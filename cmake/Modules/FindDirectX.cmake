@@ -1,4 +1,5 @@
 # Copyright (c) 2008-2022 the Urho3D project
+# Copyright (c) 2022-2022 the Dviglo project
 # License: MIT
 
 # For MSVC compiler, find Microsoft DirectX installation in Windows SDK or in June 2010 DirectX SDK or later
