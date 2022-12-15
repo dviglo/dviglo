@@ -1,3 +1,0 @@
-URL: https://github.com/codecat/angelscript-mirror
-Дата обновления: 28.11.2022
-Последний коммит: https://github.com/codecat/angelscript-mirror/commit/f3f6b6753b4f74f4567c1e8db0e2a6b3ac96bbdb
