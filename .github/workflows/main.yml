@@ -27,7 +27,7 @@ jobs:
     name: 🔲
     runs-on: windows-2019
     needs: init
-    if: needs.init.outputs.skip == '0' && github.event_name != 'repository_dispatch'
+    if: false && needs.init.outputs.skip == '0' && github.event_name != 'repository_dispatch'
     strategy:
       fail-fast: false
       matrix:
@@ -251,6 +251,7 @@ jobs:
       run: $GITHUB_WORKSPACE/engine_repo/script/test_tools.sh $GITHUB_WORKSPACE/engine_repo $GITHUB_WORKSPACE/engine_build
 
     - name: Test app
+      if: false
       run: |
         #cmake --install engine_build --prefix=$HOME/installed_engine # Not works
         #URHO3D_HOME=$HOME/installed_engine # Not works (add export?)
@@ -357,6 +358,7 @@ jobs:
         cmake --build engine_build
 
     - name: Test app
+      if: false
       run: |
         #sudo cmake --build engine_build --target install
         export URHO3D_HOME=$GITHUB_WORKSPACE/engine_build
