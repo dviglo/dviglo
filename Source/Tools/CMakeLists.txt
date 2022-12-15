@@ -9,15 +9,6 @@ project (Urho3D-Tools)
 find_package (Urho3D REQUIRED)
 include_directories (${URHO3D_INCLUDE_DIRS})
 
-# Urho3DPlayer target is rather special, although it is here, it is not a tool because it is built into target platform binary as opposed to host platform
-# In order to test the player on Web platform built using Emscripten, the request parameters need to be parsed into Module['argument'] (see https://github.com/kripken/emscripten/blob/master/src/emrun_prejs.js for inspiration)
-# The CTest could "run" the Urho3DPlayer.html with script name as parameter, thanks to emrun performing this parsing automatically
-# In a production environment, however, the request parameters parsing has to be done by the application itself one way or another
-if (URHO3D_ANGELSCRIPT OR URHO3D_LUA)
-    # Add Urho3DPlayer as target only when one of the supported scripting subsystems is enabled
-    add_subdirectory (Urho3DPlayer)
-endif ()
-
 # Build host-tools using host compiler toolchain
 if (CMAKE_CROSSCOMPILING)
     check_native_compiler_exist ()
@@ -41,17 +32,6 @@ if (CMAKE_CROSSCOMPILING)
         endif ()
         install (PROGRAMS ${CMAKE_BINARY_DIR}/bin/tool/PackageTool DESTINATION ${DEST_RUNTIME_DIR}/tool)
     endif ()
-    if (URHO3D_GENERATEBINDINGS)
-        ExternalProject_Add (BindingGenerator
-            SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/Tools/BindingGenerator
-            CMAKE_ARGS -D URHO3D_DEPLOYMENT_TARGET=generic -D DEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -D BAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -D BAKED_CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR} -D CMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
-            ${ALTERNATE_COMMAND})
-        add_make_clean_files (${CMAKE_BINARY_DIR}/bin/tool/BindingGenerator)
-        if (CMAKE_HOST_WIN32 AND NOT HAS_MKLINK)
-            add_dependencies (BindingGenerator Urho3D)
-        endif ()
-        install (PROGRAMS ${CMAKE_BINARY_DIR}/bin/tool/BindingGenerator DESTINATION ${DEST_RUNTIME_DIR}/tool)
-    endif ()
 endif ()
 
 if (URHO3D_TOOLS)
@@ -62,14 +42,7 @@ if (URHO3D_TOOLS)
     add_subdirectory (RampGenerator)
     add_subdirectory (SpritePacker)
     add_subdirectory (Tests)
-    if (URHO3D_ANGELSCRIPT)
-        add_subdirectory (ScriptCompiler)
-    endif ()
 elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
     # PackageTool target is required but we are not cross-compiling, so build it as per normal
     add_subdirectory (PackageTool)
-endif ()
-
-if (NOT CMAKE_CROSSCOMPILING AND URHO3D_GENERATEBINDINGS)
-    add_subdirectory (BindingGenerator)
 endif ()
