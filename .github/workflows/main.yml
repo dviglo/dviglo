@@ -148,7 +148,6 @@ jobs:
           }
         BITS:
         - 64
-        - 32
         LIB_TYPE:
         - {
             ID: shared,
@@ -286,7 +285,6 @@ jobs:
       matrix:
         BITS:
         - 64
-        - 32
         LIB_TYPE:
         - {
             ID: shared,
