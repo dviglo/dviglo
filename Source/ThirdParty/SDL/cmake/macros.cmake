@@ -22,6 +22,7 @@
 # Modified by Yao Wei Tjong for Urho3D, the modified portion is licensed under below license
 
 # Copyright (c) 2008-2022 the Urho3D project
+# Copyright (c) 2022-2022 the Dviglo project
 # License: MIT
 
 macro(SET_OPTION _NAME _DESC)

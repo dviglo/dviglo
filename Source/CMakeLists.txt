@@ -1,4 +1,5 @@
 # Copyright (c) 2008-2022 the Urho3D project
+# Copyright (c) 2022-2022 the Dviglo project
 # License: MIT
 
 # Check existence of various header files and their functions required by some of the third-party libraries and Urho3D library

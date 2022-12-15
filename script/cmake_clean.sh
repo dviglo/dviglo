@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 # Copyright (c) 2008-2022 the Urho3D project
+# Copyright (c) 2022-2022 the Dviglo project
 # License: MIT
 
 # Clean the CMake cache and CMake generated files in the build tree

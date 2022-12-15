@@ -1,4 +1,5 @@
 # Copyright (c) 2008-2022 the Urho3D project
+# Copyright (c) 2022-2022 the Dviglo project
 # License: MIT
 
 # Find Urho3D include directories and libraries in the Urho3D SDK installation or build tree or in Android library
