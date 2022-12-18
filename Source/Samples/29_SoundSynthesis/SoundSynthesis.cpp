@@ -2,20 +2,20 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Audio/BufferedSoundStream.h>
-#include <Urho3D/Audio/SoundSource.h>
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Scene/Node.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/audio/buffered_sound_stream.h>
+#include <dviglo/audio/sound_source.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/log.h>
+#include <dviglo/scene/node.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
 
 #include "SoundSynthesis.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
 URHO3D_DEFINE_APPLICATION_MAIN(SoundSynthesis)

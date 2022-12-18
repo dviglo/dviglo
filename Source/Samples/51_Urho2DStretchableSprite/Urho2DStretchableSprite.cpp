@@ -2,24 +2,24 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/Graphics/Octree.h>
-#include <Urho3D/Graphics/Renderer.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/Urho2D/Sprite2D.h>
-#include <Urho3D/Urho2D/StaticSprite2D.h>
-#include <Urho3D/Urho2D/StretchableSprite2D.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics/octree.h>
+#include <dviglo/graphics/renderer.h>
+#include <dviglo/input/input.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/urho_2d/sprite_2d.h>
+#include <dviglo/urho_2d/static_sprite_2d.h>
+#include <dviglo/urho_2d/stretchable_sprite_2d.h>
 
 #include "Urho2DStretchableSprite.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(Urho2DStretchableSprite)
 

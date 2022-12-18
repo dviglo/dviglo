@@ -2,16 +2,16 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/GraphicsAPI/Texture2D.h>
-#include <Urho3D/UI/Sprite.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics_api/texture_2d.h>
+#include <dviglo/ui/sprite.h>
+#include <dviglo/ui/ui.h>
 
 #include "Sprites.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 // Number of sprites to draw
 static const unsigned NUM_SPRITES = 100;

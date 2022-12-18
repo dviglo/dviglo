@@ -2,19 +2,19 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Physics2D/RigidBody2D.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/Urho2D/AnimatedSprite2D.h>
-#include <Urho3D/Urho2D/AnimationSet2D.h>
+#include <dviglo/core/context.h>
+#include <dviglo/input/input.h>
+#include <dviglo/physics_2d/rigid_body_2d.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/scene/scene_events.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
+#include <dviglo/urho_2d/animated_sprite_2d.h>
+#include <dviglo/urho_2d/animation_set_2d.h>
 
 #include "Character2D.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 // Character2D logic component
 Character2D::Character2D(Context* context) :

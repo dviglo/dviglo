@@ -4,13 +4,13 @@
 
 #include "AppState_Base.h"
 
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/Renderer.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/renderer.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

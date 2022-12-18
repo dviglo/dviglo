@@ -1,6 +1,6 @@
-#include <Urho3D/Urho3DAll.h>
+#include <dviglo/dviglo_all.h>
 
-#include <Urho3D/Graphics/SpriteBatch.h>
+#include <dviglo/graphics/sprite_batch.h>
 
 class Game : public Application
 {

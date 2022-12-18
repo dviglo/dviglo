@@ -2,17 +2,17 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Graphics/Material.h>
-#include <Urho3D/Graphics/Model.h>
-#include <Urho3D/Graphics/StaticModel.h>
-#include <Urho3D/Physics/CollisionShape.h>
-#include <Urho3D/Physics/Constraint.h>
-#include <Urho3D/Physics/PhysicsEvents.h>
-#include <Urho3D/Physics/PhysicsWorld.h>
-#include <Urho3D/Physics/RigidBody.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
+#include <dviglo/core/context.h>
+#include <dviglo/graphics/material.h>
+#include <dviglo/graphics/model.h>
+#include <dviglo/graphics/static_model.h>
+#include <dviglo/physics/collision_shape.h>
+#include <dviglo/physics/constraint.h>
+#include <dviglo/physics/physics_events.h>
+#include <dviglo/physics/physics_world.h>
+#include <dviglo/physics/rigid_body.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
 
 #include "Vehicle.h"
 

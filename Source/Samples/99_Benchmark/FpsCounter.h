@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Urho3D/Base/PrimitiveTypes.h>
+#include <dviglo/base/primitive_types.h>
 
 using namespace Urho3D::PrimitiveTypes;
 

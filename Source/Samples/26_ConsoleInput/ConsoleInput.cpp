@@ -2,19 +2,19 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Core/Timer.h>
-#include <Urho3D/Engine/Console.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Engine/EngineEvents.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/UI/Button.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/core/timer.h>
+#include <dviglo/engine/console.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/engine/engine_events.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/log.h>
+#include <dviglo/ui/button.h>
 
 #include "ConsoleInput.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
 URHO3D_DEFINE_APPLICATION_MAIN(ConsoleInput)

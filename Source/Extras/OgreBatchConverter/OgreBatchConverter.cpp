@@ -1,9 +1,9 @@
 // OgreBatchConverter.cpp : Defines the entry point for the console application.
 //
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/IO/FileSystem.h>
+#include <dviglo/core/context.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/io/file_system.h>
 
 #include <cstdio>
 

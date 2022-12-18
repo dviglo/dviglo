@@ -4,13 +4,13 @@
 
 #pragma once
 
-#include <Urho3D/Base/Utils.h>
-#include <Urho3D/Graphics/Animation.h>
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/GraphicsAPI/VertexBuffer.h>
-#include <Urho3D/IO/Serializer.h>
-#include <Urho3D/Math/BoundingBox.h>
-#include <Urho3D/Math/Matrix3x4.h>
+#include <dviglo/base/utils.h>
+#include <dviglo/graphics/animation.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics_api/vertex_buffer.h>
+#include <dviglo/io/serializer.h>
+#include <dviglo/math/bounding_box.h>
+#include <dviglo/math/matrix3x4.h>
 
 using namespace Urho3D;
 

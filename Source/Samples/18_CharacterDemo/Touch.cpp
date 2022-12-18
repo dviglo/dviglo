@@ -2,10 +2,10 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/Graphics/Renderer.h>
-#include <Urho3D/Input/Controls.h>
-#include <Urho3D/Input/Input.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics/renderer.h>
+#include <dviglo/input/controls.h>
+#include <dviglo/input/input.h>
 
 #include "Character.h"
 #include "Touch.h"

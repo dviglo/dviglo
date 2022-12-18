@@ -4,14 +4,14 @@
 
 #include "AppStateManager.h"
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Engine/Application.h>
-#include <Urho3D/Engine/EngineDefs.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/engine/application.h>
+#include <dviglo/engine/engine_defs.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
 
 using namespace Urho3D;
 

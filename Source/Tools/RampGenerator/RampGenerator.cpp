@@ -2,20 +2,20 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Container/ArrayPtr.h>
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/IO/File.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Core/StringUtils.h>
+#include <dviglo/container/array_ptr.h>
+#include <dviglo/core/context.h>
+#include <dviglo/io/file.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/core/string_utils.h>
 
 #ifdef WIN32
-#include <Urho3D/Engine/WinWrapped.h>
+#include <dviglo/engine/win_wrapped.h>
 #endif
 
 #include <STB/stb_image_write.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

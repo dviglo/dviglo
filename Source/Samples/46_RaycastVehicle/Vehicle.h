@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include <Urho3D/Input/Controls.h>
-#include <Urho3D/Physics/PhysicsUtils.h>
-#include <Urho3D/Scene/LogicComponent.h>
+#include <dviglo/input/controls.h>
+#include <dviglo/physics/physics_utils.h>
+#include <dviglo/scene/logic_component.h>
 
 namespace Urho3D
 {

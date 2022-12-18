@@ -2,14 +2,14 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Graphics/AnimatedModel.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Physics/PhysicsEvents.h>
-#include <Urho3D/Physics/RigidBody.h>
+#include <dviglo/graphics/animated_model.h>
+#include <dviglo/io/log.h>
+#include <dviglo/physics/physics_events.h>
+#include <dviglo/physics/rigid_body.h>
 
 #include "CreateRagdoll.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 CreateRagdoll::CreateRagdoll(Context* context) :
     Component(context)

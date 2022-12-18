@@ -2,15 +2,15 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/UI/Button.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UIEvents.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/ui/button.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui_events.h>
 
 #include "UIDrag.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(UIDrag)
 

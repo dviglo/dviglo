@@ -2,14 +2,14 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Graphics/AnimationController.h>
-#include <Urho3D/IO/MemoryBuffer.h>
-#include <Urho3D/Physics/PhysicsEvents.h>
-#include <Urho3D/Physics/PhysicsWorld.h>
-#include <Urho3D/Physics/RigidBody.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/Scene/SceneEvents.h>
+#include <dviglo/core/context.h>
+#include <dviglo/graphics/animation_controller.h>
+#include <dviglo/io/memory_buffer.h>
+#include <dviglo/physics/physics_events.h>
+#include <dviglo/physics/physics_world.h>
+#include <dviglo/physics/rigid_body.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/scene/scene_events.h>
 
 #include "Character.h"
 

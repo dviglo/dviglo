@@ -5,10 +5,10 @@
 #include "AppState_Benchmark01.h"
 #include "AppStateManager.h"
 
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Scene/SceneEvents.h>
+#include <dviglo/input/input.h>
+#include <dviglo/scene/scene_events.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

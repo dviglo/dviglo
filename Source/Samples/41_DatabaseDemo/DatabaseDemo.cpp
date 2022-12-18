@@ -2,16 +2,16 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Database/Database.h>
-#include <Urho3D/Database/DatabaseEvents.h>
-#include <Urho3D/Engine/Console.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Engine/EngineEvents.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/UI/Button.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/database/database.h>
+#include <dviglo/database/database_events.h>
+#include <dviglo/engine/console.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/engine/engine_events.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/log.h>
+#include <dviglo/ui/button.h>
 
 #include "DatabaseDemo.h"
 

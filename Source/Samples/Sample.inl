@@ -2,27 +2,27 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/Timer.h>
-#include <Urho3D/Engine/Application.h>
-#include <Urho3D/Engine/Console.h>
-#include <Urho3D/Engine/DebugHud.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Engine/EngineDefs.h>
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/Graphics/Renderer.h>
-#include <Urho3D/GraphicsAPI/Texture2D.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Input/InputEvents.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Resource/XMLFile.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/UI/Cursor.h>
-#include <Urho3D/UI/Sprite.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/core/timer.h>
+#include <dviglo/engine/application.h>
+#include <dviglo/engine/console.h>
+#include <dviglo/engine/debug_hud.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/engine/engine_defs.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics/renderer.h>
+#include <dviglo/graphics_api/texture_2d.h>
+#include <dviglo/input/input.h>
+#include <dviglo/input/input_events.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/io/log.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/resource/xml_file.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/scene/scene_events.h>
+#include <dviglo/ui/cursor.h>
+#include <dviglo/ui/sprite.h>
+#include <dviglo/ui/ui.h>
 
 Sample::Sample(Context* context) :
     Application(context),
@@ -40,7 +40,7 @@ void Sample::Setup()
 {
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = GetTypeName();
-    engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + GetTypeName() + ".log";
+    engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("dviglo", "logs") + GetTypeName() + ".log";
     engineParameters_[EP_FULL_SCREEN]  = false;
     engineParameters_[EP_HEADLESS]     = false;
     engineParameters_[EP_SOUND]        = false;

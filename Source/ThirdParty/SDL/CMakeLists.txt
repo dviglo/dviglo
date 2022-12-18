@@ -1527,7 +1527,7 @@ if(NOT WINDOWS OR CYGWIN)
   set(SDL_LIBS ${_SDL_LIBS})
 
   # Urho3D - commented out pkg-config configuration file generation
-  # Urho3D - TODO - utilize the populated variables for pkg-config configuration file generation for Urho3D.pc
+  # Urho3D - TODO - utilize the populated variables for pkg-config configuration file generation for dviglo.pc
 endif()
 
 # Urho3D - restore the original CMake global settings

@@ -6,7 +6,7 @@
 
 #include "AppState_Base.h"
 
-#include <Urho3D/Container/HashMap.h>
+#include <dviglo/container/hash_map.h>
 
 using AppStateId = u32;
 

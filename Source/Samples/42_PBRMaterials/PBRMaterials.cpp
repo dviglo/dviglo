@@ -2,29 +2,29 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/Graphics/RenderPath.h>
-#include <Urho3D/Graphics/StaticModel.h>
-#include <Urho3D/Graphics/Zone.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/UI/Button.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Slider.h>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/UI/UIEvents.h>
-#include <Urho3D/UI/Text.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics/render_path.h>
+#include <dviglo/graphics/static_model.h>
+#include <dviglo/graphics/zone.h>
+#include <dviglo/input/input.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/ui/button.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/slider.h>
+#include <dviglo/ui/ui.h>
+#include <dviglo/ui/ui_events.h>
+#include <dviglo/ui/text.h>
 #ifdef URHO3D_ANGELSCRIPT
-#include <Urho3D/AngelScript/Script.h>
+#include <dviglo/AngelScript/Script.h>
 #endif
 
 #include "PBRMaterials.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(PBRMaterials)
 

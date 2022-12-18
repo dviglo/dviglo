@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <Urho3D/Scene/LogicComponent.h>
-#include <Urho3D/Math/BoundingBox.h>
+#include <dviglo/scene/logic_component.h>
+#include <dviglo/math/bounding_box.h>
 
 namespace U3D = Urho3D;
 

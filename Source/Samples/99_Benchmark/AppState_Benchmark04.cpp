@@ -5,13 +5,13 @@
 #include "AppState_Benchmark04.h"
 #include "AppStateManager.h"
 
-#include <Urho3D/Core/Timer.h>
-#include <Urho3D/Graphics/GraphicsEvents.h>
-#include <Urho3D/GraphicsAPI/Texture2D.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Resource/ResourceCache.h>
+#include <dviglo/core/timer.h>
+#include <dviglo/graphics/graphics_events.h>
+#include <dviglo/graphics_api/texture_2d.h>
+#include <dviglo/input/input.h>
+#include <dviglo/resource/resource_cache.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 
