@@ -2,25 +2,25 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Core/StringUtils.h>
-#include <Urho3D/IO/File.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Resource/Image.h>
-#include <Urho3D/Resource/XMLElement.h>
-#include <Urho3D/Resource/XMLFile.h>
+#include <dviglo/core/context.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/core/string_utils.h>
+#include <dviglo/io/file.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/io/log.h>
+#include <dviglo/resource/image.h>
+#include <dviglo/resource/xml_element.h>
+#include <dviglo/resource/xml_file.h>
 
 #ifdef WIN32
-#include <Urho3D/Engine/WinWrapped.h>
+#include <dviglo/engine/win_wrapped.h>
 #endif
 
 #define STBRP_LARGE_RECTS
 #define STB_RECT_PACK_IMPLEMENTATION
 #include <STB/stb_rect_pack.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

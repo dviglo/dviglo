@@ -2,13 +2,13 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Graphics/AnimatedModel.h>
-#include <Urho3D/Graphics/AnimationState.h>
-#include <Urho3D/Scene/Scene.h>
+#include <dviglo/graphics/animated_model.h>
+#include <dviglo/graphics/animation_state.h>
+#include <dviglo/scene/scene.h>
 
 #include "Mover.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 Mover::Mover(Context* context) :
     LogicComponent(context),

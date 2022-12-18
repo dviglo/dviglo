@@ -2,46 +2,46 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Container/Vector.h>
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/DebugRenderer.h>
-#include <Urho3D/Graphics/Graphics.h>
-#include <Urho3D/Graphics/Octree.h>
-#include <Urho3D/Graphics/Renderer.h>
-#include <Urho3D/Graphics/Zone.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/Physics2D/CollisionBox2D.h>
-#include <Urho3D/Physics2D/CollisionCircle2D.h>
-#include <Urho3D/Physics2D/CollisionEdge2D.h>
-#include <Urho3D/Physics2D/CollisionPolygon2D.h>
-#include <Urho3D/Physics2D/ConstraintDistance2D.h>
-#include <Urho3D/Physics2D/ConstraintFriction2D.h>
-#include <Urho3D/Physics2D/ConstraintGear2D.h>
-#include <Urho3D/Physics2D/ConstraintMotor2D.h>
-#include <Urho3D/Physics2D/ConstraintMouse2D.h>
-#include <Urho3D/Physics2D/ConstraintPrismatic2D.h>
-#include <Urho3D/Physics2D/ConstraintPulley2D.h>
-#include <Urho3D/Physics2D/ConstraintRevolute2D.h>
-#include <Urho3D/Physics2D/ConstraintWeld2D.h>
-#include <Urho3D/Physics2D/ConstraintWheel2D.h>
-#include <Urho3D/Physics2D/PhysicsWorld2D.h>
-#include <Urho3D/Physics2D/RigidBody2D.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/Text3D.h>
-#include <Urho3D/Urho2D/Drawable2D.h>
-#include <Urho3D/Urho2D/Sprite2D.h>
-#include <Urho3D/Urho2D/StaticSprite2D.h>
+#include <dviglo/container/vector.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/debug_renderer.h>
+#include <dviglo/graphics/graphics.h>
+#include <dviglo/graphics/octree.h>
+#include <dviglo/graphics/renderer.h>
+#include <dviglo/graphics/zone.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/physics_2d/collision_box_2d.h>
+#include <dviglo/physics_2d/collision_circle_2d.h>
+#include <dviglo/physics_2d/collision_edge_2d.h>
+#include <dviglo/physics_2d/collision_polygon_2d.h>
+#include <dviglo/physics_2d/constraint_distance_2d.h>
+#include <dviglo/physics_2d/constraint_friction_2d.h>
+#include <dviglo/physics_2d/constraint_gear_2d.h>
+#include <dviglo/physics_2d/constraint_motor_2d.h>
+#include <dviglo/physics_2d/constraint_mouse_2d.h>
+#include <dviglo/physics_2d/constraint_prismatic_2d.h>
+#include <dviglo/physics_2d/constraint_pulley_2d.h>
+#include <dviglo/physics_2d/constraint_revolute_2d.h>
+#include <dviglo/physics_2d/constraint_weld_2d.h>
+#include <dviglo/physics_2d/constraint_wheel_2d.h>
+#include <dviglo/physics_2d/physics_world_2d.h>
+#include <dviglo/physics_2d/rigid_body_2d.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/scene/scene_events.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/text_3d.h>
+#include <dviglo/urho_2d/drawable_2d.h>
+#include <dviglo/urho_2d/sprite_2d.h>
+#include <dviglo/urho_2d/static_sprite_2d.h>
 
 #include "Urho2DConstraints.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(Urho2DConstraints)
 

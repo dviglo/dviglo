@@ -2,11 +2,11 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Scene/Scene.h>
+#include <dviglo/scene/scene.h>
 
 #include "Rotator.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 Rotator::Rotator(Context* context) :
     LogicComponent(context),

@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <Urho3D/Scene/LogicComponent.h>
-#include <Urho3D/Base/PrimitiveTypes.h>
+#include <dviglo/scene/logic_component.h>
+#include <dviglo/base/primitive_types.h>
 
 namespace U3D = Urho3D;
 using namespace Urho3D::PrimitiveTypes;

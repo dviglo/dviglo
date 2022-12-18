@@ -2,16 +2,16 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/input/input.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
 
 #include "Clicker.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
 URHO3D_DEFINE_APPLICATION_MAIN(Clicker)

@@ -5,15 +5,15 @@
 #include "AppState_ResultScreen.h"
 #include "AppStateManager.h"
 
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/UI/Button.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/UI/UIEvents.h>
-#include <Urho3D/UI/Window.h>
+#include <dviglo/input/input.h>
+#include <dviglo/scene/scene_events.h>
+#include <dviglo/ui/button.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
+#include <dviglo/ui/ui_events.h>
+#include <dviglo/ui/window.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

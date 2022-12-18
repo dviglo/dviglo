@@ -2,34 +2,34 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Core/ProcessUtils.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Graphics/AnimatedModel.h>
-#include <Urho3D/Graphics/AnimationController.h>
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/Light.h>
-#include <Urho3D/Graphics/Material.h>
-#include <Urho3D/Graphics/Octree.h>
-#include <Urho3D/Graphics/Renderer.h>
-#include <Urho3D/Graphics/Zone.h>
-#include <Urho3D/Input/Controls.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/FileSystem.h>
-#include <Urho3D/Physics/CollisionShape.h>
-#include <Urho3D/Physics/PhysicsWorld.h>
-#include <Urho3D/Physics/RigidBody.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/core/process_utils.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/graphics/animated_model.h>
+#include <dviglo/graphics/animation_controller.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/light.h>
+#include <dviglo/graphics/material.h>
+#include <dviglo/graphics/octree.h>
+#include <dviglo/graphics/renderer.h>
+#include <dviglo/graphics/zone.h>
+#include <dviglo/input/controls.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/physics/collision_shape.h>
+#include <dviglo/physics/physics_world.h>
+#include <dviglo/physics/rigid_body.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
 
 #include "Character.h"
 #include "CharacterDemo.h"
 #include "Touch.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(CharacterDemo)
 

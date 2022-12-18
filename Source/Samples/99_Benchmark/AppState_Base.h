@@ -6,7 +6,7 @@
 
 #include "FpsCounter.h"
 
-#include <Urho3D/Scene/Scene.h>
+#include <dviglo/scene/scene.h>
 
 namespace U3D = Urho3D;
 

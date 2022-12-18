@@ -3,22 +3,22 @@
 // License: MIT
 
 #include "Vehicle.h"
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Graphics/DebugRenderer.h>
-#include <Urho3D/Graphics/DecalSet.h>
-#include <Urho3D/Graphics/Material.h>
-#include <Urho3D/Graphics/Model.h>
-#include <Urho3D/Graphics/ParticleEffect.h>
-#include <Urho3D/Graphics/ParticleEmitter.h>
-#include <Urho3D/Graphics/StaticModel.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Physics/CollisionShape.h>
-#include <Urho3D/Physics/Constraint.h>
-#include <Urho3D/Physics/PhysicsEvents.h>
-#include <Urho3D/Physics/PhysicsWorld.h>
-#include <Urho3D/Physics/RaycastVehicle.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
+#include <dviglo/core/context.h>
+#include <dviglo/graphics/debug_renderer.h>
+#include <dviglo/graphics/decal_set.h>
+#include <dviglo/graphics/material.h>
+#include <dviglo/graphics/model.h>
+#include <dviglo/graphics/particle_effect.h>
+#include <dviglo/graphics/particle_emitter.h>
+#include <dviglo/graphics/static_model.h>
+#include <dviglo/io/log.h>
+#include <dviglo/physics/collision_shape.h>
+#include <dviglo/physics/constraint.h>
+#include <dviglo/physics/physics_events.h>
+#include <dviglo/physics/physics_world.h>
+#include <dviglo/physics/raycast_vehicle.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
 
 using namespace Urho3D;
 

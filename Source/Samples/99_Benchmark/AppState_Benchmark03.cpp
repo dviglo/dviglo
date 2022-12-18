@@ -6,17 +6,17 @@
 #include "AppStateManager.h"
 #include "Benchmark03_MoleculeLogic.h"
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Graphics/Camera.h>
-#include <Urho3D/Graphics/Model.h>
-#include <Urho3D/Graphics/Octree.h>
-#include <Urho3D/Graphics/StaticModel.h>
-#include <Urho3D/Graphics/Zone.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/SceneEvents.h>
+#include <dviglo/core/context.h>
+#include <dviglo/graphics/camera.h>
+#include <dviglo/graphics/model.h>
+#include <dviglo/graphics/octree.h>
+#include <dviglo/graphics/static_model.h>
+#include <dviglo/graphics/zone.h>
+#include <dviglo/input/input.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene_events.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

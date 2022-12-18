@@ -123,7 +123,7 @@ if (NOT ANDROID AND NOT ARM AND NOT WEB)
     endif ()
 endif ()
 
-add_subdirectory (Urho3D)
+add_subdirectory (dviglo)
 
 if (URHO3D_CLANG_TOOLS)
     add_subdirectory (Clang-Tools)

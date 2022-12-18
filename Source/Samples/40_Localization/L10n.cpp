@@ -2,24 +2,24 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Core/CoreEvents.h>
-#include <Urho3D/Graphics/Material.h>
-#include <Urho3D/Graphics/Model.h>
-#include <Urho3D/Graphics/Octree.h>
-#include <Urho3D/Graphics/StaticModel.h>
-#include <Urho3D/Graphics/Zone.h>
-#include <Urho3D/Resource/Localization.h>
-#include <Urho3D/Resource/ResourceEvents.h>
-#include <Urho3D/UI/Button.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/Text3D.h>
-#include <Urho3D/UI/UIEvents.h>
-#include <Urho3D/UI/Window.h>
+#include <dviglo/core/core_events.h>
+#include <dviglo/graphics/material.h>
+#include <dviglo/graphics/model.h>
+#include <dviglo/graphics/octree.h>
+#include <dviglo/graphics/static_model.h>
+#include <dviglo/graphics/zone.h>
+#include <dviglo/resource/localization.h>
+#include <dviglo/resource/resource_events.h>
+#include <dviglo/ui/button.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/text_3d.h>
+#include <dviglo/ui/ui_events.h>
+#include <dviglo/ui/window.h>
 
 #include "L10n.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 URHO3D_DEFINE_APPLICATION_MAIN(L10n)
 

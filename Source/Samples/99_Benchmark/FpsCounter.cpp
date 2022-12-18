@@ -4,9 +4,9 @@
 
 #include "FpsCounter.h"
 
-#include <Urho3D/Math/MathDefs.h>
+#include <dviglo/math/math_defs.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

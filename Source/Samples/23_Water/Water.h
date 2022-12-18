@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Urho3D/Math/Plane.h>
+#include <dviglo/math/plane.h>
 
 #include "Sample.h"
 

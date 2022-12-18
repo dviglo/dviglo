@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Urho3D/Math/BigInt.h>
+#include <dviglo/math/big_int.h>
 
 #include "Sample.h"
 

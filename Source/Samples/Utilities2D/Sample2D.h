@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Urho3D/Core/Object.h>
+#include <dviglo/core/object.h>
 
 namespace Urho3D
 {

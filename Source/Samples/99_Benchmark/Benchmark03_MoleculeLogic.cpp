@@ -4,9 +4,9 @@
 
 #include "Benchmark03_MoleculeLogic.h"
 
-#include <Urho3D/Scene/Scene.h>
+#include <dviglo/scene/scene.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

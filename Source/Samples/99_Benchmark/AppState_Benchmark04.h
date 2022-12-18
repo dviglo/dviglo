@@ -6,7 +6,7 @@
 
 #include "AppState_Base.h"
 
-#include <Urho3D/Graphics/SpriteBatch.h>
+#include <dviglo/graphics/sprite_batch.h>
 
 // Бенчмарк для SpriteBatch
 class AppState_Benchmark04 : public AppState_Base

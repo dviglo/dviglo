@@ -11,7 +11,7 @@
 #include "AppState_MainScreen.h"
 #include "AppState_ResultScreen.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

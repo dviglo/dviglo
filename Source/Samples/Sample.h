@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <Urho3D/Engine/Application.h>
-#include <Urho3D/Input/Input.h>
+#include <dviglo/engine/application.h>
+#include <dviglo/input/input.h>
 
 namespace Urho3D
 {

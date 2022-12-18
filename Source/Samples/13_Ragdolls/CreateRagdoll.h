@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <Urho3D/Physics/CollisionShape.h>
-#include <Urho3D/Physics/Constraint.h>
+#include <dviglo/physics/collision_shape.h>
+#include <dviglo/physics/constraint.h>
 
 using namespace Urho3D;
 

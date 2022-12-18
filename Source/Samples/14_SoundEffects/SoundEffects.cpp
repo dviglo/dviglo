@@ -2,25 +2,25 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include <Urho3D/Audio/Audio.h>
-#include <Urho3D/Audio/AudioEvents.h>
-#include <Urho3D/Audio/Sound.h>
-#include <Urho3D/Audio/SoundSource.h>
-#include <Urho3D/Engine/Engine.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/IO/Log.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/Scene.h>
-#include <Urho3D/UI/Button.h>
-#include <Urho3D/UI/Font.h>
-#include <Urho3D/UI/Slider.h>
-#include <Urho3D/UI/Text.h>
-#include <Urho3D/UI/UI.h>
-#include <Urho3D/UI/UIEvents.h>
+#include <dviglo/audio/audio.h>
+#include <dviglo/audio/audio_events.h>
+#include <dviglo/audio/sound.h>
+#include <dviglo/audio/sound_source.h>
+#include <dviglo/engine/engine.h>
+#include <dviglo/input/input.h>
+#include <dviglo/io/log.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene.h>
+#include <dviglo/ui/button.h>
+#include <dviglo/ui/font.h>
+#include <dviglo/ui/slider.h>
+#include <dviglo/ui/text.h>
+#include <dviglo/ui/ui.h>
+#include <dviglo/ui/ui_events.h>
 
 #include "SoundEffects.h"
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 // Custom variable identifier for storing sound effect name within the UI element
 static const StringHash VAR_SOUNDRESOURCE("SoundResource");

@@ -2,12 +2,12 @@
 // Copyright (c) 2022-2022 the Dviglo project
 // License: MIT
 
-#include "../ForceAssert.h"
+#include "../force_assert.h"
 
-#include <Urho3D/Container/Str.h>
-#include <Urho3D/Math/BigInt.h>
+#include <dviglo/container/str.h>
+#include <dviglo/math/big_int.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 

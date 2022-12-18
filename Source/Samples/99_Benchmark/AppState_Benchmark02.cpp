@@ -6,17 +6,17 @@
 #include "AppStateManager.h"
 #include "Benchmark02_WomanMover.h"
 
-#include <Urho3D/Core/Context.h>
-#include <Urho3D/Graphics/AnimatedModel.h>
-#include <Urho3D/Graphics/Animation.h>
-#include <Urho3D/Graphics/AnimationController.h>
-#include <Urho3D/Graphics/AnimationState.h>
-#include <Urho3D/Input/Input.h>
-#include <Urho3D/Resource/ResourceCache.h>
-#include <Urho3D/Scene/SceneEvents.h>
-#include <Urho3D/Scene/SplinePath.h>
+#include <dviglo/core/context.h>
+#include <dviglo/graphics/animated_model.h>
+#include <dviglo/graphics/animation.h>
+#include <dviglo/graphics/animation_controller.h>
+#include <dviglo/graphics/animation_state.h>
+#include <dviglo/input/input.h>
+#include <dviglo/resource/resource_cache.h>
+#include <dviglo/scene/scene_events.h>
+#include <dviglo/scene/spline_path.h>
 
-#include <Urho3D/DebugNew.h>
+#include <dviglo/debug_new.h>
 
 using namespace Urho3D;
 
