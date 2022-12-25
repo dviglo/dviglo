@@ -16,7 +16,7 @@ Dviglo распространяется под лицензией MIT.
 ## Важные ссылки:
 
 * [Документация, сгенерированная Doxygen](https://urho3d-doxygen.github.io)
-* [Форум](https://github.com/urho3d-community/discussions/discussions)
+* [Форум](https://github.com/dviglo-community/discussions/discussions)
 * [Wiki](https://github.com/urho3d-community/wiki/wiki)
 * [Архив англоязычной Wiki](https://github.com/urho3d-community/wiki-archive/wiki)
 * [Обучающие материалы](https://github.com/urho3d-learn)
