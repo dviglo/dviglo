@@ -5,7 +5,7 @@
 
 # Отображаемое имя workflow
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#name
-name: Обновление года в копирайтах
+name: Обновление года копирайта
 
 # Условия, при которых будет запущен workflow
 on:
@@ -28,11 +28,11 @@ jobs:
 
     # Отображаемое имя job 
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idname
-    name: Обновляем год в копирайтах
+    name: Обновляем год копирайта
 
     # Ничего не делаем в форках
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idif
-    #if: github.repository == 'dviglo/dviglo'
+    if: github.repository == 'dviglo/dviglo'
 
     # Job состоит из последовательности задач
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps
