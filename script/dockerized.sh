@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2008-2022 the Urho3D project
-# Copyright (c) 2022-2022 the Dviglo project
+# Copyright (c) 2008-2023 the Urho3D project
+# Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
 if [[ $# -eq 0 ]]; then echo "Usage: dockerized.sh linux|mingw|android|rpi|arm|web [command]"; exit 1; fi

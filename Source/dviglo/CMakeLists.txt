@@ -1,5 +1,5 @@
-# Copyright (c) 2008-2022 the Urho3D project
-# Copyright (c) 2022-2022 the Dviglo project
+# Copyright (c) 2008-2023 the Urho3D project
+# Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
 # Define target name
@@ -372,7 +372,7 @@ if (URHO3D_FORCE_AS_MAX_PORTABILITY)
     set (APPENDIX "${APPENDIX}#define AS_MAX_PORTABILITY\n")
 endif ()
 generate_export_header (${TARGET_NAME} EXPORT_MACRO_NAME URHO3D_API EXPORT_FILE_NAME dviglo.h.new CUSTOM_CONTENT_FROM_VARIABLE APPENDIX)
-set (COPYRIGHT "// Copyright (c) 2008-2022 the Urho3D project\n// License: MIT\n")
+set (COPYRIGHT "// Copyright (c) 2008-2023 the Urho3D project\n// License: MIT\n")
 file (READ ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new EXPORT_HEADER)
 file (WRITE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new ${COPYRIGHT}${EXPORT_HEADER})
 execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)

@@ -1,5 +1,5 @@
-# Copyright (c) 2008-2022 the Urho3D project
-# Copyright (c) 2022-2022 the Dviglo project
+# Copyright (c) 2008-2023 the Urho3D project
+# Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
 # https://cmake.org/cmake/help/book/mastering-cmake/chapter/Cross%20Compiling%20With%20CMake.html

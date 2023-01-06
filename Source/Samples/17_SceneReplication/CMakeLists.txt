@@ -1,5 +1,5 @@
-# Copyright (c) 2008-2022 the Urho3D project
-# Copyright (c) 2022-2022 the Dviglo project
+# Copyright (c) 2008-2023 the Urho3D project
+# Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
 if (NOT URHO3D_NETWORK OR NOT URHO3D_PHYSICS)
