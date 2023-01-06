@@ -32,7 +32,7 @@ jobs:
 
     # Ничего не делаем в форках
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idif
-    #if: github.repository == 'dviglo/dviglo'
+    if: github.repository == 'dviglo/dviglo'
 
     # Job состоит из последовательности задач
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idsteps
