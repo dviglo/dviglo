@@ -5,6 +5,9 @@
 # Set project name
 project (Urho3D-Tools)
 
+# В IDE инструменты будут помещены в папку tools
+set (CMAKE_FOLDER tools)
+
 # Find Urho3D library
 find_package (Urho3D REQUIRED)
 include_directories (${URHO3D_INCLUDE_DIRS})
