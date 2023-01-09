@@ -6,11 +6,13 @@
 
 void Test_Container_Str();
 void Test_Math_BigInt();
+void test_third_party_sdl();
 
 void Run()
 {
     Test_Container_Str();
     Test_Math_BigInt();
+    test_third_party_sdl();
 }
 
 int main(int argc, char* argv[])
