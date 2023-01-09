@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "../base/primitive_types.h"
 #include "../container/ref_counted.h"
 #include "../container/swap.h"
 
