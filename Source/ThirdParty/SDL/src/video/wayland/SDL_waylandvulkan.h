@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -24,7 +24,7 @@
  * SDL_x11vulkan.h.
  */
 
-#include "../../SDL_internal.h"
+#include "SDL_internal.h"
 
 #ifndef SDL_waylandvulkan_h_
 #define SDL_waylandvulkan_h_
@@ -37,17 +37,13 @@
 int Wayland_Vulkan_LoadLibrary(_THIS, const char *path);
 void Wayland_Vulkan_UnloadLibrary(_THIS);
 SDL_bool Wayland_Vulkan_GetInstanceExtensions(_THIS,
-                                          SDL_Window *window,
-                                          unsigned *count,
-                                          const char **names);
-void Wayland_Vulkan_GetDrawableSize(_THIS, SDL_Window *window, int *w, int *h);
+                                              unsigned *count,
+                                              const char **names);
 SDL_bool Wayland_Vulkan_CreateSurface(_THIS,
-                                  SDL_Window *window,
-                                  VkInstance instance,
-                                  VkSurfaceKHR *surface);
+                                      SDL_Window *window,
+                                      VkInstance instance,
+                                      VkSurfaceKHR *surface);
 
 #endif
 
 #endif /* SDL_waylandvulkan_h_ */
-
-/* vi: set ts=4 sw=4 expandtab: */

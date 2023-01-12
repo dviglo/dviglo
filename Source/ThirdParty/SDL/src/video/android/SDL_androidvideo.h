@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,17 +18,16 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "../../SDL_internal.h"
+#include "SDL_internal.h"
 
 #ifndef SDL_androidvideo_h_
 #define SDL_androidvideo_h_
 
-#include "SDL_mutex.h"
-#include "SDL_rect.h"
 #include "../SDL_sysvideo.h"
 
 /* Called by the JNI layer when the screen changes size or format */
-extern void Android_SetScreenResolution(int surfaceWidth, int surfaceHeight, int deviceWidth, int deviceHeight, Uint32 format, float rate);
+extern void Android_SetScreenResolution(int surfaceWidth, int surfaceHeight, int deviceWidth, int deviceHeight, float rate);
+extern void Android_SetFormat(int format_wanted, int format_got);
 extern void Android_SendResize(SDL_Window *window);
 
 /* Private display data */
@@ -36,8 +35,9 @@ extern void Android_SendResize(SDL_Window *window);
 typedef struct SDL_VideoData
 {
     SDL_Rect textRect;
-    int      isPaused;
-    int      isPausing;
+    int isPaused;
+    int isPausing;
+    int pauseAudio;
 } SDL_VideoData;
 
 extern int Android_SurfaceWidth;
@@ -46,5 +46,3 @@ extern SDL_sem *Android_PauseSem, *Android_ResumeSem;
 extern SDL_mutex *Android_ActivityMutex;
 
 #endif /* SDL_androidvideo_h_ */
-
-/* vi: set ts=4 sw=4 expandtab: */

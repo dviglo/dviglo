@@ -67,9 +67,9 @@ struct JoystickState
     /// Reset button, axis and hat states to neutral.
     void Reset();
 
-    /// Return whether is a game controller. Game controllers will use standardized axis and button mappings.
+    /// Return whether is a gamepad. Gamepads will use standardized axis and button mappings.
     /// @property
-    bool IsController() const { return controller_ != nullptr; }
+    bool IsGamepad() const { return gamepad_ != nullptr; }
 
     /// Return number of buttons.
     /// @property
@@ -119,8 +119,8 @@ struct JoystickState
     SDL_Joystick* joystick_{};
     /// SDL joystick instance ID.
     SDL_JoystickID joystickID_{};
-    /// SDL game controller.
-    SDL_GameController* controller_{};
+    /// SDL gamepad.
+    SDL_Gamepad* gamepad_{};
     /// UI element containing the screen joystick.
     UIElement* screenJoystick_{};
     /// Joystick name.
@@ -350,8 +350,8 @@ public:
 private:
     /// Initialize when screen mode initially set.
     void Initialize();
-    /// Open a joystick and return its ID. Return -1 if no joystick.
-    SDL_JoystickID OpenJoystick(i32 index);
+    /// Open a joystick and return its ID. Return 0 if no joystick.
+    SDL_JoystickID OpenJoystick(SDL_JoystickID id);
     /// Setup internal joystick structures.
     void ResetJoysticks();
     /// Prepare input state for application gaining input focus.

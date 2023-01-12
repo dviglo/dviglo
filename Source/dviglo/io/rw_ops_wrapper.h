@@ -6,7 +6,9 @@
 
 #include "../io/file.h"
 
-#include <SDL/SDL_rwops.h>
+#include <SDL3/SDL_rwops.h>
+
+// TODO: После обновления SDL до 3й версии поменялись функции Read и Write. Они нужны для Gestures
 
 namespace Urho3D
 {
@@ -49,15 +51,15 @@ private:
 
         switch (whence)
         {
-        case RW_SEEK_SET:
+        case SDL_RW_SEEK_SET:
             des->Seek((unsigned)offset);
             break;
 
-        case RW_SEEK_CUR:
+        case SDL_RW_SEEK_CUR:
             des->Seek((unsigned)(des->GetPosition() + offset));
             break;
 
-        case RW_SEEK_END:
+        case SDL_RW_SEEK_END:
             des->Seek((unsigned)(des->GetSize() + offset));
             break;
 
@@ -80,19 +82,23 @@ private:
     }
 
     /// Read from the object. Return number of "packets" read.
-    static size_t Read(SDL_RWops* context, void* ptr, size_t size, size_t maxNum)
+    static Sint64 Read(SDL_RWops* context, void* ptr, Sint64 size)
     {
-        auto* object = reinterpret_cast<T*>(context->hidden.unknown.data1);
-        auto* des = dynamic_cast<Deserializer*>(object);
-        return des ? (size_t)(des->Read(ptr, (unsigned)(size * maxNum)) / size) : 0;
+        // TODO: сделать
+        //auto* object = reinterpret_cast<T*>(context->hidden.unknown.data1);
+        //auto* des = dynamic_cast<Deserializer*>(object);
+        //return des ? (size_t)(des->Read(ptr, (unsigned)(size * maxNum)) / size) : 0;
+        return 0;
     }
 
     /// Write to the object. Return number of "packets" written.
-    static size_t Write(SDL_RWops* context, const void* ptr, size_t size, size_t maxNum)
+    static Sint64 Write(SDL_RWops* context, const void* ptr, Sint64 size)
     {
-        auto* object = reinterpret_cast<T*>(context->hidden.unknown.data1);
-        auto* ser = dynamic_cast<Serializer*>(object);
-        return ser ? (size_t)(ser->Write(ptr, (unsigned)(size * maxNum)) / size) : 0;
+        // TODO: Сделать
+        //auto* object = reinterpret_cast<T*>(context->hidden.unknown.data1);
+        //auto* ser = dynamic_cast<Serializer*>(object);
+        //return ser ? (size_t)(ser->Write(ptr, (unsigned)(size * maxNum)) / size) : 0;
+        return 0;
     }
 
     /// SDL RWOps structure associated with the object.

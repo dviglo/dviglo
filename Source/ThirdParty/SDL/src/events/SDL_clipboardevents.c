@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,29 +18,24 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "../SDL_internal.h"
+#include "SDL_internal.h"
 
 /* Clipboard event handling code for SDL */
 
-#include "SDL_events.h"
 #include "SDL_events_c.h"
 #include "SDL_clipboardevents_c.h"
 
-
-int
-SDL_SendClipboardUpdate(void)
+int SDL_SendClipboardUpdate(void)
 {
     int posted;
 
     /* Post the event, if desired */
     posted = 0;
-    if (SDL_GetEventState(SDL_CLIPBOARDUPDATE) == SDL_ENABLE) {
+    if (SDL_EventEnabled(SDL_CLIPBOARDUPDATE)) {
         SDL_Event event;
         event.type = SDL_CLIPBOARDUPDATE;
-
+        event.common.timestamp = 0;
         posted = (SDL_PushEvent(&event) > 0);
     }
-    return (posted);
+    return posted;
 }
-
-/* vi: set ts=4 sw=4 expandtab: */

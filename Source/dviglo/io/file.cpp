@@ -12,7 +12,7 @@
 #include "../io/package_file.h"
 
 #ifdef __ANDROID__
-#include <SDL/SDL_rwops.h>
+#include <SDL3/SDL_rwops.h>
 #endif
 
 #include <cstdio>

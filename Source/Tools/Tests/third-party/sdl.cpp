@@ -5,7 +5,7 @@
 
 #include "../force_assert.h"
 
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
 
 #include <dviglo/dviglo.h> // URHO3D_STATIC_DEFINE
 

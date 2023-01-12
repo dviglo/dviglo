@@ -46,7 +46,7 @@
 #include "../ui/window.h"
 
 #include <cassert>
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "../debug_new.h"
 

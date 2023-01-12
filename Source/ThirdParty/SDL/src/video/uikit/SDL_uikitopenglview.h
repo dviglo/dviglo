@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,6 +18,8 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
+
+#if SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
 
 #import <UIKit/UIKit.h>
 #import <OpenGLES/EAGL.h>
@@ -41,15 +43,15 @@
                  multisamples:(int)multisamples
                       context:(EAGLContext *)glcontext;
 
-@property (nonatomic, readonly, weak) EAGLContext *context;
+@property(nonatomic, readonly, weak) EAGLContext *context;
 
 /* The width and height of the drawable in pixels (as opposed to points.) */
-@property (nonatomic, readonly) int backingWidth;
-@property (nonatomic, readonly) int backingHeight;
+@property(nonatomic, readonly) int backingWidth;
+@property(nonatomic, readonly) int backingHeight;
 
-@property (nonatomic, readonly) GLuint drawableRenderbuffer;
-@property (nonatomic, readonly) GLuint drawableFramebuffer;
-@property (nonatomic, readonly) GLuint msaaResolveFramebuffer;
+@property(nonatomic, readonly) GLuint drawableRenderbuffer;
+@property(nonatomic, readonly) GLuint drawableFramebuffer;
+@property(nonatomic, readonly) GLuint msaaResolveFramebuffer;
 
 - (void)swapBuffers;
 
@@ -57,4 +59,4 @@
 
 @end
 
-/* vi: set ts=4 sw=4 expandtab: */
+#endif // SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2

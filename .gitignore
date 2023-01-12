@@ -98,7 +98,7 @@ CPackSourceConfig.cmake
 CTestTestfile.cmake
 /Source/**/*.cmake
 !/Source/ThirdParty/SDL/cmake/*.cmake
-!/Source/ThirdParty/SDL/include/*cmake
+!/Source/ThirdParty/SDL/include/build_config/*.cmake
 !/Source/ThirdParty/Assimp/cmake-modules/*cmake
 /Docs/**/*.cmake
 

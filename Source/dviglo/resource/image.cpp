@@ -11,7 +11,7 @@
 #include "../io/log.h"
 #include "../resource/decompress.h"
 
-#include <SDL/SDL_surface.h>
+#include <SDL3/SDL_surface.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <STB/stb_image.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
@@ -2255,13 +2255,7 @@ SDL_Surface* Image::GetSDLSurface(const IntRect& rect) const
     int width = imageRect.Width();
     int height = imageRect.Height();
 
-    // Assume little-endian for all the supported platforms
-    unsigned rMask = 0x000000ff;
-    unsigned gMask = 0x0000ff00;
-    unsigned bMask = 0x00ff0000;
-    unsigned aMask = 0xff000000;
-
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, components_ * 8, rMask, gMask, bMask, aMask);
+    SDL_Surface* surface = SDL_CreateSurface(width, height, SDL_PIXELFORMAT_ABGR8888);
     if (surface)
     {
         SDL_LockSurface(surface);

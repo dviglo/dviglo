@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,7 +18,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "../../SDL_internal.h"
+#include "SDL_internal.h"
 
 /* An implementation of condition variables using semaphores and mutexes */
 /*
@@ -26,43 +26,55 @@
    implementation, written by Christopher Tate and Owen Smith.  Thanks!
  */
 
-#include "SDL_thread.h"
+#include "../generic/SDL_syscond_c.h"
 
-struct SDL_cond
+/* If two implementations are to be compiled into SDL (the active one
+ * will be chosen at runtime), the function names need to be
+ * suffixed
+ */
+#if !SDL_THREAD_GENERIC_COND_SUFFIX
+#define SDL_CreateCond_generic      SDL_CreateCond
+#define SDL_DestroyCond_generic     SDL_DestroyCond
+#define SDL_CondSignal_generic      SDL_CondSignal
+#define SDL_CondBroadcast_generic   SDL_CondBroadcast
+#define SDL_CondWaitTimeoutNS_generic SDL_CondWaitTimeoutNS
+#endif
+
+typedef struct SDL_cond_generic
 {
     SDL_mutex *lock;
     int waiting;
     int signals;
     SDL_sem *wait_sem;
     SDL_sem *wait_done;
-};
+} SDL_cond_generic;
 
 /* Create a condition variable */
 SDL_cond *
-SDL_CreateCond(void)
+SDL_CreateCond_generic(void)
 {
-    SDL_cond *cond;
+    SDL_cond_generic *cond;
 
-    cond = (SDL_cond *) SDL_malloc(sizeof(SDL_cond));
+    cond = (SDL_cond_generic *)SDL_malloc(sizeof(SDL_cond_generic));
     if (cond) {
         cond->lock = SDL_CreateMutex();
         cond->wait_sem = SDL_CreateSemaphore(0);
         cond->wait_done = SDL_CreateSemaphore(0);
         cond->waiting = cond->signals = 0;
         if (!cond->lock || !cond->wait_sem || !cond->wait_done) {
-            SDL_DestroyCond(cond);
+            SDL_DestroyCond_generic((SDL_cond *)cond);
             cond = NULL;
         }
     } else {
         SDL_OutOfMemory();
     }
-    return (cond);
+    return (SDL_cond *)cond;
 }
 
 /* Destroy a condition variable */
-void
-SDL_DestroyCond(SDL_cond * cond)
+void SDL_DestroyCond_generic(SDL_cond *_cond)
 {
+    SDL_cond_generic *cond = (SDL_cond_generic *)_cond;
     if (cond) {
         if (cond->wait_sem) {
             SDL_DestroySemaphore(cond->wait_sem);
@@ -78,11 +90,11 @@ SDL_DestroyCond(SDL_cond * cond)
 }
 
 /* Restart one of the threads that are waiting on the condition variable */
-int
-SDL_CondSignal(SDL_cond * cond)
+int SDL_CondSignal_generic(SDL_cond *_cond)
 {
-    if (!cond) {
-        return SDL_SetError("Passed a NULL condition variable");
+    SDL_cond_generic *cond = (SDL_cond_generic *)_cond;
+    if (cond == NULL) {
+        return SDL_InvalidParamError("cond");
     }
 
     /* If there are waiting threads not already signalled, then
@@ -102,11 +114,11 @@ SDL_CondSignal(SDL_cond * cond)
 }
 
 /* Restart all threads that are waiting on the condition variable */
-int
-SDL_CondBroadcast(SDL_cond * cond)
+int SDL_CondBroadcast_generic(SDL_cond *_cond)
 {
-    if (!cond) {
-        return SDL_SetError("Passed a NULL condition variable");
+    SDL_cond_generic *cond = (SDL_cond_generic *)_cond;
+    if (cond == NULL) {
+        return SDL_InvalidParamError("cond");
     }
 
     /* If there are waiting threads not already signalled, then
@@ -135,7 +147,7 @@ SDL_CondBroadcast(SDL_cond * cond)
     return 0;
 }
 
-/* Wait on the condition variable for at most 'ms' milliseconds.
+/* Wait on the condition variable for at most 'timeoutNS' nanoseconds.
    The mutex must be locked before entering this function!
    The mutex is unlocked during the wait, and locked again after the wait.
 
@@ -156,13 +168,13 @@ Thread B:
     SDL_CondSignal(cond);
     SDL_UnlockMutex(lock);
  */
-int
-SDL_CondWaitTimeout(SDL_cond * cond, SDL_mutex * mutex, Uint32 ms)
+int SDL_CondWaitTimeoutNS_generic(SDL_cond *_cond, SDL_mutex *mutex, Sint64 timeoutNS)
 {
+    SDL_cond_generic *cond = (SDL_cond_generic *)_cond;
     int retval;
 
-    if (!cond) {
-        return SDL_SetError("Passed a NULL condition variable");
+    if (cond == NULL) {
+        return SDL_InvalidParamError("cond");
     }
 
     /* Obtain the protection mutex, and increment the number of waiters.
@@ -177,11 +189,7 @@ SDL_CondWaitTimeout(SDL_cond * cond, SDL_mutex * mutex, Uint32 ms)
     SDL_UnlockMutex(mutex);
 
     /* Wait for a signal */
-    if (ms == SDL_MUTEX_MAXWAIT) {
-        retval = SDL_SemWait(cond->wait_sem);
-    } else {
-        retval = SDL_SemWaitTimeout(cond->wait_sem, ms);
-    }
+    retval = SDL_SemWaitTimeoutNS(cond->wait_sem, timeoutNS);
 
     /* Let the signaler know we have completed the wait, otherwise
        the signaler can race ahead and get the condition semaphore
@@ -209,12 +217,3 @@ SDL_CondWaitTimeout(SDL_cond * cond, SDL_mutex * mutex, Uint32 ms)
 
     return retval;
 }
-
-/* Wait on the condition variable forever */
-int
-SDL_CondWait(SDL_cond * cond, SDL_mutex * mutex)
-{
-    return SDL_CondWaitTimeout(cond, mutex, SDL_MUTEX_MAXWAIT);
-}
-
-/* vi: set ts=4 sw=4 expandtab: */

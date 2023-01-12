@@ -35,7 +35,7 @@
 #include "../io/file_system.h"
 #include "../io/log.h"
 
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "../debug_new.h"
 
@@ -465,7 +465,7 @@ void Graphics::CreateWindowIcon()
         if (surface)
         {
             SDL_SetWindowIcon(window_, surface);
-            SDL_FreeSurface(surface);
+            SDL_DestroySurface(surface);
         }
     }
 }
