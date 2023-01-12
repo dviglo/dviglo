@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -30,5 +30,3 @@ extern void SDL_EVDEV_kbd_keycode(SDL_EVDEV_keyboard_state *state, unsigned int 
 extern void SDL_EVDEV_kbd_quit(SDL_EVDEV_keyboard_state *state);
 
 #endif /* SDL_evdev_kbd_h_ */
-
-/* vi: set ts=4 sw=4 expandtab: */

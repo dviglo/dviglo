@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -29,5 +29,3 @@ extern void Android_OnMouse(SDL_Window *window, int button, int action, float x,
 extern void Android_QuitMouse(void);
 
 #endif /* SDL_androidmouse_h_ */
-
-/* vi: set ts=4 sw=4 expandtab: */

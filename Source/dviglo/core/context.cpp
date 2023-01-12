@@ -9,7 +9,8 @@
 #include "../io/log.h"
 
 #ifndef MINI_URHO
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_gesture.h>
 #ifdef URHO3D_IK
 #include <ik/log.h>
 #include <ik/memory.h>
@@ -242,9 +243,16 @@ bool Context::RequireSDL(unsigned int sdlFlags)
     if (sdlInitCounter == 1)
     {
         URHO3D_LOGDEBUG("Initialising SDL");
+
         if (SDL_Init(0) != 0)
         {
             URHO3D_LOGERRORF("Failed to initialise SDL: %s", SDL_GetError());
+            return false;
+        }
+        
+        if (Gesture_Init() != 0) // Начиная с SDL 3 Gesture больше не часть библиотеки
+        {
+            URHO3D_LOGERRORF("Failed to initialise Gesture: %s", SDL_GetError());
             return false;
         }
     }
@@ -270,6 +278,7 @@ void Context::ReleaseSDL()
     {
         URHO3D_LOGDEBUG("Quitting SDL");
         SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
+        Gesture_Quit();
         SDL_Quit();
     }
 

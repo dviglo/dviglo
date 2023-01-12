@@ -25,7 +25,10 @@
 #endif
 
 
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
+
+#define SDL_GESTURE_IMPLEMENTATION
+#include <SDL3/SDL_gesture.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten/html5.h>
@@ -41,6 +44,8 @@ extern "C" int SDL_AddTouch(SDL_TouchID touchID, SDL_TouchDeviceType type, const
 #if defined(_WIN32) || (defined(__APPLE__) && !defined(IOS) && !defined(TVOS)) || (defined(__linux__) && !defined(__ANDROID__))
 #define REQUIRE_CLICK_TO_FOCUS
 #endif
+
+// TODO: Gestures не протестированы и джойстик тоже. После обновления SDL до 3й версии по индексам к джойстикам обращаться нельзя
 
 namespace Urho3D
 {
@@ -288,7 +293,7 @@ int EmscriptenInput::HandleSDLEvents(void* userData, SDL_Event* event)
 // On Windows repaint while the window is actively being resized.
 int Win32_ResizingEventWatcher(void* data, SDL_Event* event)
 {
-    if (event->type == SDL_WINDOWEVENT && event->window.event == SDL_WINDOWEVENT_RESIZED)
+    if (event->type == SDL_WINDOWEVENT_RESIZED)
     {
         SDL_Window* win = SDL_GetWindowFromID(event->window.windowID);
         if (win == (SDL_Window*)data)
@@ -365,7 +370,7 @@ Input::Input(Context* context) :
     mouseMoveScaled_(false),
     initialized_(false)
 {
-    context_->RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER);
+    context_->RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
 
     for (int i = 0; i < TOUCHID_MAX; i++)
         availableTouchIDs_.Push(i);
@@ -438,9 +443,9 @@ void Input::Update()
     if (mouseVisible_ && mouseMode_ == MM_WRAP)
     {
         IntVector2 windowPos = graphics_->GetWindowPosition();
-        IntVector2 mpos;
+        Vector2 mpos;
         SDL_GetGlobalMouseState(&mpos.x_, &mpos.y_);
-        mpos -= windowPos;
+        mpos -= Vector2(windowPos);
 
         const int buffer = 5;
         const int width = graphics_->GetWidth() - buffer * 2;
@@ -477,7 +482,7 @@ void Input::Update()
 
         if (warp)
         {
-            SetMousePosition(mpos);
+            SetMousePosition({(int)mpos.x_, (int)mpos.y_});
             SuppressNextMouseMove();
         }
     }
@@ -583,14 +588,14 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
                 if (mouseMode_ == MM_ABSOLUTE && !emscriptenPointerLock_)
                     emscriptenInput_->RequestPointerLock(MM_ABSOLUTE, suppressEvent);
 #endif
-                SDL_ShowCursor(SDL_FALSE);
+                SDL_HideCursor();
                 mouseVisible_ = false;
             }
             else if (mouseMode_ != MM_RELATIVE)
             {
                 SetMouseGrabbed(false, suppressEvent);
 
-                SDL_ShowCursor(SDL_TRUE);
+                SDL_ShowCursor();
                 mouseVisible_ = true;
 
 #ifndef __EMSCRIPTEN__
@@ -1165,7 +1170,7 @@ void Input::SetScreenJoystickVisible(SDL_JoystickID id, bool enable)
 
 void Input::SetScreenKeyboardVisible(bool enable)
 {
-    if (enable != (bool)SDL_IsTextInputActive())
+    if (enable != (bool)SDL_TextInputActive())
     {
         if (enable)
             SDL_StartTextInput();
@@ -1206,19 +1211,19 @@ bool Input::RecordGesture()
         return false;
     }
 
-    return SDL_RecordGesture(-1) != 0;
+    return Gesture_RecordGesture(-1) != 0;
 }
 
 bool Input::SaveGestures(Serializer& dest)
 {
     RWOpsWrapper<Serializer> wrapper(dest);
-    return SDL_SaveAllDollarTemplates(wrapper.GetRWOps()) != 0;
+    return Gesture_SaveAllDollarTemplates(wrapper.GetRWOps()) != 0;
 }
 
 bool Input::SaveGesture(Serializer& dest, unsigned gestureID)
 {
     RWOpsWrapper<Serializer> wrapper(dest);
-    return SDL_SaveDollarTemplate(gestureID, wrapper.GetRWOps()) != 0;
+    return Gesture_SaveDollarTemplate(gestureID, wrapper.GetRWOps()) != 0;
 }
 
 i32 Input::LoadGestures(Deserializer& source)
@@ -1231,7 +1236,7 @@ i32 Input::LoadGestures(Deserializer& source)
     }
 
     RWOpsWrapper<Deserializer> wrapper(source);
-    return SDL_LoadDollarTemplates(-1, wrapper.GetRWOps());
+    return Gesture_LoadDollarTemplates(-1, wrapper.GetRWOps());
 }
 
 
@@ -1240,48 +1245,48 @@ bool Input::RemoveGesture(unsigned gestureID)
 #ifdef __EMSCRIPTEN__
     return false;
 #else
-    return SDL_RemoveDollarTemplate(gestureID) != 0;
+    return Gesture_RemoveDollarTemplate(gestureID) != 0;
 #endif
 }
 
 void Input::RemoveAllGestures()
 {
 #ifndef __EMSCRIPTEN__
-    SDL_RemoveAllDollarTemplates();
+    Gesture_RemoveAllDollarTemplates();
 #endif
 }
 
-SDL_JoystickID Input::OpenJoystick(i32 index)
+SDL_JoystickID Input::OpenJoystick(SDL_JoystickID id)
 {
-    assert(index >= 0);
+    assert(id > 0);
 
-    SDL_Joystick* joystick = SDL_JoystickOpen(index);
+    SDL_Joystick* joystick = SDL_OpenJoystick(id);
     if (!joystick)
     {
-        URHO3D_LOGERRORF("Cannot open joystick #%d", index);
-        return -1;
+        URHO3D_LOGERRORF("Cannot open joystick #%d", id);
+        return 0;
     }
 
     // Create joystick state for the new joystick
-    int joystickID = SDL_JoystickInstanceID(joystick);
+    int joystickID = SDL_GetJoystickInstanceID(joystick);
     JoystickState& state = joysticks_[joystickID];
     state.joystick_ = joystick;
     state.joystickID_ = joystickID;
-    state.name_ = SDL_JoystickName(joystick);
-    if (SDL_IsGameController(index))
-        state.controller_ = SDL_GameControllerOpen(index);
+    state.name_ = SDL_GetJoystickName(joystick);
+    if (SDL_IsGamepad(id))
+        state.gamepad_ = SDL_OpenGamepad(id);
 
-    i32 numButtons = SDL_JoystickNumButtons(joystick);
-    i32 numAxes = SDL_JoystickNumAxes(joystick);
-    i32 numHats = SDL_JoystickNumHats(joystick);
+    i32 numButtons = SDL_GetNumJoystickButtons(joystick);
+    i32 numAxes = SDL_GetNumJoystickAxes(joystick);
+    i32 numHats = SDL_GetNumJoystickHats(joystick);
 
-    // When the joystick is a controller, make sure there's enough axes & buttons for the standard controller mappings
-    if (state.controller_)
+    // When the joystick is a gamepad, make sure there's enough axes & buttons for the standard gamepad mappings
+    if (state.gamepad_)
     {
-        if (numButtons < SDL_CONTROLLER_BUTTON_MAX)
-            numButtons = SDL_CONTROLLER_BUTTON_MAX;
-        if (numAxes < SDL_CONTROLLER_AXIS_MAX)
-            numAxes = SDL_CONTROLLER_AXIS_MAX;
+        if (numButtons < SDL_GAMEPAD_BUTTON_MAX)
+            numButtons = SDL_GAMEPAD_BUTTON_MAX;
+        if (numAxes < SDL_GAMEPAD_AXIS_MAX)
+            numAxes = SDL_GAMEPAD_AXIS_MAX;
     }
 
     state.Initialize(numButtons, numAxes, numHats);
@@ -1393,9 +1398,10 @@ IntVector2 Input::GetMousePosition() const
     if (!initialized_)
         return ret;
 
-    SDL_GetMouseState(&ret.x_, &ret.y_);
-    ret.x_ = (int)(ret.x_ * inputScale_.x_);
-    ret.y_ = (int)(ret.y_ * inputScale_.y_);
+    float x, y;
+    SDL_GetMouseState(&x, &y);
+    ret.x_ = (int)(x * inputScale_.x_);
+    ret.y_ = (int)(y * inputScale_.y_);
 
     return ret;
 }
@@ -1482,7 +1488,7 @@ bool Input::GetScreenKeyboardSupport() const
 
 bool Input::IsScreenKeyboardVisible() const
 {
-    return SDL_IsTextInputActive();
+    return SDL_TextInputActive();
 }
 
 bool Input::IsMouseLocked() const
@@ -1551,10 +1557,18 @@ void Input::ResetJoysticks()
 {
     joysticks_.Clear();
 
-    // Open each detected joystick automatically on startup
-    i32 size = SDL_NumJoysticks();
-    for (i32 i = 0; i < size; ++i)
-        OpenJoystick(i);
+    i32 num_joysticks;
+    SDL_JoystickID* joysticks = SDL_GetJoysticks(&num_joysticks);
+    
+    if (joysticks)
+    {
+        for (i32 i = 0; i < num_joysticks; ++i)
+        {
+            SDL_JoystickID instance_id = joysticks[i];
+            OpenJoystick(instance_id);
+        }
+        SDL_free(joysticks);
+    }
 }
 
 void Input::ResetInputAccumulation()
@@ -1598,7 +1612,7 @@ void Input::GainFocus()
 
     // Re-establish mouse cursor hiding as necessary
     if (!mouseVisible_)
-        SDL_ShowCursor(SDL_FALSE);
+        SDL_HideCursor();
 
     SendInputFocusEvent();
 }
@@ -1611,7 +1625,7 @@ void Input::LoseFocus()
     focusedThisFrame_ = false;
 
     // Show the mouse cursor when inactive
-    SDL_ShowCursor(SDL_TRUE);
+    SDL_ShowCursor();
 
     // Change mouse mode -- removing any cursor grabs, etc.
 #ifndef __EMSCRIPTEN__
@@ -1856,7 +1870,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
     SDL_Event& evt = *static_cast<SDL_Event*>(sdlEvent);
 
     // While not having input focus, skip key/mouse/touch/joystick events, except for the "click to focus" mechanism
-    if (!inputFocus_ && evt.type >= SDL_KEYDOWN && evt.type <= SDL_MULTIGESTURE)
+    if (!inputFocus_ && evt.type >= SDL_KEYDOWN && evt.type <= GESTURE_MULTIGESTURE)
     {
 #ifdef REQUIRE_CLICK_TO_FOCUS
         // Require the click to be at least 1 pixel inside the window to disregard clicks in the title bar
@@ -1931,7 +1945,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         else
         {
-            int x, y;
+            float x, y;
             SDL_GetMouseState(&x, &y);
             x = (int)(x * inputScale_.x_);
             y = (int)(y * inputScale_.y_);
@@ -1957,7 +1971,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         else
         {
-            int x, y;
+            float x, y;
             SDL_GetMouseState(&x, &y);
             x = (int)(x * inputScale_.x_);
             y = (int)(y * inputScale_.y_);
@@ -2013,7 +2027,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         // Only the left mouse button "finger" moves along with the mouse movement
         else if (touchEmulation_ && touches_.Contains(0))
         {
-            int x, y;
+            float x, y;
             SDL_GetMouseState(&x, &y);
             x = (int)(x * inputScale_.x_);
             y = (int)(y * inputScale_.y_);
@@ -2116,40 +2130,43 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_DOLLARRECORD:
+    case GESTURE_DOLLARRECORD:
         {
             using namespace GestureRecorded;
 
             VariantMap& eventData = GetEventDataMap();
-            eventData[P_GESTUREID] = (int)evt.dgesture.gestureId;
+            Gesture_DollarGestureEvent& e = (Gesture_DollarGestureEvent&)evt;
+            eventData[P_GESTUREID] = (int)e.gestureId;
             SendEvent(E_GESTURERECORDED, eventData);
         }
         break;
 
-    case SDL_DOLLARGESTURE:
+    case GESTURE_DOLLARGESTURE:
         {
             using namespace GestureInput;
 
             VariantMap& eventData = GetEventDataMap();
-            eventData[P_GESTUREID] = (int)evt.dgesture.gestureId;
-            eventData[P_CENTERX] = (int)(evt.dgesture.x * graphics_->GetWidth());
-            eventData[P_CENTERY] = (int)(evt.dgesture.y * graphics_->GetHeight());
-            eventData[P_NUMFINGERS] = (int)evt.dgesture.numFingers;
-            eventData[P_ERROR] = evt.dgesture.error;
+            Gesture_DollarGestureEvent& e = (Gesture_DollarGestureEvent&)evt;
+            eventData[P_GESTUREID] = (int)e.gestureId;
+            eventData[P_CENTERX] = (int)(e.x * graphics_->GetWidth());
+            eventData[P_CENTERY] = (int)(e.y * graphics_->GetHeight());
+            eventData[P_NUMFINGERS] = (int)e.numFingers;
+            eventData[P_ERROR] = e.error;
             SendEvent(E_GESTUREINPUT, eventData);
         }
         break;
 
-    case SDL_MULTIGESTURE:
+    case GESTURE_MULTIGESTURE:
         {
             using namespace MultiGesture;
 
             VariantMap& eventData = GetEventDataMap();
-            eventData[P_CENTERX] = (int)(evt.mgesture.x * graphics_->GetWidth());
-            eventData[P_CENTERY] = (int)(evt.mgesture.y * graphics_->GetHeight());
-            eventData[P_NUMFINGERS] = (int)evt.mgesture.numFingers;
-            eventData[P_DTHETA] = M_RADTODEG * evt.mgesture.dTheta;
-            eventData[P_DDIST] = evt.mgesture.dDist;
+            Gesture_MultiGestureEvent& e = (Gesture_MultiGestureEvent&)evt;
+            eventData[P_CENTERX] = (int)(e.x * graphics_->GetWidth());
+            eventData[P_CENTERY] = (int)(e.y * graphics_->GetHeight());
+            eventData[P_NUMFINGERS] = (int)e.numFingers;
+            eventData[P_DTHETA] = M_RADTODEG * e.dTheta;
+            eventData[P_DDIST] = e.dDist;
             SendEvent(E_MULTIGESTURE, eventData);
         }
         break;
@@ -2186,8 +2203,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
             SDL_JoystickID joystickID = evt.jbutton.which;
             JoystickState& state = joysticks_[joystickID];
 
-            // Skip ordinary joystick event for a controller
-            if (!state.controller_)
+            // Skip ordinary joystick event for a gamepad
+            if (!state.gamepad_)
             {
                 VariantMap& eventData = GetEventDataMap();
                 eventData[P_JOYSTICKID] = joystickID;
@@ -2211,7 +2228,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
             SDL_JoystickID joystickID = evt.jbutton.which;
             JoystickState& state = joysticks_[joystickID];
 
-            if (!state.controller_)
+            if (!state.gamepad_)
             {
                 VariantMap& eventData = GetEventDataMap();
                 eventData[P_JOYSTICKID] = joystickID;
@@ -2219,7 +2236,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
                 if (button < state.buttons_.Size())
                 {
-                    if (!state.controller_)
+                    if (!state.gamepad_)
                         state.buttons_[button] = false;
                     SendEvent(E_JOYSTICKBUTTONUP, eventData);
                 }
@@ -2234,7 +2251,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
             SDL_JoystickID joystickID = evt.jaxis.which;
             JoystickState& state = joysticks_[joystickID];
 
-            if (!state.controller_)
+            if (!state.gamepad_)
             {
                 VariantMap& eventData = GetEventDataMap();
                 eventData[P_JOYSTICKID] = joystickID;
@@ -2243,9 +2260,9 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
                 if (evt.jaxis.axis < state.axes_.Size())
                 {
-                    // If the joystick is a controller, only use the controller axis mappings
-                    // (we'll also get the controller event)
-                    if (!state.controller_)
+                    // If the joystick is a gamepad, only use the gamepad axis mappings
+                    // (we'll also get the gamepad event)
+                    if (!state.gamepad_)
                         state.axes_[evt.jaxis.axis] = eventData[P_POSITION].GetFloat();
                     SendEvent(E_JOYSTICKAXISMOVE, eventData);
                 }
@@ -2273,7 +2290,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_CONTROLLERBUTTONDOWN:
+    case SDL_GAMEPADBUTTONDOWN:
         {
             using namespace JoystickButtonDown;
 
@@ -2294,7 +2311,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_CONTROLLERBUTTONUP:
+    case SDL_GAMEPADBUTTONUP:
         {
             using namespace JoystickButtonUp;
 
@@ -2314,7 +2331,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_CONTROLLERAXISMOTION:
+    case SDL_GAMEPADAXISMOTION:
         {
             using namespace JoystickAxisMove;
 
@@ -2334,36 +2351,28 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_WINDOWEVENT:
-        {
-            switch (evt.window.event)
-            {
-            case SDL_WINDOWEVENT_MINIMIZED:
-                minimized_ = true;
-                SendInputFocusEvent();
-                break;
+    case SDL_WINDOWEVENT_MINIMIZED:
+        minimized_ = true;
+        SendInputFocusEvent();
+        break;
 
-            case SDL_WINDOWEVENT_MAXIMIZED:
-            case SDL_WINDOWEVENT_RESTORED:
+    case SDL_WINDOWEVENT_MAXIMIZED:
+    case SDL_WINDOWEVENT_RESTORED:
 #if defined(IOS) || defined(TVOS) || defined (__ANDROID__)
-                // On iOS/tvOS we never lose the GL context, but may have done GPU object changes that could not be applied yet. Apply them now
-                // On Android the old GL context may be lost already, restore GPU objects to the new GL context
-                graphics_->Restore_OGL();
+        // On iOS/tvOS we never lose the GL context, but may have done GPU object changes that could not be applied yet. Apply them now
+        // On Android the old GL context may be lost already, restore GPU objects to the new GL context
+        graphics_->Restore_OGL();
 #endif
-                minimized_ = false;
-                SendInputFocusEvent();
-                break;
+        minimized_ = false;
+        SendInputFocusEvent();
+        break;
 
-            case SDL_WINDOWEVENT_RESIZED:
-                graphics_->OnWindowResized();
-                break;
-            case SDL_WINDOWEVENT_MOVED:
-                graphics_->OnWindowMoved();
-                break;
+    case SDL_WINDOWEVENT_RESIZED:
+        graphics_->OnWindowResized();
+        break;
 
-            default: break;
-            }
-        }
+    case SDL_WINDOWEVENT_MOVED:
+        graphics_->OnWindowMoved();
         break;
 
     case SDL_DROPFILE:

@@ -13,7 +13,7 @@
 
 #include "../debug_new.h"
 
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
 
 namespace Urho3D
 {

@@ -24,8 +24,8 @@
 #include "../../io/log.h"
 #include "../../resource/resource_cache.h"
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_syswm.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_syswm.h>
 
 #include "../../debug_new.h"
 
@@ -163,9 +163,7 @@ static void GetD3DPrimitiveType(unsigned elementCount, PrimitiveType type, unsig
 static HWND GetWindowHandle(SDL_Window* window)
 {
     SDL_SysWMinfo sysInfo;
-
-    SDL_VERSION(&sysInfo.version);
-    SDL_GetWindowWMInfo(window, &sysInfo);
+    SDL_GetWindowWMInfo(window, &sysInfo, SDL_SYSWM_CURRENT_VERSION);
     return sysInfo.info.win.window;
 }
 
@@ -234,7 +232,7 @@ void Graphics::Destructor_D3D11()
 
     if (window_)
     {
-        SDL_ShowCursor(SDL_TRUE);
+        SDL_ShowCursor();
         SDL_DestroyWindow(window_);
         window_ = nullptr;
     }
@@ -342,7 +340,7 @@ void Graphics::Close_D3D11()
 {
     if (window_)
     {
-        SDL_ShowCursor(SDL_TRUE);
+        SDL_ShowCursor();
         SDL_DestroyWindow(window_);
         window_ = nullptr;
     }
@@ -1983,7 +1981,7 @@ bool Graphics::OpenWindow_D3D11(int width, int height, bool resizable, bool bord
         window_ = SDL_CreateWindow(windowTitle_.CString(), position_.x_, position_.y_, width, height, flags);
     }
     else
-        window_ = SDL_CreateWindowFrom(externalWindow_, 0);
+        window_ = SDL_CreateWindowFrom(externalWindow_);
 
     if (!window_)
     {

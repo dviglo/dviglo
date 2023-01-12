@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2019 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,17 +18,15 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "../../SDL_internal.h"
+#include "SDL_internal.h"
 
 #if SDL_VIDEO_DRIVER_VIVANTE
 
 /* SDL internals */
 #include "../SDL_sysvideo.h"
-#include "SDL_version.h"
-#include "SDL_syswm.h"
-#include "SDL_loadso.h"
-#include "SDL_events.h"
 #include "../../events/SDL_events_c.h"
+
+#include <SDL3/SDL_syswm.h>
 
 #ifdef SDL_INPUT_LINUXEV
 #include "../../core/linux/SDL_evdev.h"
@@ -39,15 +37,7 @@
 #include "SDL_vivanteopengles.h"
 #include "SDL_vivantevulkan.h"
 
-
-static int
-VIVANTE_Available(void)
-{
-    return 1;
-}
-
-static void
-VIVANTE_Destroy(SDL_VideoDevice * device)
+static void VIVANTE_Destroy(SDL_VideoDevice *device)
 {
     if (device->driverdata != NULL) {
         SDL_free(device->driverdata);
@@ -55,21 +45,20 @@ VIVANTE_Destroy(SDL_VideoDevice * device)
     }
 }
 
-static SDL_VideoDevice *
-VIVANTE_Create()
+static SDL_VideoDevice *VIVANTE_Create()
 {
     SDL_VideoDevice *device;
     SDL_VideoData *data;
 
     /* Initialize SDL_VideoDevice structure */
-    device = (SDL_VideoDevice *) SDL_calloc(1, sizeof(SDL_VideoDevice));
+    device = (SDL_VideoDevice *)SDL_calloc(1, sizeof(SDL_VideoDevice));
     if (device == NULL) {
         SDL_OutOfMemory();
         return NULL;
     }
 
     /* Initialize internal data */
-    data = (SDL_VideoData *) SDL_calloc(1, sizeof(SDL_VideoData));
+    data = (SDL_VideoData *)SDL_calloc(1, sizeof(SDL_VideoData));
     if (data == NULL) {
         SDL_OutOfMemory();
         SDL_free(device);
@@ -125,7 +114,6 @@ VIVANTE_Create()
 VideoBootStrap VIVANTE_bootstrap = {
     "vivante",
     "Vivante EGL Video Driver",
-    VIVANTE_Available,
     VIVANTE_Create
 };
 
@@ -133,8 +121,7 @@ VideoBootStrap VIVANTE_bootstrap = {
 /* SDL Video and Display initialization/handling functions                   */
 /*****************************************************************************/
 
-static int
-VIVANTE_AddVideoDisplays(_THIS)
+static int VIVANTE_AddVideoDisplays(_THIS)
 {
     SDL_VideoData *videodata = _this->driverdata;
     SDL_VideoDisplay display;
@@ -143,7 +130,7 @@ VIVANTE_AddVideoDisplays(_THIS)
     int pitch = 0, bpp = 0;
     unsigned long pixels = 0;
 
-    data = (SDL_DisplayData *) SDL_calloc(1, sizeof(SDL_DisplayData));
+    data = (SDL_DisplayData *)SDL_calloc(1, sizeof(SDL_DisplayData));
     if (data == NULL) {
         return SDL_OutOfMemory();
     }
@@ -159,8 +146,7 @@ VIVANTE_AddVideoDisplays(_THIS)
     videodata->fbGetDisplayInfo(data->native_display, &current_mode.w, &current_mode.h, &pixels, &pitch, &bpp);
 #endif /* SDL_VIDEO_DRIVER_VIVANTE_VDK */
 
-    switch (bpp)
-    {
+    switch (bpp) {
     default: /* Is another format used? */
     case 32:
         current_mode.format = SDL_PIXELFORMAT_ARGB8888;
@@ -170,19 +156,18 @@ VIVANTE_AddVideoDisplays(_THIS)
         break;
     }
     /* FIXME: How do we query refresh rate? */
-    current_mode.refresh_rate = 60;
+    current_mode.refresh_rate = 60.0f;
 
     SDL_zero(display);
     display.name = VIVANTE_GetDisplayName(_this);
     display.desktop_mode = current_mode;
     display.current_mode = current_mode;
     display.driverdata = data;
-    SDL_AddVideoDisplay(&display);
+    SDL_AddVideoDisplay(&display, SDL_FALSE);
     return 0;
 }
 
-int
-VIVANTE_VideoInit(_THIS)
+int VIVANTE_VideoInit(_THIS)
 {
     SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
 
@@ -199,9 +184,10 @@ VIVANTE_VideoInit(_THIS)
             return -1;
         }
     }
-#define LOAD_FUNC(NAME) \
+#define LOAD_FUNC(NAME)                                               \
     videodata->NAME = SDL_LoadFunction(videodata->egl_handle, #NAME); \
-    if (!videodata->NAME) return -1;
+    if (!videodata->NAME)                                             \
+        return -1;
 
     LOAD_FUNC(fbGetDisplay);
     LOAD_FUNC(fbGetDisplayByIndex);
@@ -233,8 +219,7 @@ VIVANTE_VideoInit(_THIS)
     return 0;
 }
 
-void
-VIVANTE_VideoQuit(_THIS)
+void VIVANTE_VideoQuit(_THIS)
 {
     SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
 
@@ -257,21 +242,18 @@ VIVANTE_VideoQuit(_THIS)
 #endif
 }
 
-void
-VIVANTE_GetDisplayModes(_THIS, SDL_VideoDisplay * display)
+void VIVANTE_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
 {
     /* Only one display mode available, the current one */
     SDL_AddDisplayMode(display, &display->current_mode);
 }
 
-int
-VIVANTE_SetDisplayMode(_THIS, SDL_VideoDisplay * display, SDL_DisplayMode * mode)
+int VIVANTE_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode)
 {
     return 0;
 }
 
-int
-VIVANTE_CreateWindow(_THIS, SDL_Window * window)
+int VIVANTE_CreateWindow(_THIS, SDL_Window *window)
 {
     SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
     SDL_DisplayData *displaydata;
@@ -280,7 +262,7 @@ VIVANTE_CreateWindow(_THIS, SDL_Window * window)
     displaydata = SDL_GetDisplayDriverData(0);
 
     /* Allocate window internal data */
-    data = (SDL_WindowData *) SDL_calloc(1, sizeof(SDL_WindowData));
+    data = (SDL_WindowData *)SDL_calloc(1, sizeof(SDL_WindowData));
     if (data == NULL) {
         return SDL_OutOfMemory();
     }
@@ -312,8 +294,7 @@ VIVANTE_CreateWindow(_THIS, SDL_Window * window)
     return 0;
 }
 
-void
-VIVANTE_DestroyWindow(_THIS, SDL_Window * window)
+void VIVANTE_DestroyWindow(_THIS, SDL_Window *window)
 {
     SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
     SDL_WindowData *data;
@@ -339,8 +320,7 @@ VIVANTE_DestroyWindow(_THIS, SDL_Window * window)
     window->driverdata = NULL;
 }
 
-void
-VIVANTE_SetWindowTitle(_THIS, SDL_Window * window)
+void VIVANTE_SetWindowTitle(_THIS, SDL_Window *window)
 {
 #if SDL_VIDEO_DRIVER_VIVANTE_VDK
     SDL_WindowData *data = window->driverdata;
@@ -348,20 +328,17 @@ VIVANTE_SetWindowTitle(_THIS, SDL_Window * window)
 #endif
 }
 
-void
-VIVANTE_SetWindowPosition(_THIS, SDL_Window * window)
+void VIVANTE_SetWindowPosition(_THIS, SDL_Window *window)
 {
     /* FIXME */
 }
 
-void
-VIVANTE_SetWindowSize(_THIS, SDL_Window * window)
+void VIVANTE_SetWindowSize(_THIS, SDL_Window *window)
 {
     /* FIXME */
 }
 
-void
-VIVANTE_ShowWindow(_THIS, SDL_Window * window)
+void VIVANTE_ShowWindow(_THIS, SDL_Window *window)
 {
 #if SDL_VIDEO_DRIVER_VIVANTE_VDK
     SDL_WindowData *data = window->driverdata;
@@ -371,8 +348,7 @@ VIVANTE_ShowWindow(_THIS, SDL_Window * window)
     SDL_SetKeyboardFocus(window);
 }
 
-void
-VIVANTE_HideWindow(_THIS, SDL_Window * window)
+void VIVANTE_HideWindow(_THIS, SDL_Window *window)
 {
 #if SDL_VIDEO_DRIVER_VIVANTE_VDK
     SDL_WindowData *data = window->driverdata;
@@ -384,20 +360,19 @@ VIVANTE_HideWindow(_THIS, SDL_Window * window)
 /* SDL Window Manager function                                               */
 /*****************************************************************************/
 SDL_bool
-VIVANTE_GetWindowWMInfo(_THIS, SDL_Window * window, struct SDL_SysWMinfo *info)
+VIVANTE_GetWindowWMInfo(_THIS, SDL_Window *window, struct SDL_SysWMinfo *info)
 {
-    SDL_WindowData *data = (SDL_WindowData *) window->driverdata;
+    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
     SDL_DisplayData *displaydata = SDL_GetDisplayDriverData(0);
 
-    if (info->version.major == SDL_MAJOR_VERSION &&
-        info->version.minor == SDL_MINOR_VERSION) {
+    if (info->version.major == SDL_MAJOR_VERSION) {
         info->subsystem = SDL_SYSWM_VIVANTE;
         info->info.vivante.display = displaydata->native_display;
         info->info.vivante.window = data->native_window;
         return SDL_TRUE;
     } else {
-        SDL_SetError("Application not compiled with SDL %d.%d",
-                     SDL_MAJOR_VERSION, SDL_MINOR_VERSION);
+        SDL_SetError("Application not compiled with SDL %d",
+                     SDL_MAJOR_VERSION);
         return SDL_FALSE;
     }
 }
@@ -413,5 +388,3 @@ void VIVANTE_PumpEvents(_THIS)
 }
 
 #endif /* SDL_VIDEO_DRIVER_VIVANTE */
-
-/* vi: set ts=4 sw=4 expandtab: */

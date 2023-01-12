@@ -11,7 +11,7 @@
 #include "../resource/resource_cache.h"
 #include "../ui/ui.h"
 
-#include <SDL/SDL_mouse.h>
+#include <SDL3/SDL_mouse.h>
 
 #include "../debug_new.h"
 
@@ -75,7 +75,7 @@ Cursor::~Cursor()
     {
         if (i->second_.osCursor_)
         {
-            SDL_FreeCursor(i->second_.osCursor_);
+            SDL_DestroyCursor(i->second_.osCursor_);
             i->second_.osCursor_ = nullptr;
         }
     }
@@ -144,7 +144,7 @@ void Cursor::DefineShape(const String& shape, Image* image, const IntRect& image
     // Remove existing SDL cursor
     if (info.osCursor_)
     {
-        SDL_FreeCursor(info.osCursor_);
+        SDL_DestroyCursor(info.osCursor_);
         info.osCursor_ = nullptr;
     }
 
@@ -247,7 +247,7 @@ void Cursor::ApplyOSCursorShape()
     // Remove existing SDL cursor if is not a system shape while we should be using those, or vice versa
     if (info.osCursor_ && info.systemDefined_ != useSystemShapes_)
     {
-        SDL_FreeCursor(info.osCursor_);
+        SDL_DestroyCursor(info.osCursor_);
         info.osCursor_ = nullptr;
     }
 
@@ -273,7 +273,7 @@ void Cursor::ApplyOSCursorShape()
                 info.systemDefined_ = false;
                 if (!info.osCursor_)
                     URHO3D_LOGERROR("Could not create cursor from image " + info.image_->GetName());
-                SDL_FreeSurface(surface);
+                SDL_DestroySurface(surface);
             }
         }
     }

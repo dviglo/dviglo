@@ -14,7 +14,7 @@
 #include "../core/profiler.h"
 #include "../io/log.h"
 
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "../debug_new.h"
 
@@ -136,7 +136,7 @@ bool Audio::Play()
         return false;
     }
 
-    SDL_PauseAudioDevice(deviceID_, 0);
+    SDL_PlayAudioDevice(deviceID_);
 
     // Update sound sources before resuming playback to make sure 3D positions are up to date
     UpdateInternal(0.0f);

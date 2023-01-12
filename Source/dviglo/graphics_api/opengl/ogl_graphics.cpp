@@ -25,7 +25,7 @@
 #include "../../io/log.h"
 #include "../../resource/resource_cache.h"
 
-#include <SDL/SDL.h>
+#include <SDL3/SDL.h>
 
 #include "../../debug_new.h"
 
@@ -394,7 +394,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
         const int x = reposition ? display_rect.x : position_.x_;
         const int y = reposition ? display_rect.y : position_.y_;
 
-        unsigned flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+        unsigned flags = SDL_WINDOW_OPENGL;
         if (newParams.fullscreen_)
             flags |= SDL_WINDOW_FULLSCREEN;
         if (newParams.borderless_)
@@ -434,7 +434,10 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
                 {
     #ifndef __EMSCRIPTEN__
                     if (!window_)
-                        window_ = SDL_CreateWindowFrom(externalWindow_, SDL_WINDOW_OPENGL);
+                    {
+                        SDL_SetHint(SDL_HINT_VIDEO_FOREIGN_WINDOW_OPENGL, "1");
+                        window_ = SDL_CreateWindowFrom(externalWindow_);
+                    }
                     newParams.fullscreen_ = false;
     #endif
                 }
@@ -2457,7 +2460,7 @@ void Graphics::Release_OGL(bool clearGPUObjects, bool closeWindow)
 
     if (closeWindow)
     {
-        SDL_ShowCursor(SDL_TRUE);
+        SDL_ShowCursor();
 
         // Do not destroy external window except when shutting down
         if (!externalWindow_ || clearGPUObjects)
