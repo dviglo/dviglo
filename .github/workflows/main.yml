@@ -73,6 +73,25 @@ jobs:
         fetch-depth: 0
         path: repo # Папка, в которую будет скачан репозиторий
 
+    - name: Скачиваем кэш
+      uses: actions/cache@v3
+      with:
+        path: build
+        key: windows-${{ matrix.COMPILER }}-${{ matrix.LIB_TYPE }}-${{ matrix.BUILD_TYPE }}-${{ github.sha }}
+        restore-keys: windows-${{ matrix.COMPILER }}-${{ matrix.LIB_TYPE }}-${{ matrix.BUILD_TYPE }}
+
+      # https://docs.github.com/en/actions/learn-github-actions/expressions
+      # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+      # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#push
+      # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#pull_request
+    - name: Удаляем кэш по запросу пользователя
+      if: |
+        (github.event_name == 'pull_request' && contains(github.event.pull_request.title, '[clear cache]')) ||
+        (github.event_name == 'push' && contains(join(github.event.commits.*.message, ' '), '[clear cache]'))
+      shell: bash
+      run: |
+        rm -rf build
+
     - name: Генерируем проекты
       shell: bash
       run: |
