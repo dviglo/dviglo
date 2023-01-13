@@ -23,101 +23,126 @@ jobs:
           git log --raw --no-merges -1 |grep '^:' >/tmp/whatchanged
           echo "name=skip::$(grep -cqv 'website/' /tmp/whatchanged; echo $?)" >> $GITHUB_OUTPUT
 
-  windows:
-    name: 🔲
-    runs-on: windows-2019
-    needs: init
-    if: false && needs.init.outputs.skip == '0' && github.event_name != 'repository_dispatch'
+  Windows:
+    # Job будет запущен на виртуальной машине с новейшей версией Windows
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    # https://github.com/actions/runner-images
+    runs-on: windows-latest
+
+    # Используем матрицу для параллельной сборки разных билдов
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategy
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - win-vs
-          - win-gcc
-        lib-type:
-          - static
-          - shared
-        graphics-api:
-          - DX11
-          - OpenGL
-    env:
-      HOST: ${{ github.job }}
-      PLATFORM: ${{ matrix.platform }}
-      LIB_TYPE: ${{ matrix.lib-type }}
-      GRAPHICS_API: ${{ matrix.graphics-api }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with: { fetch-depth: 0 }
-      - name: Install dependencies
-        id: install_dependencies
-        shell: bash {0} # Allow catching errors
-        run: |
-          # Server may reject connection, so try several times
-          for (( i = 0; i < 4; ++i ))
-          do
-            choco install --no-progress doxygen.install
-            if (( $? == 0 )) # Exit code of the previous command
-            then
-              break
-            else
-              echo "========== One more try =========="
-              sleep 20
-            fi
-          done
-          for (( i = 0; i < 4; ++i ))
-          do
-            choco install --no-progress graphviz.portable
-            if (( $? == 0 )) # Exit code of the previous command
-            then
-              break
-            else
-              echo "========== One more try =========="
-              sleep 20
-            fi
-          done
-          # Use MSYS2 instead obsolete MinGW
-          # https://github.com/urho3d/Urho3D/issues/2887
-          echo "c:\msys64\mingw32\bin" >> $GITHUB_PATH
-      - name: CMake
-        run: rake cmake
-      - name: Build
-        shell: bash
-        run: |
-          rake build
+        COMPILER: [vs, mingw]
+        LIB_TYPE: [static, shared]
+        BUILD_TYPE: [debug, release]
 
-      - name: Test tools
-        shell: bash
-        run: D:/a/Urho3D/Urho3D/script/test_tools.sh D:/a/Urho3D/Urho3D D:/a/Urho3D/Urho3D/build/ci
-      - name: Test
-        run: rake test
-        if: matrix.graphics-api != 'OpenGL'
-      - name: Documentation
-        run: rake doc
-      - name: Install
-        run: rake install
-      - name: Scaffolding - new
-        run: rake new
-      - name: Scaffolding - build
-        run: |
-          cd ~/projects/UrhoApp
-          rake
-      - name: Scaffolding - test
-        run: |
-          cd ~/projects/UrhoApp
-          rake test
-        if: matrix.graphics-api != 'OpenGL'
-      - name: Scaffolding - cleanup
-        run: rm -r -fo ~/.urho3d, ~/Projects
-      - name: Package
-        run: rake package
-        if: github.event_name == 'push'
-      - name: Upload
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.platform }}-${{ matrix.lib-type }}-64-${{ matrix.graphics-api }}-rel
-          path: build/ci/*.zip
-        if: github.event_name == 'push'
+    # Отображаемое имя job
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idname
+    name: 🔲-${{ matrix.COMPILER }}-${{ matrix.LIB_TYPE }}-${{ matrix.BUILD_TYPE }}
+
+    steps:
+      # Используем MSYS2 вместо устаревшего MinGW
+      # https://github.com/urho3d/urho3D/issues/2887
+    - name: Устанавливаем MinGW
+      if: matrix.COMPILER == 'mingw'
+      # https://www.msys2.org/docs/ci/
+      # https://github.com/msys2/setup-msys2
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: mingw-w64-x86_64-toolchain
+
+    - name: Добавляем в PATH путь к MinGW
+      if: matrix.COMPILER == 'mingw'
+      shell: bash
+      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#adding-a-system-path
+      run: echo "${RUNNER_TEMP}/msys64/mingw64/bin" >> $GITHUB_PATH
+
+    - name: Устанавливаем остальной софт
+      shell: bash
+      run: |
+        choco install --no-progress doxygen.install
+        choco install --no-progress graphviz.portable
+
+    - name: Скачиваем репозиторий
+      # https://github.com/actions/checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        path: repo # Папка, в которую будет скачан репозиторий
+
+    - name: Генерируем проекты
+      shell: bash
+      run: |
+        ARGS=(repo -B build) # Массив аргументов
+
+        if [ "${{ matrix.COMPILER }}" == "vs" ]
+        then
+          ARGS+=(-G "Visual Studio 17 2022" -A x64)
+        else
+          ARGS+=(-G "MinGW Makefiles")
+          # Для MinGW тип сбоки задаётся при генерации проектов
+          ARGS+=(-D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }})
+        fi
+
+        ARGS+=(-D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE }})
+        ARGS+=(-D URHO3D_64BIT=1 -D URHO3D_TESTING=1)
+        ARGS+=(-D URHO3D_OPENGL=1 -D URHO3D_D3D11=1)
+
+        cmake "${ARGS[@]}"
+
+    - name: Компилируем
+      shell: bash
+      run: |
+        ARGS=(--build build) # Массив аргументов
+
+        if [ "${{ matrix.COMPILER }}" == "vs" ]
+        then
+          # Для Visual Studio тип сбоки задаётся при компиляции проектов
+          ARGS+=(--config ${{ matrix.BUILD_TYPE }})
+        fi
+
+        cmake "${ARGS[@]}"
+
+      # Виртуальная машина ГитХаба может запускать Direct3D-приложения,
+      # но не может запускать OpenGL-приложения. Поэтому используем
+      # предкомпилированный Mesa 3D for Windows
+    - name: Качаем Mesa 3D
+      shell: bash
+      run: |
+        # Качаем и распаковываем Mesa 3D
+        # https://curl.se/docs/manpage.html
+        curl.exe --location --output mesa.7z --url https://github.com/pal1000/mesa-dist-win/releases/download/22.2.3/mesa3d-22.2.3-release-msvc.7z
+        7z x mesa.7z -omesa
+        rm mesa.7z
+
+        # Перемещаем нужные dll в папку bin
+        mv mesa/x64/dxil.dll build/bin
+        mv mesa/x64/libgallium_wgl.dll build/bin
+        mv mesa/x64/libglapi.dll build/bin
+        mv mesa/x64/opengl32.dll build/bin
+
+    - name: CTest
+      shell: bash {0} # Разрешаем перехват ошибок
+      run: |
+        ARGS=(--test-dir build --timeout 60) # Массив аргументов
+
+        if [ "${{ matrix.COMPILER }}" == "vs" ]
+        then
+          # Для Visual Studio нужно указывать тип сборки (конфигурацию)
+          ARGS+=(-C ${{ matrix.BUILD_TYPE }})
+        fi
+
+        ctest "${ARGS[@]}"
+        EXIT_CODE=$? # Код возврата предыдущей команды
+
+        if (( $EXIT_CODE != 0 )) 
+        then
+          echo "$(cat $APPDATA/urho3d/logs/HelloWorld.log)" # Показываем содержимое лога
+          exit $EXIT_CODE
+        fi
 
   Linux_Native:
     runs-on: ubuntu-latest
