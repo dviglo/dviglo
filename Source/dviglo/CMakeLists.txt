@@ -535,19 +535,26 @@ install_header_files (DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ DESTINATION ${DEST_
 # Generate the include-all-headers header file even though we do not encourage Urho3D library users to use it
 list (SORT URHO_HEADERS)
 list (REVERSE URHO_HEADERS)
-set (OPTIONAL_SUBS AngelScript Database IK LuaScript Navigation Network Physics Physics2D Urho2D)
+
+# Опциональные папки, которые могут быть отключены дефайнами
+set (OPTIONAL_SUBS database ik navigation network physics physics_2d urho_2d)
+
 foreach (SUB ${OPTIONAL_SUBS})
-    if (URHO_HEADERS MATCHES "(include/Urho3D/${SUB}/[^;]+)")
+    if (URHO_HEADERS MATCHES "(include/dviglo/${SUB}/[^;]+)")
         list (FIND URHO_HEADERS ${CMAKE_MATCH_1} FOUND_INDEX)
         list (INSERT URHO_HEADERS ${FOUND_INDEX} "#endif")
     endif ()
 endforeach ()
 list (REVERSE URHO_HEADERS)
+
+# Добавляем дефайны для h-файлов в опциональных папках
 foreach (SUB ${OPTIONAL_SUBS})
-    if (URHO_HEADERS MATCHES "(include/Urho3D/${SUB}/[^;]+)")
+    if (URHO_HEADERS MATCHES "(include/dviglo/${SUB}/[^;]+)")
         string (TOUPPER ${SUB} SUB)
-        if("${SUB}" STREQUAL "LUASCRIPT")
-            set (SUB "LUA")
+        if ("${SUB}" STREQUAL "PHYSICS_2D")
+            set (SUB "PHYSICS2D")
+        elseif ("${SUB}" STREQUAL "URHO_2D")
+            set (SUB "URHO2D")
         endif ()
         list (FIND URHO_HEADERS ${CMAKE_MATCH_1} FOUND_INDEX)
         list (INSERT URHO_HEADERS ${FOUND_INDEX} "#if URHO3D_${SUB}")
