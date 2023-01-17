@@ -1,13 +1,18 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME STB)
+# Название таргета
+set(target_name stb)
 
-# Setup target
-add_custom_target (${TARGET_NAME} ALL)   # Dummy target just so that its post-build step can install headers to the build tree
-set (STATIC_LIBRARY_TARGETS ${STATIC_LIBRARY_TARGETS} ${TARGET_NAME} PARENT_SCOPE)
+# Создаём список файлов
+file(GLOB_RECURSE source_files STB/*.h)
 
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/STB FILES_MATCHING PATTERN *.h USE_FILE_SYMLINK BUILD_TREE_ONLY)  # Note: the trailing slash is significant
+# Создаём интерфейсную библиотеку. Интерфейсная библиотека не компилируется,
+# так как состоит только из заголовочных файлов
+add_library(${target_name} INTERFACE ${source_files})
+
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/STB FILES ${source_files})

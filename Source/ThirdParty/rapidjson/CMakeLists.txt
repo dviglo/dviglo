@@ -1,13 +1,15 @@
-# Copyright (c) 2008-2023 the Urho3D project
-# Copyright (c) 2022-2023 the Dviglo project
-# License: MIT
+# Название таргета
+set(target_name rapidjson)
 
-# Define target name
-set (TARGET_NAME rapidjson)
+# Создаём список файлов
+file(GLOB_RECURSE source_files include/rapidjson/*.h)
 
-# Setup target
-add_custom_target (${TARGET_NAME} ALL)   # Dummy target just so that its post-build step can install headers to the build tree
-set (STATIC_LIBRARY_TARGETS ${STATIC_LIBRARY_TARGETS} ${TARGET_NAME} PARENT_SCOPE)
+# Создаём интерфейсную библиотеку. Интерфейсная библиотека не компилируется,
+# так как состоит только из заголовочных файлов
+add_library(${target_name} INTERFACE ${source_files})
 
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY include/rapidjson/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/rapidjson FILES_MATCHING PATTERN *.h USE_FILE_SYMLINK BUILD_TREE_ONLY)  # Note: the trailing slash is significant
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE include)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/include/rapidjson FILES ${source_files})
