@@ -62,10 +62,6 @@ if ($ENV{COVERITY_SCAN_BRANCH})
     # TODO: The Coverity-Scan modelling is not yet working properly (anyone interested in static analyzer is welcome to give it another try)
     add_definitions (-DCOVERITY_SCAN_MODEL)
 endif ()
-if (TARGET GLEW)
-    # These macros are required because Urho3D (OpenGL) headers are exposed to GLEW headers
-    add_definitions (-DGLEW_STATIC -DGLEW_NO_GLU)
-endif ()
 if (HAVE_SINCOSF)
     add_definitions (-DHAVE_SINCOSF)
 elseif (HAVE___SINCOSF)
@@ -435,7 +431,7 @@ if (MINGW)
 endif ()
 
 target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
-target_link_libraries(${TARGET_NAME} PRIVATE stb rapidjson)
+target_link_libraries(${TARGET_NAME} PRIVATE glew stb rapidjson)
 target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static)
 
 # Install headers for using the Urho3D library
