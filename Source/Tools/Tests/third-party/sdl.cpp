@@ -5,6 +5,9 @@
 
 #include "../force_assert.h"
 
+// TODO: Подключить SDL в конфиге CMake
+#if false
+
 #include <SDL3/SDL.h>
 
 #include <dviglo/dviglo.h> // URHO3D_STATIC_DEFINE
@@ -18,3 +21,5 @@ void test_third_party_sdl()
     assert(SDL_abs(-1) == 1);
 #endif
 }
+
+#endif // #if false
