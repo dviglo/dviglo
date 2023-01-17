@@ -63,8 +63,14 @@ jobs:
     - name: Устанавливаем остальной софт
       shell: bash
       run: |
-        choco install --no-progress doxygen.install
         choco install --no-progress graphviz.portable
+
+        # choco качает Doxygen через раз. Качаем собственную сборку
+        mkdir $GITHUB_WORKSPACE/programs
+        cd $GITHUB_WORKSPACE/programs
+        curl -Lso tmp.zip https://github.com/dviglo-tools/doxygen-builder/raw/main/doxygen_win64.zip && unzip tmp.zip && rm tmp.zip
+        echo "$GITHUB_WORKSPACE/programs" >> $GITHUB_PATH
+        echo "Собственная сборка Doxygen скачана в $GITHUB_WORKSPACE/programs"
 
     - name: Скачиваем репозиторий
       # https://github.com/actions/checkout
