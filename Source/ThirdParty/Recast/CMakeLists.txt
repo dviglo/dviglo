@@ -11,7 +11,7 @@ file(GLOB_RECURSE source_files Recast/*.cpp Recast/*.h)
 add_library(${target_name} STATIC ${source_files})
 
 # Делаем заголовочные файлы доступными библиотеке
-target_include_directories(${target_name} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Recast)
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Recast)
 
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
