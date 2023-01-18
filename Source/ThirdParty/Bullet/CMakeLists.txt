@@ -19,5 +19,8 @@ target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 # Примечание: Bullet не испольузет относительные пути к заголовкам, к тому же движок
 # хочет видеть заголовки в папке Bullet. Поэтому заголовки должны быть видны по разным путям
 
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Bullet FILES ${source_files})

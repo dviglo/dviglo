@@ -11,4 +11,5 @@ set (SOURCE_FILES source/etcdec.cxx)
 # Setup target
 setup_library ()
 
-
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)

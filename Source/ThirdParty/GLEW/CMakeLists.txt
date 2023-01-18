@@ -19,6 +19,9 @@ target_include_directories(${target_name} PRIVATE GLEW)
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 # Подключаем OpenGL к таргетам, которые используют текущую библиотеку
 find_package(OpenGL)
 target_link_libraries(${target_name} INTERFACE ${OPENGL_gl_LIBRARY})

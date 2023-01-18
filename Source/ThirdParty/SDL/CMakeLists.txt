@@ -3403,3 +3403,6 @@ set(CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} ${CMAKE_C_FLAGS}")
 if(TARGET SDL3::SDL3-static AND NOT TARGET SDL3::SDL3)
   add_library(SDL3::SDL3 ALIAS SDL3-static)
 endif()
+
+# Dviglo: Добавлено. Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET SDL3-static PROPERTY POSITION_INDEPENDENT_CODE ON)

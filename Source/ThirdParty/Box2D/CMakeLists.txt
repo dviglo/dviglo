@@ -18,3 +18,6 @@ setup_library ()
 
 # Install headers for building and using the Urho3D library (install dependency for Urho3D/Physics2D/PhysicsWorld2D.h and Urho3D/Physics2D/RigidBody2D.h)
 install_header_files (DIRECTORY include/box2d DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty)
+
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)

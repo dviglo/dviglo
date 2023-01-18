@@ -29,6 +29,9 @@ setup_library ()
 # Install headers for building and using the Urho3D library
 install_header_files (DIRECTORY src/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/SQLite FILES_MATCHING PATTERN *.h)  # Note: the trailing slash is significant
 
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
 # Setup additional SQLite CLI standalone target (this target can be transfered and executed on an embedded device, such as Raspberry Pi and Android)
 if (NOT IOS AND NOT TVOS AND NOT WEB)
     # Define target name for SQLite shell
@@ -49,6 +52,9 @@ if (NOT IOS AND NOT TVOS AND NOT WEB)
 
     # Setup target
     setup_executable (NODEPS)
+
+    # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+    set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 endif ()
 
 # SQLite will not work correctly with the -ffast-math option, so unset it in this scope only
