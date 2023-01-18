@@ -1,29 +1,23 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME Bullet)
+# Название таргета
+set(target_name bullet)
 
-# Define preprocessor macros
-if (BT_USE_DOUBLE_PRECISION)
-    add_definitions (-DBT_USE_DOUBLE_PRECISION)
-endif ()
-if (BT_THREADSAFE)
-    add_definitions (-DBT_THREADSAFE=1)
-endif ()
-if (BT_USE_OPENMP)
-    add_definitions (-DBT_USE_OPENMP=1)
-endif ()
+# Создаём список файлов
+file(GLOB_RECURSE source_files Bullet/*.cpp Bullet/*.h)
 
-# Define source files
-define_source_files (RECURSE GLOB_CPP_PATTERNS src/*.cpp GLOB_H_PATTERNS src/*.h src/*.hpp)
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Define dependency libs
-set (INCLUDE_DIRS src)
+# Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Bullet)
 
-# Setup target
-setup_library ()
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Install headers for building and using the Urho3D library (install dependency for Urho3D/Physics/PhysicsWorld.h, Urho3D/Physics/RigidBody.h, and Urho3D/Physics/PhysicsUtils.h)
-install_header_files (DIRECTORY src/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/Bullet FILES_MATCHING PATTERN *.h)  # Note: the trailing slash is significant
+# Примечание: Bullet не испольузет относительные пути к заголовкам, к тому же движок
+# хочет видеть заголовки в папке Bullet. Поэтому заголовки должны быть видны по разным путям
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Bullet FILES ${source_files})
