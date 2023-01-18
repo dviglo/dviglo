@@ -2,6 +2,9 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
+# Эта библиотека нигде не используется
+return ()
+
 # Define target name
 set (TARGET_NAME Mustache)
 
