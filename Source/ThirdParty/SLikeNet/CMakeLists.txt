@@ -69,3 +69,8 @@ install_header_files (DIRECTORY Source/include/slikenet DESTINATION ${DEST_INCLU
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
 set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+if (MINGW AND NOT URHO3D_LIB_TYPE STREQUAL SHARED)
+    # Требуется для компиляции статической версии движка в MinGW
+    target_link_libraries(${TARGET_NAME} PRIVATE ws2_32)
+endif ()
