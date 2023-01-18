@@ -1,23 +1,20 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME Box2D)
+# Название таргета
+set(target_name box2d)
 
-# Define source files
-define_source_files (RECURSE GLOB_CPP_PATTERNS src/*.cpp src/*.h GLOB_H_PATTERNS include/*.h GROUP)
+# Создаём список файлов
+file(GLOB_RECURSE source_files src/*.cpp src/*.h include/*.h)
 
-set (SOURCE_FILES ${CPP_FILES} ${H_FILES})
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Define dependency libs
-set (INCLUDE_DIRS include)
-
-# Setup target
-setup_library ()
-
-# Install headers for building and using the Urho3D library (install dependency for Urho3D/Physics2D/PhysicsWorld2D.h and Urho3D/Physics2D/RigidBody2D.h)
-install_header_files (DIRECTORY include/box2d DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty)
+# Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
