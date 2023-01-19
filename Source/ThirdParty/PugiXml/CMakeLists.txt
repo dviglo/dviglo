@@ -1,18 +1,20 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME PugiXml)
+# Название таргета
+set(target_name pugixml)
 
-# Define source files
-define_source_files (GLOB_CPP_PATTERNS src/*.cpp GLOB_H_PATTERNS src/*.hpp)
+# Создаём список файлов
+file(GLOB_RECURSE source_files PugiXml/*.cpp PugiXml/*.h)
 
-# Setup target
-setup_library ()
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY src/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/PugiXml FILES_MATCHING PATTERN *.hpp BUILD_TREE_ONLY)  # Note: the trailing slash is significant
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/PugiXml FILES ${source_files})
