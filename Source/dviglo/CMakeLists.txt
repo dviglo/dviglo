@@ -435,7 +435,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
 # TODO: Либы подключаются без учёта дефайнов
 target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjson
     recast detour detour_crowd detour_tile_cache box2d lz4 pugixml webp freetype
-    stanhull)
+    stanhull civetweb)
 
 # Install headers for using the Urho3D library
 install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h DESTINATION ${DEST_INCLUDE_DIR} ACCUMULATE GENERATED_HEADERS)
