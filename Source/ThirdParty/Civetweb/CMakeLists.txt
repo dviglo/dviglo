@@ -92,6 +92,5 @@ if (MINGW)
     target_link_libraries(${target_name} PRIVATE ws2_32)
 endif ()
 
-
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Civetweb FILES ${source_files})

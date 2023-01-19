@@ -10,8 +10,12 @@
 # license found in the license.txt file in the root directory of this source tree.
 #
 
-# Define target name
-set (TARGET_NAME SLikeNet)
+# Лицензия на изменения:
+# Copyright (c) 2022-2023 the Dviglo project
+# License: MIT
+
+# Название таргета
+set(target_name slikenet)
 
 add_definitions (-DRAKNET_ENABLE_STATIC -D_RAKNET_SUPPORT_NatTypeDetectionServer=0 -D_RAKNET_SUPPORT_UDPForwarder=0 -D_RAKNET_SUPPORT_TwoWayAuthentication=0)
 add_definitions (-D_RAKNET_SUPPORT_CloudClient=0 -D_RAKNET_SUPPORT_CloudServer=0 -D_RAKNET_SUPPORT_ConnectionGraph2=0 -D_RAKNET_SUPPORT_NatPunchthroughServer=0)
@@ -53,24 +57,27 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED)
     add_definitions(-D_RAKNET_DLL=1)
 endif ()
 
-# Define source files
-file (GLOB_RECURSE CPP_FILES *.cpp source)
-file (GLOB_RECURSE H_FILES *.h include)
-set (SOURCE_FILES ${CPP_FILES} ${H_FILES})
+# Создаём список файлов
+file(GLOB_RECURSE source_files Source/*.cpp Source/*.h)
 
-# Define dependency libs
-set (INCLUDE_DIRS Source/include)
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Setup target
-setup_library ()
-
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY Source/include/slikenet DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty BUILD_TREE_ONLY)    # Note: the trailing slash is significant
+# Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Source)
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+if (MINGW)
+    # Требуется для компиляции движка в MinGW
+    target_link_libraries(${target_name} PRIVATE iphlpapi)
+endif ()
 
 if (MINGW AND NOT URHO3D_LIB_TYPE STREQUAL SHARED)
     # Требуется для компиляции статической версии движка в MinGW
-    target_link_libraries(${TARGET_NAME} PRIVATE ws2_32)
+    target_link_libraries(${target_name} PRIVATE ws2_32)
 endif ()
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Source FILES ${source_files})
