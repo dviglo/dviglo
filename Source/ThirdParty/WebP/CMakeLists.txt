@@ -1,23 +1,20 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME WebP)
+# Название таргета
+set(target_name webp)
 
-# Define source files
-define_source_files (RECURSE GLOB_CPP_PATTERNS src/*.c GLOB_H_PATTERNS src/*.h)
+# Создаём список файлов
+file(GLOB_RECURSE source_files webp/*.c webp/*.h)
 
-# Define dependency libs
-if (ANDROID)
-    set (INCLUDE_DIRS ${ANDROID_NDK}/sources/android/cpufeatures)
-endif ()
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Setup target
-setup_library ()
-
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY src/webp/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/webp FILES_MATCHING PATTERN *.h BUILD_TREE_ONLY)  # Note: the trailing slash is significant
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/webp)
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/webp FILES ${source_files})
