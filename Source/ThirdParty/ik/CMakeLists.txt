@@ -4,8 +4,8 @@
 
 include (CheckIncludeFiles)
 
-# Define target name
-set (TARGET_NAME ik)
+# Название таргета
+set(target_name ik)
 
 check_include_files (stdint.h IK_HAVE_STDINT_H)
 
@@ -54,15 +54,21 @@ set (IK_LIB_TYPE STATIC)      # Urho always builds its 3rd-party as STATIC lib
 configure_file (include/ik/export.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/generated/ik/export.h)
 configure_file (include/ik/config.h.in ${CMAKE_CURRENT_BINARY_DIR}/include/generated/ik/config.h)
 
-# Define dependency libs
-set (INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/include/generated include)
+# Создаём список файлов (без рекурсии)
+file(GLOB source_files src/*.c include/ik/*.h)
 
-# Setup target
-setup_library ()
+if (IK_MEMORY_BACKTRACE)
+    list(APPEND source_files src/platform/linux/backtrace_linux.c)
+endif ()
 
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY include/ik/ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/ik FILES_MATCHING PATTERN *.h USE_FILE_SYMLINK BUILD_TREE_ONLY)  # Note: the trailing slash is significant
-install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/include/generated/ik/export.h ${CMAKE_CURRENT_BINARY_DIR}/include/generated/ik/config.h DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/ik BUILD_TREE_ONLY)
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
+
+# Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include/generated)
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
