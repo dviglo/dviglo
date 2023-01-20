@@ -3404,22 +3404,5 @@ if(TARGET SDL3::SDL3-static AND NOT TARGET SDL3::SDL3)
   add_library(SDL3::SDL3 ALIAS SDL3-static)
 endif()
 
-# Dviglo: Всё, что ниже - добавлено
-
-# Необходимо установить TARGET_NAME перед вызовом макроса install_header_files
-set (TARGET_NAME SDL3-static)
-
-# Копируем заголовочные файлы в BUILD_DIR/include/Urho3D/ThirdParty
-install_header_files (DIRECTORY include/SDL3 DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty FILES_MATCHING PATTERN *.h USE_FILE_SYMLINK) # После SDL нет слэша, поэтому копируется папка
-
-# SDL_build_config.h пока не существует и мы не можем его скопировать с помощью install_header_files.
-# Поэтому заново генерируем
-#file (GENERATE
-#      OUTPUT "${THIRD_PARTY_INCLUDE_DIR}/SDL3/build_config/SDL_build_config.h"
-#      INPUT "${SDL3_BINARY_DIR}/SDL_build_config.h.intermediate")
-
-# А ещё install надо самостоятельно вызвать
-#install (FILES "${THIRD_PARTY_INCLUDE_DIR}/SDL3/build_config/SDL_build_config.h" DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/SDL)
-
-# Так как мы не используем макрос setup_library, то добавляем библиотеку в список самостоятельно
-set (STATIC_LIBRARY_TARGETS ${STATIC_LIBRARY_TARGETS} SDL3-static PARENT_SCOPE)
+# Dviglo: Добавлено. Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET SDL3-static PROPERTY POSITION_INDEPENDENT_CODE ON)

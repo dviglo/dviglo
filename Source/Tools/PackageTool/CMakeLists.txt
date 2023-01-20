@@ -81,7 +81,7 @@ set (TARGET_NAME PackageTool${POSTFIX})
 define_source_files (EXTRA_CPP_FILES ${MINI_URHO_CPP_FILES})
 
 # Define dependency libs
-list (APPEND LIBS LZ4)
+list (APPEND LIBS lz4)
 
 # Setup target
 setup_executable (TOOL)

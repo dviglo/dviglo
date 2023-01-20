@@ -1,21 +1,31 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME GLEW)
+# Название таргета
+set(target_name glew)
 
-# Define preprocessor macros
-add_definitions (-DGLEW_STATIC -DGLEW_NO_GLU)
+# Создаём список файлов
+file(GLOB_RECURSE source_files GLEW/*.c GLEW/*.h)
 
-# Define source files
-define_source_files (GLOB_CPP_PATTERNS *.c)
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Define dependency libs
-set (INCLUDE_DIRS .)
+# Дефайны для библиотеки и для таргетов, которые используют текущую библиотеку
+target_compile_definitions(${target_name} PUBLIC GLEW_STATIC GLEW_NO_GLU)
 
-# Setup target
-setup_library ()
+# Делаем заголовочные файлы доступными библиотеке
+target_include_directories(${target_name} PRIVATE GLEW)
 
-# Install headers for building and using the Urho3D library (install dependency for OGLGraphicsImpl.h)
-install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/GLEW FILES_MATCHING PATTERN *.h)  # Note: the trailing slash is significant
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Подключаем OpenGL к таргетам, которые используют текущую библиотеку
+find_package(OpenGL)
+target_link_libraries(${target_name} INTERFACE ${OPENGL_gl_LIBRARY})
+target_include_directories(${target_name} INTERFACE ${OPENGL_INCLUDE_DIR})
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/GLEW FILES ${source_files})

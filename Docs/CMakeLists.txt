@@ -2,6 +2,10 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
+if (dviglo_subproject)
+    return()
+endif ()
+
 # Set project name
 project (Urho3D-Docs)
 

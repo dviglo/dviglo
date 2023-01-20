@@ -5,15 +5,9 @@
 #include "precompiled.h"
 
 #include "library_info.h"
-#include "librevision.h"
 
 namespace Urho3D
 {
-
-const char* GetRevision()
-{
-    return revision;
-}
 
 const char* GetCompilerDefines()
 {

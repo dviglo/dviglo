@@ -62,10 +62,6 @@ if ($ENV{COVERITY_SCAN_BRANCH})
     # TODO: The Coverity-Scan modelling is not yet working properly (anyone interested in static analyzer is welcome to give it another try)
     add_definitions (-DCOVERITY_SCAN_MODEL)
 endif ()
-if (TARGET GLEW)
-    # These macros are required because Urho3D (OpenGL) headers are exposed to GLEW headers
-    add_definitions (-DGLEW_STATIC -DGLEW_NO_GLU)
-endif ()
 if (HAVE_SINCOSF)
     add_definitions (-DHAVE_SINCOSF)
 elseif (HAVE___SINCOSF)
@@ -215,10 +211,6 @@ if (URHO3D_GENERATEBINDINGS)
 endif ()
 
 # Define generated source files
-if (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/librevision.h)
-    execute_process (COMMAND ${CMAKE_COMMAND} -DFILENAME=${CMAKE_CURRENT_BINARY_DIR}/librevision.h -P cmake/Modules/GetUrhoRevision.cmake
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_QUIET ERROR_QUIET)
-endif ()
 set (URHO3D_DEPS ${STATIC_LIBRARY_TARGETS})
 if (TARGET LuaJIT_universal)
     list (REMOVE_ITEM URHO3D_DEPS LuaJIT)
@@ -229,14 +221,6 @@ if (TARGET LuaJIT_universal)
     list (APPEND SYMBOLIC_SOURCES ${LuaJIT_universal_symbolic})
 endif ()
 set_source_files_properties (${SYMBOLIC_SOURCES} PROPERTIES SYMBOLIC TRUE)
-add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/librevision.h
-    COMMAND ${CMAKE_COMMAND} -DFILENAME=${CMAKE_CURRENT_BINARY_DIR}/librevision.h.new -P cmake/Modules/GetUrhoRevision.cmake
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/librevision.h.new ${CMAKE_CURRENT_BINARY_DIR}/librevision.h
-    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_CURRENT_BINARY_DIR}/librevision.h.new
-    DEPENDS ${URHO3D_DEPS} ${CMAKE_SOURCE_DIR}/cmake/Modules/GetUrhoRevision.cmake
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    COMMENT "")     # Suppress the comment as the header file may or may not be re-generated
-source_group ("Source Files\\Generated" FILES ${CMAKE_CURRENT_BINARY_DIR}/librevision.h)
 
 # Use the AutoBinder tool to generate source files for binding script subsystems
 if (URHO3D_BINDINGS)
@@ -322,7 +306,7 @@ if (URHO3D_LUA)
 endif ()
 
 # Aggregate all source files
-list (APPEND SOURCE_FILES ${GEN_CPP_FILES} ${LUA_GEN_CPP_FILES} librevision.h dviglo.h ${SYMBOLIC_SOURCES})
+list (APPEND SOURCE_FILES ${GEN_CPP_FILES} ${LUA_GEN_CPP_FILES} dviglo.h ${SYMBOLIC_SOURCES})
 
 # Define dependency libs
 # Add include directories to find the precompiled header, export header, and installed headers from third-party libs
@@ -434,100 +418,20 @@ if (MINGW)
     endif ()
 endif ()
 
-# Setup dependency libraries to be linked or archived as a whole inside Urho3D library for SHARED or STATIC lib type, respectively
-if (APPLE)
-    set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES -force_load)
-elseif (MSVC)
-    foreach (THIRD_PARTY_LIB ${STATIC_LIBRARY_TARGETS})
-        if (NOT ${THIRD_PARTY_LIB} MATCHES boost|rapidjson|STB)  # Exclude header-only "fake" static libs
-            # Must be specified for each library https://github.com/urho3d/Urho3D/issues/2760
-            set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_OPTIONS /WHOLEARCHIVE:${THIRD_PARTY_LIB})  # Require VS 2015 Update 2 onward
-        endif ()
-    endforeach ()
-    set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_OPTIONS /FORCE)
-else ()
-    set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES -Wl,--whole-archive)
+target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
+
+# TODO: Либы подключаются без учёта дефайнов
+target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjson
+    recast detour detour_crowd detour_tile_cache box2d lz4 pugixml webp freetype
+    stanhull civetweb slikenet ik)
+
+# Не линкуем LibCpuId при сборке для Linux
+if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
+    target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
 endif ()
 
-foreach (TARGET ${STATIC_LIBRARY_TARGETS})
-    set (ARCHIVE $<TARGET_FILE:${TARGET}>)
-    if (NOT ${TARGET} MATCHES boost|rapidjson|STB)  # Exclude header-only "fake" static lib targets
-        set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES ${ARCHIVE})      # Should work for all compiler toolchains while building shared library
-        if (URHO3D_LIB_TYPE STREQUAL STATIC)
-            if (XCODE OR MSVC)  # Only works in Xcode and MSVC while building static library
-                set_property (TARGET ${TARGET_NAME} APPEND PROPERTY STATIC_LIBRARY_OPTIONS ${ARCHIVE})
-            else ()
-                list (APPEND ARCHIVES ${ARCHIVE})   # Accumulate the target locations for archiving later
-            endif ()
-        endif ()
-    endif ()
-endforeach ()
-if (NOT XCODE AND NOT MSVC)
-    if (NOT APPLE)
-        set_property (TARGET ${TARGET_NAME} APPEND PROPERTY LINK_LIBRARIES -Wl,--no-whole-archive)  # GCC/Clang-specific to pair up with whole-archive linker option
-    endif ()
-    if (URHO3D_LIB_TYPE STREQUAL STATIC)
-        if (APPLE)
-            # Apple libtool takes archives directly as input
-            add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND mv $<TARGET_FILE:${TARGET_NAME}>{,.engine}
-                COMMAND libtool -static $<TARGET_FILE:${TARGET_NAME}>.engine ${ARCHIVES} -o $<TARGET_FILE:${TARGET_NAME}>
-                COMMAND rm $<TARGET_FILE:${TARGET_NAME}>.engine
-                COMMENT "Merging all archives into a single static library using libtool")
-        elseif (EMSCRIPTEN OR CMAKE_BINARY_DIR MATCHES "[ +*;,]")
-            # Do it the hard way by first extracting the object (bitcode) files and appending them to final archive:
-            # a) For Emscripten build as Emscripten emar (llvm-ar) neither takes archives directly as input nor supports MRI-style script
-            # b) When the build tree path contains special characters for MRI scripts (space, '+', '*', ';', ',') as escaping is not supported
-            get_filename_component (AR ${CMAKE_AR} NAME_WE)
-            if (CMAKE_HOST_WIN32)
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E remove_directory archives
-                    COMMAND ${CMAKE_COMMAND} -E echo "Merging all archives into a single static library using ${AR}")
-                foreach (ARCHIVE ${ARCHIVES})
-                    # Merge per library because Window cmd shell does not handle long argument list
-                    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory archives)
-                    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CMAKE_AR} x ${ARCHIVE}
-                        COMMAND ${CMAKE_COMMAND} -E echo_append "\\\"${CMAKE_AR}\\\"" q \\\"$<TARGET_FILE:${TARGET_NAME}>\\\" " " >merge.bat
-                        COMMAND for /F %%i in ('dir /B *.o*') do ${CMAKE_COMMAND} -E echo_append %%i" " >>merge.bat
-                        COMMAND merge.bat WORKING_DIRECTORY archives)
-                    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E remove_directory archives)
-                endforeach ()
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_RANLIB} $<TARGET_FILE:${TARGET_NAME}>)
-            else ()
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E remove_directory archives
-                    COMMAND ${CMAKE_COMMAND} -E make_directory archives COMMENT "Merging all archives into a single static library using ${AR}")
-                foreach (ARCHIVE ${ARCHIVES})
-                    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_AR} x ${ARCHIVE} WORKING_DIRECTORY archives)
-                endforeach ()
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_AR} q $<TARGET_FILE:${TARGET_NAME}> `ls -1` WORKING_DIRECTORY archives)
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CMAKE_RANLIB} $<TARGET_FILE:${TARGET_NAME}>
-                    COMMAND ${CMAKE_COMMAND} -E remove_directory archives)
-            endif ()
-        else ()
-            # GCC ar does not take archives directly as input like Apple libtool, however, it can be scripted to do so
-            add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E rename $<TARGET_FILE:${TARGET_NAME}> $<TARGET_FILE:${TARGET_NAME}>.engine
-                COMMAND echo CREATE $<TARGET_FILE:${TARGET_NAME}> >script.ar
-                COMMAND echo ADDLIB $<TARGET_FILE:${TARGET_NAME}>.engine >>script.ar)
-            foreach (ARCHIVE ${ARCHIVES})
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND echo ADDLIB ${ARCHIVE} >>script.ar)
-            endforeach ()
-            add_custom_command (TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND echo SAVE >>script.ar
-                COMMAND echo END >>script.ar
-                COMMAND ${CMAKE_AR} -M <script.ar
-                COMMAND ${CMAKE_COMMAND} -E remove $<TARGET_FILE:${TARGET_NAME}>.engine script.ar
-                COMMENT "Merging all archives into a single static library using ar")
-        endif ()
-    endif ()
-endif ()
-# Use PIC on platforms that support it (shared library type has this property set to true by default, so we only have to deal with those static ones that the shared library links against)
-if (NOT URHO3D_LIB_TYPE STREQUAL STATIC)
-    set_target_properties (${STATIC_LIBRARY_TARGETS} PROPERTIES POSITION_INDEPENDENT_CODE true)
-endif ()
+# Делаем h-файлы досутпными приложениям, которые подключили движок как поддиректорию
+target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
 
 # Install headers for using the Urho3D library
 install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h DESTINATION ${DEST_INCLUDE_DIR} ACCUMULATE GENERATED_HEADERS)
@@ -564,7 +468,7 @@ string (REGEX REPLACE "include/[^;]+(debug_new|direct3d|graphics_impl|ik_convert
 string (REGEX REPLACE "include/([^;]+)" "#include <\\1>" URHO_HEADERS "${GENERATED_HEADERS};;${URHO_HEADERS}")
 string (REPLACE ";" \n URHO_HEADERS "${URHO_HEADERS}")
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
-install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h ${CMAKE_CURRENT_BINARY_DIR}/librevision.h DESTINATION ${DEST_INCLUDE_DIR})
+install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h DESTINATION ${DEST_INCLUDE_DIR})
 
 # Generate platform specific pkg-config file for the benefit of Urho3D library users via SDK without CMake
 if (ABSOLUTE_PATH_LIBS)
@@ -609,10 +513,6 @@ endif ()
 string (REGEX REPLACE " -include \"[^\"]+\"" "" CLEANED_CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 string (REPLACE "${SYSROOT}" "\${pc_sysrootdir}" CLEANED_CMAKE_CXX_FLAGS "${CLEANED_CMAKE_CXX_FLAGS}")
 string (REPLACE "${SYSROOT}" "\${pc_sysrootdir}" CLEANED_CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
-configure_file (${CMAKE_CURRENT_SOURCE_DIR}/dviglo.pc.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo.pc${PC_SUFFIX} @ONLY)
-if (MSVC)
-    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -DLIB_NAME=$<TARGET_LINKER_FILE_NAME:${TARGET_NAME}> -P ${CMAKE_SOURCE_DIR}/cmake/Modules/AdjustPkgConfigForMSVC.cmake)
-endif ()
 if (ANDROID)
     # After migration to Gradle build system we do not support Android cross-compiling build via pkgconfig anymore, however, this file is still being provided as reference only
     set (RENAME RENAME Urho3D-${ANDROID_ABI}.pc)

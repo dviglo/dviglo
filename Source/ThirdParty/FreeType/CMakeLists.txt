@@ -1,19 +1,11 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME FreeType)
+# Название таргета
+set(target_name freetype)
 
-add_definitions (-DFT2_BUILD_LIBRARY)
-
-# Rename z_verbose and z_error symbols to prevent Clang duplicate symbol linker error (clash with Assimp) on debug build
-if (XCODE OR CMAKE_BUILD_TYPE STREQUAL Debug)
-    add_definitions (-Dz_verbose=ft2_z_verbose -Dz_error=ft2_z_error)
-endif ()
-
-# Define source files
-set (SOURCE_FILES
+# Нужны не все исходники
+set(source_files
     src/autofit/autofit.c
     src/base/ftbase.c
     src/base/ftbbox.c
@@ -56,12 +48,23 @@ set (SOURCE_FILES
     src/type42/type42.c
     src/winfonts/winfnt.c)
 
-# Define dependency libs
-set (INCLUDE_DIRS include)
+# Создаём список заголовочных файлов
+file(GLOB_RECURSE header_files *.h)
 
-# Setup target
-setup_library ()
+# Дополняем список
+list(APPEND source_files ${header_files})
 
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY include/freetype DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty FILES_MATCHING PATTERN *.h BUILD_TREE_ONLY)
-install_header_files (FILES include/ft2build.h DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty FILES_MATCHING PATTERN *.h BUILD_TREE_ONLY)
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
+
+# Нужно для компиляции библиотеки
+target_compile_definitions(${target_name} PRIVATE -D FT2_BUILD_LIBRARY)
+
+# Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
