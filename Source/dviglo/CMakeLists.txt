@@ -423,7 +423,12 @@ target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
 # TODO: Либы подключаются без учёта дефайнов
 target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjson
     recast detour detour_crowd detour_tile_cache box2d lz4 pugixml webp freetype
-    stanhull civetweb slikenet ik libcpuid)
+    stanhull civetweb slikenet ik)
+
+# Не линкуем LibCpuId при сборке для Linux
+if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
+    target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
+endif ()
 
 # Делаем h-файлы досутпными приложениям, которые подключили движок как поддиректорию
 target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
