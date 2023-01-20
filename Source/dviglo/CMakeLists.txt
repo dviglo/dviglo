@@ -430,45 +430,55 @@ if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
     target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
 endif ()
 
-# Делаем h-файлы досутпными приложениям, которые подключили движок как поддиректорию
+# Делаем h-файлы доступными приложениям, которые подключили движок как поддиректорию
 target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
 
-# Install headers for using the Urho3D library
-install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h DESTINATION ${DEST_INCLUDE_DIR} ACCUMULATE GENERATED_HEADERS)
-install_header_files (DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/ DESTINATION ${DEST_INCLUDE_DIR} FILES_MATCHING PATTERN *.h ACCUMULATE URHO_HEADERS)    # Note: the trailing slash is significant
-# Generate the include-all-headers header file even though we do not encourage Urho3D library users to use it
-list (SORT URHO_HEADERS)
-list (REVERSE URHO_HEADERS)
+# Создаём список h-файлов
+file(GLOB_RECURSE dviglo_headers RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h)
+# Обрамляем названия файлов
+list(TRANSFORM dviglo_headers REPLACE "(.+)" "#include <dviglo/\\1>")
+# Сортируем список h-файлов в реверсном порядке
+list(SORT dviglo_headers ORDER DESCENDING)
 
 # Опциональные папки, которые могут быть отключены дефайнами
+# TODO: Сделать их отдельными модулями?
 set (OPTIONAL_SUBS database ik navigation network physics physics_2d urho_2d)
 
 foreach (SUB ${OPTIONAL_SUBS})
-    if (URHO_HEADERS MATCHES "(include/dviglo/${SUB}/[^;]+)")
-        list (FIND URHO_HEADERS ${CMAKE_MATCH_1} FOUND_INDEX)
-        list (INSERT URHO_HEADERS ${FOUND_INDEX} "#endif")
+    if (dviglo_headers MATCHES "(#include <dviglo/${SUB}/[^;]+>)")
+        # Так как список h-файлов был отсортирован в реверсном порядке, то первый
+        # найденный элемент на самом деле последний. Вставляем перед ним #endif
+        list (FIND dviglo_headers ${CMAKE_MATCH_1} FOUND_INDEX)
+        list (INSERT dviglo_headers ${FOUND_INDEX} "#endif")
     endif ()
 endforeach ()
-list (REVERSE URHO_HEADERS)
+# Меняем порядок элементов на правильный
+list(REVERSE dviglo_headers)
 
-# Добавляем дефайны для h-файлов в опциональных папках
 foreach (SUB ${OPTIONAL_SUBS})
-    if (URHO_HEADERS MATCHES "(include/dviglo/${SUB}/[^;]+)")
+    if (dviglo_headers MATCHES "(#include <dviglo/${SUB}/[^;]+>)")
         string (TOUPPER ${SUB} SUB)
+
+        # Заменяем дефайны для случаев, когда дефайны не совпадают с именами папок
         if ("${SUB}" STREQUAL "PHYSICS_2D")
             set (SUB "PHYSICS2D")
         elseif ("${SUB}" STREQUAL "URHO_2D")
             set (SUB "URHO2D")
         endif ()
-        list (FIND URHO_HEADERS ${CMAKE_MATCH_1} FOUND_INDEX)
-        list (INSERT URHO_HEADERS ${FOUND_INDEX} "#if URHO3D_${SUB}")
+
+        # Добавляем дефайны для h-файлов в опциональных папках
+        list (FIND dviglo_headers ${CMAKE_MATCH_1} FOUND_INDEX)
+        list (INSERT dviglo_headers ${FOUND_INDEX} "#if URHO3D_${SUB}")
     endif ()
 endforeach ()
-string (REGEX REPLACE "include/[^;]+(debug_new|direct3d|graphics_impl|ik_converters|odbc|opengl|precompiled|sqlite|dviglo|librevision|wrap\.h|aswrappedcall\.h)[^;]*;" "" URHO_HEADERS "${URHO_HEADERS};")
-string (REGEX REPLACE "include/([^;]+)" "#include <\\1>" URHO_HEADERS "${GENERATED_HEADERS};;${URHO_HEADERS}")
-string (REPLACE ";" \n URHO_HEADERS "${URHO_HEADERS}")
+
+# Исключаем некоторые h-файлы
+string (REGEX REPLACE "#include <[^;]+(debug_new|direct3d|graphics_impl|ik_converters|odbc|opengl|precompiled|sqlite|dviglo|librevision|wrap\.h|aswrappedcall\.h)[^;]*>;" "" dviglo_headers "${dviglo_headers};")
+
+# Заменяем ; на перевод строки
+string (REPLACE ";" \n dviglo_headers "${dviglo_headers}")
+
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
-install_header_files (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h DESTINATION ${DEST_INCLUDE_DIR})
 
 # Generate platform specific pkg-config file for the benefit of Urho3D library users via SDK without CMake
 if (ABSOLUTE_PATH_LIBS)

@@ -4,7 +4,9 @@
 
 #pragma once
 
-@URHO_HEADERS@
+#include <dviglo/dviglo.h>
+
+@dviglo_headers@
 #include <dviglo/debug_new.h>
 
 using namespace Urho3D;
