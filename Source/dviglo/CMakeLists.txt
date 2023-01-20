@@ -277,9 +277,6 @@ foreach (DEFINE URHO3D_STATIC_DEFINE URHO3D_OPENGL URHO3D_D3D11 URHO3D_SSE URHO3
         set (APPENDIX "${APPENDIX}#define ${DEFINE}\n")
     endif ()
 endforeach()
-if (URHO3D_FORCE_AS_MAX_PORTABILITY)
-    set (APPENDIX "${APPENDIX}#define AS_MAX_PORTABILITY\n")
-endif ()
 generate_export_header (${TARGET_NAME} EXPORT_MACRO_NAME URHO3D_API EXPORT_FILE_NAME dviglo.h.new CUSTOM_CONTENT_FROM_VARIABLE APPENDIX)
 set (COPYRIGHT "// Copyright (c) 2008-2023 the Urho3D project\n// License: MIT\n")
 file (READ ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new EXPORT_HEADER)
@@ -454,8 +451,4 @@ if (URHO3D_SCP_TO_TARGET)
     # Ensure SCP is the last command
     add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND scp $<TARGET_FILE:${TARGET_NAME}> ${URHO3D_SCP_TO_TARGET} || exit 0
         COMMENT "Scp-ing Urho3D library to target system")
-endif ()
-
-if (URHO3D_FORCE_AS_MAX_PORTABILITY)
-    add_definitions (-DAS_MAX_PORTABILITY)
 endif ()
