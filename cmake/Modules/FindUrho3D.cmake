@@ -143,9 +143,6 @@ else ()
         if (URHO3D_LUA)
             list (APPEND URHO3D_INCLUDE_DIRS ${URHO3D_BASE_INCLUDE_DIR}/ThirdParty/Lua${JIT})
         endif ()
-        # Intentionally do not cache the URHO3D_VERSION as it has potential to change frequently
-        file (STRINGS ${URHO3D_BASE_INCLUDE_DIR}/librevision.h URHO3D_VERSION REGEX "^const char\\* revision=\"[^\"]*\".*$")
-        string (REGEX REPLACE "^const char\\* revision=\"([^\"]*)\".*$" \\1 URHO3D_VERSION "${URHO3D_VERSION}")      # Stringify to guard against empty variable
         # The library type is baked into export header only for MSVC as it has no other way to differentiate them, fortunately both types cannot coexist for MSVC anyway unlike other compilers
         if (MSVC)
             file (STRINGS ${URHO3D_BASE_INCLUDE_DIR}/dviglo.h MSVC_STATIC_LIB REGEX "^#define URHO3D_STATIC_DEFINE$")

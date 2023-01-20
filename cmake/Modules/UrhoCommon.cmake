@@ -155,7 +155,7 @@ if (RPI)
     include_directories (SYSTEM ${VIDEOCORE_INCLUDE_DIRS})
     link_directories (${VIDEOCORE_LIBRARY_DIRS})
 endif ()
-if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
+if (PROJECT_NAME STREQUAL Urho3D)
     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED (not available for Emscripten)")
     # Non-Windows platforms always use OpenGL, the URHO3D_OPENGL variable will always be forced to TRUE, i.e. it is not an option at all
     # Windows platform has URHO3D_OPENGL as an option, MSVC compiler default to FALSE (i.e. prefers Direct3D) while MinGW compiler default to TRUE

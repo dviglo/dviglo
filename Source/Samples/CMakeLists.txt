@@ -2,6 +2,10 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
+if (dviglo_subproject)
+    return()
+endif ()
+
 if (NOT URHO3D_SAMPLES)
     return ()
 endif ()
