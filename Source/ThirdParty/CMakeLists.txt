@@ -45,10 +45,6 @@ if (URHO3D_URHO2D)
     endif ()
 endif ()
 
-if (URHO3D_WEBP)
-    add_subdirectory (WebP)
-endif ()
-
 if (URHO3D_PHYSICS)
     add_subdirectory (Bullet)
 endif ()

@@ -99,7 +99,7 @@ if (URHO3D_SSL)
 endif ()
 
 # Define source files
-foreach (DIR IK Navigation Network Physics Physics2D Urho2D WebP)
+foreach (DIR IK Navigation Network Physics Physics2D Urho2D)
     string (TOUPPER URHO3D_${DIR} OPT)
     if (NOT ${OPT})
         list (APPEND EXCLUDED_SOURCE_DIRS ${DIR})
@@ -344,7 +344,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
 
 # TODO: Либы подключаются без учёта дефайнов
 target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjson
-    recast detour detour_crowd detour_tile_cache box2d lz4 pugixml webp freetype
+    recast detour detour_crowd detour_tile_cache box2d lz4 pugixml freetype
     stanhull civetweb slikenet ik)
 
 # Не линкуем LibCpuId при сборке для Linux
