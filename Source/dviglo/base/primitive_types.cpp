@@ -19,6 +19,9 @@ static_assert(sizeof(long) == 4);
 static_assert(sizeof(long) == sizeof(void*)); // 4 or 8
 #endif
 
-// Pointer arithmetics
+// Арифметика указателей
 static_assert(sizeof(void*) == sizeof(std::ptrdiff_t));
 static_assert(sizeof(void*) == sizeof(std::intptr_t));
+
+// Dviglo поддерживает только 64-битные платформы
+static_assert(sizeof(void*) == 8);
