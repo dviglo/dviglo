@@ -265,7 +265,7 @@ jobs:
 
         cmake engine_repo -B engine_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
-          -D URHO3D_DATABASE_SQLITE=1 -D URHO3D_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
+          -D URHO3D_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
           -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build engine_build
@@ -305,7 +305,7 @@ jobs:
 
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
-          -D URHO3D_DATABASE_SQLITE=1 -D URHO3D_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
+          -D URHO3D_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
           -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build
@@ -387,7 +387,7 @@ jobs:
         cmake engine_repo -B engine_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
           -D URHO3D_EXTRAS=1 -D URHO3D_OPENGL=1 -D URHO3D_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
-          -D URHO3D_DATABASE_SQLITE=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
+          -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
           -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build engine_build
@@ -420,7 +420,7 @@ jobs:
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
           -D URHO3D_EXTRAS=1 -D URHO3D_OPENGL=1 -D URHO3D_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
-          -D URHO3D_DATABASE_SQLITE=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
+          -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
           -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build
