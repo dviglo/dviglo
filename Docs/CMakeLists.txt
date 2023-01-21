@@ -53,11 +53,6 @@ if (DOXYGEN_FOUND)
         foreach (IDE XCODE MSVC Eclipse CodeBlocks)
             enable_help (${IDE})
         endforeach ()
-        if (MSVC_HELP)
-            find_package (HTMLHelp)
-            # It is not an error when HTML help compiler is not found, instead just switching off the Doxygen's HHC option
-            find_package_handle_standard_args (HTMLHelp REQUIRED_VARS HTML_HELP_COMPILER)
-        endif ()
         configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/generated/Doxyfile)
     endif ()
 
