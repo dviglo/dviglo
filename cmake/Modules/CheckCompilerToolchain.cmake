@@ -9,8 +9,6 @@
 #
 # Target architecture:
 #  ARM
-#  MIPS
-#  POWERPC
 #  WEB
 #  X86
 #
@@ -23,9 +21,6 @@
 #  HAVE_SSE4
 #  HAVE_AVX
 #  HAVE_AVX2
-#
-# CPU SIMD instruction extension support for powerpc/powerpc64 archs:
-#  HAVE_ALTIVEC
 #
 # CPU SIMD instruction extension support for arm/arm64 archs:
 #  HAVE_NEON
@@ -187,9 +182,6 @@ else ()
     endif ()
     # Android arm64 compiler only emits __aarch64__ while iOS/tvOS arm64 emits __aarch64__ and __arm64__; for armv7a all emit __arm__
     check_native_define ("__(arm|aarch64)__" ARM)
-    # For completeness sake as currently we do not support MIPS and PowerPC (yet)
-    check_native_define (__MIPSEL__ MIPS)
-    check_native_define ("__(ppc|PPC|powerpc|POWERPC)(64)*__" POWERPC)
     # For now we only support Emscripten compiler toolchain when targeting Web platform
     check_native_define (__EMSCRIPTEN__ WEB)
     # Compiler should emit __x86_64__, __i686__, or __i386__, etc when targeting archs using Intel or AMD processors
@@ -202,8 +194,6 @@ else ()
         else ()
             check_extension (fpu=neon __ARM_NEON)
         endif ()
-    elseif (POWERPC)
-        check_extension (altivec)
     elseif (X86)
         foreach (ext sse sse2 sse3 sse4 avx avx2)
             check_extension (${ext})
