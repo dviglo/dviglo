@@ -206,7 +206,6 @@ if (PROJECT_NAME STREQUAL Urho3D)
     cmake_dependent_option (URHO3D_EXTRAS "Build extras (native, RPI, and ARM on Linux only)" FALSE "NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT WEB" FALSE)
     option (URHO3D_DOCS "Generate documentation as part of normal build")
     option (URHO3D_DOCS_QUIET "Generate documentation as part of normal build, suppress generation process from sending anything to stdout")
-    option (URHO3D_PCH "Enable PCH support" TRUE)
     #cmake_dependent_option (URHO3D_DATABASE_ODBC "Enable Database support with ODBC, requires vendor-specific ODBC driver" FALSE "NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT WEB;NOT MSVC OR NOT MSVC_VERSION VERSION_LESS 1900" FALSE)
     unset(URHO3D_DATABASE_ODBC CACHE)
     #option (URHO3D_DATABASE_SQLITE "Enable Database support with SQLite embedded")
@@ -231,7 +230,7 @@ if (PROJECT_NAME STREQUAL Urho3D)
 else ()
     set (URHO3D_LIB_TYPE "" CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED (not available for Emscripten)")
     set (URHO3D_HOME "" CACHE PATH "Path to Urho3D build tree or SDK installation location (downstream project only)")
-    if (URHO3D_PCH OR URHO3D_SAMPLES OR URHO3D_TOOLS OR URHO3D_EXTRAS)
+    if (URHO3D_SAMPLES OR URHO3D_TOOLS OR URHO3D_EXTRAS)
         # Just reference it to suppress "unused variable" CMake warning on downstream projects using this CMake module
     endif ()
     if (CMAKE_PROJECT_NAME MATCHES ^Urho3D-ExternalProject-)
@@ -391,7 +390,6 @@ if (URHO3D_CLANG_TOOLS OR URHO3D_BINDINGS)
     endif ()
 endif ()
 if (URHO3D_CLANG_TOOLS)
-    set (URHO3D_PCH 0)
     set (URHO3D_LIB_TYPE SHARED)
     # Set build options that would maximise the AST of Urho3D library
     foreach (OPT
@@ -412,11 +410,6 @@ if (URHO3D_CLANG_TOOLS)
     foreach (OPT URHO3D_TESTING URHO3D_LUAJIT URHO3D_DATABASE_ODBC URHO3D_TRACY_PROFILING)
         set (${OPT} 0)
     endforeach ()
-endif ()
-
-# Coverity scan does not support PCH
-if ($ENV{COVERITY_SCAN_BRANCH})
-    set (URHO3D_PCH 0)
 endif ()
 
 # Enable testing
@@ -995,12 +988,11 @@ endmacro ()
 #  EXCLUDE_PATTERNS <list> - Use the provided regex patterns for excluding the unwanted matched source files
 #  EXTRA_CPP_FILES <list> - Include the provided list of files into CPP_FILES result
 #  EXTRA_H_FILES <list> - Include the provided list of files into H_FILES result
-#  PCH <list> - Enable precompiled header support on the defined source files using the specified header file, the list is "<path/to/header> [C++|C]"
 #  RECURSE - Option to glob recursively
 #  GROUP - Option to group source files based on its relative path to the corresponding parent directory
 macro (define_source_files)
     # Source files are defined by globbing source files in current source directory and also by including the extra source files if provided
-    cmake_parse_arguments (ARG "RECURSE;GROUP" "" "PCH;EXTRA_CPP_FILES;EXTRA_H_FILES;GLOB_CPP_PATTERNS;GLOB_H_PATTERNS;EXCLUDE_PATTERNS" ${ARGN})
+    cmake_parse_arguments (ARG "RECURSE;GROUP" "" "EXTRA_CPP_FILES;EXTRA_H_FILES;GLOB_CPP_PATTERNS;GLOB_H_PATTERNS;EXCLUDE_PATTERNS" ${ARGN})
     if (NOT ARG_GLOB_CPP_PATTERNS)
         set (ARG_GLOB_CPP_PATTERNS *.cpp)    # Default glob pattern
     endif ()
@@ -1029,10 +1021,6 @@ macro (define_source_files)
     list (APPEND CPP_FILES ${ARG_EXTRA_CPP_FILES})
     list (APPEND H_FILES ${ARG_EXTRA_H_FILES})
     set (SOURCE_FILES ${CPP_FILES} ${H_FILES})
-    # Optionally enable PCH
-    if (ARG_PCH)
-        enable_pch (${ARG_PCH})
-    endif ()
     # Optionally group the sources based on their physical subdirectories
     if (ARG_GROUP)
         source_group (TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Source Files" FILES ${SOURCE_FILES})
@@ -1166,167 +1154,6 @@ macro (add_html_shell)
 endmacro ()
 
 include (GenerateExportHeader)
-
-# Macro for precompiling header (On MSVC, the dummy C++ or C implementation file for precompiling the header file would be generated if not already exists)
-# Typically, user should indirectly call this macro by using the 'PCH' option when calling define_source_files() macro
-macro (enable_pch HEADER_PATHNAME)
-    # No op when PCH support is not enabled
-    if (URHO3D_PCH)
-        # Get the optional LANG parameter to indicate whether the header should be treated as C or C++ header, default to C++
-        if ("${ARGN}" STREQUAL C) # Stringify as the LANG parameter could be empty
-            set (EXT c)
-            set (LANG C)
-            set (LANG_H c-header)
-        else ()
-            # This is the default
-            set (EXT cpp)
-            set (LANG CXX)
-            set (LANG_H c++-header)
-        endif ()
-        # Relative path is resolved using CMAKE_CURRENT_SOURCE_DIR
-        if (IS_ABSOLUTE ${HEADER_PATHNAME})
-            set (ABS_HEADER_PATHNAME ${HEADER_PATHNAME})
-        else ()
-            set (ABS_HEADER_PATHNAME ${CMAKE_CURRENT_SOURCE_DIR}/${HEADER_PATHNAME})
-        endif ()
-        # Determine the precompiled header output filename
-        get_filename_component (HEADER_FILENAME ${HEADER_PATHNAME} NAME)
-        if (CMAKE_COMPILER_IS_GNUCXX)
-            # GNU g++
-            set (PCH_FILENAME ${HEADER_FILENAME}.gch)
-        else ()
-            # Clang or MSVC
-            set (PCH_FILENAME ${HEADER_FILENAME}.pch)
-        endif ()
-        if (TARGET ${TARGET_NAME})
-            if (MSVC)
-                # Add the dummy C++ or C implementation file if necessary
-                get_filename_component (NAME_WE ${HEADER_FILENAME} NAME_WE)
-                set (${LANG}_FILENAME ${NAME_WE}.${EXT})
-                get_filename_component (PATH ${HEADER_PATHNAME} PATH)
-                if (PATH)
-                    set (PATH ${PATH}/)
-                endif ()
-                list (FIND SOURCE_FILES ${PATH}${${LANG}_FILENAME} ${LANG}_FILENAME_FOUND)
-                if (${LANG}_FILENAME_FOUND STREQUAL -1)
-                    if (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${${LANG}_FILENAME})
-                        # Only generate it once so that its timestamp is not touched unnecessarily
-                        file (WRITE ${CMAKE_CURRENT_BINARY_DIR}/${${LANG}_FILENAME} "// This is a generated file. DO NOT EDIT!\n\n#include \"${HEADER_FILENAME}\"")
-                    endif ()
-                    set (GEN_SOURCE_FILE ${CMAKE_CURRENT_BINARY_DIR}/${${LANG}_FILENAME})
-                    target_sources (${TARGET_NAME} PRIVATE ${GEN_SOURCE_FILE})
-                    source_group ("Source Files\\Generated" FILES ${GEN_SOURCE_FILE})
-                endif ()
-                if (VS)
-                    # VS is multi-config, the exact path is only known during actual build time based on effective build config
-                    set (PCH_PATHNAME "$(IntDir)${PCH_FILENAME}")
-                else ()
-                    set (PCH_PATHNAME ${CMAKE_CURRENT_BINARY_DIR}/${PCH_FILENAME})
-                endif ()
-                foreach (FILE ${SOURCE_FILES} ${GEN_SOURCE_FILE})
-                    if (FILE MATCHES \\.${EXT}$)
-                        if (FILE MATCHES ${NAME_WE}\\.${EXT}$)
-                            # Precompiling header file
-                            set_property (SOURCE ${FILE} APPEND_STRING PROPERTY COMPILE_FLAGS " /Fp${PCH_PATHNAME} /Yc${HEADER_FILENAME}")     # Need a leading space for appending
-                        else ()
-                            # Using precompiled header file
-                            set_property (SOURCE ${FILE} APPEND_STRING PROPERTY COMPILE_FLAGS " /Fp${PCH_PATHNAME} /Yu${HEADER_FILENAME} /FI${HEADER_FILENAME}")
-                        endif ()
-                    endif ()
-                endforeach ()
-                unset (${TARGET_NAME}_HEADER_PATHNAME)
-            elseif (XCODE)
-                # Precompiling and using precompiled header file
-                set_target_properties (${TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_GCC_PRECOMPILE_PREFIX_HEADER YES XCODE_ATTRIBUTE_GCC_PREFIX_HEADER ${ABS_HEADER_PATHNAME})
-                unset (${TARGET_NAME}_HEADER_PATHNAME)
-            else () # GCC or Clang
-                # Precompiling header file
-                get_directory_property (COMPILE_DEFINITIONS COMPILE_DEFINITIONS)
-                get_directory_property (INCLUDE_DIRECTORIES INCLUDE_DIRECTORIES)
-                get_target_property (TYPE ${TARGET_NAME} TYPE)
-                if (TYPE MATCHES SHARED)
-                    list (APPEND COMPILE_DEFINITIONS ${TARGET_NAME}_EXPORTS)
-                endif ()
-                # Clang for Android platform requires additional target compiler flag
-                if (ANDROID)
-                    set (ARCH "--target=${ANDROID_LLVM_TRIPLE} --gcc-toolchain=${ANDROID_TOOLCHAIN_ROOT}")  # Stringify here to ensure they are not treated as list
-                endif ()
-                # Use PIC flags as necessary, except when compiling using MinGW which already uses PIC flags for all codes
-                if (NOT MINGW)
-                    get_target_property (PIC ${TARGET_NAME} POSITION_INDEPENDENT_CODE)
-                    if (PIC)
-                        set (PIC_FLAGS -fPIC)
-                    endif ()
-                endif ()
-                get_target_property (VISIBILITY_PRESET ${TARGET_NAME} ${LANG}_VISIBILITY_PRESET)
-                set (CVP -fvisibility=${VISIBILITY_PRESET})
-                get_target_property (VISIBILITY_INLINES_HIDDEN ${TARGET_NAME} VISIBILITY_INLINES_HIDDEN)
-                if (VISIBILITY_INLINES_HIDDEN)
-                    set (VID -fvisibility-inlines-hidden)
-                endif ()
-                if (LANG STREQUAL CXX)
-                    get_target_property (CXX_STANDARD ${TARGET_NAME} CXX_STANDARD)
-                    set (CXX_STANDARD -std=c++${CXX_STANDARD})
-                endif ()
-                string (REPLACE ";" " -D" COMPILE_DEFINITIONS "-D${COMPILE_DEFINITIONS}")
-                string (REPLACE "\"" "\\\"" COMPILE_DEFINITIONS ${COMPILE_DEFINITIONS})
-                string (REPLACE ";" "\" -I\"" INCLUDE_DIRECTORIES "-I\"${INCLUDE_DIRECTORIES}\"")
-                if (CMAKE_SYSROOT)
-                    set (SYSROOT_FLAGS "--sysroot=\"${CMAKE_SYSROOT}\"")
-                endif ()
-                # Make sure the precompiled headers are not stale by creating custom rules to re-compile the header as necessary
-                file (MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PCH_FILENAME})
-                set (ABS_PATH_PCH ${CMAKE_CURRENT_BINARY_DIR}/${HEADER_FILENAME})
-                foreach (CONFIG ${CMAKE_CONFIGURATION_TYPES} ${CMAKE_BUILD_TYPE})   # These two vars are mutually exclusive
-                    # Generate *.rsp containing configuration specific compiler flags
-                    string (TOUPPER ${CONFIG} UPPERCASE_CONFIG)
-                    file (WRITE ${ABS_PATH_PCH}.${CONFIG}.pch.rsp.new "${ARCH} ${COMPILE_DEFINITIONS} ${SYSROOT_FLAGS} ${CLANG_${LANG}_FLAGS} ${CMAKE_${LANG}_FLAGS} ${CMAKE_${LANG}_FLAGS_${UPPERCASE_CONFIG}} ${PIC_FLAGS} ${CVP} ${VID} ${CXX_STANDARD} ${INCLUDE_DIRECTORIES} -c -x ${LANG_H}")
-                    execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ABS_PATH_PCH}.${CONFIG}.pch.rsp.new ${ABS_PATH_PCH}.${CONFIG}.pch.rsp)
-                    file (REMOVE ${ABS_PATH_PCH}.${CONFIG}.pch.rsp.new)
-                    if (NOT ${TARGET_NAME}_PCH_DEPS)
-                        if (NOT CMAKE_CURRENT_SOURCE_DIR EQUAL CMAKE_CURRENT_BINARY_DIR)
-                            # Create a dummy initial PCH file in the Out-of-source build tree to keep CLion happy
-                            execute_process (COMMAND ${CMAKE_COMMAND} -E touch ${ABS_PATH_PCH})
-                        endif ()
-                        # Determine the dependency list
-                        execute_process (COMMAND ${CMAKE_${LANG}_COMPILER} @${ABS_PATH_PCH}.${CONFIG}.pch.rsp -MTdeps -MM -MF ${ABS_PATH_PCH}.d ${ABS_HEADER_PATHNAME} RESULT_VARIABLE ${LANG}_COMPILER_EXIT_CODE)
-                        if (NOT ${LANG}_COMPILER_EXIT_CODE EQUAL 0)
-                            message (FATAL_ERROR "Could not generate dependency list for PCH. There is something wrong with your compiler toolchain. "
-                                "Ensure its bin path is in the PATH environment variable or ensure CMake can find CC/CXX in your build environment.")
-                        endif ()
-                        file (STRINGS ${ABS_PATH_PCH}.d ${TARGET_NAME}_PCH_DEPS)
-                        string (REGEX REPLACE "^deps: *| *\\; *" ";" ${TARGET_NAME}_PCH_DEPS ${${TARGET_NAME}_PCH_DEPS})
-                        string (REGEX REPLACE "\\\\ " "\ " ${TARGET_NAME}_PCH_DEPS "${${TARGET_NAME}_PCH_DEPS}")    # Need to stringify the second time to preserve the semicolons
-                    endif ()
-                    # Create the rule that depends on the included headers
-                    add_custom_command (OUTPUT ${HEADER_FILENAME}.${CONFIG}.pch.trigger
-                        COMMAND ${CMAKE_${LANG}_COMPILER} @${ABS_PATH_PCH}.${CONFIG}.pch.rsp -o ${PCH_FILENAME}/${PCH_FILENAME}.${CONFIG} ${ABS_HEADER_PATHNAME}
-                        COMMAND ${CMAKE_COMMAND} -E touch ${HEADER_FILENAME}.${CONFIG}.pch.trigger
-                        DEPENDS ${ABS_PATH_PCH}.${CONFIG}.pch.rsp ${${TARGET_NAME}_PCH_DEPS}
-                        COMMENT "Precompiling header file '${HEADER_FILENAME}' for ${CONFIG} configuration")
-                    add_make_clean_files (${PCH_FILENAME}/${PCH_FILENAME}.${CONFIG})
-                endforeach ()
-                # Using precompiled header file
-                set (CMAKE_${LANG}_FLAGS "${CMAKE_${LANG}_FLAGS} -include \"${ABS_PATH_PCH}\" -Winvalid-pch")   # Catch the invalid PCH sooner
-                unset (${TARGET_NAME}_HEADER_PATHNAME)
-                # Add the dummy source file(s) to trigger the custom command output rule
-                if (CMAKE_CONFIGURATION_TYPES)
-                    # Multi-config, trigger all rules and let the compiler to choose which precompiled header is suitable to use
-                    foreach (CONFIG ${CMAKE_CONFIGURATION_TYPES})
-                        list (APPEND TRIGGERS ${HEADER_FILENAME}.${CONFIG}.pch.trigger)
-                    endforeach ()
-                else ()
-                    # Single-config, just trigger the corresponding rule matching the current build configuration
-                    set (TRIGGERS ${HEADER_FILENAME}.${CMAKE_BUILD_TYPE}.pch.trigger)
-                endif ()
-                target_sources (${TARGET_NAME} PRIVATE ${TRIGGERS})
-            endif ()
-        else ()
-            # The target has not been created yet, so set an internal variable to come back here again later
-            set (${TARGET_NAME}_HEADER_PATHNAME ${ARGV})
-        endif ()
-    endif ()
-endmacro ()
 
 # Macro for finding file in Urho3D build tree or Urho3D SDK
 macro (find_Urho3D_file VAR NAME)
@@ -1767,10 +1594,6 @@ macro (_setup_target)
     # Link libraries
     define_dependency_libs (${TARGET_NAME})
     target_link_libraries (${TARGET_NAME} PRIVATE ${ABSOLUTE_PATH_LIBS} ${LIBS})
-    # Enable PCH if requested
-    if (${TARGET_NAME}_HEADER_PATHNAME)
-        enable_pch (${${TARGET_NAME}_HEADER_PATHNAME})
-    endif ()
     # Extra compiler flags for Xcode which are dynamically changed based on active arch in order to support Mach-O universal binary targets
     # We don't add the ABI flag for Xcode because it automatically passes '-arch i386' compiler flag when targeting 32 bit which does the same thing as '-m32'
     if (XCODE)

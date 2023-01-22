@@ -235,9 +235,6 @@ execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_B
 file (REMOVE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new)
 source_group ("Source Files\\Generated" FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)
 
-# Precompile the header after the export header file has been generated
-enable_pch (precompiled.h)
-
 if (NOT ANDROID AND NOT WEB)
     file (READ .soversion SOVERSION)
     string (STRIP ${SOVERSION} SOVERSION)
