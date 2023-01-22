@@ -345,7 +345,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
 # TODO: Либы подключаются без учёта дефайнов
 target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjson
     recast detour detour_crowd detour_tile_cache box2d lz4 pugixml freetype
-    stanhull civetweb slikenet ik)
+    stanhull civetweb slikenet ik etcpack)
 
 # Не линкуем LibCpuId при сборке для Linux
 if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
