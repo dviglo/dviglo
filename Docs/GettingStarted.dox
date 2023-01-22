@@ -148,7 +148,6 @@ A number of build options can be defined when invoking the build scripts or when
 |URHO3D_WIN32_CONSOLE |0|Use console main() instead of WinMain() as entry point when setting up Windows executable targets (Windows platform only)|
 |URHO3D_MACOSX_BUNDLE |0|Use MACOSX_BUNDLE when setting up macOS executable targets (macOS platform only)|
 |URHO3D_LIB_TYPE      |STATIC|Specify Urho3D library type, possible values are STATIC (default) and SHARED (not available for Emscripten)|
-|URHO3D_SCP_TO_TARGET |-|Use scp to transfer executables to target system (RPI and generic ARM cross-compiling build only), SSH digital key must be setup first for this to work, typical value has a pattern of usr@tgt:remote-loc|
 |URHO3D_USE_LIB64_RPM |0|Enable 64-bit RPM CPack generator using /usr/lib64 and disable all other generators (Debian-based host only, which uses /usr/lib by default)|
 |URHO3D_USE_LIB_DEB   |0|Enable 64-bit DEB CPack generator using /usr/lib and disable all other generators (Redhat-based host only, which uses /usr/lib64 by default)|
 |URHO3D_HOME          |-|Path to Urho3D build tree or SDK installation location (downstream project only)|
@@ -264,7 +263,7 @@ For cross-compiling build on a Linux host system, firstly set the RPI_PREFIX env
 
 Execute cmake_raspi.sh then go to the build tree to execute make command. You may pass the optional RPI_ABI build option to specifically target for the Raspberry Pi 2. After the build is complete, the ARM executables can be found in the build tree's "bin" subdirectory.
 
-You can also build, deploy, run/debug (as C/C++ Remote %Application) using Eclipse IDE. To do that, execute cmake_eclipse.sh with "-DRPI=1" build option set. Import the CMake generated Eclipse project in the build tree into Eclipse's workspace. Build the project as usual. Optionally, use the "URHO3D_SCP_TO_TARGET" build option to automatically deploy the ARM executables to target Raspberry Pi device as part of build process; or configure Eclipse to perform a "download to target path" in the Run/Debug configuration for C/C++ Remote %Application. Either way, you have to configure the Run/Debug configuration to let it know how to reach your target Raspberry Pi device.
+You can also build, deploy, run/debug (as C/C++ Remote %Application) using Eclipse IDE. To do that, execute cmake_eclipse.sh with "-DRPI=1" build option set. Import the CMake generated Eclipse project in the build tree into Eclipse's workspace. Build the project as usual.
 
 \section Building_GenericARM Generic ARM build process (EXPERIMENTAL)
 
@@ -276,7 +275,7 @@ For cross-compiling build on a Linux host system, firstly set the ARM_PREFIX env
 
 Execute cmake_arm.sh then go to the build tree to execute make command. You may pass the optional ARM_ABI_FLAGS build option to specifically target the CPU and FPU on your ARM board. For example: "-mcpu=cortex-a9 -mfpu=neon-fp16" for ODROID-X2, "-mcpu=cortex-a53" for ODROID-C2, "-mcpu=cortex-a7 -mfpu=neon-vfpv4" for Orange Pi, etc. After the build is complete, the ARM executables can be found in the build tree's "bin" subdirectory.
 
-You can also build, deploy, run/debug (as C/C++ Remote %Application) using Eclipse IDE. To do that, execute cmake_eclipse.sh with "-DARM=1" build option set. Import the CMake generated Eclipse project in the build tree into Eclipse's workspace. Build the project as usual. Optionally, use the "URHO3D_SCP_TO_TARGET" build option to automatically deploy the ARM executables to target ARM board as part of build process; or configure Eclipse to perform a "download to target path" in the Run/Debug configuration for C/C++ Remote %Application. Either way, you have to configure the Run/Debug configuration to let it know how to reach your target ARM board.
+You can also build, deploy, run/debug (as C/C++ Remote %Application) using Eclipse IDE. To do that, execute cmake_eclipse.sh with "-DARM=1" build option set. Import the CMake generated Eclipse project in the build tree into Eclipse's workspace. Build the project as usual.
 
 \section Building_MinGW MinGW cross-compile build process
 
