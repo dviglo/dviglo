@@ -47,10 +47,6 @@ For further reference, see:
 \ref FileFormats "Custom file formats" <br>
 \ref CodingConventions "Coding conventions" <br>
 \ref ContributionChecklist "Contribution checklist" <br>
-\ref ScriptAPI "Scripting API (generated)" <br>
-\ref LuaScriptAPI "Lua scripting API (generated)" <br>
-\ref EventList "Event list (generated)" <br>
-\ref AttributeList "Attribute list (generated)" <br>
 
 For Urho3D related links and projects, see \ref ExternalLinks "External links".
 
