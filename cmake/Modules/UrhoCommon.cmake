@@ -199,9 +199,6 @@ if (PROJECT_NAME STREQUAL Urho3D)
     unset (URHO3D_LUA_RAW_SCRIPT_LOADER CACHE)
     option (URHO3D_PLAYER "Build Urho3D script player" TRUE)
     option (URHO3D_SAMPLES "Build sample applications" TRUE)
-    option (URHO3D_BINDINGS "Enable API binding generation support for script subsystems")
-    cmake_dependent_option (URHO3D_CLANG_TOOLS "Build Clang tools (native on host system only)" FALSE "NOT CMAKE_CROSSCOMPILING" FALSE)
-    mark_as_advanced (URHO3D_BINDINGS URHO3D_CLANG_TOOLS)
     cmake_dependent_option (URHO3D_TOOLS "Build tools (native, RPI, and ARM on Linux only)" TRUE "NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT WEB" FALSE)
     cmake_dependent_option (URHO3D_EXTRAS "Build extras (native, RPI, and ARM on Linux only)" FALSE "NOT IOS AND NOT TVOS AND NOT ANDROID AND NOT WEB" FALSE)
     option (URHO3D_DOCS "Generate documentation as part of normal build")
@@ -380,37 +377,6 @@ endif ()
 
 # Union all the sysroot variables into one so it can be referred to generically later
 set (SYSROOT ${CMAKE_SYSROOT} ${MINGW_SYSROOT} ${IOS_SYSROOT} ${TVOS_SYSROOT} CACHE INTERNAL "Path to system root of the cross-compiling target")  # SYSROOT is empty for native build
-
-# Clang tools building
-if (URHO3D_CLANG_TOOLS OR URHO3D_BINDINGS)
-    # Ensure LLVM/Clang is installed
-    find_program (LLVM_CONFIG NAMES llvm-config llvm-config-64 llvm-config-32 HINTS $ENV{LLVM_CLANG_ROOT}/bin DOC "LLVM config tool" NO_CMAKE_FIND_ROOT_PATH)
-    if (NOT LLVM_CONFIG)
-        message (FATAL_ERROR "Could not find LLVM/Clang installation")
-    endif ()
-endif ()
-if (URHO3D_CLANG_TOOLS)
-    set (URHO3D_LIB_TYPE SHARED)
-    # Set build options that would maximise the AST of Urho3D library
-    foreach (OPT
-            URHO3D_ANGELSCRIPT
-            URHO3D_DATABASE_SQLITE
-            URHO3D_FILEWATCHER
-            URHO3D_IK
-            URHO3D_LOGGING
-            URHO3D_LUA
-            URHO3D_NAVIGATION
-            URHO3D_NETWORK
-            URHO3D_PHYSICS
-            URHO3D_PHYSICS2D
-            URHO3D_PROFILING
-            URHO3D_URHO2D)
-        set (${OPT} 1)
-    endforeach ()
-    foreach (OPT URHO3D_TESTING URHO3D_LUAJIT URHO3D_DATABASE_ODBC URHO3D_TRACY_PROFILING)
-        set (${OPT} 0)
-    endforeach ()
-endif ()
 
 # Enable testing
 if (URHO3D_TESTING)
