@@ -186,18 +186,6 @@ execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_B
 file (REMOVE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new)
 source_group ("Source Files\\Generated" FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)
 
-if (NOT ANDROID AND NOT WEB)
-    file (READ .soversion SOVERSION)
-    string (STRIP ${SOVERSION} SOVERSION)
-    string (REGEX MATCH "([^.]+)\\.([^.]+)\\.(.+)" MATCHED ${SOVERSION})
-    if (MATCHED)
-        set_target_properties (${TARGET_NAME} PROPERTIES VERSION ${MATCHED} SOVERSION ${CMAKE_MATCH_1})
-    else ()
-        message (FATAL_ERROR "The .soversion file is corrupted. It should contain a version number with this format major(0xFFFF).minor(0xFF).patch-level(0xFF). e.g.: 0.1.2")
-    endif ()
-else ()
-    set_target_properties (${TARGET_NAME} PROPERTIES NO_SONAME TRUE)
-endif ()
 # TODO: to use 'xcframework' as Apple discourages the use of 'lipo' to create universal binary combining libs/frameworks from different SDK
 # As of Xcode 12 the 'iphonesimulator' SDK produces binary for both 'x86_64' and 'arm64' archs
 # This has caused problem with 'lipo' to combine the already FAT lib from 'iphonesimulator' SDK with 'iphoneos' SDK containing 'arm64' arch
