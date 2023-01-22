@@ -2,8 +2,14 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME Tracy)
+# Название таргета
+set(target_name tracy)
+
+# Создаём список h-файлов
+file(GLOB_RECURSE source_files Tracy/*.h)
+
+# Нужен единственный cpp-файл
+list(APPEND source_files Tracy/TracyClient.cpp)
 
 # Definition
 add_definitions (-DTRACY_ENABLE=1)
@@ -21,14 +27,14 @@ if (ANDROID)
     add_definitions (-DTRACY_TIMER_FALLBACK=1)
 endif ()
 
-# Define source files
-define_source_files (TracyClient.cpp)
+# Создаём статическую библиотеку
+add_library(${target_name} STATIC ${source_files})
 
-# Setup target
-setup_library ()
-
-# Install headers for building the Urho3D library
-install_header_files (DIRECTORY ./ DESTINATION ${DEST_INCLUDE_DIR}/ThirdParty/Tracy FILES_MATCHING PATTERN *.hpp *.h BUILD_TREE_ONLY)  # Note: the trailing slash is significant
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Tracy FILES ${source_files})

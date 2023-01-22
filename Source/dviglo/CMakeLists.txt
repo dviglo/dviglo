@@ -347,6 +347,10 @@ target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjso
     recast detour detour_crowd detour_tile_cache box2d lz4 pugixml freetype
     stanhull civetweb slikenet ik etcpack)
 
+if (URHO3D_TRACY_PROFILING)
+    target_link_libraries(${TARGET_NAME} PUBLIC tracy)
+endif ()
+
 # Не линкуем LibCpuId при сборке для Linux
 if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
     target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
