@@ -271,11 +271,6 @@ cmake_dependent_option (URHO3D_MINIDUMPS "Enable minidumps on crash (VS only)" T
 # By default Windows platform setups main executable as Windows application with WinMain() as entry point
 cmake_dependent_option (URHO3D_WIN32_CONSOLE "Use console main() instead of WinMain() as entry point when setting up Windows executable targets (Windows platform only)" FALSE "WIN32" FALSE)
 cmake_dependent_option (URHO3D_MACOSX_BUNDLE "Use MACOSX_BUNDLE when setting up macOS executable targets (Xcode/macOS platform only)" FALSE "XCODE AND NOT ARM" FALSE)
-if (CMAKE_CROSSCOMPILING AND NOT ANDROID AND NOT APPLE)
-    set (URHO3D_SCP_TO_TARGET "" CACHE STRING "Use scp to transfer executables to target system (RPI and generic ARM cross-compiling build only), SSH digital key must be setup first for this to work, typical value has a pattern of usr@tgt:remote-loc")
-else ()
-    unset (URHO3D_SCP_TO_TARGET CACHE)
-endif ()
 if (MINGW AND CMAKE_CROSSCOMPILING)
     set (MINGW_PREFIX "" CACHE STRING "Prefix path to MinGW cross-compiler tools (MinGW cross-compiling build only)")
     set (MINGW_SYSROOT "" CACHE PATH "Path to MinGW system root (MinGW only); should only be used when the system root could not be auto-detected")
@@ -1317,10 +1312,6 @@ macro (setup_executable)
     endif ()
     _setup_target ()
 
-    if (URHO3D_SCP_TO_TARGET)
-        add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND scp $<TARGET_FILE:${TARGET_NAME}> ${URHO3D_SCP_TO_TARGET} || exit 0
-            COMMENT "Scp-ing ${TARGET_NAME} executable to target system")
-    endif ()
     if (WIN32 AND NOT ARG_NODEPS AND URHO3D_LIB_TYPE STREQUAL SHARED)
         # Make a copy of the Urho3D DLL to the runtime directory in the build tree
         if (TARGET Urho3D)
@@ -1401,9 +1392,6 @@ macro (setup_library)
                 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w")
             endif ()
         endif ()
-    elseif (URHO3D_SCP_TO_TARGET)
-        add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND scp $<TARGET_FILE:${TARGET_NAME}> ${URHO3D_SCP_TO_TARGET} || exit 0
-            COMMENT "Scp-ing ${TARGET_NAME} library to target system")
     endif ()
 endmacro ()
 
