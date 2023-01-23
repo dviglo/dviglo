@@ -39,8 +39,6 @@ Although all required third-party libraries are included as source code, there a
     - libssl-dev (Debian-based)
     - openssl (OS X using homebrew)
 
-- For Raspberry Pi, follow the building prerequisite for Linux above, with the exception for display server. Raspberry Pi operating system usually already comes with Broadcom Video Core display server preinstalled. On top of that, you must also install this package: libevdev2 (Raspbian) or libevdev (Pidora).
-
 - For Android, the Android Studio (version 4.0 or later) should include everything necessary. Make sure the Android NDK r21d is installed with the Android SDK Manager and CMake version 3.17.3 is installed on the host machine. Adjust the "buildSrc/src/main/kotlin/UrhoCommon.kt" accordingly if your host has different NDK and CMake version.
 
 - For Web, the Emscripten SDK (version 1.39.0 or later) needs to be installed with the upstream LLVM WASM backend is activated. On Windows host also MinGW-W64 compiler toolchain is required.

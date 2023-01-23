@@ -107,22 +107,6 @@ endif ()
 include (CheckHost)
 include (CheckCompilerToolchain)
 
-# Extra linker flags for linking against indirect dependencies (linking shared lib with dependencies)
-if (RPI AND NOT RPI_ABI STREQUAL RPI4)
-    # Extra linker flags for legacy Raspbian because it installs VideoCore libraries in the "/opt/vc/lib" directory (no harm in doing so for other distros)
-    set (INDIRECT_DEPS_EXE_LINKER_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} -Wl,-rpath-link,\"${CMAKE_SYSROOT}/opt/vc/lib\"")      # CMAKE_SYSROOT is empty when not cross-compiling
-endif ()
-if (ARM AND CMAKE_SYSTEM_NAME STREQUAL Linux AND CMAKE_CROSSCOMPILING AND CMAKE_LIBRARY_ARCHITECTURE)
-    # Check if the "cross" linker has already the library search path patched, see '129_multiarch_libpath.patch'
-    execute_process (COMMAND ${CMAKE_LINKER} --verbose COMMAND grep -i search OUTPUT_VARIABLE LD_SEARCH_PATHS)  # We only support *nix system for cross-compiling
-    if (NOT LD_SEARCH_PATHS MATCHES /lib/${CMAKE_LIBRARY_ARCHITECTURE})
-        # If not yet patched then the linker needs the following in order to link correctly
-        set (INDIRECT_DEPS_EXE_LINKER_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} -Wl,-rpath-link,\"${CMAKE_SYSROOT}/usr/local/lib/${CMAKE_LIBRARY_ARCHITECTURE}\":\"${CMAKE_SYSROOT}/lib/${CMAKE_LIBRARY_ARCHITECTURE}\":\"${CMAKE_SYSROOT}/usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}\"")
-    endif ()
-endif ()
-set (CMAKE_REQUIRED_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} ${CMAKE_REQUIRED_FLAGS}")
-set (CMAKE_EXE_LINKER_FLAGS "${INDIRECT_DEPS_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_FLAGS}")
-
 # Define all supported build options
 include (CMakeDependentOption)
 cmake_dependent_option (IOS "Setup build for iOS platform" FALSE "XCODE" FALSE)
@@ -148,13 +132,7 @@ if (RPI OR (ARM AND (APPLE OR URHO3D_64BIT OR "${ARM_ABI_FLAGS}" MATCHES neon)))
     # TODO: remove this logic when the compiler flags are set in each toolchain file, such that the CheckCompilerToolchain can perform the check automatically
     set (NEON 1)
 endif ()
-# For Raspberry Pi, find Broadcom VideoCore IV firmware
-if (RPI)
-    # TODO: this logic is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling
-    find_package (VideoCore REQUIRED)
-    include_directories (SYSTEM ${VIDEOCORE_INCLUDE_DIRS})
-    link_directories (${VIDEOCORE_LIBRARY_DIRS})
-endif ()
+
 if (PROJECT_NAME STREQUAL Urho3D)
     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED (not available for Emscripten)")
     # Non-Windows platforms always use OpenGL, the URHO3D_OPENGL variable will always be forced to TRUE, i.e. it is not an option at all
@@ -817,9 +795,6 @@ macro (define_dependency_libs TARGET)
             # Linux
             if (NOT WEB)
                 list (APPEND LIBS dl m rt)
-            endif ()
-            if (RPI)
-                list (APPEND ABSOLUTE_PATH_LIBS ${VIDEOCORE_LIBRARIES})
             endif ()
         endif ()
     endif ()
