@@ -1659,21 +1659,3 @@ if (NOT CMAKE_HOST_WIN32 AND "$ENV{USE_CCACHE}")
             "In order to rectify this, the build tree must be regenerated after the PATH environment variable has been adjusted accordingly.")
     endif ()
 endif ()
-
-# Post-CMake fixes
-if (IOS)
-    # TODO: can be removed when CMake minimum required has reached 3.4
-    if (CMAKE_VERSION VERSION_LESS 3.4)
-        # Due to a bug in the CMake/Xcode generator (fixed in 3.4) that prevents iOS targets (library and bundle) to be installed correctly
-        # (see http://public.kitware.com/Bug/bug_relationship_graph.php?bug_id=12506&graph=dependency),
-        # below temporary fix is required to work around the bug
-        list (APPEND POST_CMAKE_FIXES COMMAND sed -i '' 's/\$$\(EFFECTIVE_PLATFORM_NAME\)//g' ${CMAKE_BINARY_DIR}/CMakeScripts/install_postBuildPhase.make* || exit 0)
-    endif ()
-elseif (TVOS)
-    # Almost the same bug as iOS one above but not quite, most probably because CMake does not support AppleTV platform yet
-    list (APPEND POST_CMAKE_FIXES COMMAND sed -i '' 's/\)\$$\(EFFECTIVE_PLATFORM_NAME\)/\) -DEFFECTIVE_PLATFORM_NAME=$$\(EFFECTIVE_PLATFORM_NAME\)/g' ${CMAKE_BINARY_DIR}/CMakeScripts/install_postBuildPhase.make* || exit 0)
-    add_custom_target (APPLETV_POST_CMAKE_FIX COMMAND sed -i '' -E 's,\(Debug|RelWithDebInfo|Release\)/,$$\(CONFIGURATION\)$$\(EFFECTIVE_PLATFORM_NAME\)/,g' ${CMAKE_BINARY_DIR}/Source/Urho3D/CMakeScripts/Urho3D_cmakeRulesBuildPhase.make* || exit 0)
-endif ()
-if (POST_CMAKE_FIXES)
-    add_custom_target (POST_CMAKE_FIXES ALL ${POST_CMAKE_FIXES} COMMENT "Applying post-cmake fixes")
-endif ()
