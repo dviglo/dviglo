@@ -122,20 +122,8 @@ endif ()
 string (REPLACE ";" "/[^;]+;" EXCLUDE_PATTERNS "${EXCLUDED_SOURCE_DIRS};")
 define_source_files (EXCLUDE_PATTERNS ${EXCLUDE_PATTERNS} GLOB_CPP_PATTERNS *.cpp ${GLOB_OBJC_PATTERN} RECURSE GROUP)
 
-# Define generated source files
-set (URHO3D_DEPS ${STATIC_LIBRARY_TARGETS})
-if (TARGET LuaJIT_universal)
-    list (REMOVE_ITEM URHO3D_DEPS LuaJIT)
-    set (LuaJIT_universal_symbolic LuaJIT_universal_symbolic)
-    add_custom_command (OUTPUT ${LuaJIT_universal_symbolic}
-        COMMAND xcodebuild ARCHS="$(ARCHS)" -target LuaJIT_universal -configuration $(CONFIGURATION)
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-    list (APPEND SYMBOLIC_SOURCES ${LuaJIT_universal_symbolic})
-endif ()
-set_source_files_properties (${SYMBOLIC_SOURCES} PROPERTIES SYMBOLIC TRUE)
-
 # Aggregate all source files
-list (APPEND SOURCE_FILES ${GEN_CPP_FILES} ${LUA_GEN_CPP_FILES} dviglo.h ${SYMBOLIC_SOURCES})
+list (APPEND SOURCE_FILES ${GEN_CPP_FILES} ${LUA_GEN_CPP_FILES} dviglo.h)
 
 # Define dependency libs
 # Add include directories to find the precompiled header, export header, and installed headers from third-party libs
