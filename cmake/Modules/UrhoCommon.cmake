@@ -125,9 +125,6 @@ option (URHO3D_URHO2D "Enable 2D graphics support" TRUE)
 option (URHO3D_GLES3 "Enable GLES3" FALSE)
 #option (URHO3D_WEBP "Enable WebP support" TRUE)
 unset(URHO3D_WEBP CACHE)
-if (ARM AND NOT ANDROID AND NOT APPLE)
-    set (ARM_ABI_FLAGS "" CACHE STRING "Specify ABI compiler flags (ARM on Linux platform only); e.g. Orange-Pi Mini 2 could use '-mcpu=cortex-a7 -mfpu=neon-vfpv4'")
-endif ()
 
 if (PROJECT_NAME STREQUAL Urho3D)
     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default) and SHARED (not available for Emscripten)")
@@ -390,16 +387,6 @@ if (APPLE)
             endif ()
         endif ()
     endif ()
-    # Common macOS, iOS, and tvOS bundle setup
-    if (URHO3D_MACOSX_BUNDLE OR (APPLE AND ARM))
-        # Only set the bundle properties to its default when they are not explicitly specified by user
-        if (NOT MACOSX_BUNDLE_GUI_IDENTIFIER)
-            set (MACOSX_BUNDLE_GUI_IDENTIFIER io.urho3d.\${PRODUCT_NAME:rfc1034identifier:lower})
-        endif ()
-        if (NOT MACOSX_BUNDLE_BUNDLE_NAME)
-            set (MACOSX_BUNDLE_BUNDLE_NAME \${PRODUCT_NAME})
-        endif ()
-    endif ()
 endif ()
 if (MSVC)
     # VS-specific setup
@@ -429,32 +416,7 @@ else ()
     set (CMAKE_VISIBILITY_INLINES_HIDDEN true)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-invalid-offsetof")
     if (NOT ANDROID)    # Most of the flags are already setup in Android toolchain file
-        if (ARM AND CMAKE_SYSTEM_NAME STREQUAL Linux)
-            # Common compiler flags for aarch64-linux-gnu and arm-linux-gnueabihf, we do not support ARM on Windows for now
-            set (ARM_CFLAGS "${ARM_CFLAGS} -fsigned-char -pipe")
-            if (NOT URHO3D_64BIT)
-                # We only support armhf distros, so turn on hard-float by default
-                set (ARM_CFLAGS "${ARM_CFLAGS} -mfloat-abi=hard -Wno-psabi")
-            endif ()
-            # The configuration is done here instead of in CMake toolchain file because we also support native build which does not use toolchain file at all
-            if (FALSE) # Не RPI
-            else ()
-                # Generic ARM-specific setup
-                add_definitions (-DGENERIC_ARM)
-                if (URHO3D_64BIT)
-                    # aarch64 has only one valid arch so far
-                    set (ARM_CFLAGS "${ARM_CFLAGS} -march=armv8-a")
-                elseif (URHO3D_ANGELSCRIPT)
-                    # Angelscript seems to fail to compile using Thumb states, so force to use ARM states by default
-                    set (ARM_CFLAGS "${ARM_CFLAGS} -marm")
-                endif ()
-                if (ARM_ABI_FLAGS)
-                    # Instead of guessing all the possible ABIs, user would have to specify the ABI compiler flags explicitly via ARM_ABI_FLAGS build option
-                    set (ARM_CFLAGS "${ARM_CFLAGS} ${ARM_ABI_FLAGS}")
-                endif ()
-            endif ()
-            set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ARM_CFLAGS}")
-            set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ARM_CFLAGS}")
+        if (FALSE) # ARM
         else ()
             if (NOT XCODE AND NOT WEB)
                 set (CMAKE_C_FLAGS "-mtune=generic ${CMAKE_C_FLAGS}")
@@ -775,14 +737,6 @@ macro (define_dependency_libs TARGET)
                 list (APPEND LIBS dbghelp)
             endif ()
         elseif (APPLE)
-            if (ARM)
-                list (APPEND LIBS "-framework AudioToolbox" "-framework AVFoundation" "-framework CoreAudio" "-framework CoreBluetooth" "-framework CoreGraphics" "-framework Foundation" "-framework GameController" "-framework OpenGLES" "-framework QuartzCore" "-framework UIKit")
-                if (NOT TVOS)
-                    list (APPEND LIBS "-framework CoreMotion")
-                endif ()
-            else ()
-                list (APPEND LIBS "-framework AudioToolbox" "-framework Carbon" "-framework Cocoa" "-framework CoreFoundation" "-framework SystemConfiguration" "-framework CoreAudio" "-framework CoreBluetooth" "-framework CoreServices" "-framework CoreVideo" "-framework ForceFeedback" "-framework IOKit" "-framework OpenGL")
-            endif ()
         endif ()
 
         # Graphics
@@ -794,12 +748,6 @@ macro (define_dependency_libs TARGET)
                 # Do nothing
             elseif (WIN32)
                 list (APPEND LIBS opengl32)
-            elseif (ANDROID OR ARM)
-                if (URHO3D_GLES3)
-                    list (APPEND LIBS GLESv3)
-                else ()
-                    list (APPEND LIBS GLESv1_CM GLESv2)
-                endif ()
             else ()
                 list (APPEND LIBS GL)
             endif ()
@@ -960,10 +908,6 @@ macro (define_resource_dirs)
         if (NOT RESOURCE_FILES)
             # Default app bundle icon
             set (RESOURCE_FILES ${CMAKE_SOURCE_DIR}/bin/Data/Textures/UrhoIcon.icns)
-            if (ARM)
-                # Default app icon on the iOS/tvOS home screen
-                list (APPEND RESOURCE_FILES ${CMAKE_SOURCE_DIR}/bin/Data/Textures/UrhoIcon.png)
-            endif ()
         endif ()
         # Group them together under 'Resources' in Xcode IDE
         source_group (Resources FILES ${RESOURCE_PAKS} ${RESOURCE_FILES})     # RESOURCE_PAKS could be empty if packaging is not requested
