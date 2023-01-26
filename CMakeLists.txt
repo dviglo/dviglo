@@ -40,6 +40,8 @@ set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 # Include UrhoCommon.cmake module after setting project name
 include (UrhoCommon)
 
+include(cmake/utils.cmake)
+
 # Setup SDK install destinations
 set (PATH_SUFFIX Urho3D)
 if (WIN32)
