@@ -5,6 +5,10 @@
 # Define target name
 set (TARGET_NAME Urho3D)
 
+# Отладочная версия библиотеки будут иметь суффикс _d.
+# Не работает для экзешников
+set(CMAKE_DEBUG_POSTFIX _d)
+
 if (MSVC)
     # Set warning level for Urho3D project
     add_compile_options (/W3)
@@ -69,7 +73,6 @@ if (ODBC_VERSION AND NOT ODBC_VERSION VERSION_LESS 3)
     add_definitions (-DODBC_3_OR_LATER)
 endif ()
 if (WIN32)
-    set (CMAKE_DEBUG_POSTFIX _d)
     if (NOT MINGW OR HAVE_RTL_OSVERSIONINFOW)
         add_definitions (-DHAVE_RTL_OSVERSIONINFOW)
     endif ()
