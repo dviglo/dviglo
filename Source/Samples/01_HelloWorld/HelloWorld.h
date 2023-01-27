@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../Sample.h"
 
 /// This first example, maintaining tradition, prints a "Hello World" message.
 /// Furthermore it shows:
