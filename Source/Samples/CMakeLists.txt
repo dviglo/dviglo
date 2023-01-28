@@ -14,7 +14,7 @@ endif ()
 project (Urho3D-Samples)
 
 # В IDE примеры будут помещаться в папку samples
-set (CMAKE_FOLDER samples)
+set(CMAKE_FOLDER samples)
 
 # Find Urho3D library
 find_package (Urho3D REQUIRED)
