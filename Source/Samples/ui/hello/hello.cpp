@@ -17,7 +17,7 @@
 #include <dviglo/ui/ui_events.h>
 #include <dviglo/ui/window.h>
 
-#include "hello_gui.h"
+#include "hello.h"
 
 #include <dviglo/debug_new.h>
 
