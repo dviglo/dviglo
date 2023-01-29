@@ -12,7 +12,7 @@
 #include <dviglo/io/log.h>
 #include <dviglo/ui/button.h>
 
-#include "ConsoleInput.h"
+#include "console_input.h"
 
 #include <dviglo/debug_new.h>
 

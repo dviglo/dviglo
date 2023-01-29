@@ -14,7 +14,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "Typography.h"
+#include "typography.h"
 
 #include <dviglo/debug_new.h>
 

@@ -8,7 +8,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "UIDrag.h"
+#include "drag.h"
 
 #include <dviglo/debug_new.h>
 

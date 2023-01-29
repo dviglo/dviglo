@@ -24,7 +24,7 @@
 #include <dviglo/ui/ui_events.h>
 #include <dviglo/ui/window.h>
 
-#include "Hello3DUI.h"
+#include "3d.h"
 
 #include <dviglo/debug_new.h>
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 /// Console input example.
 /// This sample demonstrates:
