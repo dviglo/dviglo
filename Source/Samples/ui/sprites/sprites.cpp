@@ -9,7 +9,7 @@
 #include <dviglo/ui/sprite.h>
 #include <dviglo/ui/ui.h>
 
-#include "Sprites.h"
+#include "sprites.h"
 
 #include <dviglo/debug_new.h>
 

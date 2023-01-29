@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 /// Moving sprites example.
 /// This sample demonstrates:
