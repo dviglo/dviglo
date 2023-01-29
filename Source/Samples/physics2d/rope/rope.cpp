@@ -20,7 +20,7 @@
 #include <dviglo/ui/font.h>
 #include <dviglo/ui/text.h>
 
-#include "Urho2DPhysicsRope.h"
+#include "rope.h"
 
 #include <dviglo/debug_new.h>
 

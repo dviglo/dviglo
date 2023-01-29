@@ -37,11 +37,10 @@
 
 #include <dviglo/debug_new.h>
 
-#include "Character2D.h"
-#include "Utilities2D/Sample2D.h"
-#include "Utilities2D/Mover.h"
-#include "Urho2DPlatformer.h"
-
+#include "character2d.h"
+#include "platformer.h"
+#include "../../Utilities2D/Sample2D.h"
+#include "../../Utilities2D/Mover.h"
 
 URHO3D_DEFINE_APPLICATION_MAIN(Urho2DPlatformer)
 

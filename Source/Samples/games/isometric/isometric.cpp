@@ -33,10 +33,10 @@
 
 #include <dviglo/debug_new.h>
 
-#include "Character2D.h"
-#include "Utilities2D/Sample2D.h"
-#include "Utilities2D/Mover.h"
-#include "Urho2DIsometricDemo.h"
+#include "character2d.h"
+#include "isometric.h"
+#include "../../Utilities2D/Sample2D.h"
+#include "../../Utilities2D/Mover.h"
 
 Urho2DIsometricDemo::Urho2DIsometricDemo(Context* context) :
     Sample(context),

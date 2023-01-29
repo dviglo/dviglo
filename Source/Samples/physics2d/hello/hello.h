@@ -4,27 +4,25 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 namespace Urho3D
 {
     class Node;
     class Scene;
-    class ConstraintRope2D;
 }
 
-/// Physics2D rope sample.
+/// Urho2D and Physics2D sample.
 /// This sample demonstrates:
-///     - Create revolute constraint
-///     - Create roop constraint
+///     - Creating both static and moving 2D physics objects to a scene
 ///     - Displaying physics debug geometry
-class Urho2DPhysicsRope : public Sample
+class Urho2DPhysics : public Sample
 {
-    URHO3D_OBJECT(Urho2DPhysicsRope, Sample);
+    URHO3D_OBJECT(Urho2DPhysics, Sample);
 
 public:
     /// Construct.
-    explicit Urho2DPhysicsRope(Context* context);
+    explicit Urho2DPhysics(Context* context);
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

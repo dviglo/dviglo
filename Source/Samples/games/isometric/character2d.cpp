@@ -4,8 +4,6 @@
 
 #include <dviglo/core/context.h>
 #include <dviglo/input/input.h>
-#include <dviglo/io/memory_buffer.h>
-#include <dviglo/physics_2d/physics_world_2d.h>
 #include <dviglo/physics_2d/rigid_body_2d.h>
 #include <dviglo/scene/scene.h>
 #include <dviglo/scene/scene_events.h>
@@ -14,9 +12,9 @@
 #include <dviglo/urho_2d/animated_sprite_2d.h>
 #include <dviglo/urho_2d/animation_set_2d.h>
 
-#include <dviglo/debug_new.h>
+#include "character2d.h"
 
-#include "Character2D.h"
+#include <dviglo/debug_new.h>
 
 // Character2D logic component
 Character2D::Character2D(Context* context) :
@@ -27,10 +25,8 @@ Character2D::Character2D(Context* context) :
     maxCoins_(0),
     remainingCoins_(0),
     remainingLifes_(3),
-    isClimbing_(false),
-    climb2_(false),
-    aboveClimbable_(false),
-    onSlope_(false)
+    moveSpeedScale_(1.0f),
+    zoom_(0.0f)
 {
 }
 
@@ -40,16 +36,11 @@ void Character2D::RegisterObject(Context* context)
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the 'Default' attribute mode which means it will be used both for saving into file, and network replication.
-    URHO3D_ATTRIBUTE("Wounded", wounded_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Killed", killed_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Timer", timer_, 0.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Move Speed Scale", moveSpeedScale_, 1.0f, AM_DEFAULT);
+    URHO3D_ATTRIBUTE("Camera Zoom", zoom_, 0.0f, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Coins In Level", maxCoins_, 0, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Remaining Coins", remainingCoins_, 0, AM_DEFAULT);
     URHO3D_ATTRIBUTE("Remaining Lifes", remainingLifes_, 3, AM_DEFAULT);
-    // Note that we don't load/save isClimbing_ as the contact listener already sets this bool.
-    URHO3D_ATTRIBUTE("Is Climbing Rope", climb2_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Is Above Climbable", aboveClimbable_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Is On Slope", onSlope_, false, AM_DEFAULT);
 }
 
 void Character2D::Update(float timeStep)
@@ -64,71 +55,44 @@ void Character2D::Update(float timeStep)
         return;
     }
 
-    // Set temporary variables
-    auto* input = GetSubsystem<Input>();
-    auto* body = GetComponent<RigidBody2D>();
     auto* animatedSprite = GetComponent<AnimatedSprite2D>();
-    bool onGround = false;
-    bool jump = false;
-
-    // Collision detection (AABB query)
-    Vector2 characterHalfSize = Vector2(0.16f, 0.16f);
-    auto* physicsWorld = GetScene()->GetComponent<PhysicsWorld2D>();
-    Vector<RigidBody2D*> collidingBodies;
-    physicsWorld->GetRigidBodies(collidingBodies, Rect(node_->GetWorldPosition2D() - characterHalfSize - Vector2(0.0f, 0.1f), node_->GetWorldPosition2D() + characterHalfSize));
-
-    if (collidingBodies.Size() > 1 && !isClimbing_)
-        onGround = true;
+    auto* input = GetSubsystem<Input>();
 
     // Set direction
-    Vector2 moveDir = Vector2::ZERO; // Reset
+    Vector3 moveDir = Vector3::ZERO; // Reset
+    float speedX = Clamp(MOVE_SPEED_X / zoom_, 0.4f, 1.0f);
+    float speedY = speedX;
 
     if (input->GetKeyDown(KEY_A) || input->GetKeyDown(KEY_LEFT))
     {
-        moveDir = moveDir + Vector2::LEFT;
+        moveDir = moveDir + Vector3::LEFT * speedX;
         animatedSprite->SetFlipX(false); // Flip sprite (reset to default play on the X axis)
     }
     if (input->GetKeyDown(KEY_D) || input->GetKeyDown(KEY_RIGHT))
     {
-        moveDir = moveDir + Vector2::RIGHT;
+        moveDir = moveDir + Vector3::RIGHT * speedX;
         animatedSprite->SetFlipX(true); // Flip sprite (flip animation on the X axis)
     }
 
-    // Jump
-    if ((onGround || aboveClimbable_) && (input->GetKeyPress(KEY_W) || input->GetKeyPress(KEY_UP)))
-        jump = true;
+    if (!moveDir.Equals(Vector3::ZERO))
+        speedY = speedX * moveSpeedScale_;
 
-    // Climb
-    if (isClimbing_)
-    {
-        if (!aboveClimbable_ && (input->GetKeyDown(KEY_UP) || input->GetKeyDown(KEY_W)))
-            moveDir = moveDir + Vector2(0.0f, 1.0f);
-
-        if (input->GetKeyDown(KEY_DOWN) || input->GetKeyDown(KEY_S))
-            moveDir = moveDir + Vector2(0.0f, -1.0f);
-    }
+    if (input->GetKeyDown(KEY_W) || input->GetKeyDown(KEY_UP))
+        moveDir = moveDir + Vector3::UP * speedY;
+    if (input->GetKeyDown(KEY_S) || input->GetKeyDown(KEY_DOWN))
+        moveDir = moveDir + Vector3::DOWN * speedY;
 
     // Move
-    if (!moveDir.Equals(Vector2::ZERO) || jump)
-    {
-        if (onSlope_)
-            body->ApplyForceToCenter(moveDir * MOVE_SPEED / 2, true); // When climbing a slope, apply force (todo: replace by setting linear velocity to zero when will work)
-        else
-            node_->Translate(Vector3(moveDir.x_, moveDir.y_, 0) * timeStep * 1.8f);
-        if (jump)
-            body->ApplyLinearImpulse(Vector2(0.0f, 0.17f) * MOVE_SPEED, body->GetMassCenter(), true);
-    }
+    if (!moveDir.Equals(Vector3::ZERO))
+        node_->Translate(moveDir * timeStep);
 
     // Animate
     if (input->GetKeyDown(KEY_SPACE))
     {
         if (animatedSprite->GetAnimation() != "attack")
-        {
             animatedSprite->SetAnimation("attack", LM_FORCE_LOOPED);
-            animatedSprite->SetSpeed(1.5f);
-        }
     }
-    else if (!moveDir.Equals(Vector2::ZERO))
+    else if (!moveDir.Equals(Vector3::ZERO))
     {
         if (animatedSprite->GetAnimation() != "run")
             animatedSprite->SetAnimation("run");
@@ -182,7 +146,7 @@ void Character2D::HandleWoundedState(float timeStep)
 
         // Re-position the character to the nearest point
         if (node_->GetPosition().x_ < 15.0f)
-            node_->SetPosition(Vector3(1.0f, 8.0f, 0.0f));
+            node_->SetPosition(Vector3(-5.0f, 11.0f, 0.0f));
         else
             node_->SetPosition(Vector3(18.8f, 9.2f, 0.0f));
     }
@@ -212,6 +176,6 @@ void Character2D::HandleDeath()
     node_->SetScale(1.2f);
 
     // Play death animation once
-    if (animatedSprite->GetAnimation() != "dead2")
-        animatedSprite->SetAnimation("dead2");
+    if (animatedSprite->GetAnimation() != "dead")
+        animatedSprite->SetAnimation("dead");
 }
