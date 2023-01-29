@@ -24,7 +24,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "Chat.h"
+#include "chat.h"
 
 #include <dviglo/debug_new.h>
 

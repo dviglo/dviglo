@@ -32,7 +32,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "SceneReplication.h"
+#include "scene_replication.h"
 
 #include <dviglo/debug_new.h>
 

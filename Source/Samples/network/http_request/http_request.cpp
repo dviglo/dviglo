@@ -11,7 +11,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "HttpRequestDemo.h"
+#include "http_request.h"
 
 #include <dviglo/debug_new.h>
 

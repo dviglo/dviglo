@@ -23,7 +23,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "LANDiscovery.h"
+#include "lan_discovery.h"
 
 #include <dviglo/debug_new.h>
 

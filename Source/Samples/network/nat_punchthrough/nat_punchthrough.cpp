@@ -19,7 +19,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "NATPunchtrough.h"
+#include "nat_punchthrough.h"
 
 // Undefine Windows macro, as our Connection class has a function called SendMessage
 #ifdef SendMessage
