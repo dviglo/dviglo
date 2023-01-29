@@ -2,7 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "Vehicle.h"
 #include <dviglo/core/context.h>
 #include <dviglo/graphics/debug_renderer.h>
 #include <dviglo/graphics/decal_set.h>
@@ -19,6 +18,8 @@
 #include <dviglo/physics/raycast_vehicle.h>
 #include <dviglo/resource/resource_cache.h>
 #include <dviglo/scene/scene.h>
+
+#include "vehicle.h"
 
 using namespace Urho3D;
 

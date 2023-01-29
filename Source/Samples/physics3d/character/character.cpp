@@ -11,7 +11,7 @@
 #include <dviglo/scene/scene.h>
 #include <dviglo/scene/scene_events.h>
 
-#include "Character.h"
+#include "character.h"
 
 Character::Character(Context* context) :
     LogicComponent(context),

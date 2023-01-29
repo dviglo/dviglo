@@ -7,8 +7,8 @@
 #include <dviglo/input/controls.h>
 #include <dviglo/input/input.h>
 
-#include "Character.h"
-#include "Touch.h"
+#include "character.h"
+#include "touch.h"
 
 const float GYROSCOPE_THRESHOLD = 0.1f;
 

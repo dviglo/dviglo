@@ -7,7 +7,7 @@
 #include <dviglo/physics/physics_events.h>
 #include <dviglo/physics/rigid_body.h>
 
-#include "CreateRagdoll.h"
+#include "create_ragdoll.h"
 
 #include <dviglo/debug_new.h>
 

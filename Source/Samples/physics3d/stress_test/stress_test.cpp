@@ -12,7 +12,7 @@
 #include <dviglo/graphics/model.h>
 #include <dviglo/graphics/octree.h>
 #include <dviglo/graphics/renderer.h>
-#include <dviglo/graphics/skybox.h>
+#include <dviglo/graphics/static_model.h>
 #include <dviglo/graphics/zone.h>
 #include <dviglo/input/input.h>
 #include <dviglo/io/file.h>
@@ -26,19 +26,19 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "Physics.h"
+#include "stress_test.h"
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Physics)
+URHO3D_DEFINE_APPLICATION_MAIN(PhysicsStressTest)
 
-Physics::Physics(Context* context) :
+PhysicsStressTest::PhysicsStressTest(Context* context) :
     Sample(context),
     drawDebug_(false)
 {
 }
 
-void Physics::Start()
+void PhysicsStressTest::Start()
 {
     // Execute base class startup
     Sample::Start();
@@ -59,7 +59,7 @@ void Physics::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void Physics::CreateScene()
+void PhysicsStressTest::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
@@ -78,9 +78,9 @@ void Physics::CreateScene()
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
-    zone->SetFogColor(Color(1.0f, 1.0f, 1.0f));
-    zone->SetFogStart(300.0f);
-    zone->SetFogEnd(500.0f);
+    zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
+    zone->SetFogStart(100.0f);
+    zone->SetFogEnd(300.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->CreateChild("DirectionalLight");
@@ -92,70 +92,76 @@ void Physics::CreateScene()
     // Set cascade splits at 10, 50 and 200 world units, fade shadows out at 80% of maximum shadow distance
     light->SetShadowCascade(CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f));
 
-    // Create skybox. The Skybox component is used like StaticModel, but it will be always located at the camera, giving the
-    // illusion of the box planes being far away. Use just the ordinary Box model and a suitable material, whose shader will
-    // generate the necessary 3D texture coordinates for cube mapping
-    Node* skyNode = scene_->CreateChild("Sky");
-    skyNode->SetScale(500.0f); // The scale actually does not matter
-    auto* skybox = skyNode->CreateComponent<Skybox>();
-    skybox->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    skybox->SetMaterial(cache->GetResource<Material>("Materials/Skybox.xml"));
-
     {
-        // Create a floor object, 1000 x 1000 world units. Adjust position so that the ground is at zero Y
+        // Create a floor object, 500 x 500 world units. Adjust position so that the ground is at zero Y
         Node* floorNode = scene_->CreateChild("Floor");
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
-        floorNode->SetScale(Vector3(1000.0f, 1.0f, 1000.0f));
+        floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->CreateComponent<StaticModel>();
         floorObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
         floorObject->SetMaterial(cache->GetResource<Material>("Materials/StoneTiled.xml"));
 
-        // Make the floor physical by adding RigidBody and CollisionShape components. The RigidBody's default
-        // parameters make the object static (zero mass.) Note that a CollisionShape by itself will not participate
-        // in the physics simulation
+        // Make the floor physical by adding RigidBody and CollisionShape components
         /*RigidBody* body = */floorNode->CreateComponent<RigidBody>();
         auto* shape = floorNode->CreateComponent<CollisionShape>();
-        // Set a box shape of size 1 x 1 x 1 for collision. The shape will be scaled with the scene node scale, so the
-        // rendering and physics representation sizes should match (the box model is also 1 x 1 x 1.)
         shape->SetBox(Vector3::ONE);
     }
 
     {
-        // Create a pyramid of movable physics objects
-        for (int y = 0; y < 8; ++y)
+        // Create static mushrooms with triangle mesh collision
+        const unsigned NUM_MUSHROOMS = 50;
+        for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
         {
-            for (int x = -y; x <= y; ++x)
-            {
-                Node* boxNode = scene_->CreateChild("Box");
-                boxNode->SetPosition(Vector3((float)x, -(float)y + 8.0f, 0.0f));
-                auto* boxObject = boxNode->CreateComponent<StaticModel>();
-                boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-                boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
-                boxObject->SetCastShadows(true);
+            Node* mushroomNode = scene_->CreateChild("Mushroom");
+            mushroomNode->SetPosition(Vector3(Random(400.0f) - 200.0f, 0.0f, Random(400.0f) - 200.0f));
+            mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
+            mushroomNode->SetScale(5.0f + Random(5.0f));
+            auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+            mushroomObject->SetModel(cache->GetResource<Model>("Models/Mushroom.mdl"));
+            mushroomObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
+            mushroomObject->SetCastShadows(true);
 
-                // Create RigidBody and CollisionShape components like above. Give the RigidBody mass to make it movable
-                // and also adjust friction. The actual mass is not important; only the mass ratios between colliding
-                // objects are significant
-                auto* body = boxNode->CreateComponent<RigidBody>();
-                body->SetMass(1.0f);
-                body->SetFriction(0.75f);
-                auto* shape = boxNode->CreateComponent<CollisionShape>();
-                shape->SetBox(Vector3::ONE);
-            }
+            /*RigidBody* body = */mushroomNode->CreateComponent<RigidBody>();
+            auto* shape = mushroomNode->CreateComponent<CollisionShape>();
+            // By default the highest LOD level will be used, the LOD level can be passed as an optional parameter
+            shape->SetTriangleMesh(mushroomObject->GetModel());
         }
     }
 
-    // Create the camera. Set far clip to match the fog. Note: now we actually create the camera node outside the scene, because
-    // we want it to be unaffected by scene load / save
+    {
+        // Create a large amount of falling physics objects
+        const unsigned NUM_OBJECTS = 1000;
+        for (unsigned i = 0; i < NUM_OBJECTS; ++i)
+        {
+            Node* boxNode = scene_->CreateChild("Box");
+            boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
+            auto* boxObject = boxNode->CreateComponent<StaticModel>();
+            boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+            boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneSmall.xml"));
+            boxObject->SetCastShadows(true);
+
+            // Give the RigidBody mass to make it movable and also adjust friction
+            auto* body = boxNode->CreateComponent<RigidBody>();
+            body->SetMass(1.0f);
+            body->SetFriction(1.0f);
+            // Disable collision event signaling to reduce CPU load of the physics simulation
+            body->SetCollisionEventMode(COLLISION_NEVER);
+            auto* shape = boxNode->CreateComponent<CollisionShape>();
+            shape->SetBox(Vector3::ONE);
+        }
+    }
+
+    // Create the camera. Limit far clip distance to match the fog. Note: now we actually create the camera node outside
+    // the scene, because we want it to be unaffected by scene load / save
     cameraNode_ = new Node(context_);
     auto* camera = cameraNode_->CreateComponent<Camera>();
-    camera->SetFarClip(500.0f);
+    camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the floor
-    cameraNode_->SetPosition(Vector3(0.0f, 5.0f, -20.0f));
+    cameraNode_->SetPosition(Vector3(0.0f, 3.0f, -20.0f));
 }
 
-void Physics::CreateInstructions()
+void PhysicsStressTest::CreateInstructions()
 {
     auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
@@ -178,7 +184,7 @@ void Physics::CreateInstructions()
     instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
 }
 
-void Physics::SetupViewport()
+void PhysicsStressTest::SetupViewport()
 {
     auto* renderer = GetSubsystem<Renderer>();
 
@@ -187,17 +193,17 @@ void Physics::SetupViewport()
     renderer->SetViewport(0, viewport);
 }
 
-void Physics::SubscribeToEvents()
+void PhysicsStressTest::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Physics, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(PhysicsStressTest, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(Physics, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(PhysicsStressTest, HandlePostRenderUpdate));
 }
 
-void Physics::MoveCamera(float timeStep)
+void PhysicsStressTest::MoveCamera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (GetSubsystem<UI>()->GetFocusElement())
@@ -233,16 +239,15 @@ void Physics::MoveCamera(float timeStep)
     if (input->GetMouseButtonPress(MOUSEB_LEFT))
         SpawnObject();
 
-    // Check for loading/saving the scene. Save the scene to the file Data/Scenes/Physics.xml relative to the executable
-    // directory
+    // Check for loading / saving the scene
     if (input->GetKeyPress(KEY_F5))
     {
-        File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/Physics.xml", FILE_WRITE);
+        File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_WRITE);
         scene_->SaveXML(saveFile);
     }
     if (input->GetKeyPress(KEY_F7))
     {
-        File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/Physics.xml", FILE_READ);
+        File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_READ);
         scene_->LoadXML(loadFile);
     }
 
@@ -251,7 +256,7 @@ void Physics::MoveCamera(float timeStep)
         drawDebug_ = !drawDebug_;
 }
 
-void Physics::SpawnObject()
+void PhysicsStressTest::SpawnObject()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
@@ -262,7 +267,7 @@ void Physics::SpawnObject()
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->CreateComponent<StaticModel>();
     boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+    boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneSmall.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also
@@ -279,7 +284,7 @@ void Physics::SpawnObject()
     body->SetLinearVelocity(cameraNode_->GetRotation() * Vector3(0.0f, 0.25f, 1.0f) * OBJECT_VELOCITY);
 }
 
-void Physics::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void PhysicsStressTest::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 
@@ -290,7 +295,7 @@ void Physics::HandleUpdate(StringHash eventType, VariantMap& eventData)
     MoveCamera(timeStep);
 }
 
-void Physics::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void PhysicsStressTest::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw physics debug geometry. Use depth test to make the result easier to interpret
     if (drawDebug_)

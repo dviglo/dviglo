@@ -25,9 +25,9 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "Character.h"
-#include "CharacterDemo.h"
-#include "Touch.h"
+#include "character.h"
+#include "demo.h"
+#include "touch.h"
 
 #include <dviglo/debug_new.h>
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 namespace Urho3D
 {
@@ -14,18 +14,19 @@ class Scene;
 
 }
 
-/// Physics stress test example.
+/// Physics example.
 /// This sample demonstrates:
-///     - Physics and rendering performance with a high (1000) moving object count
-///     - Using triangle meshes for collision
-///     - Optimizing physics simulation by leaving out collision event signaling
-class PhysicsStressTest : public Sample
+///     - Creating both static and moving physics objects to a scene
+///     - Displaying physics debug geometry
+///     - Using the Skybox component for setting up an unmoving sky
+///     - Saving a scene to a file and loading it to restore a previous state
+class Physics : public Sample
 {
-    URHO3D_OBJECT(PhysicsStressTest, Sample);
+    URHO3D_OBJECT(Physics, Sample);
 
 public:
     /// Construct.
-    explicit PhysicsStressTest(Context* context);
+    explicit Physics(Context* context);
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

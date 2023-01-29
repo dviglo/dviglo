@@ -25,8 +25,8 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "CreateRagdoll.h"
-#include "Ragdolls.h"
+#include "create_ragdoll.h"
+#include "ragdolls.h"
 
 #include <dviglo/debug_new.h>
 

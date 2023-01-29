@@ -14,7 +14,7 @@
 #include <dviglo/resource/resource_cache.h>
 #include <dviglo/scene/scene.h>
 
-#include "Vehicle.h"
+#include "vehicle.h"
 
 Vehicle::Vehicle(Context* context) :
     LogicComponent(context)
