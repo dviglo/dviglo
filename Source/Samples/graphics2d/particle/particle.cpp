@@ -17,7 +17,7 @@
 #include <dviglo/urho_2d/particle_effect_2d.h>
 #include <dviglo/urho_2d/particle_emitter_2d.h>
 
-#include "Urho2DParticle.h"
+#include "particle.h"
 
 #include <dviglo/debug_new.h>
 

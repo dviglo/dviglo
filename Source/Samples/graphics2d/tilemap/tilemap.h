@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 /// Urho2D tile map example.
 /// This sample demonstrates:

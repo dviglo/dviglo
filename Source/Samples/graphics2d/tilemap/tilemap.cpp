@@ -18,7 +18,7 @@
 #include <dviglo/urho_2d/tilemap_layer_2d.h>
 #include <dviglo/urho_2d/tmx_file_2d.h>
 
-#include "Urho2DTileMap.h"
+#include "tilemap.h"
 
 #include <dviglo/debug_new.h>
 

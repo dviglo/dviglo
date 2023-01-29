@@ -17,7 +17,7 @@
 #include <dviglo/urho_2d/static_sprite_2d.h>
 #include <dviglo/urho_2d/stretchable_sprite_2d.h>
 
-#include "Urho2DStretchableSprite.h"
+#include "stretchable_sprite.h"
 
 #include <dviglo/debug_new.h>
 

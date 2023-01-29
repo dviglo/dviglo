@@ -17,7 +17,7 @@
 #include <dviglo/urho_2d/animated_sprite_2d.h>
 #include <dviglo/urho_2d/animation_set_2d.h>
 
-#include "Urho2DSpriterAnimation.h"
+#include "spriter_animation.h"
 
 #include <dviglo/debug_new.h>
 
