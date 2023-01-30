@@ -57,7 +57,3 @@ if (NOT ANDROID)
     add_subdirectory (Tools)
     add_subdirectory (Samples)
 endif ()
-
-if (URHO3D_EXTRAS)
-    add_subdirectory (Extras)
-endif ()
