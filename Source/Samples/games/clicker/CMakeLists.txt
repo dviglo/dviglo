@@ -2,7 +2,7 @@
 # License: MIT
 
 # Название таргета
-set(target_name games_clicker)
+set(target_name game_clicker)
 
 # Создаём список файлов
 file(GLOB source_files *.cpp *.h)
