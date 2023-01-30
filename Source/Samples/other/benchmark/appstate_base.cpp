@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppState_Base.h"
+#include "appstate_base.h"
 
 #include <dviglo/graphics/camera.h>
 #include <dviglo/graphics/renderer.h>

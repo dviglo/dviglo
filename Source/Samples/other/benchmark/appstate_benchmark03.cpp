@@ -2,9 +2,9 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppState_Benchmark03.h"
-#include "AppStateManager.h"
-#include "Benchmark03_MoleculeLogic.h"
+#include "app_state_manager.h"
+#include "appstate_benchmark03.h"
+#include "benchmark03_molecule_logic.h"
 
 #include <dviglo/core/context.h>
 #include <dviglo/graphics/camera.h>

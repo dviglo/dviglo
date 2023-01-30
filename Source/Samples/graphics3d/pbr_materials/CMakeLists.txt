@@ -23,9 +23,3 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/../.. PREFIX common FILES ${common
 
 # Добавляем приложение в список тестируемых
 add_test(NAME ${target_name} COMMAND ${target_name} -timeout 5)
-
-# Копируем ресурсы в bin, если нужно
-if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/Autoload)
-    # TODO: Переделать
-    create_symlink(${CMAKE_SOURCE_DIR}/bin/Autoload ${CMAKE_BINARY_DIR}/bin/Autoload FALLBACK_TO_COPY)
-endif()

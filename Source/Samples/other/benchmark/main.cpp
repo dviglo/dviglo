@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppStateManager.h"
+#include "app_state_manager.h"
 
 #include <dviglo/core/core_events.h>
 #include <dviglo/engine/application.h>

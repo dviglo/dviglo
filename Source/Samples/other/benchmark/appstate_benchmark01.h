@@ -4,15 +4,19 @@
 
 #pragma once
 
-#include "AppState_Base.h"
+#include "appstate_base.h"
 
-class AppState_Benchmark02 : public AppState_Base
+class AppState_Benchmark01 : public AppState_Base
 {
 public:
-    URHO3D_OBJECT(AppState_Benchmark02, AppState_Base);
+    URHO3D_OBJECT(AppState_Benchmark01, AppState_Base);
 
 public:
-    AppState_Benchmark02(U3D::Context* context);
+    AppState_Benchmark01(U3D::Context* context)
+        : AppState_Base(context)
+    {
+        name_ = "Static Scene";
+    }
 
     void OnEnter() override;
     void OnLeave() override;

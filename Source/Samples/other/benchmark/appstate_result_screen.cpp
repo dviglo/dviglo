@@ -2,8 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppState_ResultScreen.h"
-#include "AppStateManager.h"
+#include "appstate_result_screen.h"
+#include "app_state_manager.h"
 
 #include <dviglo/input/input.h>
 #include <dviglo/scene/scene_events.h>

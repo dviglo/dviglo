@@ -2,9 +2,9 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppState_Benchmark02.h"
-#include "AppStateManager.h"
-#include "Benchmark02_WomanMover.h"
+#include "appstate_benchmark02.h"
+#include "app_state_manager.h"
+#include "benchmark02_woman_mover.h"
 
 #include <dviglo/core/context.h>
 #include <dviglo/graphics/animated_model.h>

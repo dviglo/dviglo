@@ -2,8 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppState_Benchmark04.h"
-#include "AppStateManager.h"
+#include "appstate_benchmark04.h"
+#include "app_state_manager.h"
 
 #include <dviglo/core/timer.h>
 #include <dviglo/graphics/graphics_events.h>

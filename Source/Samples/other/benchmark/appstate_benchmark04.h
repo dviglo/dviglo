@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "AppState_Base.h"
+#include "appstate_base.h"
 
 #include <dviglo/graphics/sprite_batch.h>
 

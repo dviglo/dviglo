@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "AppState_Base.h"
+#include "appstate_base.h"
 
 class AppState_ResultScreen : public AppState_Base
 {

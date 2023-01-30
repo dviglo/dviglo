@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "AppState_Base.h"
+#include "appstate_base.h"
 
 // Huge number of interactions between components
 class AppState_Benchmark03 : public AppState_Base

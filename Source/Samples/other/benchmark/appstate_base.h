@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "FpsCounter.h"
+#include "fps_counter.h"
 
 #include <dviglo/scene/scene.h>
 

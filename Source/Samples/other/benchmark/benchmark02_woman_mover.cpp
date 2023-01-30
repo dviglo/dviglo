@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "Benchmark02_WomanMover.h"
+#include "benchmark02_woman_mover.h"
 
 #include <dviglo/graphics/animated_model.h>
 #include <dviglo/graphics/animation_state.h>

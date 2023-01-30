@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "Benchmark03_MoleculeLogic.h"
+#include "benchmark03_molecule_logic.h"
 
 #include <dviglo/scene/scene.h>
 

@@ -2,14 +2,14 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "AppStateManager.h"
+#include "app_state_manager.h"
 
-#include "AppState_Benchmark01.h"
-#include "AppState_Benchmark02.h"
-#include "AppState_Benchmark03.h"
-#include "AppState_Benchmark04.h"
-#include "AppState_MainScreen.h"
-#include "AppState_ResultScreen.h"
+#include "appstate_benchmark01.h"
+#include "appstate_benchmark02.h"
+#include "appstate_benchmark03.h"
+#include "appstate_benchmark04.h"
+#include "appstate_main_screen.h"
+#include "appstate_result_screen.h"
 
 #include <dviglo/debug_new.h>
 
