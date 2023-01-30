@@ -24,7 +24,7 @@
 #include <dviglo/ui/ui_events.h>
 #include <dviglo/ui/window.h>
 
-#include "WindowSettingsDemo.h"
+#include "settings.h"
 
 #include <dviglo/debug_new.h>
 

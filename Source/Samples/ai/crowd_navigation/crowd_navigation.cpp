@@ -27,7 +27,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "CrowdNavigation.h"
+#include "crowd_navigation.h"
 
 #include <dviglo/debug_new.h>
 

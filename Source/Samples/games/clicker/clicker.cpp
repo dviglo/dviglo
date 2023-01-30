@@ -9,7 +9,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "Clicker.h"
+#include "clicker.h"
 
 #include <dviglo/debug_new.h>
 

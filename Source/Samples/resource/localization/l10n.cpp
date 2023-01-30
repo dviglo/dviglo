@@ -17,7 +17,7 @@
 #include <dviglo/ui/ui_events.h>
 #include <dviglo/ui/window.h>
 
-#include "L10n.h"
+#include "l10n.h"
 
 #include <dviglo/debug_new.h>
 

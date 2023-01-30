@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 namespace Urho3D
 {
@@ -15,23 +15,21 @@ class Scene;
 
 }
 
-/// CrowdNavigation example.
+/// Navigation example.
 /// This sample demonstrates:
-///     - Generating a dynamic navigation mesh into the scene
+///     - Generating a navigation mesh into the scene
 ///     - Performing path queries to the navigation mesh
-///     - Adding and removing obstacles/agents at runtime
+///     - Rebuilding the navigation mesh partially when adding or removing objects
+///     - Visualizing custom debug geometry
 ///     - Raycasting drawable components
-///     - Crowd movement management
-///     - Accessing crowd agents with the crowd manager
-///     - Using off-mesh connections to make boxes climbable
-///     - Using agents to simulate moving obstacles
-class CrowdNavigation : public Sample
+///     - Making a node follow the Detour path
+class Navigation : public Sample
 {
-    URHO3D_OBJECT(CrowdNavigation, Sample);
+    URHO3D_OBJECT(Navigation, Sample);
 
 public:
     /// Construct.
-    explicit CrowdNavigation(Context* context);
+    explicit Navigation(Context* context);
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;
@@ -56,7 +54,7 @@ protected:
         "                <attribute name=\"Horiz Alignment\" value=\"Center\" />"
         "                <attribute name=\"Vert Alignment\" value=\"Center\" />"
         "                <attribute name=\"Color\" value=\"0 0 0 1\" />"
-        "                <attribute name=\"Text\" value=\"Spawn\" />"
+        "                <attribute name=\"Text\" value=\"Teleport\" />"
         "            </element>"
         "            <element type=\"Text\">"
         "                <attribute name=\"Name\" value=\"KeyBinding\" />"
@@ -120,20 +118,16 @@ private:
     void SubscribeToEvents();
     /// Read input and moves the camera.
     void MoveCamera(float timeStep);
-    /// Set crowd agents target or spawn another jack.
-    void SetPathPoint(bool spawning);
-    /// Add new obstacle or remove existing obstacle/agent.
+    /// Set path start or end point.
+    void SetPathPoint();
+    /// Add or remove object.
     void AddOrRemoveObject();
-    /// Create a "Jack" object at position.
-    void SpawnJack(const Vector3& pos, Node* jackGroup);
     /// Create a mushroom object at position.
-    void CreateMushroom(const Vector3& pos);
-    /// Create an off-mesh connection for each box to make it climbable.
-    void CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh, Node* boxGroup);
-    /// Create some movable barrels as crowd agents.
-    void CreateMovingBarrels(DynamicNavigationMesh* navMesh);
-    /// Utility function to raycast to the cursor position. Return true if hit.
+    Node* CreateMushroom(const Vector3& pos);
+    /// Utility function to raycast to the cursor position. Return true if hit
     bool Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable);
+    /// Make Jack follow the Detour path.
+    void FollowPath(float timeStep);
     /// Toggle navigation mesh streaming.
     void ToggleStreaming(bool enabled);
     /// Update navigation mesh streaming.
@@ -144,23 +138,21 @@ private:
     void HandleUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
-    /// Handle problems with crowd agent placement.
-    void HandleCrowdAgentFailure(StringHash eventType, VariantMap& eventData);
-    /// Handle crowd agent reposition.
-    void HandleCrowdAgentReposition(StringHash eventType, VariantMap& eventData);
-    /// Handle crowd agent formation.
-    void HandleCrowdAgentFormation(StringHash eventType, VariantMap& eventData);
 
+    /// Last calculated path.
+    Vector<Vector3> currentPath_;
+    /// Path end position.
+    Vector3 endPos_;
+    /// Jack scene node.
+    SharedPtr<Node> jackNode_;
+    /// Flag for drawing debug geometry.
+    bool drawDebug_;
     /// Flag for using navigation mesh streaming.
-    bool useStreaming_{};
+    bool useStreaming_;
     /// Streaming distance.
-    int streamingDistance_{2};
+    int streamingDistance_;
     /// Tile data.
     HashMap<IntVector2, Vector<byte>> tileData_;
     /// Added tiles.
     HashSet<IntVector2> addedTiles_;
-    /// Flag for drawing debug geometry.
-    bool drawDebug_{};
-    /// Instruction text UI-element.
-    Text* instructionText_{};
 };

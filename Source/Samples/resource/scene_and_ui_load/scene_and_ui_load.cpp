@@ -13,7 +13,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "SceneAndUILoad.h"
+#include "scene_and_ui_load.h"
 
 #include <dviglo/debug_new.h>
 

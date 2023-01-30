@@ -22,7 +22,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "Navigation.h"
+#include "navigation.h"
 
 #include <dviglo/debug_new.h>
 

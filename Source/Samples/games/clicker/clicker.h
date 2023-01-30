@@ -6,7 +6,7 @@
 
 #include <dviglo/math/big_int.h>
 
-#include "Sample.h"
+#include "../../Sample.h"
 
 class Clicker : public Sample
 {
