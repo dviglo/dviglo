@@ -18,7 +18,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 
-#include "SoundEffects.h"
+#include "sound_effects.h"
 
 #include <dviglo/debug_new.h>
 

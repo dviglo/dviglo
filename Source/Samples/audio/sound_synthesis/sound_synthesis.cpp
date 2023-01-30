@@ -13,7 +13,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include "SoundSynthesis.h"
+#include "sound_synthesis.h"
 
 #include <dviglo/debug_new.h>
 
