@@ -42,6 +42,23 @@ include (UrhoCommon)
 
 include(cmake/utils.cmake)
 
+# Папка для экзешников и динамических библиотек
+dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin)
+
+# Копируем d3dcompiler_xx.dll в папку bin. Этот файл есть в Windows SDK,
+# но отсутствует в DirectX redist, поэтому его надо распространять вместе с игрой
+if (WIN32)
+    set(DIRECTX_REQUIRED_COMPONENTS D3D11)
+
+    find_package (DirectX REQUIRED ${DIRECTX_REQUIRED_COMPONENTS})
+    if (DIRECTX_FOUND)
+        if(DIRECT3D_DLL AND URHO3D_D3D11)
+            file(COPY ${DIRECT3D_DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
+            #file(COPY ${DIRECT3D_DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin/tool)
+        endif()
+    endif ()
+endif ()
+
 # Setup SDK install destinations
 set (PATH_SUFFIX Urho3D)
 if (WIN32)
@@ -69,13 +86,13 @@ set (DEST_LIBRARY_DIR lib${LIB_SUFFIX}/${PATH_SUFFIX})
 set (DEST_PKGCONFIG_DIR lib${LIB_SUFFIX}/pkgconfig)
 # Install application launcher scripts
 file (GLOB APP_SCRIPTS ${CMAKE_SOURCE_DIR}/bin/*${SCRIPT_EXT})
-install (PROGRAMS ${APP_SCRIPTS} DESTINATION ${DEST_RUNTIME_DIR})   # DEST_RUNTIME_DIR variable is set by the set_output_directories() macro call in the UrhoCommon module
+#install (PROGRAMS ${APP_SCRIPTS} DESTINATION ${DEST_RUNTIME_DIR})   # DEST_RUNTIME_DIR variable is set by the set_output_directories() macro call in the UrhoCommon module
 # Install CMake modules and toolchains provided by and for Urho3D
-install (DIRECTORY ${CMAKE_SOURCE_DIR}/cmake/ DESTINATION ${DEST_SHARE_DIR}/cmake)    # Note: the trailing slash is significant
+#install (DIRECTORY ${CMAKE_SOURCE_DIR}/cmake/ DESTINATION ${DEST_SHARE_DIR}/cmake)    # Note: the trailing slash is significant
 # Install CMake build scripts and rakefile
 file (GLOB CMAKE_SCRIPTS ${CMAKE_SOURCE_DIR}/script/*${SCRIPT_EXT})
-install (PROGRAMS ${CMAKE_SCRIPTS} DESTINATION ${DEST_SHARE_DIR}/scripts)
-install (FILES rakefile DESTINATION ${DEST_SHARE_DIR})
+#install (PROGRAMS ${CMAKE_SCRIPTS} DESTINATION ${DEST_SHARE_DIR}/scripts)
+#install (FILES rakefile DESTINATION ${DEST_SHARE_DIR})
 
 # Setup macOS, iOS, and tvOS bundle variables
 if (URHO3D_MACOSX_BUNDLE OR (APPLE AND ARM))

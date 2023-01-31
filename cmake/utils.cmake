@@ -20,3 +20,16 @@ function(dv_add_all_subdirs)
         add_subdirectory(${child} ${ARGN})
     endforeach()
 endfunction()
+
+# Куда будут помещены экзешники и динамические библиотеки.
+# Функцию нужно вызывать перед созданием таргетов
+function(dv_set_bin_dir bin_dir)
+    # Для одноконфигурационных генераторов (MinGW)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin PARENT_SCOPE)
+
+    # Для многоконфигурационных генераторов (Visual Studio)
+    foreach(config_name ${CMAKE_CONFIGURATION_TYPES})
+        string(TOUPPER ${config_name} config_name)
+        set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config_name} ${bin_dir} PARENT_SCOPE)
+    endforeach()
+endfunction()
