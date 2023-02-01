@@ -50,5 +50,9 @@ rd /s /q src\test
 :: файл SDL_config.h генерируется с помощью SDL_config.h.cmake
 del include\build_config\*.h
 
+:: Удаляем файлы Visual Studio
+del /s *.sln
+del /s *.vcproj
+
 :: Ждём нажатие Enter перед закрытием консоли
 pause
