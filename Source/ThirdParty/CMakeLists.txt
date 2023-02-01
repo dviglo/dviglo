@@ -2,8 +2,11 @@
 # Copyright (c) 2008-2023 the Urho3D project
 # License: MIT
 
-# В IDE сторонние библиотеки будут помещены в папку third-party libs
-set (CMAKE_FOLDER "third-party libs")
+# Помещаем сторонние библиотеки в отдельный проект
+project(dviglo-third-party)
+
+# В IDE таргеты будут отображаться в папке third-party libs
+set(CMAKE_FOLDER "third-party libs")
 
 foreach (TARGET ETCPACK FreeType LZ4 PugiXml rapidjson SDL StanHull STB)
     add_subdirectory (${TARGET})

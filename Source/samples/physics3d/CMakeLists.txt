@@ -1,7 +1,7 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# В IDE примеры будут помещаться в папку samples/physics3d
+# В IDE таргеты будут отображаться в папке samples/physics3d
 set(CMAKE_FOLDER samples/physics3d)
 
 # Добавляем все папки

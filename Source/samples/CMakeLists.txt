@@ -9,7 +9,10 @@ if(NOT URHO3D_SAMPLES)
     return ()
 endif ()
 
-# В IDE примеры будут помещаться в папку samples
+# Помещаем примеры в отдельный проект
+project(dviglo-samples)
+
+# В IDE таргеты будут отображаться в папке samples
 set(CMAKE_FOLDER samples)
 
 # Копируем ресурсы в bin, если нужно

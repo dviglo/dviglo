@@ -1,7 +1,7 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# В IDE примеры будут помещаться в папку samples/audio
+# В IDE таргеты будут отображаться в папке samples/audio
 set(CMAKE_FOLDER samples/audio)
 
 # Добавляем все папки

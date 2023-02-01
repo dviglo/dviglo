@@ -6,11 +6,11 @@ if (dviglo_subproject)
     return()
 endif ()
 
-# Set project name
-project (Urho3D-Tools)
+# Помещаем инструменты в отдельный проект
+project(dviglo-tools)
 
-# В IDE инструменты будут помещены в папку tools
-set (CMAKE_FOLDER tools)
+# В IDE таргеты будут отображаться в папке tools
+set(CMAKE_FOLDER tools)
 
 # Find Urho3D library
 find_package (Urho3D REQUIRED)
