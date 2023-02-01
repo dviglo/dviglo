@@ -53,7 +53,7 @@ if (URHO3D_PHYSICS)
 endif ()
 
 if (URHO3D_PHYSICS2D)
-    add_subdirectory (Box2D)
+    add_subdirectory (box2d)
 endif ()
 
 if (URHO3D_TRACY_PROFILING)
