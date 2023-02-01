@@ -3,6 +3,7 @@
 !/bin/**/
 !/bin/*.bat
 !/bin/*.sh
+!/bin/*.html
 /bin/*.app/
 /bin/*.app.dSYM/
 /bin/jit/
@@ -113,6 +114,7 @@ CTestTestfile.cmake
 
 # Misc.
 configure*
+!/Source/ThirdParty/SDL/src/hidapi/configure.ac
 *~
 *.swp
 .DS_Store
