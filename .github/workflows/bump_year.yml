@@ -71,7 +71,6 @@ jobs:
 
           # Про find читайте тут: https://github.com/dviglo/dviglo/pull/3
           find . -type f -not -path './.git/*' -exec perl -pi -e "s/2022-[0-9]{4} the Dviglo project/2022-$YEAR the Dviglo project/g" {} +
-          find . -type f -not -path './.git/*' -exec perl -pi -e "s/2008-[0-9]{4} the Urho3D project/2008-$YEAR the Urho3D project/g" {} +
 
           # Создаём и отправляем коммит
           git add -A
