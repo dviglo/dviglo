@@ -8,7 +8,7 @@ project(dviglo-third-party)
 # В IDE таргеты будут отображаться в папке third-party libs
 set(CMAKE_FOLDER "third-party libs")
 
-foreach (TARGET ETCPACK FreeType LZ4 PugiXml rapidjson SDL StanHull STB)
+foreach (TARGET ETCPACK FreeType LZ4 PugiXml rapidjson sdl StanHull STB)
     add_subdirectory (${TARGET})
 endforeach ()
 

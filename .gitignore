@@ -98,8 +98,8 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 CTestTestfile.cmake
 /Source/**/*.cmake
-!/Source/ThirdParty/SDL/cmake/*.cmake
-!/Source/ThirdParty/SDL/include/build_config/*.cmake
+!/Source/ThirdParty/sdl/cmake/*.cmake
+!/Source/ThirdParty/sdl/include/build_config/*.cmake
 !/Source/ThirdParty/Assimp/cmake-modules/*cmake
 /Docs/**/*.cmake
 
@@ -114,7 +114,7 @@ CTestTestfile.cmake
 
 # Misc.
 configure*
-!/Source/ThirdParty/SDL/src/hidapi/configure.ac
+!/Source/ThirdParty/sdl/src/hidapi/configure.ac
 *~
 *.swp
 .DS_Store
