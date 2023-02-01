@@ -49,7 +49,7 @@ if (URHO3D_LIB_TYPE STREQUAL SHARED AND NOT WIN32 AND NOT ANDROID AND NOT IOS AN
     endif ()
 endif ()
 
-add_subdirectory (ThirdParty)
+add_subdirectory (third-party)
 add_subdirectory (dviglo)
 
 # In order to get clean module segregation, always exclude player/samples from AAR
