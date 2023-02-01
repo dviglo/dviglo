@@ -5,6 +5,7 @@ bin/Data/Fonts/* linguist-vendored
 
 # Автоматически нормализуем концы строк, если у пользователя не настроен параметр autocrlf
 # https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
+# https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/
 * text=auto
 
 # Явно указываем файлы, в которых хотим всегда нормализовать концы строк
