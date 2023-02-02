@@ -66,6 +66,6 @@ if (NOT ANDROID AND NOT ARM AND NOT WEB)
     endif()
 
     if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
-        add_subdirectory (LibCpuId)
+        add_subdirectory (libcpuid)
     endif ()
 endif ()

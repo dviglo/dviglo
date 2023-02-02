@@ -20,7 +20,7 @@
 #elif defined(TVOS)
 extern "C" unsigned SDL_TVOS_GetActiveProcessorCount();
 #elif !defined(__linux__) && !defined(__EMSCRIPTEN__)
-#include <LibCpuId/libcpuid.h>
+#include <libcpuid/libcpuid.h>
 #endif
 
 #if defined(_WIN32)

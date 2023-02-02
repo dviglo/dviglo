@@ -12,10 +12,10 @@ if (HAVE_STDINT_H)
 endif ()
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files LibCpuId/*.c LibCpuId/*.h)
+file(GLOB_RECURSE source_files libcpuid/*.c libcpuid/*.h)
 
 if (MSVC)
-    list(APPEND source_files LibCpuId/masm-x64.asm)
+    list(APPEND source_files libcpuid/masm-x64.asm)
     enable_language(ASM_MASM)
 endif ()
 
@@ -29,4 +29,4 @@ target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/LibCpuId FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/libcpuid FILES ${source_files})
