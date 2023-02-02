@@ -19,7 +19,7 @@ endif ()
 
 if (URHO3D_NETWORK)
     add_subdirectory (civetweb)
-    add_subdirectory (SLikeNet)
+    add_subdirectory (slikenet)
 endif ()
 
 if (URHO3D_DATABASE_ODBC)

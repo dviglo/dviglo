@@ -695,8 +695,8 @@ macro (define_dependency_libs TARGET)
         endif ()
     endif ()
 
-    # third-party/SLikeNet external dependency
-    if (${TARGET} MATCHES SLikeNet|Urho3D)
+    # third-party/slikeNet external dependency
+    if (${TARGET} MATCHES slikeNet|Urho3D)
         if (WIN32)
             list (APPEND LIBS iphlpapi)
         endif ()
