@@ -6,7 +6,7 @@
 set(target_name civetweb)
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files Civetweb/*.c Civetweb/*.h)
+file(GLOB_RECURSE source_files civetweb/*.c civetweb/*.h)
 
 # Создаём статическую библиотеку
 add_library(${target_name} STATIC ${source_files})
@@ -93,4 +93,4 @@ if (MINGW)
 endif ()
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Civetweb FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/civetweb FILES ${source_files})

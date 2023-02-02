@@ -672,7 +672,7 @@ endmacro ()
 # It works for both targets setup within Urho3D project and downstream projects that uses Urho3D as external static/shared library
 # *** THIS IS A DEPRECATED MACRO ***
 macro (define_dependency_libs TARGET)
-    # ThirdParty/SDL external dependency
+    # third-party/sdl external dependency
     if (${TARGET} MATCHES SDL|Urho3D)
         if (WIN32)
             list (APPEND LIBS user32 gdi32 winmm imm32 ole32 oleaut32 setupapi version uuid)
@@ -688,29 +688,29 @@ macro (define_dependency_libs TARGET)
         endif ()
     endif ()
 
-    # ThirdParty/Civetweb external dependency
-    if (${TARGET} MATCHES Civetweb|Urho3D)
+    # third-party/civetweb external dependency
+    if (${TARGET} MATCHES civetweb|Urho3D)
         if (WIN32)
             list (APPEND LIBS ws2_32)
         endif ()
     endif ()
 
-    # ThirdParty/SLikeNet external dependency
+    # third-party/SLikeNet external dependency
     if (${TARGET} MATCHES SLikeNet|Urho3D)
         if (WIN32)
             list (APPEND LIBS iphlpapi)
         endif ()
     endif ()
 
-    # ThirdParty/Tracy external dependency
+    # third-party/Tracy external dependency
     if (${TARGET} MATCHES Tracy|Urho3D)
         if (MINGW)
             list (APPEND LIBS ws2_32 dbghelp advapi32 user32)
         endif ()
     endif ()
 
-    # ThirdParty/Civetweb external dependency
-    if (${TARGET} MATCHES Civetweb|Urho3D)
+    # third-party/civetweb external dependency
+    if (${TARGET} MATCHES civetweb|Urho3D)
         if (URHO3D_SSL)
             if (NOT URHO3D_SSL_DYNAMIC)
                 set(OPENSSL_USE_STATIC_LIBS TRUE)

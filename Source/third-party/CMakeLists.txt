@@ -18,7 +18,7 @@ if (URHO3D_LUA)
 endif ()
 
 if (URHO3D_NETWORK)
-    add_subdirectory (Civetweb)
+    add_subdirectory (civetweb)
     add_subdirectory (SLikeNet)
 endif ()
 

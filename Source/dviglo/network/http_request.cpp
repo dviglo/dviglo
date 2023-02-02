@@ -8,7 +8,7 @@
 #include "../io/log.h"
 #include "../network/http_request.h"
 
-#include <Civetweb/civetweb.h>
+#include <civetweb/civetweb.h>
 
 #include "../debug_new.h"
 
