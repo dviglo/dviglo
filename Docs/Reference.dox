@@ -3616,8 +3616,8 @@ Alternatively bakes the image from .ies input file.
 Usage:
 
 \verbatim
-RampGenerator <output file> <width> <power> [dimensions]
-RampGenerator <input file> <output png file> <width> [dimensions]
+ramp_generator <output file> <width> <power> [dimensions]
+ramp_generator <input file> <output png file> <width> [dimensions]
 \endverbatim
 
 The output is saved in PNG format. The power parameter is fed into the pow() function to determine ramp shape; higher value gives more brightness and more abrupt fade at the edge.

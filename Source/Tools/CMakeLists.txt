@@ -48,7 +48,7 @@ if (URHO3D_TOOLS)
     # Urho3D tools
     add_subdirectory(OgreImporter)
     add_subdirectory(PackageTool)
-    add_subdirectory(RampGenerator)
+    add_subdirectory(ramp_generator)
     add_subdirectory(SpritePacker)
     add_subdirectory(tests)
 elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
