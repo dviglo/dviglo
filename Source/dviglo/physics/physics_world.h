@@ -11,7 +11,7 @@
 #include "../math/vector3.h"
 #include "../scene/component.h"
 
-#include <Bullet/LinearMath/btIDebugDraw.h>
+#include <bullet/LinearMath/btIDebugDraw.h>
 
 #include <memory>
 

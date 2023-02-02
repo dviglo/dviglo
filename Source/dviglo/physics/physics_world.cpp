@@ -21,14 +21,14 @@
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
 
-#include <Bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
-#include <Bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
-#include <Bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.h>
-#include <Bullet/BulletCollision/CollisionShapes/btBoxShape.h>
-#include <Bullet/BulletCollision/CollisionShapes/btSphereShape.h>
-#include <Bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
-#include <Bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
-#include <Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <bullet/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h>
+#include <bullet/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h>
+#include <bullet/BulletCollision/CollisionDispatch/btInternalEdgeUtility.h>
+#include <bullet/BulletCollision/CollisionShapes/btBoxShape.h>
+#include <bullet/BulletCollision/CollisionShapes/btSphereShape.h>
+#include <bullet/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.h>
+#include <bullet/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h>
+#include <bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 
 extern ContactAddedCallback gContactAddedCallback;
 

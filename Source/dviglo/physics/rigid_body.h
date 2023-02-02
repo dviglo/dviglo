@@ -9,7 +9,7 @@
 #include "../io/vector_buffer.h"
 #include "../scene/component.h"
 
-#include <Bullet/LinearMath/btMotionState.h>
+#include <bullet/LinearMath/btMotionState.h>
 
 #include <memory>
 

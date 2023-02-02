@@ -49,7 +49,7 @@ if (URHO3D_URHO2D)
 endif ()
 
 if (URHO3D_PHYSICS)
-    add_subdirectory (Bullet)
+    add_subdirectory(bullet)
     add_subdirectory(stanhull)
 endif ()
 

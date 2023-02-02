@@ -19,9 +19,9 @@
 #include "../scene/scene_events.h"
 #include "../scene/smoothed_transform.h"
 
-#include <Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include <Bullet/BulletDynamics/Dynamics/btRigidBody.h>
-#include <Bullet/BulletCollision/CollisionShapes/btCompoundShape.h>
+#include <bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <bullet/BulletDynamics/Dynamics/btRigidBody.h>
+#include <bullet/BulletCollision/CollisionShapes/btCompoundShape.h>
 
 using namespace std;
 

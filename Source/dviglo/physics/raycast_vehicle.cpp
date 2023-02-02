@@ -10,8 +10,8 @@
 #include "../io/log.h"
 #include "../physics/raycast_vehicle.h"
 
-#include <Bullet/BulletDynamics/Vehicle/btRaycastVehicle.h>
-#include <Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
+#include <bullet/BulletDynamics/Vehicle/btRaycastVehicle.h>
+#include <bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 
 namespace Urho3D
 {
