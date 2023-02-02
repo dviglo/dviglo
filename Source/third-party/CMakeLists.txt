@@ -62,7 +62,7 @@ endif ()
 
 if (NOT ANDROID AND NOT ARM AND NOT WEB)
     if (URHO3D_OPENGL)
-        add_subdirectory (GLEW)
+        add_subdirectory(glew)
     endif()
 
     if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)

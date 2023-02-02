@@ -34,7 +34,7 @@
 #define URHO3D_GLES2
 #endif
 #else
-#include <GLEW/glew.h>
+#include <glew/glew.h>
 #endif
 
 #ifndef GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
