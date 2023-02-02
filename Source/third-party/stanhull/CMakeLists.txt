@@ -5,7 +5,7 @@
 set(target_name stanhull)
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files StanHull/*.cpp StanHull/*.h)
+file(GLOB_RECURSE source_files stanhull/*.cpp stanhull/*.h)
 
 # Создаём статическую библиотеку
 add_library(${target_name} STATIC ${source_files})
@@ -17,4 +17,4 @@ target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/StanHull FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/stanhull FILES ${source_files})

@@ -8,7 +8,7 @@ project(dviglo-third-party)
 # В IDE таргеты будут отображаться в папке third-party libs
 set(CMAKE_FOLDER "third-party libs")
 
-foreach (TARGET etcpack freetype lz4 PugiXml rapidjson sdl StanHull stb)
+foreach (TARGET etcpack freetype lz4 PugiXml rapidjson sdl stb)
     add_subdirectory (${TARGET})
 endforeach ()
 
@@ -50,6 +50,7 @@ endif ()
 
 if (URHO3D_PHYSICS)
     add_subdirectory (Bullet)
+    add_subdirectory(stanhull)
 endif ()
 
 if (URHO3D_PHYSICS2D)

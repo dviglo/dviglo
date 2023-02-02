@@ -37,7 +37,7 @@
 #include <Bullet/BulletCollision/CollisionShapes/btStaticPlaneShape.h>
 #include <Bullet/BulletCollision/Gimpact/btGImpactShape.h>
 #include <Bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
-#include <StanHull/hull.h>
+#include <stanhull/hull.h>
 
 using namespace std;
 
