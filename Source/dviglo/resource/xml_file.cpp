@@ -14,7 +14,7 @@
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
 
-#include <PugiXml/pugixml.hpp>
+#include <pugixml/pugixml.hpp>
 
 #include "../debug_new.h"
 

@@ -5,7 +5,7 @@
 set(target_name pugixml)
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files PugiXml/*.cpp PugiXml/*.h)
+file(GLOB_RECURSE source_files pugixml/*.cpp pugixml/*.h)
 
 # Создаём статическую библиотеку
 add_library(${target_name} STATIC ${source_files})
@@ -17,4 +17,4 @@ target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/PugiXml FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/pugixml FILES ${source_files})

@@ -7,7 +7,7 @@
 #include "../math/math_defs.h"
 #include "../urho_2d/spriter_data_2d.h"
 
-#include <PugiXml/pugixml.hpp>
+#include <pugixml/pugixml.hpp>
 
 #include <cstring>
 
