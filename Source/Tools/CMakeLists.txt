@@ -49,7 +49,7 @@ if (URHO3D_TOOLS)
     add_subdirectory(OgreImporter)
     add_subdirectory(PackageTool)
     add_subdirectory(ramp_generator)
-    add_subdirectory(SpritePacker)
+    add_subdirectory(sprite_packer)
     add_subdirectory(tests)
 elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
     # PackageTool target is required but we are not cross-compiling, so build it as per normal

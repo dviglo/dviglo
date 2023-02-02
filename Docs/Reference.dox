@@ -3628,7 +3628,7 @@ Takes a series of images and packs them into a single texture and creates a spri
 
 Usage:
 \verbatim
-SpritePacker -options <input file> <input file> <output png file>
+sprite_packer -options <input file> <input file> <output png file>
 Options:
     -h Shows this help message.
     -px Adds x pixels of padding per image to width.

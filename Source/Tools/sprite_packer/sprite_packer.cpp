@@ -56,7 +56,7 @@ public:
 
 void Help()
 {
-    ErrorExit("Usage: SpritePacker -options <input file> <input file> <output png file>\n"
+    ErrorExit("Usage: sprite_packer -options <input file> <input file> <output png file>\n"
         "\n"
         "Options:\n"
         "-h Shows this help message.\n"
