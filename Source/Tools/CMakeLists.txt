@@ -41,14 +41,17 @@ if (CMAKE_CROSSCOMPILING)
     endif ()
 endif ()
 
+# Папка для экзешников и динамических библиотек
+dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin/tool)
+
 if (URHO3D_TOOLS)
     # Urho3D tools
-    add_subdirectory (OgreImporter)
-    add_subdirectory (PackageTool)
-    add_subdirectory (RampGenerator)
-    add_subdirectory (SpritePacker)
-    add_subdirectory (Tests)
+    add_subdirectory(OgreImporter)
+    add_subdirectory(PackageTool)
+    add_subdirectory(RampGenerator)
+    add_subdirectory(SpritePacker)
+    add_subdirectory(tests)
 elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
     # PackageTool target is required but we are not cross-compiling, so build it as per normal
-    add_subdirectory (PackageTool)
+    add_subdirectory(PackageTool)
 endif ()

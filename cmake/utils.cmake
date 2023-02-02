@@ -25,7 +25,7 @@ endfunction()
 # Функцию нужно вызывать перед созданием таргетов
 function(dv_set_bin_dir bin_dir)
     # Для одноконфигурационных генераторов (MinGW)
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin PARENT_SCOPE)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${bin_dir} PARENT_SCOPE)
 
     # Для многоконфигурационных генераторов (Visual Studio)
     foreach(config_name ${CMAKE_CONFIGURATION_TYPES})
