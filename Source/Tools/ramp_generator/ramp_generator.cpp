@@ -59,8 +59,8 @@ int main(int argc, char** argv)
 void Run(const Vector<String>& arguments)
 {
     if (arguments.Size() < 3)
-        ErrorExit("Usage: RampGenerator <output png file> <width> <power> [dimensions]\n"
-                  "IES Usage: RampGenerator <input file> <output png file> <width> [dimensions]");
+        ErrorExit("Usage: ramp_generator <output png file> <width> <power> [dimensions]\n"
+                  "IES Usage: ramp_generator <input file> <output png file> <width> [dimensions]");
 
     if (GetExtension(arguments[0]) == ".ies") // Generate an IES light derived ramp
     {
