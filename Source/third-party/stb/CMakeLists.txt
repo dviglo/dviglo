@@ -5,7 +5,7 @@
 set(target_name stb)
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files STB/*.h)
+file(GLOB_RECURSE source_files stb/*.h)
 
 # Создаём интерфейсную библиотеку. Интерфейсная библиотека не компилируется,
 # так как состоит только из заголовочных файлов
@@ -15,4 +15,4 @@ add_library(${target_name} INTERFACE ${source_files})
 target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/STB FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/stb FILES ${source_files})

@@ -18,7 +18,7 @@
 
 #define STBRP_LARGE_RECTS
 #define STB_RECT_PACK_IMPLEMENTATION
-#include <STB/stb_rect_pack.h>
+#include <stb/stb_rect_pack.h>
 
 #include <dviglo/debug_new.h>
 

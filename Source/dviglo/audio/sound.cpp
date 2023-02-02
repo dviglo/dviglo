@@ -15,7 +15,7 @@
 #ifndef STB_VORBIS_HEADER_ONLY
 #define STB_VORBIS_HEADER_ONLY
 #endif
-#include <STB/stb_vorbis.h>
+#include <stb/stb_vorbis.h>
 
 #include "../debug_new.h"
 

@@ -16,7 +16,7 @@
 #ifndef URHO3D_STATIC_DEFINE
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #endif
-#include <STB/stb_image_write.h>
+#include <stb/stb_image_write.h>
 
 #include <dviglo/debug_new.h>
 
