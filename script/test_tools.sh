@@ -19,7 +19,7 @@ repo_dir=${repo_dir%\\}
 build_dir=${build_dir%/}
 build_dir=${build_dir%\\}
 
-# ================== OgreImporter ==================
+# ================== ogre_importer ==================
 
 src_filenames=(
     Jack.mesh.xml
@@ -126,6 +126,14 @@ result_sizes=(
     11724  # SnowCrate.mdl
 )
 
+# Если существует отладочная версия, то используем её
+if [ -f ${build_dir}/bin/tool/ogre_importer_d ]
+then
+    ogre_importer_path=${build_dir}/bin/tool/ogre_importer_d
+else
+    ogre_importer_path=${build_dir}/bin/tool/ogre_importer
+fi
+
 # Convert models
 for (( i = 0; i < ${#src_filenames[*]}; ++i ))
 do
@@ -134,7 +142,7 @@ do
     # Replace extension from .mesh.xml to .mdl
     output_filename=${src_filenames[$i]%.mesh.xml}.mdl
 
-    ${build_dir}/bin/tool/OgreImporter $src_filepath $output_filename -t
+    ${ogre_importer_path} $src_filepath $output_filename -t
 
     # Check exit code of the previous command
     if [[ $? != 0 ]]

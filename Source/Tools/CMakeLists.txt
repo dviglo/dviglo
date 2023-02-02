@@ -46,7 +46,7 @@ dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin/tool)
 
 if (URHO3D_TOOLS)
     # Urho3D tools
-    add_subdirectory(OgreImporter)
+    add_subdirectory(ogre_importer)
     add_subdirectory(PackageTool)
     add_subdirectory(ramp_generator)
     add_subdirectory(sprite_packer)

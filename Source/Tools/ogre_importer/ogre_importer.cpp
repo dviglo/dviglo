@@ -10,7 +10,7 @@
 #include <dviglo/io/file_system.h>
 #include <dviglo/resource/xml_file.h>
 
-#include "OgreImporterUtils.h"
+#include "ogre_importer_utils.h"
 
 #ifdef WIN32
 #include <dviglo/engine/win_wrapped.h>
@@ -63,7 +63,7 @@ void Run(const Vector<String>& arguments)
     if (arguments.Size() < 2)
     {
         ErrorExit(
-            "Usage: OgreImporter <input file> <output file> [options]\n\n"
+            "Usage: ogre_importer <input file> <output file> [options]\n\n"
             "Options:\n"
             "-l      Output a material list file\n"
             "-na     Do not output animations\n"

@@ -3533,7 +3533,7 @@ Loads OGRE .mesh.xml and .skeleton.xml files and saves them as Urho3D .mdl (mode
 Usage:
 
 \verbatim
-OgreImporter <input file> <output file> [options]
+ogre_importer <input file> <output file> [options]
 
 Options:
 -l      Output a material list file
