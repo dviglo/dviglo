@@ -5,7 +5,7 @@
 set(target_name lz4)
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files LZ4/*.c LZ4/*.h)
+file(GLOB_RECURSE source_files lz4/*.c lz4/*.h)
 
 # Создаём статическую библиотеку
 add_library(${target_name} STATIC ${source_files})
@@ -17,4 +17,4 @@ target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/LZ4 FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/lz4 FILES ${source_files})

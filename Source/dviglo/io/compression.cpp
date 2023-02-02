@@ -10,8 +10,8 @@
 #include "../io/serializer.h"
 #include "../io/vector_buffer.h"
 
-#include <LZ4/lz4.h>
-#include <LZ4/lz4hc.h>
+#include <lz4/lz4.h>
+#include <lz4/lz4hc.h>
 
 namespace Urho3D
 {

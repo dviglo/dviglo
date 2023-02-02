@@ -16,7 +16,7 @@
 #endif
 
 #include <cstdio>
-#include <LZ4/lz4.h>
+#include <lz4/lz4.h>
 
 #include "../debug_new.h"
 
