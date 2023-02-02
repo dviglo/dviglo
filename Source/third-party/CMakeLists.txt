@@ -57,7 +57,7 @@ if (URHO3D_PHYSICS2D)
 endif ()
 
 if (URHO3D_TRACY_PROFILING)
-    add_subdirectory (Tracy)
+    add_subdirectory (tracy)
 endif ()
 
 if (NOT ANDROID AND NOT ARM AND NOT WEB)

@@ -6,10 +6,10 @@
 set(target_name tracy)
 
 # Создаём список h-файлов
-file(GLOB_RECURSE source_files Tracy/*.h)
+file(GLOB_RECURSE source_files tracy/*.h)
 
 # Нужен единственный cpp-файл
-list(APPEND source_files Tracy/TracyClient.cpp)
+list(APPEND source_files tracy/TracyClient.cpp)
 
 # Definition
 add_definitions (-DTRACY_ENABLE=1)
@@ -37,4 +37,4 @@ target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/Tracy FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/tracy FILES ${source_files})

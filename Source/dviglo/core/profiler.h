@@ -10,7 +10,7 @@
 
 #ifdef URHO3D_TRACY_PROFILING
 #define TRACY_ENABLE 1
-#include "Tracy/Tracy.hpp"
+#include "tracy/Tracy.hpp"
 #endif
 
 namespace Urho3D

@@ -702,8 +702,8 @@ macro (define_dependency_libs TARGET)
         endif ()
     endif ()
 
-    # third-party/Tracy external dependency
-    if (${TARGET} MATCHES Tracy|Urho3D)
+    # third-party/tracy external dependency
+    if (${TARGET} MATCHES tracy|Urho3D)
         if (MINGW)
             list (APPEND LIBS ws2_32 dbghelp advapi32 user32)
         endif ()
