@@ -138,7 +138,7 @@ if (URHO3D_PHYSICS)
 endif ()
 if (URHO3D_NAVIGATION)
     # DetourTileCache and DetourCrowd libraries depend on Detour's include dir to be added in the header search path
-    list (APPEND INCLUDE_DIRS ${THIRD_PARTY_INCLUDE_DIR}/Detour)
+    list (APPEND INCLUDE_DIRS ${THIRD_PARTY_INCLUDE_DIR}/detour)
 endif ()
 if (URHO3D_LUA)
     # Lua/LuaJIT library depends on its own include dir to be added in the header search path

@@ -22,11 +22,11 @@
 #include "../scene/scene_events.h"
 
 #include <lz4/lz4.h>
-#include <Detour/DetourNavMesh.h>
-#include <Detour/DetourNavMeshBuilder.h>
-#include <DetourTileCache/DetourTileCache.h>
-#include <DetourTileCache/DetourTileCacheBuilder.h>
-#include <Recast/Recast.h>
+#include <detour/DetourNavMesh.h>
+#include <detour/DetourNavMeshBuilder.h>
+#include <detour_tile_cache/DetourTileCache.h>
+#include <detour_tile_cache/DetourTileCacheBuilder.h>
+#include <recast/Recast.h>
 
 using namespace std;
 

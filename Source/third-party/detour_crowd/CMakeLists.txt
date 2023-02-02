@@ -2,16 +2,16 @@
 # License: MIT
 
 # Название таргета
-set(target_name detour_tile_cache)
+set(target_name detour_crowd)
 
 # Создаём список файлов
-file(GLOB_RECURSE source_files DetourTileCache/*.cpp DetourTileCache/*.h)
+file(GLOB_RECURSE source_files detour_crowd/*.cpp detour_crowd/*.h)
 
 # Создаём статическую библиотеку
 add_library(${target_name} STATIC ${source_files})
 
-# Делаем заголовочные файлы доступными библиотеке
-target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/DetourTileCache)
+# Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/detour_crowd)
 
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
@@ -23,4 +23,4 @@ target_link_libraries(${target_name} PUBLIC detour)
 set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/DetourTileCache FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/detour_crowd FILES ${source_files})

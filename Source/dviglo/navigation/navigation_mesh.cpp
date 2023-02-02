@@ -30,10 +30,10 @@
 #include "../scene/scene.h"
 
 #include <cfloat>
-#include <Detour/DetourNavMesh.h>
-#include <Detour/DetourNavMeshBuilder.h>
-#include <Detour/DetourNavMeshQuery.h>
-#include <Recast/Recast.h>
+#include <detour/DetourNavMesh.h>
+#include <detour/DetourNavMeshBuilder.h>
+#include <detour/DetourNavMeshQuery.h>
+#include <recast/Recast.h>
 
 #include "../debug_new.h"
 

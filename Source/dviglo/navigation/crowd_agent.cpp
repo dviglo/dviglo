@@ -15,8 +15,8 @@
 #include "../scene/node.h"
 #include "../scene/scene.h"
 
-#include <Detour/DetourCommon.h>
-#include <DetourCrowd/DetourCrowd.h>
+#include <detour/DetourCommon.h>
+#include <detour_crowd/DetourCrowd.h>
 
 #include "../debug_new.h"
 

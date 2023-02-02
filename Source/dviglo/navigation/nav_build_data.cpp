@@ -6,8 +6,8 @@
 
 #include "../navigation/nav_build_data.h"
 
-#include <DetourTileCache/DetourTileCacheBuilder.h>
-#include <Recast/Recast.h>
+#include <detour_tile_cache/DetourTileCacheBuilder.h>
+#include <recast/Recast.h>
 
 namespace Urho3D
 {

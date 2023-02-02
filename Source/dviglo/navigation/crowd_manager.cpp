@@ -16,7 +16,7 @@
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
 
-#include <DetourCrowd/DetourCrowd.h>
+#include <detour_crowd/DetourCrowd.h>
 
 #include "../debug_new.h"
 
