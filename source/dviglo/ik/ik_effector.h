@@ -61,7 +61,6 @@ public:
     void SetFeature(Feature feature, bool enable);
 
     /// Retrieves the node that is being used as a target. Can be NULL.
-    /// @property
     Node* GetTargetNode() const;
 
     /*!
@@ -96,17 +95,13 @@ public:
     void SetTargetName(const String& nodeName);
 
     /// Returns the current target position in world space.
-    /// @property
     const Vector3& GetTargetPosition() const;
     /// Sets the current target position. If the effector has a target node then this will have no effect.
-    /// @property
     void SetTargetPosition(const Vector3& targetPosition);
 
     /// Gets the current target rotation in world space.
-    /// @property
     const Quaternion& GetTargetRotation() const;
     /// Sets the current target rotation. If the effector has a target node then this will have no effect.
-    /// @property
     void SetTargetRotation(const Quaternion& targetRotation);
 
     /// Required for the editor, get the target rotation in euler angles.
@@ -115,14 +110,11 @@ public:
     void SetTargetRotationEuler(const Vector3& targetRotation);
 
     /// Returns the number of segments that will be affected by this effector. 0 Means all nodes between this effector and the next IKSolver.
-    /// @property
     unsigned GetChainLength() const;
     /// Sets the number of segments that will be affected. 0 Means all nodes between this effector and the next IKSolver.
-    /// @property
     void SetChainLength(unsigned chainLength);
 
     /// How strongly the effector affects the solution.
-    /// @property
     float GetWeight() const;
 
     /*!
@@ -136,7 +128,6 @@ public:
     void SetWeight(float weight);
 
     /// How strongly the target node's rotation influences the solution.
-    /// @property
     float GetRotationWeight() const;
 
     /*!
@@ -150,7 +141,6 @@ public:
     void SetRotationWeight(float weight);
 
     /// Retrieves the rotation decay factor. See SetRotationDecay() for info.
-    /// @property
     float GetRotationDecay() const;
 
     /*!

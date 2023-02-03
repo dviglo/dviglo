@@ -59,7 +59,6 @@ public:
     virtual void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
 
     /// Set enabled/disabled state.
-    /// @property
     void SetEnabled(bool enable);
     /// Remove from the scene node. If no other shared pointer references exist, causes immediate deletion.
     void Remove();
@@ -68,21 +67,17 @@ public:
     /// @property{get_id}
     ComponentId GetID() const { return id_; }
     /// Return whether the component is replicated or local to a scene.
-    /// @property
     bool IsReplicated() const;
 
     /// Return scene node.
-    /// @property
     Node* GetNode() const { return node_; }
 
     /// Return the scene the node belongs to.
     Scene* GetScene() const;
 
     /// Return whether is enabled.
-    /// @property
     bool IsEnabled() const { return enabled_; }
     /// Return whether is effectively enabled (node is also enabled).
-    /// @property
     bool IsEnabledEffective() const;
 
     /// Return component in the same scene node by type. If there are several, returns the first.

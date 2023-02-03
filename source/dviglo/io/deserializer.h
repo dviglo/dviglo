@@ -28,25 +28,20 @@ public:
     /// Set position from the beginning of the stream. Return actual new position.
     virtual i64 Seek(i64 position) = 0;
     /// Return name of the stream.
-    /// @property
     virtual const String& GetName() const;
     /// Return a checksum if applicable.
-    /// @property
     virtual hash32 GetChecksum();
     /// Return whether the end of stream has been reached.
-    /// @property
     virtual bool IsEof() const { return position_ >= size_; }
 
     /// Set position relative to current position. Return actual new position.
     i64 SeekRelative(i64 delta);
     /// Return current position.
-    /// @property
     i64 GetPosition() const { return position_; }
     /// Return current position.
     i64 Tell() const { return position_; }
 
     /// Return size.
-    /// @property
     i64 GetSize() const { return size_; }
 
     /// Read a 64-bit integer.

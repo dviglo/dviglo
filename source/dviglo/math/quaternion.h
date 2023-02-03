@@ -425,7 +425,6 @@ public:
     }
 
     /// Return Euler angles in degrees.
-    /// @property
     Vector3 EulerAngles() const;
     /// Return yaw angle in degrees.
     /// @property{get_yaw}
@@ -437,13 +436,10 @@ public:
     /// @property{get_roll}
     float RollAngle() const;
     /// Return rotation axis.
-    /// @property
     Vector3 Axis() const;
     /// Return rotation angle.
-    /// @property
     float Angle() const;
     /// Return the rotation matrix that corresponds to this quaternion.
-    /// @property
     Matrix3 RotationMatrix() const;
     /// Spherical interpolation with another quaternion.
     Quaternion Slerp(const Quaternion& rhs, float t) const;

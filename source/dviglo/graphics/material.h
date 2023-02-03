@@ -118,15 +118,12 @@ public:
     bool Save(JSONValue& dest) const;
 
     /// Set number of techniques.
-    /// @property
     void SetNumTechniques(i32 num);
     /// Set technique.
     void SetTechnique(i32 index, Technique* tech, MaterialQuality qualityLevel = QUALITY_LOW, float lodDistance = 0.0f);
     /// Set additional vertex shader defines. Separate multiple defines with spaces. Setting defines at the material level causes technique(s) to be cloned as necessary.
-    /// @property
     void SetVertexShaderDefines(const String& defines);
     /// Set additional pixel shader defines. Separate multiple defines with spaces. Setting defines at the material level causes technique(s) to be cloned as necessary.
-    /// @property
     void SetPixelShaderDefines(const String& defines);
     /// Set shader parameter.
     /// @property{set_shaderParameters}
@@ -146,31 +143,22 @@ public:
     /// Set texture coordinate transform.
     void SetUVTransform(const Vector2& offset, float rotation, float repeat);
     /// Set culling mode.
-    /// @property
     void SetCullMode(CullMode mode);
     /// Set culling mode for shadows.
-    /// @property
     void SetShadowCullMode(CullMode mode);
     /// Set polygon fill mode. Interacts with the camera's fill mode setting so that the "least filled" mode will be used.
-    /// @property
     void SetFillMode(FillMode mode);
     /// Set depth bias parameters for depth write and compare. Note that the normal offset parameter is not used and will not be saved, as it affects only shadow map sampling during light rendering.
-    /// @property
     void SetDepthBias(const BiasParameters& parameters);
     /// Set alpha-to-coverage mode on all passes.
-    /// @property
     void SetAlphaToCoverage(bool enable);
     /// Set line antialiasing on/off. Has effect only on models that consist of line lists.
-    /// @property
     void SetLineAntiAlias(bool enable);
     /// Set 8-bit render order within pass. Default 0. Lower values will render earlier and higher values later, taking precedence over e.g. state and distance sorting.
-    /// @property
     void SetRenderOrder(i8 order);
     /// Set whether to use in occlusion rendering. Default true.
-    /// @property
     void SetOcclusion(bool enable);
     /// Associate the material with a scene to ensure that shader parameter animation happens in sync with scene update, respecting the scene time scale. If no scene is set, the global update events will be used.
-    /// @property
     void SetScene(Scene* scene);
     /// Remove shader parameter.
     void RemoveShaderParameter(const String& name);
@@ -184,7 +172,6 @@ public:
     void MarkForAuxView(i32 frameNumber);
 
     /// Return number of techniques.
-    /// @property
     i32 GetNumTechniques() const { return techniques_.Size(); }
 
     /// Return all techniques.
@@ -205,10 +192,8 @@ public:
     const HashMap<TextureUnit, SharedPtr<Texture>>& GetTextures() const { return textures_; }
 
     /// Return additional vertex shader defines.
-    /// @property
     const String& GetVertexShaderDefines() const { return vertexShaderDefines_; }
     /// Return additional pixel shader defines.
-    /// @property
     const String& GetPixelShaderDefines() const { return pixelShaderDefines_; }
 
     /// Return shader parameter.
@@ -225,45 +210,36 @@ public:
     const HashMap<StringHash, MaterialShaderParameter>& GetShaderParameters() const { return shaderParameters_; }
 
     /// Return normal culling mode.
-    /// @property
     CullMode GetCullMode() const { return cullMode_; }
 
     /// Return culling mode for shadows.
-    /// @property
     CullMode GetShadowCullMode() const { return shadowCullMode_; }
 
     /// Return polygon fill mode.
-    /// @property
     FillMode GetFillMode() const { return fillMode_; }
 
     /// Return depth bias.
-    /// @property
     const BiasParameters& GetDepthBias() const { return depthBias_; }
 
     /// Return alpha-to-coverage mode.
-    /// @property
     bool GetAlphaToCoverage() const { return alphaToCoverage_; }
 
     /// Return whether line antialiasing is enabled.
-    /// @property
     bool GetLineAntiAlias() const { return lineAntiAlias_; }
 
     /// Return render order.
-    /// @property
     i8 GetRenderOrder() const { return renderOrder_; }
 
     /// Return last auxiliary view rendered frame number.
     i32 GetAuxViewFrameNumber() const { return auxViewFrameNumber_; }
 
     /// Return whether should render occlusion.
-    /// @property
     bool GetOcclusion() const { return occlusion_; }
 
     /// Return whether should render specular.
     bool GetSpecular() const { return specular_; }
 
     /// Return the scene associated with the material for shader parameter animation updates.
-    /// @property
     Scene* GetScene() const;
 
     /// Return shader parameter hash value. Used as an optimization to avoid setting shader parameters unnecessarily.

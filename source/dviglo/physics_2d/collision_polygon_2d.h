@@ -24,7 +24,6 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set vertex count.
-    /// @property
     void SetVertexCount(i32 count);
     /// Set vertex.
     void SetVertex(i32 index, const Vector2& vertex);
@@ -32,7 +31,6 @@ public:
     void SetVertices(const Vector<Vector2>& vertices);
 
     /// Return vertex count.
-    /// @property
     i32 GetVertexCount() const { return vertices_.Size(); }
 
     /// Return vertex.

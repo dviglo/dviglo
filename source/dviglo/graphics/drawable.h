@@ -137,98 +137,73 @@ public:
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set draw distance.
-    /// @property
     void SetDrawDistance(float distance);
     /// Set shadow draw distance.
-    /// @property
     void SetShadowDistance(float distance);
     /// Set LOD bias.
-    /// @property
     void SetLodBias(float bias);
     /// Set view mask. Is and'ed with camera's view mask to see if the object should be rendered.
-    /// @property
     void SetViewMask(mask32 mask);
     /// Set light mask. Is and'ed with light's and zone's light mask to see if the object should be lit.
-    /// @property
     void SetLightMask(mask32 mask);
     /// Set shadow mask. Is and'ed with light's light mask and zone's shadow mask to see if the object should be rendered to a shadow map.
-    /// @property
     void SetShadowMask(mask32 mask);
     /// Set zone mask. Is and'ed with zone's zone mask to see if the object should belong to the zone.
-    /// @property
     void SetZoneMask(mask32 mask);
     /// Set maximum number of per-pixel lights. Default 0 is unlimited.
-    /// @property
     void SetMaxLights(i32 num);
     /// Set shadowcaster flag.
-    /// @property
     void SetCastShadows(bool enable);
     /// Set occlusion flag.
-    /// @property
     void SetOccluder(bool enable);
     /// Set occludee flag.
-    /// @property
     void SetOccludee(bool enable);
     /// Mark for update and octree reinsertion. Update is automatically queued when the drawable's scene node moves or changes scale.
     void MarkForUpdate();
 
     /// Return local space bounding box. May not be applicable or properly updated on all drawables.
-    /// @property
     const BoundingBox& GetBoundingBox() const { return boundingBox_; }
 
     /// Return world-space bounding box.
-    /// @property
     const BoundingBox& GetWorldBoundingBox();
 
     /// Return drawable type.
     DrawableTypes GetDrawableType() const { return drawableType_; }
 
     /// Return draw distance.
-    /// @property
     float GetDrawDistance() const { return drawDistance_; }
 
     /// Return shadow draw distance.
-    /// @property
     float GetShadowDistance() const { return shadowDistance_; }
 
     /// Return LOD bias.
-    /// @property
     float GetLodBias() const { return lodBias_; }
 
     /// Return view mask.
-    /// @property
     mask32 GetViewMask() const { return viewMask_; }
 
     /// Return light mask.
-    /// @property
     mask32 GetLightMask() const { return lightMask_; }
 
     /// Return shadow mask.
-    /// @property
     mask32 GetShadowMask() const { return shadowMask_; }
 
     /// Return zone mask.
-    /// @property
     mask32 GetZoneMask() const { return zoneMask_; }
 
     /// Return maximum number of per-pixel lights.
-    /// @property
     i32 GetMaxLights() const { return maxLights_; }
 
     /// Return shadowcaster flag.
-    /// @property
     bool GetCastShadows() const { return castShadows_; }
 
     /// Return occluder flag.
-    /// @property
     bool IsOccluder() const { return occluder_; }
 
     /// Return occludee flag.
-    /// @property
     bool IsOccludee() const { return occludee_; }
 
     /// Return whether is in view this frame from any viewport camera. Excludes shadow map cameras.
-    /// @property
     bool IsInView() const;
     /// Return whether is in view of a specific camera this frame. Pass in a null camera to allow any camera, including shadow map cameras.
     bool IsInView(Camera* camera) const;
@@ -268,7 +243,6 @@ public:
     Octant* GetOctant() const { return octant_; }
 
     /// Return current zone.
-    /// @property
     Zone* GetZone() const { return zone_; }
 
     /// Return whether current zone is inconclusive or dirty due to the drawable moving.

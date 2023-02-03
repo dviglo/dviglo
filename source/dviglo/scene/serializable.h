@@ -77,7 +77,6 @@ public:
     /// Remove instance's default values if they are set previously.
     void RemoveInstanceDefault();
     /// Set temporary flag. Temporary objects will not be saved.
-    /// @property
     void SetTemporary(bool enable);
     /// Enable interception of an attribute from network updates. Intercepted attributes are sent as events instead of applying directly. This can be used to implement client side prediction.
     void SetInterceptNetworkUpdate(const String& attributeName, bool enable);
@@ -105,13 +104,11 @@ public:
     /// Return attribute default value by name. Return empty if not found.
     Variant GetAttributeDefault(const String& name) const;
     /// Return number of attributes.
-    /// @property
     unsigned GetNumAttributes() const;
     /// Return number of network replication attributes.
     unsigned GetNumNetworkAttributes() const;
 
     /// Return whether is temporary.
-    /// @property
     bool IsTemporary() const { return temporary_; }
 
     /// Return whether an attribute's network updates are being intercepted.

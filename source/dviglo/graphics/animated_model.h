@@ -68,10 +68,8 @@ public:
     /// Remove all animations.
     void RemoveAllAnimationStates();
     /// Set animation LOD bias.
-    /// @property
     void SetAnimationLodBias(float bias);
     /// Set whether to update animation and the bounding box when not visible. Recommended to enable for physically controlled models like ragdolls.
-    /// @property
     void SetUpdateInvisible(bool enable);
     /// Set vertex morph weight by index.
     void SetMorphWeight(i32 index, float weight);
@@ -86,14 +84,12 @@ public:
     void ApplyAnimation();
 
     /// Return skeleton.
-    /// @property
     Skeleton& GetSkeleton() { return skeleton_; }
 
     /// Return all animation states.
     const Vector<SharedPtr<AnimationState>>& GetAnimationStates() const { return animationStates_; }
 
     /// Return number of animation states.
-    /// @property
     i32 GetNumAnimationStates() const { return animationStates_.Size(); }
 
     /// Return animation state by animation pointer.
@@ -107,11 +103,9 @@ public:
     AnimationState* GetAnimationState(i32 index) const;
 
     /// Return animation LOD bias.
-    /// @property
     float GetAnimationLodBias() const { return animationLodBias_; }
 
     /// Return whether to update animation when not visible.
-    /// @property
     bool GetUpdateInvisible() const { return updateInvisible_; }
 
     /// Return all vertex morphs.
@@ -121,7 +115,6 @@ public:
     const Vector<SharedPtr<VertexBuffer>>& GetMorphVertexBuffers() const { return morphVertexBuffers_; }
 
     /// Return number of vertex morphs.
-    /// @property
     i32 GetNumMorphs() const { return morphs_.Size(); }
 
     /// Return vertex morph weight by index.

@@ -108,7 +108,6 @@ public:
     bool Save(Serializer& dest) const override;
 
     /// Set local-space bounding box.
-    /// @property
     void SetBoundingBox(const BoundingBox& box);
     /// Set vertex buffers and their morph ranges.
     bool SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
@@ -116,10 +115,8 @@ public:
     /// Set index buffers.
     bool SetIndexBuffers(const Vector<SharedPtr<IndexBuffer>>& buffers);
     /// Set number of geometries.
-    /// @property
     void SetNumGeometries(i32 num);
     /// Set number of LOD levels in a geometry.
-    /// @property
     bool SetNumGeometryLodLevels(i32 index, i32 num);
     /// Set geometry.
     bool SetGeometry(i32 index, i32 lodLevel, Geometry* geometry);
@@ -136,11 +133,9 @@ public:
     SharedPtr<Model> Clone(const String& cloneName = String::EMPTY) const;
 
     /// Return bounding box.
-    /// @property
     const BoundingBox& GetBoundingBox() const { return boundingBox_; }
 
     /// Return skeleton.
-    /// @property
     Skeleton& GetSkeleton() { return skeleton_; }
 
     /// Return vertex buffers.
@@ -150,11 +145,9 @@ public:
     const Vector<SharedPtr<IndexBuffer>>& GetIndexBuffers() const { return indexBuffers_; }
 
     /// Return number of geometries.
-    /// @property
     i32 GetNumGeometries() const { return geometries_.Size(); }
 
     /// Return number of LOD levels in geometry.
-    /// @property
     i32 GetNumGeometryLodLevels(i32 index) const;
 
     /// Return geometry pointers.
@@ -181,7 +174,6 @@ public:
     const Vector<ModelMorph>& GetMorphs() const { return morphs_; }
 
     /// Return number of vertex morphs.
-    /// @property
     i32 GetNumMorphs() const { return morphs_.Size(); }
 
     /// Return vertex morph by index.

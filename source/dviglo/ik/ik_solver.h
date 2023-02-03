@@ -185,7 +185,6 @@ public:
     void SetFeature(Feature feature, bool enable);
 
     /// Returns the configured maximum number of iterations.
-    /// @property
     unsigned GetMaximumIterations() const;
 
     /*!
@@ -209,7 +208,6 @@ public:
     void SetMaximumIterations(unsigned iterations);
 
     /// Returns the configured tolerance.
-    /// @property
     float GetTolerance() const;
 
     /*!

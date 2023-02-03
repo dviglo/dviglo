@@ -68,7 +68,6 @@ struct URHO3D_API AnimationTrack
     /// Return keyframe at index, or null if not found.
     AnimationKeyFrame* GetKeyFrame(i32 index);
     /// Return number of keyframes.
-    /// @property
     i32 GetNumKeyFrames() const { return keyFrames_.Size(); }
     /// Return keyframe index based on time and previous index. Return false if animation is empty.
     bool GetKeyFrameIndex(float time, i32& index) const;
@@ -118,10 +117,8 @@ public:
     bool Save(Serializer& dest) const override;
 
     /// Set animation name.
-    /// @property
     void SetAnimationName(const String& name);
     /// Set animation length.
-    /// @property
     void SetLength(float length);
     /// Create and return a track by name. If track by same name already exists, returns the existing.
     AnimationTrack* CreateTrack(const String& name);
@@ -141,27 +138,23 @@ public:
     /// Remove all trigger points.
     void RemoveAllTriggers();
     /// Resize trigger point vector.
-    /// @property
     void SetNumTriggers(i32 num);
     /// Clone the animation.
     SharedPtr<Animation> Clone(const String& cloneName = String::EMPTY) const;
 
     /// Return animation name.
-    /// @property
     const String& GetAnimationName() const { return animationName_; }
 
     /// Return animation name hash.
     StringHash GetAnimationNameHash() const { return animationNameHash_; }
 
     /// Return animation length.
-    /// @property
     float GetLength() const { return length_; }
 
     /// Return all animation tracks.
     const HashMap<StringHash, AnimationTrack>& GetTracks() const { return tracks_; }
 
     /// Return number of animation tracks.
-    /// @property
     i32 GetNumTracks() const { return tracks_.Size(); }
 
     /// Return animation track by index.
@@ -177,7 +170,6 @@ public:
     const Vector<AnimationTriggerPoint>& GetTriggers() const { return triggers_; }
 
     /// Return number of animation trigger points.
-    /// @property
     i32 GetNumTriggers() const { return triggers_.Size(); }
 
     /// Return a trigger point by index.

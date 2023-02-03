@@ -26,27 +26,21 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set anchor.
-    /// @property
     void SetAnchor(const Vector2& anchor);
 
     /// Return anchor.
-    /// @property
     const Vector2& GetAnchor() const { return anchor_; }
 
     /// Set linear stiffness in N/m.
-    /// @property
     void SetStiffness(float stiffness);
 
     /// Return linear stiffness in N/m.
-    /// @property
     float GetStiffness() const { return jointDef_.stiffness; }
 
     /// Set linear damping in N*s/m.
-    /// @property
     void SetDamping(float damping);
 
     /// Return linear damping in N*s/m.
-    /// @property
     float GetDamping() const { return jointDef_.damping; }
 
     /// Calc and set stiffness and damping. Must be used after set owner and other bodies.

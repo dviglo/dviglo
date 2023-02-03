@@ -47,7 +47,6 @@ public:
     /// Return the object name. Applicable only on OpenGL.
     u32 GetGPUObjectName() const { return object_.name_; }
     /// Return whether data is lost due to context loss.
-    /// @property
     bool IsDataLost() const { return dataLost_; }
     /// Return whether has pending data assigned while graphics context was lost.
     bool HasPendingData() const { return dataPending_; }

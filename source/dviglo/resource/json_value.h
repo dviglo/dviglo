@@ -161,16 +161,12 @@ public:
     JSONValue& operator =(const JSONValue& rhs);
 
     /// Return value type.
-    /// @property
     JSONValueType GetValueType() const;
     /// Return number type.
-    /// @property
     JSONNumberType GetNumberType() const;
     /// Return value type's name.
-    /// @property
     String GetValueTypeName() const;
     /// Return number type's name.
-    /// @property
     String GetNumberTypeName() const;
 
     /// Check is null.
@@ -227,7 +223,6 @@ public:
     /// Resize array.
     void Resize(unsigned newSize);
     /// Return size of array or number of keys in object.
-    /// @property
     unsigned Size() const;
 
     // JSON object functions

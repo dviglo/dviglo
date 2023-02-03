@@ -73,10 +73,8 @@ public:
     ~Object() override;
 
     /// Return type hash.
-    /// @property
     virtual StringHash GetType() const = 0;
     /// Return type name.
-    /// @property
     virtual const String& GetTypeName() const = 0;
     /// Return type info.
     virtual const TypeInfo* GetTypeInfo() const = 0;
@@ -129,13 +127,10 @@ public:
     /// Return execution context.
     Context* GetContext() const { return context_; }
     /// Return global variable based on key.
-    /// @property
     const Variant& GetGlobalVar(StringHash key) const;
     /// Return all global variables.
-    /// @property
     const VariantMap& GetGlobalVars() const;
     /// Set global variable with the respective key and value.
-    /// @property
     void SetGlobalVar(StringHash key, const Variant& value);
     /// Return subsystem by type.
     Object* GetSubsystem(StringHash type) const;
@@ -154,7 +149,6 @@ public:
     /// Template version of returning a subsystem.
     template <class T> T* GetSubsystem() const;
     /// Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.
-    /// @property
     const String& GetCategory() const;
 
     /// Block object from sending and receiving events.

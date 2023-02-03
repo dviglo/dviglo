@@ -25,19 +25,15 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set loop.
-    /// @property
     void SetLoop(bool loop);
 
     /// Return loop.
-    /// @property
     bool GetLoop() const { return loop_; }
 
     /// Set vertex count.
-    /// @property
     void SetVertexCount(i32 count);
 
     /// Return vertex count.
-    /// @property
     i32 GetVertexCount() const { return vertices_.Size(); }
 
     /// Set vertex.

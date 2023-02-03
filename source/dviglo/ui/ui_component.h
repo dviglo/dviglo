@@ -33,13 +33,10 @@ public:
     static void RegisterObject(Context* context);
 
     /// Return UIElement.
-    /// @property
     UIElement* GetRoot() const;
     /// Return material which will be used for rendering UI texture.
-    /// @property
     Material* GetMaterial() const;
     /// Return texture which will be used for rendering UI to.
-    /// @property
     Texture2D* GetTexture() const;
     /// Set index of viewport to be used for screen coordinate translation.
     void SetViewportIndex(unsigned index);

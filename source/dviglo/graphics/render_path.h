@@ -94,7 +94,6 @@ struct URHO3D_API RenderPathCommand
     /// Remove a shader parameter.
     void RemoveShaderParameter(const String& name);
     /// Set number of output rendertargets.
-    /// @property
     void SetNumOutputs(i32 num);
     /// Set output rendertarget name and face index for cube maps.
     void SetOutput(i32 index, const String& name, CubeMapFace face = FACE_POSITIVE_X);
@@ -105,7 +104,6 @@ struct URHO3D_API RenderPathCommand
     /// @property{set_outputFaces}
     void SetOutputFace(i32 index, CubeMapFace face);
     /// Set depth-stencil output name. When empty, will assign a depth-stencil buffer automatically.
-    /// @property
     void SetDepthStencilName(const String& name);
 
     /// Return texture resource name.
@@ -116,7 +114,6 @@ struct URHO3D_API RenderPathCommand
     const Variant& GetShaderParameter(const String& name) const;
 
     /// Return number of output rendertargets.
-    /// @property
     i32 GetNumOutputs() const { return outputs_.Size(); }
 
     /// Return output rendertarget name.
@@ -127,7 +124,6 @@ struct URHO3D_API RenderPathCommand
     CubeMapFace GetOutputFace(i32 index) const;
 
     /// Return depth-stencil output name.
-    /// @property
     const String& GetDepthStencilName() const { return depthStencilName_; }
 
     /// Tag name.
@@ -200,10 +196,8 @@ public:
     /// Enable/disable commands and rendertargets by tag.
     void SetEnabled(const String& tag, bool active);
     /// Return true of any of render targets or commands with specified tag are enabled.
-    /// @property
     bool IsEnabled(const String& tag) const;
     /// Return true if renderpath or command with given tag exists.
-    /// @property
     bool IsAdded(const String& tag) const;
     /// Toggle enabled state of commands and rendertargets by tag.
     void ToggleEnabled(const String& tag);
@@ -234,11 +228,9 @@ public:
     void SetShaderParameter(const String& name, const Variant& value);
 
     /// Return number of rendertargets.
-    /// @property
     i32 GetNumRenderTargets() const { return renderTargets_.Size(); }
 
     /// Return number of commands.
-    /// @property
     i32 GetNumCommands() const { return commands_.Size(); }
 
     /// Return command at index, or null if does not exist.

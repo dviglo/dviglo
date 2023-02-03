@@ -59,7 +59,6 @@ public:
     virtual bool SaveFile(const String& fileName) const;
 
     /// Set name.
-    /// @property
     void SetName(const String& name);
     /// Set memory use in bytes, possibly approximate.
     void SetMemoryUse(i32 size);
@@ -69,18 +68,15 @@ public:
     void SetAsyncLoadState(AsyncLoadState newState);
 
     /// Return name.
-    /// @property
     const String& GetName() const { return name_; }
 
     /// Return name hash.
     StringHash GetNameHash() const { return nameHash_; }
 
     /// Return memory use in bytes, possibly approximate.
-    /// @property
     i32 GetMemoryUse() const { return memoryUse_; }
 
     /// Return time since last use in milliseconds. If referred to elsewhere than in the resource cache, returns always zero.
-    /// @property
     unsigned GetUseTimer();
 
     /// Return the asynchronous loading state.
@@ -116,10 +112,8 @@ public:
     /// Remove all metadata variables.
     void RemoveAllMetadata();
     /// Return metadata variable.
-    /// @property
     const Variant& GetMetadata(const String& name) const;
     /// Return whether the resource has metadata.
-    /// @property
     bool HasMetadata() const;
 
 protected:

@@ -147,13 +147,10 @@ public:
     /// Set external window handle. Only effective before setting the initial screen mode.
     void SetExternalWindow(void* window);
     /// Set window title.
-    /// @property
     void SetWindowTitle(const String& windowTitle);
     /// Set window icon.
-    /// @property
     void SetWindowIcon(Image* windowIcon);
     /// Set window position. Sets initial position if window is not created yet.
-    /// @property
     void SetWindowPosition(const IntVector2& position);
     /// Set window position. Sets initial position if window is not created yet.
     void SetWindowPosition(int x, int y);
@@ -174,18 +171,14 @@ public:
     /// Set screen resolution only. Deprecated. Return true if successful.
     bool SetMode(int width, int height);
     /// Set whether the main window uses sRGB conversion on write.
-    /// @property
     void SetSRGB(bool enable);
     /// Set whether rendering output is dithered. Default true on OpenGL. No effect on Direct3D.
-    /// @property
     void SetDither(bool enable);
     /// Set whether to flush the GPU command buffer to prevent multiple frames being queued and uneven frame timesteps. Default off, may decrease performance if enabled. Not currently implemented on OpenGL.
-    /// @property
     void SetFlushGPU(bool enable);
     /// Set forced use of OpenGL 2 even if OpenGL 3 is available. Must be called before setting the screen mode for the first time. Default false. No effect on Direct3D9 & 11.
     void SetForceGL2(bool enable);
     /// Set allowed screen orientations as a space-separated list of "LandscapeLeft", "LandscapeRight", "Portrait" and "PortraitUpsideDown". Affects currently only iOS platform.
-    /// @property
     void SetOrientations(const String& orientations);
     /// Toggle between full screen and windowed mode. Return true if successful.
     bool ToggleFullscreen();
@@ -320,11 +313,9 @@ public:
     /// Precache shader variations from an XML file generated with BeginDumpShaders().
     void PrecacheShaders(Deserializer& source);
     /// Set shader cache directory, Direct3D only. This can either be an absolute path or a path within the resource system.
-    /// @property
     void SetShaderCacheDir(const String& path);
 
     /// Return whether rendering initialized.
-    /// @property
     bool IsInitialized() const;
 
 #ifdef URHO3D_OPENGL
@@ -352,53 +343,42 @@ public:
     SDL_Window* GetWindow() const { return window_; }
 
     /// Return window title.
-    /// @property
     const String& GetWindowTitle() const { return windowTitle_; }
 
     /// Return graphics API name.
-    /// @property
     const String& GetApiName() const { return apiName_; }
 
     /// Return window position.
-    /// @property
     IntVector2 GetWindowPosition() const;
 
     /// Return window width in pixels.
-    /// @property
     int GetWidth() const { return width_; }
 
     /// Return window height in pixels.
-    /// @property
     int GetHeight() const { return height_; }
 
     /// Return screen mode parameters.
     const ScreenModeParams& GetScreenModeParams() const { return screenParams_; }
 
     /// Return multisample mode (1 = no multisampling).
-    /// @property
     int GetMultiSample() const { return screenParams_.multiSample_; }
 
     /// Return window size in pixels.
-    /// @property
     IntVector2 GetSize() const { return IntVector2(width_, height_); }
 
     /// Return whether window is fullscreen.
-    /// @property
     bool GetFullscreen() const { return screenParams_.fullscreen_; }
 
     /// Return whether window is borderless.
-    /// @property
     bool GetBorderless() const { return screenParams_.borderless_; }
 
     /// Return whether window is resizable.
-    /// @property
     bool GetResizable() const { return screenParams_.resizable_; }
 
     /// Return whether window is high DPI.
     bool GetHighDPI() const { return screenParams_.highDPI_; }
 
     /// Return whether vertical sync is on.
-    /// @property
     bool GetVSync() const { return screenParams_.vsync_; }
 
     /// Return refresh rate when using vsync in fullscreen
@@ -408,38 +388,30 @@ public:
     int GetMonitor() const { return screenParams_.monitor_; }
 
     /// Return whether triple buffering is enabled.
-    /// @property
     bool GetTripleBuffer() const { return screenParams_.tripleBuffer_; }
 
     /// Return whether the main window is using sRGB conversion on write.
-    /// @property
     bool GetSRGB() const { return sRGB_; }
 
     /// Return whether rendering output is dithered. Always false on Direct3D.
-    /// @property
     bool GetDither() const;
 
     /// Return whether the GPU command buffer is flushed each frame.
-    /// @property
     bool GetFlushGPU() const { return flushGPU_; }
 
     /// Return whether OpenGL 2 use is forced. Effective only on OpenGL.
     bool GetForceGL2() const { return forceGL2_; }
 
     /// Return allowed screen orientations.
-    /// @property
     const String& GetOrientations() const { return orientations_; }
 
     /// Return whether graphics context is lost and can not render or load GPU resources.
-    /// @property
     bool IsDeviceLost() const;
 
     /// Return number of primitives drawn this frame.
-    /// @property
     unsigned GetNumPrimitives() const { return numPrimitives_; }
 
     /// Return number of batches drawn this frame.
-    /// @property
     unsigned GetNumBatches() const { return numBatches_; }
 
     /// Return dummy color texture format for shadow maps. Is "NULL" (consume no video memory) if supported.
@@ -452,58 +424,44 @@ public:
     unsigned GetHiresShadowMapFormat() const { return hiresShadowMapFormat_; }
 
     /// Return whether hardware instancing is supported.
-    /// @property
     bool GetInstancingSupport() const { return instancingSupport_; }
 
     /// Return whether light pre-pass rendering is supported.
-    /// @property
     bool GetLightPrepassSupport() const { return lightPrepassSupport_; }
 
     /// Return whether deferred rendering is supported.
-    /// @property
     bool GetDeferredSupport() const { return deferredSupport_; }
 
     /// Return whether anisotropic texture filtering is supported.
     bool GetAnisotropySupport() const { return anisotropySupport_; }
 
     /// Return whether shadow map depth compare is done in hardware.
-    /// @property
     bool GetHardwareShadowSupport() const { return hardwareShadowSupport_; }
 
     /// Return whether a readable hardware depth format is available.
-    /// @property
     bool GetReadableDepthSupport() const { return GetReadableDepthFormat() != 0; }
 
     /// Return whether sRGB conversion on texture sampling is supported.
-    /// @property
     bool GetSRGBSupport() const { return sRGBSupport_; }
 
     /// Return whether sRGB conversion on rendertarget writing is supported.
-    /// @property
     bool GetSRGBWriteSupport() const { return sRGBWriteSupport_; }
 
     /// Return supported fullscreen resolutions (third component is refreshRate). Will be empty if listing the resolutions is not supported on the platform (e.g. Web).
-    /// @property
     Vector<IntVector3> GetResolutions(int monitor) const;
     /// Return index of the best resolution for requested width, height and refresh rate.
     i32 FindBestResolutionIndex(int monitor, int width, int height, int refreshRate) const;
     /// Return supported multisampling levels.
-    /// @property
     Vector<int> GetMultiSampleLevels() const;
     /// Return the desktop resolution.
-    /// @property
     IntVector2 GetDesktopResolution(int monitor) const;
     /// Return the number of currently connected monitors.
-    /// @property
     int GetMonitorCount() const;
     /// Returns the index of the display containing the center of the window on success or a negative error code on failure.
-    /// @property
     int GetCurrentMonitor() const;
     /// Returns true if window is maximized or runs in full screen mode.
-    /// @property
     bool GetMaximized() const;
     /// Return display dpi information: (hdpi, vdpi, ddpi). On failure returns zero vector.
-    /// @property
     Vector3 GetDisplayDPI(int monitor=0) const;
 
     /// Return hardware format for a compressed image format, or 0 if unsupported.
@@ -630,7 +588,6 @@ public:
     bool GetUseClipPlane() const { return useClipPlane_; }
 
     /// Return shader cache directory, Direct3D only.
-    /// @property
     const String& GetShaderCacheDir() const { return shaderCacheDir_; }
 
     /// Return current rendertarget width and height.

@@ -66,7 +66,6 @@ public:
     /// Remove all items.
     void RemoveAllItems();
     /// Set selection.
-    /// @property
     void SetSelection(i32 index);
     /// Set multiple selected items. If multiselect disabled, sets only the first.
     void SetSelections(const Vector<i32>& indices);
@@ -81,23 +80,17 @@ public:
     /// Clear selection.
     void ClearSelection();
     /// Set selected items' highlight mode.
-    /// @property
     void SetHighlightMode(HighlightMode mode);
     /// Enable multiselect.
-    /// @property
     void SetMultiselect(bool enable);
     /// \brief Enable hierarchy mode. Allows items to have parent-child relationship at different indent level and the ability to expand/collapse child items.
     /// All items in the list will be lost during mode change.
-    /// @property
     void SetHierarchyMode(bool enable);
     /// Set base indent, i.e. the indent level of the ultimate parent item.
-    /// @property
     void SetBaseIndent(int baseIndent);
     /// Enable clearing of selection on defocus.
-    /// @property
     void SetClearSelectionOnDefocus(bool enable);
     /// Enable reacting to click end instead of click start for item selection. Default false.
-    /// @property
     void SetSelectOnClickEnd(bool enable);
 
     /// Expand item at index. Only has effect in hierarchy mode.
@@ -106,7 +99,6 @@ public:
     void ToggleExpand(i32 index, bool recursive = false);
 
     /// Return number of items.
-    /// @property
     i32 GetNumItems() const;
     /// Return item at index.
     /// @property{get_items}
@@ -116,20 +108,16 @@ public:
     /// Return index of item, or NINDEX If not found.
     i32 FindItem(UIElement* item) const;
     /// Return first selected index, or NINDEX if none selected.
-    /// @property
     i32 GetSelection() const;
 
     /// Return all selected indices.
-    /// @property
     const Vector<i32>& GetSelections() const { return selections_; }
 
     /// Copy selected items to system clipboard. Currently only applicable to Text items.
     void CopySelectedItemsToClipboard() const;
     /// Return first selected item, or null if none selected.
-    /// @property
     UIElement* GetSelectedItem() const;
     /// Return all selected items.
-    /// @property
     Vector<UIElement*> GetSelectedItems() const;
     /// Return whether an item at index is selected.
     bool IsSelected(i32 index) const;
@@ -137,27 +125,21 @@ public:
     bool IsExpanded(i32 index) const;
 
     /// Return highlight mode.
-    /// @property
     HighlightMode GetHighlightMode() const { return highlightMode_; }
 
     /// Return whether multiselect enabled.
-    /// @property
     bool GetMultiselect() const { return multiselect_; }
 
     /// Return whether selection is cleared on defocus.
-    /// @property
     bool GetClearSelectionOnDefocus() const { return clearSelectionOnDefocus_; }
 
     /// Return whether reacts to click end instead of click start for item selection.
-    /// @property
     bool GetSelectOnClickEnd() const { return selectOnClickEnd_; }
 
     /// Return whether hierarchy mode enabled.
-    /// @property
     bool GetHierarchyMode() const { return hierarchyMode_; }
 
     /// Return base indent.
-    /// @property
     int GetBaseIndent() const { return baseIndent_; }
 
     /// Ensure full visibility of the item.

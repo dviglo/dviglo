@@ -57,7 +57,6 @@ public:
     SharedPtr<Image> GetImage() const;
 
     /// Return render surface.
-    /// @property
     RenderSurface* GetRenderSurface() const { return renderSurface_; }
 
 protected:
