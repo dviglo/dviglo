@@ -82,7 +82,6 @@ public:
     DropDownList* GetFilterList() const { return filterList_; }
 
     /// Return OK button.
-    /// @property{get_okButton}
     Button* GetOKButton() const { return okButton_; }
 
     /// Return cancel button.

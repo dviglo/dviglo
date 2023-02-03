@@ -45,7 +45,6 @@ public:
     void SetRadius(float newRadius);
 
     /// Get the internal obstacle ID.
-    /// @property{get_obstacleId}
     unsigned GetObstacleID() const { return obstacleId_; }
 
     /// Render debug information.

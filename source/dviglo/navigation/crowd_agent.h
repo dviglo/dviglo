@@ -155,11 +155,9 @@ public:
     NavigationPushiness GetNavigationPushiness() const { return navPushiness_; }
 
     /// Return true when the agent has a target.
-    /// @property{get_requestedTarget}
     bool HasRequestedTarget() const { return requestedTargetType_ != CA_REQUESTEDTARGET_NONE; }
 
     /// Return true when the agent has arrived at its target.
-    /// @property{get_arrived}
     bool HasArrived() const;
     /// Return true when the agent is in crowd (being managed by a crowd manager).
     bool IsInCrowd() const;

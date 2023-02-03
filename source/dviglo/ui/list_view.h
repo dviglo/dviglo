@@ -101,7 +101,6 @@ public:
     /// Return number of items.
     i32 GetNumItems() const;
     /// Return item at index.
-    /// @property{get_items}
     UIElement* GetItem(i32 index) const;
     /// Return all items.
     Vector<UIElement*> GetItems() const;

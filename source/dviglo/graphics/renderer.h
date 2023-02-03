@@ -169,7 +169,6 @@ public:
     /// Set number of backbuffer viewports to render.
     void SetNumViewports(i32 num);
     /// Set a backbuffer viewport.
-    /// @property{set_viewports}
     void SetViewport(i32 index, Viewport* viewport);
     /// Set default renderpath.
     void SetDefaultRenderPath(RenderPath* renderPath);
@@ -178,7 +177,6 @@ public:
     /// Set default non-textured material technique.
     void SetDefaultTechnique(Technique* technique);
     /// Set HDR rendering on/off.
-    /// @property{set_hdrRendering}
     void SetHDRRendering(bool enable);
     /// Set specular lighting on/off.
     void SetSpecularLighting(bool enable);
@@ -201,7 +199,6 @@ public:
     /// Set shadow parameters when VSM is used, they help to reduce light bleeding. LightBleeding must be in [0, 1].
     void SetVSMShadowParameters(float minVariance, float lightBleedingReduction);
     /// Set VSM shadow map multisampling level. Default 1 (no multisampling).
-    /// @property{set_vsmMultiSample}
     void SetVSMMultiSample(int multiSample);
     /// Set post processing filter to the shadow map.
     /// @nobind
@@ -242,7 +239,6 @@ public:
     i32 GetNumViewports() const { return viewports_.Size(); }
 
     /// Return backbuffer viewport by index.
-    /// @property{get_viewports}
     Viewport* GetViewport(i32 index) const;
     /// Return nth backbuffer viewport associated to a scene. Index 0 returns the first.
     Viewport* GetViewportForScene(Scene* scene, i32 index) const;
@@ -252,7 +248,6 @@ public:
     Technique* GetDefaultTechnique() const;
 
     /// Return whether HDR rendering is enabled.
-    /// @property{get_hdrRendering}
     bool GetHDRRendering() const { return hdrRendering_; }
 
     /// Return whether specular lighting is enabled.
@@ -283,11 +278,9 @@ public:
     float GetShadowSoftness() const { return shadowSoftness_; }
 
     /// Return VSM shadow parameters.
-    /// @property{get_vsmShadowParameters}
     Vector2 GetVSMShadowParameters() const { return vsmShadowParams_; };
 
     /// Return VSM shadow multisample level.
-    /// @property{get_vsmMultiSample}
     int GetVSMMultiSample() const { return vsmMultiSample_; }
 
     /// Return whether shadow maps are reused.

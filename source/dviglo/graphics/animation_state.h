@@ -97,7 +97,6 @@ public:
     /// Return per-bone blending weight by track index.
     float GetBoneWeight(i32 index) const;
     /// Return per-bone blending weight by name.
-    /// @property{get_boneWeights}
     float GetBoneWeight(const String& name) const;
     /// Return per-bone blending weight by name.
     float GetBoneWeight(StringHash nameHash) const;

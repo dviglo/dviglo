@@ -28,7 +28,6 @@ public:
     /// Set number of viewports.
     void SetNumViewports(unsigned num);
     /// Set viewport.
-    /// @property{set_viewports}
     void SetViewport(unsigned index, Viewport* viewport);
     /// Set viewport update mode. Default is to update when visible.
     void SetUpdateMode(RenderSurfaceUpdateMode mode);
@@ -64,7 +63,6 @@ public:
     unsigned GetNumViewports() const { return viewports_.Size(); }
 
     /// Return viewport by index.
-    /// @property{get_viewports}
     Viewport* GetViewport(unsigned index) const;
 
     /// Return viewport update mode.

@@ -64,7 +64,6 @@ public:
     void Remove();
 
     /// Return ID.
-    /// @property{get_id}
     ComponentId GetID() const { return id_; }
     /// Return whether the component is replicated or local to a scene.
     bool IsReplicated() const;
@@ -111,7 +110,6 @@ protected:
     /// Handle scene node enabled status changing.
     virtual void OnNodeSetEnabled(Node* node);
     /// Set ID. Called by Scene.
-    /// @property{set_id}
     void SetID(ComponentId id);
     /// Set scene node. Called by Node when creating the component.
     void SetNode(Node* node);

@@ -110,7 +110,6 @@ public:
     /// Return material.
     Material* GetMaterial() const;
     /// Return patch by index.
-    /// @property{get_patches}
     TerrainPatch* GetPatch(i32 index) const;
     /// Return patch by patch coordinates.
     TerrainPatch* GetPatch(int x, int z) const;

@@ -332,7 +332,6 @@ public:
     template <class T> void RemoveComponents();
 
     /// Return ID.
-    /// @property{get_id}
     NodeId GetID() const { return id_; }
     /// Return whether the node is replicated or local to a scene.
     bool IsReplicated() const;
@@ -573,7 +572,6 @@ public:
     template <class T> bool HasComponent() const;
 
     /// Set ID. Called by Scene.
-    /// @property{set_id}
     void SetID(NodeId id);
     /// Set scene. Called by Scene.
     void SetScene(Scene* scene);

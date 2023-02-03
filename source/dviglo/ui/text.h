@@ -165,13 +165,10 @@ public:
     i32 GetNumChars() const { return unicodeText_.Size(); }
 
     /// Return width of row by index.
-    /// @property{get_rowWidths}
     float GetRowWidth(i32 index) const;
     /// Return position of character by index relative to the text element origin.
-    /// @property{get_charPositions}
     Vector2 GetCharPosition(i32 index);
     /// Return size of character by index.
-    /// @property{get_charSizes}
     Vector2 GetCharSize(i32 index);
 
     /// Set text effect Z bias. Zero by default, adjusted only in 3D mode.

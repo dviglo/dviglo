@@ -265,7 +265,6 @@ public:
     /// Set color on all corners.
     void SetColor(const Color& color);
     /// Set color on one corner.
-    /// @property{set_colors}
     void SetColor(Corner corner, const Color& color);
     /// Set priority.
     void SetPriority(int priority);
@@ -475,7 +474,6 @@ public:
     const IntRect& GetClipBorder() const { return clipBorder_; }
 
     /// Return corner color.
-    /// @property{get_colors}
     const Color& GetColor(Corner corner) const { return colors_[corner]; }
 
     /// Return priority.
@@ -503,7 +501,6 @@ public:
     bool GetUseDerivedOpacity() const { return useDerivedOpacity_; }
 
     /// Return whether has focus.
-    /// @property{get_focus}
     bool HasFocus() const;
 
     /// Return whether is a direct or indirect child of specified element.
@@ -534,7 +531,6 @@ public:
     bool IsInternal() const { return internal_; }
 
     /// Return whether has different color in at least one corner.
-    /// @property{get_colorGradient}
     bool HasColorGradient() const { return colorGradient_; }
 
     /// Return focus mode.
@@ -544,7 +540,6 @@ public:
     DragAndDropModeFlags GetDragDropMode() const { return dragDropMode_; }
 
     /// Return applied style name. Return an empty string when the applied style is an 'auto' style (i.e. style derived from instance's type).
-    /// @property{get_style}
     const String& GetAppliedStyle() const;
     /// Return default style.
     XMLFile* GetDefaultStyle(bool recursiveUp = true) const;
@@ -565,7 +560,6 @@ public:
     i32 GetNumChildren(bool recursive = false) const;
 
     /// Return child element by index.
-    /// @property{get_children}
     UIElement* GetChild(i32 index) const;
 
     /// Return child element by name.

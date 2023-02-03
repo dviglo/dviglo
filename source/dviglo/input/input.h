@@ -261,19 +261,15 @@ public:
     /// Return number of active finger touches.
     i32 GetNumTouches() const { return touches_.Size(); }
     /// Return active finger touch by index.
-    /// @property{get_touches}
     TouchState* GetTouch(i32 index) const;
 
     /// Return number of connected joysticks.
     i32 GetNumJoysticks() const { return joysticks_.Size(); }
     /// Return joystick state by ID, or null if does not exist.
-    /// @property{get_joysticks}
     JoystickState* GetJoystick(SDL_JoystickID id);
     /// Return joystick state by index, or null if does not exist. 0 = first connected joystick.
-    /// @property{get_joysticksByIndex}
     JoystickState* GetJoystickByIndex(i32 index);
     /// Return joystick state by name, or null if does not exist.
-    /// @property{get_joysticksByName}
     JoystickState* GetJoystickByName(const String& name);
 
     /// Return whether fullscreen toggle is enabled.
@@ -300,7 +296,6 @@ public:
     MouseMode GetMouseMode() const { return mouseMode_; }
 
     /// Return whether application window has input focus.
-    /// @property{get_focus}
     bool HasFocus() { return inputFocus_; }
 
     /// Return whether application window is minimized.

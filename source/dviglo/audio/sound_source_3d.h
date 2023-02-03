@@ -58,7 +58,6 @@ public:
     float GetOuterAngle() const { return outerAngle_; }
 
     /// Return rolloff power factor.
-    /// @property{get_rolloffFactor}
     float RollAngleoffFactor() const { return rolloffFactor_; }
 
 protected:

@@ -117,7 +117,6 @@ public:
     UIElement* GetRoot() const { return rootElement_; }
 
     /// Return root modal element.
-    /// @property{get_modalRoot}
     UIElement* GetRootModalElement() const { return rootModalElement_; }
 
     /// Return cursor.

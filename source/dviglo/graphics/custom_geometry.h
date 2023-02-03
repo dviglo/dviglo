@@ -77,7 +77,6 @@ public:
     /// Set material on all geometries.
     void SetMaterial(Material* material);
     /// Set material on one geometry. Return true if successful.
-    /// @property{set_materials}
     bool SetMaterial(unsigned index, Material* material);
 
     /// Return number of geometries.
@@ -90,7 +89,6 @@ public:
     bool IsDynamic() const { return dynamic_; }
 
     /// Return material by geometry index.
-    /// @property{get_materials}
     Material* GetMaterial(unsigned index = 0) const;
 
     /// Return all vertices. These can be edited; calling Commit() updates the vertex buffer.

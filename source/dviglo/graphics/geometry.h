@@ -56,7 +56,6 @@ public:
     i32 GetNumVertexBuffers() const { return vertexBuffers_.Size(); }
 
     /// Return vertex buffer by index.
-    /// @property{get_vertexBuffers}
     VertexBuffer* GetVertexBuffer(i32 index) const;
 
     /// Return the index buffer.

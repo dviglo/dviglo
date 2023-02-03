@@ -79,7 +79,6 @@ public:
     void Reset();
 
     /// Returns whether the movement along the SplinePath is complete.
-    /// @property{get_isFinished}
     bool IsFinished() const { return traveled_ >= 1.0f; }
 
     /// Set Control Point Node IDs attribute.

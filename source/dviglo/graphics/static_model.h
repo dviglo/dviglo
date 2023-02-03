@@ -51,7 +51,6 @@ public:
     /// Set material on all geometries.
     virtual void SetMaterial(Material* material);
     /// Set material on one geometry. Return true if successful.
-    /// @property{set_materials}
     virtual bool SetMaterial(unsigned index, Material* material);
     /// Set occlusion LOD level. By default (NINDEX) same as visible.
     void SetOcclusionLodLevel(i32 level);
@@ -67,7 +66,6 @@ public:
     /// Return material from the first geometry, assuming all the geometries use the same material.
     virtual Material* GetMaterial() const { return GetMaterial(0); }
     /// Return material by geometry index.
-    /// @property{get_materials}
     virtual Material* GetMaterial(unsigned index) const;
 
     /// Return occlusion LOD level.

@@ -45,7 +45,6 @@ public:
     unsigned GetNumInstanceNodes() const { return instanceNodes_.Size(); }
 
     /// Return instance node by index.
-    /// @property{get_instanceNodes}
     Node* GetInstanceNode(unsigned index) const;
 
     /// Set node IDs attribute.

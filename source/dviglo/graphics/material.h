@@ -126,7 +126,6 @@ public:
     /// Set additional pixel shader defines. Separate multiple defines with spaces. Setting defines at the material level causes technique(s) to be cloned as necessary.
     void SetPixelShaderDefines(const String& defines);
     /// Set shader parameter.
-    /// @property{set_shaderParameters}
     void SetShaderParameter(const String& name, const Variant& value);
     /// Set shader parameter animation.
     void
@@ -136,7 +135,6 @@ public:
     /// Set shader parameter animation speed.
     void SetShaderParameterAnimationSpeed(const String& name, float speed);
     /// Set texture.
-    /// @property{set_textures}
     void SetTexture(TextureUnit unit, Texture* texture);
     /// Set texture coordinate transform.
     void SetUVTransform(const Vector2& offset, float rotation, const Vector2& repeat);
@@ -180,12 +178,10 @@ public:
     /// Return technique entry by index.
     const TechniqueEntry& GetTechniqueEntry(i32 index) const;
     /// Return technique by index.
-    /// @property{get_techniques}
     Technique* GetTechnique(i32 index) const;
     /// Return pass by technique index and pass name.
     Pass* GetPass(i32 index, const String& passName) const;
     /// Return texture by unit.
-    /// @property{get_textures}
     Texture* GetTexture(TextureUnit unit) const;
 
     /// Return all textures.
@@ -197,7 +193,6 @@ public:
     const String& GetPixelShaderDefines() const { return pixelShaderDefines_; }
 
     /// Return shader parameter.
-    /// @property{get_shaderParameters}
     const Variant& GetShaderParameter(const String& name) const;
     /// Return shader parameter animation.
     ValueAnimation* GetShaderParameterAnimation(const String& name) const;

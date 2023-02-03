@@ -158,7 +158,6 @@ public:
     bool SetMatrix4(const String& name, const Matrix4& value);
 
     /// Return whether does not refer to an element or an XPath node.
-    /// @property{get_isNull}
     bool IsNull() const;
     /// Return whether refers to an element or an XPath node.
     bool NotNull() const;

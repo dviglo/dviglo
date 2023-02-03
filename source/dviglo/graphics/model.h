@@ -121,7 +121,6 @@ public:
     /// Set geometry.
     bool SetGeometry(i32 index, i32 lodLevel, Geometry* geometry);
     /// Set geometry center.
-    /// @property{set_geometryCenters}
     bool SetGeometryCenter(i32 index, const Vector3& center);
     /// Set skeleton.
     void SetSkeleton(const Skeleton& skeleton);
@@ -160,7 +159,6 @@ public:
     Geometry* GetGeometry(i32 index, i32 lodLevel) const;
 
     /// Return geometry center by index.
-    /// @property{get_geometryCenters}
     const Vector3& GetGeometryCenter(i32 index) const
     {
         assert(index >= 0);

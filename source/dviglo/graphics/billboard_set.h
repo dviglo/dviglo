@@ -94,7 +94,6 @@ public:
     Vector<Billboard>& GetBillboards() { return billboards_; }
 
     /// Return billboard by index.
-    /// @property{get_billboards}
     Billboard* GetBillboard(i32 index);
 
     /// Return whether billboards are relative to the scene node.

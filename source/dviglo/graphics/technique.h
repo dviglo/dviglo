@@ -44,7 +44,6 @@ public:
     /// Set alpha-to-coverage on/off.
     void SetAlphaToCoverage(bool enable);
     /// Set whether requires desktop level hardware.
-    /// @property{set_desktop}
     void SetIsDesktop(bool enable);
     /// Set vertex shader name.
     void SetVertexShader(const String& name);
@@ -189,7 +188,6 @@ public:
     bool BeginLoad(Deserializer& source) override;
 
     /// Set whether requires desktop level hardware.
-    /// @property{set_desktop}
     void SetIsDesktop(bool enable);
     /// Create a new pass.
     Pass* CreatePass(const String& name);

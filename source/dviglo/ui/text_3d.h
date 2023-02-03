@@ -76,7 +76,6 @@ public:
     /// Set color on all corners.
     void SetColor(const Color& color);
     /// Set color on one corner.
-    /// @property{set_colors}
     void SetColor(Corner corner, const Color& color);
     /// Set opacity.
     void SetOpacity(float opacity);
@@ -126,16 +125,12 @@ public:
     /// Return number of characters.
     i32 GetNumChars() const;
     /// Return width of row by index.
-    /// @property{get_rowWidths}
     int GetRowWidth(i32 index) const;
     /// Return position of character by index relative to the text element origin.
-    /// @property{get_charPositions}
     Vector2 GetCharPosition(i32 index);
     /// Return size of character by index.
-    /// @property{get_charSizes}
     Vector2 GetCharSize(i32 index);
     /// Return corner color.
-    /// @property{get_colors}
     const Color& GetColor(Corner corner) const;
     /// Return opacity.
     float GetOpacity() const;

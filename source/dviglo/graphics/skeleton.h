@@ -109,7 +109,6 @@ public:
     /// Return parent of the given bone. Return null for root bones.
     Bone* GetBoneParent(const Bone* bone);
     /// Return bone by index.
-    /// @property{get_bones}
     Bone* GetBone(i32 index);
     /// Return bone by name.
     Bone* GetBone(const String& name);

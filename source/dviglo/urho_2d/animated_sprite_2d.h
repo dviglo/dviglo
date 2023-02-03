@@ -81,7 +81,6 @@ public:
     /// Return animation set attribute.
     ResourceRef GetAnimationSetAttr() const;
     /// Set animation by name.
-    /// @property{set_animation}
     void SetAnimationAttr(const String& name);
 
 protected:

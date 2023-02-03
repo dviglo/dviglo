@@ -54,7 +54,6 @@ struct URHO3D_API AnimationTrack
     }
 
     /// Assign keyframe at index.
-    /// @property{set_keyFrames}
     void SetKeyFrame(i32 index, const AnimationKeyFrame& keyFrame);
     /// Add a keyframe at the end.
     void AddKeyFrame(const AnimationKeyFrame& keyFrame);
@@ -127,7 +126,6 @@ public:
     /// Remove all tracks. This is unsafe if the animation is currently used in playback.
     void RemoveAllTracks();
     /// Set a trigger point at index.
-    /// @property{set_triggers}
     void SetTrigger(i32 index, const AnimationTriggerPoint& trigger);
     /// Add a trigger point.
     void AddTrigger(const AnimationTriggerPoint& trigger);
@@ -161,7 +159,6 @@ public:
     AnimationTrack *GetTrack(i32 index);
 
     /// Return animation track by name.
-    /// @property{get_tracks}
     AnimationTrack* GetTrack(const String& name);
     /// Return animation track by name hash.
     AnimationTrack* GetTrack(StringHash nameHash);

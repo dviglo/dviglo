@@ -436,7 +436,6 @@ public:
     /// Construct UTF8 content from wide characters.
     void SetUTF8FromWChar(const wchar_t* str);
     /// Calculate number of characters in UTF8 content.
-    /// @property{get_utf8Length}
     i32 LengthUTF8() const;
     /// Return byte offset to char in UTF8 content.
     i32 ByteOffsetUTF8(i32 index) const;

@@ -76,10 +76,8 @@ public:
     /// Set low limit. Interpretation is constraint type specific.
     void SetLowLimit(const Vector2& limit);
     /// Set constraint error reduction parameter. Zero = leave to default.
-    /// @property{set_erp}
     void SetERP(float erp);
     /// Set constraint force mixing parameter. Zero = leave to default.
-    /// @property{set_cfm}
     void SetCFM(float cfm);
     /// Set whether to disable collisions between connected bodies.
     void SetDisableCollision(bool disable);
@@ -121,11 +119,9 @@ public:
     const Vector2& GetLowLimit() const { return lowLimit_; }
 
     /// Return constraint error reduction parameter.
-    /// @property{get_erp}
     float GetERP() const { return erp_; }
 
     /// Return constraint force mixing parameter.
-    /// @property{get_cfm}
     float GetCFM() const { return cfm_; }
 
     /// Return whether collisions between connected bodies are disabled.

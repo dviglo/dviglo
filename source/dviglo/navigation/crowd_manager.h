@@ -72,7 +72,6 @@ public:
     /// Set the maximum radius of any agent.
     void SetMaxAgentRadius(float maxAgentRadius);
     /// Assigns the navigation mesh for the crowd.
-    /// @property{set_navMesh}
     void SetNavigationMesh(NavigationMesh* navMesh);
     /// Set all the query filter types configured in the crowd based on the corresponding attribute.
     void SetQueryFilterTypesAttr(const VariantVector& value);
@@ -111,7 +110,6 @@ public:
     float GetMaxAgentRadius() const { return maxAgentRadius_; }
 
     /// Get the Navigation mesh assigned to the crowd.
-    /// @property{get_navMesh}
     NavigationMesh* GetNavigationMesh() const { return navigationMesh_; }
 
     /// Get the number of configured query filter types.

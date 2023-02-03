@@ -74,7 +74,6 @@ public:
     /// Set vertex morph weight by index.
     void SetMorphWeight(i32 index, float weight);
     /// Set vertex morph weight by name.
-    /// @property{set_morphWeights}
     void SetMorphWeight(const String& name, float weight);
     /// Set vertex morph weight by name hash.
     void SetMorphWeight(StringHash nameHash, float weight);
@@ -95,7 +94,6 @@ public:
     /// Return animation state by animation pointer.
     AnimationState* GetAnimationState(Animation* animation) const;
     /// Return animation state by animation name.
-    /// @property{get_animationStates}
     AnimationState* GetAnimationState(const String& animationName) const;
     /// Return animation state by animation name hash.
     AnimationState* GetAnimationState(StringHash animationNameHash) const;
@@ -120,7 +118,6 @@ public:
     /// Return vertex morph weight by index.
     float GetMorphWeight(i32 index) const;
     /// Return vertex morph weight by name.
-    /// @property{get_morphWeights}
     float GetMorphWeight(const String& name) const;
     /// Return vertex morph weight by name hash.
     float GetMorphWeight(StringHash nameHash) const;

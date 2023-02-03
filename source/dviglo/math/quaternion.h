@@ -427,13 +427,10 @@ public:
     /// Return Euler angles in degrees.
     Vector3 EulerAngles() const;
     /// Return yaw angle in degrees.
-    /// @property{get_yaw}
     float YawAngle() const;
     /// Return pitch angle in degrees.
-    /// @property{get_pitch}
     float PitchAngle() const;
     /// Return roll angle in degrees.
-    /// @property{get_roll}
     float RollAngle() const;
     /// Return rotation axis.
     Vector3 Axis() const;

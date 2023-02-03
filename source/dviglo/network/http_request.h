@@ -44,7 +44,6 @@ public:
     bool IsEof() const override;
 
     /// Return URL used in the request.
-    /// @property{get_url}
     const String& GetURL() const { return url_; }
 
     /// Return verb used in the request. Default GET if empty verb specified on construction.

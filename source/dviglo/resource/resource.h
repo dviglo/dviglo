@@ -105,7 +105,6 @@ public:
     explicit ResourceWithMetadata(Context* context) : Resource(context) {}
 
     /// Add new metadata variable or overwrite old value.
-    /// @property{set_metadata}
     void AddMetadata(const String& name, const Variant& value);
     /// Remove metadata variable.
     void RemoveMetadata(const String& name);

@@ -53,7 +53,6 @@ public:
     /// Start NAT punchtrough client to allow remote connections.
     void StartNATClient();
     /// Get local server GUID.
-    /// @property{get_guid}
     const String& GetGUID() const { return guid_; }
     /// Attempt to connect to NAT server.
     void AttemptNATPunchtrough(const String& guid, Scene* scene, const VariantMap& identity = Variant::emptyVariantMap);
