@@ -47,11 +47,11 @@ dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin/tool)
 if (URHO3D_TOOLS)
     # Urho3D tools
     add_subdirectory(ogre_importer)
-    add_subdirectory(PackageTool)
+    add_subdirectory(package_tool)
     add_subdirectory(ramp_generator)
     add_subdirectory(sprite_packer)
     add_subdirectory(tests)
 elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
     # PackageTool target is required but we are not cross-compiling, so build it as per normal
-    add_subdirectory(PackageTool)
+    add_subdirectory(package_tool)
 endif ()

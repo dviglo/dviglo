@@ -69,22 +69,22 @@ int main(int argc, char** argv)
 
 static const String USAGE_STR = 
     "Usage:\n"
-    "1) Packing: PackageTool -p<options> <input directory name> <output package name> [base path]\n"
+    "1) Packing: package_tool -p<options> <input directory name> <output package name> [base path]\n"
     "   Options:\n"
     "     q - enable quiet mode\n"
     "     c - enable LZ4 compression\n"
     "   Base path is an optional prefix that will be added to the file entries.\n"
-    "   Example: PackageTool -pqc CoreData CoreData.pak\n"
-    "2) Unpacking: PackageTool -u<options> <input package name> <output directory name>\n"
+    "   Example: package_tool -pqc CoreData CoreData.pak\n"
+    "2) Unpacking: package_tool -u<options> <input package name> <output directory name>\n"
     "   Options:\n"
     "     q - enable quiet mode\n"
-    "   Example: PackageTool -uq CoreData.pak CoreData\n"
-    "3) Print info: PackageTool -<mode> <package name>\n"
+    "   Example: package_tool -uq CoreData.pak CoreData\n"
+    "3) Print info: package_tool -<mode> <package name>\n"
     "   Modes:\n"
     "     i - print package file information\n"
     "     l - print file names (including their paths) contained in the package\n"
     "     L - similar to l but also output compression ratio (compressed package file only)\n"
-    "   Example: PackageTool -i CoreData.pak";
+    "   Example: package_tool -i CoreData.pak";
 
 void Pack(const Vector<String>& arguments)
 {

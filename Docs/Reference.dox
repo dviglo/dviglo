@@ -3557,7 +3557,7 @@ to compress the package, because in that case the .apk packaging may skip its ow
 Packing:
 
 \verbatim
-PackageTool -p<options> <input directory name> <output package name> [base path]
+package_tool -p<options> <input directory name> <output package name> [base path]
 
 Options:
   q - enable quiet mode
@@ -3571,7 +3571,7 @@ When PackageTool runs, it will go inside the source directory, then look for sub
 For example, this would convert all the resource files inside the Urho3D Data directory into a package called Data.pak (execute the command from the bin directory)
 
 \verbatim
-PackageTool -pcq Data Data.pak"
+package_tool -pcq Data Data.pak"
 \endverbatim
 
 The -c option enables LZ4 compression on the files. The -q option enables the operation to be performed without sending output to the standard output stream.
@@ -3579,7 +3579,7 @@ The -c option enables LZ4 compression on the files. The -q option enables the op
 Unpacking:
 
 \verbatim
-PackageTool -u<options> <input package name> <output directory name>
+package_tool -u<options> <input package name> <output directory name>
 
 Options:
   q - enable quiet mode
@@ -3588,13 +3588,13 @@ Options:
 Example:
 
 \verbatim
-PackageTool -uq CoreData.pak CoreData
+package_tool -uq CoreData.pak CoreData
 \endverbatim
 
 Print info:
 
 \verbatim
-PackageTool -<mode> <package name>
+package_tool -<mode> <package name>
 
 Modes:
   i - print package file information
@@ -3605,7 +3605,7 @@ Modes:
 Example:
 
 \verbatim
-PackageTool -i CoreData.pak
+package_tool -i CoreData.pak
 \endverbatim
 
 \section Tools_RampGenerator RampGenerator
