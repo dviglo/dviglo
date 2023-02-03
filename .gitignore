@@ -12,20 +12,19 @@
 /include/
 /lib*/
 generated/
-/Source/Urho3D/tolua++-prefix/
 build/
 /captures/
 .cxx/
 /demo/
 
 # Output files
-/Source/**/*.a
-/Source/Urho3D/Precompiled.cpp
-/Source/Urho3D/Urho3D.h
-/Source/Urho3D/Urho3D.pc
-/Source/Urho3D/Urho3D.pc.msvc
-/Source/Urho3D/Urho3DAll.h
-/Source/Urho3D/librevision.h
+/source/**/*.a
+/source/Urho3D/Precompiled.cpp
+/source/Urho3D/Urho3D.h
+/source/Urho3D/Urho3D.pc
+/source/Urho3D/Urho3D.pc.msvc
+/source/Urho3D/Urho3DAll.h
+/source/Urho3D/librevision.h
 
 # Compiled shaders
 *.vs?
@@ -91,9 +90,9 @@ install_manifest.txt
 CPackConfig.cmake
 CPackSourceConfig.cmake
 CTestTestfile.cmake
-/Source/**/*.cmake
-!/Source/third-party/sdl/cmake/*.cmake
-!/Source/third-party/sdl/include/build_config/*.cmake
+/source/**/*.cmake
+!/source/third-party/sdl/cmake/*.cmake
+!/source/third-party/sdl/include/build_config/*.cmake
 /Docs/**/*.cmake
 
 # Precompiled header files
@@ -107,7 +106,7 @@ CTestTestfile.cmake
 
 # Misc.
 configure*
-!/Source/third-party/sdl/src/hidapi/configure.ac
+!/source/third-party/sdl/src/hidapi/configure.ac
 *~
 *.swp
 .DS_Store
