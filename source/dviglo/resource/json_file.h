@@ -37,7 +37,6 @@ public:
     String ToString(const String& indendation = "\t") const;
 
     /// Return root value.
-    /// @property
     JSONValue& GetRoot() { return root_; }
     /// Return root value.
     const JSONValue& GetRoot() const { return root_; }

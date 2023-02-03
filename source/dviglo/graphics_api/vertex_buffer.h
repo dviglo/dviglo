@@ -31,7 +31,6 @@ public:
     void Release() override;
 
     /// Enable shadowing in CPU memory. Shadowing is forced on if the graphics subsystem does not exist.
-    /// @property
     void SetShadowed(bool enable);
     /// Set size, vertex elements and dynamic mode. Previous data will be lost.
     bool SetSize(i32 vertexCount, const Vector<VertexElement>& elements, bool dynamic = false);
@@ -47,26 +46,21 @@ public:
     void Unlock();
 
     /// Return whether CPU memory shadowing is enabled.
-    /// @property
     bool IsShadowed() const { return shadowed_; }
 
     /// Return whether is dynamic.
-    /// @property
     bool IsDynamic() const { return dynamic_; }
 
     /// Return whether is currently locked.
     bool IsLocked() const { return lockState_ != LOCK_NONE; }
 
     /// Return number of vertices.
-    /// @property
     i32 GetVertexCount() const { return vertexCount_; }
 
     /// Return vertex size in bytes.
-    /// @property
     i32 GetVertexSize() const { return vertexSize_; }
 
     /// Return vertex elements.
-    /// @property
     const Vector<VertexElement>& GetElements() const { return elements_; }
 
     /// Return vertex element, or null if does not exist.
@@ -106,7 +100,6 @@ public:
     }
 
     /// Return legacy vertex element mask. Note that both semantic and type must match the legacy element for a mask bit to be set.
-    /// @property
     VertexElements GetElementMask() const { return elementMask_; }
 
     /// Return CPU memory shadow data.

@@ -78,7 +78,6 @@ public:
     explicit operator bool() const { return value_ != 0; }
 
     /// Return hash value.
-    /// @property
     hash32 Value() const { return value_; }
 
     /// Return as string.

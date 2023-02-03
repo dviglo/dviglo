@@ -243,15 +243,12 @@ public:
     }
 
     /// Return center.
-    /// @property
     Vector3 Center() const { return (max_ + min_) * 0.5f; }
 
     /// Return size.
-    /// @property
     Vector3 Size() const { return max_ - min_; }
 
     /// Return half-size.
-    /// @property
     Vector3 HalfSize() const { return (max_ - min_) * 0.5f; }
 
     /// Return transformed by a 3x3 matrix.

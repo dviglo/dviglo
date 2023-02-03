@@ -161,35 +161,25 @@ public:
     JSONValue& operator =(const JSONValue& rhs);
 
     /// Return value type.
-    /// @property
     JSONValueType GetValueType() const;
     /// Return number type.
-    /// @property
     JSONNumberType GetNumberType() const;
     /// Return value type's name.
-    /// @property
     String GetValueTypeName() const;
     /// Return number type's name.
-    /// @property
     String GetNumberTypeName() const;
 
     /// Check is null.
-    /// @property{get_isNull}
     bool IsNull() const { return GetValueType() == JSON_NULL; }
     /// Check is boolean.
-    /// @property{get_isBool}
     bool IsBool() const { return GetValueType() == JSON_BOOL; }
     /// Check is number.
-    /// @property{get_isNumber}
     bool IsNumber() const { return GetValueType() == JSON_NUMBER; }
     /// Check is string.
-    /// @property{get_isString}
     bool IsString() const { return GetValueType() == JSON_STRING; }
     /// Check is array.
-    /// @property{get_isArray}
     bool IsArray() const { return GetValueType() == JSON_ARRAY; }
     /// Check is object.
-    /// @property{get_isObject}
     bool IsObject() const { return GetValueType() == JSON_OBJECT; }
 
     /// Return boolean value.
@@ -227,7 +217,6 @@ public:
     /// Resize array.
     void Resize(unsigned newSize);
     /// Return size of array or number of keys in object.
-    /// @property
     unsigned Size() const;
 
     // JSON object functions

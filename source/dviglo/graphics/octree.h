@@ -55,7 +55,6 @@ public:
     }
 
     /// Return world-space bounding box.
-    /// @property
     const BoundingBox& GetWorldBoundingBox() const { return worldBoundingBox_; }
 
     /// Return bounding box used for fitting drawable objects.
@@ -175,7 +174,6 @@ public:
     void RaycastSingle(RayOctreeQuery& query) const;
 
     /// Return subdivision levels.
-    /// @property
     i32 GetNumLevels() const { return numLevels_; }
 
     /// Mark drawable object as requiring an update and a reinsertion.

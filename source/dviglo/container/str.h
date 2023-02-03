@@ -412,14 +412,12 @@ public:
     const char* CString() const { return GetBuffer(); }
 
     /// Return length.
-    /// @property
     i32 Length() const { return IsShort() ? GetShortStringLength() : data_.longString_.length_; }
 
     /// Return buffer capacity.
     i32 Capacity() const { return IsShort() ? SHORT_STRING_CAPACITY : data_.longString_.capacity_; }
 
     /// Return whether the string is empty.
-    /// @property
     bool Empty() const { return Length() == 0; }
 
     /// Return comparison result with a string.
@@ -438,7 +436,6 @@ public:
     /// Construct UTF8 content from wide characters.
     void SetUTF8FromWChar(const wchar_t* str);
     /// Calculate number of characters in UTF8 content.
-    /// @property{get_utf8Length}
     i32 LengthUTF8() const;
     /// Return byte offset to char in UTF8 content.
     i32 ByteOffsetUTF8(i32 index) const;

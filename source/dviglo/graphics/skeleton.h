@@ -96,11 +96,9 @@ public:
     Vector<Bone>& GetModifiableBones() { return bones_; }
 
     /// Return number of bones.
-    /// @property
     i32 GetNumBones() const { return bones_.Size(); }
 
     /// Return root bone.
-    /// @property
     Bone* GetRootBone();
     /// Return index of the bone by name. Return NINDEX if not found.
     i32 GetBoneIndex(const String& boneName) const;
@@ -111,7 +109,6 @@ public:
     /// Return parent of the given bone. Return null for root bones.
     Bone* GetBoneParent(const Bone* bone);
     /// Return bone by index.
-    /// @property{get_bones}
     Bone* GetBone(i32 index);
     /// Return bone by name.
     Bone* GetBone(const String& name);

@@ -31,7 +31,6 @@ public:
     void Release() override;
 
     /// Enable shadowing in CPU memory. Shadowing is forced on if the graphics subsystem does not exist.
-    /// @property
     void SetShadowed(bool enable);
     /// Set size and vertex elements and dynamic mode. Previous data will be lost.
     bool SetSize(i32 indexCount, bool largeIndices, bool dynamic = false);
@@ -45,22 +44,18 @@ public:
     void Unlock();
 
     /// Return whether CPU memory shadowing is enabled.
-    /// @property
     bool IsShadowed() const { return shadowed_; }
 
     /// Return whether is dynamic.
-    /// @property
     bool IsDynamic() const { return dynamic_; }
 
     /// Return whether is currently locked.
     bool IsLocked() const { return lockState_ != LOCK_NONE; }
 
     /// Return number of indices.
-    /// @property
     i32 GetIndexCount() const { return indexCount_; }
 
     /// Return index size in bytes.
-    /// @property
     i32 GetIndexSize() const { return indexSize_; }
 
     /// Return used vertex range from index range.

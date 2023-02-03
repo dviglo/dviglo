@@ -42,11 +42,9 @@ public:
     void RemoveAllInstanceNodes();
 
     /// Return number of instance nodes.
-    /// @property
     unsigned GetNumInstanceNodes() const { return instanceNodes_.Size(); }
 
     /// Return instance node by index.
-    /// @property{get_instanceNodes}
     Node* GetInstanceNode(unsigned index) const;
 
     /// Set node IDs attribute.

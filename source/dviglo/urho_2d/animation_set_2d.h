@@ -46,7 +46,6 @@ public:
     bool EndLoad() override;
 
     /// Get number of animations.
-    /// @property
     unsigned GetNumAnimations() const;
     /// Return animation name.
     String GetAnimation(unsigned index) const;

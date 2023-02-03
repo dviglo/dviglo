@@ -58,10 +58,8 @@ public:
     /// @manualbind
     void ReleaseRef();
     /// Return reference count.
-    /// @property
     int Refs() const;
     /// Return weak reference count.
-    /// @property
     int WeakRefs() const;
 
     /// Return pointer to the reference count structure.

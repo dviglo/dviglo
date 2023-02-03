@@ -47,44 +47,33 @@ public:
     /// Remove all items.
     void RemoveAllItems();
     /// Set selection.
-    /// @property
     void SetSelection(i32 index);
     /// Set place holder text. This is the text shown when there is no selection (-1) in drop down list. Note that if the list has items, the default is to show the first item, so the "no selection" state has to be set explicitly.
-    /// @property
     void SetPlaceholderText(const String& text);
     /// Set whether popup should be automatically resized to match the dropdown button width.
-    /// @property
     void SetResizePopup(bool enable);
 
     /// Return number of items.
-    /// @property
     i32 GetNumItems() const;
     /// Return item at index.
-    /// @property{get_items}
     UIElement* GetItem(i32 index) const;
     /// Return all items.
     Vector<UIElement*> GetItems() const;
     /// Return selection index, or NINDEX if none selected.
-    /// @property
     i32 GetSelection() const;
     /// Return selected item, or null if none selected.
-    /// @property
     UIElement* GetSelectedItem() const;
 
     /// Return listview element.
-    /// @property
     ListView* GetListView() const { return listView_; }
 
     /// Return selected item placeholder element.
-    /// @property
     UIElement* GetPlaceholder() const { return placeholder_; }
 
     /// Return place holder text.
-    /// @property
     const String& GetPlaceholderText() const;
 
     /// Return whether popup should be automatically resized.
-    /// @property
     bool GetResizePopup() const { return resizePopup_; }
 
     /// Set selection attribute.

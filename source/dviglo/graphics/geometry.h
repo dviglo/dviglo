@@ -28,12 +28,10 @@ public:
     ~Geometry() override;
 
     /// Set number of vertex buffers.
-    /// @property
     bool SetNumVertexBuffers(i32 num);
     /// Set a vertex buffer by index.
     bool SetVertexBuffer(i32 index, VertexBuffer* buffer);
     /// Set the index buffer.
-    /// @property
     void SetIndexBuffer(IndexBuffer* buffer);
     /// Set the draw range.
     bool SetDrawRange(PrimitiveType type, i32 indexStart, i32 indexCount, bool getUsedVertexRange = true);
@@ -41,7 +39,6 @@ public:
     bool SetDrawRange(PrimitiveType type, i32 indexStart, i32 indexCount, i32 vertexStart, i32 vertexCount,
         bool checkIllegal = true);
     /// Set the LOD distance.
-    /// @property
     void SetLodDistance(float distance);
     /// Override raw vertex data to be returned for CPU-side operations.
     void SetRawVertexData(const SharedArrayPtr<byte>& data, const Vector<VertexElement>& elements);
@@ -56,39 +53,30 @@ public:
     const Vector<SharedPtr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }
 
     /// Return number of vertex buffers.
-    /// @property
     i32 GetNumVertexBuffers() const { return vertexBuffers_.Size(); }
 
     /// Return vertex buffer by index.
-    /// @property{get_vertexBuffers}
     VertexBuffer* GetVertexBuffer(i32 index) const;
 
     /// Return the index buffer.
-    /// @property
     IndexBuffer* GetIndexBuffer() const { return indexBuffer_; }
 
     /// Return primitive type.
-    /// @property
     PrimitiveType GetPrimitiveType() const { return primitiveType_; }
 
     /// Return start index.
-    /// @property
     i32 GetIndexStart() const { return indexStart_; }
 
     /// Return number of indices.
-    /// @property
     i32 GetIndexCount() const { return indexCount_; }
 
     /// Return first used vertex.
-    /// @property
     i32 GetVertexStart() const { return vertexStart_; }
 
     /// Return number of used vertices.
-    /// @property
     i32 GetVertexCount() const { return vertexCount_; }
 
     /// Return LOD distance.
-    /// @property
     float GetLodDistance() const { return lodDistance_; }
 
     /// Return buffers' combined hash value for state sorting.
@@ -104,7 +92,6 @@ public:
     bool IsInside(const Ray& ray) const;
 
     /// Return whether has empty draw range.
-    /// @property
     bool IsEmpty() const { return indexCount_ == 0 && vertexCount_ == 0; }
 
 private:

@@ -26,35 +26,27 @@ public:
     static void RegisterObject(Context* context);
 
     /// Set target.
-    /// @property
     void SetTarget(const Vector2& target);
 
     /// Return target.
-    /// @property
     const Vector2& GetTarget() const { return target_; }
 
     /// Set max force.
-    /// @property
     void SetMaxForce(float maxForce);
 
     /// Return max force.
-    /// @property
     float GetMaxForce() const { return jointDef_.maxForce; }
 
     /// Set linear stiffness in N/m.
-    /// @property
     void SetStiffness(float stiffness);
 
     /// Return linear stiffness in N/m.
-    /// @property
     float GetStiffness() const { return jointDef_.stiffness; }
 
     /// Set linear damping in N*s/m.
-    /// @property
     void SetDamping(float damping);
 
     /// Return linear damping in N*s/m.
-    /// @property
     float GetDamping() const { return jointDef_.damping; }
 
     /// Calc and set stiffness and damping. Must be used after set owner and other bodies.

@@ -68,13 +68,10 @@ public:
     /// Reset any crowd target for all crowd agents found in the specified node. Defaulted to scene node.
     void ResetCrowdTarget(Node* node = nullptr);
     /// Set the maximum number of agents.
-    /// @property
     void SetMaxAgents(i32 maxAgents);
     /// Set the maximum radius of any agent.
-    /// @property
     void SetMaxAgentRadius(float maxAgentRadius);
     /// Assigns the navigation mesh for the crowd.
-    /// @property{set_navMesh}
     void SetNavigationMesh(NavigationMesh* navMesh);
     /// Set all the query filter types configured in the crowd based on the corresponding attribute.
     void SetQueryFilterTypesAttr(const VariantVector& value);
@@ -107,23 +104,18 @@ public:
     Vector3 Raycast(const Vector3& start, const Vector3& end, int queryFilterType, Vector3* hitNormal = nullptr);
 
     /// Get the maximum number of agents.
-    /// @property
     i32 GetMaxAgents() const { return maxAgents_; }
 
     /// Get the maximum radius of any agent.
-    /// @property
     float GetMaxAgentRadius() const { return maxAgentRadius_; }
 
     /// Get the Navigation mesh assigned to the crowd.
-    /// @property{get_navMesh}
     NavigationMesh* GetNavigationMesh() const { return navigationMesh_; }
 
     /// Get the number of configured query filter types.
-    /// @property
     unsigned GetNumQueryFilterTypes() const { return numQueryFilterTypes_; }
 
     /// Get the number of configured area in the specified query filter type.
-    /// @property
     unsigned GetNumAreas(unsigned queryFilterType) const;
     /// Return all the filter types configured in the crowd as attribute.
     VariantVector GetQueryFilterTypesAttr() const;
@@ -135,7 +127,6 @@ public:
     float GetAreaCost(unsigned queryFilterType, unsigned areaID) const;
 
     /// Get the number of configured obstacle avoidance types.
-    /// @property
     unsigned GetNumObstacleAvoidanceTypes() const { return numObstacleAvoidanceTypes_; }
 
     /// Return all the obstacle avoidance types configured in the crowd as attribute.

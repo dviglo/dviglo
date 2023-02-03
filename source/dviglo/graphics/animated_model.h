@@ -68,15 +68,12 @@ public:
     /// Remove all animations.
     void RemoveAllAnimationStates();
     /// Set animation LOD bias.
-    /// @property
     void SetAnimationLodBias(float bias);
     /// Set whether to update animation and the bounding box when not visible. Recommended to enable for physically controlled models like ragdolls.
-    /// @property
     void SetUpdateInvisible(bool enable);
     /// Set vertex morph weight by index.
     void SetMorphWeight(i32 index, float weight);
     /// Set vertex morph weight by name.
-    /// @property{set_morphWeights}
     void SetMorphWeight(const String& name, float weight);
     /// Set vertex morph weight by name hash.
     void SetMorphWeight(StringHash nameHash, float weight);
@@ -86,20 +83,17 @@ public:
     void ApplyAnimation();
 
     /// Return skeleton.
-    /// @property
     Skeleton& GetSkeleton() { return skeleton_; }
 
     /// Return all animation states.
     const Vector<SharedPtr<AnimationState>>& GetAnimationStates() const { return animationStates_; }
 
     /// Return number of animation states.
-    /// @property
     i32 GetNumAnimationStates() const { return animationStates_.Size(); }
 
     /// Return animation state by animation pointer.
     AnimationState* GetAnimationState(Animation* animation) const;
     /// Return animation state by animation name.
-    /// @property{get_animationStates}
     AnimationState* GetAnimationState(const String& animationName) const;
     /// Return animation state by animation name hash.
     AnimationState* GetAnimationState(StringHash animationNameHash) const;
@@ -107,11 +101,9 @@ public:
     AnimationState* GetAnimationState(i32 index) const;
 
     /// Return animation LOD bias.
-    /// @property
     float GetAnimationLodBias() const { return animationLodBias_; }
 
     /// Return whether to update animation when not visible.
-    /// @property
     bool GetUpdateInvisible() const { return updateInvisible_; }
 
     /// Return all vertex morphs.
@@ -121,13 +113,11 @@ public:
     const Vector<SharedPtr<VertexBuffer>>& GetMorphVertexBuffers() const { return morphVertexBuffers_; }
 
     /// Return number of vertex morphs.
-    /// @property
     i32 GetNumMorphs() const { return morphs_.Size(); }
 
     /// Return vertex morph weight by index.
     float GetMorphWeight(i32 index) const;
     /// Return vertex morph weight by name.
-    /// @property{get_morphWeights}
     float GetMorphWeight(const String& name) const;
     /// Return vertex morph weight by name hash.
     float GetMorphWeight(StringHash nameHash) const;
