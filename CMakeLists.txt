@@ -8,6 +8,11 @@ cmake_minimum_required (VERSION 3.15)
 # Set project name
 project (Urho3D)
 
+# Предупреждаем об in-source build
+if(CMAKE_BINARY_DIR MATCHES "^${CMAKE_SOURCE_DIR}")
+    message(WARNING "Генерировать проекты в папке с иходниками - плохая идея")
+endif()
+
 # Определяем, подключён ли движок как поддиректория
 if (CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
   set(dviglo_subproject OFF)
