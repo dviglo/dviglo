@@ -64,7 +64,6 @@ public:
     Node* GetTargetNode() const;
 
     /*!
-     * @property
      * @brief The position of the target node provides the target position of
      * the effector node.
      *
@@ -79,14 +78,12 @@ public:
     void SetTargetNode(Node* targetNode);
 
     /*!
-     * @property
      * @brief Retrieves the name of the target node. The node doesn't
      * necessarily have to exist in the scene graph.
      */
     const String& GetTargetName() const;
 
     /*!
-     * @property
      * @brief Sets the name of the target node. The node doesn't necessarily
      * have to exist in the scene graph. When a node is created that matches
      * this name, it is selected as the target.
@@ -118,7 +115,6 @@ public:
     float GetWeight() const;
 
     /*!
-     * @property
      * @brief Sets how much influence the effector has on the solution.
      *
      * You can use this value to smoothly transition between a solved pose and
@@ -131,7 +127,6 @@ public:
     float GetRotationWeight() const;
 
     /*!
-     * @property
      * @brief Sets how much influence the target rotation should have on the
      * solution. A value of 1 means to match the target rotation exactly, if
      * possible. A value of 0 means to not match it at all.
@@ -144,7 +139,6 @@ public:
     float GetRotationDecay() const;
 
     /*!
-     * @property
      * @brief A factor with which to control the target rotation influence of
      * the next segments down the chain.
      *

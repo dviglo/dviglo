@@ -188,7 +188,6 @@ public:
     unsigned GetMaximumIterations() const;
 
     /*!
-     * @property
      * @brief Sets the maximum number of iterations the solver is allowed to
      * perform before applying the result.
      *
@@ -211,7 +210,6 @@ public:
     float GetTolerance() const;
 
     /*!
-     * @property
      * @brief Sets the distance at which the effector is "close enough" to the
      * target node, at which point the algorithm will stop iterating.
      *
