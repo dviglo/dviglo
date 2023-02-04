@@ -60,7 +60,6 @@ struct URHO3D_API BiasParameters
 };
 
 /// Cascaded shadow map parameters.
-/// @pod
 struct URHO3D_API CascadeParameters
 {
     /// Construct undefined.
@@ -99,7 +98,6 @@ struct URHO3D_API CascadeParameters
 };
 
 /// Shadow map focusing parameters.
-/// @pod
 struct URHO3D_API FocusParameters
 {
     /// Construct undefined.
