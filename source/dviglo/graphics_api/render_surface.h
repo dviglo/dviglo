@@ -122,7 +122,6 @@ private:
     /// Parent texture.
     Texture* parentTexture_;
 
-    // https://github.com/doxygen/doxygen/issues/7623
     union
     {
         /// Direct3D9 surface.
@@ -133,7 +132,6 @@ private:
         unsigned renderBuffer_;
     };
 
-    // https://github.com/doxygen/doxygen/issues/7623
     union
     {
         /// Direct3D11 read-only depth-stencil view. Present only on depth-stencil surfaces.

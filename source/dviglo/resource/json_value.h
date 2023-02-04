@@ -288,7 +288,6 @@ private:
     /// Type.
     unsigned type_;
 
-    // https://github.com/doxygen/doxygen/issues/7623
     union
     {
         /// Boolean value.
