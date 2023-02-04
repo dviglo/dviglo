@@ -37,7 +37,7 @@ if (DOXYGEN_FOUND)
     find_package_handle_standard_args (Dot REQUIRED_VARS DOXYGEN_DOT_EXECUTABLE)
 
     # Generate platform specific Doxyfile automatically
-    if (NOT URHO3D_OPENGL EQUAL DOXYFILE_URHO3D_OPENGL OR ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in IS_NEWER_THAN ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    if (NOT URHO3D_OPENGL EQUAL DOXYFILE_URHO3D_OPENGL OR ${CMAKE_CURRENT_SOURCE_DIR}/doxyfile.in IS_NEWER_THAN ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
         set (DOXYFILE_URHO3D_OPENGL ${URHO3D_OPENGL} CACHE INTERNAL "URHO3D_OPENGL build option when Doxyfile was last generated")
         if (URHO3D_OPENGL)
             set (EXCLUDE_GRAPHICS_API Direct3D9)
@@ -53,7 +53,7 @@ if (DOXYGEN_FOUND)
         foreach (IDE XCODE MSVC Eclipse CodeBlocks)
             enable_help (${IDE})
         endforeach ()
-        configure_file (${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/generated/Doxyfile)
+        configure_file (${CMAKE_CURRENT_SOURCE_DIR}/doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/generated/doxyfile)
     endif ()
 
     # In quiet mode, redirect standard output stream of Doxygen to a null device
@@ -68,8 +68,8 @@ if (DOXYGEN_FOUND)
     # Add custom 'doc' target for generating Urho3D documentation
     file (GLOB DOX_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.dox)
     add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
-        COMMAND ${DOXYGEN_EXECUTABLE} generated/Doxyfile ${REDIRECT_STDOUT}
-        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated/Doxyfile ${DOX_FILES}
+        COMMAND ${DOXYGEN_EXECUTABLE} generated/doxyfile ${REDIRECT_STDOUT}
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated/doxyfile ${DOX_FILES}
         COMMENT "Generating documentation with Doxygen")
     add_custom_target (doc ${ALL}
         DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
