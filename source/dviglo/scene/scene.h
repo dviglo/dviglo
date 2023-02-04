@@ -71,11 +71,8 @@ class URHO3D_API Scene : public Node
     URHO3D_OBJECT(Scene, Node);
 
 public:
-    /// @manualbind
     using Node::GetComponent;
-    /// @manualbind
     using Node::SaveXML;
-    /// @manualbind
     using Node::SaveJSON;
 
     /// Construct.
@@ -238,7 +235,6 @@ public:
     /// Prepare network update by comparing attributes and marking replication states dirty as necessary.
     void PrepareNetworkUpdate();
     /// Clean up all references to a network connection that is about to be removed.
-    /// @manualbind
     void CleanupConnection(Connection* connection);
     /// Mark a node for attribute check on the next network update.
     void MarkNetworkUpdate(Node* node);

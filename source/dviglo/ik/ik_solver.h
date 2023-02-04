@@ -156,11 +156,9 @@ public:
     static void RegisterObject(Context* context);
 
     /// Returns the active algorithm.
-    /// @manualbind
     Algorithm GetAlgorithm() const;
 
     /*!
-     * @manualbind
      * @brief Selects the solver algorithm. Default is FABRIK. Note that this
      * may not be the most efficient algorithm available. The specialized
      * solvers will be a lot faster.

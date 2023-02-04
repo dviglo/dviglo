@@ -46,7 +46,6 @@ public:
     bool DrawOcclusion(OcclusionBuffer* buffer) override;
 
     /// Set model.
-    /// @manualbind
     virtual void SetModel(Model* model);
     /// Set material on all geometries.
     virtual void SetMaterial(Material* material);

@@ -469,7 +469,6 @@ public:
     /// Return substrings split by a separator char. By default don't return empty strings.
     static Vector<String> Split(const char* str, char separator, bool keepEmptyStrings = false);
     /// Return a string by joining substrings with a 'glue' string.
-    /// @manualbind
     static String Joined(const Vector<String>& subStrings, const String& glue);
     /// Encode Unicode character to UTF8. Pointer will be incremented.
     static void EncodeUTF8(char*& dest, c32 unicodeChar);
