@@ -32,7 +32,7 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = Urho3D
+PROJECT_NAME           = Dviglo
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
@@ -792,7 +792,7 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = "@CMAKE_SOURCE_DIR@/Source/Urho3D" \
+INPUT                  = "@CMAKE_SOURCE_DIR@/source/dviglo" \
                          "@CMAKE_CURRENT_SOURCE_DIR@" \
                          "@CMAKE_CURRENT_BINARY_DIR@/generated"
 
@@ -852,14 +852,8 @@ EXCLUDE_SYMLINKS       = NO
 # Note that the wildcards are matched against the file with absolute path, so to
 # exclude all test directories for example use the pattern */test/*
 
-EXCLUDE_PATTERNS       = "@CMAKE_SOURCE_DIR@/Source/Urho3D/AngelScript/*" \
-                         "@CMAKE_SOURCE_DIR@/Source/Urho3D/LuaScript/*" \
-                         "@CMAKE_CURRENT_SOURCE_DIR@/*API.dox" \
-                         "@CMAKE_SOURCE_DIR@/Docs/AngelScriptAPI.h" \
-                         "@CMAKE_BINARY_DIR@/Docs/generated/AngelScriptAPI.h" \
-                         */@EXCLUDE_GRAPHICS_API@/* \
-                         */@EXCLUDE_GRAPHICS_API2@/* \
-                         "@CMAKE_SOURCE_DIR@/Source/Urho3D/Database/ODBC/*" # https://github.com/doxygen/doxygen/issues/8805
+EXCLUDE_PATTERNS       = */@EXCLUDE_GRAPHICS_API@/* \
+                         */@EXCLUDE_GRAPHICS_API2@/*
 
 # The EXCLUDE_SYMBOLS tag can be used to specify one or more symbol names
 # (namespaces, classes, functions, etc.) that should be excluded from the
@@ -1254,7 +1248,7 @@ GENERATE_DOCSET        = @XCODE_HELP@
 # The default value is: Doxygen generated docs.
 # This tag requires that the tag GENERATE_DOCSET is set to YES.
 
-DOCSET_FEEDNAME        = "Urho3D Documentation"
+DOCSET_FEEDNAME        = "Dviglo Documentation"
 
 # This tag specifies a string that should uniquely identify the documentation
 # set bundle. This should be a reverse domain-name style string, e.g.
