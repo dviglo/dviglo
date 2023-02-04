@@ -69,7 +69,7 @@ if (DOXYGEN_FOUND)
     file (GLOB DOX_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.dox)
     add_custom_command (OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
         COMMAND ${DOXYGEN_EXECUTABLE} generated/Doxyfile ${REDIRECT_STDOUT}
-        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated/Doxyfile ${DOX_FILES} ${CMAKE_CURRENT_BINARY_DIR}/generated/ScriptAPI.dox
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/generated/Doxyfile ${DOX_FILES}
         COMMENT "Generating documentation with Doxygen")
     add_custom_target (doc ${ALL}
         DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
