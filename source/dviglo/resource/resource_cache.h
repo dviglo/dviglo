@@ -47,7 +47,6 @@ enum ResourceRequest
 };
 
 /// Optional resource request processor. Can deny requests, re-route resource file names, or perform other processing per request.
-/// @nobindtemp
 class URHO3D_API ResourceRouter : public Object
 {
 public:
@@ -283,7 +282,6 @@ template <class T> void ResourceCache::GetResources(Vector<T*>& result) const
 }
 
 /// Register Resource library subsystems and objects.
-/// @nobind
 void URHO3D_API RegisterResourceLibrary(Context* context);
 
 }

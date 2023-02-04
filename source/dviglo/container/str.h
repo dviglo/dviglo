@@ -96,7 +96,6 @@ public:
     /// Construct from a short integer.
     explicit String(short value);
     /// Construct from a long integer.
-    /// @nobind
     explicit String(long value);
     /// Construct from a long long integer.
     explicit String(long long value);
@@ -105,7 +104,6 @@ public:
     /// Construct from an unsigned short integer.
     explicit String(unsigned short value);
     /// Construct from an unsigned long integer.
-    /// @nobind
     explicit String(unsigned long value);
     /// Construct from an unsigned long long integer.
     explicit String(unsigned long long value);
@@ -200,7 +198,6 @@ public:
     /// Add-assign (concatenate as string) a short integer.
     String& operator +=(short rhs);
     /// Add-assign (concatenate as string) a long integer.
-    /// @nobind
     String& operator +=(long rhs);
     /// Add-assign (concatenate as string) a long long integer.
     String& operator +=(long long rhs);
@@ -209,7 +206,6 @@ public:
     /// Add-assign (concatenate as string) a short unsigned integer.
     String& operator +=(unsigned short rhs);
     /// Add-assign (concatenate as string) a long unsigned integer.
-    /// @nobind
     String& operator +=(unsigned long rhs);
     /// Add-assign (concatenate as string) a long long unsigned integer.
     String& operator +=(unsigned long long rhs);
@@ -535,10 +531,8 @@ private:
     // https://github.com/doxygen/doxygen/issues/7623
     union
     {
-        /// @nobind
         LongString longString_;
 
-        /// @nobind
         ShortString shortString_;
     } data_;
 
@@ -605,7 +599,6 @@ inline String operator +(const wchar_t* lhs, const String& rhs)
 }
 
 /// Wide character string. Only meant for converting from String and passing to the operating system where necessary.
-/// @nobind
 class URHO3D_API WString
 {
 public:

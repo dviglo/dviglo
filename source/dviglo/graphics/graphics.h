@@ -213,7 +213,6 @@ public:
     /// Set vertex buffer.
     void SetVertexBuffer(VertexBuffer* buffer);
     /// Set multiple vertex buffers.
-    /// @nobind
     bool SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned instanceOffset = 0);
     /// Set multiple vertex buffers.
     bool SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset = 0);
@@ -640,7 +639,6 @@ public:
     void CleanupScratchBuffers();
 
     /// Get or create a constant buffer. Will be shared between shaders if possible. Used only on OpenGL and DirectX 11.
-    /// @nobind
     ConstantBuffer* GetOrCreateConstantBuffer(ShaderType type, unsigned index, unsigned size);
 
     /// Get used graphics API.
@@ -1158,7 +1156,6 @@ private:
 };
 
 /// Register Graphics library objects.
-/// @nobind
 void URHO3D_API RegisterGraphicsLibrary(Context* context);
 
 } // namespace Urho3D

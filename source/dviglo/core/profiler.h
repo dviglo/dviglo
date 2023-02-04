@@ -17,7 +17,6 @@ namespace Urho3D
 {
 
 /// Profiling data for one block in the profiling tree.
-/// @nobind
 class URHO3D_API ProfilerBlock
 {
 public:
@@ -216,7 +215,6 @@ protected:
 };
 
 /// Helper class for automatically beginning and ending a profiling block.
-/// @nobind
 class URHO3D_API AutoProfileBlock
 {
 public:

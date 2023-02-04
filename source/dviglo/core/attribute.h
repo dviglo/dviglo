@@ -99,7 +99,6 @@ struct AttributeInfo
 };
 
 /// Attribute handle returned by Context::RegisterAttribute and used to chain attribute setup calls.
-/// @nobind
 struct AttributeHandle
 {
     friend class Context;

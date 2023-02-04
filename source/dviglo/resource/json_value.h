@@ -292,19 +292,14 @@ private:
     union
     {
         /// Boolean value.
-        /// @nobind
         bool boolValue_;
         /// Number value.
-        /// @nobind
         double numberValue_;
         /// String value.
-        /// @nobind
         String* stringValue_;
         /// Array value.
-        /// @nobind
         JSONArray* arrayValue_;
         /// Object value.
-        /// @nobind
         JSONObject* objectValue_;
     };
 };

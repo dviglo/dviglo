@@ -33,7 +33,6 @@ public:
     /// Destruct.
     ~SmoothedTransform() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Update smoothing.

@@ -22,7 +22,6 @@ public:
     ~ConstraintDistance2D() override;
 
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Set owner body anchor.

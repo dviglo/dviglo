@@ -99,7 +99,6 @@ public:
     /// Destruct.
     ~ParticleEffect() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
@@ -185,7 +184,6 @@ public:
     /// Remove color frame at index.
     void RemoveColorFrame(unsigned index);
     /// Set color animation of particles.
-    /// @nobindtemp
     void SetColorFrames(const Vector<ColorFrame>& colorFrames);
     /// Set color animation frame at index. If index is greater than number of color frames, new color frames are added.
     void SetColorFrame(unsigned index, const ColorFrame& colorFrame);
@@ -201,7 +199,6 @@ public:
     /// Remove texture frame at index.
     void RemoveTextureFrame(unsigned index);
     /// Set particle texture animation.
-    /// @nobindtemp
     void SetTextureFrames(const Vector<TextureFrame>& textureFrames);
     /// Set number of texture animation frames.
     void SetTextureFrame(unsigned index, const TextureFrame& textureFrame);
@@ -303,7 +300,6 @@ public:
     float GetSizeMul() const { return sizeMul_; }
 
     /// Return all color animation frames.
-    /// @nobindtemp
     const Vector<ColorFrame>& GetColorFrames() const { return colorFrames_; }
 
     /// Return number of color animation frames.
@@ -313,7 +309,6 @@ public:
     const ColorFrame* GetColorFrame(unsigned index) const;
 
     /// Return all texture animation frames.
-    /// @nobindtemp
     const Vector<TextureFrame>& GetTextureFrames() const { return textureFrames_; }
 
     /// Return number of texture animation frames.

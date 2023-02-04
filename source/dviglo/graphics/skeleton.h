@@ -89,7 +89,6 @@ public:
     void Reset();
 
     /// Return all bones.
-    /// @nobindtemp
     const Vector<Bone>& GetBones() const { return bones_; }
 
     /// Return modifiable bones.

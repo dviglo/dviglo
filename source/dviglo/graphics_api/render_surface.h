@@ -126,13 +126,10 @@ private:
     union
     {
         /// Direct3D9 surface.
-        /// @nobind
         void* surface_;
         /// Direct3D11 rendertarget or depth-stencil view.
-        /// @nobind
         void* renderTargetView_;
         /// OpenGL renderbuffer name.
-        /// @nobind
         unsigned renderBuffer_;
     };
 
@@ -140,10 +137,8 @@ private:
     union
     {
         /// Direct3D11 read-only depth-stencil view. Present only on depth-stencil surfaces.
-        /// @nobind
         void* readOnlyView_;
         /// OpenGL target.
-        /// @nobind
         unsigned target_;
     };
 

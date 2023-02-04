@@ -29,7 +29,6 @@ public:
     /// Destructor.
     ~SplinePath() override = default;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Apply Attributes to the SplinePath.

@@ -141,7 +141,6 @@ public:
     /// Return topmost enabled root-level non-modal element.
     UIElement* GetFrontElement() const;
     /// Return currently dragged elements.
-    /// @nobindtemp
     const Vector<UIElement*> GetDragElements();
 
     /// Return the number of currently dragged elements.
@@ -425,7 +424,6 @@ private:
 };
 
 /// Register UI library objects.
-/// @nobind
 void URHO3D_API RegisterUILibrary(Context* context);
 
 }

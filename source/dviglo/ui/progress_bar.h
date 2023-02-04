@@ -24,7 +24,6 @@ public:
     ~ProgressBar() override;
 
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context *context);
 
     /// React to resize.

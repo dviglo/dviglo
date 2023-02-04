@@ -147,7 +147,6 @@ struct URHO3D_API ResourceRefList
 };
 
 /// Custom variant value. This type is not abstract to store it in the VariantValue by value.
-/// @nobindtemp
 class CustomVariantValue
 {
     // GetValuePtr expects that CustomVariantValue is always convertible to CustomVariantValueImpl<T>.
@@ -341,7 +340,6 @@ public:
     // c32 not bound because in AngelScript c32 just alias for u32 and c32 conflicts with u32
 
     /// Construct from Unicode code point.
-    /// @nobind
     Variant(c32 value)                  // NOLINT(google-explicit-constructor)
     {
         *this = value;
@@ -600,7 +598,6 @@ public:
     }
 
     /// Assign from an Unicode code point.
-    /// @nobind
     Variant& operator =(c32 rhs)
     {
         SetType(VAR_INT);
@@ -837,7 +834,6 @@ public:
     bool operator ==(unsigned rhs) const { return type_ == VAR_INT ? value_.int_ == static_cast<int>(rhs) : false; }
 
     /// Test for equality with an Unicode code point. To return true, both the type and value must match.
-    /// @nobind
     bool operator ==(c32 rhs) const { return type_ == VAR_INT ? value_.int_ == static_cast<int>(rhs) : false; }
 
     /// Test for equality with an 64 bit integer. To return true, both the type and value must match.
