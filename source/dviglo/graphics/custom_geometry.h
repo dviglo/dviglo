@@ -10,7 +10,6 @@ namespace Urho3D
 {
 
 /// Custom geometry vertex.
-/// @nocount
 struct CustomGeometryVertex
 {
     /// Position.

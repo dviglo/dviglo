@@ -45,7 +45,6 @@ struct AnimationKeyFrame
 };
 
 /// Skeletal animation track, stores keyframes of a single bone.
-/// @nocount
 struct URHO3D_API AnimationTrack
 {
     /// Construct.
