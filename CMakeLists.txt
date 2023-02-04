@@ -123,7 +123,7 @@ set (THIRD_PARTY_INCLUDE_DIR ${CMAKE_BINARY_DIR}/${DEST_INCLUDE_DIR}/ThirdParty)
 file (MAKE_DIRECTORY ${THIRD_PARTY_INCLUDE_DIR})
 
 # Urho3D source
-add_subdirectory (source)
+add_subdirectory(source)
 
 # Urho3D documentation
-add_subdirectory (Docs)
+add_subdirectory(docs)
