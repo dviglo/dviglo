@@ -88,12 +88,10 @@ template <class T>
 inline T InverseLerp(T lhs, T rhs, T x) { return (x - lhs) / (rhs - lhs); }
 
 /// Return the smaller of two values.
-/// @specialization{float,float} @specialization{int,int}
 template <class T, class U>
 inline T Min(T lhs, U rhs) { return lhs < rhs ? lhs : rhs; }
 
 /// Return the larger of two values.
-/// @specialization{float,float} @specialization{int,int}
 template <class T, class U>
 inline T Max(T lhs, U rhs) { return lhs > rhs ? lhs : rhs; }
 
@@ -121,14 +119,12 @@ inline unsigned FloatToRawIntBits(float value)
 }
 
 /// Check whether a floating point value is NaN.
-/// @specialization{float} @specialization{double}
 template <class T> inline bool IsNaN(T value) { return std::isnan(value); }
 
 /// Check whether a floating point value is positive or negative infinity.
 template <class T> inline bool IsInf(T value) { return std::isinf(value); }
 
 /// Clamp a number to a range.
-/// @specialization{float} @specialization{int}
 template <class T>
 inline T Clamp(T value, T min, T max)
 {
