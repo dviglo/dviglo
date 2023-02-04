@@ -6,8 +6,8 @@ if (dviglo_subproject)
     return()
 endif ()
 
-# Set project name
-project (Urho3D-Docs)
+# Помещаем документацию в отдельный проект
+project(dviglo-docs)
 
 if (URHO3D_DOCS_QUIET)
     set (URHO3D_DOCS 1)
