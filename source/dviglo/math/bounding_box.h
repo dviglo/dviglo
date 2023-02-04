@@ -22,7 +22,6 @@ class Matrix3x4;
 class Sphere;
 
 /// Three-dimensional axis-aligned bounding box.
-/// @allfloats
 class URHO3D_API BoundingBox
 {
 public:
