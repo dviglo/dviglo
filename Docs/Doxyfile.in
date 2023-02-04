@@ -2402,22 +2402,6 @@ GENERATE_LEGEND        = YES
 
 DOT_CLEANUP            = YES
 
-ALIASES += manualbind=""
-ALIASES += nobind=""
-ALIASES += nobindtemp=""
-ALIASES += nobindfile=""
-ALIASES += fakeref=""
-ALIASES += pod=""
-ALIASES += templateversion=""
-ALIASES += allints=""
-ALIASES += allfloats=""
-ALIASES += property=""
-ALIASES += property{1}=""
-ALIASES += alias{1}=""
-ALIASES += specialization{1}=""
-ALIASES += specialization{2}=""
-ALIASES += specialization{3}=""
-
 # For Doxygen 1.9.5
 HTML_DYNAMIC_MENUS = NO
 HTML_COLORSTYLE = LIGHT
