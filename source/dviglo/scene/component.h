@@ -28,7 +28,6 @@ enum AutoRemoveMode
 using ComponentId = id32;
 
 /// Base class for components. Components can be created to scene nodes.
-/// @templateversion
 class URHO3D_API Component : public Animatable
 {
     URHO3D_OBJECT(Component, Animatable);

@@ -33,7 +33,6 @@ enum AsyncLoadState
 };
 
 /// Base class for resources.
-/// @templateversion
 class URHO3D_API Resource : public Object
 {
     URHO3D_OBJECT(Resource, Object);
