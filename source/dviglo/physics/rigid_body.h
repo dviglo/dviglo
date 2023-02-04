@@ -43,7 +43,6 @@ public:
     /// Destruct. Free the rigid body and geometries.
     ~RigidBody() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
@@ -51,10 +50,8 @@ public:
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;
     /// Return initial world transform to Bullet.
-    /// @nobind
     void getWorldTransform(btTransform& worldTrans) const override;
     /// Update world transform from Bullet.
-    /// @nobind
     void setWorldTransform(const btTransform& worldTrans) override;
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

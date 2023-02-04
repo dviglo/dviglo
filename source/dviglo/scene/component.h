@@ -28,7 +28,6 @@ enum AutoRemoveMode
 using ComponentId = id32;
 
 /// Base class for components. Components can be created to scene nodes.
-/// @templateversion
 class URHO3D_API Component : public Animatable
 {
     URHO3D_OBJECT(Component, Animatable);
@@ -93,7 +92,6 @@ public:
     /// Prepare network update by comparing attributes and marking replication states dirty as necessary.
     void PrepareNetworkUpdate();
     /// Clean up all references to a network connection that is about to be removed.
-    /// @manualbind
     void CleanupConnection(Connection* connection);
 
 protected:

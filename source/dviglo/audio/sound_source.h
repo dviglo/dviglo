@@ -28,7 +28,6 @@ public:
     /// Destruct. Remove self from the audio subsystem.
     ~SoundSource() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Seek to time.

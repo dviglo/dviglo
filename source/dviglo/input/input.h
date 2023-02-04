@@ -36,7 +36,6 @@ class XMLFile;
 inline const IntVector2 MOUSE_POSITION_OFFSCREEN = IntVector2(M_MIN_INT, M_MIN_INT);
 
 /// %Input state for a finger touch.
-/// @nocount
 struct TouchState
 {
     /// Return last touched UI element, used by scripting integration.
@@ -57,7 +56,6 @@ struct TouchState
 };
 
 /// %Input state for a joystick.
-/// @nocount
 struct JoystickState
 {
     /// Initialize the number of buttons, axes and hats and set them to neutral state.

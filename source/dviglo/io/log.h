@@ -86,7 +86,6 @@ public:
     bool IsQuiet() const { return quiet_; }
 
     /// Write to the log. If logging level is higher than the level of the message, the message is ignored.
-    /// @nobind
     static void Write(int level, const String& message);
     /// Write formatted message to the log. If logging level is higher than the level of the message, the message is ignored.
     static void WriteFormat(int level, const char* format, ...);

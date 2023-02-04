@@ -33,7 +33,6 @@ enum AsyncLoadState
 };
 
 /// Base class for resources.
-/// @templateversion
 class URHO3D_API Resource : public Object
 {
     URHO3D_OBJECT(Resource, Object);
@@ -52,10 +51,8 @@ public:
     virtual bool Save(Serializer& dest) const;
 
     /// Load resource from file.
-    /// @alias{Load}
     bool LoadFile(const String& fileName);
     /// Save resource to file.
-    /// @alias{Save}
     virtual bool SaveFile(const String& fileName) const;
 
     /// Set name.

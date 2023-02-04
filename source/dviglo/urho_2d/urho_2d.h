@@ -11,7 +11,6 @@ namespace Urho3D
 inline constexpr float PIXEL_SIZE = 0.01f;
 
 /// Register Urho2D library objects.
-/// @nobind
 void URHO3D_API RegisterUrho2DLibrary(Context* context);
 
 }

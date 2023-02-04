@@ -20,7 +20,6 @@ public:
     /// Destruct.
     ~ConstraintPrismatic2D() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Set anchor.

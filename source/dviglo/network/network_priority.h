@@ -20,7 +20,6 @@ public:
     /// Destruct.
     ~NetworkPriority() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Set base priority. Default 100 (send updates at full frequency).

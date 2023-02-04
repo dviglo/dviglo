@@ -24,7 +24,6 @@ public:
     /// Destruct.
     ~TerrainPatch() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Process octree raycast. May be called from a worker thread.

@@ -24,7 +24,6 @@ inline constexpr i32 WI_MAX_PRIORITY = M_MAX_INT;
 class WorkerThread;
 
 /// Work queue item.
-/// @nobind
 struct WorkItem : public RefCounted
 {
     friend class WorkQueue;

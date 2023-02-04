@@ -23,7 +23,6 @@ public:
     /// Destruct.
     ~ScrollView() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Perform UI element update.

@@ -45,7 +45,6 @@ struct AnimationKeyFrame
 };
 
 /// Skeletal animation track, stores keyframes of a single bone.
-/// @nocount
 struct URHO3D_API AnimationTrack
 {
     /// Construct.
@@ -107,7 +106,6 @@ public:
     /// Destruct.
     ~Animation() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.

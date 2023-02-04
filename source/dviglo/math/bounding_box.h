@@ -22,7 +22,6 @@ class Matrix3x4;
 class Sphere;
 
 /// Three-dimensional axis-aligned bounding box.
-/// @allfloats
 class URHO3D_API BoundingBox
 {
 public:
@@ -62,7 +61,6 @@ public:
     }
 
 #ifdef URHO3D_SSE
-    /// @nobind
     BoundingBox(__m128 min, __m128 max) noexcept
     {
         _mm_storeu_ps(&min_.x_, min);

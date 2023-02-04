@@ -24,7 +24,6 @@ inline constexpr i32 NINDEX = -1;
 inline constexpr i32 ENDPOS = -1;
 
 /// https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2022/p2593r0.html
-/// @nobindtemp
 template <typename...> inline constexpr bool always_false = false;
 
 /// %Vector template class.

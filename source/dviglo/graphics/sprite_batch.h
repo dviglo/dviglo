@@ -24,7 +24,6 @@ enum class FlipModes : u32
 };
 URHO3D_FLAGS(FlipModes);
 
-/// @nobindtemp
 class URHO3D_API SpriteBatch : public SpriteBatchBase
 {
     URHO3D_OBJECT(SpriteBatch, SpriteBatchBase);

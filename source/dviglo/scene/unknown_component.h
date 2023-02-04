@@ -17,7 +17,6 @@ public:
     explicit UnknownComponent(Context* context);
 
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Return type of the stored component.

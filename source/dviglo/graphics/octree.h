@@ -17,7 +17,6 @@ static const int NUM_OCTANTS = 8;
 static const i32 ROOT_INDEX = NINDEX;
 
 /// %Octree octant.
-/// @nobind
 class URHO3D_API Octant
 {
 public:
@@ -78,7 +77,6 @@ public:
     /// Reset root pointer recursively. Called when the whole octree is being destroyed.
     void ResetRoot();
     /// Draw bounds to the debug graphics recursively.
-    /// @nobind
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
 
 protected:
@@ -150,7 +148,6 @@ public:
     /// Destruct.
     ~Octree() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Visualize the component as debug geometry.
@@ -166,7 +163,6 @@ public:
     void RemoveManualDrawable(Drawable* drawable);
 
     /// Return drawable objects by a query.
-    /// @nobind
     void GetDrawables(OctreeQuery& query) const;
     /// Return drawable objects by a ray query.
     void Raycast(RayOctreeQuery& query) const;

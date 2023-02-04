@@ -85,7 +85,6 @@ public:
     /// Destruct.
     ~NavigationMesh() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Visualize the component as debug geometry.
@@ -130,7 +129,6 @@ public:
     /// Rebuild part of the navigation mesh in the rectangular area. Return true if successful.
     virtual bool Build(const IntVector2& from, const IntVector2& to);
     /// Return tile data.
-    /// @manualbind
     virtual Vector<byte> GetTileData(const IntVector2& tile) const;
     /// Add tile to navigation mesh.
     virtual bool AddTile(const Vector<byte>& tileData);
@@ -346,7 +344,6 @@ protected:
 };
 
 /// Register Navigation library objects.
-/// @nobind
 void URHO3D_API RegisterNavigationLibrary(Context* context);
 
 }

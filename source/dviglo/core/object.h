@@ -17,7 +17,6 @@ class Context;
 class EventHandler;
 
 /// Type info.
-/// @nobind
 class URHO3D_API TypeInfo
 {
 public:
@@ -61,7 +60,6 @@ private:
         static const Urho3D::TypeInfo* GetTypeInfoStatic() { static const Urho3D::TypeInfo typeInfoStatic(#typeName, BaseClassName::GetTypeInfoStatic()); return &typeInfoStatic; }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
-/// @templateversion
 class URHO3D_API Object : public RefCounted
 {
     friend class Context;
@@ -311,7 +309,6 @@ private:
 };
 
 /// Template implementation of the event handler invoke helper (std::function instance).
-/// @nobind
 class EventHandler11Impl : public EventHandler
 {
 public:

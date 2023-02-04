@@ -43,7 +43,6 @@ public:
     /// Destruct.
     ~ParticleEmitter() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Handle enabled/disabled state change.

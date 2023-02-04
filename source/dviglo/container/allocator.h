@@ -3,7 +3,6 @@
 // License: MIT
 
 /// \file
-/// @nobindfile
 
 #pragma once
 

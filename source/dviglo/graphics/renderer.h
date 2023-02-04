@@ -201,7 +201,6 @@ public:
     /// Set VSM shadow map multisampling level. Default 1 (no multisampling).
     void SetVSMMultiSample(int multiSample);
     /// Set post processing filter to the shadow map.
-    /// @nobind
     void SetShadowMapFilter(Object* instance, ShadowMapFilter functionPtr);
     /// Set reuse of shadow maps. Default is true. If disabled, also transparent geometry can be shadowed.
     void SetReuseShadowMaps(bool enable);

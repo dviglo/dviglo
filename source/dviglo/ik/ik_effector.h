@@ -50,14 +50,11 @@ public:
     ~IKEffector() override;
 
     /// Registers this class as an object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Test if a certain feature is enabled (see IKEffector::Feature).
-    /// @nobind
     bool GetFeature(Feature feature) const;
     /// Enable or disable a certain feature (see IKEffector::Feature).
-    /// @nobind
     void SetFeature(Feature feature, bool enable);
 
     /// Retrieves the node that is being used as a target. Can be NULL.

@@ -25,7 +25,6 @@ class ResourceCache;
 class Serializer;
 
 /// %Bone in a skeleton.
-/// @nocount
 struct Bone
 {
     /// Construct with defaults.
@@ -66,7 +65,6 @@ struct Bone
 };
 
 /// Hierarchical collection of bones.
-/// @nocount
 class URHO3D_API Skeleton
 {
 public:
@@ -89,7 +87,6 @@ public:
     void Reset();
 
     /// Return all bones.
-    /// @nobindtemp
     const Vector<Bone>& GetBones() const { return bones_; }
 
     /// Return modifiable bones.

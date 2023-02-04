@@ -16,7 +16,6 @@
 namespace Urho3D
 {
 
-/// @nobindtemp
 class URHO3D_API SpriteBatchBase : public Object
 {
     URHO3D_OBJECT(SpriteBatchBase, Object);

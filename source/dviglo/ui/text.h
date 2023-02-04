@@ -35,7 +35,6 @@ struct CharLocation
 };
 
 /// Glyph and its location within the text. Used when preparing text rendering.
-/// @nobind
 struct GlyphLocation
 {
     /// Fields are not initialized.
@@ -70,7 +69,6 @@ public:
     /// Destruct.
     ~Text() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Apply attribute changes that can not be applied immediately.

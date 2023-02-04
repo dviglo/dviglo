@@ -23,7 +23,6 @@ class CrowdAgent;
 class NavigationMesh;
 
 /// Parameter structure for obstacle avoidance params (copied from DetourObstacleAvoidance.h in order to hide Detour header from Urho3D library users).
-/// @pod
 struct CrowdObstacleAvoidanceParams
 {
     float velBias;
@@ -51,7 +50,6 @@ public:
     /// Destruct.
     ~CrowdManager() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;

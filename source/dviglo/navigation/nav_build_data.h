@@ -81,7 +81,6 @@ struct SimpleNavBuildData : public NavBuildData
     rcPolyMeshDetail* polyMeshDetail_;
 };
 
-/// @nobind
 struct DynamicNavBuildData : public NavBuildData
 {
     /// Constructor.

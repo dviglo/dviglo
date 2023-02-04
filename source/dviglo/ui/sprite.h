@@ -21,7 +21,6 @@ public:
     /// Destruct.
     ~Sprite() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Return whether is visible and inside a scissor rectangle and should be rendered.

@@ -10,7 +10,6 @@ namespace Urho3D
 {
 
 /// Two-dimensional bounding rectangle.
-/// @allfloats
 class URHO3D_API Rect
 {
 public:

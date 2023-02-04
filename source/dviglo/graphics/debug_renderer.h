@@ -80,7 +80,6 @@ public:
     /// Destruct.
     ~DebugRenderer() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Set line antialiasing on/off. Default false.

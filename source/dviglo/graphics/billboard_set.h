@@ -17,7 +17,6 @@ class IndexBuffer;
 class VertexBuffer;
 
 /// One billboard in the billboard set.
-/// @nocount
 struct URHO3D_API Billboard
 {
     /// Position.
@@ -51,7 +50,6 @@ public:
     /// Destruct.
     ~BillboardSet() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Process octree raycast. May be called from a worker thread.

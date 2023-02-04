@@ -16,7 +16,6 @@ class Animation;
 struct Bone;
 
 /// Control data for an animation.
-/// @nocount
 struct URHO3D_API AnimationControl
 {
     /// Construct with defaults.
@@ -74,7 +73,6 @@ public:
     /// Destruct.
     ~AnimationController() override;
     /// Register object factory.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Handle enabled/disabled state change.
@@ -157,7 +155,6 @@ public:
     /// Find an animation state by animation name hash.
     AnimationState* GetAnimationState(StringHash nameHash) const;
     /// Return the animation control structures for inspection.
-    /// @nobindtemp
     const Vector<AnimationControl>& GetAnimations() const { return animations_; }
 
     /// Set animation control structures attribute.

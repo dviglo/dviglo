@@ -152,15 +152,12 @@ public:
     /// Default destructor.
     ~IKSolver() override;
     /// Registers this class to the context.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Returns the active algorithm.
-    /// @manualbind
     Algorithm GetAlgorithm() const;
 
     /*!
-     * @manualbind
      * @brief Selects the solver algorithm. Default is FABRIK. Note that this
      * may not be the most efficient algorithm available. The specialized
      * solvers will be a lot faster.
@@ -178,10 +175,8 @@ public:
     void SetAlgorithm(Algorithm algorithm);
 
     /// Test if a certain feature is enabled (see IKSolver::Feature).
-    /// @nobind
     bool GetFeature(Feature feature) const;
     /// Enable or disable a certain feature (see IKSolver::Feature).
-    /// @nobind
     void SetFeature(Feature feature, bool enable);
 
     /// Returns the configured maximum number of iterations.

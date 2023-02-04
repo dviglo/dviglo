@@ -20,7 +20,6 @@ public:
     /// Destruct.
     ~NavArea() override;
     /// Register object factory and attributes.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Render debug geometry for the bounds.

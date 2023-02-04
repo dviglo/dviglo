@@ -10,7 +10,6 @@ namespace Urho3D
 {
 
 /// Surface in three-dimensional space.
-/// @allfloats
 class URHO3D_API Plane
 {
 public:

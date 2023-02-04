@@ -60,7 +60,6 @@ struct URHO3D_API BiasParameters
 };
 
 /// Cascaded shadow map parameters.
-/// @pod
 struct URHO3D_API CascadeParameters
 {
     /// Construct undefined.
@@ -99,7 +98,6 @@ struct URHO3D_API CascadeParameters
 };
 
 /// Shadow map focusing parameters.
-/// @pod
 struct URHO3D_API FocusParameters
 {
     /// Construct undefined.
@@ -141,7 +139,6 @@ public:
     /// Destruct.
     ~Light() override;
     /// Register object factory. Drawable must be registered first.
-    /// @nobind
     static void RegisterObject(Context* context);
 
     /// Process octree raycast. May be called from a worker thread.
