@@ -56,12 +56,23 @@ enum _intel_model_t {
 	_5400,
 	_2xxx, /* Core i[357] 2xxx */
 	_3xxx, /* Core i[357] 3xxx */
+	_4xxx, /* Core i[357] 4xxx */
+	_5xxx, /* Core i[357] 5xxx */
+	_6xxx, /* Core i[357] 6xxx */
+	_7xxx, /* Core i[3579] 7xxx */
+	_8xxx, /* Core i[3579] 8xxx */
+	_9xxx, /* Core i[3579] 9xxx */
+	_10xxx, /* Core i[3579] 10xxx */
+	_11xxx, /* Core i[3579] 11xxx */
+	_12xxx, /* Core i[3579] 12xxx */
+	_13xxx, /* Core i[3579] 13xxx */
 };
 typedef enum _intel_model_t intel_model_t;
 
 const struct match_entry_t cpudb_intel[] = {
+//     F   M   S  EF  EM  #cores  L2$   L3$  BC  ModelBits     ModelCode  Name
 	{ -1, -1, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown Intel CPU"       },
-	
+
 	/* i486 */
 	{  4, -1, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown i486"            },
 	{  4,  0, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "i486 DX-25/33"           },
@@ -73,7 +84,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{  4,  7, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "i486 DX2 WriteBack"      },
 	{  4,  8, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "i486 DX4"                },
 	{  4,  9, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "i486 DX4 WriteBack"      },
-	
+
 	/* All Pentia:
 	   Pentium 1 */
 	{  5, -1, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown Pentium"         },
@@ -84,7 +95,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{  5,  4, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium 1 (0.35u)"       },
 	{  5,  7, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium 1 (0.35u)"       },
 	{  5,  8, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium MMX (0.25u)"     },
-	
+
 	/* Pentium 2 / 3 / M / Conroe / whatsnext - all P6 based. */
 	{  6, -1, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown P6"              },
 	{  6,  0, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium Pro"             },
@@ -93,37 +104,38 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6,  5, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium II (Deschutes)"  },
 	{  6,  5, -1, -1, -1,   1,    -1,    -1, NC, MOBILE_|PENTIUM_,   0, "Mobile Pentium II (Tonga)"},
 	{  6,  6, -1, -1, -1,   1,    -1,    -1, NC,0              ,     0, "Pentium II (Dixon)"      },
-	
+
 	{  6,  3, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-II Xeon (Klamath)"     },
 	{  6,  5, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-II Xeon (Drake)"       },
 	{  6,  6, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-II Xeon (Dixon)"       },
-		
+
 	{  6,  5, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-II Celeron (Covington)" },
 	{  6,  6, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-II Celeron (Mendocino)" },
-	
+
 	/* -------------------------------------------------- */
-	
+
 	{  6,  7, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium III (Katmai)"    },
 	{  6,  8, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium III (Coppermine)"},
 	{  6, 10, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium III (Coppermine)"},
 	{  6, 11, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium III (Tualatin)"  },
-	
+	{  6, 11, -1, -1, -1,   1,   512,    -1, NC, 0             ,     0, "Pentium III (Tualatin)"  },
+
 	{  6,  7, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-III Xeon (Tanner)"     },
 	{  6,  8, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-III Xeon (Cascades)"   },
 	{  6, 10, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-III Xeon (Cascades)"   },
 	{  6, 11, -1, -1, -1,   1,    -1,    -1, NC, XEON_         ,     0, "P-III Xeon (Tualatin)"   },
-	
-	{  6,  7, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-III Celeron (Katmai)"     },
-	{  6,  8, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-III Celeron (Coppermine)" },
-	{  6, 10, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-III Celeron (Coppermine)" },
-	{  6, 11, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-III Celeron (Tualatin)"   },
-	
+
+	{  6,  7, -1, -1, -1,   1,   128,    -1, NC, CELERON_      ,     0, "P-III Celeron (Katmai)"     },
+	{  6,  8, -1, -1, -1,   1,   128,    -1, NC, CELERON_      ,     0, "P-III Celeron (Coppermine)" },
+	{  6, 10, -1, -1, -1,   1,   128,    -1, NC, CELERON_      ,     0, "P-III Celeron (Coppermine)" },
+	{  6, 11, -1, -1, -1,   1,   256,    -1, NC, CELERON_      ,     0, "P-III Celeron (Tualatin)"   },
+
 	/* Netburst based (Pentium 4 and later)
 	   classic P4s */
 	{ 15, -1, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown Pentium 4"       },
 	{ 15, -1, -1, 15, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "Unknown P-4 Celeron"     },
 	{ 15, -1, -1, 15, -1,   1,    -1,    -1, NC, XEON_         ,     0, "Unknown Xeon"            },
-	
+
 	{ 15,  0, -1, 15, -1,   1,    -1,    -1, NC, PENTIUM_      ,     0, "Pentium 4 (Willamette)"  },
 	{ 15,  1, -1, 15, -1,   1,    -1,    -1, NC, PENTIUM_      ,     0, "Pentium 4 (Willamette)"  },
 	{ 15,  2, -1, 15, -1,   1,    -1,    -1, NC, PENTIUM_      ,     0, "Pentium 4 (Northwood)"   },
@@ -136,7 +148,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{ 15,  3, -1, 15, -1,   1,    -1,    -1, NC, MOBILE_|PENTIUM_,   0, "Mobile P-4 (Prescott)"   },
 	{ 15,  4, -1, 15, -1,   1,    -1,    -1, NC, MOBILE_|PENTIUM_,   0, "Mobile P-4 (Prescott)"   },
 	{ 15,  6, -1, 15, -1,   1,    -1,    -1, NC, MOBILE_|PENTIUM_,   0, "Mobile P-4 (Cedar Mill)" },
-	
+
 	/* server CPUs */
 	{ 15,  0, -1, 15, -1,   1,    -1,    -1, NC, XEON_         ,     0, "Xeon (Foster)"           },
 	{ 15,  1, -1, 15, -1,   1,    -1,    -1, NC, XEON_         ,     0, "Xeon (Foster)"           },
@@ -148,7 +160,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{ 15,  4, -1, 15, -1,   1,    -1,    -1, NC, XEON_|_MP_    ,     0, "Xeon (Cranford)"         },
 	{ 15,  4, -1, 15, -1,   1,    -1,    -1, POTOMAC, XEON_    ,     0, "Xeon (Potomac)"          },
 	{ 15,  6, -1, 15, -1,   1,    -1,    -1, NC, XEON_         ,     0, "Xeon (Dempsey)"          },
-	
+
 	/* Pentium Ds */
 	{ 15,  4,  4, 15, -1,   1,    -1,    -1, NC, 0             ,     0, "Pentium D (SmithField)"  },
 	{ 15,  4, -1, 15, -1,   1,    -1,    -1, PENTIUM_D, 0      ,     0, "Pentium D (SmithField)"  },
@@ -161,10 +173,10 @@ const struct match_entry_t cpudb_intel[] = {
 	{ 15,  3, -1, 15, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-4 Celeron D (Prescott)"   },
 	{ 15,  4, -1, 15, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-4 Celeron D (Prescott)"   },
 	{ 15,  6, -1, 15, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "P-4 Celeron D (Cedar Mill)" },
-	
+
 	/* -------------------------------------------------- */
 	/* Intel Core microarchitecture - P6-based */
-	
+
 	{  6,  9, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown Pentium M"          },
 	{  6,  9, -1, -1, -1,   1,    -1,    -1, PENTIUM_M, 0      ,     0, "Unknown Pentium M"          },
 	{  6,  9, -1, -1, -1,   1,    -1,    -1, NC, PENTIUM_      ,     0, "Pentium M (Banias)"         },
@@ -173,23 +185,23 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 13, -1, -1, -1,   1,    -1,    -1, NC, PENTIUM_      ,     0, "Pentium M (Dothan)"         },
 	{  6, 13, -1, -1, -1,   1,    -1,    -1, PENTIUM_M, 0      ,     0, "Pentium M (Dothan)"         },
 	{  6, 13, -1, -1, -1,   1,    -1,    -1, NC, CELERON_      ,     0, "Celeron M"                  },
-	
+
 	{  6, 12, -1, -1, -1,  -1,    -1,    -1, NC, ATOM_         ,     0, "Unknown Atom"               },
 	{  6, 12, -1, -1, -1,  -1,    -1,    -1, DIAMONDVILLE,ATOM_,     0, "Atom (Diamondville)"        },
 	{  6, 12, -1, -1, -1,  -1,    -1,    -1, SILVERTHORNE,ATOM_,     0, "Atom (Silverthorne)"        },
 	{  6, 12, -1, -1, -1,  -1,    -1,    -1, CEDARVIEW, ATOM_  ,     0, "Atom (Cedarview)"           },
 	{  6,  6, -1, -1, -1,  -1,    -1,    -1, CEDARVIEW, ATOM_  ,     0, "Atom (Cedarview)"           },
 	{  6, 12, -1, -1, -1,  -1,    -1,    -1, PINEVIEW, ATOM_   ,     0, "Atom (Pineview)"            },
-	
+
 	/* -------------------------------------------------- */
-	
+
 	{  6, 14, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown Yonah"             },
 	{  6, 14, -1, -1, -1,   1,    -1,    -1, CORE_SOLO, 0      ,     0, "Yonah (Core Solo)"         },
 	{  6, 14, -1, -1, -1,   2,    -1,    -1, CORE_DUO, 0       ,     0, "Yonah (Core Duo)"          },
 	{  6, 14, -1, -1, -1,   1,    -1,    -1, CORE_SOLO, MOBILE_,     0, "Yonah (Core Solo)"         },
 	{  6, 14, -1, -1, -1,   2,    -1,    -1, CORE_DUO , MOBILE_,     0, "Yonah (Core Duo)"          },
 	{  6, 14, -1, -1, -1,   1,    -1,    -1, CORE_SOLO, 0      ,     0, "Yonah (Core Solo)"         },
-	
+
 	{  6, 15, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Unknown Core 2"            },
 	{  6, 15, -1, -1, -1,   2,  4096,    -1, CORE_DUO, 0       ,     0, "Conroe (Core 2 Duo)"       },
 	{  6, 15, -1, -1, -1,   2,  1024,    -1, CORE_DUO, 0       ,     0, "Conroe (Core 2 Duo) 1024K" },
@@ -201,24 +213,25 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 15, -1, -1, -1,   2,    -1,    -1, MOBILE_CORE_DUO, 0,     0, "Merom (Core 2 Duo)"        },
 	{  6, 15, -1, -1, -1,   2,  2048,    -1, MEROM, 0          ,     0, "Merom (Core 2 Duo) 2048K"  },
 	{  6, 15, -1, -1, -1,   2,  4096,    -1, MEROM, 0          ,     0, "Merom (Core 2 Duo) 4096K"  },
-	
+
 	{  6, 15, -1, -1, 15,   1,    -1,    -1, NC, CELERON_      ,     0, "Conroe-L (Celeron)"        },
 	{  6,  6, -1, -1, 22,   1,    -1,    -1, NC, CELERON_      ,     0, "Conroe-L (Celeron)"        },
 	{  6, 15, -1, -1, 15,   2,    -1,    -1, NC, CELERON_      ,     0, "Conroe-L (Allendale)"      },
 	{  6,  6, -1, -1, 22,   2,    -1,    -1, NC, CELERON_      ,     0, "Conroe-L (Allendale)"      },
-	
-	
+
+
 	{  6,  6, -1, -1, 22,   1,    -1,    -1, NC, 0             ,     0, "Unknown Core ?"           },
 	{  6,  7, -1, -1, 23,   1,    -1,    -1, NC, 0             ,     0, "Unknown Core ?"           },
 	{  6,  6, -1, -1, 22, 400,    -1,    -1, MORE_THAN_QUADCORE, 0,  0, "More than quad-core"      },
 	{  6,  7, -1, -1, 23, 400,    -1,    -1, MORE_THAN_QUADCORE, 0,  0, "More than quad-core"      },
-	
+
 	{  6,  7, -1, -1, 23,   1,    -1,    -1, CORE_SOLO         , 0,  0, "Unknown Core 45nm"        },
 	{  6,  7, -1, -1, 23,   1,    -1,    -1, CORE_DUO          , 0,  0, "Unknown Core 45nm"        },
 	{  6,  7, -1, -1, 23,   2,  1024,    -1, WOLFDALE          , 0,  0, "Celeron Wolfdale 1M"      },
 	{  6,  7, -1, -1, 23,   2,  2048,    -1, WOLFDALE          , 0,  0, "Wolfdale (Core 2 Duo) 2M" },
 	{  6,  7, -1, -1, 23,   2,  3072,    -1, WOLFDALE          , 0,  0, "Wolfdale (Core 2 Duo) 3M" },
 	{  6,  7, -1, -1, 23,   2,  6144,    -1, WOLFDALE          , 0,  0, "Wolfdale (Core 2 Duo) 6M" },
+	{  6,  7, -1, -1, 23,   1,  1024,    -1, PENRYN,      CELERON_,  0, "Celeron Penryn L"         },
 	{  6,  7, -1, -1, 23,   1,    -1,    -1, MOBILE_CORE_DUO   , 0,  0, "Penryn (Core 2 Duo)"      },
 	{  6,  7, -1, -1, 23,   2,  1024,    -1, PENRYN            , 0,  0, "Penryn (Core 2 Duo)"      },
 	{  6,  7, -1, -1, 23,   2,  3072,    -1, PENRYN            , 0,  0, "Penryn (Core 2 Duo) 3M"   },
@@ -226,7 +239,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6,  7, -1, -1, 23,   4,  2048,    -1, NC                , 0,  0, "Yorkfield (Core 2 Quad) 2M"},
 	{  6,  7, -1, -1, 23,   4,  3072,    -1, NC                , 0,  0, "Yorkfield (Core 2 Quad) 3M"},
 	{  6,  7, -1, -1, 23,   4,  6144,    -1, NC                , 0,  0, "Yorkfield (Core 2 Quad) 6M"},
-	
+
 	/* Core microarchitecture-based Xeons: */
 	{  6, 14, -1, -1, 14,   1,    -1,    -1, NC, XEON_         ,     0, "Xeon LV"                  },
 	{  6, 15, -1, -1, 15,   2,  4096,    -1, NC, XEON_         , _5100, "Xeon (Woodcrest)"         },
@@ -261,9 +274,10 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6,  5, -1, -1, 37,   2,    -1,  3072, NC, CORE_|_I_|_5  ,     0, "Arrandale (Core i5)"      },
 	{  6,  5, -1, -1, 37,   2,    -1,  3072, NC, CORE_|_I_|_3  ,     0, "Arrandale (Core i3)"      },
 
-	/* Sandy Bridge CPUs (32nm): */
+	/* Sandy Bridge CPUs (2nd gen, 32nm): */
 	{  6, 10, -1, -1, 42,  -1,    -1,    -1, NC, 0             ,     0, "Unknown Sandy Bridge"     },
 	{  6, 10, -1, -1, 42,  -1,    -1,    -1, NC, XEON_         ,     0, "Sandy Bridge (Xeon)"      },
+	{  6, 10, -1, -1, 42,   4,    -1,    -1, NC, XEON_         ,     0, "Sandy Bridge (Xeon)"      },
 	{  6, 10, -1, -1, 42,  -1,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Sandy Bridge (Core i7)"   },
 	{  6, 10, -1, -1, 42,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Sandy Bridge (Core i7)"   },
 	{  6, 10, -1, -1, 42,   4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Sandy Bridge (Core i5)"   },
@@ -274,7 +288,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 13, -1, -1, 45,  -1,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Sandy Bridge-E"           },
 	{  6, 13, -1, -1, 45,  -1,    -1,    -1, NC, XEON_         ,     0, "Sandy Bridge-E (Xeon)"    },
 
-	/* Ivy Bridge CPUs (22nm): */
+	/* Ivy Bridge CPUs (3rd gen, 22nm): */
 	{  6, 10, -1, -1, 58,  -1,    -1,    -1, NC, XEON_         ,     0, "Ivy Bridge (Xeon)"        },
 	{  6, 10, -1, -1, 58,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Ivy Bridge (Core i7)"     },
 	{  6, 10, -1, -1, 58,   4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Ivy Bridge (Core i5)"     },
@@ -282,9 +296,10 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 10, -1, -1, 58,   2,    -1,    -1, NC, PENTIUM_      ,     0, "Ivy Bridge (Pentium)"     },
 	{  6, 10, -1, -1, 58,   1,    -1,    -1, NC, CELERON_      ,     0, "Ivy Bridge (Celeron)"     },
 	{  6, 10, -1, -1, 58,   2,    -1,    -1, NC, CELERON_      ,     0, "Ivy Bridge (Celeron)"     },
+	{  6, 14, -1, -1, 62,  -1,    -1,    -1, NC, XEON_         ,     0, "Ivy Bridge-E (Xeon)"      },
 	{  6, 14, -1, -1, 62,  -1,    -1,    -1, NC, 0             ,     0, "Ivy Bridge-E"             },
-	
-	/* Haswell CPUs (22nm): */
+
+	/* Haswell CPUs (4th gen, 22nm): */
 	{  6, 12, -1, -1, 60,  -1,    -1,    -1, NC, XEON_         ,     0, "Haswell (Xeon)"           },
 	{  6, 12, -1, -1, 60,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Haswell (Core i7)"        },
 	{  6,  5, -1, -1, 69,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Haswell (Core i7)"        },
@@ -300,7 +315,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 12, -1, -1, 60,   1,    -1,    -1, NC, CELERON_      ,     0, "Haswell (Celeron)"        },
 	{  6, 15, -1, -1, 63,  -1,    -1,    -1, NC, 0             ,     0, "Haswell-E"                },
 
-	/* Broadwell CPUs (14nm): */
+	/* Broadwell CPUs (5th gen, 14nm): */
 	{  6,  7, -1, -1, 71,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Broadwell (Core i7)"      },
 	{  6,  7, -1, -1, 71,   4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Broadwell (Core i5)"      },
 	{  6, 13, -1, -1, 61,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Broadwell-U (Core i7)"    },
@@ -317,7 +332,7 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 15, -1, -1, 79,   2,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Broadwell-E (Core i7)"    },
 	{  6, 15, -1, -1, 79,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Broadwell-E (Core i7)"    },
 
-	/* Skylake CPUs (14nm): */
+	/* Skylake CPUs (6th gen, 14nm): */
 	{  6, 14, -1, -1, 94,  -1,    -1,    -1, NC, XEON_         ,     0, "Skylake (Xeon)"           },
 	{  6, 14, -1, -1, 94,   4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Skylake (Core i7)"        },
 	{  6, 14, -1, -1, 94,   4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Skylake (Core i5)"        },
@@ -330,14 +345,126 @@ const struct match_entry_t cpudb_intel[] = {
 	{  6, 14, -1, -1, 78,   2,    -1,    -1, NC, CORE_|_M_|_5  ,     0, "Skylake (Core m5)"        },
 	{  6, 14, -1, -1, 78,   2,    -1,    -1, NC, CORE_|_M_|_3  ,     0, "Skylake (Core m3)"        },
 	{  6,  5, -1, -1, 85,   8,    -1,    -1, NC, XEON_,              0, "Skylake (Xeon Scalable)"  },
+	{  6,  5, -1, -1, 85,  -1,    -1,    -1, NC, CORE_|_I_|_9,       0, "Skylake-X (Core i9)"      }, /* 10 to 18 cores */
+	{  6,  5, -1, -1, 85,  -1,    -1,    -1, NC, CORE_|_I_|_7,       0, "Skylake-X (Core i7)"      }, /* 6 to 8 cores */
 
-	/* Kaby Lake CPUs (14nm): */
+	/* Kaby Lake CPUs (7th gen, 14nm): */
 	{  6, 14, -1, -1, 158,  4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Kaby Lake (Core i7)"      },
 	{  6, 14, -1, -1, 158,  4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Kaby Lake (Core i5)"      },
 	{  6, 14, -1, -1, 158,  2,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Kaby Lake (Core i3)"      },
 	{  6, 14, -1, -1, 158,  2,    -1,    -1, NC, PENTIUM_      ,     0, "Kaby Lake (Pentium)"      },
 	{  6, 14, -1, -1, 158,  2,    -1,    -1, NC, CELERON_      ,     0, "Kaby Lake (Celeron)"      },
-	{  6, 14, -1, -1, 158,  2,    -1,    -1, NC, CORE_|_M_|_3  ,     0, "Kaby Lake (Core m3)"      },
+	{  6, 14,  9, -1, 142,  2,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Kaby Lake-U (Core i7)"    },
+	{  6, 14,  9, -1, 142,  2,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Kaby Lake-U (Core i5)"    },
+	{  6, 14,  9, -1, 142,  2,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Kaby Lake-U (Core i3)"    },
+	{  6, 14,  9, -1, 142,  2,    -1,    -1, NC, PENTIUM_      ,     0, "Kaby Lake-U (Pentium)"    },
+	{  6, 14,  9, -1, 142,  2,    -1,    -1, NC, CELERON_      ,     0, "Kaby Lake-U (Celeron)"    },
+	{  6, 14,  9, -1, 142,  2,    -1,    -1, NC, CORE_|_M_|_3  ,     0, "Kaby Lake-U (Core m3)"    },
+	{  6, 14,  9, -1, 158,  4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Kaby Lake-G (Core i7)"    },
+	{  6, 14,  9, -1, 158,  4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Kaby Lake-G (Core i5)"    },
+	{  6, 14, 10, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Kaby Lake-R (Core i7)"    }, /* i7-8550U + i7-8650U */
+	{  6, 14, 10, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Kaby Lake-R (Core i5)"    }, /* i5-8250U + i5-8350U */
+
+	/* Coffee Lake CPUs (8th gen, 14nm): */
+	{  6, 14, 10, -1, 158,  8,    -1,    -1, NC, CORE_|_I_|_9  ,     0, "Coffee Lake (Core i9)"    },
+	{  6, 14, 10, -1, 158,  8,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Coffee Lake (Core i7)"    },
+	{  6, 14, 10, -1, 158,  6,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Coffee Lake (Core i7)"    },
+	{  6, 14, 10, -1, 158,  6,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Coffee Lake (Core i5)"    },
+	{  6, 14, 10, -1, 158,  4,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Coffee Lake (Core i3)"    },
+	{  6, 14, 10, -1, 158,  2,    -1,    -1, NC, PENTIUM_      ,     0, "Coffee Lake (Pentium)"    },
+	{  6, 14, 10, -1, 158,  2,    -1,    -1, NC, CELERON_      ,     0, "Coffee Lake (Celeron)"    },
+	{  6, 14, 10, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Coffee Lake-U (Core i7)"  },
+	{  6, 14, 10, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Coffee Lake-U (Core i5)"  },
+	{  6, 14, 10, -1, 142,  2,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Coffee Lake-U (Core i3)"  },
+	{  6,  6, -1, -1, 102,  2,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Cannon Lake (Core i3)"    }, /* Core i3 8121U */
+	{  6,  6, -1, -1, 102,  2,    -1,    -1, NC, CORE_|_M_|_3  ,     0, "Cannon Lake (Core m3)"    }, /* Core m3 8114Y */
+	{  6, 14, 12, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_7  , _8xxx, "Whiskey Lake-U (Core i7)" },
+	{  6, 14, 12, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_5  , _8xxx, "Whiskey Lake-U (Core i5)" },
+	{  6, 14, 12, -1, 142,  2,    -1,    -1, NC, CORE_|_I_|_3  , _8xxx, "Whiskey Lake-U (Core i3)" },
+	{  6, 14, 12, -1, 142,  2,    -1,    -1, NC, PENTIUM_      , _8xxx, "Whiskey Lake-U (Pentium)" },
+	{  6, 14, 12, -1, 142,  2,    -1,    -1, NC, CELERON_      , _8xxx, "Whiskey Lake-U (Celeron)" },
+
+	/* Coffee Lake Refresh CPUs (9th gen, 14nm): */
+	{  6, 14, 13, -1, 158,  8,    -1,    -1, NC, CORE_|_I_|_9  ,     0, "Coffee Lake-R (Core i9)"  },
+	{  6, 14, 12, -1, 158,  8,    -1,    -1, NC, CORE_|_I_|_9  ,     0, "Coffee Lake-R (Core i9)"  },
+	{  6, 14, 13, -1, 158,  8,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Coffee Lake-R (Core i7)"  },
+	{  6, 14, 12, -1, 158,  8,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Coffee Lake-R (Core i7)"  },
+	{  6, 14, 13, -1, 158,  6,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Coffee Lake-R (Core i5)"  },
+	{  6, 14, 11, -1, 158,  4,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Coffee Lake-R (Core i3)"  },
+
+	/* Comet Lake CPUs (10th gen, 14nm): */
+	{  6,  5, -1, -1, 165, 10,    -1,    -1, NC, CORE_|_I_|_9  ,     0, "Comet Lake (Core i9)"     },
+	{  6,  5, -1, -1, 165,  8,    -1,    -1, NC, CORE_|_I_|_7  ,     0, "Comet Lake (Core i7)"     },
+	{  6,  5, -1, -1, 165,  6,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Comet Lake (Core i5)"     },
+	{  6,  5, -1, -1, 165,  4,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Comet Lake (Core i3)"     },
+	{  6,  5, -1, -1, 165,  2,    -1,    -1, NC, PENTIUM_      ,     0, "Comet Lake (Pentium)"     },
+	{  6,  5, -1, -1, 165,  2,    -1,    -1, NC, CELERON_      ,     0, "Comet Lake (Celeron)"     },
+	{  6, 14, 12, -1, 142,  6,    -1,    -1, NC, CORE_|_I_|_7  ,_10xxx, "Comet Lake-U (Core i7)"   },
+	{  6, 14, 12, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_7  ,_10xxx, "Comet Lake-U (Core i7)"   },
+	{  6, 14, 12, -1, 142,  4,    -1,    -1, NC, CORE_|_I_|_5  ,_10xxx, "Comet Lake-U (Core i5)"   },
+	{  6, 14, 12, -1, 142,  2,    -1,    -1, NC, PENTIUM_      ,_10xxx, "Comet Lake-U (Pentium)"   },
+	{  6, 14, 12, -1, 142,  2,    -1,    -1, NC, CELERON_      ,_10xxx, "Comet Lake-U (Celeron)"   },
+	{  6, 12, -1, -1, 108,  4,    -1,    -1, NC, XEON_         ,     0, "Ice Lake (Xeon-D)"        },
+	{  6, 14, -1, -1, 126,  4,    -1,    -1, NC, CORE_|_I_|_7  ,_10xxx, "Ice Lake (Core i7)"       },
+	{  6, 14, -1, -1, 126,  4,    -1,    -1, NC, CORE_|_I_|_5  ,_10xxx, "Ice Lake (Core i5)"       },
+	{  6, 14, -1, -1, 126,  2,    -1,    -1, NC, CORE_|_I_|_3  ,_10xxx, "Ice Lake (Core i3)"       },
+
+	/* Rocket Lake CPUs (11th gen, 14nm): */
+	{  6, 7, -1, -1, 167,  -1,    -1,    -1, NC, CORE_|_I_|_9  ,_11xxx, "Rocket Lake (Core i9)"    },
+	{  6, 7, -1, -1, 167,  -1,    -1,    -1, NC, CORE_|_I_|_7  ,_11xxx, "Rocket Lake (Core i7)"    },
+	{  6, 7, -1, -1, 167,  -1,    -1,    -1, NC, CORE_|_I_|_5  ,_11xxx, "Rocket Lake (Core i5)"    },
+	{  6, 7, -1, -1, 167,  -1,    -1,    -1, NC, CORE_|_I_|_3  ,_11xxx, "Rocket Lake (Core i3)"    },
+
+	/* Goldmont Plus CPUs (2017, 14nm, low-power) */
+	{  6, 10, -1, -1, 122,  4,    -1,    -1, NC, PENTIUM_      ,     0, "Gemini Lake (Pentium)"    },
+	{  6, 10, -1, -1, 122,  4,    -1,    -1, NC, CELERON_      ,     0, "Gemini Lake (Celeron)"    },
+	{  6, 10, -1, -1, 122,  2,    -1,    -1, NC, CELERON_      ,     0, "Gemini Lake (Celeron)"    },
+
+	/* Tremont CPUs (2020, 10nm, low-power) */
+	{  6,  6, -1, -1, 150, -1,    -1,    -1, NC, PENTIUM_      ,     0, "Elkhart Lake (Pentium)"   },
+	{  6,  6, -1, -1, 150, -1,    -1,    -1, NC, CELERON_      ,     0, "Elkhart Lake (Celeron)"   },
+	{  6,  6, -1, -1, 150, -1,    -1,    -1, NC, ATOM_         ,     0, "Elkhart Lake (Atom)"      },
+	{  6, 10, -1, -1, 138, -1,    -1,    -1, NC, CORE_|_I_|_5  ,     0, "Lakefield (Core i5)"      },
+	{  6, 10, -1, -1, 138, -1,    -1,    -1, NC, CORE_|_I_|_3  ,     0, "Lakefield (Core i3)"      },
+	{  6, 12, -1, -1, 156, -1,    -1,    -1, NC, PENTIUM_      ,     0, "Jasper Lake (Pentium)"    },
+	{  6, 12, -1, -1, 156, -1,    -1,    -1, NC, CELERON_      ,     0, "Jasper Lake (Celeron)"    },
+
+	/* Tiger Lake CPUs (2020, 11th gen, 10nm, mobile processors): */
+	{  6, 12, -1, -1, 140, -1,    -1,    -1, NC, CORE_|_I_|_9  ,_11xxx, "Tiger Lake (Core i9)"     },
+	{  6, 12, -1, -1, 140, -1,    -1,    -1, NC, CORE_|_I_|_7  ,_11xxx, "Tiger Lake (Core i7)"     },
+	{  6, 12, -1, -1, 140, -1,    -1,    -1, NC, CORE_|_I_|_5  ,_11xxx, "Tiger Lake (Core i5)"     },
+	{  6, 12, -1, -1, 140, -1,    -1,    -1, NC, CORE_|_I_|_3  ,_11xxx, "Tiger Lake (Core i3)"     },
+	{  6, 12, -1, -1, 140,  2,    -1,    -1, NC, PENTIUM_      ,     0, "Tiger Lake (Pentium)"     },
+	{  6, 12, -1, -1, 140,  2,    -1,    -1, NC, CELERON_      ,     0, "Tiger Lake (Celeron)"     },
+
+	/* Alder Lake CPUs (2021, 12th gen, 10nm) => https://en.wikichip.org/wiki/intel/microarchitectures/alder_lake */
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_9  ,     _12xxx, "Alder Lake-S (Core i9)"  },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_7  ,     _12xxx, "Alder Lake-S (Core i7)"  },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_5  ,     _12xxx, "Alder Lake-S (Core i5)"  },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_3  ,     _12xxx, "Alder Lake-S (Core i3)"  },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, PENTIUM_      ,          0, "Alder Lake-S (Pentium)"  },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CELERON_      ,          0, "Alder Lake-S (Celeron)"  },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_9|_H|_X, _12xxx, "Alder Lake-HX (Core i9)" },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_7|_H|_X, _12xxx, "Alder Lake-HX (Core i7)" },
+	{  6,  7, -1, -1, 151, -1,    -1,    -1, NC, CORE_|_I_|_5|_H|_X, _12xxx, "Alder Lake-HX (Core i5)" },
+	{  6, 10, -1, -1, 154, -1,    -1,    -1, NC, CORE_|_I_|_7|_P  ,  _12xxx, "Alder Lake-P (Core i7)"  },
+	{  6, 10, -1, -1, 154, -1,    -1,    -1, NC, CORE_|_I_|_5|_P  ,  _12xxx, "Alder Lake-P (Core i5)"  },
+	{  6, 10, -1, -1, 154, -1,    -1,    -1, NC, CORE_|_I_|_3|_P  ,  _12xxx, "Alder Lake-P (Core i3)"  },
+	{  6, 10, -1, -1, 154, -1,    -1,    -1, NC, CORE_|_I_|_9|_H  ,  _12xxx, "Alder Lake-H (Core i9)"  },
+	{  6, 10, -1, -1, 154, -1,    -1,    -1, NC, CORE_|_I_|_7|_H  ,  _12xxx, "Alder Lake-H (Core i7)"  },
+	{  6, 10, -1, -1, 154, -1,    -1,    -1, NC, CORE_|_I_|_5|_H  ,  _12xxx, "Alder Lake-H (Core i5)"  },
+
+	/* Raptor Lake CPUs (2022, 13th gen, 7nm) => https://en.wikichip.org/wiki/intel/microarchitectures/raptor_lake */
+	{  6,  7, -1, -1, 183, -1,    -1,    -1, NC, CORE_|_I_|_9  ,_13xxx, "Raptor Lake-S (Core i9)"    },
+	{  6,  7, -1, -1, 183, -1,    -1,    -1, NC, CORE_|_I_|_7  ,_13xxx, "Raptor Lake-S (Core i7)"    },
+	{  6,  7, -1, -1, 183, -1,    -1,    -1, NC, CORE_|_I_|_5  ,_13xxx, "Raptor Lake-S (Core i5)"    },
+	{  6,  7, -1, -1, 183, -1,    -1,    -1, NC, CORE_|_I_|_3  ,_13xxx, "Raptor Lake-S (Core i3)"    },
+	//{  6, ??, -1, -1, ???, -1,    -1,    -1, NC, CORE_|_I_|_9  ,_13xxx, "Raptor Lake-P (Core i9)"    },
+	//{  6, ??, -1, -1, ???, -1,    -1,    -1, NC, CORE_|_I_|_7  ,_13xxx, "Raptor Lake-P (Core i7)"    },
+	//{  6, ??, -1, -1, ???, -1,    -1,    -1, NC, CORE_|_I_|_5  ,_13xxx, "Raptor Lake-P (Core i5)"    },
+	//{  6, ??, -1, -1, ???, -1,    -1,    -1, NC, CORE_|_I_|_3  ,_13xxx, "Raptor Lake-P (Core i3)"    },
+	/* F   M   S  EF   EM   C     L2     L3               Brand */
+
 
 	/* Itaniums */
 	{  7, -1, -1, -1, -1,   1,    -1,    -1, NC, 0             ,     0, "Itanium"                  },
@@ -378,66 +505,30 @@ static void load_intel_features(struct cpu_raw_data_t* raw, struct cpu_id_t* dat
 		{ 11, CPU_FEATURE_RTM },
 		{ 16, CPU_FEATURE_AVX512F },
 		{ 17, CPU_FEATURE_AVX512DQ },
-		{ 18, CPU_FEATURE_RDSEED },
-		{ 19, CPU_FEATURE_ADX },
+		/* id 18 and 19 are handled in common */
 		{ 26, CPU_FEATURE_AVX512PF },
 		{ 27, CPU_FEATURE_AVX512ER },
 		{ 28, CPU_FEATURE_AVX512CD },
-		{ 29, CPU_FEATURE_SHA_NI },
+		/* id 29 is handled in common */
 		{ 30, CPU_FEATURE_AVX512BW },
 		{ 31, CPU_FEATURE_AVX512VL },
 	};
-	if (raw->basic_cpuid[0][0] >= 1) {
-		match_features(matchtable_edx1, COUNT_OF(matchtable_edx1), raw->basic_cpuid[1][3], data);
-		match_features(matchtable_ecx1, COUNT_OF(matchtable_ecx1), raw->basic_cpuid[1][2], data);
+	const struct feature_map_t matchtable_ecx7[] = {
+		{  1, CPU_FEATURE_AVX512VBMI },
+		{  6, CPU_FEATURE_AVX512VBMI2 },
+		{ 11, CPU_FEATURE_AVX512VNNI },
+	};
+	if (raw->basic_cpuid[0][EAX] >= 1) {
+		match_features(matchtable_edx1, COUNT_OF(matchtable_edx1), raw->basic_cpuid[1][EDX], data);
+		match_features(matchtable_ecx1, COUNT_OF(matchtable_ecx1), raw->basic_cpuid[1][ECX], data);
 	}
-	if (raw->ext_cpuid[0][0] >= 1) {
-		match_features(matchtable_edx81, COUNT_OF(matchtable_edx81), raw->ext_cpuid[1][3], data);
+	if (raw->ext_cpuid[0][EAX] >= 1) {
+		match_features(matchtable_edx81, COUNT_OF(matchtable_edx81), raw->ext_cpuid[1][EDX], data);
 	}
 	// detect TSX/AVX512:
-	if (raw->basic_cpuid[0][0] >= 7) {
-		match_features(matchtable_ebx7, COUNT_OF(matchtable_ebx7), raw->basic_cpuid[7][1], data);
-	}
-}
-
-enum _cache_type_t {
-	L1I,
-	L1D,
-	L2,
-	L3,
-	L4
-};
-typedef enum _cache_type_t cache_type_t;
-
-static void check_case(uint8_t on, cache_type_t cache, int size, int assoc, int linesize, struct cpu_id_t* data)
-{
-	if (!on) return;
-	switch (cache) {
-		case L1I:
-			data->l1_instruction_cache = size;
-			break;
-		case L1D:
-			data->l1_data_cache = size;
-			data->l1_assoc = assoc;
-			data->l1_cacheline = linesize;
-			break;
-		case L2:
-			data->l2_cache = size;
-			data->l2_assoc = assoc;
-			data->l2_cacheline = linesize;
-			break;
-		case L3:
-			data->l3_cache = size;
-			data->l3_assoc = assoc;
-			data->l3_cacheline = linesize;
-			break;
-		case L4:
-			data->l4_cache = size;
-			data->l4_assoc = assoc;
-			data->l4_cacheline = linesize;
-			break;
-		default:
-			break;
+	if (raw->basic_cpuid[0][EAX] >= 7) {
+		match_features(matchtable_ebx7, COUNT_OF(matchtable_ebx7), raw->basic_cpuid[7][EBX], data);
+		match_features(matchtable_ecx7, COUNT_OF(matchtable_ecx7), raw->basic_cpuid[7][ECX], data);
 	}
 }
 
@@ -454,61 +545,61 @@ static void decode_intel_oldstyle_cache_info(struct cpu_raw_data_t* raw, struct 
 			x >>= 8;
 		}
 	}
-	
-	check_case(f[0x06], L1I,      8,  4,  32, data);
-	check_case(f[0x08], L1I,     16,  4,  32, data);
-	check_case(f[0x0A], L1D,      8,  2,  32, data);
-	check_case(f[0x0C], L1D,     16,  4,  32, data);
-	check_case(f[0x22],  L3,    512,  4,  64, data);
-	check_case(f[0x23],  L3,   1024,  8,  64, data);
-	check_case(f[0x25],  L3,   2048,  8,  64, data);
-	check_case(f[0x29],  L3,   4096,  8,  64, data);
-	check_case(f[0x2C], L1D,     32,  8,  64, data);
-	check_case(f[0x30], L1I,     32,  8,  64, data);
-	check_case(f[0x39],  L2,    128,  4,  64, data);
-	check_case(f[0x3A],  L2,    192,  6,  64, data);
-	check_case(f[0x3B],  L2,    128,  2,  64, data);
-	check_case(f[0x3C],  L2,    256,  4,  64, data);
-	check_case(f[0x3D],  L2,    384,  6,  64, data);
-	check_case(f[0x3E],  L2,    512,  4,  64, data);
-	check_case(f[0x41],  L2,    128,  4,  32, data);
-	check_case(f[0x42],  L2,    256,  4,  32, data);
-	check_case(f[0x43],  L2,    512,  4,  32, data);
-	check_case(f[0x44],  L2,   1024,  4,  32, data);
-	check_case(f[0x45],  L2,   2048,  4,  32, data);
-	check_case(f[0x46],  L3,   4096,  4,  64, data);
-	check_case(f[0x47],  L3,   8192,  8,  64, data);
-	check_case(f[0x4A],  L3,   6144, 12,  64, data);
-	check_case(f[0x4B],  L3,   8192, 16,  64, data);
-	check_case(f[0x4C],  L3,  12288, 12,  64, data);
-	check_case(f[0x4D],  L3,  16384, 16,  64, data);
-	check_case(f[0x4E],  L2,   6144, 24,  64, data);
-	check_case(f[0x60], L1D,     16,  8,  64, data);
-	check_case(f[0x66], L1D,      8,  4,  64, data);
-	check_case(f[0x67], L1D,     16,  4,  64, data);
-	check_case(f[0x68], L1D,     32,  4,  64, data);
+
+	assign_cache_data(f[0x06], L1I,      8,  4,  32, data);
+	assign_cache_data(f[0x08], L1I,     16,  4,  32, data);
+	assign_cache_data(f[0x0A], L1D,      8,  2,  32, data);
+	assign_cache_data(f[0x0C], L1D,     16,  4,  32, data);
+	assign_cache_data(f[0x22],  L3,    512,  4,  64, data);
+	assign_cache_data(f[0x23],  L3,   1024,  8,  64, data);
+	assign_cache_data(f[0x25],  L3,   2048,  8,  64, data);
+	assign_cache_data(f[0x29],  L3,   4096,  8,  64, data);
+	assign_cache_data(f[0x2C], L1D,     32,  8,  64, data);
+	assign_cache_data(f[0x30], L1I,     32,  8,  64, data);
+	assign_cache_data(f[0x39],  L2,    128,  4,  64, data);
+	assign_cache_data(f[0x3A],  L2,    192,  6,  64, data);
+	assign_cache_data(f[0x3B],  L2,    128,  2,  64, data);
+	assign_cache_data(f[0x3C],  L2,    256,  4,  64, data);
+	assign_cache_data(f[0x3D],  L2,    384,  6,  64, data);
+	assign_cache_data(f[0x3E],  L2,    512,  4,  64, data);
+	assign_cache_data(f[0x41],  L2,    128,  4,  32, data);
+	assign_cache_data(f[0x42],  L2,    256,  4,  32, data);
+	assign_cache_data(f[0x43],  L2,    512,  4,  32, data);
+	assign_cache_data(f[0x44],  L2,   1024,  4,  32, data);
+	assign_cache_data(f[0x45],  L2,   2048,  4,  32, data);
+	assign_cache_data(f[0x46],  L3,   4096,  4,  64, data);
+	assign_cache_data(f[0x47],  L3,   8192,  8,  64, data);
+	assign_cache_data(f[0x4A],  L3,   6144, 12,  64, data);
+	assign_cache_data(f[0x4B],  L3,   8192, 16,  64, data);
+	assign_cache_data(f[0x4C],  L3,  12288, 12,  64, data);
+	assign_cache_data(f[0x4D],  L3,  16384, 16,  64, data);
+	assign_cache_data(f[0x4E],  L2,   6144, 24,  64, data);
+	assign_cache_data(f[0x60], L1D,     16,  8,  64, data);
+	assign_cache_data(f[0x66], L1D,      8,  4,  64, data);
+	assign_cache_data(f[0x67], L1D,     16,  4,  64, data);
+	assign_cache_data(f[0x68], L1D,     32,  4,  64, data);
 	/* The following four entries are trace cache. Intel does not
 	 * specify a cache-line size, so we use -1 instead
 	 */
-	check_case(f[0x70], L1I,     12,  8,  -1, data);
-	check_case(f[0x71], L1I,     16,  8,  -1, data);
-	check_case(f[0x72], L1I,     32,  8,  -1, data);
-	check_case(f[0x73], L1I,     64,  8,  -1, data);
-	
-	check_case(f[0x78],  L2,   1024,  4,  64, data);
-	check_case(f[0x79],  L2,    128,  8,  64, data);
-	check_case(f[0x7A],  L2,    256,  8,  64, data);
-	check_case(f[0x7B],  L2,    512,  8,  64, data);
-	check_case(f[0x7C],  L2,   1024,  8,  64, data);
-	check_case(f[0x7D],  L2,   2048,  8,  64, data);
-	check_case(f[0x7F],  L2,    512,  2,  64, data);
-	check_case(f[0x82],  L2,    256,  8,  32, data);
-	check_case(f[0x83],  L2,    512,  8,  32, data);
-	check_case(f[0x84],  L2,   1024,  8,  32, data);
-	check_case(f[0x85],  L2,   2048,  8,  32, data);
-	check_case(f[0x86],  L2,    512,  4,  64, data);
-	check_case(f[0x87],  L2,   1024,  8,  64, data);
-	
+	assign_cache_data(f[0x70], L1I,     12,  8,  -1, data);
+	assign_cache_data(f[0x71], L1I,     16,  8,  -1, data);
+	assign_cache_data(f[0x72], L1I,     32,  8,  -1, data);
+	assign_cache_data(f[0x73], L1I,     64,  8,  -1, data);
+
+	assign_cache_data(f[0x78],  L2,   1024,  4,  64, data);
+	assign_cache_data(f[0x79],  L2,    128,  8,  64, data);
+	assign_cache_data(f[0x7A],  L2,    256,  8,  64, data);
+	assign_cache_data(f[0x7B],  L2,    512,  8,  64, data);
+	assign_cache_data(f[0x7C],  L2,   1024,  8,  64, data);
+	assign_cache_data(f[0x7D],  L2,   2048,  8,  64, data);
+	assign_cache_data(f[0x7F],  L2,    512,  2,  64, data);
+	assign_cache_data(f[0x82],  L2,    256,  8,  32, data);
+	assign_cache_data(f[0x83],  L2,    512,  8,  32, data);
+	assign_cache_data(f[0x84],  L2,   1024,  8,  32, data);
+	assign_cache_data(f[0x85],  L2,   2048,  8,  32, data);
+	assign_cache_data(f[0x86],  L2,    512,  4,  64, data);
+	assign_cache_data(f[0x87],  L2,   1024,  8,  64, data);
+
 	if (f[0x49]) {
 		/* This flag is overloaded with two meanings. On Xeon MP
 		 * (family 0xf, model 0x6) this means L3 cache. On all other
@@ -538,52 +629,18 @@ static void decode_intel_oldstyle_cache_info(struct cpu_raw_data_t* raw, struct 
 	}
 }
 
-static void decode_intel_deterministic_cache_info(struct cpu_raw_data_t* raw,
-                                                  struct cpu_id_t* data)
-{
-	int ecx;
-	int ways, partitions, linesize, sets, size, level, typenumber;
-	cache_type_t type;
-	for (ecx = 0; ecx < MAX_INTELFN4_LEVEL; ecx++) {
-		typenumber = raw->intel_fn4[ecx][0] & 0x1f;
-		if (typenumber == 0) break;
-		level = (raw->intel_fn4[ecx][0] >> 5) & 0x7;
-		if (level == 1 && typenumber == 1)
-			type = L1D;
-		else if (level == 1 && typenumber == 2)
-			type = L1I;
-		else if (level == 2 && typenumber == 3)
-			type = L2;
-		else if (level == 3 && typenumber == 3)
-			type = L3;
-		else if (level == 4 && typenumber == 3)
-			type = L4;
-		else {
-			warnf("deterministic_cache: unknown level/typenumber combo (%d/%d), cannot\n", level, typenumber);
-			warnf("deterministic_cache: recognize cache type\n");
-			continue;
-		}
-		ways = ((raw->intel_fn4[ecx][1] >> 22) & 0x3ff) + 1;
-		partitions = ((raw->intel_fn4[ecx][1] >> 12) & 0x3ff) + 1;
-		linesize = (raw->intel_fn4[ecx][1] & 0xfff) + 1;
-		sets = raw->intel_fn4[ecx][2] + 1;
-		size = ways * partitions * linesize * sets / 1024;
-		check_case(1, type, size, ways, linesize, data);
-	}
-}
-
-static int decode_intel_extended_topology(struct cpu_raw_data_t* raw,
-                                           struct cpu_id_t* data)
+static int decode_intel_extended_topology(struct cpu_raw_data_t* raw, struct cpu_id_t* data)
 {
 	int i, level_type, num_smt = -1, num_core = -1;
-	for (i = 0; i < MAX_INTELFN11_LEVEL; i++) {
-		level_type = (raw->intel_fn11[i][2] & 0xff00) >> 8;
+
+	for (i = 0; (raw->intel_fn11[i][EAX] != 0x0) && (raw->intel_fn11[i][EBX] != 0x0) && (i < MAX_INTELFN11_LEVEL); i++) {
+		level_type = EXTRACTS_BITS(raw->intel_fn11[i][ECX], 15, 8);
 		switch (level_type) {
 			case 0x01:
-				num_smt = raw->intel_fn11[i][1] & 0xffff;
+				num_smt = EXTRACTS_BITS(raw->intel_fn11[i][EBX], 15, 0);
 				break;
 			case 0x02:
-				num_core = raw->intel_fn11[i][1] & 0xffff;
+				num_core = EXTRACTS_BITS(raw->intel_fn11[i][EBX], 15, 0);
 				break;
 			default:
 				break;
@@ -599,19 +656,18 @@ static int decode_intel_extended_topology(struct cpu_raw_data_t* raw,
 	return 1;
 }
 
-static void decode_intel_number_of_cores(struct cpu_raw_data_t* raw,
-                                         struct cpu_id_t* data)
+static void decode_intel_number_of_cores(struct cpu_raw_data_t* raw, struct cpu_id_t* data)
 {
 	int logical_cpus = -1, num_cores = -1;
-	
-	if (raw->basic_cpuid[0][0] >= 11) {
+
+	if (raw->basic_cpuid[0][EAX] >= 11) {
 		if (decode_intel_extended_topology(raw, data)) return;
 	}
-	
-	if (raw->basic_cpuid[0][0] >= 1) {
-		logical_cpus = (raw->basic_cpuid[1][1] >> 16) & 0xff;
-		if (raw->basic_cpuid[0][0] >= 4) {
-			num_cores = 1 + ((raw->basic_cpuid[4][0] >> 26) & 0x3f);
+
+	if (raw->basic_cpuid[0][EAX] >= 1) {
+		logical_cpus = (raw->basic_cpuid[1][EBX] >> 16) & 0xff;
+		if (raw->basic_cpuid[0][EAX] >= 4) {
+			num_cores = 1 + ((raw->basic_cpuid[4][EAX] >> 26) & 0x3f);
 		}
 	}
 	if (data->flags[CPU_FEATURE_HT]) {
@@ -637,6 +693,7 @@ static intel_code_and_bits_t get_brand_code_and_bits(struct cpu_id_t* data)
 	int i = 0;
 	const char* bs = data->brand_str;
 	const char* s;
+	const size_t n = strlen(bs);
 	const struct { intel_code_t c; const char *search; } matchtable[] = {
 		{ PENTIUM_M, "Pentium(R) M" },
 		{ CORE_SOLO, "Pentium(R) Dual  CPU" },
@@ -649,22 +706,22 @@ static intel_code_and_bits_t get_brand_code_and_bits(struct cpu_id_t* data)
 		{ PINEVIEW, "CPU [ND][45]## " },
 		{ CEDARVIEW, "CPU [ND]#### " },
 	};
-	
+
 	const struct { uint64_t bit; const char* search; } bit_matchtable[] = {
 		{ XEON_, "Xeon" },
 		{ _MP_, " MP" },
-		{ ATOM_, "Atom(TM) CPU" },
+		{ ATOM_, "Atom" },
 		{ MOBILE_, "Mobile" },
 		{ CELERON_, "Celeron" },
 		{ PENTIUM_, "Pentium" },
 	};
-	
+
 	for (i = 0; i < COUNT_OF(bit_matchtable); i++) {
 		if (match_pattern(bs, bit_matchtable[i].search))
 			bits |= bit_matchtable[i].bit;
 	}
-	
-	if ((i = match_pattern(bs, "Core(TM) [im][357]")) != 0) {
+
+	if ((i = match_pattern(bs, "Core(TM) [im][3579]")) != 0) {
 		bits |= CORE_;
 		i--;
 		switch (bs[i + 9]) {
@@ -675,6 +732,15 @@ static intel_code_and_bits_t get_brand_code_and_bits(struct cpu_id_t* data)
 			case '3': bits |= _3; break;
 			case '5': bits |= _5; break;
 			case '7': bits |= _7; break;
+			case '9': bits |= _9; break;
+		}
+		for(i = i + 11; i < n; i++) {
+			switch (bs[i]) {
+				case 'H': bits |= _H; break;
+				case 'K': bits |= _K; break;
+				case 'X': bits |= _X; break;
+				case 'P': bits |= _P; break;
+			}
 		}
 	}
 	for (i = 0; i < COUNT_OF(matchtable); i++)
@@ -726,7 +792,7 @@ static intel_code_and_bits_t get_brand_code_and_bits(struct cpu_id_t* data)
 				code = MORE_THAN_QUADCORE; break;
 		}
 	}
-	
+
 	if (code == CORE_DUO && (bits & MOBILE_) && data->model != 14) {
 		if (data->ext_model < 23) {
 			code = MEROM;
@@ -751,14 +817,22 @@ static intel_model_t get_model_code(struct cpu_id_t* data)
 	const char *bs = data->brand_str;
 	int mod_flags = 0, model_no = 0, ndigs = 0;
 	/* If the CPU is a Core ix, then just return the model number generation: */
-	if ((i = match_pattern(bs, "Core(TM) i[357]")) != 0) {
+	if ((i = match_pattern(bs, "Core(TM) i[3579]")) != 0) {
 		i += 11;
 		if (i + 4 >= l) return UNKNOWN;
 		if (bs[i] == '2') return _2xxx;
 		if (bs[i] == '3') return _3xxx;
+		if (bs[i] == '4') return _4xxx;
+		if (bs[i] == '5') return _5xxx;
+		if (bs[i] == '6') return _6xxx;
+		if (bs[i] == '7') return _7xxx;
+		if (bs[i] == '8') return _8xxx;
+		if (bs[i] == '9') return _9xxx;
+		if ((bs[i] == '1') && (bs[i+1] == '0')) return _10xxx;
+		if ((bs[i] == '1') && (bs[i+1] == '1')) return _11xxx;
 		return UNKNOWN;
 	}
-	
+
 	/* For Core2-based Xeons: */
 	while (i < l - 3) {
 		if (bs[i] == 'C' && bs[i+1] == 'P' && bs[i+2] == 'U')
@@ -807,23 +881,23 @@ static void decode_intel_sgx_features(const struct cpu_raw_data_t* raw, struct c
 {
 	struct cpu_epc_t epc;
 	int i;
-	
-	if (raw->basic_cpuid[0][0] < 0x12) return; // no 12h leaf
-	if (raw->basic_cpuid[0x12][0] == 0) return; // no sub-leafs available, probably it's disabled by BIOS
-	
+
+	if (raw->basic_cpuid[0][EAX] < 0x12) return; // no 12h leaf
+	if (raw->basic_cpuid[0x12][EAX] == 0) return; // no sub-leafs available, probably it's disabled by BIOS
+
 	// decode sub-leaf 0:
-	if (raw->basic_cpuid[0x12][0] & 1) data->sgx.flags[INTEL_SGX1] = 1;
-	if (raw->basic_cpuid[0x12][0] & 2) data->sgx.flags[INTEL_SGX2] = 1;
+	if (raw->basic_cpuid[0x12][EAX] & 1) data->sgx.flags[INTEL_SGX1] = 1;
+	if (raw->basic_cpuid[0x12][EAX] & 2) data->sgx.flags[INTEL_SGX2] = 1;
 	if (data->sgx.flags[INTEL_SGX1] || data->sgx.flags[INTEL_SGX2])
 		data->sgx.present = 1;
-	data->sgx.misc_select = raw->basic_cpuid[0x12][1];
-	data->sgx.max_enclave_32bit = (raw->basic_cpuid[0x12][3]     ) & 0xff;
-	data->sgx.max_enclave_64bit = (raw->basic_cpuid[0x12][3] >> 8) & 0xff;
-	
+	data->sgx.misc_select = raw->basic_cpuid[0x12][EBX];
+	data->sgx.max_enclave_32bit = (raw->basic_cpuid[0x12][EDX]     ) & 0xff;
+	data->sgx.max_enclave_64bit = (raw->basic_cpuid[0x12][EDX] >> 8) & 0xff;
+
 	// decode sub-leaf 1:
-	data->sgx.secs_attributes = raw->intel_fn12h[1][0] | (((uint64_t) raw->intel_fn12h[1][1]) << 32);
-	data->sgx.secs_xfrm       = raw->intel_fn12h[1][2] | (((uint64_t) raw->intel_fn12h[1][3]) << 32);
-	
+	data->sgx.secs_attributes = raw->intel_fn12h[1][EAX] | (((uint64_t) raw->intel_fn12h[1][EBX]) << 32);
+	data->sgx.secs_xfrm       = raw->intel_fn12h[1][ECX] | (((uint64_t) raw->intel_fn12h[1][EDX]) << 32);
+
 	// decode higher-order subleafs, whenever present:
 	data->sgx.num_epc_sections = -1;
 	for (i = 0; i < 1000000; i++) {
@@ -854,7 +928,7 @@ struct cpu_epc_t cpuid_get_epc(int index, const struct cpu_raw_data_t* raw)
 		regs[1] = regs[3] = 0;
 		cpu_exec_cpuid_ext(regs);
 	}
-	
+
 	// decode values:
 	if ((regs[0] & 0xf) == 0x1) {
 		retval.start_addr |= (regs[0] & 0xfffff000); // bits [12, 32) -> bits [12, 32)
@@ -873,13 +947,14 @@ int cpuid_identify_intel(struct cpu_raw_data_t* raw, struct cpu_id_t* data, stru
 	char* brand_code_str = NULL;
 
 	load_intel_features(raw, data);
-	if (raw->basic_cpuid[0][0] >= 4) {
+	if (raw->basic_cpuid[0][EAX] >= 4) {
 		/* Deterministic way is preferred, being more generic */
-		decode_intel_deterministic_cache_info(raw, data);
-	} else if (raw->basic_cpuid[0][0] >= 2) {
+		decode_deterministic_cache_info_x86(raw->intel_fn4, MAX_INTELFN4_LEVEL, data, internal);
+	} else if (raw->basic_cpuid[0][EAX] >= 2) {
 		decode_intel_oldstyle_cache_info(raw, data);
 	}
 	decode_intel_number_of_cores(raw, data);
+	data->purpose = cpuid_identify_purpose_intel(raw);
 
 	brand = get_brand_code_and_bits(data);
 	model_code = get_model_code(data);
@@ -898,10 +973,10 @@ int cpuid_identify_intel(struct cpu_raw_data_t* raw, struct cpu_id_t* data, stru
 		debug_print_lbits(2, brand.bits);
 	}
 	debugf(2, "Detected Intel model code: %d\n", model_code);
-	
+
 	internal->code.intel = brand.code;
 	internal->bits = brand.bits;
-	
+
 	if (data->flags[CPU_FEATURE_SGX]) {
 		debugf(2, "SGX seems to be present, decoding...\n");
 		// if SGX is indicated by the CPU, verify its presence:
@@ -916,4 +991,28 @@ int cpuid_identify_intel(struct cpu_raw_data_t* raw, struct cpu_id_t* data, stru
 void cpuid_get_list_intel(struct cpu_list_t* list)
 {
 	generic_get_cpu_list(cpudb_intel, COUNT_OF(cpudb_intel), list);
+}
+
+cpu_purpose_t cpuid_identify_purpose_intel(struct cpu_raw_data_t* raw)
+{
+	/* Check for hybrid architecture
+	From Intel® 64 and IA-32 Architectures Software Developer’s Manual Combined Volumes: 1, 2A, 2B, 2C, 2D, 3A, 3B, 3C, 3D, and 4
+	Available at https://cdrdv2.intel.com/v1/dl/getContent/671200
+
+	- CPUID[7h] is Structured Extended Feature Flags Enumeration Leaf (Output depends on ECX input value)
+	  EDX, bit 15: Hybrid. If 1, the processor is identified as a hybrid part.
+
+	- CPUID[1Ah] is Hybrid Information Enumeration Leaf (EAX = 1AH, ECX = 0)
+	  EAX, bits 31-24: Core type
+	*/
+	if (EXTRACTS_BIT(raw->basic_cpuid[0x7][EDX], 15) == 0x1) {
+		debugf(3, "Detected Intel CPU hybrid architecture\n");
+		switch (EXTRACTS_BITS(raw->basic_cpuid[0x1a][EAX], 31, 24)) {
+			case 0x20: /* Atom */ return PURPOSE_EFFICIENCY;
+			case 0x40: /* Core */ return PURPOSE_PERFORMANCE;
+			default:              return PURPOSE_GENERAL;
+		}
+	}
+
+	return PURPOSE_GENERAL;
 }

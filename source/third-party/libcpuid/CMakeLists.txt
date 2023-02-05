@@ -1,32 +1,25 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
 # Название таргета
 set(target_name libcpuid)
 
-# Define preprocessor macros
-add_definitions (-DVERSION="0.4.0+")
-if (HAVE_STDINT_H)
-    add_definitions (-DHAVE_STDINT_H)
-endif ()
-
 # Создаём список файлов
 file(GLOB_RECURSE source_files libcpuid/*.c libcpuid/*.h)
 
-if (MSVC)
+if(MSVC)
     list(APPEND source_files libcpuid/masm-x64.asm)
     enable_language(ASM_MASM)
-endif ()
+endif()
 
 # Создаём статическую библиотеку
-add_library(${target_name} STATIC ${source_files} ${ASM_FILES})
+add_library(${target_name} STATIC ${source_files})
+
+# Добавляем дефайн. Версию можно посмотреть в libcpuid.h
+target_compile_definitions(${target_name} PRIVATE VERSION="0.6.2+")
 
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
-target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
-
-# Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/libcpuid)
 
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/libcpuid FILES ${source_files})

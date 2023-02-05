@@ -23,7 +23,10 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#define _XOPEN_SOURCE 500
+
+/* freebsd requires _XOPEN_SOURCE 600 for snprintf()
+ * for linux it is enough 500 */
+#define _XOPEN_SOURCE 600
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,10 +36,11 @@
 #include "libcpuid_internal.h"
 #include "rdtsc.h"
 
+#define MSR_PATH_LEN 32
+
 #if defined (__linux__) || defined (__gnu_linux__)
 /* Assuming linux with /dev/cpu/x/msr: */
 #include <unistd.h>
-#include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -65,7 +69,7 @@ struct msr_driver_t* cpu_msr_driver_open(void)
 
 struct msr_driver_t* cpu_msr_driver_open_core(unsigned core_num)
 {
-	char msr[32];
+	char msr[MSR_PATH_LEN];
 	struct msr_driver_t* handle;
 	if (core_num >= cpuid_get_total_cpus()) {
 		set_error(ERR_INVCNB);
@@ -75,7 +79,7 @@ struct msr_driver_t* cpu_msr_driver_open_core(unsigned core_num)
 		set_error(ERR_NO_RDMSR);
 		return NULL;
 	}
-	sprintf(msr, "/dev/cpu/%u/msr", core_num);
+	snprintf(msr, MSR_PATH_LEN, "/dev/cpu/%u/msr", core_num);
 	if(!load_driver(msr)) {
 		set_error(ERR_NO_DRIVER);
 		return NULL;
@@ -90,6 +94,10 @@ struct msr_driver_t* cpu_msr_driver_open_core(unsigned core_num)
 		return NULL;
 	}
 	handle = (struct msr_driver_t*) malloc(sizeof(struct msr_driver_t));
+	if (!handle) {
+		set_error(ERR_NO_MEM);
+		return NULL;
+	}
 	handle->fd = fd;
 	return handle;
 }
@@ -149,7 +157,7 @@ struct msr_driver_t* cpu_msr_driver_open(void)
 
 struct msr_driver_t* cpu_msr_driver_open_core(unsigned core_num)
 {
-	char msr[32];
+	char msr[MSR_PATH_LEN];
 	struct msr_driver_t* handle;
 	if (core_num >= cpuid_get_total_cpus()) {
 		set_error(ERR_INVCNB);
@@ -159,7 +167,7 @@ struct msr_driver_t* cpu_msr_driver_open_core(unsigned core_num)
 		set_error(ERR_NO_RDMSR);
 		return NULL;
 	}
-	sprintf(msr, "/dev/cpuctl%u", core_num);
+	snprintf(msr, MSR_PATH_LEN, "/dev/cpuctl%u", core_num);
 	if(!load_driver(msr)) {
 		set_error(ERR_NO_DRIVER);
 		return NULL;
@@ -174,6 +182,10 @@ struct msr_driver_t* cpu_msr_driver_open_core(unsigned core_num)
 		return NULL;
 	}
 	handle = (struct msr_driver_t*) malloc(sizeof(struct msr_driver_t));
+	if (!handle) {
+		set_error(ERR_NO_MEM);
+		return NULL;
+	}
 	handle->fd = fd;
 	return handle;
 }
@@ -189,7 +201,7 @@ int cpu_rdmsr(struct msr_driver_t* driver, uint32_t msr_index, uint64_t* result)
 	if(ioctl(driver->fd, CPUCTL_RDMSR, &args))
 		return set_error(ERR_INVMSR);
 
-	*result = args.data; 
+	*result = args.data;
 	return 0;
 }
 
@@ -235,7 +247,7 @@ struct msr_driver_t* cpu_msr_driver_open(void)
 		set_error(ERR_NO_RDMSR);
 		return NULL;
 	}
-	
+
 	drv = (struct msr_driver_t*) malloc(sizeof(struct msr_driver_t));
 	if (!drv) {
 		set_error(ERR_NO_MEM);
@@ -248,7 +260,7 @@ struct msr_driver_t* cpu_msr_driver_open(void)
 		set_error(ERR_EXTRACT);
 		return NULL;
 	}
-	
+
 	status = load_driver(drv);
 	if (!DeleteFile(drv->driver_path))
 		debugf(1, "Deleting temporary driver file failed.\n");
@@ -283,7 +295,7 @@ static int extract_driver(struct msr_driver_t* driver)
 	FILE *f;
 	if (!GetTempPath(sizeof(driver->driver_path), driver->driver_path)) return 0;
 	strcat(driver->driver_path, "TmpRdr.sys");
-	
+
 	f = fopen(driver->driver_path, "wb");
 	if (!f) return 0;
 	if (is_running_x64())
@@ -301,15 +313,15 @@ static BOOL wait_for_service_state(SC_HANDLE hService, DWORD dwDesiredState, SER
 	if(hService != NULL){
 		while(TRUE){
 			fOK = QueryServiceStatus(hService, lpsrvStatus);
-			if(!fOK) 
+			if(!fOK)
 				break;
-			if(lpsrvStatus->dwCurrentState == dwDesiredState) 
+			if(lpsrvStatus->dwCurrentState == dwDesiredState)
 				break;
 
 			dwWaitHint = lpsrvStatus->dwWaitHint / 10;    // Poll 1/10 of the wait hint
-			if (dwWaitHint <  1000) 
+			if (dwWaitHint <  1000)
 				dwWaitHint = 1000;  // At most once per second
-			if (dwWaitHint > 10000) 
+			if (dwWaitHint > 10000)
 				dwWaitHint = 10000; // At least every 10 seconds
 			Sleep(dwWaitHint);
 		}
@@ -370,7 +382,7 @@ static int load_driver(struct msr_driver_t* drv)
 				default:
 					debugf(1, "Create driver service failed: %d\n", dwLastError);
 					break;
-			}				
+			}
 		}
 		if(drv->scDriver != NULL){
 			if(StartService(drv->scDriver, 0, NULL)){
@@ -398,7 +410,7 @@ static int load_driver(struct msr_driver_t* drv)
 			if(fRunning)
 				debugf(1, "Driver already running.\n");
 			else
-				debugf(1, "Driver loaded.\n"); 
+				debugf(1, "Driver loaded.\n");
 			CloseServiceHandle(drv->scManager);
 			drv->hhDriver = CreateFile(lpszDriverName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, 0);
 			drv->ovl.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -436,7 +448,7 @@ int cpu_rdmsr(struct msr_driver_t* driver, uint32_t msr_index, uint64_t* result)
 	if (!driver)
 		return set_error(ERR_HANDLE);
 	DeviceIoControl(driver->hhDriver, IOCTL_PROCVIEW_RDMSR, &msr_index, sizeof(int), &msrdata, sizeof(__int64), &dwBytesReturned, &driver->ovl);
-	GetOverlappedResult(driver->hhDriver, &driver->ovl, &dwBytesReturned, TRUE);	
+	GetOverlappedResult(driver->hhDriver, &driver->ovl, &dwBytesReturned, TRUE);
 	*result = msrdata;
 	return 0;
 }
@@ -702,7 +714,7 @@ static int get_amd_multipliers(struct msr_info_t *info, uint32_t pstate, double 
 			Note: This family contains only APUs */
 			err  = cpu_rdmsr_range(info->handle, pstate, 8, 6, &CpuDid);
 			err += cpu_rdmsr_range(info->handle, pstate, 5, 0, &CpuFid);
-			*multiplier = (double) ((CpuFid + magic_constant) / (1ull << CpuDid)) / divisor;
+			*multiplier = ((double) (CpuFid + magic_constant) / (1ull << CpuDid)) / divisor;
 			break;
 		case 0x17:
 			/* PPR 17h, pages 30 and 138-139
@@ -711,7 +723,7 @@ static int get_amd_multipliers(struct msr_info_t *info, uint32_t pstate, double 
 			CoreCOF is (Core::X86::Msr::PStateDef[CpuFid[7:0]] / Core::X86::Msr::PStateDef[CpuDfsId]) * 200 */
 			err  = cpu_rdmsr_range(info->handle, pstate, 13, 8, &CpuDid);
 			err += cpu_rdmsr_range(info->handle, pstate,  7, 0, &CpuFid);
-			*multiplier = (double) (CpuFid / CpuDid) * 2;
+			*multiplier = ((double) CpuFid / CpuDid) * 2;
 			break;
 		default:
 			err = 1;
@@ -763,7 +775,7 @@ static double get_info_min_multiplier(struct msr_info_t *info)
 		err = cpu_rdmsr_range(info->handle, MSR_PLATFORM_INFO, 47, 40, &reg);
 		if (!err) return (double) reg;
 	}
-	else if(info->id->vendor == VENDOR_AMD) {
+	else if(info->id->vendor == VENDOR_AMD || info->id->vendor == VENDOR_HYGON) {
 		/* N.B.: Find the last P-state
 		get_amd_last_pstate_addr() returns the last P-state, MSR_PSTATE_0 <= addr <= MSR_PSTATE_7 */
 		addr = get_amd_last_pstate_addr(info);
@@ -792,7 +804,7 @@ static double get_info_cur_multiplier(struct msr_info_t *info)
 		err = cpu_rdmsr_range(info->handle, IA32_PERF_STATUS, 15, 8, &reg);
 		if (!err) return (double) reg;
 	}
-	else if(info->id->vendor == VENDOR_AMD) {
+	else if(info->id->vendor == VENDOR_AMD || info->id->vendor == VENDOR_HYGON) {
 		/* Refer links above
 		MSRC001_0063[2:0] is CurPstate */
 		err  = cpu_rdmsr_range(info->handle, MSR_PSTATE_S, 2, 0, &reg);
@@ -832,7 +844,7 @@ static double get_info_max_multiplier(struct msr_info_t *info)
 		err = cpu_rdmsr_range(info->handle, MSR_TURBO_RATIO_LIMIT, 7, 0, &reg);
 		if (!err) return (double) reg;
 	}
-	else if(info->id->vendor == VENDOR_AMD) {
+	else if(info->id->vendor == VENDOR_AMD || info->id->vendor == VENDOR_HYGON) {
 		/* Refer links above
 		MSRC001_0064 is Pb0
 		Pb0 is the highest-performance boosted P-state */
@@ -884,7 +896,7 @@ static double get_info_voltage(struct msr_info_t *info)
 		err = cpu_rdmsr_range(info->handle, MSR_PERF_STATUS, 47, 32, &reg);
 		if (!err) return (double) reg / (1 << 13);
 	}
-	else if(info->id->vendor == VENDOR_AMD) {
+	else if(info->id->vendor == VENDOR_AMD || info->id->vendor == VENDOR_HYGON) {
 		/* Refer links above
 		MSRC001_00[6B:64][15:9]  is CpuVid (Jaguar and before)
 		MSRC001_00[6B:64][21:14] is CpuVid (Zen)
@@ -924,13 +936,13 @@ static double get_info_bus_clock(struct msr_info_t *info)
 		err = cpu_rdmsr_range(info->handle, MSR_PLATFORM_INFO, 15, 8, &reg);
 		if (!err) return (double) info->cpu_clock / reg;
 	}
-	else if(info->id->vendor == VENDOR_AMD) {
+	else if(info->id->vendor == VENDOR_AMD || info->id->vendor == VENDOR_HYGON) {
 		/* Refer links above
 		MSRC001_0061[6:4] is PstateMaxVal
 		PstateMaxVal is the the lowest-performance non-boosted P-state */
 		addr = get_amd_last_pstate_addr(info);
 		err  = cpu_rdmsr_range(info->handle, MSR_PSTATE_L, 6, 4, &reg);
-		err += get_amd_multipliers(info, addr - reg, &mult);
+		err += get_amd_multipliers(info, addr - (uint32_t) reg, &mult);
 		if (!err) return (double) info->cpu_clock / mult;
 	}
 
@@ -1014,39 +1026,47 @@ int msr_serialize_raw_data(struct msr_driver_t* handle, const char* filename)
 	FILE *f;
 	uint64_t reg;
 	const uint32_t *msr;
-	struct cpu_raw_data_t raw;
-	struct cpu_id_t id;
-	struct internal_id_info_t internal;
+	struct cpu_id_t* id;
+	static int cpu_clock = 0;
 
+	/* Check if MSR driver is initialized */
 	if (handle == NULL)
 		return set_error(ERR_HANDLE);
 
-	if (!strcmp(filename, ""))
-		f = stdout;
-	else
-		f = fopen(filename, "wt");
-	if (!f) return set_error(ERR_OPEN);
+	/* Open file descriptor */
+	f = ((filename == NULL) || !strcmp(filename, "")) ? stdout : fopen(filename, "wt");
+	if (!f)
+		return set_error(ERR_OPEN);
 
-	if (cpuid_get_raw_data(&raw) || cpu_ident_internal(&raw, &id, &internal))
-		return -1;
+	/* Get cached decoded CPUID information */
+	id = get_cached_cpuid();
+	if (id->vendor == VENDOR_UNKNOWN)
+		return get_error();
 
-	fprintf(f, "CPU is %s %s, stock clock is %dMHz.\n", id.vendor_str, id.brand_str, cpu_clock_measure(250, 1));
-	if (id.vendor == VENDOR_INTEL)
-		msr = intel_msr;
-	else if (id.vendor == VENDOR_AMD)
-		msr = amd_msr;
-	else
-		return set_error(ERR_CPU_UNKN);
+	/* Get CPU stock speed */
+	if (cpu_clock == 0)
+		cpu_clock = cpu_clock_measure(250, 1);
 
+	/* Check if CPU vendor is supported */
+	fprintf(f, "vendor_str=%s\nbrand_str=%s\ncpu_clock_measure=%dMHz\n", id->vendor_str, id->brand_str, cpu_clock);
+	switch (id->vendor) {
+		case VENDOR_HYGON:
+		case VENDOR_AMD:   msr = amd_msr;   break;
+		case VENDOR_INTEL: msr = intel_msr; break;
+		default: return set_error(ERR_CPU_UNKN);
+	}
+
+	/* Print raw MSR values */
 	for (i = 0; msr[i] != CPU_INVALID_VALUE; i++) {
 		cpu_rdmsr(handle, msr[i], &reg);
 		fprintf(f, "msr[%#08x]=", msr[i]);
 		for (j = 56; j >= 0; j -= 8)
 			fprintf(f, "%02x ", (int) (reg >> j) & 0xff);
-		printf("\n");
+		fprintf(f, "\n");
 	}
 
-	if (strcmp(filename, ""))
+	/* Close file descriptor */
+	if (f != stdout)
 		fclose(f);
 	return set_error(ERR_OK);
 }
