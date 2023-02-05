@@ -37,11 +37,11 @@ direct3d11 # Хорошо
 ```
 
 ```
-constraint_weld2d  # Плохо
-constraint_weld_2d # Хорошо
-physics2d.h        # Плохо, так как рядом лежит куча файлов из той же
-                   # логической группы с именами вида xxx_xx_2d
-physics_2d.h       # Приемлемо
+constraint_weld2d.h  # Плохо
+constraint_weld_2d.h # Хорошо
+physics2d.h          # Плохо, так как рядом лежит куча файлов из той же
+                     # логической группы с именами вида xxx_xx_2d.h
+physics_2d.h         # Приемлемо
 ```
 
 ```
