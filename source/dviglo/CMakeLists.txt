@@ -14,12 +14,6 @@ if (MSVC)
     add_compile_options (/W3)
 endif ()
 
-# Prevent ICE from old MinGW versions, workaround from the GCC bugzilla https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61189
-if (MINGW AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9.1 AND NOT URHO3D_64BIT)
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mpreferred-stack-boundary=2")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mpreferred-stack-boundary=2")
-endif ()
-
 check_include_files (stdint.h HAVE_STDINT_H)
 if (HAVE_STDINT_H)
   add_definitions (-DHAVE_STDINT_H)
