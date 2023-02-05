@@ -1,3 +1,5 @@
+[![](https://github.com/dviglo/dviglo/actions/workflows/main.yml/badge.svg)](https://github.com/dviglo/dviglo/actions)
+
 # Dviglo
 
 Игровой движок Dviglo - это форк движка Urho3D, ориентированный на русскоязычное сообщество. Отличия от оригинала перечислены [тут](docs/features.md).
