@@ -16,7 +16,7 @@
 #include "../scene/node.h"
 #include "../ui/font.h"
 #include "../ui/text.h"
-#include "../ui/text_3d.h"
+#include "../ui/text3d.h"
 
 namespace Urho3D
 {

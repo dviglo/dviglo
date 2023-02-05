@@ -16,7 +16,7 @@
 #include <dviglo/scene/scene.h>
 #include <dviglo/ui/font.h>
 #include <dviglo/ui/text.h>
-#include <dviglo/ui/text_3d.h>
+#include <dviglo/ui/text3d.h>
 #include <dviglo/ui/ui.h>
 
 #include "sdf_text.h"

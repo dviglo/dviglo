@@ -34,7 +34,7 @@
 #include <dviglo/scene/scene_events.h>
 #include <dviglo/ui/font.h>
 #include <dviglo/ui/text.h>
-#include <dviglo/ui/text_3d.h>
+#include <dviglo/ui/text3d.h>
 #include <dviglo/urho_2d/drawable_2d.h>
 #include <dviglo/urho_2d/sprite_2d.h>
 #include <dviglo/urho_2d/static_sprite_2d.h>

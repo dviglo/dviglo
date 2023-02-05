@@ -37,12 +37,12 @@
 #include "../ui/slider.h"
 #include "../ui/sprite.h"
 #include "../ui/text.h"
-#include "../ui/text_3d.h"
+#include "../ui/text3d.h"
 #include "../ui/tooltip.h"
 #include "../ui/ui.h"
 #include "../ui/ui_component.h"
 #include "../ui/ui_events.h"
-#include "../ui/view_3d.h"
+#include "../ui/view3d.h"
 #include "../ui/window.h"
 
 #include <cassert>

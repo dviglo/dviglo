@@ -14,7 +14,7 @@
 #include "../scene/scene.h"
 #include "../ui/ui.h"
 #include "../ui/ui_events.h"
-#include "../ui/view_3d.h"
+#include "../ui/view3d.h"
 
 namespace Urho3D
 {
