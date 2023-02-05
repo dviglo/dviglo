@@ -14,11 +14,6 @@ if (MSVC)
     add_compile_options (/W3)
 endif ()
 
-check_include_files (stdint.h HAVE_STDINT_H)
-if (HAVE_STDINT_H)
-  add_definitions (-DHAVE_STDINT_H)
-endif ()
-
 # Save keep the preprocessor macros (for using the Urho3D library) for later use in generating dviglo.pc file
 get_directory_property (URHO3D_COMPILE_DEFINITIONS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMPILE_DEFINITIONS)
 
