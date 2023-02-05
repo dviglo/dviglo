@@ -12,10 +12,6 @@ project(dviglo-tools)
 # В IDE таргеты будут отображаться в папке tools
 set(CMAKE_FOLDER tools)
 
-# Find Urho3D library
-find_package (Urho3D REQUIRED)
-include_directories (${URHO3D_INCLUDE_DIRS})
-
 # Build host-tools using host compiler toolchain
 if (CMAKE_CROSSCOMPILING)
     check_native_compiler_exist ()
