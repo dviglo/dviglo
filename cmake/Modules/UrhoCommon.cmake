@@ -33,77 +33,6 @@ elseif (CMAKE_GENERATOR MATCHES Visual)
     set (VS TRUE)
 endif ()
 
-# Rightfully we could have performed this inside a CMake/iOS toolchain file but we don't have one nor need for one for now
-if (IOS)
-    set (CMAKE_CROSSCOMPILING TRUE)
-    set (CMAKE_XCODE_EFFECTIVE_PLATFORMS -iphoneos -iphonesimulator)
-    set (CMAKE_OSX_SYSROOT iphoneos)    # Set Base SDK to "Latest iOS"
-    if (DEFINED ENV{CI})
-        set (CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED 0)
-        set (CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "")
-    endif ()
-    # This is a CMake hack in order to make standard CMake check modules that use try_compile() internally work on iOS platform
-    # The injected "flags" are not compiler flags, they are actually CMake variables meant for another CMake subprocess that builds the source file being passed in the try_compile() command
-    # CAVEAT: these injected "flags" must always be kept at the end of the string variable, i.e. when adding more compiler flags later on then those new flags must be prepended in front of these flags instead
-    set (CMAKE_REQUIRED_FLAGS ";-DSmileyHack=byYaoWT;-DCMAKE_MACOSX_BUNDLE=1;-DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=0;-DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY=")
-    if (NOT IOS_SYSROOT)
-        execute_process (COMMAND xcodebuild -version -sdk ${CMAKE_OSX_SYSROOT} Path OUTPUT_VARIABLE IOS_SYSROOT OUTPUT_STRIP_TRAILING_WHITESPACE)   # Obtain iOS sysroot path
-        set (IOS_SYSROOT ${IOS_SYSROOT} CACHE INTERNAL "Path to iOS system root")
-    endif ()
-    set (CMAKE_FIND_ROOT_PATH ${IOS_SYSROOT})
-    set (IPHONEOS_DEPLOYMENT_TARGET "" CACHE STRING "Specify iOS deployment target (iOS platform only); default to latest installed iOS SDK if not specified, the minimum supported target is 3.0 due to constraint from SDL library")
-    if (DEPLOYMENT_TARGET_SAVED AND NOT ${IPHONEOS_DEPLOYMENT_TARGET}: STREQUAL DEPLOYMENT_TARGET_SAVED)
-        string (REPLACE : "" DEPLOYMENT_TARGET_SAVED ${DEPLOYMENT_TARGET_SAVED})
-        set (IPHONEOS_DEPLOYMENT_TARGET "${DEPLOYMENT_TARGET_SAVED}" CACHE STRING "Specify iOS deployment target (iOS platform only); default to latest installed iOS SDK if not specified, the minimum supported target is 3.0 due to constraint from SDL library" FORCE)
-        message (FATAL_ERROR "IPHONEOS_DEPLOYMENT_TARGET cannot be changed after the initial configuration/generation. "
-            "Auto reverting to its initial value. If you wish to change it then the build tree would have to be regenerated from scratch.")
-    endif ()
-    set (CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET ${IPHONEOS_DEPLOYMENT_TARGET})
-    set (DEPLOYMENT_TARGET_SAVED ${IPHONEOS_DEPLOYMENT_TARGET}: CACHE INTERNAL "Last known deployment target")    # with sentinel so it does not appear empty even when the default target is used
-    set (CMAKE_XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES)
-    # Workaround what appears to be a bug in CMake/Xcode generator, ensure the CMAKE_OSX_DEPLOYMENT_TARGET is set to empty for iOS build
-    set (CMAKE_OSX_DEPLOYMENT_TARGET)
-    unset (CMAKE_OSX_DEPLOYMENT_TARGET CACHE)
-elseif (TVOS)
-    set (CMAKE_CROSSCOMPILING TRUE)
-    set (CMAKE_XCODE_EFFECTIVE_PLATFORMS -appletvos -appletvsimulator)
-    set (CMAKE_OSX_SYSROOT appletvos)    # Set Base SDK to "Latest tvOS"
-    if (DEFINED ENV{CI})
-        set (CMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED 0)
-        set (CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "")
-    endif ()
-    set (CMAKE_REQUIRED_FLAGS ";-DSmileyHack=byYaoWT;-DCMAKE_MACOSX_BUNDLE=1;-DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED=0;-DCMAKE_XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY=")
-    if (NOT TVOS_SYSROOT)
-        execute_process (COMMAND xcodebuild -version -sdk ${CMAKE_OSX_SYSROOT} Path OUTPUT_VARIABLE TVOS_SYSROOT OUTPUT_STRIP_TRAILING_WHITESPACE)   # Obtain tvOS sysroot path
-        set (TVOS_SYSROOT ${TVOS_SYSROOT} CACHE INTERNAL "Path to tvOS system root")
-    endif ()
-    set (CMAKE_FIND_ROOT_PATH ${TVOS_SYSROOT})
-    set (APPLETVOS_DEPLOYMENT_TARGET "" CACHE STRING "Specify AppleTV OS deployment target (tvOS platform only); default to latest installed tvOS SDK if not specified, the minimum supported target is 9.0")
-    set (CMAKE_XCODE_ATTRIBUTE_APPLETVOS_DEPLOYMENT_TARGET ${APPLETVOS_DEPLOYMENT_TARGET})
-    set (CMAKE_XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES)
-    # Just in case it has similar bug for tvOS build
-    set (CMAKE_OSX_DEPLOYMENT_TARGET)
-    unset (CMAKE_OSX_DEPLOYMENT_TARGET CACHE)
-elseif (XCODE)
-    set (CMAKE_OSX_SYSROOT macosx)    # Set Base SDK to "Latest OS X"
-    if (CMAKE_OSX_DEPLOYMENT_TARGET)
-        if (CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.9)
-            message (FATAL_ERROR "The minimum supported CMAKE_OSX_DEPLOYMENT_TARGET is 10.9.")
-        endif ()
-    else ()
-        # If not set, set to current running build system OS version by default
-        execute_process (COMMAND sw_vers -productVersion OUTPUT_VARIABLE CURRENT_OSX_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
-        string (REGEX REPLACE ^\([^.]+\\.[^.]+\).* \\1 CMAKE_OSX_DEPLOYMENT_TARGET ${CURRENT_OSX_VERSION})
-        set (CMAKE_OSX_DEPLOYMENT_TARGET ${CMAKE_OSX_DEPLOYMENT_TARGET} CACHE STRING "Specify macOS deployment target (macOS platform only); default to current running macOS if not specified, the minimum supported target is 10.9")
-    endif ()
-    if (DEPLOYMENT_TARGET_SAVED AND NOT CMAKE_OSX_DEPLOYMENT_TARGET STREQUAL DEPLOYMENT_TARGET_SAVED)
-        set (CMAKE_OSX_DEPLOYMENT_TARGET ${DEPLOYMENT_TARGET_SAVED} CACHE STRING "Specify macOS deployment target (macOS platform only); default to current running macOS if not specified, the minimum supported target is 10.9" FORCE)
-        message (FATAL_ERROR "CMAKE_OSX_DEPLOYMENT_TARGET cannot be changed after the initial configuration/generation. "
-            "Auto reverting to its initial value. If you wish to change it then the build tree would have to be regenerated from scratch.")
-    endif ()
-    set (DEPLOYMENT_TARGET_SAVED ${CMAKE_OSX_DEPLOYMENT_TARGET} CACHE INTERNAL "Last known deployment target")
-endif ()
-
 include (CheckHost)
 include (CheckCompilerToolchain)
 
@@ -262,21 +191,7 @@ set_property (CACHE URHO3D_LIB_TYPE PROPERTY STRINGS STATIC ${SHARED})
 if (NOT CMAKE_CONFIGURATION_TYPES)
     set_property (CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${URHO3D_BUILD_CONFIGURATIONS})
 endif ()
-if (URHO3D_DATABASE_ODBC)
-    set (URHO3D_DATABASE_SQLITE 0)
-    unset (URHO3D_DATABASE_SQLITE CACHE)
-endif ()
-if (URHO3D_DATABASE_SQLITE OR URHO3D_DATABASE_ODBC)
-    set (URHO3D_DATABASE 1)
-endif ()
-if (URHO3D_LUAJIT)
-    set (JIT JIT)
-    set (URHO3D_LUA 1)
-endif ()
-if (EMSCRIPTEN)
-    set (URHO3D_LIB_TYPE STATIC)
-    unset (URHO3D_LIB_TYPE CACHE)
-endif ()
+
 if (URHO3D_TRACY_PROFILING)
     set (URHO3D_PROFILING 0)
     unset (URHO3D_PROFILING CACHE)
@@ -353,40 +268,7 @@ endif ()
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_EXTENSIONS OFF)
-if (EMSCRIPTEN)     # It appears CMake does not detect C++standard for EMCC correctly, so do it the old way still
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-endif ()
-if (APPLE)
-    if (IOS)
-        # iOS-specific setup
-        add_definitions (-DIOS)
-        if (URHO3D_64BIT)
-            set (CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD))
-        else ()
-            message (WARNING "URHO3D_64BIT=0 for iOS is a deprecated option and should not be used as we are phasing out 32-bit only mode")
-            set (CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD_32_BIT))
-        endif ()
-    elseif (TVOS)
-        # tvOS-specific setup
-        add_definitions (-DTVOS)
-        set (CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD))
-    else ()
-        if (XCODE)
-            # macOS-specific setup
-            if (URHO3D_64BIT)
-                if (URHO3D_UNIVERSAL)
-                    message (WARNING "URHO3D_UNIVERSAL=1 for macOS is a deprecated option and should not be used as we are phasing out macOS universal binary mode")
-                    set (CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD_32_64_BIT))
-                else ()
-                    set (CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD))
-                endif ()
-            else ()
-                message (WARNING "URHO3D_64BIT=0 for macOS is a deprecated option and should not be used as we are phasing out 32-bit only mode")
-                set (CMAKE_OSX_ARCHITECTURES $(ARCHS_STANDARD_32_BIT))
-            endif ()
-        endif ()
-    endif ()
-endif ()
+
 if (MSVC)
     # VS-specific setup
     add_definitions (-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS)
@@ -558,23 +440,7 @@ else ()
         endif ()
     endif ()
 endif ()
-# LuaJIT specific - extra linker flags for linking against LuaJIT (adapted from LuaJIT's original Makefile)
-if (URHO3D_LUAJIT)
-    if (URHO3D_64BIT AND APPLE AND NOT ARM)
-        # 64-bit macOS: it simply won't work without these flags; if you are reading this comment then you may want to know the following also
-        # it's recommended to rebase all (self-compiled) shared libraries which are loaded at runtime on OSX/x64 (e.g. C extension modules for Lua), see: man rebase
-        set (LUAJIT_EXE_LINKER_FLAGS_APPLE "-pagezero_size 10000 -image_base 100000000")
-        set (LUAJIT_SHARED_LINKER_FLAGS_APPLE "-image_base 7fff04c4a000")
-        if (NOT XCODE)
-            set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${LUAJIT_EXE_LINKER_FLAGS_APPLE}")
-            set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${LUAJIT_SHARED_LINKER_FLAGS_APPLE}")
-        endif ()
-    elseif (URHO3D_LIB_TYPE STREQUAL STATIC AND NOT WIN32 AND NOT APPLE)    # The original condition also checks: AND NOT SunOS AND NOT PS3
-        # We assume user may want to load C modules compiled for plain Lua with require(), so we have to ensure all the public symbols are exported when linking with Urho3D (and therefore LuaJIT) statically
-        # Note: this implies that loading such modules on Windows platform may only work with SHARED library type
-        set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-E")
-    endif ()
-endif ()
+
 # Trim the leading white space in the compiler/linker flags, if any
 foreach (TYPE C CXX EXE_LINKER SHARED_LINKER)
     string (REGEX REPLACE "^ +" "" CMAKE_${TYPE}_FLAGS "${CMAKE_${TYPE}_FLAGS}")
@@ -918,36 +784,6 @@ endmacro()
 
 include (GenerateExportHeader)
 
-# Macro for finding file in Urho3D build tree or Urho3D SDK
-macro (find_Urho3D_file VAR NAME)
-    # Pass the arguments to the actual find command
-    cmake_parse_arguments (ARG "" "DOC;MSG_MODE" "HINTS;PATHS;PATH_SUFFIXES" ${ARGN})
-    find_file (${VAR} ${NAME} HINTS ${ARG_HINTS} PATHS ${ARG_PATHS} PATH_SUFFIXES ${ARG_PATH_SUFFIXES} DOC ${ARG_DOC} NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
-    mark_as_advanced (${VAR})  # Hide it from cmake-gui in non-advanced mode
-    if (NOT ${VAR} AND ARG_MSG_MODE)
-        message (${ARG_MSG_MODE}
-            "Could not find ${VAR} file in the Urho3D build tree or Urho3D SDK. "
-            "Please reconfigure and rebuild your Urho3D build tree or reinstall the SDK for the correct target platform.")
-    endif ()
-endmacro ()
-
-# Macro for finding tool in Urho3D build tree or Urho3D SDK
-macro (find_Urho3D_tool VAR NAME)
-    # Pass the arguments to the actual find command
-    cmake_parse_arguments (ARG "" "DOC;MSG_MODE" "HINTS;PATHS;PATH_SUFFIXES" ${ARGN})
-    find_program (${VAR} ${NAME} HINTS ${ARG_HINTS} PATHS ${ARG_PATHS} PATH_SUFFIXES ${ARG_PATH_SUFFIXES} DOC ${ARG_DOC} NO_DEFAULT_PATH)
-    mark_as_advanced (${VAR})  # Hide it from cmake-gui in non-advanced mode
-    if (NOT ${VAR})
-        set (${VAR} ${CMAKE_BINARY_DIR}/bin/tool/${NAME})
-        if (ARG_MSG_MODE AND NOT CMAKE_PROJECT_NAME STREQUAL Urho3D)
-            message (${ARG_MSG_MODE}
-                "Could not find ${VAR} tool in the Urho3D build tree or Urho3D SDK. Your project may not build successfully without this tool. "
-                "You may have to first rebuild the Urho3D in its build tree or reinstall Urho3D SDK to get this tool built or installed properly. "
-                "Alternatively, copy the ${VAR} executable manually into bin/tool subdirectory in your own project build tree.")
-        endif ()
-    endif ()
-endmacro ()
-
 # Macro for setting common output directories
 macro (set_output_directories OUTPUT_PATH)
     cmake_parse_arguments (ARG LOCAL "" "" ${ARGN})
@@ -975,96 +811,6 @@ macro (set_output_directories OUTPUT_PATH)
     endif ()
 endmacro ()
 
-# Macro for setting up an executable target
-# Macro arguments:
-#  PRIVATE - setup executable target without installing it
-#  TOOL - setup a tool executable target
-#  NODEPS - setup executable target without defining Urho3D dependency libraries
-#  WIN32/MACOSX_BUNDLE/EXCLUDE_FROM_ALL - see CMake help on add_executable() command
-# CMake variables:
-#  SOURCE_FILES - list of source files
-#  INCLUDE_DIRS - list of directories for include search path
-#  LIBS - list of dependent libraries that are built internally in the project
-#  ABSOLUTE_PATH_LIBS - list of dependent libraries that are external to the project
-#  LINK_DEPENDS - list of additional files on which a target binary depends for linking (Makefile-based generator only)
-#  LINK_FLAGS - list of additional link flags
-#  TARGET_PROPERTIES - list of target properties
-macro (setup_executable)
-    cmake_parse_arguments (ARG "PRIVATE;TOOL;NODEPS" "" "" ${ARGN})
-
-    if (MSVC)
-        # Set warning level
-        add_compile_options (/W3)
-    endif ()
-
-    check_source_files ()
-    add_executable (${TARGET_NAME} ${ARG_UNPARSED_ARGUMENTS} ${SOURCE_FILES})
-    set (RUNTIME_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
-    if (ARG_PRIVATE)
-        set_output_directories (. LOCAL RUNTIME PDB)
-        set (RUNTIME_DIR .)
-    endif ()
-    if (ARG_TOOL)
-        list (APPEND TARGET_PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH YES)
-        if (NOT ARG_PRIVATE AND NOT DEST_RUNTIME_DIR MATCHES tool)
-            set_output_directories (${CMAKE_BINARY_DIR}/bin/tool LOCAL RUNTIME PDB)
-            set (RUNTIME_DIR ${CMAKE_BINARY_DIR}/bin/tool)
-        endif ()
-    endif ()
-    if (NOT ARG_NODEPS)
-        define_dependency_libs (Urho3D)
-    endif ()
-    if (XCODE AND LUAJIT_EXE_LINKER_FLAGS_APPLE)
-        # Xcode universal build linker flags when targeting 64-bit OSX with LuaJIT enabled
-        list (APPEND TARGET_PROPERTIES XCODE_ATTRIBUTE_OTHER_LDFLAGS[arch=x86_64] "${LUAJIT_EXE_LINKER_FLAGS_APPLE} $(OTHER_LDFLAGS)")
-    endif ()
-    _setup_target ()
-
-    if (WIN32 AND NOT ARG_NODEPS AND URHO3D_LIB_TYPE STREQUAL SHARED)
-        # Make a copy of the Urho3D DLL to the runtime directory in the build tree
-        if (TARGET Urho3D)
-            add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:Urho3D> ${RUNTIME_DIR})
-            add_make_clean_files (${RUNTIME_DIR}/$<TARGET_FILE_NAME:Urho3D>)
-        else ()
-            foreach (DLL ${URHO3D_DLL})
-                add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DLL} ${RUNTIME_DIR})
-                add_make_clean_files (${RUNTIME_DIR}/${DLL})
-            endforeach ()
-        endif ()
-    endif ()
-    if (DIRECT3D_DLL AND NOT ARG_NODEPS)
-        # Make a copy of the D3D DLL to the runtime directory in the build tree
-        add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DIRECT3D_DLL} ${RUNTIME_DIR})
-        add_make_clean_files (${RUNTIME_DIR}/${DIRECT3D_DLL})
-    endif ()
-    # Need to check if the destination variable is defined first because this macro could be called by downstream project that does not wish to install anything
-    if (NOT ARG_PRIVATE)
-        if (WEB AND DEST_BUNDLE_DIR)
-            set (LOCATION $<TARGET_FILE_DIR:${TARGET_NAME}>)
-            unset (FILES)
-            foreach (EXT data html html.map js wasm)
-                list (APPEND FILES ${LOCATION}/${TARGET_NAME}.${EXT})
-            endforeach ()
-            install (FILES ${FILES} DESTINATION ${DEST_BUNDLE_DIR} OPTIONAL)
-        elseif (DEST_RUNTIME_DIR AND (DEST_BUNDLE_DIR OR NOT (IOS OR TVOS)))
-            install (TARGETS ${TARGET_NAME} RUNTIME DESTINATION ${DEST_RUNTIME_DIR} BUNDLE DESTINATION ${DEST_BUNDLE_DIR})
-            if (WIN32 AND NOT ARG_NODEPS AND URHO3D_LIB_TYPE STREQUAL SHARED AND NOT URHO3D_DLL_INSTALLED)
-                if (TARGET Urho3D)
-                    install (FILES $<TARGET_FILE:Urho3D> DESTINATION ${DEST_RUNTIME_DIR})
-                else ()
-                    install (FILES ${URHO3D_DLL} DESTINATION ${DEST_RUNTIME_DIR})
-                endif ()
-                set (URHO3D_DLL_INSTALLED TRUE)
-            endif ()
-            if (DIRECT3D_DLL AND NOT DIRECT3D_DLL_INSTALLED)
-                # Make a copy of the D3D DLL to the runtime directory in the installed location
-                install (FILES ${DIRECT3D_DLL} DESTINATION ${DEST_RUNTIME_DIR})
-                set (DIRECT3D_DLL_INSTALLED TRUE)
-            endif ()
-        endif ()
-    endif ()
-endmacro ()
-
 # Macro for setting up a library target
 # Macro arguments:
 #  NODEPS - setup library target without defining Urho3D dependency libraries (applicable for downstream projects)
@@ -1089,118 +835,6 @@ macro (setup_library)
         list (APPEND TARGET_PROPERTIES XCODE_ATTRIBUTE_OTHER_LDFLAGS[arch=x86_64] "${LUAJIT_SHARED_LINKER_FLAGS_APPLE} $(OTHER_LDFLAGS)")    # Xcode universal build linker flags when targeting 64-bit OSX with LuaJIT enabled
     endif ()
     _setup_target ()
-endmacro ()
-
-# Macro for setting up an executable target with resources to copy/package/bundle/preload
-# Macro arguments:
-#  NODEPS - setup executable target without defining Urho3D dependency libraries
-#  NOBUNDLE - do not use MACOSX_BUNDLE even when URHO3D_MACOSX_BUNDLE build option is enabled
-#  WIN32/MACOSX_BUNDLE/EXCLUDE_FROM_ALL - see CMake help on add_executable() command
-# CMake variables:
-#  RESOURCE_DIRS - list of resource directories (will be packaged into *.pak when URHO3D_PACKAGING build option is set)
-#  RESOURCE_FILES - list of additional resource files (will not be packaged into *.pak in any case)
-#  SOURCE_FILES - list of source files
-#  INCLUDE_DIRS - list of directories for include search path
-#  LIBS - list of dependent libraries that are built internally in the project
-#  ABSOLUTE_PATH_LIBS - list of dependent libraries that are external to the project
-#  LINK_DEPENDS - list of additional files on which a target binary depends for linking (Makefile-based generator only)
-#  LINK_FLAGS - list of additional link flags
-#  TARGET_PROPERTIES - list of target properties
-macro (setup_main_executable)
-    cmake_parse_arguments (ARG "NOBUNDLE;MACOSX_BUNDLE;WIN32" "" "" ${ARGN})
-
-    if (MSVC)
-        # Set warning level
-        add_compile_options (/W3)
-    endif ()
-
-    if (NOT RESOURCE_DIRS)
-        define_resource_dirs ()
-    endif ()
-    if (ANDROID)
-        # Setup target as main shared library
-        setup_library (SHARED)
-        if (DEST_LIBRARY_DIR)
-            install (TARGETS ${TARGET_NAME} LIBRARY DESTINATION ${DEST_LIBRARY_DIR} ARCHIVE DESTINATION ${DEST_LIBRARY_DIR})
-        endif ()
-    else ()
-        # Setup target as executable
-        if (WIN32)
-            if (NOT URHO3D_WIN32_CONSOLE OR ARG_WIN32)
-                set (EXE_TYPE WIN32)
-            endif ()
-            list (APPEND TARGET_PROPERTIES DEBUG_POSTFIX _d)
-        elseif (WEB)
-
-        endif ()
-        setup_executable (${EXE_TYPE} ${ARG_UNPARSED_ARGUMENTS})
-    endif ()
-    # Setup custom resource checker target
-    if ((EXE_TYPE STREQUAL MACOSX_BUNDLE OR URHO3D_PACKAGING) AND RESOURCE_DIRS)
-        if (URHO3D_PACKAGING)
-            # Urho3D project builds the PackageTool as required; downstream project uses PackageTool found in the Urho3D build tree or Urho3D SDK
-            find_Urho3d_tool (PACKAGE_TOOL PackageTool
-                HINTS ${CMAKE_BINARY_DIR}/bin/tool ${URHO3D_HOME}/bin/tool
-                DOC "Path to PackageTool" MSG_MODE WARNING)
-            if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
-                set (PACKAGING_DEP DEPENDS PackageTool)
-            endif ()
-            set (PACKAGING_COMMENT " and packaging")
-        endif ()
-        # Share a same custom target that checks for a same resource dirs list
-        foreach (DIR ${RESOURCE_DIRS})
-            string (MD5 MD5 ${DIR})
-            set (MD5ALL ${MD5ALL}${MD5})
-            if (CMAKE_HOST_WIN32)
-                # On Windows host, always assumes there are changes so resource dirs would be repackaged in each build, however, still make sure the *.pak timestamp is not altered unnecessarily
-                if (URHO3D_PACKAGING)
-                    set (PACKAGING_COMMAND && echo Packaging ${DIR}... && ${PACKAGE_TOOL} -pcq ${DIR} ${RESOURCE_${DIR}_PATHNAME}.new && ${CMAKE_COMMAND} -E copy_if_different ${RESOURCE_${DIR}_PATHNAME}.new ${RESOURCE_${DIR}_PATHNAME} && ${CMAKE_COMMAND} -E remove ${RESOURCE_${DIR}_PATHNAME}.new)
-                endif ()
-                list (APPEND COMMANDS COMMAND ${CMAKE_COMMAND} -E touch ${DIR} ${PACKAGING_COMMAND})
-            else ()
-                # On Unix-like hosts, detect the changes in the resource directory recursively so they are only repackaged and/or rebundled (Xcode only) as necessary
-                if (URHO3D_PACKAGING)
-                    set (PACKAGING_COMMAND && echo Packaging ${DIR}... && ${PACKAGE_TOOL} -pcq ${DIR} ${RESOURCE_${DIR}_PATHNAME})
-                    set (OUTPUT_COMMAND test -e ${RESOURCE_${DIR}_PATHNAME} || \( true ${PACKAGING_COMMAND} \))
-                else ()
-                    set (OUTPUT_COMMAND true)   # Nothing to output
-                endif ()
-                list (APPEND COMMANDS COMMAND echo Checking ${DIR}... && bash -c \"\(\( `find ${DIR} -newer ${DIR} |wc -l` \)\)\" && touch -cm ${DIR} ${PACKAGING_COMMAND} || ${OUTPUT_COMMAND})
-            endif ()
-            add_make_clean_files (${RESOURCE_${DIR}_PATHNAME})
-        endforeach ()
-        string (MD5 MD5ALL ${MD5ALL})
-        # Ensure the resource check is done before building the main executable target
-        if (NOT RESOURCE_CHECK_${MD5ALL})
-            set (RESOURCE_CHECK RESOURCE_CHECK)
-            while (TARGET ${RESOURCE_CHECK})
-                string (RANDOM RANDOM)
-                set (RESOURCE_CHECK RESOURCE_CHECK_${RANDOM})
-            endwhile ()
-            set (RESOURCE_CHECK_${MD5ALL} ${RESOURCE_CHECK} CACHE INTERNAL "Resource check hash map")
-        endif ()
-        if (NOT TARGET ${RESOURCE_CHECK_${MD5ALL}})
-            add_custom_target (${RESOURCE_CHECK_${MD5ALL}} ALL ${COMMANDS} ${PACKAGING_DEP} COMMENT "Checking${PACKAGING_COMMENT} resource directories")
-        endif ()
-        add_dependencies (${TARGET_NAME} ${RESOURCE_CHECK_${MD5ALL}})
-    endif ()
-    # Only need to install the resource directories once in case they are referenced by multiple targets
-    if (RESOURCE_DIRS AND DEST_SHARE_DIR)
-        foreach (DIR ${RESOURCE_DIRS})
-            list (FIND INSTALLED_RESOURCE_DIRS ${DIR} FOUND_INDEX)
-            if (FOUND_INDEX EQUAL -1)
-                install (DIRECTORY ${DIR} DESTINATION ${DEST_SHARE_DIR}/resources)
-                list (APPEND INSTALLED_RESOURCE_DIRS ${DIR})
-            endif ()
-            # This cache variable is used to keep track of whether a resource directory has been instructed to be installed by CMake or not
-            set (INSTALLED_RESOURCE_DIRS ${INSTALLED_RESOURCE_DIRS} CACHE INTERNAL "Installed resource dirs")
-        endforeach ()
-    endif ()
-    # Define a custom command for stripping the main target executable for Release build configuration,
-    # but only for platforms that support it and require it (for Android, let Android plugin handle it)
-    if (CMAKE_BUILD_TYPE STREQUAL Release AND NOT ANDROID AND NOT WEB AND NOT MSVC)
-        add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} $<TARGET_FILE:${TARGET_NAME}>)
-    endif ()
 endmacro ()
 
 # This cache variable is used to keep track of whether a resource directory has been instructed to be installed by CMake or not
@@ -1320,12 +954,6 @@ macro (setup_test)
         endif ()
     endif ()
 endmacro ()
-
-if (WEB)
-    if (EMSCRIPTEN_SHARE_DATA AND NOT EXISTS ${CMAKE_BINARY_DIR}/Source/pak-loader.js)
-        file (WRITE ${CMAKE_BINARY_DIR}/Source/pak-loader.js "var Module;if(typeof Module==='undefined')Module=eval('(function(){try{return Module||{}}catch(e){return{}}})()');var s=document.createElement('script');s.src='${CMAKE_PROJECT_NAME}.js';document.body.appendChild(s);Module['preRun'].push(function(){Module['addRunDependency']('${CMAKE_PROJECT_NAME}.js.loader')});s.onload=function(){Module['removeRunDependency']('${CMAKE_PROJECT_NAME}.js.loader')};")
-    endif ()
-endif ()
 
 # Warn user if PATH environment variable has not been correctly set for using ccache
 if (NOT CMAKE_HOST_WIN32 AND "$ENV{USE_CCACHE}")

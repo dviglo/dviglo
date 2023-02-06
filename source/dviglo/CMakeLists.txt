@@ -50,17 +50,7 @@ elseif (MSVC AND NOT URHO3D_SSE)
 elseif (MINGW AND NOT URHO3D_64BIT AND URHO3D_SSE)
     add_definitions (-DSTBI_MINGW_ENABLE_SSE2)
 endif ()
-if (URHO3D_LUA)
-    if (NOT URHO3D_SAFE_LUA)
-        add_definitions (-DTOLUA_RELEASE)
-    endif ()
-    if (URHO3D_LUA_RAW_SCRIPT_LOADER)
-        add_definitions (-DURHO3D_LUA_RAW_SCRIPT_LOADER)
-    endif ()
-endif ()
-if (ODBC_VERSION AND NOT ODBC_VERSION VERSION_LESS 3)
-    add_definitions (-DODBC_3_OR_LATER)
-endif ()
+
 if (WIN32)
     if (NOT MINGW OR HAVE_RTL_OSVERSIONINFOW)
         add_definitions (-DHAVE_RTL_OSVERSIONINFOW)
@@ -108,9 +98,6 @@ if (NOT URHO3D_D3D11)
     list (APPEND EXCLUDED_SOURCE_DIRS graphics_api/direct3d11)
 endif ()
 
-if (APPLE AND NOT ARM)
-    set (GLOB_OBJC_PATTERN *.m)     # Should only pick up MacFileWatcher.m for macOS platform at the moment
-endif ()
 string (REPLACE ";" "/[^;]+;" EXCLUDE_PATTERNS "${EXCLUDED_SOURCE_DIRS};")
 define_source_files (EXCLUDE_PATTERNS ${EXCLUDE_PATTERNS} GLOB_CPP_PATTERNS *.cpp ${GLOB_OBJC_PATTERN} RECURSE GROUP)
 
@@ -129,11 +116,7 @@ if (URHO3D_NAVIGATION)
     # DetourTileCache and DetourCrowd libraries depend on Detour's include dir to be added in the header search path
     list (APPEND INCLUDE_DIRS ${THIRD_PARTY_INCLUDE_DIR}/detour)
 endif ()
-if (URHO3D_LUA)
-    # Lua/LuaJIT library depends on its own include dir to be added in the header search path
-    # This is more practical than patching its header files in many places to make them work with relative path
-    list (APPEND INCLUDE_DIRS ${THIRD_PARTY_INCLUDE_DIR}/Lua${JIT})
-endif ()
+
 # Workaround for GCC 5.4 and above when building a SHARED lib type for Linux platform to fix the undefined symbol "__cpu_model" issue (see #1519)
 if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3.1 AND CMAKE_SYSTEM_NAME STREQUAL Linux AND URHO3D_LIB_TYPE STREQUAL SHARED)  # 5.3.1 was the last known good version
     list (APPEND LIBS gcc)
@@ -143,9 +126,7 @@ endif ()
 set_output_directories (${CMAKE_BINARY_DIR}/lib ARCHIVE LIBRARY)
 
 # Setup target
-if (IOS OR TVOS)
-    set (EXCLUDE_FROM_ALL EXCLUDE_FROM_ALL)
-endif ()
+
 setup_library (${URHO3D_LIB_TYPE} ${EXCLUDE_FROM_ALL})
 
 # Generate platform specific export header file (can only be called after the target has been added)
@@ -165,37 +146,6 @@ file (WRITE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new ${COPYRIGHT}${EXPORT_HEADER
 execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)
 file (REMOVE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new)
 source_group ("Source Files\\Generated" FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)
-
-# TODO: to use 'xcframework' as Apple discourages the use of 'lipo' to create universal binary combining libs/frameworks from different SDK
-# As of Xcode 12 the 'iphonesimulator' SDK produces binary for both 'x86_64' and 'arm64' archs
-# This has caused problem with 'lipo' to combine the already FAT lib from 'iphonesimulator' SDK with 'iphoneos' SDK containing 'arm64' arch
-# Temporary workaround by not generating the universal binary when the issue is detected
-if (IOS)
-    # Add a custom target to build Mach-O universal binary consisting of both iPhoneOS and iPhoneSimulator SDKs
-    add_custom_target (${TARGET_NAME}_universal ALL
-        COMMAND if [ '$(CONFIGURATION)' != 'Debug' ]\; then if lipo -info $<TARGET_FILE:${TARGET_NAME}> 2>/dev/null |egrep -cq 'x86_64.*arm64|arm64.*x86_64'\; then echo $<TARGET_FILE:${TARGET_NAME}> is already a Mach-O universal binary consisting of both iphoneos and iphonesimulator SDKs\; else mv $<TARGET_FILE:${TARGET_NAME}>{,.ori} && if lipo -info $<TARGET_FILE:${TARGET_NAME}>.ori 2>/dev/null |egrep -cq x86_64\; then sdk=iphoneos\; else sdk=iphonesimulator\; fi && xcodebuild -target ${TARGET_NAME} -configuration $(CONFIGURATION) -sdk $$sdk 2>&1 && mv $<TARGET_FILE:${TARGET_NAME}>{,.$$sdk} && if lipo -info $<TARGET_FILE:${TARGET_NAME}>.$$sdk 2>/dev/null |egrep -cq 'x86_64.*arm64|arm64.*x86_64'\; then echo 'Skip on Xcode 12 due to arch conflict' && mv $<TARGET_FILE:${TARGET_NAME}>{.ori,} && rm $<TARGET_FILE:${TARGET_NAME}>.$$sdk\; else lipo -create -output $<TARGET_FILE:${TARGET_NAME}>{,.ori,.$$sdk} && rm $<TARGET_FILE:${TARGET_NAME}>{.ori,.$$sdk}\; fi\; fi\; fi
-        DEPENDS ${TARGET_NAME}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        COMMENT "Creating Mach-O universal binary library consisting of both iPhoneOS and iPhoneSimulator SDks")
-    install (FILES $<TARGET_FILE:${TARGET_NAME}> DESTINATION ${DEST_LIBRARY_DIR})
-elseif (TVOS)
-    # Add a custom target to build Mach-O universal binary consisting of both AppleTVOS and AppleTVSimulator SDKs
-    add_custom_target (${TARGET_NAME}_universal ALL
-        COMMAND if [ '$(CONFIGURATION)' != 'Debug' ]\; then if lipo -info $<TARGET_FILE:${TARGET_NAME}> 2>/dev/null |egrep -cq 'x86_64.*arm64|arm64.*x86_64'\; then echo $<TARGET_FILE:${TARGET_NAME}> is already a Mach-O universal binary consisting of both AppleTVOS and AppleTVSimulator SDKs\; else mv $<TARGET_FILE:${TARGET_NAME}>{,.ori} && if lipo -info $<TARGET_FILE:${TARGET_NAME}>.ori 2>/dev/null |grep -cq x86_64\; then sdk=appletvos\; else sdk=appletvsimulator\; fi && xcodebuild -target ${TARGET_NAME} -configuration $(CONFIGURATION) -sdk $$sdk 2>&1 && mv $<TARGET_FILE:${TARGET_NAME}>{,.$$sdk} && if lipo -info $<TARGET_FILE:${TARGET_NAME}>.$$sdk 2>/dev/null |egrep -cq 'x86_64.*arm64|arm64.*x86_64'\; then echo 'Skip on Xcode 12 due to arch conflict' && mv $<TARGET_FILE:${TARGET_NAME}>{.ori,} && rm $<TARGET_FILE:${TARGET_NAME}>.$$sdk\; else lipo -create -output $<TARGET_FILE:${TARGET_NAME}>{,.ori,.$$sdk} && rm $<TARGET_FILE:${TARGET_NAME}>{.ori,.$$sdk}\; fi\; fi\; fi
-        DEPENDS ${TARGET_NAME}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        COMMENT "Creating Mach-O universal binary library consisting of both AppleTVOS and AppleTVSimulator SDKs")
-    install (FILES $<TARGET_FILE:${TARGET_NAME}> DESTINATION ${DEST_LIBRARY_DIR})
-    # TODO: Temporary workaround as CMake does not recognize AppleTV platform yet
-    add_dependencies (${TARGET_NAME} APPLETV_POST_CMAKE_FIX)
-elseif (EMSCRIPTEN)
-    install (TARGETS ${TARGET_NAME} LIBRARY DESTINATION ${DEST_LIBRARY_DIR} PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ ARCHIVE DESTINATION ${DEST_LIBRARY_DIR})
-else ()
-    install (TARGETS ${TARGET_NAME} RUNTIME DESTINATION ${DEST_RUNTIME_DIR} LIBRARY DESTINATION ${DEST_LIBRARY_DIR} ARCHIVE DESTINATION ${DEST_LIBRARY_DIR})
-endif ()
-if (WIN32 AND URHO3D_LIB_TYPE STREQUAL SHARED)
-    set (URHO3D_DLL_INSTALLED TRUE)
-endif ()
 
 # TODO: This seems out of place
 if (MINGW)
@@ -271,49 +221,3 @@ string (REGEX REPLACE "#include <[^;]+(debug_new|direct3d|graphics_impl|ik_conve
 string (REPLACE ";" \n dviglo_headers "${dviglo_headers}")
 
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
-
-# Generate platform specific pkg-config file for the benefit of Urho3D library users via SDK without CMake
-if (ABSOLUTE_PATH_LIBS)
-    string (REPLACE ";" "\" \"" URHO3D_ABS_PATH_LIBS "\"${ABSOLUTE_PATH_LIBS}\"")   # Note: need to always "stringify" a variable in list context for replace to work correctly, besides the list could be empty
-    string (REPLACE "${SYSROOT}" "\${pc_sysrootdir}" URHO3D_ABS_PATH_LIBS "${URHO3D_ABS_PATH_LIBS}")
-endif ()
-if (MSVC)
-    set (DASH /)
-    set (LIB_DIR "/LIBPATH:\"\${libdir}\"")
-    string (REPLACE ";" ".lib\" \"" URHO3D_LIBS "\"@LIB_NAME@\" \"${LIBS}.lib\"")
-    set (PC_SUFFIX .msvc)
-else ()
-    set (LIB_NAME ${TARGET_NAME})
-    if (MINGW)
-        if (CMAKE_BUILD_TYPE STREQUAL Debug)
-            set (LIB_NAME ${LIB_NAME}_d)
-        endif ()
-        if (URHO3D_LIB_TYPE STREQUAL SHARED)
-            set (LIB_NAME ${LIB_NAME}.dll)
-        endif ()
-    endif ()
-    set (DASH -)
-    set (LIB_DIR "-L\"\${libdir}\"")
-    string (REPLACE ";" " -l" URHO3D_LIBS "-l${LIB_NAME};${LIBS}")
-endif ()
-string (REPLACE ";" " ${DASH}D" URHO3D_COMPILE_DEFINITIONS "${DASH}D${URHO3D_COMPILE_DEFINITIONS}")
-get_directory_property (GLOBAL_INCLUDE_DIRS DIRECTORY ${CMAKE_SOURCE_DIR} INCLUDE_DIRECTORIES)
-if (GLOBAL_INCLUDE_DIRS)
-    string (REPLACE ";" "\" ${DASH}I\"" GLOBAL_INCLUDE_DIRS "${DASH}I\"${GLOBAL_INCLUDE_DIRS}\"")
-    string (REPLACE "${SYSROOT}" "" GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS})
-endif ()
-string (REGEX REPLACE " -include \"[^\"]+\"" "" CLEANED_CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-string (REPLACE "${SYSROOT}" "\${pc_sysrootdir}" CLEANED_CMAKE_CXX_FLAGS "${CLEANED_CMAKE_CXX_FLAGS}")
-string (REPLACE "${SYSROOT}" "\${pc_sysrootdir}" CLEANED_CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
-if (ANDROID)
-    # After migration to Gradle build system we do not support Android cross-compiling build via pkgconfig anymore, however, this file is still being provided as reference only
-    set (RENAME RENAME Urho3D-${ANDROID_ABI}.pc)
-endif ()
-install (FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.pc DESTINATION ${DEST_PKGCONFIG_DIR} ${RENAME})
-
-# Define post build steps
-if (URHO3D_LIB_TYPE STREQUAL SHARED AND ARM)
-    # Strip the output shared library for embedded ARM platforms (we don't do this for Android anymore, assuming Android plugin will take care of it)
-    add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} $<TARGET_FILE:${TARGET_NAME}>
-        COMMENT "Stripping Urho3D shared library")
-endif ()
