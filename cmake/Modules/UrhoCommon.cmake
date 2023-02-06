@@ -784,33 +784,6 @@ endmacro()
 
 include (GenerateExportHeader)
 
-# Macro for setting common output directories
-macro (set_output_directories OUTPUT_PATH)
-    cmake_parse_arguments (ARG LOCAL "" "" ${ARGN})
-    if (ARG_LOCAL)
-        unset (SCOPE)
-        unset (OUTPUT_DIRECTORY_PROPERTIES)
-    else ()
-        set (SCOPE CMAKE_)
-    endif ()
-    foreach (TYPE ${ARG_UNPARSED_ARGUMENTS})
-        set (${SCOPE}${TYPE}_OUTPUT_DIRECTORY ${OUTPUT_PATH})
-        list (APPEND OUTPUT_DIRECTORY_PROPERTIES ${TYPE}_OUTPUT_DIRECTORY ${${TYPE}_OUTPUT_DIRECTORY})
-        foreach (CONFIG ${CMAKE_CONFIGURATION_TYPES})
-            string (TOUPPER ${CONFIG} CONFIG)
-            set (${SCOPE}${TYPE}_OUTPUT_DIRECTORY_${CONFIG} ${OUTPUT_PATH})
-            list (APPEND OUTPUT_DIRECTORY_PROPERTIES ${TYPE}_OUTPUT_DIRECTORY_${CONFIG} ${${TYPE}_OUTPUT_DIRECTORY_${CONFIG}})
-        endforeach ()
-        if (TYPE STREQUAL RUNTIME AND NOT ${OUTPUT_PATH} STREQUAL .)
-            file (RELATIVE_PATH REL_OUTPUT_PATH ${CMAKE_BINARY_DIR} ${OUTPUT_PATH})
-            set (DEST_RUNTIME_DIR ${REL_OUTPUT_PATH})
-        endif ()
-    endforeach ()
-    if (ARG_LOCAL)
-        list (APPEND TARGET_PROPERTIES ${OUTPUT_DIRECTORY_PROPERTIES})
-    endif ()
-endmacro ()
-
 # Macro for setting up a library target
 # Macro arguments:
 #  NODEPS - setup library target without defining Urho3D dependency libraries (applicable for downstream projects)
