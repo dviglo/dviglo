@@ -122,9 +122,6 @@ if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3.
     list (APPEND LIBS gcc)
 endif ()
 
-# Setup library output path
-set_output_directories (${CMAKE_BINARY_DIR}/lib ARCHIVE LIBRARY)
-
 # Setup target
 
 setup_library (${URHO3D_LIB_TYPE} ${EXCLUDE_FROM_ALL})

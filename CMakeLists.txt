@@ -42,6 +42,9 @@ set_property (GLOBAL PROPERTY USE_FOLDERS ON)
 # Set CMake modules search path
 set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 
+# В Linux динамическая версия движка будет искаться в папке с приложением
+set(CMAKE_BUILD_RPATH_USE_ORIGIN ON)
+
 # Include UrhoCommon.cmake module after setting project name
 include (UrhoCommon)
 
