@@ -111,7 +111,17 @@ BoundingBox BoundingBox::Transformed(const Matrix3& transform) const
 
 BoundingBox BoundingBox::Transformed(const Matrix3x4& transform) const
 {
-#ifdef URHO3D_SSE
+    /*
+    Vector3 newCenter = transform * Center();
+    Vector3 oldEdge = Size() * 0.5f;
+    Vector3 newEdge = Vector3(
+        Abs(transform.m00_) * oldEdge.x_ + Abs(transform.m01_) * oldEdge.y_ + Abs(transform.m02_) * oldEdge.z_,
+        Abs(transform.m10_) * oldEdge.x_ + Abs(transform.m11_) * oldEdge.y_ + Abs(transform.m12_) * oldEdge.z_,
+        Abs(transform.m20_) * oldEdge.x_ + Abs(transform.m21_) * oldEdge.y_ + Abs(transform.m22_) * oldEdge.z_
+    );
+
+    return BoundingBox(newCenter - newEdge, newCenter + newEdge);
+    */
     const __m128 one = _mm_set_ss(1.f);
     __m128 minPt = _mm_movelh_ps(_mm_loadl_pi(_mm_setzero_ps(), (const __m64*)&min_.x_), _mm_unpacklo_ps(_mm_set_ss(min_.z_), one));
     __m128 maxPt = _mm_movelh_ps(_mm_loadl_pi(_mm_setzero_ps(), (const __m64*)&max_.x_), _mm_unpacklo_ps(_mm_set_ss(max_.z_), one));
@@ -135,17 +145,6 @@ BoundingBox BoundingBox::Transformed(const Matrix3x4& transform) const
     t2 = _mm_add_ps(_mm_unpacklo_ps(z, zero), _mm_unpackhi_ps(z, zero));
     __m128 newDir = _mm_add_ps(_mm_movelh_ps(t0, t2), _mm_movehl_ps(t2, t0));
     return BoundingBox(_mm_sub_ps(newCenter, newDir), _mm_add_ps(newCenter, newDir));
-#else
-    Vector3 newCenter = transform * Center();
-    Vector3 oldEdge = Size() * 0.5f;
-    Vector3 newEdge = Vector3(
-        Abs(transform.m00_) * oldEdge.x_ + Abs(transform.m01_) * oldEdge.y_ + Abs(transform.m02_) * oldEdge.z_,
-        Abs(transform.m10_) * oldEdge.x_ + Abs(transform.m11_) * oldEdge.y_ + Abs(transform.m12_) * oldEdge.z_,
-        Abs(transform.m20_) * oldEdge.x_ + Abs(transform.m21_) * oldEdge.y_ + Abs(transform.m22_) * oldEdge.z_
-    );
-
-    return BoundingBox(newCenter - newEdge, newCenter + newEdge);
-#endif
 }
 
 Rect BoundingBox::Projected(const Matrix4& projection) const
