@@ -40,6 +40,22 @@ endif ()
 # Папка для экзешников и динамических библиотек
 dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin/tool)
 
+# Копирует скомпилированный движок в папку tool.
+# Сам по себе таргет не активируется. Нужно использовать функцию dv_copy_shared_libs_to_tool_dir
+add_custom_target(dv_copy_engine_to_tool_dir
+                  COMMAND ${CMAKE_COMMAND} -E copy
+                      $<TARGET_FILE:Urho3D>
+                      ${CMAKE_BINARY_DIR}/bin/tool
+                  COMMENT "Копируем движок в папку tool")
+
+# Перед компиляцией экзешника копирует dll или so в папку tool.
+# Если компилируется несколько экзешников, повторного копирования не произойдёт
+function(dv_copy_shared_libs_to_tool_dir target_name)
+    if(URHO3D_LIB_TYPE STREQUAL "SHARED")
+        add_dependencies(${target_name} dv_copy_engine_to_tool_dir)
+    endif()
+endfunction()
+
 if (URHO3D_TOOLS)
     # Urho3D tools
     add_subdirectory(ogre_importer)

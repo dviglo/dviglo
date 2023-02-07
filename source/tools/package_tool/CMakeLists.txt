@@ -17,12 +17,7 @@ set_property(TARGET ${target_name} PROPERTY DEBUG_POSTFIX _d)
 target_link_libraries(${target_name} PRIVATE Urho3D)
 
 # Копируем динамические библиотеки в папку с приложением
-if(NOT URHO3D_STATIC)
-    add_custom_command(TARGET ${target_name} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:Urho3D>/$<TARGET_FILE_NAME:Urho3D> 
-            $<TARGET_FILE_DIR:${target_name}>)
-endif()
+dv_copy_shared_libs_to_tool_dir(${target_name})
 
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
