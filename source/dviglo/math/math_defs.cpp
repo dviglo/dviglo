@@ -14,13 +14,12 @@ namespace Urho3D
 void SinCos(float angle, float& sin, float& cos)
 {
     float angleRadians = angle * M_DEGTORAD;
-#if defined(HAVE_SINCOSF)
-    sincosf(angleRadians, &sin, &cos);
-#elif defined(HAVE___SINCOSF)
-    __sincosf(angleRadians, &sin, &cos);
-#else
+
+#ifdef _MSC_VER
     sin = sinf(angleRadians);
     cos = cosf(angleRadians);
+#else // Linux или MinGW
+    sincosf(angleRadians, &sin, &cos);
 #endif
 }
 
