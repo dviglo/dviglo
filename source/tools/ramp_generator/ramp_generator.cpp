@@ -13,7 +13,7 @@
 #include <dviglo/engine/win_wrapped.h>
 #endif
 
-#ifndef URHO3D_STATIC_DEFINE
+#ifdef DVIGLO_SHARED
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #endif
 #include <stb/stb_image_write.h>

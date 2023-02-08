@@ -1,12 +1,11 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
 #pragma once
 
-#include <dviglo/dviglo.h>
+#include <dviglo/dviglo_config.h>
 
-@dviglo_headers@
+@dviglo_all_content@
+
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;

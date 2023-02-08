@@ -4,15 +4,23 @@
 
 #pragma once
 
-#ifdef URHO3D_IS_BUILDING
-    #include "dviglo.h"
-#else
-    #include <dviglo/dviglo.h>
+#ifdef DVIGLO_SHARED // Динамическая версия движка
+#    if _WIN32 // Visual Studio или MinGW
+#        ifdef DVIGLO_IS_BUILDING // Компиляция движка
+#            define URHO3D_API __declspec(dllexport)
+#        else // Использование движка
+#            define URHO3D_API __declspec(dllimport)
+#        endif
+#    else // Linux
+#        define URHO3D_API __attribute__((visibility("default")))
+#    endif
+#else // Статическая версия движка
+#    define URHO3D_API
 #endif
 
 // Macros with identifiers of c++ version.
-#define URHO_CPP17_STANDARD (201703L)
-#define URHO_CPP20_STANDARD (202002L)
+#define URHO_CPP17_STANDARD 201703L
+#define URHO_CPP20_STANDARD 202002L
 
 // Macro that can be used to identify c++ version.
 #ifndef URHO_CPLUSPLUS

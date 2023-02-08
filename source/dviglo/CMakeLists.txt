@@ -1,192 +1,228 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-# Define target name
-set (TARGET_NAME Urho3D)
+# Название таргета
+set(target_name Urho3D)
 
 # Отладочная версия библиотеки будут иметь суффикс _d.
 # Не работает для экзешников
 set(CMAKE_DEBUG_POSTFIX _d)
 
-if (MSVC)
-    # Set warning level for Urho3D project
-    add_compile_options (/W3)
-endif ()
+# Начинаем формировать список исходников
+file(GLOB source_files
+                       *.h
+    audio/*.cpp        audio/*.h
+    base/*.cpp         base/*.h
+    container/*.cpp    container/*.h
+    core/*.cpp         core/*.h
+    engine/*.cpp       engine/*.h
+    graphics/*.cpp     graphics/*.h
+    graphics_api/*.cpp graphics_api/*.h
+    input/*.cpp        input/*.h
+    io/*.cpp           io/*.h
+    math/*.cpp         math/*.h
+    resource/*.cpp     resource/*.h
+    scene/*.cpp        scene/*.h
+    ui/*.cpp           ui/*.h
+)
 
-# Save keep the preprocessor macros (for using the Urho3D library) for later use in generating dviglo.pc file
-get_directory_property (URHO3D_COMPILE_DEFINITIONS DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} COMPILE_DEFINITIONS)
+# Заодно начинаем формировать содержимое файла dviglo_all.h
+file(GLOB dviglo_all_content RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    *.h
+    audio/*.h
+    base/*.h
+    container/*.h
+    core/*.h
+    engine/*.h
+    graphics/*.h
+    graphics_api/*.h
+    input/*.h
+    io/*.h
+    math/*.h
+    resource/*.h
+    scene/*.h
+    ui/*.h
+)
 
-# Define preprocessor macros (for building the Urho3D library)
-add_definitions (-DURHO3D_IS_BUILDING)
-if (ANDROID AND DEFINED ENV{ASSET_DIR_INDICATOR})
-    add_definitions (-DASSET_DIR_INDICATOR=\"$ENV{ASSET_DIR_INDICATOR}\")
-endif ()
-if ($ENV{COVERITY_SCAN_BRANCH})
-    # This macro is used when scanning Urho3D library via Coverity-Scan
-    # TODO: The Coverity-Scan modelling is not yet working properly (anyone interested in static analyzer is welcome to give it another try)
-    add_definitions (-DCOVERITY_SCAN_MODEL)
-endif ()
+# Удаляем лишние элементы из списка
+list(REMOVE_ITEM dviglo_all_content "debug_new.h" "dviglo_config.h")
 
-if (URHO3D_HASH_DEBUG)
-    add_definitions (-DURHO3D_HASH_DEBUG)
-endif ()
+# Обрамляем каждый элемент в списке
+list(TRANSFORM dviglo_all_content REPLACE "(.+)" "#include <dviglo/\\1>")
 
-if (URHO3D_SSL)
-    add_definitions (-DURHO3D_SSL)
-    if (URHO3D_SSL_DYNAMIC)
-        add_definitions (-DURHO3D_SSL_DYNAMIC)
-    endif ()
-endif ()
+if(URHO3D_D3D11)
+    # Пополняем список исходников
+    file(GLOB tmp_var graphics_api/direct3d11/*.cpp graphics_api/direct3d11/*.h)
+    list(APPEND source_files ${tmp_var})
+endif()
 
-# Define source files
-foreach (DIR IK Navigation Network Physics Physics2D Urho2D)
-    string (TOUPPER URHO3D_${DIR} OPT)
-    if (NOT ${OPT})
-        list (APPEND EXCLUDED_SOURCE_DIRS ${DIR})
-    endif ()
-endforeach ()
-if (NOT URHO3D_ANGELSCRIPT)
-    list (APPEND EXCLUDED_SOURCE_DIRS AngelScript)
-endif ()
-if (NOT URHO3D_LUA)
-    list (APPEND EXCLUDED_SOURCE_DIRS LuaScript)
-endif ()
-if (URHO3D_DATABASE)
-    if (URHO3D_DATABASE_ODBC)
-        list (APPEND EXCLUDED_SOURCE_DIRS database/sqite)
-    else ()
-        list (APPEND EXCLUDED_SOURCE_DIRS database/odbc)
-    endif ()
-else ()
-    list (APPEND EXCLUDED_SOURCE_DIRS database)
-endif ()
+if(URHO3D_OPENGL)
+    # Пополняем список исходников
+    file(GLOB tmp_var graphics_api/opengl/*.cpp graphics_api/opengl/*.h)
+    list(APPEND source_files ${tmp_var})
+endif()
 
-if (NOT URHO3D_OPENGL)
-    list (APPEND EXCLUDED_SOURCE_DIRS graphics_api/opengl)
-endif ()
+if(URHO3D_IK)
+    # Пополняем список исходников
+    file(GLOB tmp_var ik/*.cpp ik/*.h)
+    list(APPEND source_files ${tmp_var})
 
-if (NOT URHO3D_D3D11)
-    list (APPEND EXCLUDED_SOURCE_DIRS graphics_api/direct3d11)
-endif ()
+    # Пополняем содержимое файла dviglo_all.h
+    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ik/*.h)
+    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
+    list(APPEND dviglo_all_content ";#if URHO3D_IK")
+    list(APPEND dviglo_all_content ${tmp_var})
+    list(APPEND dviglo_all_content "#endif // URHO3D_IK")
+endif()
 
-string (REPLACE ";" "/[^;]+;" EXCLUDE_PATTERNS "${EXCLUDED_SOURCE_DIRS};")
-define_source_files (EXCLUDE_PATTERNS ${EXCLUDE_PATTERNS} GLOB_CPP_PATTERNS *.cpp ${GLOB_OBJC_PATTERN} RECURSE GROUP)
+if(URHO3D_NAVIGATION)
+    # Пополняем список исходников
+    file(GLOB tmp_var navigation/*.cpp navigation/*.h)
+    list(APPEND source_files ${tmp_var})
 
-# Aggregate all source files
-list (APPEND SOURCE_FILES ${GEN_CPP_FILES} ${LUA_GEN_CPP_FILES} dviglo.h)
+    # Пополняем содержимое файла dviglo_all.h
+    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} navigation/*.h)
+    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
+    list(APPEND dviglo_all_content ";#if URHO3D_NAVIGATION")
+    list(APPEND dviglo_all_content ${tmp_var})
+    list(APPEND dviglo_all_content "#endif // URHO3D_NAVIGATION")
+endif()
 
-# Define dependency libs
-# Add include directories to find the precompiled header, export header, and installed headers from third-party libs
-set (INCLUDE_DIRS ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${THIRD_PARTY_INCLUDE_DIR})
-if (URHO3D_PHYSICS)
-    # Bullet library depends on its own include dir to be added in the header search path
-    # This is more practical than patching its header files in many places to make them work with relative path
-    list (APPEND INCLUDE_DIRS ${THIRD_PARTY_INCLUDE_DIR}/Bullet)
-endif ()
-if (URHO3D_NAVIGATION)
-    # DetourTileCache and DetourCrowd libraries depend on Detour's include dir to be added in the header search path
-    list (APPEND INCLUDE_DIRS ${THIRD_PARTY_INCLUDE_DIR}/detour)
-endif ()
+if(URHO3D_NETWORK)
+    # Пополняем список исходников
+    file(GLOB tmp_var network/*.cpp network/*.h)
+    list(APPEND source_files ${tmp_var})
 
-# Workaround for GCC 5.4 and above when building a SHARED lib type for Linux platform to fix the undefined symbol "__cpu_model" issue (see #1519)
-if (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3.1 AND CMAKE_SYSTEM_NAME STREQUAL Linux AND URHO3D_LIB_TYPE STREQUAL SHARED)  # 5.3.1 was the last known good version
-    list (APPEND LIBS gcc)
-endif ()
+    # Пополняем содержимое файла dviglo_all.h
+    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} network/*.h)
+    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
+    list(APPEND dviglo_all_content ";#if URHO3D_NETWORK")
+    list(APPEND dviglo_all_content ${tmp_var})
+    list(APPEND dviglo_all_content "#endif // URHO3D_NETWORK")
+endif()
 
-# Setup target
+if(URHO3D_PHYSICS)
+    # Пополняем список исходников
+    file(GLOB tmp_var physics/*.cpp physics/*.h)
+    list(APPEND source_files ${tmp_var})
 
-setup_library (${URHO3D_LIB_TYPE} ${EXCLUDE_FROM_ALL})
+    # Пополняем содержимое файла dviglo_all.h
+    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} physics/*.h)
+    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
+    list(APPEND dviglo_all_content ";#if URHO3D_PHYSICS")
+    list(APPEND dviglo_all_content ${tmp_var})
+    list(APPEND dviglo_all_content "#endif // URHO3D_PHYSICS")
+endif()
 
-# Generate platform specific export header file (can only be called after the target has been added)
-if (MSVC)
-    set (APPENDIX "\n#pragma warning(disable: 4251)\n#pragma warning(disable: 4275)\n\n#if _MSC_VER < 1900\n#define strtoll _strtoi64\n#define strtoull _strtoui64\n#endif\n")
-endif ()
-set (APPENDIX "${APPENDIX}\n#define NONSCRIPTABLE ${ANNOTATE_NONSCRIPTABLE}\n\n")
-foreach (DEFINE URHO3D_STATIC_DEFINE URHO3D_OPENGL URHO3D_D3D11 URHO3D_SSE URHO3D_DATABASE_ODBC URHO3D_DATABASE_SQLITE URHO3D_LUAJIT URHO3D_TESTING CLANG_PRE_STANDARD)
-    if (${DEFINE})
-        set (APPENDIX "${APPENDIX}#define ${DEFINE}\n")
-    endif ()
-endforeach()
-generate_export_header (${TARGET_NAME} EXPORT_MACRO_NAME URHO3D_API EXPORT_FILE_NAME dviglo.h.new CUSTOM_CONTENT_FROM_VARIABLE APPENDIX)
-set (COPYRIGHT "// Copyright (c) 2008-2023 the Urho3D project\n// License: MIT\n")
-file (READ ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new EXPORT_HEADER)
-file (WRITE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new ${COPYRIGHT}${EXPORT_HEADER})
-execute_process (COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)
-file (REMOVE ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h.new)
-source_group ("Source Files\\Generated" FILES ${CMAKE_CURRENT_BINARY_DIR}/dviglo.h)
+if(URHO3D_PHYSICS2D)
+    # Пополняем список исходников
+    file(GLOB tmp_var physics_2d/*.cpp physics_2d/*.h)
+    list(APPEND source_files ${tmp_var})
 
-# TODO: This seems out of place
-if (MINGW)
-    set (CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES_INIT} -lwinmm")
-    set (CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES_INIT} -lwinmm")
-    if (URHO3D_LIB_TYPE STREQUAL SHARED)
-        set_target_properties (${TARGET_NAME} PROPERTIES PREFIX "")
-    endif ()
-endif ()
+    # Пополняем содержимое файла dviglo_all.h
+    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} physics_2d/*.h)
+    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
+    list(APPEND dviglo_all_content ";#if URHO3D_PHYSICS2D")
+    list(APPEND dviglo_all_content ${tmp_var})
+    list(APPEND dviglo_all_content "#endif // URHO3D_PHYSICS2D")
+endif()
 
-target_link_libraries(${TARGET_NAME} PRIVATE ${STATIC_LIBRARY_TARGETS})
+if(URHO3D_URHO2D)
+    # Пополняем список исходников
+    file(GLOB tmp_var urho_2d/*.cpp urho_2d/*.h)
+    list(APPEND source_files ${tmp_var})
 
-# TODO: Либы подключаются без учёта дефайнов
-target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static bullet glew stb rapidjson
-    recast detour detour_crowd detour_tile_cache box2d lz4 pugixml freetype
-    stanhull civetweb slikenet ik etcpack)
+    # Пополняем содержимое файла dviglo_all.h
+    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} urho_2d/*.h)
+    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
+    list(APPEND dviglo_all_content ";#if URHO3D_URHO2D")
+    list(APPEND dviglo_all_content ${tmp_var})
+    list(APPEND dviglo_all_content "#endif // URHO3D_URHO2D")
+endif()
 
-if (URHO3D_TRACY_PROFILING)
-    target_link_libraries(${TARGET_NAME} PUBLIC tracy)
-endif ()
+# Список генерируемых файлов
+set(generated_src_files "${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h")
 
-# Не линкуем LibCpuId при сборке для Linux
-if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
-    target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
-endif ()
+if(URHO3D_LIB_TYPE STREQUAL "SHARED")
+    # Создаём динамическую библиотеку
+    add_library(${target_name} SHARED ${source_files} ${generated_src_files})
+    target_compile_definitions(${target_name} PUBLIC DVIGLO_SHARED=1)
+else()
+    # Создаём статическую библиотеку
+    add_library(${target_name} STATIC ${source_files} ${generated_src_files})
+endif()
 
-# Делаем h-файлы доступными приложениям, которые подключили движок как поддиректорию
-target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
+# При компиляции библиотеки и при использовании библиотеки h-файлы отличаются 
+target_compile_definitions(${target_name} PRIVATE DVIGLO_IS_BUILDING=1)
 
-# Создаём список h-файлов
-file(GLOB_RECURSE dviglo_headers RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.h)
-# Обрамляем названия файлов
-list(TRANSFORM dviglo_headers REPLACE "(.+)" "#include <dviglo/\\1>")
-# Сортируем список h-файлов в реверсном порядке
-list(SORT dviglo_headers ORDER DESCENDING)
+# Подключаем библиотеки из папки third-party
+target_link_libraries(${target_name} PUBLIC SDL3-static stb rapidjson lz4 pugixml freetype etcpack)
 
-# Опциональные папки, которые могут быть отключены дефайнами
-# TODO: Сделать их отдельными модулями?
-set (OPTIONAL_SUBS database ik navigation network physics physics_2d urho_2d)
+# Не линкуем libcpuid при сборке для Linux
+if(NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
+    target_link_libraries(${target_name} PUBLIC libcpuid)
+endif()
 
-foreach (SUB ${OPTIONAL_SUBS})
-    if (dviglo_headers MATCHES "(#include <dviglo/${SUB}/[^;]+>)")
-        # Так как список h-файлов был отсортирован в реверсном порядке, то первый
-        # найденный элемент на самом деле последний. Вставляем перед ним #endif
-        list (FIND dviglo_headers ${CMAKE_MATCH_1} FOUND_INDEX)
-        list (INSERT dviglo_headers ${FOUND_INDEX} "#endif")
-    endif ()
-endforeach ()
-# Меняем порядок элементов на правильный
-list(REVERSE dviglo_headers)
+if(URHO3D_D3D11)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_D3D11=1)
+    target_link_libraries(${target_name} PUBLIC ${DIRECT3D_LIBRARIES})
+endif()
 
-foreach (SUB ${OPTIONAL_SUBS})
-    if (dviglo_headers MATCHES "(#include <dviglo/${SUB}/[^;]+>)")
-        string (TOUPPER ${SUB} SUB)
+if(URHO3D_OPENGL)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_OPENGL=1)
+    target_link_libraries(${target_name} PUBLIC glew)
+     
+    if(NOT WIN32) # Целевая ОС - Linux
+        target_link_libraries(${target_name} PUBLIC GL)
+    endif()
+endif()
 
-        # Заменяем дефайны для случаев, когда дефайны не совпадают с именами папок
-        if ("${SUB}" STREQUAL "PHYSICS_2D")
-            set (SUB "PHYSICS2D")
-        elseif ("${SUB}" STREQUAL "URHO_2D")
-            set (SUB "URHO2D")
-        endif ()
+if(URHO3D_IK)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_IK=1)
+    target_link_libraries(${target_name} PUBLIC ik)
+endif()
 
-        # Добавляем дефайны для h-файлов в опциональных папках
-        list (FIND dviglo_headers ${CMAKE_MATCH_1} FOUND_INDEX)
-        list (INSERT dviglo_headers ${FOUND_INDEX} "#if URHO3D_${SUB}")
-    endif ()
-endforeach ()
+if(URHO3D_MINIDUMPS)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_MINIDUMPS=1)
+    target_link_libraries(${target_name} PUBLIC dbghelp)
+endif()
 
-# Исключаем некоторые h-файлы
-string (REGEX REPLACE "#include <[^;]+(debug_new|direct3d|graphics_impl|ik_converters|odbc|opengl|precompiled|sqlite|dviglo|librevision|wrap\.h|aswrappedcall\.h)[^;]*>;" "" dviglo_headers "${dviglo_headers};")
+if(URHO3D_NAVIGATION)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_NAVIGATION=1)
+    target_link_libraries(${target_name} PUBLIC detour detour_crowd detour_tile_cache recast)
+endif()
 
-# Заменяем ; на перевод строки
-string (REPLACE ";" \n dviglo_headers "${dviglo_headers}")
+if(URHO3D_NETWORK)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_NETWORK=1)
+    target_link_libraries(${target_name} PUBLIC civetweb slikenet)
+endif()
 
-configure_file (${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
+if(URHO3D_PHYSICS)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_PHYSICS=1)
+    target_link_libraries(${target_name} PUBLIC bullet stanhull)
+endif()
+
+if(URHO3D_PHYSICS2D)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_PHYSICS2D=1)
+    target_link_libraries(${target_name} PUBLIC box2d)
+endif()
+
+if(URHO3D_TESTING)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_TESTING)
+endif()
+
+if(URHO3D_TRACY_PROFILING)
+    target_compile_definitions(${target_name} PUBLIC URHO3D_TRACY_PROFILING=1)
+    target_link_libraries(${target_name} PUBLIC tracy)
+endif()
+
+# Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
+target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
+
+# Генерируем файл dviglo_all.h
+list(JOIN dviglo_all_content "\n" dviglo_all_content)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
+
+# Заставляем VS отображать дерево каталогов
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
+source_group("_generated" FILES ${generated_src_files})

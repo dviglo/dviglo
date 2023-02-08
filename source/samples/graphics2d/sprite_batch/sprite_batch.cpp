@@ -2,6 +2,8 @@
 
 #include <dviglo/graphics/sprite_batch.h>
 
+using namespace Urho3D;
+
 class Game : public Application
 {
     URHO3D_OBJECT(Game, Application);

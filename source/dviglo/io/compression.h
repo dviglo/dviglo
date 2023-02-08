@@ -4,11 +4,7 @@
 
 #pragma once
 
-#ifdef URHO3D_IS_BUILDING
-#include "dviglo.h"
-#else
-#include <dviglo/dviglo.h>
-#endif
+#include "../dviglo_config.h"
 
 namespace Urho3D
 {

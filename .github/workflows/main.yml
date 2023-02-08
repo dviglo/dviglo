@@ -165,7 +165,7 @@ jobs:
 
         if (( $EXIT_CODE != 0 )) 
         then
-          echo "$(cat $APPDATA/dviglo/logs/HelloWorld.log)" # Показываем содержимое лога
+          echo "$(cat $APPDATA/dviglo/logs/CrowdNavigation.log)" # Показываем содержимое лога
           exit $EXIT_CODE
         fi
 
@@ -278,7 +278,7 @@ jobs:
 
         if (( $EXIT_CODE != 0 )) 
         then
-          echo "$(cat ~/.local/share/dviglo/logs/HelloWorld.log)"
+          echo "$(cat ~/.local/share/dviglo/logs/CrowdNavigation.log)"
           exit $EXIT_CODE
         fi
 
