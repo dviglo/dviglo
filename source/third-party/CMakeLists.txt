@@ -1,5 +1,4 @@
 # Copyright (c) 2022-2023 the Dviglo project
-# Copyright (c) 2008-2023 the Urho3D project
 # License: MIT
 
 # Помещаем сторонние библиотеки в отдельный проект
@@ -8,61 +7,5 @@ project(dviglo-third-party)
 # В IDE таргеты будут отображаться в папке third-party libs
 set(CMAKE_FOLDER "third-party libs")
 
-foreach (TARGET etcpack freetype lz4 pugixml rapidjson sdl stb)
-    add_subdirectory (${TARGET})
-endforeach ()
-
-if (URHO3D_LUA)
-    add_subdirectory (Lua${JIT})
-    add_subdirectory (toluapp/src/lib)
-endif ()
-
-if (URHO3D_NETWORK)
-    add_subdirectory (civetweb)
-    add_subdirectory (slikenet)
-endif ()
-
-if (URHO3D_DATABASE_ODBC)
-    add_subdirectory (nanodbc)
-endif ()
-if (URHO3D_DATABASE_SQLITE)
-    add_subdirectory (SQLite)
-endif ()
-
-if (URHO3D_NAVIGATION)
-    add_subdirectory(detour)
-    add_subdirectory(detour_crowd)
-    add_subdirectory(detour_tile_cache)
-    add_subdirectory(recast)
-endif ()
-
-if (URHO3D_URHO2D)
-    if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/spine)
-        add_subdirectory (spine)
-        # Add definition for Spine
-        add_definitions (-DURHO3D_SPINE)
-    endif ()
-endif ()
-
-if (URHO3D_PHYSICS)
-    add_subdirectory(bullet)
-    add_subdirectory(stanhull)
-endif ()
-
-if (URHO3D_PHYSICS2D)
-    add_subdirectory (box2d)
-endif ()
-
-if (URHO3D_TRACY_PROFILING)
-    add_subdirectory (tracy)
-endif ()
-
-if (NOT ANDROID AND NOT ARM AND NOT WEB)
-    if (URHO3D_OPENGL)
-        add_subdirectory(glew)
-    endif()
-
-    if (NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
-        add_subdirectory (libcpuid)
-    endif ()
-endif ()
+# Добавляем все папки
+dv_add_all_subdirs()

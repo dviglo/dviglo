@@ -14,6 +14,11 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
+# Должна быть включена опция
+if(NOT URHO3D_NETWORK)
+    return()
+endif()
+
 # Название таргета
 set(target_name slikenet)
 

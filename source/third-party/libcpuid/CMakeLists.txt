@@ -1,6 +1,11 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
+# На Linux библиотека не нужна
+if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+    return()
+endif()
+
 # Название таргета
 set(target_name libcpuid)
 
