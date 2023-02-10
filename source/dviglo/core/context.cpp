@@ -11,10 +11,6 @@
 #ifndef MINI_URHO
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_gesture.h>
-#ifdef URHO3D_IK
-#include <ik/log.h>
-#include <ik/memory.h>
-#endif
 #endif
 
 #include "../debug_new.h"
@@ -286,38 +282,6 @@ void Context::ReleaseSDL()
         URHO3D_LOGERROR("Too many calls to Context::ReleaseSDL()!");
 }
 
-#ifdef URHO3D_IK
-void Context::RequireIK()
-{
-    // Always increment, the caller must match with ReleaseIK(), regardless of
-    // what happens.
-    ++ikInitCounter;
-
-    if (ikInitCounter == 1)
-    {
-        URHO3D_LOGDEBUG("Initialising Inverse Kinematics library");
-        ik_memory_init();
-        ik_log_init(IK_LOG_NONE);
-        ik_log_register_listener(HandleIKLog);
-    }
-}
-
-void Context::ReleaseIK()
-{
-    --ikInitCounter;
-
-    if (ikInitCounter == 0)
-    {
-        URHO3D_LOGDEBUG("De-initialising Inverse Kinematics library");
-        ik_log_unregister_listener(HandleIKLog);
-        ik_log_deinit();
-        ik_memory_deinit();
-    }
-
-    if (ikInitCounter < 0)
-        URHO3D_LOGERROR("Too many calls to Context::ReleaseIK()");
-}
-#endif // ifdef URHO3D_IK
 #endif // ifndef MINI_URHO
 
 void Context::CopyBaseAttributes(StringHash baseType, StringHash derivedType)
