@@ -36,6 +36,8 @@ foreach (CACHE_VAR ${CACHE_VARS})
 endforeach ()
 message ("!! CMAKE_ARGS: ${CMAKE_ARGS}")
 
+include(cmake/common.cmake)
+
 # Включаем поддержку папок в IDE
 set_property (GLOBAL PROPERTY USE_FOLDERS ON)
 
