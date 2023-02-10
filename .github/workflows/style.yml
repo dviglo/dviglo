@@ -15,7 +15,7 @@ jobs:
   Style:
     name: Style
     runs-on: ubuntu-latest
-    if: github.repository == 'urho3d/Urho3D'
+    if: github.repository == 'dviglo/dviglo'
 
     steps:
     - name: Remove end-line spaces
@@ -23,8 +23,8 @@ jobs:
 
       run: |
         #set -x # Echo commands
-        git config --global user.email "urho3d[bot]@users.noreply.github.com"
-        git config --global user.name "Urho3D[bot]"
+        git config --global user.email "[bot]@users.noreply.github.com"
+        git config --global user.name "[Бот]"
 
         # Someone can push to the repo at the same time, so try several times
         for (( i = 0; i < 4; ++i ))
@@ -33,7 +33,7 @@ jobs:
           cd engine_repo
           find ./bin -type f \( -name '*.glsl' -or -name '*.hlsl' -or -name '*.xml' \) -exec perl -i -pe 's/[ \t]+(\r?\n)/$1/g' {} +
           find ./cmake -type f -exec perl -i -pe 's/[ \t]+(\r?\n)/$1/g' {} +
-          find ./Source/Urho3D -type f -exec perl -i -pe 's/[ \t]+(\r?\n)/$1/g' {} +
+          find ./source/dviglo -type f -exec perl -i -pe 's/[ \t]+(\r?\n)/$1/g' {} +
           git add -A
           git diff-index --quiet HEAD || git commit -m "Remove end-line spaces" # Create the commit if there are changes
           git push https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
