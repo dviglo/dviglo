@@ -3,11 +3,11 @@
 
 if(dviglo_subproject)
     return()
-endif ()
+endif()
 
 if(NOT URHO3D_SAMPLES)
-    return ()
-endif ()
+    return()
+endif()
 
 # Помещаем примеры в отдельный проект
 project(dviglo-samples)

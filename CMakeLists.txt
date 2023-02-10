@@ -14,11 +14,11 @@ if(CMAKE_BINARY_DIR MATCHES "^${CMAKE_SOURCE_DIR}")
 endif()
 
 # Определяем, подключён ли движок как поддиректория
-if (CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
-  set(dviglo_subproject OFF)
-else ()
-  set(dviglo_subproject ON)
-endif ()
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+    set(dviglo_subproject OFF)
+else()
+    set(dviglo_subproject ON)
+endif()
 
 # Show command line options
 get_cmake_property (CACHE_VARS CACHE_VARIABLES)
