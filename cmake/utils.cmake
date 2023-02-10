@@ -1,3 +1,6 @@
+# Copyright (c) 2022-2023 the Dviglo project
+# License: MIT
+
 # Добавляет все поддиректории, в которых есть CMakeLists.txt.
 # Использование: dv_add_all_subdirs() или dv_add_all_subdirs(EXCLUDE_FROM_ALL)
 function(dv_add_all_subdirs)
