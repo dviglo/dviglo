@@ -139,7 +139,7 @@ else()
     add_library(${target_name} STATIC ${source_files} ${generated_src_files})
 endif()
 
-# При компиляции библиотеки и при использовании библиотеки h-файлы отличаются 
+# При компиляции библиотеки и при использовании библиотеки h-файлы отличаются
 target_compile_definitions(${target_name} PRIVATE DVIGLO_IS_BUILDING=1)
 
 # Подключаем библиотеки из папки third-party
@@ -158,7 +158,7 @@ endif()
 if(URHO3D_OPENGL)
     target_compile_definitions(${target_name} PUBLIC URHO3D_OPENGL=1)
     target_link_libraries(${target_name} PUBLIC glew)
-     
+
     if(NOT WIN32) # Целевая ОС - Linux
         target_link_libraries(${target_name} PUBLIC GL)
     endif()

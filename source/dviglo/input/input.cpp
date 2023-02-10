@@ -1559,7 +1559,7 @@ void Input::ResetJoysticks()
 
     i32 num_joysticks;
     SDL_JoystickID* joysticks = SDL_GetJoysticks(&num_joysticks);
-    
+
     if (joysticks)
     {
         for (i32 i = 0; i < num_joysticks; ++i)

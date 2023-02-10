@@ -245,7 +245,7 @@ bool Context::RequireSDL(unsigned int sdlFlags)
             URHO3D_LOGERRORF("Failed to initialise SDL: %s", SDL_GetError());
             return false;
         }
-        
+
         if (Gesture_Init() != 0) // Начиная с SDL 3 Gesture больше не часть библиотеки
         {
             URHO3D_LOGERRORF("Failed to initialise Gesture: %s", SDL_GetError());
