@@ -48,11 +48,30 @@ add_custom_target(dv_copy_engine_to_tool_dir
                       ${CMAKE_BINARY_DIR}/bin/tool
                   COMMENT "Копируем движок в папку tool")
 
+if(MSVC AND NOT dv_static_runtime)
+    # Помимо релизных будут искаться и отладочные версии библиотек
+    set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
+    # Заполняем список __install__libs
+    include(InstallRequiredSystemLibraries)
+
+    # Копирует MSVC runtime в папку tool.
+    # Сам по себе таргет не активируется. Нужно использовать функцию dv_copy_shared_libs_to_tool_dir
+    add_custom_target(dv_copy_msvc_runtime_to_tool_dir
+                      COMMAND ${CMAKE_COMMAND} -E copy
+                          ${__install__libs}
+                          ${CMAKE_BINARY_DIR}/bin/tool
+                      COMMENT "Копируем MSVC runtime в папку tool")
+endif()
+
 # Перед компиляцией экзешника копирует dll или so в папку tool.
 # Если компилируется несколько экзешников, повторного копирования не произойдёт
 function(dv_copy_shared_libs_to_tool_dir target_name)
     if(URHO3D_LIB_TYPE STREQUAL "SHARED")
         add_dependencies(${target_name} dv_copy_engine_to_tool_dir)
+    endif()
+
+    if(MSVC AND NOT dv_static_runtime)
+        add_dependencies(${target_name} dv_copy_msvc_runtime_to_tool_dir)
     endif()
 endfunction()
 
