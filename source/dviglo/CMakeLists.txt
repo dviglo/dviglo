@@ -62,19 +62,6 @@ if(URHO3D_OPENGL)
     list(APPEND source_files ${tmp_var})
 endif()
 
-if(URHO3D_IK)
-    # Пополняем список исходников
-    file(GLOB tmp_var ik/*.cpp ik/*.h)
-    list(APPEND source_files ${tmp_var})
-
-    # Пополняем содержимое файла dviglo_all.h
-    file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ik/*.h)
-    list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
-    list(APPEND dviglo_all_content ";#if URHO3D_IK")
-    list(APPEND dviglo_all_content ${tmp_var})
-    list(APPEND dviglo_all_content "#endif // URHO3D_IK")
-endif()
-
 if(URHO3D_NAVIGATION)
     # Пополняем список исходников
     file(GLOB tmp_var navigation/*.cpp navigation/*.h)
@@ -175,11 +162,6 @@ if(URHO3D_OPENGL)
     if(NOT WIN32) # Целевая ОС - Linux
         target_link_libraries(${target_name} PUBLIC GL)
     endif()
-endif()
-
-if(URHO3D_IK)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_IK=1)
-    target_link_libraries(${target_name} PUBLIC ik)
 endif()
 
 if(URHO3D_MINIDUMPS)

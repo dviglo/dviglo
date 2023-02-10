@@ -29,10 +29,6 @@ if (URHO3D_DATABASE_SQLITE)
     add_subdirectory (SQLite)
 endif ()
 
-if (URHO3D_IK)
-    add_subdirectory (ik)
-endif ()
-
 if (URHO3D_NAVIGATION)
     add_subdirectory(detour)
     add_subdirectory(detour_crowd)
