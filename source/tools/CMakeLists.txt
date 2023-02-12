@@ -9,8 +9,8 @@ endif()
 # Помещаем инструменты в отдельный проект
 project(dviglo-tools)
 
-# В IDE таргеты будут отображаться в папке tools
-set(CMAKE_FOLDER tools)
+# В IDE таргеты будут отображаться в папке инструменты
+set(CMAKE_FOLDER инструменты)
 
 # Build host-tools using host compiler toolchain
 #if (CMAKE_CROSSCOMPILING)

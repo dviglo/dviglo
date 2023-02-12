@@ -12,8 +12,8 @@ endif()
 # Помещаем примеры в отдельный проект
 project(dviglo-samples)
 
-# В IDE таргеты будут отображаться в папке samples
-set(CMAKE_FOLDER samples)
+# В IDE таргеты будут отображаться в папке примеры
+set(CMAKE_FOLDER примеры)
 
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
