@@ -1,7 +1,7 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-if(dviglo_subproject)
+if(DVIGLO_IS_SUBPROJECT)
     return()
 endif()
 
@@ -19,15 +19,15 @@ file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Копируем ресурсы в bin, если нужно
 if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/Autoload)
-    create_symlink(${CMAKE_SOURCE_DIR}/bin/Autoload ${CMAKE_BINARY_DIR}/bin/Autoload FALLBACK_TO_COPY)
+    dv_create_symlink(${CMAKE_SOURCE_DIR}/bin/Autoload ${CMAKE_BINARY_DIR}/bin/Autoload)
 endif()
 
 if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/CoreData)
-    create_symlink(${CMAKE_SOURCE_DIR}/bin/CoreData ${CMAKE_BINARY_DIR}/bin/CoreData FALLBACK_TO_COPY)
+    dv_create_symlink(${CMAKE_SOURCE_DIR}/bin/CoreData ${CMAKE_BINARY_DIR}/bin/CoreData)
 endif()
 
 if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/Data)
-    create_symlink(${CMAKE_SOURCE_DIR}/bin/Data ${CMAKE_BINARY_DIR}/bin/Data FALLBACK_TO_COPY)
+    dv_create_symlink(${CMAKE_SOURCE_DIR}/bin/Data ${CMAKE_BINARY_DIR}/bin/Data)
 endif()
 
 # Добавляем все папки

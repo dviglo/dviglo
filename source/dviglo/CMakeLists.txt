@@ -189,14 +189,24 @@ if(URHO3D_PHYSICS2D)
     target_link_libraries(${target_name} PUBLIC box2d)
 endif()
 
-if(URHO3D_TESTING)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_TESTING)
-endif()
-
 if(URHO3D_TRACY_PROFILING)
     target_compile_definitions(${target_name} PUBLIC URHO3D_TRACY_PROFILING=1)
     target_link_libraries(${target_name} PUBLIC tracy)
 endif()
+
+# Опции, которые не требуют ничего, кроме создания дефайнов
+foreach(opt
+            URHO3D_LOGGING
+            URHO3D_TESTING # enable_testing() вызывается в common.cmake
+            URHO3D_FILEWATCHER
+            URHO3D_NETWORK
+            URHO3D_PROFILING
+            URHO3D_THREADING
+            URHO3D_URHO2D)
+    if(${opt})
+        target_compile_definitions(${target_name} PUBLIC ${opt}=1)
+    endif()
+endforeach()
 
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
