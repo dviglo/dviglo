@@ -14,7 +14,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 ShaderPrecache::ShaderPrecache(Context* context, const String& fileName) :

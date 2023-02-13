@@ -13,7 +13,7 @@
 #include "tracy/Tracy.hpp"
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Profiling data for one block in the profiling tree.
@@ -243,7 +243,7 @@ private:
     #define URHO3D_PROFILE(name) ZoneScopedN(#name)
 #elif defined(URHO3D_PROFILING) // Use default profiler
     /// Macro for scoped profiling with a name.
-    #define URHO3D_PROFILE(name) Urho3D::AutoProfileBlock profile_ ## name (GetSubsystem<Urho3D::Profiler>(), #name)
+    #define URHO3D_PROFILE(name) dviglo::AutoProfileBlock profile_ ## name (GetSubsystem<dviglo::Profiler>(), #name)
 #else // Profiling off
     #define URHO3D_PROFILE(name)
 #endif

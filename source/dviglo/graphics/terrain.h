@@ -7,7 +7,7 @@
 #include "../container/array_ptr.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Image;

@@ -41,7 +41,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const float DEFAULT_COLLISION_MARGIN = 0.04f;

@@ -6,9 +6,9 @@
 
 #include <dviglo/core/object.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
-namespace Urho3D
+namespace dviglo
 {
     class Controls;
 }

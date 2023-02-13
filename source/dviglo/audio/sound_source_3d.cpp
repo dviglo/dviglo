@@ -12,7 +12,7 @@
 #include "../graphics/debug_renderer.h"
 #include "../scene/node.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const float DEFAULT_NEARDISTANCE = 0.0f;

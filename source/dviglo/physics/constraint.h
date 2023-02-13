@@ -13,7 +13,7 @@
 
 class btTypedConstraint;
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Supported constraint types.

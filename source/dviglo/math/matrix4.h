@@ -9,7 +9,7 @@
 
 #include <emmintrin.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Matrix3x4;
@@ -603,7 +603,7 @@ public:
 
         for (unsigned i = 0; i < 16; ++i)
         {
-            if (!Urho3D::Equals(leftData[i], rightData[i]))
+            if (!dviglo::Equals(leftData[i], rightData[i]))
                 return false;
         }
 
@@ -634,7 +634,7 @@ public:
         const float* data = Data();
         for (unsigned i = 0; i < 16; ++i)
         {
-            if (Urho3D::IsNaN(data[i]))
+            if (dviglo::IsNaN(data[i]))
                 return true;
         }
         return false;
@@ -646,7 +646,7 @@ public:
         const float* data = Data();
         for (unsigned i = 0; i < 16; ++i)
         {
-            if (Urho3D::IsInf(data[i]))
+            if (dviglo::IsInf(data[i]))
                 return true;
         }
         return false;

@@ -9,7 +9,7 @@
 #include "../navigation/crowd_manager.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum CrowdAgentRequestedTarget

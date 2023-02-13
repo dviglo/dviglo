@@ -17,7 +17,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #define INC_POS_LOOPED() \

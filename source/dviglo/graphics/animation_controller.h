@@ -8,7 +8,7 @@
 #include "../scene/component.h"
 #include "../graphics/animation_state.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class AnimatedModel;

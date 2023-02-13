@@ -6,7 +6,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void HashBase::AllocateBuckets(i32 size, i32 numBuckets)

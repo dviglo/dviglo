@@ -12,7 +12,7 @@
 
 #include <cstring>
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const unsigned MAX_NETWORK_ATTRIBUTES = 64;

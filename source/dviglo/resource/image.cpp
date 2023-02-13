@@ -69,7 +69,7 @@ static const unsigned DDS_DXGI_FORMAT_BC2_UNORM_SRGB = 75;
 static const unsigned DDS_DXGI_FORMAT_BC3_UNORM = 77;
 static const unsigned DDS_DXGI_FORMAT_BC3_UNORM_SRGB = 78;
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// DirectDraw color key definition.

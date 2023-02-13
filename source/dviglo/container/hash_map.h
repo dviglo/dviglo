@@ -13,7 +13,7 @@
 #include <cassert>
 #include <initializer_list>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Hash map template class.
@@ -473,7 +473,7 @@ public:
             ptr = ptr->Next();
         }
 
-        Urho3D::Sort(RandomAccessIterator<Node*>(ptrs), RandomAccessIterator<Node*>(ptrs + numKeys), CompareNodes);
+        dviglo::Sort(RandomAccessIterator<Node*>(ptrs), RandomAccessIterator<Node*>(ptrs + numKeys), CompareNodes);
 
         head_ = ptrs[0];
         ptrs[0]->prev_ = 0;
@@ -762,12 +762,12 @@ private:
     hash32 Hash(const T& key) const { return MakeHash(key) & (NumBuckets() - 1); }
 };
 
-template <class T, class U> typename Urho3D::HashMap<T, U>::ConstIterator begin(const Urho3D::HashMap<T, U>& v) { return v.Begin(); }
+template <class T, class U> typename dviglo::HashMap<T, U>::ConstIterator begin(const dviglo::HashMap<T, U>& v) { return v.Begin(); }
 
-template <class T, class U> typename Urho3D::HashMap<T, U>::ConstIterator end(const Urho3D::HashMap<T, U>& v) { return v.End(); }
+template <class T, class U> typename dviglo::HashMap<T, U>::ConstIterator end(const dviglo::HashMap<T, U>& v) { return v.End(); }
 
-template <class T, class U> typename Urho3D::HashMap<T, U>::Iterator begin(Urho3D::HashMap<T, U>& v) { return v.Begin(); }
+template <class T, class U> typename dviglo::HashMap<T, U>::Iterator begin(dviglo::HashMap<T, U>& v) { return v.Begin(); }
 
-template <class T, class U> typename Urho3D::HashMap<T, U>::Iterator end(Urho3D::HashMap<T, U>& v) { return v.End(); }
+template <class T, class U> typename dviglo::HashMap<T, U>::Iterator end(dviglo::HashMap<T, U>& v) { return v.End(); }
 
 }

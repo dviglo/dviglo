@@ -12,7 +12,7 @@ public:
     URHO3D_OBJECT(AppState_Benchmark01, AppState_Base);
 
 public:
-    AppState_Benchmark01(U3D::Context* context)
+    AppState_Benchmark01(dv::Context* context)
         : AppState_Base(context)
     {
         name_ = "Static Scene";
@@ -21,5 +21,5 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void HandleSceneUpdate(U3D::StringHash eventType, U3D::VariantMap& eventData);
+    void HandleSceneUpdate(dv::StringHash eventType, dv::VariantMap& eventData);
 };

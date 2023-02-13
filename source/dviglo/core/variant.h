@@ -16,7 +16,7 @@
 
 #include <typeinfo>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Variant's supported types.

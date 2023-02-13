@@ -10,7 +10,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Vector3 Ray::ClosestPoint(const Ray& ray) const

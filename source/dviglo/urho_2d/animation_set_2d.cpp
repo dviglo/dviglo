@@ -27,11 +27,11 @@ using namespace std;
 #include <spine/extension.h>
 
 // Current animation set
-static Urho3D::AnimationSet2D* currentAnimationSet = 0;
+static dviglo::AnimationSet2D* currentAnimationSet = 0;
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
-    using namespace Urho3D;
+    using namespace dviglo;
     if (!currentAnimationSet)
         return;
 
@@ -49,7 +49,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 
 void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
-    using namespace Urho3D;
+    using namespace dviglo;
     Sprite2D* sprite = static_cast<Sprite2D*>(self->rendererObject);
     if (sprite)
         sprite->ReleaseRef();
@@ -59,7 +59,7 @@ void _spAtlasPage_disposeTexture(spAtlasPage* self)
 
 char* _spUtil_readFile(const char* path, int* length)
 {
-    using namespace Urho3D;
+    using namespace dviglo;
 
     if (!currentAnimationSet)
         return 0;
@@ -82,7 +82,7 @@ char* _spUtil_readFile(const char* path, int* length)
 }
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 AnimationSet2D::AnimationSet2D(Context* context) :

@@ -8,7 +8,7 @@
 #include "../core/object.h"
 #include "../graphics_api/graphics_defs.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class IndexBuffer;

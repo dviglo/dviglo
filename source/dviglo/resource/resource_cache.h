@@ -11,7 +11,7 @@
 #include "../io/file.h"
 #include "../resource/resource.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class BackgroundLoader;

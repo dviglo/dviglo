@@ -6,7 +6,7 @@
 
 #include "../ui/border_image.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Push button %UI element.

@@ -11,7 +11,7 @@
 
 #include "../ui/font.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Режимы зеркального отображения спрайтов и текста

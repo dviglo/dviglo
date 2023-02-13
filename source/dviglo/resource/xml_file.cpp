@@ -22,7 +22,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// XML writer for pugixml.
@@ -356,9 +356,9 @@ bool XMLFile::CombineText(const pugi::xml_node& patch, const pugi::xml_node& ori
         (patch.type() == pugi::node_cdata && original.type() == pugi::node_cdata))
     {
         if (prepend)
-            const_cast<pugi::xml_node&>(original).set_value(Urho3D::ToString("%s%s", patch.value(), original.value()).CString());
+            const_cast<pugi::xml_node&>(original).set_value(dviglo::ToString("%s%s", patch.value(), original.value()).CString());
         else
-            const_cast<pugi::xml_node&>(original).set_value(Urho3D::ToString("%s%s", original.value(), patch.value()).CString());
+            const_cast<pugi::xml_node&>(original).set_value(dviglo::ToString("%s%s", original.value(), patch.value()).CString());
 
         return true;
     }

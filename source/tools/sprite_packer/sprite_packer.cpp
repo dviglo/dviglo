@@ -22,7 +22,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 // number of nodes allocated to each packer info.  since this packer is not suited for real time purposes we can over allocate.
 const int PACKER_NUM_NODES = 4096;

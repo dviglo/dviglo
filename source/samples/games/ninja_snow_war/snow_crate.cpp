@@ -5,7 +5,7 @@
 #include "snow_crate.h"
 #include "utilities/spawn.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static constexpr i32 SNOWCRATE_HEALTH = 5;
@@ -44,4 +44,4 @@ void SnowCrate::FixedUpdate(float timeStep)
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

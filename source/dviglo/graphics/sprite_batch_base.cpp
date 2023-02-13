@@ -7,7 +7,7 @@
 #include "graphics.h"
 #include "camera.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void SpriteBatchBase::AddTriangle()

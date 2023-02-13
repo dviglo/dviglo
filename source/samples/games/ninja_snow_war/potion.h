@@ -6,7 +6,7 @@
 
 #include "game_object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Potion : public GameObject
@@ -24,4 +24,4 @@ public:
     void ObjectCollision(GameObject& otherObject, VariantMap& eventData) override;
 };
 
-} // namespace Urho3D
+} // namespace dviglo

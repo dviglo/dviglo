@@ -14,7 +14,7 @@
 #include "../scene/component.h"
 #include "../scene/node.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Spline for creating smooth movement based on Speed along a set of Control Points modified by the Interpolation Mode.

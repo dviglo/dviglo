@@ -5,7 +5,7 @@
 #include "foot_steps.h"
 #include "utilities/spawn.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void FootSteps::RegisterObject(Context* context)
@@ -44,4 +44,4 @@ void FootSteps::HandleAnimationTrigger(StringHash eventType, VariantMap& eventDa
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

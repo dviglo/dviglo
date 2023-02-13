@@ -11,7 +11,7 @@
 
 struct SDL_Surface;
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const int COLOR_LUT_SIZE = 16;

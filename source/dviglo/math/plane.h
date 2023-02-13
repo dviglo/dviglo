@@ -6,7 +6,7 @@
 
 #include "../math/matrix3x4.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Surface in three-dimensional space.

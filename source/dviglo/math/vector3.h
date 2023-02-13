@@ -7,7 +7,7 @@
 #include "../math/vector2.h"
 #include "../math/math_defs.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Three-dimensional vector with integer values.
@@ -324,7 +324,7 @@ public:
     void Normalize()
     {
         float lenSquared = LengthSquared();
-        if (!Urho3D::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
+        if (!dviglo::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
         {
             float invLen = 1.0f / sqrtf(lenSquared);
             x_ *= invLen;
@@ -345,7 +345,7 @@ public:
     /// Calculate absolute dot product.
     float AbsDotProduct(const Vector3& rhs) const
     {
-        return Urho3D::Abs(x_ * rhs.x_) + Urho3D::Abs(y_ * rhs.y_) + Urho3D::Abs(z_ * rhs.z_);
+        return dviglo::Abs(x_ * rhs.x_) + dviglo::Abs(y_ * rhs.y_) + dviglo::Abs(z_ * rhs.z_);
     }
 
     /// Project direction vector onto axis.
@@ -391,7 +391,7 @@ public:
     }
 
     /// Return absolute vector.
-    Vector3 Abs() const { return Vector3(Urho3D::Abs(x_), Urho3D::Abs(y_), Urho3D::Abs(z_)); }
+    Vector3 Abs() const { return Vector3(dviglo::Abs(x_), dviglo::Abs(y_), dviglo::Abs(z_)); }
 
     /// Linear interpolation with another vector.
     Vector3 Lerp(const Vector3& rhs, float t) const { return *this * (1.0f - t) + rhs * t; }
@@ -399,23 +399,23 @@ public:
     /// Test for equality with another vector with epsilon.
     bool Equals(const Vector3& rhs) const
     {
-        return Urho3D::Equals(x_, rhs.x_) && Urho3D::Equals(y_, rhs.y_) && Urho3D::Equals(z_, rhs.z_);
+        return dviglo::Equals(x_, rhs.x_) && dviglo::Equals(y_, rhs.y_) && dviglo::Equals(z_, rhs.z_);
     }
 
     /// Returns the angle between this vector and another vector in degrees.
-    float Angle(const Vector3& rhs) const { return Urho3D::Acos(DotProduct(rhs) / (Length() * rhs.Length())); }
+    float Angle(const Vector3& rhs) const { return dviglo::Acos(DotProduct(rhs) / (Length() * rhs.Length())); }
 
     /// Return whether any component is NaN.
-    bool IsNaN() const { return Urho3D::IsNaN(x_) || Urho3D::IsNaN(y_) || Urho3D::IsNaN(z_); }
+    bool IsNaN() const { return dviglo::IsNaN(x_) || dviglo::IsNaN(y_) || dviglo::IsNaN(z_); }
 
     /// Return whether any component is Inf.
-    bool IsInf() const { return Urho3D::IsInf(x_) || Urho3D::IsInf(y_) || Urho3D::IsInf(z_); }
+    bool IsInf() const { return dviglo::IsInf(x_) || dviglo::IsInf(y_) || dviglo::IsInf(z_); }
 
     /// Return normalized to unit length.
     Vector3 Normalized() const
     {
         const float lenSquared = LengthSquared();
-        if (!Urho3D::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
+        if (!dviglo::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
         {
             float invLen = 1.0f / sqrtf(lenSquared);
             return *this * invLen;

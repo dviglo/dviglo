@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 StringHashRegister::StringHashRegister(bool threadSafe)

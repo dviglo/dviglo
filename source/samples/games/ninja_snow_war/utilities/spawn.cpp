@@ -6,7 +6,7 @@
 
 #include "../game_object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Node* SpawnObject(Scene* scene, const Vector3& position, const Quaternion& rotation, const String& className)
@@ -55,4 +55,4 @@ Node* SpawnSound(Scene* scene, const Vector3& position, const String& soundName,
     return newNode;
 }
 
-} // namespace Urho3D
+} // namespace dviglo

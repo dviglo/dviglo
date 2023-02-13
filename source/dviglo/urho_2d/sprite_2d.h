@@ -7,7 +7,7 @@
 #include "../resource/resource.h"
 #include "../urho_2d/urho_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class SpriteSheet2D;

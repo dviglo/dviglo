@@ -8,7 +8,7 @@
 #include "../ui/tooltip.h"
 #include "../ui/ui.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* UI_CATEGORY;

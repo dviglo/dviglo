@@ -22,7 +22,7 @@
 #define glRenderbufferStorageMultisampleEXT glRenderbufferStorageMultisample
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 void RenderSurface::Constructor_OGL(Texture* parentTexture)

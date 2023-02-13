@@ -9,7 +9,7 @@
 #include "../container/flag_set.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum class LogicComponentEvents

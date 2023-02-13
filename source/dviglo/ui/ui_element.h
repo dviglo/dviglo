@@ -12,7 +12,7 @@
 #include "../scene/animatable.h"
 #include "../ui/ui_batch.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %UI element horizontal alignment.

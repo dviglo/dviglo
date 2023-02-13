@@ -8,7 +8,7 @@
 #include "../graphics_api/graphics_defs.h"
 #include "../resource/resource.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class ShaderVariation;

@@ -8,7 +8,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 u8* VectorBase::AllocateBuffer(i32 size)

@@ -21,7 +21,7 @@ class btTriangleMesh;
 
 struct btTriangleInfoMap;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class CustomGeometry;

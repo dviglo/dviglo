@@ -20,7 +20,7 @@ extern void setupAlphaTable();
 
 // DXT decompression based on the Squish library, modified for Urho3D
 
-namespace Urho3D
+namespace dviglo
 {
 
 /* -----------------------------------------------------------------------------

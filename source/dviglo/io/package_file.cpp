@@ -8,7 +8,7 @@
 #include "../io/log.h"
 #include "../io/package_file.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 PackageFile::PackageFile(Context* context) :

@@ -9,7 +9,7 @@
 #include "../math/color.h"
 #include "../resource/resource.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const int MAX_TEXTURE_QUALITY_LEVELS = 3;

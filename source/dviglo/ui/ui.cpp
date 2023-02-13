@@ -50,7 +50,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static MouseButton MakeTouchIDMask(int id)
@@ -504,7 +504,7 @@ void UI::Render(bool renderUICommand)
                 graphics_->SetDepthStencil(surface->GetLinkedDepthStencil());
                 graphics_->SetRenderTarget(0, surface);
                 graphics_->SetViewport(IntRect(0, 0, surface->GetWidth(), surface->GetHeight()));
-                graphics_->Clear(Urho3D::CLEAR_COLOR);
+                graphics_->Clear(dviglo::CLEAR_COLOR);
 
                 Render(data.vertexBuffer_, data.batches_, 0, data.batches_.Size());
                 Render(data.debugVertexBuffer_, data.debugDrawBatches_, 0, data.debugDrawBatches_.Size());

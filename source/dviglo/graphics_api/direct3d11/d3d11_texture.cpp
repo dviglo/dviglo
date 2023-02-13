@@ -15,7 +15,7 @@
 
 #include "../../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const D3D11_FILTER d3dFilterMode[] =

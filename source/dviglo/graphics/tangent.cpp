@@ -7,7 +7,7 @@
 #include "../graphics/tangent.h"
 #include "../math/vector4.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 inline unsigned GetIndex(void*& indexPointer, unsigned indexSize)

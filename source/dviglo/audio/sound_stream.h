@@ -6,7 +6,7 @@
 
 #include "../container/ref_counted.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Base class for sound streams.

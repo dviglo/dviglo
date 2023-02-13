@@ -13,7 +13,7 @@ using ThreadID = pthread_t;
 using ThreadID = unsigned;
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Operating system thread.

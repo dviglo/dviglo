@@ -9,7 +9,7 @@
 #include "../core/thread.h"
 #include "../core/timer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class FileSystem;

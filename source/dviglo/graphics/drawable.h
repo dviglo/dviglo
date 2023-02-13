@@ -10,7 +10,7 @@
 #include "../math/bounding_box.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum class DrawableTypes : u8

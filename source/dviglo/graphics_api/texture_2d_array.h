@@ -8,7 +8,7 @@
 #include "../graphics_api/render_surface.h"
 #include "../graphics_api/texture.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Deserializer;

@@ -10,7 +10,7 @@
 
 #include <atomic>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Work item completed event.

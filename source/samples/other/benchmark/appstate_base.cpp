@@ -12,7 +12,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 void AppState_Base::LoadSceneXml(const String& path)
 {

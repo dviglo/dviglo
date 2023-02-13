@@ -9,7 +9,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 void Test_Math_BigInt()
 {

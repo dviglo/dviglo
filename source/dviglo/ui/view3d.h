@@ -6,7 +6,7 @@
 
 #include "../ui/window.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Camera;

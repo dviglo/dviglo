@@ -7,7 +7,7 @@
 #include "../graphics/drawable.h"
 #include "../math/frustum.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Drawable2D;

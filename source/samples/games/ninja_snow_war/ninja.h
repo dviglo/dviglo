@@ -10,7 +10,7 @@
 
 #include "ai_controller.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Ninja : public GameObject
@@ -43,4 +43,4 @@ public:
     bool Heal(i32 amount) override;
 };
 
-} // namespace Urho3D
+} // namespace dviglo

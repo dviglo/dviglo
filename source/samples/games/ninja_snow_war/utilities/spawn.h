@@ -6,7 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 // Перенесено сюда из NinjaSnowWar.as
@@ -14,4 +14,4 @@ Node* SpawnObject(Scene* scene, const Vector3& position, const Quaternion& rotat
 Node* SpawnParticleEffect(Scene* scene, const Vector3& position, const String& effectName, float duration, CreateMode mode = REPLICATED);
 Node* SpawnSound(Scene* scene, const Vector3& position, const String& soundName, float duration);
 
-} // namespace Urho3D
+} // namespace dviglo

@@ -10,7 +10,7 @@
 #include "../core/timer.h"
 #include "../resource/json_value.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Deserializer;

@@ -13,7 +13,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 AppStateManager::AppStateManager(Context* context)
     : Object(context)

@@ -6,7 +6,7 @@
 
 #include "../math/vector4.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Two-dimensional bounding rectangle.

@@ -7,7 +7,7 @@
 #include "../math/bounding_box.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class URHO3D_API NavArea : public Component

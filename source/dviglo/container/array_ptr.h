@@ -9,7 +9,7 @@
 
 #include <cassert>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Shared array pointer template class. Uses non-intrusive reference counting.

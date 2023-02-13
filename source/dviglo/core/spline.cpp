@@ -7,7 +7,7 @@
 #include "../core/spline.h"
 #include "../io/log.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const char* interpolationModeNames[] =

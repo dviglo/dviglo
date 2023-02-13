@@ -6,7 +6,7 @@
 
 #include "../container/ptr.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Graphics;

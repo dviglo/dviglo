@@ -18,7 +18,7 @@
 #include "../debug_new.h"
 
 
-namespace Urho3D
+namespace dviglo
 {
 
 TmxLayer2D::TmxLayer2D(TmxFile2D* tmxFile, TileMapLayerType2D type) :

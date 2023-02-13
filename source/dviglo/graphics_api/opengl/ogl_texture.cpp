@@ -18,7 +18,7 @@
 #define GL_COMPARE_R_TO_TEXTURE GL_COMPARE_REF_TO_TEXTURE
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 static GLenum glWrapModes[] =

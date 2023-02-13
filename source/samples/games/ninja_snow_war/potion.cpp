@@ -4,7 +4,7 @@
 
 #include "potion.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static constexpr int POTION_HEAL_AMOUNT = 5;
@@ -38,4 +38,4 @@ void Potion::ObjectCollision(GameObject& otherObject, VariantMap& eventData)
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

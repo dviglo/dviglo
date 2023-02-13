@@ -15,7 +15,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #if defined(IOS) || defined(TVOS) || defined(__EMSCRIPTEN__)

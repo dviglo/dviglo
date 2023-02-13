@@ -19,7 +19,7 @@
 #include <limits>
 #include <type_traits>
 
-namespace Urho3D
+namespace dviglo
 {
 
 #undef M_PI

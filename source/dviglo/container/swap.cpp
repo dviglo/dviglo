@@ -6,7 +6,7 @@
 
 #include "../container/list_base.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 template <> void Swap<String>(String& first, String& second)

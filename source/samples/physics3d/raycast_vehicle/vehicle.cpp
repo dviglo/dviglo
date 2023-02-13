@@ -21,7 +21,7 @@
 
 #include "vehicle.h"
 
-using namespace Urho3D;
+using namespace dviglo;
 
 const float CHASSIS_WIDTH = 2.6f;
 
@@ -33,7 +33,7 @@ void Vehicle::RegisterObject(Context* context)
     URHO3D_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
 }
 
-Vehicle::Vehicle(Urho3D::Context* context)
+Vehicle::Vehicle(dviglo::Context* context)
     : LogicComponent(context),
       steering_(0.0f)
 {

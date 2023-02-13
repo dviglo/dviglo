@@ -35,7 +35,7 @@ using namespace std;
 
 static const unsigned TILECACHE_MAXLAYERS = 255;
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* NAVIGATION_CATEGORY;

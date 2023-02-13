@@ -13,7 +13,7 @@
 
 using namespace pugi;
 
-namespace Urho3D
+namespace dviglo
 {
 
 namespace Spriter

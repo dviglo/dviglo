@@ -9,7 +9,7 @@
 #include "../math/color.h"
 #include "../math/rect.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class PixelShader;

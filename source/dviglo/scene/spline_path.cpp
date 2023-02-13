@@ -9,7 +9,7 @@
 #include "../scene/scene.h"
 #include "../scene/spline_path.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* interpolationModeNames[];

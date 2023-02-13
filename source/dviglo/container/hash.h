@@ -8,7 +8,7 @@
 
 #include <cstddef>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Combine hash into result value.

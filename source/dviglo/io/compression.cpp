@@ -13,7 +13,7 @@
 #include <lz4/lz4.h>
 #include <lz4/lz4hc.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 unsigned EstimateCompressBound(unsigned srcSize)

@@ -7,7 +7,7 @@
 #include "../audio/sound_listener.h"
 #include "../core/context.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* AUDIO_CATEGORY;

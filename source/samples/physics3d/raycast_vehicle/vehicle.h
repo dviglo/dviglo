@@ -8,14 +8,14 @@
 #include <dviglo/physics/physics_utils.h>
 #include <dviglo/scene/logic_component.h>
 
-namespace Urho3D
+namespace dviglo
 {
     class Constraint;
     class Node;
     class RigidBody;
 }
 
-using namespace Urho3D;
+using namespace dviglo;
 
 const unsigned CTRL_FORWARD = (1u << 0u);
 const unsigned CTRL_BACK = (1u << 1u);

@@ -19,7 +19,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static bool CompareEntries(const FileSelectorEntry& lhs, const FileSelectorEntry& rhs)

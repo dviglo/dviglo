@@ -12,7 +12,7 @@
 #include <pthread.h>
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 #ifdef _WIN32

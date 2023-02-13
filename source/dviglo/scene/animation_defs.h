@@ -6,7 +6,7 @@
 
 #pragma once
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Animation wrap mode.

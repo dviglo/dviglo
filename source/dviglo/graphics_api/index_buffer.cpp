@@ -12,7 +12,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 IndexBuffer::IndexBuffer(Context* context, bool forceHeadless) :

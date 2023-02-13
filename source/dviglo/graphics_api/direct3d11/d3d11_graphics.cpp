@@ -33,7 +33,7 @@
 #pragma warning(disable:4355)
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const D3D11_COMPARISON_FUNC d3dCmpFunc[] =

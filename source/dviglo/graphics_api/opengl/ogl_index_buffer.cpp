@@ -12,7 +12,7 @@
 
 #include "../../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void IndexBuffer::OnDeviceLost_OGL()
@@ -261,4 +261,4 @@ void IndexBuffer::UnmapBuffer_OGL()
     // Never called on OpenGL
 }
 
-} // namespace Urho3D
+} // namespace dviglo

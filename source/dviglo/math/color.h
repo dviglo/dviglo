@@ -6,7 +6,7 @@
 
 #include "../math/vector4.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class String;
@@ -219,12 +219,12 @@ public:
     Color Lerp(const Color& rhs, float t) const;
 
     /// Return color with absolute components.
-    Color Abs() const { return Color(Urho3D::Abs(r_), Urho3D::Abs(g_), Urho3D::Abs(b_), Urho3D::Abs(a_)); }
+    Color Abs() const { return Color(dviglo::Abs(r_), dviglo::Abs(g_), dviglo::Abs(b_), dviglo::Abs(a_)); }
 
     /// Test for equality with another color with epsilon.
     bool Equals(const Color& rhs) const
     {
-        return Urho3D::Equals(r_, rhs.r_) && Urho3D::Equals(g_, rhs.g_) && Urho3D::Equals(b_, rhs.b_) && Urho3D::Equals(a_, rhs.a_);
+        return dviglo::Equals(r_, rhs.r_) && dviglo::Equals(g_, rhs.g_) && dviglo::Equals(b_, rhs.b_) && dviglo::Equals(a_, rhs.a_);
     }
 
     /// Return as string.

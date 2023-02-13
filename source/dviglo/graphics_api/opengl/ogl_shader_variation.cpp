@@ -13,7 +13,7 @@
 
 #include "../../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const char* ShaderVariation::elementSemanticNames_OGL[] =

@@ -2,7 +2,7 @@
 
 #include <dviglo/graphics/sprite_batch.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 class Game : public Application
 {

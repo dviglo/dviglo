@@ -6,7 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 constexpr i32 CTRL_UP = 1;
@@ -51,4 +51,4 @@ public:
     void ResetWorldCollision();
 };
 
-} // namespace Urho3D
+} // namespace dviglo

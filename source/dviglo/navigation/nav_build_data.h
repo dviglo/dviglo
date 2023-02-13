@@ -20,7 +20,7 @@ struct rcHeightfieldLayerSet;
 struct rcPolyMesh;
 struct rcPolyMeshDetail;
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Navigation area stub.

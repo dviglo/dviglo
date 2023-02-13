@@ -13,7 +13,7 @@
 
 #include "../../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void RenderSurface::Constructor_D3D11(Texture* parentTexture)

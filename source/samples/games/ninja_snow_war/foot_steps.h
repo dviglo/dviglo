@@ -6,7 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class FootSteps : public LogicComponent
@@ -22,4 +22,4 @@ public:
     void HandleAnimationTrigger(StringHash eventType, VariantMap& eventData);
 };
 
-} // namespace Urho3D
+} // namespace dviglo

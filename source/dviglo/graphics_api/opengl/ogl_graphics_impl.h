@@ -76,7 +76,7 @@
 
 using SDL_GLContext = void *;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Context;

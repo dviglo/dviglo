@@ -14,7 +14,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// No index.
@@ -952,12 +952,12 @@ private:
     }
 };
 
-template <class T> typename Urho3D::Vector<T>::ConstIterator begin(const Urho3D::Vector<T>& v) { return v.Begin(); }
+template <class T> typename dviglo::Vector<T>::ConstIterator begin(const dviglo::Vector<T>& v) { return v.Begin(); }
 
-template <class T> typename Urho3D::Vector<T>::ConstIterator end(const Urho3D::Vector<T>& v) { return v.End(); }
+template <class T> typename dviglo::Vector<T>::ConstIterator end(const dviglo::Vector<T>& v) { return v.End(); }
 
-template <class T> typename Urho3D::Vector<T>::Iterator begin(Urho3D::Vector<T>& v) { return v.Begin(); }
+template <class T> typename dviglo::Vector<T>::Iterator begin(dviglo::Vector<T>& v) { return v.Begin(); }
 
-template <class T> typename Urho3D::Vector<T>::Iterator end(Urho3D::Vector<T>& v) { return v.End(); }
+template <class T> typename dviglo::Vector<T>::Iterator end(dviglo::Vector<T>& v) { return v.End(); }
 
 }

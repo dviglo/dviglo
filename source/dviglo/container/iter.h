@@ -8,7 +8,7 @@
 
 #include <iterator>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Random access iterator.

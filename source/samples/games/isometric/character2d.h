@@ -6,8 +6,8 @@
 
 #include <dviglo/scene/logic_component.h>
 
-// All Urho3D classes reside in namespace Urho3D
-using namespace Urho3D;
+// All Urho3D classes reside in namespace dviglo
+using namespace dviglo;
 
 const float MOVE_SPEED_X = 4.0f;
 const int LIFES = 3;

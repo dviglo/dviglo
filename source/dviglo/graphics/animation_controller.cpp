@@ -19,7 +19,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const unsigned char CTRL_LOOPED = 0x1;

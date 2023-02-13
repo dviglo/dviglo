@@ -21,7 +21,7 @@
 
 using namespace rapidjson;
 
-namespace Urho3D
+namespace dviglo
 {
 
 JSONFile::JSONFile(Context* context) :

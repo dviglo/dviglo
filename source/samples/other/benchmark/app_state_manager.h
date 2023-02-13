@@ -18,19 +18,19 @@ inline constexpr AppStateId APPSTATEID_BENCHMARK02 = 4;
 inline constexpr AppStateId APPSTATEID_BENCHMARK03 = 5;
 inline constexpr AppStateId APPSTATEID_BENCHMARK04 = 6;
 
-class AppStateManager : public U3D::Object
+class AppStateManager : public dv::Object
 {
 public:
     URHO3D_OBJECT(AppStateManager, Object);
 
 private:
-    U3D::HashMap<AppStateId, U3D::SharedPtr<AppState_Base>> appStates_;
+    dv::HashMap<AppStateId, dv::SharedPtr<AppState_Base>> appStates_;
     AppStateId currentAppStateId_ = APPSTATEID_NULL;
     AppStateId previousAppStateId_ = APPSTATEID_NULL;
     AppStateId requiredAppStateId_ = APPSTATEID_NULL;
 
 public:
-    AppStateManager(U3D::Context* context);
+    AppStateManager(dv::Context* context);
 
     AppStateId GetCurrentAppStateId() const { return currentAppStateId_; }
     AppStateId GetPreviousAppStateId() const { return previousAppStateId_; }
@@ -41,7 +41,7 @@ public:
     // Change state if currentAppStateId_ != requiredAppStateId_
     void Apply();
 
-    const U3D::String& GetName(AppStateId appStateId) const
+    const dv::String& GetName(AppStateId appStateId) const
     {
         auto it = appStates_.Find(appStateId);
         assert(it != appStates_.End());

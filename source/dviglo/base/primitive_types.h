@@ -6,8 +6,8 @@
 
 #include <cstddef> // std::byte
 
-// User can inject Urho3D::PrimitiveTypes into other namespace
-namespace Urho3D::PrimitiveTypes
+// User can inject dviglo::PrimitiveTypes into other namespace
+namespace dviglo::PrimitiveTypes
 {
 
 // https://en.cppreference.com/w/cpp/language/types
@@ -40,14 +40,14 @@ using mask32 = u32;
 // Some flags
 using flagset32 = u32;
 
-} // namespace Urho3D::PrimitiveTypes
+} // namespace dviglo::PrimitiveTypes
 
-namespace Urho3D
+namespace dviglo
 {
 
-using namespace Urho3D::PrimitiveTypes;
+using namespace dviglo::PrimitiveTypes;
 
-} // namespace Urho3D
+} // namespace dviglo
 
 /*
 

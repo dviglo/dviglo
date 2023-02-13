@@ -8,7 +8,7 @@
 #include "../math/bounding_box.h"
 #include "../math/rect.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Abstract stream for reading.

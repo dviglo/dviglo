@@ -39,7 +39,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void Graphics::SetExternalWindow(void* window)

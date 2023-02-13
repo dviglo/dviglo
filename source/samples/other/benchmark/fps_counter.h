@@ -6,7 +6,7 @@
 
 #include <dviglo/base/primitive_types.h>
 
-using namespace Urho3D::PrimitiveTypes;
+using namespace dviglo::PrimitiveTypes;
 
 class FpsCounter
 {

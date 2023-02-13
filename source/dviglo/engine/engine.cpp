@@ -69,7 +69,7 @@ typedef struct _CrtMemBlockHeader
 } _CrtMemBlockHeader;
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* logLevelPrefixes[];

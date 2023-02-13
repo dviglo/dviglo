@@ -12,7 +12,7 @@
 #include "../math/rect.h"
 #include "../math/sphere.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Frustum planes.

@@ -9,7 +9,7 @@
 #include "../container/vector.h"
 #include "../scene/animation_defs.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Object;

@@ -16,7 +16,7 @@
 #include <time.h>
 #include <dbghelp.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 int WriteMiniDump(const char* applicationName, void* exceptionPointers)

@@ -8,7 +8,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 Benchmark03_MoleculeLogic::Benchmark03_MoleculeLogic(Context* context)
     : LogicComponent(context)

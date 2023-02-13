@@ -18,7 +18,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 static unsigned RemapAttributeIndex(const Vector<AttributeInfo>* attributes, const AttributeInfo& netAttr, unsigned netAttrIndex)

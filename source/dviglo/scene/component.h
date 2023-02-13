@@ -8,7 +8,7 @@
 
 #include "../scene/animatable.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class DebugRenderer;

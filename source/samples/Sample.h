@@ -7,7 +7,7 @@
 #include <dviglo/engine/application.h>
 #include <dviglo/input/input.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Node;
@@ -16,8 +16,8 @@ class Sprite;
 
 }
 
-// All Urho3D classes reside in namespace Urho3D
-using namespace Urho3D;
+// All Urho3D classes reside in namespace dviglo
+using namespace dviglo;
 
 const float TOUCH_SENSITIVITY = 2.0f;
 

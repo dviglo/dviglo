@@ -10,7 +10,7 @@
 #include "../core/mutex.h"
 #include "../container/pair.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Sound stream that supports manual buffering of data from the main thread.

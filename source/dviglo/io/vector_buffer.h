@@ -6,7 +6,7 @@
 
 #include "../io/abstract_file.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Dynamically sized buffer that can be read and written to as a stream.

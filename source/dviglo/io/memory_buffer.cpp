@@ -6,7 +6,7 @@
 
 #include "../io/memory_buffer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 MemoryBuffer::MemoryBuffer(void* data, i32 size) :

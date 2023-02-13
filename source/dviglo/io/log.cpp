@@ -25,7 +25,7 @@ extern "C" void SDL_IOS_LogMessage(const char* message);
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const char* logLevelPrefixes[] =

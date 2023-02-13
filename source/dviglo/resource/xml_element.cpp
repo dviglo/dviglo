@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 const XMLElement XMLElement::EMPTY;

@@ -18,7 +18,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 static const unsigned COMPRESSED_BLOCK_SIZE = 32768;
 

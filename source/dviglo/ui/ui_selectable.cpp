@@ -7,7 +7,7 @@
 #include "../core/context.h"
 #include "../ui/ui_selectable.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* UI_CATEGORY;

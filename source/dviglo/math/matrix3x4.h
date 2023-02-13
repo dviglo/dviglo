@@ -8,7 +8,7 @@
 
 #include <emmintrin.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// 3x4 matrix for scene node transform calculations.
@@ -616,7 +616,7 @@ public:
 
         for (unsigned i = 0; i < 12; ++i)
         {
-            if (!Urho3D::Equals(leftData[i], rightData[i]))
+            if (!dviglo::Equals(leftData[i], rightData[i]))
                 return false;
         }
 
@@ -647,7 +647,7 @@ public:
         const float* data = Data();
         for (unsigned i = 0; i < 12; ++i)
         {
-            if (Urho3D::IsNaN(data[i]))
+            if (dviglo::IsNaN(data[i]))
                 return true;
         }
         return false;
@@ -659,7 +659,7 @@ public:
         const float* data = Data();
         for (unsigned i = 0; i < 12; ++i)
         {
-            if (Urho3D::IsInf(data[i]))
+            if (dviglo::IsInf(data[i]))
                 return true;
         }
         return false;

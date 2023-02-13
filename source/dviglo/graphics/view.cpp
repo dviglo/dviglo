@@ -35,7 +35,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Frustum octree query for shadowcasters.

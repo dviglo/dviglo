@@ -15,7 +15,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 static const String MAIN_SCREEN_WINDOW_STR = "Main Screen Window";
 static const String BENCHMARK_01_STR = "Benchmark 01";

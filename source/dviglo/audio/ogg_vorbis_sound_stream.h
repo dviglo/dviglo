@@ -7,7 +7,7 @@
 #include "../audio/sound_stream.h"
 #include "../container/array_ptr.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Sound;

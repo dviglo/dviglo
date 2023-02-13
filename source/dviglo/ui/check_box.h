@@ -6,7 +6,7 @@
 
 #include "../ui/border_image.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %UI element that can be toggled between unchecked and checked state.

@@ -6,7 +6,7 @@
 
 #include "../math/vector3.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class BoundingBox;

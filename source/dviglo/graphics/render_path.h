@@ -13,7 +13,7 @@
 #include "../math/color.h"
 #include "../math/vector4.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Variant;

@@ -22,7 +22,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) \
 { \
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); \
-    Urho3D::ParseArguments(GetCommandLineW()); \
+    dviglo::ParseArguments(GetCommandLineW()); \
     return function; \
 }
 // MSVC release mode: write minidump on crash
@@ -30,13 +30,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
 #define URHO3D_DEFINE_MAIN(function) \
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) \
 { \
-    Urho3D::ParseArguments(GetCommandLineW()); \
+    dviglo::ParseArguments(GetCommandLineW()); \
     int exitCode; \
     __try \
     { \
         exitCode = function; \
     } \
-    __except(Urho3D::WriteMiniDump("Urho3D", GetExceptionInformation())) \
+    __except(dviglo::WriteMiniDump("Urho3D", GetExceptionInformation())) \
     { \
     } \
     return exitCode; \
@@ -46,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
 #define URHO3D_DEFINE_MAIN(function) \
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) \
 { \
-    Urho3D::ParseArguments(GetCommandLineW()); \
+    dviglo::ParseArguments(GetCommandLineW()); \
     return function; \
 }
 // Android or iOS or tvOS: use SDL_main
@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, in
 extern "C" __attribute__((visibility("default"))) int SDL_main(int argc, char** argv); \
 int SDL_main(int argc, char** argv) \
 { \
-    Urho3D::ParseArguments(argc, argv); \
+    dviglo::ParseArguments(argc, argv); \
     return function; \
 }
 // Linux or OS X: use main
@@ -63,7 +63,7 @@ int SDL_main(int argc, char** argv) \
 #define URHO3D_DEFINE_MAIN(function) \
 int main(int argc, char** argv) \
 { \
-    Urho3D::ParseArguments(argc, argv); \
+    dviglo::ParseArguments(argc, argv); \
     return function; \
 }
 #endif

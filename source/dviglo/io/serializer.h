@@ -9,7 +9,7 @@
 #include "../math/bounding_box.h"
 #include "../math/string_hash.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Color;

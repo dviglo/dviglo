@@ -7,7 +7,7 @@
 #include "../io/serializer.h"
 #include "../io/deserializer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// A common root class for objects that implement both Serializer and Deserializer.

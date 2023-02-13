@@ -6,7 +6,7 @@
 
 #include "appstate_base.h"
 
-namespace Urho3D
+namespace dviglo
 {
     class Window;
 }
@@ -17,13 +17,13 @@ public:
     URHO3D_OBJECT(AppState_MainScreen, AppState_Base);
 
 private:
-    void HandleButtonPressed(U3D::StringHash eventType, U3D::VariantMap& eventData);
-    void CreateButton(const U3D::String& name, const U3D::String& text, U3D::Window& parent);
+    void HandleButtonPressed(dv::StringHash eventType, dv::VariantMap& eventData);
+    void CreateButton(const dv::String& name, const dv::String& text, dv::Window& parent);
     void CreateGui();
     void DestroyGui();
 
 public:
-    AppState_MainScreen(U3D::Context* context)
+    AppState_MainScreen(dv::Context* context)
         : AppState_Base(context)
     {
         name_ = "Main Screen";
@@ -32,5 +32,5 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void HandleSceneUpdate(U3D::StringHash eventType, U3D::VariantMap& eventData);
+    void HandleSceneUpdate(dv::StringHash eventType, dv::VariantMap& eventData);
 };

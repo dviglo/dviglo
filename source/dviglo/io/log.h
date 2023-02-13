@@ -9,7 +9,7 @@
 #include "../core/object.h"
 #include "../core/string_utils.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Fictional message level to indicate a stored raw message.
@@ -115,21 +115,21 @@ private:
 };
 
 #ifdef URHO3D_LOGGING
-#define URHO3D_LOG(level, message) Urho3D::Log::Write(level, message)
-#define URHO3D_LOGTRACE(message) Urho3D::Log::Write(Urho3D::LOG_TRACE, message)
-#define URHO3D_LOGDEBUG(message) Urho3D::Log::Write(Urho3D::LOG_DEBUG, message)
-#define URHO3D_LOGINFO(message) Urho3D::Log::Write(Urho3D::LOG_INFO, message)
-#define URHO3D_LOGWARNING(message) Urho3D::Log::Write(Urho3D::LOG_WARNING, message)
-#define URHO3D_LOGERROR(message) Urho3D::Log::Write(Urho3D::LOG_ERROR, message)
-#define URHO3D_LOGRAW(message) Urho3D::Log::Write(Urho3D::LOG_RAW, message)
+#define URHO3D_LOG(level, message) dviglo::Log::Write(level, message)
+#define URHO3D_LOGTRACE(message) dviglo::Log::Write(dviglo::LOG_TRACE, message)
+#define URHO3D_LOGDEBUG(message) dviglo::Log::Write(dviglo::LOG_DEBUG, message)
+#define URHO3D_LOGINFO(message) dviglo::Log::Write(dviglo::LOG_INFO, message)
+#define URHO3D_LOGWARNING(message) dviglo::Log::Write(dviglo::LOG_WARNING, message)
+#define URHO3D_LOGERROR(message) dviglo::Log::Write(dviglo::LOG_ERROR, message)
+#define URHO3D_LOGRAW(message) dviglo::Log::Write(dviglo::LOG_RAW, message)
 
-#define URHO3D_LOGF(level, format, ...) Urho3D::Log::WriteFormat(level, format, ##__VA_ARGS__)
-#define URHO3D_LOGTRACEF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_TRACE, format, ##__VA_ARGS__)
-#define URHO3D_LOGDEBUGF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_DEBUG, format, ##__VA_ARGS__)
-#define URHO3D_LOGINFOF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_INFO, format, ##__VA_ARGS__)
-#define URHO3D_LOGWARNINGF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_WARNING, format, ##__VA_ARGS__)
-#define URHO3D_LOGERRORF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_ERROR, format, ##__VA_ARGS__)
-#define URHO3D_LOGRAWF(format, ...) Urho3D::Log::WriteFormat(Urho3D::LOG_RAW, format, ##__VA_ARGS__)
+#define URHO3D_LOGF(level, format, ...) dviglo::Log::WriteFormat(level, format, ##__VA_ARGS__)
+#define URHO3D_LOGTRACEF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_TRACE, format, ##__VA_ARGS__)
+#define URHO3D_LOGDEBUGF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_DEBUG, format, ##__VA_ARGS__)
+#define URHO3D_LOGINFOF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_INFO, format, ##__VA_ARGS__)
+#define URHO3D_LOGWARNINGF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_WARNING, format, ##__VA_ARGS__)
+#define URHO3D_LOGERRORF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_ERROR, format, ##__VA_ARGS__)
+#define URHO3D_LOGRAWF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_RAW, format, ##__VA_ARGS__)
 
 #else
 #define URHO3D_LOG(message) ((void)0)

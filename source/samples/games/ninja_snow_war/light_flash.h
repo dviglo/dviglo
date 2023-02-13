@@ -6,7 +6,7 @@
 
 #include "game_object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class LightFlash : public GameObject
@@ -20,4 +20,4 @@ public:
     void FixedUpdate(float timeStep) override;
 };
 
-} // namespace Urho3D
+} // namespace dviglo

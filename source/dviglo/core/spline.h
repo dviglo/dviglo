@@ -12,7 +12,7 @@
 #include "../math/vector3.h"
 #include "../math/vector4.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum InterpolationMode

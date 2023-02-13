@@ -13,7 +13,7 @@
 #include <bullet/BulletDynamics/Vehicle/btRaycastVehicle.h>
 #include <bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 const IntVector3 RaycastVehicle::RIGHT_UP_FORWARD(0, 1, 2);
@@ -753,4 +753,4 @@ void RaycastVehicle::SetWheelDataAttr(const VariantVector& value)
     loadedWheelData_ = value;
 }
 
-} // namespace Urho3D
+} // namespace dviglo

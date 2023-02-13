@@ -8,7 +8,7 @@
 
 #include "../base/primitive_types.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Set the random seed. The default seed is 1.

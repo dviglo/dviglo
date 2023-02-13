@@ -11,7 +11,7 @@
 #include "../math/color.h"
 #include "../math/frustum.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Camera;

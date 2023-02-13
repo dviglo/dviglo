@@ -10,7 +10,7 @@
 #include "../../graphics_api/graphics_defs.h"
 #include "../../graphics_api/shader_variation.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class ConstantBuffer;

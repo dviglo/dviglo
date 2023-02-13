@@ -6,7 +6,7 @@
 
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// A link between otherwise unconnected regions of the navigation mesh.

@@ -20,7 +20,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 // Kernel used for blurring IES lights
 static const float sigma3Kernel9x9[9 * 9] = {

@@ -62,13 +62,13 @@ extern "C"
 }
 
 // Helper functions to support emscripten canvas resolution change
-static const Urho3D::Context *appContext;
+static const dviglo::Context *appContext;
 
 static void JSCanvasSize(int width, int height, bool fullscreen, float scale)
 {
     URHO3D_LOGINFOF("JSCanvasSize: width=%d height=%d fullscreen=%d ui scale=%f", width, height, fullscreen, scale);
 
-    using namespace Urho3D;
+    using namespace dviglo;
 
     if (appContext)
     {
@@ -131,7 +131,7 @@ EMSCRIPTEN_BINDINGS(Module) {
 }
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const GLenum glCmpFunc[] =

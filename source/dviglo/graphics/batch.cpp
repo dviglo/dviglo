@@ -20,7 +20,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 inline bool CompareBatchesState(Batch* lhs, Batch* rhs)

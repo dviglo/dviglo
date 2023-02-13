@@ -11,7 +11,7 @@
 #include "../math/ray.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const float DEFAULT_NEARCLIP = 0.1f;

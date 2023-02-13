@@ -8,7 +8,7 @@
 #include "../core/object.h"
 #include "../resource/xml_file.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Graphics;

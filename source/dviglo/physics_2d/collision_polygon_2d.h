@@ -6,7 +6,7 @@
 
 #include "../physics_2d/collision_shape_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// 2D polygon collision component.

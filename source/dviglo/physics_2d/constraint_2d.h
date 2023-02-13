@@ -8,7 +8,7 @@
 
 #include <box2d/box2d.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class RigidBody2D;

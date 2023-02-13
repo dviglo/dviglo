@@ -18,7 +18,7 @@ class xpath_node;
 
 }
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// XML document resource.

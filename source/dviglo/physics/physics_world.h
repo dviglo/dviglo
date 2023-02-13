@@ -24,7 +24,7 @@ class btDispatcher;
 class btDynamicsWorld;
 class btPersistentManifold;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class CollisionShape;

@@ -11,7 +11,7 @@
 #include "../graphics/zone.h"
 #include "../math/polyhedron.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Camera;

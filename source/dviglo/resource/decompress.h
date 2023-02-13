@@ -6,7 +6,7 @@
 
 #include "../resource/image.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Decompress a DXT compressed image to RGBA.

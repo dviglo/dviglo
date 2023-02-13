@@ -15,7 +15,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void CommentOutFunction(String& code, const String& signature)

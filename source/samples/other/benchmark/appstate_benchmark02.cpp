@@ -18,7 +18,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 AppState_Benchmark02::AppState_Benchmark02(Context* context)
     : AppState_Base(context)

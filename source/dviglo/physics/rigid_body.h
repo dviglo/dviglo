@@ -16,7 +16,7 @@
 class btCompoundShape;
 class btRigidBody;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class CollisionShape;

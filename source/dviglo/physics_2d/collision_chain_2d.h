@@ -6,7 +6,7 @@
 
 #include "../physics_2d/collision_shape_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 /// 2D chain collision component.
 class URHO3D_API CollisionChain2D : public CollisionShape2D

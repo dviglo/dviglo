@@ -14,7 +14,7 @@
 #include "../input/input_events.h"
 #include "../ui/cursor.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Input Mouse Modes.

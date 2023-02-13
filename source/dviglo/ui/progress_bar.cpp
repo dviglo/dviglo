@@ -10,7 +10,7 @@
 #include "../ui/progress_bar.h"
 #include "../ui/ui_events.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* orientations[];
@@ -149,7 +149,7 @@ void ProgressBar::UpdateProgressBar()
     // Update the text.
     loadingText_->SetStyle(loadingPercentStyle_);
     loadingText_->SetAlignment(HA_CENTER, VA_CENTER);
-    loadingText_->SetText(Urho3D::ToString("%d %%", RoundToInt((value_ / range_) * 100.0f)));
+    loadingText_->SetText(dviglo::ToString("%d %%", RoundToInt((value_ / range_) * 100.0f)));
 }
 
 }

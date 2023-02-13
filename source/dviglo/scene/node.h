@@ -12,7 +12,7 @@
 
 #include <memory>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Component;

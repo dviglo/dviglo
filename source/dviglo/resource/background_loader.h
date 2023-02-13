@@ -12,7 +12,7 @@
 #include "../core/thread.h"
 #include "../math/string_hash.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Resource;

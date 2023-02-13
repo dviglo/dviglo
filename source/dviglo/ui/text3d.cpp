@@ -18,7 +18,7 @@
 #include "../ui/text.h"
 #include "../ui/text3d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* horizontalAlignments[];

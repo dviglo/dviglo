@@ -8,7 +8,7 @@
 #include "../input/input_constants.h"
 
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Mouse button pressed.

@@ -9,7 +9,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void BoundingBox::Define(const Vector3* vertices, unsigned count)

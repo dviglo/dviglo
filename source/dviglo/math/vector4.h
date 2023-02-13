@@ -6,7 +6,7 @@
 
 #include "../math/vector3.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Four-dimensional vector.
@@ -155,14 +155,14 @@ public:
     /// Calculate absolute dot product.
     float AbsDotProduct(const Vector4& rhs) const
     {
-        return Urho3D::Abs(x_ * rhs.x_) + Urho3D::Abs(y_ * rhs.y_) + Urho3D::Abs(z_ * rhs.z_) + Urho3D::Abs(w_ * rhs.w_);
+        return dviglo::Abs(x_ * rhs.x_) + dviglo::Abs(y_ * rhs.y_) + dviglo::Abs(z_ * rhs.z_) + dviglo::Abs(w_ * rhs.w_);
     }
 
     /// Project vector onto axis.
     float ProjectOntoAxis(const Vector3& axis) const { return DotProduct(Vector4(axis.Normalized(), 0.0f)); }
 
     /// Return absolute vector.
-    Vector4 Abs() const { return Vector4(Urho3D::Abs(x_), Urho3D::Abs(y_), Urho3D::Abs(z_), Urho3D::Abs(w_)); }
+    Vector4 Abs() const { return Vector4(dviglo::Abs(x_), dviglo::Abs(y_), dviglo::Abs(z_), dviglo::Abs(w_)); }
 
     /// Linear interpolation with another vector.
     Vector4 Lerp(const Vector4& rhs, float t) const { return *this * (1.0f - t) + rhs * t; }
@@ -170,14 +170,14 @@ public:
     /// Test for equality with another vector with epsilon.
     bool Equals(const Vector4& rhs) const
     {
-        return Urho3D::Equals(x_, rhs.x_) && Urho3D::Equals(y_, rhs.y_) && Urho3D::Equals(z_, rhs.z_) && Urho3D::Equals(w_, rhs.w_);
+        return dviglo::Equals(x_, rhs.x_) && dviglo::Equals(y_, rhs.y_) && dviglo::Equals(z_, rhs.z_) && dviglo::Equals(w_, rhs.w_);
     }
 
     /// Return whether any component is NaN.
-    bool IsNaN() const { return Urho3D::IsNaN(x_) || Urho3D::IsNaN(y_) || Urho3D::IsNaN(z_) || Urho3D::IsNaN(w_); }
+    bool IsNaN() const { return dviglo::IsNaN(x_) || dviglo::IsNaN(y_) || dviglo::IsNaN(z_) || dviglo::IsNaN(w_); }
 
     /// Return whether any component is Inf.
-    bool IsInf() const { return Urho3D::IsInf(x_) || Urho3D::IsInf(y_) || Urho3D::IsInf(z_) || Urho3D::IsInf(w_); }
+    bool IsInf() const { return dviglo::IsInf(x_) || dviglo::IsInf(y_) || dviglo::IsInf(z_) || dviglo::IsInf(w_); }
 
     /// Convert to Vector2.
     explicit operator Vector2() const { return { x_, y_ }; }

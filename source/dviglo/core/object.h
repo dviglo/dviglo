@@ -10,7 +10,7 @@
 #include <functional>
 #include <utility>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Context;
@@ -52,12 +52,12 @@ private:
     public: \
         using ClassName = typeName; \
         using BaseClassName = baseTypeName; \
-        virtual Urho3D::StringHash GetType() const override { return GetTypeInfoStatic()->GetType(); } \
-        virtual const Urho3D::String& GetTypeName() const override { return GetTypeInfoStatic()->GetTypeName(); } \
-        virtual const Urho3D::TypeInfo* GetTypeInfo() const override { return GetTypeInfoStatic(); } \
-        static Urho3D::StringHash GetTypeStatic() { return GetTypeInfoStatic()->GetType(); } \
-        static const Urho3D::String& GetTypeNameStatic() { return GetTypeInfoStatic()->GetTypeName(); } \
-        static const Urho3D::TypeInfo* GetTypeInfoStatic() { static const Urho3D::TypeInfo typeInfoStatic(#typeName, BaseClassName::GetTypeInfoStatic()); return &typeInfoStatic; }
+        virtual dviglo::StringHash GetType() const override { return GetTypeInfoStatic()->GetType(); } \
+        virtual const dviglo::String& GetTypeName() const override { return GetTypeInfoStatic()->GetTypeName(); } \
+        virtual const dviglo::TypeInfo* GetTypeInfo() const override { return GetTypeInfoStatic(); } \
+        static dviglo::StringHash GetTypeStatic() { return GetTypeInfoStatic()->GetType(); } \
+        static const dviglo::String& GetTypeNameStatic() { return GetTypeInfoStatic()->GetTypeName(); } \
+        static const dviglo::TypeInfo* GetTypeInfoStatic() { static const dviglo::TypeInfo typeInfoStatic(#typeName, BaseClassName::GetTypeInfoStatic()); return &typeInfoStatic; }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
 class URHO3D_API Object : public RefCounted
@@ -341,12 +341,12 @@ private:
 URHO3D_API StringHashRegister& GetEventNameRegister();
 
 /// Describe an event's hash ID and begin a namespace in which to define its parameters.
-#define URHO3D_EVENT(eventID, eventName) static const Urho3D::StringHash eventID(Urho3D::GetEventNameRegister().RegisterString(#eventName)); namespace eventName
+#define URHO3D_EVENT(eventID, eventName) static const dviglo::StringHash eventID(dviglo::GetEventNameRegister().RegisterString(#eventName)); namespace eventName
 /// Describe an event's parameter hash ID. Should be used inside an event namespace.
-#define URHO3D_PARAM(paramID, paramName) static const Urho3D::StringHash paramID(#paramName)
+#define URHO3D_PARAM(paramID, paramName) static const dviglo::StringHash paramID(#paramName)
 /// Convenience macro to construct an EventHandler that points to a receiver object and its member function.
-#define URHO3D_HANDLER(className, function) (new Urho3D::EventHandlerImpl<className>(this, &className::function))
+#define URHO3D_HANDLER(className, function) (new dviglo::EventHandlerImpl<className>(this, &className::function))
 /// Convenience macro to construct an EventHandler that points to a receiver object and its member function, and also defines a userdata pointer.
-#define URHO3D_HANDLER_USERDATA(className, function, userData) (new Urho3D::EventHandlerImpl<className>(this, &className::function, userData))
+#define URHO3D_HANDLER_USERDATA(className, function, userData) (new dviglo::EventHandlerImpl<className>(this, &className::function, userData))
 
 }

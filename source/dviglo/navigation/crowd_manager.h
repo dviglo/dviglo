@@ -16,7 +16,7 @@ class dtCrowd;
 class dtQueryFilter;
 struct dtCrowdAgent;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class CrowdAgent;

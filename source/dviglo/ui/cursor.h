@@ -12,7 +12,7 @@
 
 struct SDL_Cursor;
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Cursor shapes recognized by the UI subsystem.

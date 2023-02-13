@@ -6,7 +6,7 @@
 
 #include "../container/str.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 // SoundSource type defaults

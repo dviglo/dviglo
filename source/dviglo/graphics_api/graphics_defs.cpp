@@ -8,7 +8,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const VertexElement LEGACY_VERTEXELEMENTS[] =
@@ -40,4 +40,4 @@ const i32 ELEMENT_TYPESIZES[] =
     sizeof(unsigned)
 };
 
-} // namespace Urho3D
+} // namespace dviglo

@@ -8,7 +8,7 @@
 #include "../graphics_api/texture.h"
 #include "../math/color.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Component that describes global rendering properties.

@@ -16,7 +16,7 @@ struct spAnimationStateData;
 struct spSkeleton;
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Loop mode.

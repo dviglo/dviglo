@@ -278,7 +278,7 @@ static int stbi__start_write_file(stbi__write_context *s, const char *filename)
 #ifndef _WIN32
    f = fopen(filename, "wb");
 #else
-   Urho3D::WString wstr(filename);
+   dviglo::WString wstr(filename);
 #ifdef STBI_MSC_SECURE_CRT
    if (_wfopen_s(&f, wstr.CString(), L"wb")
       f = NULL;
@@ -1116,7 +1116,7 @@ STBIWDEF int stbi_write_png(char const *filename, int x, int y, int comp, const 
 #ifndef _WIN32
    f = fopen(filename, "wb");
 #else
-   Urho3D::WString wstr(filename);
+   dviglo::WString wstr(filename);
 #ifdef STBI_MSC_SECURE_CRT
    if (_wfopen_s(&f, wstr.CString(), L"wb")
       f = NULL;

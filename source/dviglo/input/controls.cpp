@@ -6,7 +6,7 @@
 
 #include "../input/controls.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Controls::Controls() :

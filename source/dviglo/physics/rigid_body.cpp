@@ -25,7 +25,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const float DEFAULT_MASS = 0.0f;

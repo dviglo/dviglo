@@ -9,7 +9,7 @@
 #include "../graphics_api/texture.h"
 #include "../resource/image.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// 3D texture resource.

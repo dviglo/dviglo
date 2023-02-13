@@ -9,7 +9,7 @@
 #include "../math/matrix3x4.h"
 #include "../ui/text.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Text;

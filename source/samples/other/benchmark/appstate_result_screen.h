@@ -12,7 +12,7 @@ public:
     URHO3D_OBJECT(AppState_ResultScreen, AppState_Base);
 
 public:
-    AppState_ResultScreen(U3D::Context* context)
+    AppState_ResultScreen(dv::Context* context)
         : AppState_Base(context)
     {
         name_ = "Result Screen";
@@ -21,9 +21,9 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void HandleSceneUpdate(U3D::StringHash eventType, U3D::VariantMap& eventData);
+    void HandleSceneUpdate(dv::StringHash eventType, dv::VariantMap& eventData);
 
     void ShowResultWindow();
     void DestroyResultWindow();
-    void HandleResultOkButtonPressed(U3D::StringHash eventType, U3D::VariantMap& eventData);
+    void HandleResultOkButtonPressed(dv::StringHash eventType, dv::VariantMap& eventData);
 };

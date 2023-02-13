@@ -10,7 +10,7 @@
 #include "../navigation/nav_area.h"
 #include "../scene/node.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const unsigned MAX_NAV_AREA_ID = 255;
