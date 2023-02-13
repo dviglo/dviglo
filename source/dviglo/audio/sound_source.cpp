@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../audio/audio.h"
 #include "../audio/audio_events.h"
 #include "../audio/sound.h"

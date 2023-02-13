@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/context.h"
 #include "../urho_2d/stretchable_sprite_2d.h"
 #include "../urho_2d/animated_sprite_2d.h"

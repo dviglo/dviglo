@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/context.h"
 #include "../input/input_events.h"
 #include "../ui/button.h"

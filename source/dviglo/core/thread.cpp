@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/thread.h"
 
 #ifdef _WIN32

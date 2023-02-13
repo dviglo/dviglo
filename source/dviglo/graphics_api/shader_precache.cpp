@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../graphics/graphics.h"
 #include "../graphics_api/graphics_impl.h"
 #include "../graphics_api/shader_precache.h"

@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../io/file.h"
 #include "../io/file_system.h"
 #include "../io/file_watcher.h"

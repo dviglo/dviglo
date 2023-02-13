@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../io/log.h"
 #include "../scene/value_animation.h"
 #include "../scene/value_animation_info.h"

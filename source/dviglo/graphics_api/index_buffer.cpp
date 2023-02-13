@@ -4,8 +4,6 @@
 
 // This file contains IndexBuffer code common to all graphics APIs.
 
-#include "../precompiled.h"
-
 #include "../graphics/graphics.h"
 #include "../graphics_api/index_buffer.h"
 #include "../io/log.h"

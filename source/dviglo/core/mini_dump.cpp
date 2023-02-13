@@ -4,8 +4,6 @@
 
 #if defined(_MSC_VER) && defined(DV_MINIDUMPS)
 
-#include "../precompiled.h"
-
 #include "../core/mini_dump.h"
 #include "../core/process_utils.h"
 #include "../engine/win_wrapped.h"

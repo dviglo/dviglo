@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
+#include "ui.h"
 
 #include "../container/sort.h"
 #include "../core/context.h"
@@ -39,7 +39,6 @@
 #include "../ui/text.h"
 #include "../ui/text3d.h"
 #include "../ui/tooltip.h"
-#include "../ui/ui.h"
 #include "../ui/ui_component.h"
 #include "../ui/ui_events.h"
 #include "../ui/view3d.h"

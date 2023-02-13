@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/context.h"
 #include "../io/log.h"
 #include "../graphics_api/texture_2d.h"

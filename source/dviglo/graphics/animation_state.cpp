@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../graphics/animated_model.h"
 #include "../graphics/animation.h"
 #include "../graphics/animation_state.h"

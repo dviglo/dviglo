@@ -4,8 +4,6 @@
 
 // This file contains VertexBuffer code common to all graphics APIs.
 
-#include "../precompiled.h"
-
 #include "../graphics/graphics.h"
 #include "../math/math_defs.h"
 #include "vertex_buffer.h"

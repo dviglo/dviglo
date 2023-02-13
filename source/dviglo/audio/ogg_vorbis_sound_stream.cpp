@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../audio/ogg_vorbis_sound_stream.h"
 #include "../audio/sound.h"
 

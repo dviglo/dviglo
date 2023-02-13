@@ -2,9 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
-#include "../container/list_base.h"
+#include "hash_base.h"
+#include "list_base.h"
+#include "str.h"
+#include "vector_base.h"
 
 namespace dviglo
 {

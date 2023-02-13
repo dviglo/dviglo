@@ -2,9 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../audio/buffered_sound_stream.h"
+
+#include <cstring>
+#include <iterator>
 
 #include "../debug_new.h"
 

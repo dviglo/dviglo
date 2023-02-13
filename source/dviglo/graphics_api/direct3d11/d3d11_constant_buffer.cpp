@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../../precompiled.h"
-
 #include "../../graphics/graphics.h"
 #include "../../graphics_api/constant_buffer.h"
 #include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"

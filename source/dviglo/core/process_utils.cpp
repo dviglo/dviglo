@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/process_utils.h"
 #include "../core/string_utils.h"
 #include "../io/file_system.h"

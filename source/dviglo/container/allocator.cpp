@@ -2,7 +2,9 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
+#include "allocator.h"
+
+#include <cassert>
 
 #include "../debug_new.h"
 

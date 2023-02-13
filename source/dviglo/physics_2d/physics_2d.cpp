@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/context.h"
 #include "../physics_2d/collision_box_2d.h"
 #include "../physics_2d/collision_chain_2d.h"

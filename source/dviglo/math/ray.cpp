@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../math/bounding_box.h"
 #include "../math/frustum.h"
 #include "../math/ray.h"

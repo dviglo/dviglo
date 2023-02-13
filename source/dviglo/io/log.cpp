@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../container/str.h"
 #include "../core/context.h"
 #include "../core/core_events.h"

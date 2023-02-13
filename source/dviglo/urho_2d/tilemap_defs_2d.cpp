@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../resource/xml_element.h"
 #include "../resource/json_file.h"
 #include "../urho_2d/tilemap_defs_2d.h"

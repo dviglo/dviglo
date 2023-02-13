@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../core/core_events.h"
 #include "../core/profiler.h"
 #include "../graphics/camera.h"

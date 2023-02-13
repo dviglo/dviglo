@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../precompiled.h"
-
 #include "../io/log.h"
 #if defined(DV_BULLET) || defined(DV_BOX2D)
 #include "../physics/physics_events.h"

@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../../precompiled.h"
-
 #include "../../graphics/camera.h"
 #include "../../graphics/graphics.h"
 #include "../../graphics/renderer.h"
