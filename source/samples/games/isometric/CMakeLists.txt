@@ -21,7 +21,7 @@ add_executable(${target_name} WIN32 ${source_files} ${common_source_files})
 set_property(TARGET ${target_name} PROPERTY DEBUG_POSTFIX _d)
 
 # Подключаем библиотеку
-target_link_libraries(${target_name} PRIVATE Urho3D)
+target_link_libraries(${target_name} PRIVATE dviglo)
 
 # Копируем динамические библиотеки в папку с приложением
 dv_copy_shared_libs_to_bin_dir(${target_name} "${CMAKE_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)

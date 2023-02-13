@@ -2,7 +2,7 @@
 # License: MIT
 
 # Название таргета
-set(target_name Urho3D)
+set(target_name dviglo)
 
 # Отладочная версия библиотеки будут иметь суффикс _d.
 # Не работает для экзешников

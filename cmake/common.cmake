@@ -153,7 +153,7 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
 
         # Если движок скомпилирован как динамическая библиотека, то добавляем её в список
         if(URHO3D_LIB_TYPE STREQUAL "SHARED")
-            list(APPEND libs "$<TARGET_FILE:Urho3D>")
+            list(APPEND libs "$<TARGET_FILE:dviglo>")
         endif()
 
         # Если движок не линкует MSVC runtime статически, то добавляем библиотеки в список
