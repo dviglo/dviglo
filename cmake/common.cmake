@@ -50,7 +50,7 @@ option(URHO3D_PHYSICS "3D-физика" TRUE)
 option(URHO3D_TESTING "CTest")
 option(URHO3D_SAMPLES "Примеры" TRUE)
 option(URHO3D_TOOLS "Инструменты" TRUE)
-option(URHO3D_NAVIGATION "Навигация" TRUE)
+option(DV_NAVIGATION "Навигация" TRUE)
 cmake_dependent_option(URHO3D_OPENGL "OpenGL" TRUE "WIN32" TRUE) # Не на Windows всегда TRUE
 cmake_dependent_option(URHO3D_D3D11 "Direct3D 11" TRUE "WIN32" FALSE) # Не на Windows всегда FALSE
 cmake_dependent_option(DV_STATIC_RUNTIME "Сатическая линковка MSVC runtime" FALSE "MSVC" FALSE)

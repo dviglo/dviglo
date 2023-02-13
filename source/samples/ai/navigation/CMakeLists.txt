@@ -2,7 +2,7 @@
 # License: MIT
 
 # Движок должен быть скомпилирован с поддержкой навигации
-if(NOT URHO3D_NAVIGATION)
+if(NOT DV_NAVIGATION)
     return()
 endif()
 

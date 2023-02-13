@@ -62,7 +62,7 @@ if(URHO3D_OPENGL)
     list(APPEND source_files ${tmp_var})
 endif()
 
-if(URHO3D_NAVIGATION)
+if(DV_NAVIGATION)
     # Пополняем список исходников
     file(GLOB tmp_var navigation/*.cpp navigation/*.h)
     list(APPEND source_files ${tmp_var})
@@ -70,9 +70,9 @@ if(URHO3D_NAVIGATION)
     # Пополняем содержимое файла dviglo_all.h
     file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} navigation/*.h)
     list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
-    list(APPEND dviglo_all_content ";#if URHO3D_NAVIGATION")
+    list(APPEND dviglo_all_content ";#if DV_NAVIGATION")
     list(APPEND dviglo_all_content ${tmp_var})
-    list(APPEND dviglo_all_content "#endif // URHO3D_NAVIGATION")
+    list(APPEND dviglo_all_content "#endif // DV_NAVIGATION")
 endif()
 
 if(URHO3D_NETWORK)
@@ -169,8 +169,8 @@ if(URHO3D_MINIDUMPS)
     target_link_libraries(${target_name} PUBLIC dbghelp)
 endif()
 
-if(URHO3D_NAVIGATION)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_NAVIGATION=1)
+if(DV_NAVIGATION)
+    target_compile_definitions(${target_name} PUBLIC DV_NAVIGATION=1)
     target_link_libraries(${target_name} PUBLIC detour detour_crowd detour_tile_cache recast)
 endif()
 

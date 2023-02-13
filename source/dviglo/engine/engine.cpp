@@ -20,7 +20,7 @@
 #include "../io/file_system.h"
 #include "../io/log.h"
 #include "../io/package_file.h"
-#ifdef URHO3D_NAVIGATION
+#ifdef DV_NAVIGATION
 #include "../navigation/navigation_mesh.h"
 #endif
 #ifdef URHO3D_NETWORK
@@ -133,7 +133,7 @@ Engine::Engine(Context* context) :
     RegisterPhysics2DLibrary(context_);
 #endif
 
-#ifdef URHO3D_NAVIGATION
+#ifdef DV_NAVIGATION
     RegisterNavigationLibrary(context_);
 #endif
 
