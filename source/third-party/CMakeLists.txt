@@ -2,7 +2,7 @@
 # License: MIT
 
 # Помещаем сторонние библиотеки в отдельный проект
-project(dviglo-third-party)
+project("dv 3rd-party libs")
 
 # В IDE таргеты будут отображаться в папке "сторонние библиотеки"
 set(CMAKE_FOLDER "сторонние библиотеки")

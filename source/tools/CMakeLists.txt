@@ -7,7 +7,7 @@ if(DVIGLO_IS_SUBPROJECT)
 endif()
 
 # Помещаем инструменты в отдельный проект
-project(dviglo-tools)
+project("dv tools")
 
 # В IDE таргеты будут отображаться в папке инструменты
 set(CMAKE_FOLDER инструменты)

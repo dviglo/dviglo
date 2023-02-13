@@ -7,7 +7,7 @@ if(DVIGLO_IS_SUBPROJECT)
 endif ()
 
 # Помещаем документацию в отдельный проект
-project(dviglo-docs)
+project("dv docs")
 
 if (DV_DOCS_QUIET)
     set (DV_DOCS 1)

@@ -10,7 +10,7 @@ if(NOT DV_SAMPLES)
 endif()
 
 # Помещаем примеры в отдельный проект
-project(dviglo-samples)
+project("dv samples")
 
 # В IDE таргеты будут отображаться в папке примеры
 set(CMAKE_FOLDER примеры)
