@@ -8,20 +8,20 @@
 
 #include <dviglo/scene/scene.h>
 
-namespace U3D = Urho3D;
+namespace dv = dviglo;
 
-inline const U3D::String CURRENT_FPS_STR = "Current FPS";
+inline const dv::String CURRENT_FPS_STR = "Current FPS";
 
-class AppState_Base : public U3D::Object
+class AppState_Base : public dv::Object
 {
 public:
     URHO3D_OBJECT(AppState_Base, Object);
 
 protected:
-    U3D::String name_ = "Название бенчмарка";
+    dv::String name_ = "Название бенчмарка";
 
-    U3D::SharedPtr<U3D::Scene> scene_;
-    void LoadSceneXml(const U3D::String& path);
+    dv::SharedPtr<dv::Scene> scene_;
+    void LoadSceneXml(const dv::String& path);
 
     FpsCounter fpsCounter_;
     void UpdateCurrentFpsElement();
@@ -30,10 +30,10 @@ protected:
     void DestroyViewport();
 
 public:
-    const U3D::String& GetName() const { return name_; }
+    const dv::String& GetName() const { return name_; }
     const FpsCounter& GetResult() const { return fpsCounter_; }
 
-    AppState_Base(U3D::Context* context)
+    AppState_Base(dv::Context* context)
         : Object(context)
     {
     }

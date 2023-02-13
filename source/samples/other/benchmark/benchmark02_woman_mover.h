@@ -7,10 +7,10 @@
 #include <dviglo/scene/logic_component.h>
 #include <dviglo/math/bounding_box.h>
 
-namespace U3D = Urho3D;
+namespace dv = dviglo;
 
 // Custom logic component for moving the animated model and rotating at area edges
-class Benchmark02_WomanMover : public U3D::LogicComponent
+class Benchmark02_WomanMover : public dv::LogicComponent
 {
 public:
     URHO3D_OBJECT(Benchmark02_WomanMover, LogicComponent);
@@ -23,13 +23,13 @@ private:
     float rotationSpeed_;
     
     // Movement boundaries
-    U3D::BoundingBox bounds_;
+    dv::BoundingBox bounds_;
 
 public:
-    explicit Benchmark02_WomanMover(U3D::Context* context);
+    explicit Benchmark02_WomanMover(dv::Context* context);
 
     // Set motion parameters: forward movement speed, rotation speed, and movement boundaries
-    void SetParameters(float moveSpeed, float rotationSpeed, const U3D::BoundingBox& bounds);
+    void SetParameters(float moveSpeed, float rotationSpeed, const dv::BoundingBox& bounds);
     
     // Handle scene update. Called by LogicComponent base class
     void Update(float timeStep) override;
@@ -41,5 +41,5 @@ public:
     float GetRotationSpeed() const { return rotationSpeed_; }
     
     // Return movement boundaries
-    const U3D::BoundingBox& GetBounds() const { return bounds_; }
+    const dv::BoundingBox& GetBounds() const { return bounds_; }
 };

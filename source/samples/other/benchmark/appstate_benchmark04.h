@@ -15,7 +15,7 @@ public:
     URHO3D_OBJECT(AppState_Benchmark04, AppState_Base);
 
 public:
-    AppState_Benchmark04(U3D::Context* context)
+    AppState_Benchmark04(dv::Context* context)
         : AppState_Base(context)
     {
         name_ = "SpriteBatch";
@@ -28,5 +28,5 @@ public:
     float angle_ = 0.f;
     float scale_ = 0.f;
 
-    void HandleEndAllViewsRender(U3D::StringHash eventType, U3D::VariantMap& eventData);
+    void HandleEndAllViewsRender(dv::StringHash eventType, dv::VariantMap& eventData);
 };

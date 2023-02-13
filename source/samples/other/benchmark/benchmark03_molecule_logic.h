@@ -7,21 +7,21 @@
 #include <dviglo/scene/logic_component.h>
 #include <dviglo/base/primitive_types.h>
 
-namespace U3D = Urho3D;
+namespace dv = dviglo;
 using namespace dviglo::PrimitiveTypes;
 
-class Benchmark03_MoleculeLogic : public U3D::LogicComponent
+class Benchmark03_MoleculeLogic : public dv::LogicComponent
 {
 public:
     URHO3D_OBJECT(Benchmark03_MoleculeLogic, LogicComponent);
 
 private:
     i32 moleculeType_;
-    U3D::Vector2 velocity_;
-    U3D::Vector2 force_;
+    dv::Vector2 velocity_;
+    dv::Vector2 force_;
 
 public:
-    explicit Benchmark03_MoleculeLogic(U3D::Context* context);
+    explicit Benchmark03_MoleculeLogic(dv::Context* context);
 
     void SetParameters(i32 moleculeType);
 
