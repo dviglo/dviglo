@@ -88,7 +88,7 @@ private:
     void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle scene post-update event.
     void HandleScenePostUpdate(StringHash eventType, VariantMap& eventData);
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_PHYSICS2D)
+#if defined(DV_BULLET) || defined(DV_BOX2D)
     /// Handle physics pre-step event.
     void HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData);
     /// Handle physics post-step event.

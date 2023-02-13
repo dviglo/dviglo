@@ -10,10 +10,10 @@
 #include "../scene/replication_state.h"
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
-#ifdef URHO3D_PHYSICS
+#ifdef DV_BULLET
 #include "../physics/physics_world.h"
 #endif
-#ifdef URHO3D_PHYSICS2D
+#ifdef DV_BOX2D
 #include "../physics_2d/physics_world_2d.h"
 #endif
 
@@ -272,10 +272,10 @@ Component* Component::GetFixedUpdateSource()
 
     if (scene)
     {
-#ifdef URHO3D_PHYSICS
+#ifdef DV_BULLET
         ret = scene->GetComponent<PhysicsWorld>();
 #endif
-#ifdef URHO3D_PHYSICS2D
+#ifdef DV_BOX2D
         if (!ret)
             ret = scene->GetComponent<PhysicsWorld2D>();
 #endif

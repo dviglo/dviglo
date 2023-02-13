@@ -29,11 +29,11 @@
 #ifdef URHO3D_DATABASE
 #include "../database/database.h"
 #endif
-#ifdef URHO3D_PHYSICS
+#ifdef DV_BULLET
 #include "../physics/physics_world.h"
 #include "../physics/raycast_vehicle.h"
 #endif
-#ifdef URHO3D_PHYSICS2D
+#ifdef DV_BOX2D
 #include "../physics_2d/physics_2d.h"
 #endif
 #include "../resource/resource_cache.h"
@@ -125,11 +125,11 @@ Engine::Engine(Context* context) :
     // Register object factories for libraries which are not automatically registered along with subsystem creation
     RegisterSceneLibrary(context_);
 
-#ifdef URHO3D_PHYSICS
+#ifdef DV_BULLET
     RegisterPhysicsLibrary(context_);
 #endif
 
-#ifdef URHO3D_PHYSICS2D
+#ifdef DV_BOX2D
     RegisterPhysics2DLibrary(context_);
 #endif
 

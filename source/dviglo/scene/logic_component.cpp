@@ -5,7 +5,7 @@
 #include "../precompiled.h"
 
 #include "../io/log.h"
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_PHYSICS2D)
+#if defined(DV_BULLET) || defined(DV_BOX2D)
 #include "../physics/physics_events.h"
 #endif
 #include "../scene/logic_component.h"
@@ -77,7 +77,7 @@ void LogicComponent::OnSceneSet(Scene* scene)
     {
         UnsubscribeFromEvent(E_SCENEUPDATE);
         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_PHYSICS2D)
+#if defined(DV_BULLET) || defined(DV_BOX2D)
         UnsubscribeFromEvent(E_PHYSICSPRESTEP);
         UnsubscribeFromEvent(E_PHYSICSPOSTSTEP);
 #endif
@@ -117,7 +117,7 @@ void LogicComponent::UpdateEventSubscription()
         currentEventMask_ &= ~LogicComponentEvents::PostUpdate;
     }
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_PHYSICS2D)
+#if defined(DV_BULLET) || defined(DV_BOX2D)
     Component* world = GetFixedUpdateSource();
     if (!world)
         return;
@@ -179,7 +179,7 @@ void LogicComponent::HandleScenePostUpdate(StringHash eventType, VariantMap& eve
     PostUpdate(eventData[P_TIMESTEP].GetFloat());
 }
 
-#if defined(URHO3D_PHYSICS) || defined(URHO3D_PHYSICS2D)
+#if defined(DV_BULLET) || defined(DV_BOX2D)
 
 void LogicComponent::HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData)
 {

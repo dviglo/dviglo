@@ -2,7 +2,7 @@
 # License: MIT
 
 # Движок должен быть скомпилирован с поддержкой 3D-физики
-if(NOT URHO3D_PHYSICS)
+if(NOT DV_BULLET)
     return()
 endif()
 
