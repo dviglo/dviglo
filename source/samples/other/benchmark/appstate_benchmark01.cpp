@@ -19,7 +19,7 @@ void AppState_Benchmark01::OnEnter()
 
     GetSubsystem<Input>()->SetMouseVisible(false);
     SetupViewport();
-    SubscribeToEvent(scene_, E_SCENEUPDATE, URHO3D_HANDLER(AppState_Benchmark01, HandleSceneUpdate));
+    SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark01, HandleSceneUpdate));
     fpsCounter_.Clear();
 }
 

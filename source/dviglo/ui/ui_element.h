@@ -94,16 +94,16 @@ enum DragAndDropMode : unsigned
     /// Drag and drop source and target.
     DD_SOURCE_AND_TARGET = 0x3,
 };
-URHO3D_FLAGSET(DragAndDropMode, DragAndDropModeFlags);
+DV_FLAGSET(DragAndDropMode, DragAndDropModeFlags);
 
 class Cursor;
 class ResourceCache;
 class Texture2D;
 
 /// Base class for %UI elements.
-class URHO3D_API UIElement : public Animatable
+class DV_API UIElement : public Animatable
 {
-    URHO3D_OBJECT(UIElement, Animatable);
+    DV_OBJECT(UIElement, Animatable);
 
 public:
     /// Construct.

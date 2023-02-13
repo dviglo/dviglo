@@ -201,8 +201,8 @@ Network::Network(Context* context) :
     // Register Network library object factories
     RegisterNetworkLibrary(context_);
 
-    SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(Network, HandleBeginFrame));
-    SubscribeToEvent(E_RENDERUPDATE, URHO3D_HANDLER(Network, HandleRenderUpdate));
+    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(Network, HandleBeginFrame));
+    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Network, HandleRenderUpdate));
 
     // Blacklist remote events which are not to be allowed to be registered in any case
     blacklistedRemoteEvents_.Insert(E_CONSOLECOMMAND);
@@ -284,7 +284,7 @@ void Network::HandleMessage(const SLNet::AddressOrGUID& source, int packetID, in
             return;
     }
     else
-        URHO3D_LOGWARNING("Discarding message from unknown MessageConnection " + String(source.ToString()));
+        DV_LOGWARNING("Discarding message from unknown MessageConnection " + String(source.ToString()));
 }
 
 void Network::NewConnectionEstablished(const SLNet::AddressOrGUID& connection)
@@ -293,7 +293,7 @@ void Network::NewConnectionEstablished(const SLNet::AddressOrGUID& connection)
     SharedPtr<Connection> newConnection(new Connection(context_, true, connection, rakPeer_));
     newConnection->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
     clientConnections_[connection] = newConnection;
-    URHO3D_LOGINFO("Client " + newConnection->ToString() + " connected");
+    DV_LOGINFO("Client " + newConnection->ToString() + " connected");
 
     using namespace ClientConnected;
 
@@ -309,7 +309,7 @@ void Network::ClientDisconnected(const SLNet::AddressOrGUID& connection)
     if (i != clientConnections_.End())
     {
         Connection* connection = i->second_;
-        URHO3D_LOGINFO("Client " + connection->ToString() + " disconnected");
+        DV_LOGINFO("Client " + connection->ToString() + " disconnected");
 
         using namespace ClientDisconnected;
 
@@ -326,7 +326,7 @@ void Network::SetDiscoveryBeacon(const VariantMap& data)
     VectorBuffer buffer;
     buffer.WriteVariantMap(data);
     if (buffer.GetSize() > 400)
-        URHO3D_LOGERROR("Discovery beacon of size: " + String(buffer.GetSize()) + " bytes is too large, modify MAX_OFFLINE_DATA_LENGTH in RakNet or reduce size");
+        DV_LOGERROR("Discovery beacon of size: " + String(buffer.GetSize()) + " bytes is too large, modify MAX_OFFLINE_DATA_LENGTH in RakNet or reduce size");
     rakPeer_->SetOfflinePingResponse((const char*)buffer.GetData(), buffer.GetSize());
 }
 
@@ -350,11 +350,11 @@ void Network::SetPassword(const String& password)
 
 bool Network::Connect(const String& address, unsigned short port, Scene* scene, const VariantMap& identity)
 {
-    URHO3D_PROFILE(Connect);
+    DV_PROFILE(Connect);
 
     if (!rakPeerClient_->IsActive())
     {
-        URHO3D_LOGINFO("Initializing client connection...");
+        DV_LOGINFO("Initializing client connection...");
         SLNet::SocketDescriptor socket;
         // Startup local connection with max 2 incoming connections(first param) and 1 socket description (third param)
         rakPeerClient_->Startup(2, &socket, 1);
@@ -370,22 +370,22 @@ bool Network::Connect(const String& address, unsigned short port, Scene* scene, 
         serverConnection_->SetConnectPending(true);
         serverConnection_->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
 
-        URHO3D_LOGINFO("Connecting to server " + address + ":" + String(port) + ", Client: " + serverConnection_->ToString());
+        DV_LOGINFO("Connecting to server " + address + ":" + String(port) + ", Client: " + serverConnection_->ToString());
         return true;
     }
     else if (connectResult == SLNet::ALREADY_CONNECTED_TO_ENDPOINT) {
-        URHO3D_LOGWARNING("Already connected to server!");
+        DV_LOGWARNING("Already connected to server!");
         SendEvent(E_CONNECTIONINPROGRESS);
         return false;
     }
     else if (connectResult == SLNet::CONNECTION_ATTEMPT_ALREADY_IN_PROGRESS) {
-        URHO3D_LOGWARNING("Connection attempt already in progress!");
+        DV_LOGWARNING("Connection attempt already in progress!");
         SendEvent(E_CONNECTIONINPROGRESS);
         return false;
     }
     else
     {
-        URHO3D_LOGERROR("Failed to connect to server " + address + ":" + String(port) + ", error code: " + String((int)connectResult));
+        DV_LOGERROR("Failed to connect to server " + address + ":" + String(port) + ", error code: " + String((int)connectResult));
         SendEvent(E_CONNECTFAILED);
         return false;
     }
@@ -396,7 +396,7 @@ void Network::Disconnect(int waitMSec)
     if (!serverConnection_)
         return;
 
-    URHO3D_PROFILE(Disconnect);
+    DV_PROFILE(Disconnect);
     serverConnection_->Disconnect(waitMSec);
 }
 
@@ -405,7 +405,7 @@ bool Network::StartServer(unsigned short port, unsigned int maxConnections)
     if (IsServerRunning())
         return true;
 
-    URHO3D_PROFILE(StartServer);
+    DV_PROFILE(StartServer);
 
     SLNet::SocketDescriptor socket;//(port, AF_INET);
     socket.port = port;
@@ -414,7 +414,7 @@ bool Network::StartServer(unsigned short port, unsigned int maxConnections)
     SLNet::StartupResult startResult = rakPeer_->Startup(maxConnections, &socket, 1);
     if (startResult == SLNet::RAKNET_STARTED)
     {
-        URHO3D_LOGINFO("Started server on port " + String(port));
+        DV_LOGINFO("Started server on port " + String(port));
         rakPeer_->SetMaximumIncomingConnections(maxConnections);
         isServer_ = true;
         rakPeer_->SetOccasionalPing(true);
@@ -424,7 +424,7 @@ bool Network::StartServer(unsigned short port, unsigned int maxConnections)
     }
     else
     {
-        URHO3D_LOGINFO("Failed to start server on port " + String(port) + ", error code: " + String((int)startResult));
+        DV_LOGINFO("Failed to start server on port " + String(port) + ", error code: " + String((int)startResult));
         return false;
     }
 }
@@ -441,9 +441,9 @@ void Network::StopServer()
     // Provide 300 ms to notify
     rakPeer_->Shutdown(300);
 
-    URHO3D_PROFILE(StopServer);
+    DV_PROFILE(StopServer);
 
-    URHO3D_LOGINFO("Stopped server");
+    DV_LOGINFO("Stopped server");
 }
 
 void Network::SetNATServerInfo(const String& address, unsigned short port)
@@ -457,17 +457,17 @@ void Network::SetNATServerInfo(const String& address, unsigned short port)
 void Network::StartNATClient()
 {
     if (!rakPeer_) {
-        URHO3D_LOGERROR("Unable to start NAT client, client not initialized!");
+        DV_LOGERROR("Unable to start NAT client, client not initialized!");
         return;
     }
     if (natPunchServerAddress_->GetPort() == 0) {
-        URHO3D_LOGERROR("NAT master server address incorrect!");
+        DV_LOGERROR("NAT master server address incorrect!");
         return;
     }
 
     rakPeer_->AttachPlugin(natPunchthroughServerClient_);
     guid_ = String(rakPeer_->GetGuidFromSystemAddress(SLNet::UNASSIGNED_SYSTEM_ADDRESS).ToString());
-    URHO3D_LOGINFO("GUID: " + guid_);
+    DV_LOGINFO("GUID: " + guid_);
     rakPeer_->Connect(natPunchServerAddress_->ToString(false), natPunchServerAddress_->GetPort(), nullptr, 0);
 }
 
@@ -511,7 +511,7 @@ void Network::BroadcastMessage(int msgID, bool reliable, bool inOrder, const byt
     if (isServer_)
         rakPeer_->Send((const char*)msgData.GetData(), (int)msgData.GetSize(), HIGH_PRIORITY, RELIABLE, (char)0, SLNet::UNASSIGNED_RAKNET_GUID, true);
     else
-        URHO3D_LOGERROR("Server not running, can not broadcast messages");
+        DV_LOGERROR("Server not running, can not broadcast messages");
 }
 
 void Network::BroadcastRemoteEvent(StringHash eventType, bool inOrder, const VariantMap& eventData)
@@ -534,12 +534,12 @@ void Network::BroadcastRemoteEvent(Node* node, StringHash eventType, bool inOrde
 {
     if (!node)
     {
-        URHO3D_LOGERROR("Null sender node for remote node event");
+        DV_LOGERROR("Null sender node for remote node event");
         return;
     }
     if (!node->IsReplicated())
     {
-        URHO3D_LOGERROR("Sender node has a local ID, can not send remote node event");
+        DV_LOGERROR("Sender node has a local ID, can not send remote node event");
         return;
     }
 
@@ -575,7 +575,7 @@ void Network::RegisterRemoteEvent(StringHash eventType)
 {
     if (blacklistedRemoteEvents_.Find(eventType) != blacklistedRemoteEvents_.End())
     {
-        URHO3D_LOGERROR("Attempted to register blacklisted remote event type " + String(eventType));
+        DV_LOGERROR("Attempted to register blacklisted remote event type " + String(eventType));
         return;
     }
 
@@ -601,12 +601,12 @@ void Network::SendPackageToClients(Scene* scene, PackageFile* package)
 {
     if (!scene)
     {
-        URHO3D_LOGERROR("Null scene specified for SendPackageToClients");
+        DV_LOGERROR("Null scene specified for SendPackageToClients");
         return;
     }
     if (!package)
     {
-        URHO3D_LOGERROR("Null package specified for SendPackageToClients");
+        DV_LOGERROR("Null package specified for SendPackageToClients");
         return;
     }
 
@@ -621,7 +621,7 @@ void Network::SendPackageToClients(Scene* scene, PackageFile* package)
 SharedPtr<HttpRequest> Network::MakeHttpRequest(const String& url, const String& verb, const Vector<String>& headers,
     const String& postData)
 {
-    URHO3D_PROFILE(MakeHttpRequest);
+    DV_PROFILE(MakeHttpRequest);
 
     // The initialization of the request will take time, can not know at this point if it has an error or not
     SharedPtr<HttpRequest> request(new HttpRequest(url, verb, headers, postData));
@@ -699,7 +699,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     else if (packetID == ID_ALREADY_CONNECTED)
     {
         if (natPunchServerAddress_ && packet->systemAddress == *natPunchServerAddress_) {
-            URHO3D_LOGINFO("Already connected to NAT server! ");
+            DV_LOGINFO("Already connected to NAT server! ");
             if (!isServer)
             {
                 natPunchthroughClient_->OpenNAT(*remoteGUID_, *natPunchServerAddress_);
@@ -710,7 +710,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     else if (packetID == ID_CONNECTION_REQUEST_ACCEPTED) // We're a client, our connection as been accepted
     {
         if(natPunchServerAddress_ && packet->systemAddress == *natPunchServerAddress_) {
-            URHO3D_LOGINFO("Succesfully connected to NAT punchtrough server! ");
+            DV_LOGINFO("Succesfully connected to NAT punchtrough server! ");
             SendEvent(E_NATMASTERCONNECTIONSUCCEEDED);
             if (!isServer)
             {
@@ -726,7 +726,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     }
     else if (packetID == ID_NAT_TARGET_NOT_CONNECTED)
     {
-        URHO3D_LOGERROR("Target server not connected to NAT master server!");
+        DV_LOGERROR("Target server not connected to NAT master server!");
         packetHandled = true;
     }
     else if (packetID == ID_CONNECTION_LOST) // We've lost connectivity with the packet source
@@ -756,7 +756,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     else if (packetID == ID_CONNECTION_ATTEMPT_FAILED) // We've failed to connect to the server/peer
     {
         if (natPunchServerAddress_ && packet->systemAddress == *natPunchServerAddress_) {
-            URHO3D_LOGERROR("Connection to NAT punchtrough server failed!");
+            DV_LOGERROR("Connection to NAT punchtrough server failed!");
             SendEvent(E_NATMASTERCONNECTIONFAILED);
 
         } else {
@@ -771,7 +771,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     else if (packetID == ID_NAT_PUNCHTHROUGH_SUCCEEDED)
     {
         SLNet::SystemAddress remotePeer = packet->systemAddress;
-        URHO3D_LOGINFO("NAT punchtrough succeeded! Remote peer: " + String(remotePeer.ToString()));
+        DV_LOGINFO("NAT punchtrough succeeded! Remote peer: " + String(remotePeer.ToString()));
         if (!isServer)
         {
             using namespace NetworkNatPunchtroughSucceeded;
@@ -779,14 +779,14 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
             eventMap[P_ADDRESS] = remotePeer.ToString(false);
             eventMap[P_PORT] = remotePeer.GetPort();
             SendEvent(E_NETWORKNATPUNCHTROUGHSUCCEEDED, eventMap);
-            URHO3D_LOGINFO("Connecting to server behind NAT: " + String(remotePeer.ToString()));
+            DV_LOGINFO("Connecting to server behind NAT: " + String(remotePeer.ToString()));
             Connect(String(remotePeer.ToString(false)), remotePeer.GetPort(), scene_, identity_);
         }
         packetHandled = true;
     }
     else if (packetID == ID_NAT_PUNCHTHROUGH_FAILED)
     {
-        URHO3D_LOGERROR("NAT punchtrough failed!");
+        DV_LOGERROR("NAT punchtrough failed!");
         SLNet::SystemAddress remotePeer = packet->systemAddress;
         using namespace NetworkNatPunchtroughFailed;
         VariantMap eventMap;
@@ -797,19 +797,19 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     }
     else if (packetID == ID_CONNECTION_BANNED) // We're a client and we're on the ban list
     {
-        URHO3D_LOGERROR("Connection failed, you're banned!");
+        DV_LOGERROR("Connection failed, you're banned!");
         SendEvent(E_NETWORKBANNED);
         packetHandled = true;
     }
     else if (packetID == ID_INVALID_PASSWORD) // We're a client, and we gave an invalid password
     {
-        URHO3D_LOGERROR("Invalid password provided for connection!");
+        DV_LOGERROR("Invalid password provided for connection!");
         SendEvent(E_NETWORKINVALIDPASSWORD);
         packetHandled = true;
     }
     else if (packetID == ID_DOWNLOAD_PROGRESS) // Part of a file transfer
     {
-        //URHO3D_LOGINFO("101010");
+        //DV_LOGINFO("101010");
     }
     else if (packetID == ID_UNCONNECTED_PING)
     {
@@ -862,15 +862,15 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
     }
 
     if (!packetHandled && packetID < sizeof(RAKNET_MESSAGEID_STRINGS))
-        URHO3D_LOGERROR("Unhandled network packet: " + String(RAKNET_MESSAGEID_STRINGS[packetID]));
+        DV_LOGERROR("Unhandled network packet: " + String(RAKNET_MESSAGEID_STRINGS[packetID]));
     else if (!packetHandled)
-        URHO3D_LOGERRORF("Unhandled network packet: %i", packetID);
+        DV_LOGERRORF("Unhandled network packet: %i", packetID);
 
 }
 
 void Network::Update(float timeStep)
 {
-    URHO3D_PROFILE(UpdateNetwork);
+    DV_PROFILE(UpdateNetwork);
 
     //Process all incoming messages for the server
     if (rakPeer_->IsActive())
@@ -895,7 +895,7 @@ void Network::Update(float timeStep)
 
 void Network::PostUpdate(float timeStep)
 {
-    URHO3D_PROFILE(PostUpdateNetwork);
+    DV_PROFILE(PostUpdateNetwork);
 
     // Check if periodic update should happen now
     updateAcc_ += timeStep;
@@ -910,7 +910,7 @@ void Network::PostUpdate(float timeStep)
         {
             // Collect and prepare all networked scenes
             {
-                URHO3D_PROFILE(PrepareServerUpdate);
+                DV_PROFILE(PrepareServerUpdate);
 
                 networkScenes_.Clear();
                 for (HashMap<SLNet::AddressOrGUID, SharedPtr<Connection>>::Iterator i = clientConnections_.Begin();
@@ -926,7 +926,7 @@ void Network::PostUpdate(float timeStep)
             }
 
             {
-                URHO3D_PROFILE(SendServerUpdate);
+                DV_PROFILE(SendServerUpdate);
 
                 // Then send server updates for each client connection
                 for (HashMap<SLNet::AddressOrGUID, SharedPtr<Connection>>::Iterator i = clientConnections_.Begin();
@@ -971,7 +971,7 @@ void Network::OnServerConnected(const SLNet::AddressOrGUID& address)
 {
     serverConnection_->SetConnectPending(false);
     serverConnection_->SetAddressOrGUID(address);
-    URHO3D_LOGINFO("Connected to server!");
+    DV_LOGINFO("Connected to server!");
 
     // Send the identity map now
     VectorBuffer msg;
@@ -994,12 +994,12 @@ void Network::OnServerDisconnected(const SLNet::AddressOrGUID& address)
 
     if (!failedConnect)
     {
-        URHO3D_LOGINFO("Disconnected from server");
+        DV_LOGINFO("Disconnected from server");
         SendEvent(E_SERVERDISCONNECTED);
     }
     else
     {
-        URHO3D_LOGERROR("Failed to connect to server");
+        DV_LOGERROR("Failed to connect to server");
         SendEvent(E_CONNECTFAILED);
     }
 }

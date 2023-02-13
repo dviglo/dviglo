@@ -13,9 +13,9 @@ namespace dviglo
 {
 
 /// Hardware vertex buffer.
-class URHO3D_API VertexBuffer : public Object, public GPUObject
+class DV_API VertexBuffer : public Object, public GPUObject
 {
-    URHO3D_OBJECT(VertexBuffer, Object);
+    DV_OBJECT(VertexBuffer, Object);
 
 public:
     /// Construct. Optionally force headless (no GPU-side buffer) operation.
@@ -144,7 +144,7 @@ private:
     /// Unmap the GPU buffer. Not used on OpenGL.
     void UnmapBuffer();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     void OnDeviceLost_OGL();
     void OnDeviceReset_OGL();
     void Release_OGL();
@@ -156,9 +156,9 @@ private:
     bool UpdateToGPU_OGL();
     void* MapBuffer_OGL(i32 start, i32 count, bool discard);
     void UnmapBuffer_OGL();
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     void OnDeviceLost_D3D11();
     void OnDeviceReset_D3D11();
     void Release_D3D11();
@@ -170,7 +170,7 @@ private:
     bool UpdateToGPU_D3D11();
     void* MapBuffer_D3D11(i32 start, i32 count, bool discard);
     void UnmapBuffer_D3D11();
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     /// Shadow data.
     SharedArrayPtr<byte> shadowData_;

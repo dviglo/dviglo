@@ -37,20 +37,20 @@ void VertexBuffer::Release_D3D11()
         }
     }
 
-    URHO3D_SAFE_RELEASE(object_.ptr_);
+    DV_SAFE_RELEASE(object_.ptr_);
 }
 
 bool VertexBuffer::SetData_D3D11(const void* data)
 {
     if (!data)
     {
-        URHO3D_LOGERROR("Null pointer for vertex buffer data");
+        DV_LOGERROR("Null pointer for vertex buffer data");
         return false;
     }
 
     if (!vertexSize_)
     {
-        URHO3D_LOGERROR("Vertex elements not defined, can not set vertex buffer data");
+        DV_LOGERROR("Vertex elements not defined, can not set vertex buffer data");
         return false;
     }
 
@@ -96,19 +96,19 @@ bool VertexBuffer::SetDataRange_D3D11(const void* data, i32 start, i32 count, bo
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null pointer for vertex buffer data");
+        DV_LOGERROR("Null pointer for vertex buffer data");
         return false;
     }
 
     if (!vertexSize_)
     {
-        URHO3D_LOGERROR("Vertex elements not defined, can not set vertex buffer data");
+        DV_LOGERROR("Vertex elements not defined, can not set vertex buffer data");
         return false;
     }
 
     if (start + count > vertexCount_)
     {
-        URHO3D_LOGERROR("Illegal range for setting new vertex buffer data");
+        DV_LOGERROR("Illegal range for setting new vertex buffer data");
         return false;
     }
 
@@ -155,19 +155,19 @@ void* VertexBuffer::Lock_D3D11(i32 start, i32 count, bool discard)
 
     if (lockState_ != LOCK_NONE)
     {
-        URHO3D_LOGERROR("Vertex buffer already locked");
+        DV_LOGERROR("Vertex buffer already locked");
         return nullptr;
     }
 
     if (!vertexSize_)
     {
-        URHO3D_LOGERROR("Vertex elements not defined, can not lock vertex buffer");
+        DV_LOGERROR("Vertex elements not defined, can not lock vertex buffer");
         return nullptr;
     }
 
     if (start + count > vertexCount_)
     {
-        URHO3D_LOGERROR("Illegal range for locking vertex buffer");
+        DV_LOGERROR("Illegal range for locking vertex buffer");
         return nullptr;
     }
 
@@ -239,8 +239,8 @@ bool VertexBuffer::Create_D3D11()
         HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, nullptr, (ID3D11Buffer**)&object_.ptr_);
         if (FAILED(hr))
         {
-            URHO3D_SAFE_RELEASE(object_.ptr_);
-            URHO3D_LOGD3DERROR("Failed to create vertex buffer", hr);
+            DV_SAFE_RELEASE(object_.ptr_);
+            DV_LOGD3DERROR("Failed to create vertex buffer", hr);
             return false;
         }
     }
@@ -269,7 +269,7 @@ void* VertexBuffer::MapBuffer_D3D11(i32 start, i32 count, bool discard)
         HRESULT hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Buffer*)object_.ptr_, 0, discard ? D3D11_MAP_WRITE_DISCARD :
             D3D11_MAP_WRITE, 0, &mappedData);
         if (FAILED(hr) || !mappedData.pData)
-            URHO3D_LOGD3DERROR("Failed to map vertex buffer", hr);
+            DV_LOGD3DERROR("Failed to map vertex buffer", hr);
         else
         {
             hwData = mappedData.pData;

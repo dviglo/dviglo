@@ -18,7 +18,7 @@ if (MINGW)
     add_definitions (-D_WIN32_WINNT=0x601)
 endif ()
 
-if (URHO3D_LIB_TYPE STREQUAL SHARED)
+if (DV_LIB_TYPE STREQUAL SHARED)
     add_definitions (-DTRACY_EXPORTS)
 endif ()
 

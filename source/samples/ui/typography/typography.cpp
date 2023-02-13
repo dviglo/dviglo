@@ -19,7 +19,7 @@
 #include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
-URHO3D_DEFINE_APPLICATION_MAIN(Typography)
+DV_DEFINE_APPLICATION_MAIN(Typography)
 
 namespace
 {
@@ -60,18 +60,18 @@ void Typography::Start()
     CreateText();
 
     // Add a checkbox to toggle the background color.
-    CreateCheckbox("White background", URHO3D_HANDLER(Typography, HandleWhiteBackground))
+    CreateCheckbox("White background", DV_HANDLER(Typography, HandleWhiteBackground))
         ->SetChecked(false);
 
     // Add a checkbox to toggle SRGB output conversion (if available).
     // This will give more correct text output for FreeType fonts, as the FreeType rasterizer
     // outputs linear coverage values rather than SRGB values. However, this feature isn't
     // available on all platforms.
-    CreateCheckbox("Graphics::SetSRGB", URHO3D_HANDLER(Typography, HandleSRGB))
+    CreateCheckbox("Graphics::SetSRGB", DV_HANDLER(Typography, HandleSRGB))
         ->SetChecked(GetSubsystem<Graphics>()->GetSRGB());
 
     // Add a checkbox for the global ForceAutoHint setting. This affects character spacing.
-    CreateCheckbox("UI::SetForceAutoHint", URHO3D_HANDLER(Typography, HandleForceAutoHint))
+    CreateCheckbox("UI::SetForceAutoHint", DV_HANDLER(Typography, HandleForceAutoHint))
         ->SetChecked(ui->GetForceAutoHint());
 
     // Add a drop-down menu to control the font hinting level.
@@ -81,7 +81,7 @@ void Typography::Start()
         "FONT_HINT_LEVEL_NORMAL",
         nullptr
     };
-    CreateMenu("UI::SetFontHintLevel", levels, URHO3D_HANDLER(Typography, HandleFontHintLevel))
+    CreateMenu("UI::SetFontHintLevel", levels, DV_HANDLER(Typography, HandleFontHintLevel))
         ->SetSelection(ui->GetFontHintLevel());
 
     // Add a drop-down menu to control the subpixel threshold.
@@ -96,7 +96,7 @@ void Typography::Start()
         "21",
         nullptr
     };
-    CreateMenu("UI::SetFontSubpixelThreshold", thresholds, URHO3D_HANDLER(Typography, HandleFontSubpixel))
+    CreateMenu("UI::SetFontSubpixelThreshold", thresholds, DV_HANDLER(Typography, HandleFontSubpixel))
         ->SetSelection(ui->GetFontSubpixelThreshold() / 3);
 
     // Add a drop-down menu to control oversampling.
@@ -111,7 +111,7 @@ void Typography::Start()
         "8",
         nullptr
     };
-    CreateMenu("UI::SetFontOversampling", limits, URHO3D_HANDLER(Typography, HandleFontOversampling))
+    CreateMenu("UI::SetFontOversampling", limits, DV_HANDLER(Typography, HandleFontOversampling))
         ->SetSelection(ui->GetFontOversampling() - 1);
 
     // Set the mouse mode to use in the sample
@@ -231,7 +231,7 @@ void Typography::HandleSRGB(StringHash eventType, VariantMap& eventData)
     }
     else
     {
-        URHO3D_LOGWARNING("Graphics::GetSRGBWriteSupport returned false");
+        DV_LOGWARNING("Graphics::GetSRGBWriteSupport returned false");
 
         // Note: PostProcess/GammaCorrection.xml implements SRGB conversion.
         // However, post-processing filters don't affect the UI layer.

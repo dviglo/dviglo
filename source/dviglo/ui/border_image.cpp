@@ -35,17 +35,17 @@ void BorderImage::RegisterObject(Context* context)
 {
     context->RegisterFactory<BorderImage>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(UIElement);
-    URHO3D_ACCESSOR_ATTRIBUTE("Texture", GetTextureAttr, SetTextureAttr, ResourceRef(Texture2D::GetTypeStatic()),
+    DV_COPY_BASE_ATTRIBUTES(UIElement);
+    DV_ACCESSOR_ATTRIBUTE("Texture", GetTextureAttr, SetTextureAttr, ResourceRef(Texture2D::GetTypeStatic()),
         AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Image Rect", GetImageRect, SetImageRect, IntRect::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Border", GetBorder, SetBorder, IntRect::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Image Border", GetImageBorder, SetImageBorder, IntRect::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Hover Image Offset", GetHoverOffset, SetHoverOffset, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Disabled Image Offset", GetDisabledOffset, SetDisabledOffset, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Tiled", IsTiled, SetTiled, false, AM_FILE);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, 0, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Image Rect", GetImageRect, SetImageRect, IntRect::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Border", GetBorder, SetBorder, IntRect::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Image Border", GetImageBorder, SetImageBorder, IntRect::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Hover Image Offset", GetHoverOffset, SetHoverOffset, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Disabled Image Offset", GetDisabledOffset, SetDisabledOffset, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Tiled", IsTiled, SetTiled, false, AM_FILE);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
         AM_FILE);
 }
 

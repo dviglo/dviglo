@@ -41,15 +41,15 @@ void SoundSource3D::RegisterObject(Context* context)
 {
     context->RegisterFactory<SoundSource3D>(AUDIO_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(SoundSource);
+    DV_COPY_BASE_ATTRIBUTES(SoundSource);
     // Remove Attenuation and Panning as attribute as they are constantly being updated
-    URHO3D_REMOVE_ATTRIBUTE("Attenuation");
-    URHO3D_REMOVE_ATTRIBUTE("Panning");
-    URHO3D_ATTRIBUTE("Near Distance", nearDistance_, DEFAULT_NEARDISTANCE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Far Distance", farDistance_, DEFAULT_FARDISTANCE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Inner Angle", innerAngle_, DEFAULT_ANGLE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Outer Angle", outerAngle_, DEFAULT_ANGLE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Rolloff Factor", rolloffFactor_, DEFAULT_ROLLOFF, AM_DEFAULT);
+    DV_REMOVE_ATTRIBUTE("Attenuation");
+    DV_REMOVE_ATTRIBUTE("Panning");
+    DV_ATTRIBUTE("Near Distance", nearDistance_, DEFAULT_NEARDISTANCE, AM_DEFAULT);
+    DV_ATTRIBUTE("Far Distance", farDistance_, DEFAULT_FARDISTANCE, AM_DEFAULT);
+    DV_ATTRIBUTE("Inner Angle", innerAngle_, DEFAULT_ANGLE, AM_DEFAULT);
+    DV_ATTRIBUTE("Outer Angle", outerAngle_, DEFAULT_ANGLE, AM_DEFAULT);
+    DV_ATTRIBUTE("Rolloff Factor", rolloffFactor_, DEFAULT_ROLLOFF, AM_DEFAULT);
 }
 
 void SoundSource3D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)

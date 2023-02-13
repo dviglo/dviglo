@@ -18,7 +18,7 @@
 #include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
 #include <dviglo/ui/text.h>
-#ifdef URHO3D_ANGELSCRIPT
+#ifdef DV_ANGELSCRIPT
 #include <dviglo/AngelScript/Script.h>
 #endif
 
@@ -26,7 +26,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(PBRMaterials)
+DV_DEFINE_APPLICATION_MAIN(PBRMaterials)
 
 PBRMaterials::PBRMaterials(Context* context) :
     Sample(context),
@@ -78,7 +78,7 @@ void PBRMaterials::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-#ifdef URHO3D_ANGELSCRIPT
+#ifdef DV_ANGELSCRIPT
     // The scene uses an AngelScript component for animation. Instantiate the subsystem if possible
     context_->RegisterSubsystem(new Script(context_));
 #endif
@@ -145,7 +145,7 @@ void PBRMaterials::CreateUI()
     roughnessSlider->SetPosition(50, 50);
     roughnessSlider->SetSize(300, 20);
     roughnessSlider->SetRange(1.0f); // 0 - 1 range
-    SubscribeToEvent(roughnessSlider, E_SLIDERCHANGED, URHO3D_HANDLER(PBRMaterials, HandleRoughnessSliderChanged));
+    SubscribeToEvent(roughnessSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleRoughnessSliderChanged));
     roughnessSlider->SetValue(0.5f);
 
     auto* metallicSlider = ui->GetRoot()->CreateChild<Slider>();
@@ -153,7 +153,7 @@ void PBRMaterials::CreateUI()
     metallicSlider->SetPosition(50, 100);
     metallicSlider->SetSize(300, 20);
     metallicSlider->SetRange(1.0f); // 0 - 1 range
-    SubscribeToEvent(metallicSlider, E_SLIDERCHANGED, URHO3D_HANDLER(PBRMaterials, HandleMetallicSliderChanged));
+    SubscribeToEvent(metallicSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleMetallicSliderChanged));
     metallicSlider->SetValue(0.5f);
 
     auto* ambientSlider = ui->GetRoot()->CreateChild<Slider>();
@@ -161,7 +161,7 @@ void PBRMaterials::CreateUI()
     ambientSlider->SetPosition(50, 150);
     ambientSlider->SetSize(300, 20);
     ambientSlider->SetRange(10.0f); // 0 - 10 range
-    SubscribeToEvent(ambientSlider, E_SLIDERCHANGED, URHO3D_HANDLER(PBRMaterials, HandleAmbientSliderChanged));
+    SubscribeToEvent(ambientSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleAmbientSliderChanged));
     ambientSlider->SetValue(zone_->GetAmbientColor().a_);
 }
 
@@ -211,7 +211,7 @@ void PBRMaterials::SetupViewport()
 void PBRMaterials::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for camera motion
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(PBRMaterials, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(PBRMaterials, HandleUpdate));
 }
 
 void PBRMaterials::MoveCamera(float timeStep)

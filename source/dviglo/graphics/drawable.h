@@ -22,7 +22,7 @@ enum class DrawableTypes : u8
     Geometry2D = 1 << 3,
     Any        = 0xFF
 };
-URHO3D_FLAGS(DrawableTypes);
+DV_FLAGS(DrawableTypes);
 
 inline constexpr mask32 DEFAULT_VIEWMASK = M_U32_MASK_ALL_BITS;
 inline constexpr mask32 DEFAULT_LIGHTMASK = M_U32_MASK_ALL_BITS;
@@ -65,7 +65,7 @@ struct FrameInfo
 };
 
 /// Source data for a 3D geometry draw call.
-struct URHO3D_API SourceBatch
+struct DV_API SourceBatch
 {
     /// Construct with defaults.
     SourceBatch();
@@ -94,9 +94,9 @@ struct URHO3D_API SourceBatch
 };
 
 /// Base class for visible components.
-class URHO3D_API Drawable : public Component
+class DV_API Drawable : public Component
 {
-    URHO3D_OBJECT(Drawable, Component);
+    DV_OBJECT(Drawable, Component);
 
     friend class Octant;
     friend class Octree;
@@ -389,6 +389,6 @@ inline bool CompareDrawables(Drawable* lhs, Drawable* rhs)
     return lhs->GetSortValue() < rhs->GetSortValue();
 }
 
-URHO3D_API bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, bool asZUp, bool asRightHanded, bool writeLightmapUV = false);
+DV_API bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, bool asZUp, bool asRightHanded, bool writeLightmapUV = false);
 
 }

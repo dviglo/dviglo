@@ -1024,7 +1024,7 @@ XMLElement XPathResultSet::operator [](i32 index) const
     assert(index >= 0);
 
     if (!resultSet_)
-        URHO3D_LOGERRORF(
+        DV_LOGERRORF(
             "Could not return result at index: %u. Most probably this is caused by the XPathResultSet not being stored in a lhs variable.",
             index);
 

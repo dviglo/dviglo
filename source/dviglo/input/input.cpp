@@ -183,7 +183,7 @@ bool EmscriptenInput::IsVisible()
         return visibilityStatus.hidden >= EM_TRUE ? false : true;
 
     // Assume visible
-    URHO3D_LOGWARNING("Could not determine visibility status.");
+    DV_LOGWARNING("Could not determine visibility status.");
     return true;
 }
 
@@ -298,7 +298,7 @@ int Win32_ResizingEventWatcher(void* data, SDL_Event* event)
         SDL_Window* win = SDL_GetWindowFromID(event->window.windowID);
         if (win == (SDL_Window*)data)
         {
-            if (auto* ctx = (Context*)SDL_GetWindowData(win, "URHO3D_CONTEXT"))
+            if (auto* ctx = (Context*)SDL_GetWindowData(win, "DV_CONTEXT"))
             {
                 if (auto* graphics = ctx->GetSubsystem<Graphics>())
                 {
@@ -375,7 +375,7 @@ Input::Input(Context* context) :
     for (int i = 0; i < TOUCHID_MAX; i++)
         availableTouchIDs_.Push(i);
 
-    SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(Input, HandleScreenMode));
+    SubscribeToEvent(E_SCREENMODE, DV_HANDLER(Input, HandleScreenMode));
 
 #if defined(__ANDROID__)
     // Prevent mouse events from being registered as synthetic touch events and vice versa
@@ -398,7 +398,7 @@ void Input::Update()
 {
     assert(initialized_);
 
-    URHO3D_PROFILE(UpdateInput);
+    DV_PROFILE(UpdateInput);
 
 #ifndef __EMSCRIPTEN__
     bool mouseMoved = false;
@@ -979,7 +979,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
 
     if (!graphics_)
     {
-        URHO3D_LOGWARNING("Cannot add screen joystick in headless mode");
+        DV_LOGWARNING("Cannot add screen joystick in headless mode");
         return -1;
     }
 
@@ -1041,7 +1041,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                         keyBinding = i->second_;
                     else
                     {
-                        URHO3D_LOGERRORF("Unsupported key binding: %s", key.CString());
+                        DV_LOGERRORF("Unsupported key binding: %s", key.CString());
                         keyBinding = M_MAX_INT;
                     }
                 }
@@ -1062,7 +1062,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                 if (i != mouseButtonBindingMap.End())
                     element->SetVar(VAR_BUTTON_MOUSE_BUTTON_BINDING, i->second_);
                 else
-                    URHO3D_LOGERRORF("Unsupported mouse button binding: %s", mouseButton.CString());
+                    DV_LOGERRORF("Unsupported mouse button binding: %s", mouseButton.CString());
             }
         }
         else if (name.StartsWith("Axis"))
@@ -1070,7 +1070,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
             ++numAxes;
 
             ///\todo Axis emulation for screen joystick is not fully supported yet.
-            URHO3D_LOGWARNING("Axis emulation for screen joystick is not fully supported yet");
+            DV_LOGWARNING("Axis emulation for screen joystick is not fully supported yet");
         }
         else if (name.StartsWith("Hat"))
         {
@@ -1105,13 +1105,13 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                             if (i != keyBindingMap.End())
                                 mappedKeyBinding[j] = i->second_;
                             else
-                                URHO3D_LOGERRORF("%s - %s cannot be mapped, fallback to '%c'", name.CString(), keyBindings[j].CString(),
+                                DV_LOGERRORF("%s - %s cannot be mapped, fallback to '%c'", name.CString(), keyBindings[j].CString(),
                                     mappedKeyBinding[j]);
                         }
                     }
                 }
                 else
-                    URHO3D_LOGERRORF("%s has invalid key binding %s, fallback to WSAD", name.CString(), keyBinding.CString());
+                    DV_LOGERRORF("%s has invalid key binding %s, fallback to WSAD", name.CString(), keyBinding.CString());
                 element->SetVar(VAR_BUTTON_KEY_BINDING, IntRect(mappedKeyBinding));
             }
         }
@@ -1129,9 +1129,9 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
 
     // There could be potentially more than one screen joystick, however they all will be handled by a same handler method
     // So there is no harm to replace the old handler with the new handler in each call to SubscribeToEvent()
-    SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(Input, HandleScreenJoystickTouch));
-    SubscribeToEvent(E_TOUCHMOVE, URHO3D_HANDLER(Input, HandleScreenJoystickTouch));
-    SubscribeToEvent(E_TOUCHEND, URHO3D_HANDLER(Input, HandleScreenJoystickTouch));
+    SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(Input, HandleScreenJoystickTouch));
+    SubscribeToEvent(E_TOUCHMOVE, DV_HANDLER(Input, HandleScreenJoystickTouch));
+    SubscribeToEvent(E_TOUCHEND, DV_HANDLER(Input, HandleScreenJoystickTouch));
 
     return joystickID;
 }
@@ -1140,14 +1140,14 @@ bool Input::RemoveScreenJoystick(SDL_JoystickID id)
 {
     if (!joysticks_.Contains(id))
     {
-        URHO3D_LOGERRORF("Failed to remove non-existing screen joystick ID #%d", id);
+        DV_LOGERRORF("Failed to remove non-existing screen joystick ID #%d", id);
         return false;
     }
 
     JoystickState& state = joysticks_[id];
     if (!state.screenJoystick_)
     {
-        URHO3D_LOGERRORF("Failed to remove joystick with ID #%d which is not a screen joystick", id);
+        DV_LOGERRORF("Failed to remove joystick with ID #%d which is not a screen joystick", id);
         return false;
     }
 
@@ -1207,7 +1207,7 @@ bool Input::RecordGesture()
     // If have no touch devices, fail
     if (!SDL_GetNumTouchDevices())
     {
-        URHO3D_LOGERROR("Can not record gesture: no touch devices");
+        DV_LOGERROR("Can not record gesture: no touch devices");
         return false;
     }
 
@@ -1231,7 +1231,7 @@ i32 Input::LoadGestures(Deserializer& source)
     // If have no touch devices, fail
     if (!SDL_GetNumTouchDevices())
     {
-        URHO3D_LOGERROR("Can not load gestures: no touch devices");
+        DV_LOGERROR("Can not load gestures: no touch devices");
         return 0;
     }
 
@@ -1263,7 +1263,7 @@ SDL_JoystickID Input::OpenJoystick(SDL_JoystickID id)
     SDL_Joystick* joystick = SDL_OpenJoystick(id);
     if (!joystick)
     {
-        URHO3D_LOGERRORF("Cannot open joystick #%d", id);
+        DV_LOGERRORF("Cannot open joystick #%d", id);
         return 0;
     }
 
@@ -1536,21 +1536,21 @@ void Input::Initialize()
     ResetJoysticks();
     ResetState();
 
-    SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(Input, HandleBeginFrame));
+    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(Input, HandleBeginFrame));
 #ifdef __EMSCRIPTEN__
-    SubscribeToEvent(E_ENDFRAME, URHO3D_HANDLER(Input, HandleEndFrame));
+    SubscribeToEvent(E_ENDFRAME, DV_HANDLER(Input, HandleEndFrame));
 #endif
 
 #ifdef _WIN32
     // Register callback for resizing in order to repaint.
     if (SDL_Window* window = graphics_->GetWindow())
     {
-        SDL_SetWindowData(window, "URHO3D_CONTEXT", GetContext());
+        SDL_SetWindowData(window, "DV_CONTEXT", GetContext());
         SDL_AddEventWatch(Win32_ResizingEventWatcher, window);
     }
 #endif
 
-    URHO3D_LOGINFO("Initialized input");
+    DV_LOGINFO("Initialized input");
 }
 
 void Input::ResetJoysticks()

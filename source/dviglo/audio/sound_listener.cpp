@@ -23,7 +23,7 @@ void SoundListener::RegisterObject(Context* context)
 {
     context->RegisterFactory<SoundListener>(AUDIO_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
 }
 
 }

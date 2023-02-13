@@ -21,7 +21,7 @@ class IndexBuffer;
 class VertexBuffer;
 
 /// Trail is consisting of series of tails. Two connected points make a tail.
-struct URHO3D_API TrailPoint
+struct DV_API TrailPoint
 {
     /// Construct a zero-initialized TrailPoint.
     TrailPoint() = default;
@@ -44,9 +44,9 @@ struct URHO3D_API TrailPoint
 };
 
 /// Drawable component that creates a tail.
-class URHO3D_API RibbonTrail : public Drawable
+class DV_API RibbonTrail : public Drawable
 {
-    URHO3D_OBJECT(RibbonTrail, Drawable);
+    DV_OBJECT(RibbonTrail, Drawable);
 
 public:
     /// Construct.

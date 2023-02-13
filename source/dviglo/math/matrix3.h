@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// 3x3 matrix for rotation and scaling.
-class URHO3D_API Matrix3
+class DV_API Matrix3
 {
 public:
     /// Construct an identity matrix.

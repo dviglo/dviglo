@@ -9,8 +9,8 @@ endif ()
 # Помещаем документацию в отдельный проект
 project(dviglo-docs)
 
-if (URHO3D_DOCS_QUIET)
-    set (URHO3D_DOCS 1)
+if (DV_DOCS_QUIET)
+    set (DV_DOCS 1)
 endif ()
 
 # Macro for enabling IDE-specific integration with Urho3D documentation (See comments in Doxyfile for more detail instructions)
@@ -26,7 +26,7 @@ endmacro ()
 # As a workaround, we unset CMAKE_FIND_ROOT_PATH (even when we are cross-compiling) but in this scope ONLY in order to always do a non-rooted search for Doxygen package
 unset (CMAKE_FIND_ROOT_PATH)
 # Find Doxygen and DOT packages
-if (URHO3D_DOCS)
+if (DV_DOCS)
     set (REQUIRED REQUIRED)
 endif ()
 # https://github.com/urho3d/Urho3D/issues/2757
@@ -37,14 +37,14 @@ if (DOXYGEN_FOUND)
     find_package_handle_standard_args (Dot REQUIRED_VARS DOXYGEN_DOT_EXECUTABLE)
 
     # Generate platform specific Doxyfile automatically
-    if (NOT URHO3D_OPENGL EQUAL DOXYFILE_URHO3D_OPENGL OR ${CMAKE_CURRENT_SOURCE_DIR}/doxyfile.in IS_NEWER_THAN ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
-        set (DOXYFILE_URHO3D_OPENGL ${URHO3D_OPENGL} CACHE INTERNAL "URHO3D_OPENGL build option when Doxyfile was last generated")
-        if (URHO3D_OPENGL)
+    if (NOT DV_OPENGL EQUAL DOXYFILE_DV_OPENGL OR ${CMAKE_CURRENT_SOURCE_DIR}/doxyfile.in IS_NEWER_THAN ${CMAKE_CURRENT_BINARY_DIR}/doxyfile)
+        set (DOXYFILE_DV_OPENGL ${DV_OPENGL} CACHE INTERNAL "DV_OPENGL build option when Doxyfile was last generated")
+        if (DV_OPENGL)
             set (EXCLUDE_GRAPHICS_API Direct3D9)
             set (EXCLUDE_GRAPHICS_API2 Direct3D11)
         else ()
             set (EXCLUDE_GRAPHICS_API OpenGL)
-            if (URHO3D_D3D11)
+            if (DV_D3D11)
                 set (EXCLUDE_GRAPHICS_API2 Direct3D9)
             else ()
                 set (EXCLUDE_GRAPHICS_API2 Direct3D11)
@@ -57,11 +57,11 @@ if (DOXYGEN_FOUND)
     endif ()
 
     # In quiet mode, redirect standard output stream of Doxygen to a null device
-    if (URHO3D_DOCS_QUIET)
+    if (DV_DOCS_QUIET)
         set (REDIRECT_STDOUT 1>${NULL_DEVICE})
     endif ()
-    # If URHO3D_DOCS build option is set then add the custom 'doc' target into the default 'all' target, i.e. a normal build would not only build the software but also the documentation
-    if (URHO3D_DOCS)
+    # If DV_DOCS build option is set then add the custom 'doc' target into the default 'all' target, i.e. a normal build would not only build the software but also the documentation
+    if (DV_DOCS)
         set (ALL ALL)
     endif ()
 
@@ -76,7 +76,7 @@ if (DOXYGEN_FOUND)
 endif ()
 
 # Make sure html output directory exists and not empty
-file (WRITE ${CMAKE_CURRENT_BINARY_DIR}/html/Readme.txt "If the URHO3D_DOCS build option is set then the Urho3D documentation will be built automatically as part of the Urho3D library build. If build option is not set, however, then use 'doc' built-in target to generate the documentation manually (must do this before installing the SDK).\n")
+file (WRITE ${CMAKE_CURRENT_BINARY_DIR}/html/Readme.txt "If the DV_DOCS build option is set then the Urho3D documentation will be built automatically as part of the Urho3D library build. If build option is not set, however, then use 'doc' built-in target to generate the documentation manually (must do this before installing the SDK).\n")
 
 # Define post build steps
 if (CMAKE_EXTRA_GENERATOR MATCHES Eclipse AND NOT CMAKE_HOST_WIN32)

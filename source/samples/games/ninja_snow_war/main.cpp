@@ -48,7 +48,7 @@ static constexpr float SPAWN_AREA_SIZE = 5.0f;
 
 class App : public Application
 {
-    URHO3D_OBJECT(App, Application);
+    DV_OBJECT(App, Application);
 
 private:
     SharedPtr<Scene> gameScene;
@@ -119,18 +119,18 @@ public:
         CreateCamera();
         CreateOverlays();
 
-        SubscribeToEvent(gameScene, E_SCENEUPDATE, URHO3D_HANDLER(App, HandleUpdate));
+        SubscribeToEvent(gameScene, E_SCENEUPDATE, DV_HANDLER(App, HandleUpdate));
 
         PhysicsWorld* physicsWorld = gameScene->GetComponent<PhysicsWorld>();
         if (physicsWorld)
-            SubscribeToEvent(physicsWorld, E_PHYSICSPRESTEP, URHO3D_HANDLER(App, HandleFixedUpdate));
+            SubscribeToEvent(physicsWorld, E_PHYSICSPRESTEP, DV_HANDLER(App, HandleFixedUpdate));
 
-        SubscribeToEvent(gameScene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(App, HandlePostUpdate));
-        SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(App, HandlePostRenderUpdate));
-        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(App, HandleKeyDown));
-        SubscribeToEvent("Points", URHO3D_HANDLER(App, HandlePoints));
-        SubscribeToEvent("Kill", URHO3D_HANDLER(App, HandleKill));
-        SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(App, HandleScreenMode));
+        SubscribeToEvent(gameScene, E_SCENEPOSTUPDATE, DV_HANDLER(App, HandlePostUpdate));
+        SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(App, HandlePostRenderUpdate));
+        SubscribeToEvent(E_KEYDOWN, DV_HANDLER(App, HandleKeyDown));
+        SubscribeToEvent("Points", DV_HANDLER(App, HandlePoints));
+        SubscribeToEvent("Kill", DV_HANDLER(App, HandleKill));
+        SubscribeToEvent(E_SCREENMODE, DV_HANDLER(App, HandleScreenMode));
 
         if (singlePlayer)
         {
@@ -236,9 +236,9 @@ public:
             // Disable physics interpolation to ensure clients get sent physically correct transforms
             gameScene->GetComponent<PhysicsWorld>()->SetInterpolation(false);
 
-            SubscribeToEvent(E_CLIENTIDENTITY, URHO3D_HANDLER(App, HandleClientIdentity));
-            SubscribeToEvent(E_CLIENTSCENELOADED, URHO3D_HANDLER(App, HandleClientSceneLoaded));
-            SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(App, HandleClientDisconnected));
+            SubscribeToEvent(E_CLIENTIDENTITY, DV_HANDLER(App, HandleClientIdentity));
+            SubscribeToEvent(E_CLIENTSCENELOADED, DV_HANDLER(App, HandleClientSceneLoaded));
+            SubscribeToEvent(E_CLIENTDISCONNECTED, DV_HANDLER(App, HandleClientDisconnected));
         }
 
         if (runClient)
@@ -248,10 +248,10 @@ public:
             network->SetUpdateFps(50); // Increase controls send rate for better responsiveness
             network->Connect(serverAddress, serverPort, gameScene, identity);
 
-            SubscribeToEvent("PlayerSpawned", URHO3D_HANDLER(App, HandlePlayerSpawned));
-            SubscribeToEvent("UpdateScore", URHO3D_HANDLER(App, HandleUpdateScore));
-            SubscribeToEvent("UpdateHiscores", URHO3D_HANDLER(App, HandleUpdateHiscores));
-            SubscribeToEvent(E_NETWORKUPDATESENT, URHO3D_HANDLER(App, HandleNetworkUpdateSent));
+            SubscribeToEvent("PlayerSpawned", DV_HANDLER(App, HandlePlayerSpawned));
+            SubscribeToEvent("UpdateScore", DV_HANDLER(App, HandleUpdateScore));
+            SubscribeToEvent("UpdateHiscores", DV_HANDLER(App, HandleUpdateHiscores));
+            SubscribeToEvent(E_NETWORKUPDATESENT, DV_HANDLER(App, HandleNetworkUpdateSent));
         }
     }
 
@@ -348,7 +348,7 @@ public:
             InitTouchInput();
         else if (input->GetNumJoysticks() == 0)
             // On desktop platform, do not detect touch when we already got a joystick
-            SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(App, HandleTouchBegin));
+            SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(App, HandleTouchBegin));
     }
 
     void SetMessage(const String& message)
@@ -1204,4 +1204,4 @@ public:
 
 } // namespace dviglo
 
-URHO3D_DEFINE_APPLICATION_MAIN(dviglo::App);
+DV_DEFINE_APPLICATION_MAIN(dviglo::App);

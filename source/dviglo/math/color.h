@@ -14,7 +14,7 @@ class String;
 using color32 = u32;
 
 /// RGBA color.
-class URHO3D_API Color
+class DV_API Color
 {
 public:
     /// Mask describing color channels.

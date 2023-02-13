@@ -29,7 +29,7 @@
 
 #include "../../debug_new.h"
 
-#ifdef URHO3D_GLES2
+#ifdef DV_GLES2
 #ifndef GL_DEPTH_COMPONENT24
 #define GL_DEPTH_COMPONENT24 GL_DEPTH_COMPONENT24_OES
 #endif
@@ -66,7 +66,7 @@ static const dviglo::Context *appContext;
 
 static void JSCanvasSize(int width, int height, bool fullscreen, float scale)
 {
-    URHO3D_LOGINFOF("JSCanvasSize: width=%d height=%d fullscreen=%d ui scale=%f", width, height, fullscreen, scale);
+    DV_LOGINFOF("JSCanvasSize: width=%d height=%d fullscreen=%d ui scale=%f", width, height, fullscreen, scale);
 
     using namespace dviglo;
 
@@ -192,7 +192,7 @@ static const GLenum glFillMode[] =
     GL_POINT
 };
 #endif
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
 static const GLenum glStencilOps[] =
 {
     GL_KEEP,
@@ -225,7 +225,7 @@ static const GLint glElementComponents[] =
     4
 };
 
-#ifdef URHO3D_GLES2
+#ifdef DV_GLES2
 static unsigned glesDepthStencilFormat = GL_DEPTH_COMPONENT16;
 static unsigned glesReadableDepthFormat = GL_DEPTH_COMPONENT;
 #endif
@@ -317,7 +317,7 @@ void Graphics::Destructor_OGL()
 
 bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& params, bool maximize)
 {
-    URHO3D_PROFILE(SetScreenMode_OGL);
+    DV_PROFILE(SetScreenMode_OGL);
 
     // Ensure that parameters are properly filled
     ScreenModeParams newParams = params;
@@ -456,7 +456,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
         if (!window_)
         {
-            URHO3D_LOGERRORF("Could not create window, root cause: '%s'", SDL_GetError());
+            DV_LOGERRORF("Could not create window, root cause: '%s'", SDL_GetError());
             return false;
         }
 
@@ -507,8 +507,8 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
     CheckFeatureSupport_OGL();
 
-#ifdef URHO3D_LOGGING
-    URHO3D_LOGINFOF("Adapter used %s %s", (const char *) glGetString(GL_VENDOR), (const char *) glGetString(GL_RENDERER));
+#ifdef DV_LOGGING
+    DV_LOGINFOF("Adapter used %s %s", (const char *) glGetString(GL_VENDOR), (const char *) glGetString(GL_RENDERER));
 #endif
 
     OnScreenModeChanged();
@@ -543,7 +543,7 @@ void Graphics::SetForceGL2_OGL(bool enable)
 {
     if (IsInitialized_OGL())
     {
-        URHO3D_LOGERROR("OpenGL 2 can only be forced before setting the initial screen mode");
+        DV_LOGERROR("OpenGL 2 can only be forced before setting the initial screen mode");
         return;
     }
 
@@ -561,14 +561,14 @@ void Graphics::Close_OGL()
 
 bool Graphics::TakeScreenShot_OGL(Image& destImage)
 {
-    URHO3D_PROFILE(TakeScreenShot_OGL);
+    DV_PROFILE(TakeScreenShot_OGL);
 
     if (!IsInitialized_OGL())
         return false;
 
     if (IsDeviceLost_OGL())
     {
-        URHO3D_LOGERROR("Can not take screenshot while device is lost");
+        DV_LOGERROR("Can not take screenshot while device is lost");
         return false;
     }
 
@@ -632,7 +632,7 @@ void Graphics::EndFrame_OGL()
     if (!IsInitialized_OGL())
         return;
 
-    URHO3D_PROFILE(Present);
+    DV_PROFILE(Present);
 
     SendEvent(E_ENDRENDERING);
 
@@ -646,7 +646,7 @@ void Graphics::Clear_OGL(ClearTargetFlags flags, const Color& color, float depth
 {
     PrepareDraw_OGL();
 
-#ifdef URHO3D_GLES2
+#ifdef DV_GLES2
     flags &= ~CLEAR_STENCIL;
 #endif
 
@@ -699,7 +699,7 @@ bool Graphics::ResolveToTexture_OGL(Texture2D* destination, const IntRect& viewp
     if (!destination || !destination->GetRenderSurface())
         return false;
 
-    URHO3D_PROFILE(ResolveToTexture_OGL);
+    DV_PROFILE(ResolveToTexture_OGL);
 
     IntRect vpCopy = viewport;
     if (vpCopy.right_ <= vpCopy.left_)
@@ -724,14 +724,14 @@ bool Graphics::ResolveToTexture_OGL(Texture2D* destination, const IntRect& viewp
 
 bool Graphics::ResolveToTexture_OGL(Texture2D* texture)
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     if (!texture)
         return false;
     RenderSurface* surface = texture->GetRenderSurface();
     if (!surface || !surface->GetRenderBuffer())
         return false;
 
-    URHO3D_PROFILE(ResolveToTexture_OGL);
+    DV_PROFILE(ResolveToTexture_OGL);
 
     texture->SetResolveDirty(false);
     surface->SetResolveDirty(false);
@@ -781,11 +781,11 @@ bool Graphics::ResolveToTexture_OGL(Texture2D* texture)
 
 bool Graphics::ResolveToTexture_OGL(TextureCube* texture)
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     if (!texture)
         return false;
 
-    URHO3D_PROFILE(ResolveToTexture_OGL);
+    DV_PROFILE(ResolveToTexture_OGL);
 
     texture->SetResolveDirty(false);
 
@@ -915,7 +915,7 @@ void Graphics::Draw_OGL(PrimitiveType type, unsigned indexStart, unsigned indexC
 void Graphics::DrawInstanced_OGL(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount,
     unsigned instanceCount)
 {
-#if !defined(URHO3D_GLES2) || defined(__EMSCRIPTEN__)
+#if !defined(DV_GLES2) || defined(__EMSCRIPTEN__)
     if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName() || !instancingSupport_)
         return;
 
@@ -983,7 +983,7 @@ bool Graphics::SetVertexBuffers_OGL(const Vector<VertexBuffer*>& buffers, unsign
 {
     if (buffers.Size() > MAX_VERTEX_STREAMS)
     {
-        URHO3D_LOGERROR("Too many vertex buffers");
+        DV_LOGERROR("Too many vertex buffers");
         return false;
     }
 
@@ -1034,14 +1034,14 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
     {
         if (vs->GetCompilerOutput().Empty())
         {
-            URHO3D_PROFILE(CompileVertexShader);
+            DV_PROFILE(CompileVertexShader);
 
             bool success = vs->Create();
             if (success)
-                URHO3D_LOGDEBUG("Compiled vertex shader " + vs->GetFullName());
+                DV_LOGDEBUG("Compiled vertex shader " + vs->GetFullName());
             else
             {
-                URHO3D_LOGERROR("Failed to compile vertex shader " + vs->GetFullName() + ":\n" + vs->GetCompilerOutput());
+                DV_LOGERROR("Failed to compile vertex shader " + vs->GetFullName() + ":\n" + vs->GetCompilerOutput());
                 vs = nullptr;
             }
         }
@@ -1053,14 +1053,14 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
     {
         if (ps->GetCompilerOutput().Empty())
         {
-            URHO3D_PROFILE(CompilePixelShader);
+            DV_PROFILE(CompilePixelShader);
 
             bool success = ps->Create();
             if (success)
-                URHO3D_LOGDEBUG("Compiled pixel shader " + ps->GetFullName());
+                DV_LOGDEBUG("Compiled pixel shader " + ps->GetFullName());
             else
             {
-                URHO3D_LOGERROR("Failed to compile pixel shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
+                DV_LOGERROR("Failed to compile pixel shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
                 ps = nullptr;
             }
         }
@@ -1102,19 +1102,19 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
         else
         {
             // Link a new combination
-            URHO3D_PROFILE(LinkShaders);
+            DV_PROFILE(LinkShaders);
 
             SharedPtr<ShaderProgram_OGL> newProgram(new ShaderProgram_OGL(this, vs, ps));
             if (newProgram->Link())
             {
-                URHO3D_LOGDEBUG("Linked vertex shader " + vs->GetFullName() + " and pixel shader " + ps->GetFullName());
+                DV_LOGDEBUG("Linked vertex shader " + vs->GetFullName() + " and pixel shader " + ps->GetFullName());
                 // Note: Link() calls glUseProgram() to set the texture sampler uniforms,
                 // so it is not necessary to call it again
                 impl->shaderProgram_ = newProgram;
             }
             else
             {
-                URHO3D_LOGERROR("Failed to link vertex shader " + vs->GetFullName() + " and pixel shader " + ps->GetFullName() + ":\n" +
+                DV_LOGERROR("Failed to link vertex shader " + vs->GetFullName() + " and pixel shader " + ps->GetFullName() + ":\n" +
                          newProgram->GetLinkerOutput());
                 glUseProgram(0);
                 impl->shaderProgram_ = nullptr;
@@ -1125,7 +1125,7 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
     }
 
     // Update the clip plane uniform on GL3, and set constant buffers
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     if (gl3Support && impl->shaderProgram_)
     {
         const SharedPtr<ConstantBuffer>* constantBuffers = impl->shaderProgram_->GetConstantBuffers();
@@ -2037,7 +2037,7 @@ void Graphics::SetClipPlane_OGL(bool enable, const Plane& clipPlane, const Matri
 void Graphics::SetStencilTest_OGL(bool enable, CompareMode mode, StencilOp pass, StencilOp fail, StencilOp zFail, u32 stencilRef,
     u32 compareMask, u32 writeMask)
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     if (enable != stencilTest_)
     {
         if (enable)
@@ -2100,7 +2100,7 @@ Vector<int> Graphics::GetMultiSampleLevels_OGL() const
     // No multisampling always supported
     ret.Push(1);
 
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     int maxSamples = 0;
     glGetIntegerv(GL_MAX_SAMPLES, &maxSamples);
     for (int i = 2; i <= maxSamples && i <= 16; i *= 2)
@@ -2120,7 +2120,7 @@ unsigned Graphics::GetFormat_OGL(CompressedFormat format) const
     case CF_DXT1:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT1_EXT : 0;
 
-#if !defined(URHO3D_GLES2) || defined(__EMSCRIPTEN__)
+#if !defined(DV_GLES2) || defined(__EMSCRIPTEN__)
     case CF_DXT3:
         return dxtTextureSupport_ ? GL_COMPRESSED_RGBA_S3TC_DXT3_EXT : 0;
 
@@ -2279,7 +2279,7 @@ void Graphics::OnWindowResized_OGL()
     CleanupFramebuffers_OGL();
     ResetRenderTargets_OGL();
 
-    URHO3D_LOGDEBUGF("Window was resized to %dx%d", width_, height_);
+    DV_LOGDEBUGF("Window was resized to %dx%d", width_, height_);
 
 #ifdef __EMSCRIPTEN__
     EM_ASM({
@@ -2313,7 +2313,7 @@ void Graphics::OnWindowMoved_OGL()
     position_.x_ = newX;
     position_.y_ = newY;
 
-    URHO3D_LOGTRACEF("Window was moved to %d,%d", position_.x_, position_.y_);
+    DV_LOGTRACEF("Window was moved to %d,%d", position_.x_, position_.y_);
 
     using namespace WindowPos;
 
@@ -2452,7 +2452,7 @@ void Graphics::Release_OGL(bool clearGPUObjects, bool closeWindow)
     {
         // Do not log this message if we are exiting
         if (!clearGPUObjects)
-            URHO3D_LOGINFO("OpenGL context lost");
+            DV_LOGINFO("OpenGL context lost");
 
         SDL_GL_DeleteContext(impl->context_);
         impl->context_ = nullptr;
@@ -2513,7 +2513,7 @@ void Graphics::Restore_OGL()
 
         if (!impl->context_)
         {
-            URHO3D_LOGERRORF("Could not create OpenGL context, root cause '%s'", SDL_GetError());
+            DV_LOGERRORF("Could not create OpenGL context, root cause '%s'", SDL_GetError());
             return;
         }
 
@@ -2526,7 +2526,7 @@ void Graphics::Restore_OGL()
         GLenum err = glewInit();
         if (GLEW_OK != err)
         {
-            URHO3D_LOGERRORF("Could not initialize OpenGL extensions, root cause: '%s'", glewGetErrorString(err));
+            DV_LOGERRORF("Could not initialize OpenGL extensions, root cause: '%s'", glewGetErrorString(err));
             return;
         }
 
@@ -2544,7 +2544,7 @@ void Graphics::Restore_OGL()
         {
             if (!GLEW_EXT_framebuffer_object || !GLEW_EXT_packed_depth_stencil)
             {
-                URHO3D_LOGERROR("EXT_framebuffer_object and EXT_packed_depth_stencil OpenGL extensions are required");
+                DV_LOGERROR("EXT_framebuffer_object and EXT_packed_depth_stencil OpenGL extensions are required");
                 return;
             }
 
@@ -2553,7 +2553,7 @@ void Graphics::Restore_OGL()
         }
         else
         {
-            URHO3D_LOGERROR("OpenGL 2.0 is required");
+            DV_LOGERROR("OpenGL 2.0 is required");
             return;
         }
 
@@ -2601,7 +2601,7 @@ void Graphics::SetVBO_OGL(unsigned object)
 
 void Graphics::SetUBO_OGL(unsigned object)
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     GraphicsImpl_OGL* impl = GetImpl_OGL();
     if (impl->boundUBO_ != object)
     {
@@ -2678,7 +2678,7 @@ unsigned Graphics::GetRGBAFloat32Format_OGL()
 {
 #ifndef GL_ES_VERSION_2_0
     return GL_RGBA32F_ARB;
-#elif URHO3D_GLES3
+#elif DV_GLES3
     return GL_RGBA32F;
 #else
     return GL_RGBA;
@@ -2689,7 +2689,7 @@ unsigned Graphics::GetRG16Format_OGL()
 {
 #ifndef GL_ES_VERSION_2_0
     return GL_RG16;
-#elif URHO3D_GLES3
+#elif DV_GLES3
     return GL_RG16UI;
 #else
     return GL_RGBA;
@@ -2698,7 +2698,7 @@ unsigned Graphics::GetRG16Format_OGL()
 
 unsigned Graphics::GetRGFloat16Format_OGL()
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     return GL_RG16F;
 #else
     return GL_RGBA;
@@ -2707,7 +2707,7 @@ unsigned Graphics::GetRGFloat16Format_OGL()
 
 unsigned Graphics::GetRGFloat32Format_OGL()
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     return GL_RG32F;
 #else
     return GL_RGBA;
@@ -2716,7 +2716,7 @@ unsigned Graphics::GetRGFloat32Format_OGL()
 
 unsigned Graphics::GetFloat16Format_OGL()
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     return GL_R16F;
 #else
     return GL_LUMINANCE;
@@ -2725,7 +2725,7 @@ unsigned Graphics::GetFloat16Format_OGL()
 
 unsigned Graphics::GetFloat32Format_OGL()
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     return GL_R32F;
 #else
     return GL_LUMINANCE;
@@ -2928,7 +2928,7 @@ void Graphics::PrepareDraw_OGL()
 {
     GraphicsImpl_OGL* impl = GetImpl_OGL();
 
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
 #ifndef GL_ES_VERSION_3_0
     if (gl3Support)
 #endif
@@ -3006,7 +3006,7 @@ void Graphics::PrepareDraw_OGL()
             impl->boundFBO_ = i->second_.fbo_;
         }
 
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
         // Setup readbuffers & drawbuffers if needed
         if (i->second_.readBuffers_ != GL_NONE)
         {
@@ -3104,7 +3104,7 @@ void Graphics::PrepareDraw_OGL()
         {
             // Bind either a renderbuffer or a depth texture, depending on what is available
             Texture* texture = depthStencil_->GetParentTexture();
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
             bool hasStencil = texture->GetFormat() == GL_DEPTH24_STENCIL8_EXT;
 #else
             bool hasStencil = texture->GetFormat() == GL_DEPTH24_STENCIL8_OES;
@@ -3357,7 +3357,7 @@ void Graphics::SetTextureUnitMappings_OGL()
     textureUnits_["LightSpotMap"] = TU_LIGHTSHAPE;
     textureUnits_["LightCubeMap"] = TU_LIGHTSHAPE;
     textureUnits_["ShadowMap"] = TU_SHADOWMAP;
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     textureUnits_["VolumeMap"] = TU_VOLUMEMAP;
     textureUnits_["FaceSelectCubeMap"] = TU_FACESELECT;
     textureUnits_["IndirectionCubeMap"] = TU_INDIRECTION;
@@ -3481,7 +3481,7 @@ bool Graphics::CheckFramebuffer_OGL()
 
 void Graphics::SetVertexAttribDivisor_OGL(unsigned location, unsigned divisor)
 {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
 #ifndef GL_ES_VERSION_3_0
     if (gl3Support && instancingSupport_)
 #endif

@@ -17,7 +17,7 @@ class Window;
 /// either to a 3D scene object using UIComponent, or directly to the backbuffer.
 class Hello3DUI : public Sample
 {
-    URHO3D_OBJECT(Hello3DUI, Sample);
+    DV_OBJECT(Hello3DUI, Sample);
 
 public:
     /// Construct.

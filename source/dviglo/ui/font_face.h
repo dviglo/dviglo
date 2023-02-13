@@ -15,7 +15,7 @@ class Image;
 class Texture2D;
 
 /// %Font glyph description.
-struct URHO3D_API FontGlyph
+struct DV_API FontGlyph
 {
     /// X position in texture.
     short x_{};
@@ -42,7 +42,7 @@ struct URHO3D_API FontGlyph
 };
 
 /// %Font face description.
-class URHO3D_API FontFace : public RefCounted
+class DV_API FontFace : public RefCounted
 {
     friend class Font;
 

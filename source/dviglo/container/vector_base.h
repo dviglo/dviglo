@@ -16,7 +16,7 @@ namespace dviglo
 /** Note that to prevent extra memory use due to vtable pointer, %VectorBase intentionally does not declare a virtual destructor
     and therefore %VectorBase pointers should never be used.
   */
-class URHO3D_API VectorBase
+class DV_API VectorBase
 {
 public:
     /// Construct.

@@ -61,20 +61,20 @@ void Text::RegisterObject(Context* context)
 {
     context->RegisterFactory<Text>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(UISelectable);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Use Derived Opacity", false);
-    URHO3D_ACCESSOR_ATTRIBUTE("Font", GetFontAttr, SetFontAttr, ResourceRef(Font::GetTypeStatic()), AM_FILE);
-    URHO3D_ATTRIBUTE("Font Size", fontSize_, DEFAULT_FONT_SIZE, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Text", GetTextAttr, SetTextAttr, String::EMPTY, AM_FILE);
-    URHO3D_ENUM_ATTRIBUTE("Text Alignment", textAlignment_, horizontalAlignments, HA_LEFT, AM_FILE);
-    URHO3D_ATTRIBUTE("Row Spacing", rowSpacing_, 1.0f, AM_FILE);
-    URHO3D_ATTRIBUTE("Word Wrap", wordWrap_, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Auto Localizable", GetAutoLocalizable, SetAutoLocalizable, false, AM_FILE);
-    URHO3D_ENUM_ATTRIBUTE("Text Effect", textEffect_, textEffects, TE_NONE, AM_FILE);
-    URHO3D_ATTRIBUTE("Shadow Offset", shadowOffset_, IntVector2(1, 1), AM_FILE);
-    URHO3D_ATTRIBUTE("Stroke Thickness", strokeThickness_, 1, AM_FILE);
-    URHO3D_ATTRIBUTE("Round Stroke", roundStroke_, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Effect Color", GetEffectColor, SetEffectColor, Color::BLACK, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(UISelectable);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Use Derived Opacity", false);
+    DV_ACCESSOR_ATTRIBUTE("Font", GetFontAttr, SetFontAttr, ResourceRef(Font::GetTypeStatic()), AM_FILE);
+    DV_ATTRIBUTE("Font Size", fontSize_, DEFAULT_FONT_SIZE, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Text", GetTextAttr, SetTextAttr, String::EMPTY, AM_FILE);
+    DV_ENUM_ATTRIBUTE("Text Alignment", textAlignment_, horizontalAlignments, HA_LEFT, AM_FILE);
+    DV_ATTRIBUTE("Row Spacing", rowSpacing_, 1.0f, AM_FILE);
+    DV_ATTRIBUTE("Word Wrap", wordWrap_, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Auto Localizable", GetAutoLocalizable, SetAutoLocalizable, false, AM_FILE);
+    DV_ENUM_ATTRIBUTE("Text Effect", textEffect_, textEffects, TE_NONE, AM_FILE);
+    DV_ATTRIBUTE("Shadow Offset", shadowOffset_, IntVector2(1, 1), AM_FILE);
+    DV_ATTRIBUTE("Stroke Thickness", strokeThickness_, 1, AM_FILE);
+    DV_ATTRIBUTE("Round Stroke", roundStroke_, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Effect Color", GetEffectColor, SetEffectColor, Color::BLACK, AM_FILE);
 
     // Change the default value for UseDerivedOpacity
     context->GetAttribute<Text>("Use Derived Opacity")->defaultValue_ = false;
@@ -242,7 +242,7 @@ bool Text::SetFont(Font* font, float size)
 {
     if (!font)
     {
-        URHO3D_LOGERROR("Null font for Text");
+        DV_LOGERROR("Null font for Text");
         return false;
     }
 
@@ -327,7 +327,7 @@ void Text::SetAutoLocalizable(bool enable)
             stringId_ = text_;
             auto* l10n = GetSubsystem<Localization>();
             text_ = l10n->Get(stringId_);
-            SubscribeToEvent(E_CHANGELANGUAGE, URHO3D_HANDLER(Text, HandleChangeLanguage));
+            SubscribeToEvent(E_CHANGELANGUAGE, DV_HANDLER(Text, HandleChangeLanguage));
         }
         else
         {

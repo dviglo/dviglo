@@ -13,7 +13,7 @@ namespace dviglo
 {
 
 /// Combined information for specific vertex and pixel shaders.
-class URHO3D_API ShaderProgram_D3D11 : public RefCounted
+class DV_API ShaderProgram_D3D11 : public RefCounted
 {
 public:
     /// Construct.

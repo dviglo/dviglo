@@ -6,7 +6,7 @@ using namespace dviglo;
 
 class Game : public Application
 {
-    URHO3D_OBJECT(Game, Application);
+    DV_OBJECT(Game, Application);
 
 public:
     SharedPtr<Scene> scene_;
@@ -140,8 +140,8 @@ public:
 
     void SubscribeToEvents()
     {
-        SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Game, HandleUpdate));
-        SubscribeToEvent(E_ENDVIEWRENDER, URHO3D_HANDLER(Game, HandleEndViewRender));
+        SubscribeToEvent(E_UPDATE, DV_HANDLER(Game, HandleUpdate));
+        SubscribeToEvent(E_ENDVIEWRENDER, DV_HANDLER(Game, HandleEndViewRender));
     }
 
     void HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -287,4 +287,4 @@ public:
     }
 };
 
-URHO3D_DEFINE_APPLICATION_MAIN(Game)
+DV_DEFINE_APPLICATION_MAIN(Game)

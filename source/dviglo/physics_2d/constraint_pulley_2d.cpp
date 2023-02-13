@@ -32,15 +32,15 @@ void ConstraintPulley2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<ConstraintPulley2D>(PHYSICS2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Owner Body Ground Anchor", GetOwnerBodyGroundAnchor, SetOwnerBodyGroundAnchor, Vector2::ZERO,
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Owner Body Ground Anchor", GetOwnerBodyGroundAnchor, SetOwnerBodyGroundAnchor, Vector2::ZERO,
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Other Body Ground Anchor", GetOtherBodyGroundAnchor, SetOtherBodyGroundAnchor, Vector2::ZERO,
+    DV_ACCESSOR_ATTRIBUTE("Other Body Ground Anchor", GetOtherBodyGroundAnchor, SetOtherBodyGroundAnchor, Vector2::ZERO,
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Owner Body Anchor", GetOwnerBodyAnchor, SetOwnerBodyAnchor, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Other Body Anchor", GetOtherBodyAnchor, SetOtherBodyAnchor, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Ratio", GetRatio, SetRatio, 0.0f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Constraint2D);
+    DV_ACCESSOR_ATTRIBUTE("Owner Body Anchor", GetOwnerBodyAnchor, SetOwnerBodyAnchor, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Other Body Anchor", GetOtherBodyAnchor, SetOtherBodyAnchor, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Ratio", GetRatio, SetRatio, 0.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
 void ConstraintPulley2D::SetOwnerBodyGroundAnchor(const Vector2& groundAnchor)

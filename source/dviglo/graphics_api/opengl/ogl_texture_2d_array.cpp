@@ -84,35 +84,35 @@ void Texture2DArray::Release_OGL()
 
 bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, int width, int height, const void* data)
 {
-    URHO3D_PROFILE(SetTextureData);
+    DV_PROFILE(SetTextureData);
 
     if (!object_.name_ || !graphics_)
     {
-        URHO3D_LOGERROR("Texture array not created, can not set data");
+        DV_LOGERROR("Texture array not created, can not set data");
         return false;
     }
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null source for setting data");
+        DV_LOGERROR("Null source for setting data");
         return false;
     }
 
     if (layer >= layers_)
     {
-        URHO3D_LOGERROR("Illegal layer for setting data");
+        DV_LOGERROR("Illegal layer for setting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for setting data");
+        DV_LOGERROR("Illegal mip level for setting data");
         return false;
     }
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture array data assignment while device is lost");
+        DV_LOGWARNING("Texture array data assignment while device is lost");
         dataPending_ = true;
         return true;
     }
@@ -127,7 +127,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, i
     int levelHeight = GetLevelHeight(level);
     if (x < 0 || x + width > levelWidth || y < 0 || y + height > levelHeight || width <= 0 || height <= 0)
     {
-        URHO3D_LOGERROR("Illegal dimensions for setting data");
+        DV_LOGERROR("Illegal dimensions for setting data");
         return false;
     }
 
@@ -172,17 +172,17 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
 {
     if (!image)
     {
-        URHO3D_LOGERROR("Null image, can not set data");
+        DV_LOGERROR("Null image, can not set data");
         return false;
     }
     if (!layers_)
     {
-        URHO3D_LOGERROR("Number of layers in the array must be set first");
+        DV_LOGERROR("Number of layers in the array must be set first");
         return false;
     }
     if (layer >= layers_)
     {
-        URHO3D_LOGERROR("Illegal layer for setting data");
+        DV_LOGERROR("Illegal layer for setting data");
         return false;
     }
 
@@ -256,12 +256,12 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
         {
             if (!object_.name_)
             {
-                URHO3D_LOGERROR("Texture array layer 0 must be loaded first");
+                DV_LOGERROR("Texture array layer 0 must be loaded first");
                 return false;
             }
             if (levelWidth != width_ || levelHeight != height_ || format != format_)
             {
-                URHO3D_LOGERROR("Texture array layer does not match size or format of layer 0");
+                DV_LOGERROR("Texture array layer does not match size or format of layer 0");
                 return false;
             }
         }
@@ -312,12 +312,12 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
         {
             if (!object_.name_)
             {
-                URHO3D_LOGERROR("Texture array layer 0 must be loaded first");
+                DV_LOGERROR("Texture array layer 0 must be loaded first");
                 return false;
             }
             if (width != width_ || height != height_ || format != format_)
             {
-                URHO3D_LOGERROR("Texture array layer does not match size or format of layer 0");
+                DV_LOGERROR("Texture array layer does not match size or format of layer 0");
                 return false;
             }
         }
@@ -355,31 +355,31 @@ bool Texture2DArray::GetData_OGL(unsigned layer, unsigned level, void* dest) con
 #ifndef GL_ES_VERSION_2_0
     if (!object_.name_ || !graphics_)
     {
-        URHO3D_LOGERROR("Texture array not created, can not get data");
+        DV_LOGERROR("Texture array not created, can not get data");
         return false;
     }
 
     if (!dest)
     {
-        URHO3D_LOGERROR("Null destination for getting data");
+        DV_LOGERROR("Null destination for getting data");
         return false;
     }
 
     if (layer != 0)
     {
-        URHO3D_LOGERROR("Only the full download of the array is supported, set layer=0");
+        DV_LOGERROR("Only the full download of the array is supported, set layer=0");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for getting data");
+        DV_LOGERROR("Illegal mip level for getting data");
         return false;
     }
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Getting texture data while device is lost");
+        DV_LOGWARNING("Getting texture data while device is lost");
         return false;
     }
 
@@ -393,7 +393,7 @@ bool Texture2DArray::GetData_OGL(unsigned layer, unsigned level, void* dest) con
     graphics_->SetTexture(0, nullptr);
     return true;
 #else
-    URHO3D_LOGERROR("Getting texture data not supported");
+    DV_LOGERROR("Getting texture data not supported");
     return false;
 #endif
 }
@@ -403,7 +403,7 @@ bool Texture2DArray::Create_OGL()
     Release_OGL();
 
 #if defined(GL_ES_VERSION_2_0) && !defined(GL_ES_VERSION_3_0)
-    URHO3D_LOGERROR("Failed to create 2D array texture, currently unsupported on OpenGL ES 2");
+    DV_LOGERROR("Failed to create 2D array texture, currently unsupported on OpenGL ES 2");
     return false;
 #else
 
@@ -412,7 +412,7 @@ bool Texture2DArray::Create_OGL()
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture array creation while device is lost");
+        DV_LOGWARNING("Texture array creation while device is lost");
         return true;
     }
 
@@ -435,7 +435,7 @@ bool Texture2DArray::Create_OGL()
             success = false;
     }
     if (!success)
-        URHO3D_LOGERROR("Failed to create texture array");
+        DV_LOGERROR("Failed to create texture array");
 
     // Set mipmapping
     if (usage_ == TEXTURE_DEPTHSTENCIL || usage_ == TEXTURE_DYNAMIC)

@@ -21,7 +21,7 @@ void ConstantBuffer::OnDeviceReset_D3D11()
 
 void ConstantBuffer::Release_D3D11()
 {
-    URHO3D_SAFE_RELEASE(object_.ptr_);
+    DV_SAFE_RELEASE(object_.ptr_);
 
     shadowData_.Reset();
     size_ = 0;
@@ -33,7 +33,7 @@ bool ConstantBuffer::SetSize_D3D11(unsigned size)
 
     if (!size)
     {
-        URHO3D_LOGERROR("Can not create zero-sized constant buffer");
+        DV_LOGERROR("Can not create zero-sized constant buffer");
         return false;
     }
 
@@ -59,8 +59,8 @@ bool ConstantBuffer::SetSize_D3D11(unsigned size)
         HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, 0, (ID3D11Buffer**)&object_.ptr_);
         if (FAILED(hr))
         {
-            URHO3D_SAFE_RELEASE(object_.ptr_);
-            URHO3D_LOGD3DERROR("Failed to create constant buffer", hr);
+            DV_SAFE_RELEASE(object_.ptr_);
+            DV_LOGD3DERROR("Failed to create constant buffer", hr);
             return false;
         }
     }

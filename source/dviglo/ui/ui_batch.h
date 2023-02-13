@@ -21,7 +21,7 @@ class UIElement;
 inline constexpr i32 UI_VERTEX_SIZE = 6;
 
 /// %UI rendering draw call.
-class URHO3D_API UIBatch
+class DV_API UIBatch
 {
 public:
     /// Construct with defaults.

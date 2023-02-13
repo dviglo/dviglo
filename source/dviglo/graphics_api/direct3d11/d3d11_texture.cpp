@@ -111,7 +111,7 @@ void Texture::UpdateParameters_D3D11()
         return;
 
     // Release old sampler
-    URHO3D_SAFE_RELEASE(sampler_);
+    DV_SAFE_RELEASE(sampler_);
 
     D3D11_SAMPLER_DESC samplerDesc;
     memset(&samplerDesc, 0, sizeof samplerDesc);
@@ -131,8 +131,8 @@ void Texture::UpdateParameters_D3D11()
     HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateSamplerState(&samplerDesc, (ID3D11SamplerState**)&sampler_);
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(sampler_);
-        URHO3D_LOGD3DERROR("Failed to create sampler state", hr);
+        DV_SAFE_RELEASE(sampler_);
+        DV_LOGD3DERROR("Failed to create sampler state", hr);
     }
 
     parametersDirty_ = false;

@@ -19,7 +19,7 @@ class RibbonTrail;
 /// This sample demonstrates how to use both trail types of RibbonTrail component.
 class RibbonTrailDemo : public Sample
 {
-    URHO3D_OBJECT(RibbonTrailDemo, Sample);
+    DV_OBJECT(RibbonTrailDemo, Sample);
 
 public:
     /// Construct.

@@ -37,22 +37,22 @@ class Vector3;
 class Vector4;
 class VertexBuffer;
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
 class GraphicsImpl_OGL;
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
 class GraphicsImpl_D3D11;
 #endif
 
 struct ShaderParameter;
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
 // Note: ShaderProgram_OGL class is purposefully API-specific. It should not be used by Urho3D client applications.
 class ShaderProgram_OGL;
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
 // Note: ShaderProgram_D3D11 class is purposefully API-specific. It should not be used by Urho3D client applications.
 class ShaderProgram_D3D11;
 #endif
@@ -134,9 +134,9 @@ struct WindowModeParams
 };
 
 /// %Graphics subsystem. Manages the application window, rendering state and GPU resources.
-class URHO3D_API Graphics : public Object
+class DV_API Graphics : public Object
 {
-    URHO3D_OBJECT(Graphics, Object);
+    DV_OBJECT(Graphics, Object);
 
 public:
     /// Construct.
@@ -317,7 +317,7 @@ public:
     /// Return whether rendering initialized.
     bool IsInitialized() const;
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     /// Return graphics implementation, which holds the actual API-specific resources.
     GraphicsImpl_OGL* GetImpl_OGL() const
     {
@@ -326,7 +326,7 @@ public:
     }
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     /// Return graphics implementation, which holds the actual API-specific resources.
     GraphicsImpl_D3D11* GetImpl_D3D11() const
     {
@@ -481,7 +481,7 @@ public:
     /// Return current pixel shader.
     ShaderVariation* GetPixelShader() const { return pixelShader_; }
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     // Note: ShaderProgram_OGL class is purposefully API-specific. It should not be used by Urho3D client applications.
 
     /// Return shader program. This is an API-specific class and should not be used by applications.
@@ -491,7 +491,7 @@ public:
     void CleanupShaderPrograms_OGL(ShaderVariation* variation);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     // Note: ShaderProgram_D3D11 class is purposefully API-specific. It should not be used by Urho3D client applications.
 
     /// Return shader program. This is an API-specific class and should not be used by applications.
@@ -597,7 +597,7 @@ public:
     /// Window was moved through user interaction. Called by Input subsystem.
     void OnWindowMoved();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     /// Restore GPU objects and reinitialize state. Requires an open window. Used only on OpenGL.
     void Restore_OGL();
 
@@ -619,7 +619,7 @@ public:
     const String& GetRendererName() const { return rendererName_; }
     /// Get Version string. Used on OpenGL
     const String& GetVersionString() const { return versionString_; }
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
     /// Maximize the window.
     void Maximize();
@@ -697,7 +697,7 @@ private:
     /// Called when screen mode is successfully changed by the backend.
     void OnScreenModeChanged();
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     /// Create the application window.
     bool OpenWindow_D3D11(int width, int height, bool resizable, bool borderless);
 
@@ -727,9 +727,9 @@ private:
 
     /// Dirty texture parameters of all textures (when global settings change). Used on OpenGL and DirectX 11.
     void SetTextureParametersDirty_D3D11();
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     /// Clean up all framebuffers. Called when destroying the context. Used only on OpenGL.
     void CleanupFramebuffers_OGL();
 
@@ -774,11 +774,11 @@ private:
 
     /// Dirty texture parameters of all textures (when global settings change). Used on OpenGL and DirectX 11.
     void SetTextureParametersDirty_OGL();
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
     // For proxy functions
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     void Constructor_OGL();
     void Destructor_OGL();
     bool SetScreenMode_OGL(int width, int height, const ScreenModeParams& params, bool maximize);
@@ -880,9 +880,9 @@ private:
     static unsigned GetDepthStencilFormat_OGL();
     static unsigned GetReadableDepthFormat_OGL();
     static unsigned GetFormat_OGL(const String& formatName);
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     void Constructor_D3D11();
     void Destructor_D3D11();
     bool SetScreenMode_D3D11(int width, int height, const ScreenModeParams& params, bool maximize);
@@ -984,7 +984,7 @@ private:
     static unsigned GetDepthStencilFormat_D3D11();
     static unsigned GetReadableDepthFormat_D3D11();
     static unsigned GetFormat_D3D11(const String& formatName);
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     /// Mutex for accessing the GPU objects vector from several threads.
     Mutex gpuObjectMutex_;
@@ -1143,7 +1143,7 @@ private:
     String orientations_;
     /// Graphics API name.
     String apiName_;
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     /// Renderer name (usually GPU name)
     String rendererName_;
     /// Version of GL drivers
@@ -1156,7 +1156,7 @@ private:
 };
 
 /// Register Graphics library objects.
-void URHO3D_API RegisterGraphicsLibrary(Context* context);
+void DV_API RegisterGraphicsLibrary(Context* context);
 
 } // namespace dviglo
 

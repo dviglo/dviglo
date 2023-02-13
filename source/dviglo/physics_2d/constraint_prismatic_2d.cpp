@@ -29,16 +29,16 @@ void ConstraintPrismatic2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<ConstraintPrismatic2D>(PHYSICS2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Axis", GetAxis, SetAxis, Vector2::RIGHT, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Enable Limit", GetEnableLimit, SetEnableLimit, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Lower translation", GetLowerTranslation, SetLowerTranslation, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Upper translation", GetUpperTranslation, SetUpperTranslation, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Enable Motor", GetEnableMotor, SetEnableMotor, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Motor Force", GetMaxMotorForce, SetMaxMotorForce, 2.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Motor Speed", GetMotorSpeed, SetMotorSpeed, 0.7f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Constraint2D);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Axis", GetAxis, SetAxis, Vector2::RIGHT, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Enable Limit", GetEnableLimit, SetEnableLimit, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Lower translation", GetLowerTranslation, SetLowerTranslation, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Upper translation", GetUpperTranslation, SetUpperTranslation, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Enable Motor", GetEnableMotor, SetEnableMotor, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Motor Force", GetMaxMotorForce, SetMaxMotorForce, 2.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Motor Speed", GetMotorSpeed, SetMotorSpeed, 0.7f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
 void ConstraintPrismatic2D::SetAnchor(const Vector2& anchor)

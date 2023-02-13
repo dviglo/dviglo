@@ -40,16 +40,16 @@ void Character2D::RegisterObject(Context* context)
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the 'Default' attribute mode which means it will be used both for saving into file, and network replication.
-    URHO3D_ATTRIBUTE("Wounded", wounded_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Killed", killed_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Timer", timer_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Coins In Level", maxCoins_, 0, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Remaining Coins", remainingCoins_, 0, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Remaining Lifes", remainingLifes_, 3, AM_DEFAULT);
+    DV_ATTRIBUTE("Wounded", wounded_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Killed", killed_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Timer", timer_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Coins In Level", maxCoins_, 0, AM_DEFAULT);
+    DV_ATTRIBUTE("Remaining Coins", remainingCoins_, 0, AM_DEFAULT);
+    DV_ATTRIBUTE("Remaining Lifes", remainingLifes_, 3, AM_DEFAULT);
     // Note that we don't load/save isClimbing_ as the contact listener already sets this bool.
-    URHO3D_ATTRIBUTE("Is Climbing Rope", climb2_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Is Above Climbable", aboveClimbable_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Is On Slope", onSlope_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Is Climbing Rope", climb2_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Is Above Climbable", aboveClimbable_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Is On Slope", onSlope_, false, AM_DEFAULT);
 }
 
 void Character2D::Update(float timeStep)

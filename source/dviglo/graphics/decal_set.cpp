@@ -162,16 +162,16 @@ void DecalSet::RegisterObject(Context* context)
 {
     context->RegisterFactory<DecalSet>(GEOMETRY_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Vertices", GetMaxVertices, SetMaxVertices, DEFAULT_MAX_VERTICES, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Indices", GetMaxIndices, SetMaxIndices, DEFAULT_MAX_INDICES, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Optimize Buffer Size", GetOptimizeBufferSize, SetOptimizeBufferSize, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Drawable);
-    URHO3D_ACCESSOR_ATTRIBUTE("Decals", GetDecalsAttr, SetDecalsAttr, Variant::emptyBuffer,
+    DV_ACCESSOR_ATTRIBUTE("Max Vertices", GetMaxVertices, SetMaxVertices, DEFAULT_MAX_VERTICES, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Indices", GetMaxIndices, SetMaxIndices, DEFAULT_MAX_INDICES, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Optimize Buffer Size", GetOptimizeBufferSize, SetOptimizeBufferSize, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Drawable);
+    DV_ACCESSOR_ATTRIBUTE("Decals", GetDecalsAttr, SetDecalsAttr, Variant::emptyBuffer,
         AM_FILE | AM_NOEDIT);
 }
 
@@ -283,7 +283,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
     float aspectRatio, float depth, const Vector2& topLeftUV, const Vector2& bottomRightUV, float timeToLive, float normalCutoff,
     unsigned subGeometry)
 {
-    URHO3D_PROFILE(AddDecal);
+    DV_PROFILE(AddDecal);
 
     // Do not add decals in headless mode
     if (!node_ || !GetSubsystem<Graphics>())
@@ -291,7 +291,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
 
     if (!target || !target->GetNode())
     {
-        URHO3D_LOGERROR("Null target drawable for decal");
+        DV_LOGERROR("Null target drawable for decal");
         return false;
     }
 
@@ -416,14 +416,14 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
 
     if (newDecal.vertices_.Size() > maxVertices_)
     {
-        URHO3D_LOGWARNING("Can not add decal, vertex count " + String(newDecal.vertices_.Size()) + " exceeds maximum " +
+        DV_LOGWARNING("Can not add decal, vertex count " + String(newDecal.vertices_.Size()) + " exceeds maximum " +
                    String(maxVertices_));
         decals_.Pop();
         return false;
     }
     if (newDecal.indices_.Size() > maxIndices_)
     {
-        URHO3D_LOGWARNING("Can not add decal, index count " + String(newDecal.indices_.Size()) + " exceeds maximum " +
+        DV_LOGWARNING("Can not add decal, index count " + String(newDecal.indices_.Size()) + " exceeds maximum " +
                    String(maxIndices_));
         decals_.Pop();
         return false;
@@ -453,7 +453,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
     while (decals_.Size() && (numVertices_ > maxVertices_ || numIndices_ > maxIndices_))
         RemoveDecals(1);
 
-    URHO3D_LOGDEBUG("Added decal with " + String(newDecal.vertices_.Size()) + " vertices");
+    DV_LOGDEBUG("Added decal with " + String(newDecal.vertices_.Size()) + " vertices");
 
     // If new decal is time limited, subscribe to scene post-update
     if (newDecal.timeToLive_ > 0.0f && !subscribed_)
@@ -736,7 +736,7 @@ void DecalSet::GetFaces(Vector<Vector<DecalVertex>>& faces, Drawable* target, un
         geometry->GetRawData(positionData, positionStride, indexData, indexStride, elements);
         if (!positionData)
         {
-            URHO3D_LOGWARNING("Can not add decal, target drawable has no CPU-side geometry data");
+            DV_LOGWARNING("Can not add decal, target drawable has no CPU-side geometry data");
             return;
         }
     }
@@ -885,7 +885,7 @@ bool DecalSet::GetBones(Drawable* target, unsigned batchIndex, const float* blen
 
             if (!bone)
             {
-                URHO3D_LOGWARNING("Out of range bone index for skinned decal");
+                DV_LOGWARNING("Out of range bone index for skinned decal");
                 return false;
             }
 
@@ -910,7 +910,7 @@ bool DecalSet::GetBones(Drawable* target, unsigned batchIndex, const float* blen
             {
                 if (bones_.Size() >= Graphics::GetMaxBones())
                 {
-                    URHO3D_LOGWARNING("Maximum skinned decal bone count reached");
+                    DV_LOGWARNING("Maximum skinned decal bone count reached");
                     return false;
                 }
                 else
@@ -1127,7 +1127,7 @@ void DecalSet::UpdateEventSubscription(bool checkAllDecals)
 
     if (enabled && !subscribed_)
     {
-        SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(DecalSet, HandleScenePostUpdate));
+        SubscribeToEvent(scene, E_SCENEPOSTUPDATE, DV_HANDLER(DecalSet, HandleScenePostUpdate));
         subscribed_ = true;
     }
     else if (!enabled && subscribed_)

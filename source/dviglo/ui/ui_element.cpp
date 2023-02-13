@@ -95,47 +95,47 @@ void UIElement::RegisterObject(Context* context)
 {
     context->RegisterFactory<UIElement>(UI_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Size", GetSize, SetSize, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Min Size", GetMinSize, SetMinSize, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Size", GetMaxSize, SetMaxSize, IntVector2(M_MAX_INT, M_MAX_INT), AM_FILE);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Horiz Alignment", GetHorizontalAlignment, SetHorizontalAlignment,
+    DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Size", GetSize, SetSize, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Min Size", GetMinSize, SetMinSize, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Max Size", GetMaxSize, SetMaxSize, IntVector2(M_MAX_INT, M_MAX_INT), AM_FILE);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Horiz Alignment", GetHorizontalAlignment, SetHorizontalAlignment,
         horizontalAlignments, HA_LEFT, AM_FILEREADONLY);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Vert Alignment", GetVerticalAlignment, SetVerticalAlignment, verticalAlignments,
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Vert Alignment", GetVerticalAlignment, SetVerticalAlignment, verticalAlignments,
         VA_TOP, AM_FILEREADONLY);
-    URHO3D_ACCESSOR_ATTRIBUTE("Min Anchor", GetMinAnchor, SetMinAnchor, Vector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Anchor", GetMaxAnchor, SetMaxAnchor, Vector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Min Offset", GetMinOffset, SetMinOffset, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Offset", GetMaxOffset, SetMaxOffset, IntVector2::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Pivot", GetPivot, SetPivot, Vector2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()), AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Enable Anchor", GetEnableAnchor, SetEnableAnchor, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Clip Border", GetClipBorder, SetClipBorder, IntRect::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Priority", GetPriority, SetPriority, 0, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Opacity", GetOpacity, SetOpacity, 1.0f, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Color", GetColorAttr, SetColor, Color::WHITE, AM_FILE);
-    URHO3D_ATTRIBUTE("Top Left Color", colors_[0], Color::WHITE, AM_FILE);
-    URHO3D_ATTRIBUTE("Top Right Color", colors_[1], Color::WHITE, AM_FILE);
-    URHO3D_ATTRIBUTE("Bottom Left Color", colors_[2], Color::WHITE, AM_FILE);
-    URHO3D_ATTRIBUTE("Bottom Right Color", colors_[3], Color::WHITE, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Editable", IsEditable, SetEditable, true, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Selected", IsSelected, SetSelected, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Visible", IsVisible, SetVisible, true, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Bring To Front", GetBringToFront, SetBringToFront, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Bring To Back", GetBringToBack, SetBringToBack, true, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Clip Children", GetClipChildren, SetClipChildren, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Use Derived Opacity", GetUseDerivedOpacity, SetUseDerivedOpacity, true, AM_FILE);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Focus Mode", GetFocusMode, SetFocusMode, focusModes, FM_NOTFOCUSABLE, AM_FILE);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Drag And Drop Mode", GetDragDropMode, SetDragDropMode, dragDropModes, DD_DISABLED, AM_FILE);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Layout Mode", GetLayoutMode, SetLayoutMode, layoutModes, LM_FREE, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Layout Spacing", GetLayoutSpacing, SetLayoutSpacing, 0, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Layout Border", GetLayoutBorder, SetLayoutBorder, IntRect::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Layout Flex Scale", GetLayoutFlexScale, SetLayoutFlexScale, Vector2::ONE, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Indent", GetIndent, SetIndent, 0, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Indent Spacing", GetIndentSpacing, SetIndentSpacing, 16, AM_FILE);
-    URHO3D_ATTRIBUTE("Variables", vars_, Variant::emptyVariantMap, AM_FILE);
-    URHO3D_ATTRIBUTE("Tags", tags_, Variant::emptyStringVector, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Min Anchor", GetMinAnchor, SetMinAnchor, Vector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Max Anchor", GetMaxAnchor, SetMaxAnchor, Vector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Min Offset", GetMinOffset, SetMinOffset, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Max Offset", GetMaxOffset, SetMaxOffset, IntVector2::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Pivot", GetPivot, SetPivot, Vector2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()), AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Enable Anchor", GetEnableAnchor, SetEnableAnchor, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Clip Border", GetClipBorder, SetClipBorder, IntRect::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Priority", GetPriority, SetPriority, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Opacity", GetOpacity, SetOpacity, 1.0f, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Color", GetColorAttr, SetColor, Color::WHITE, AM_FILE);
+    DV_ATTRIBUTE("Top Left Color", colors_[0], Color::WHITE, AM_FILE);
+    DV_ATTRIBUTE("Top Right Color", colors_[1], Color::WHITE, AM_FILE);
+    DV_ATTRIBUTE("Bottom Left Color", colors_[2], Color::WHITE, AM_FILE);
+    DV_ATTRIBUTE("Bottom Right Color", colors_[3], Color::WHITE, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Is Editable", IsEditable, SetEditable, true, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Is Selected", IsSelected, SetSelected, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Is Visible", IsVisible, SetVisible, true, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Bring To Front", GetBringToFront, SetBringToFront, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Bring To Back", GetBringToBack, SetBringToBack, true, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Clip Children", GetClipChildren, SetClipChildren, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Use Derived Opacity", GetUseDerivedOpacity, SetUseDerivedOpacity, true, AM_FILE);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Focus Mode", GetFocusMode, SetFocusMode, focusModes, FM_NOTFOCUSABLE, AM_FILE);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Drag And Drop Mode", GetDragDropMode, SetDragDropMode, dragDropModes, DD_DISABLED, AM_FILE);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Layout Mode", GetLayoutMode, SetLayoutMode, layoutModes, LM_FREE, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Layout Spacing", GetLayoutSpacing, SetLayoutSpacing, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Layout Border", GetLayoutBorder, SetLayoutBorder, IntRect::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Layout Flex Scale", GetLayoutFlexScale, SetLayoutFlexScale, Vector2::ONE, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Indent", GetIndent, SetIndent, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Indent Spacing", GetIndentSpacing, SetIndentSpacing, 16, AM_FILE);
+    DV_ATTRIBUTE("Variables", vars_, Variant::emptyVariantMap, AM_FILE);
+    DV_ATTRIBUTE("Tags", tags_, Variant::emptyStringVector, AM_FILE);
 }
 
 void UIElement::ApplyAttributes()
@@ -221,7 +221,7 @@ bool UIElement::LoadXML(const XMLElement& source, XMLFile* styleFile)
             }
 
             if (!child)
-                URHO3D_LOGWARNING("Could not find matching internal child element of type " + typeName + " in " + GetTypeName());
+                DV_LOGWARNING("Could not find matching internal child element of type " + typeName + " in " + GetTypeName());
         }
 
         if (child)
@@ -248,7 +248,7 @@ UIElement* UIElement::LoadChildXML(const XMLElement& childElem, XMLFile* styleFi
     bool internalElem = childElem.GetBool("internal");
     if (internalElem)
     {
-        URHO3D_LOGERROR("Loading internal child element is not supported");
+        DV_LOGERROR("Loading internal child element is not supported");
         return nullptr;
     }
 
@@ -486,7 +486,7 @@ bool UIElement::FilterAttributes(XMLElement& dest) const
     // Filter implicit attributes
     if (!FilterImplicitAttributes(dest))
     {
-        URHO3D_LOGERROR("Could not remove implicit attributes");
+        DV_LOGERROR("Could not remove implicit attributes");
         return false;
     }
 
@@ -660,7 +660,7 @@ void UIElement::SetHorizontalAlignment(HorizontalAlignment align)
 {
     if (align != HA_LEFT && parent_ && parent_->GetLayoutMode() == LM_HORIZONTAL)
     {
-        URHO3D_LOGWARNING("Forcing left alignment because parent element has horizontal layout");
+        DV_LOGWARNING("Forcing left alignment because parent element has horizontal layout");
         align = HA_LEFT;
     }
 
@@ -693,7 +693,7 @@ void UIElement::SetVerticalAlignment(VerticalAlignment align)
 {
     if (align != VA_TOP && parent_ && parent_->GetLayoutMode() == LM_VERTICAL)
     {
-        URHO3D_LOGWARNING("Forcing top alignment because parent element has vertical layout");
+        DV_LOGWARNING("Forcing top alignment because parent element has vertical layout");
         align = VA_TOP;
     }
 
@@ -1264,7 +1264,7 @@ UIElement* UIElement::CreateChild(StringHash type, const String& name, i32 index
 
     if (!newElement)
     {
-        URHO3D_LOGERROR("Could not create unknown UI element type " + type.ToString());
+        DV_LOGERROR("Could not create unknown UI element type " + type.ToString());
         return nullptr;
     }
 
@@ -1882,7 +1882,7 @@ IntVector2 UIElement::GetEffectiveMinSize() const
 void UIElement::OnAttributeAnimationAdded()
 {
     if (attributeAnimationInfos_.Size() == 1)
-        SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(UIElement, HandlePostUpdate));
+        SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(UIElement, HandlePostUpdate));
 }
 
 void UIElement::OnAttributeAnimationRemoved()
@@ -1908,7 +1908,7 @@ Animatable* UIElement::FindAttributeAnimationTarget(const String& name, String& 
         {
             if (names[i].Front() != '#')
             {
-                URHO3D_LOGERROR("Invalid name " + name);
+                DV_LOGERROR("Invalid name " + name);
                 return nullptr;
             }
 
@@ -1926,7 +1926,7 @@ Animatable* UIElement::FindAttributeAnimationTarget(const String& name, String& 
 
             if (!element)
             {
-                URHO3D_LOGERROR("Could not find element by name " + name);
+                DV_LOGERROR("Could not find element by name " + name);
                 return nullptr;
             }
         }
@@ -1981,7 +1981,7 @@ bool UIElement::FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styl
         {
             if (!dest.RemoveAttribute("style"))
             {
-                URHO3D_LOGWARNING("Could not remove style attribute");
+                DV_LOGWARNING("Could not remove style attribute");
                 return false;
             }
         }
@@ -1994,7 +1994,7 @@ bool UIElement::FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styl
     {
         if (!childElem.GetBool("internal"))
         {
-            URHO3D_LOGERROR("Invalid style file, style element can only contain internal child elements");
+            DV_LOGERROR("Invalid style file, style element can only contain internal child elements");
             return false;
         }
         if (!FilterUIStyleAttributes(childDest, childElem))

@@ -15,7 +15,7 @@ namespace dviglo
 
 class Ninja : public GameObject
 {
-    URHO3D_OBJECT(Ninja, GameObject);
+    DV_OBJECT(Ninja, GameObject);
 
 public:
     static void RegisterObject(Context* context);

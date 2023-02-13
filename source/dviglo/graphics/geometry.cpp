@@ -38,7 +38,7 @@ bool Geometry::SetNumVertexBuffers(i32 num)
 
     if (num >= MAX_VERTEX_STREAMS)
     {
-        URHO3D_LOGERROR("Too many vertex streams");
+        DV_LOGERROR("Too many vertex streams");
         return false;
     }
 
@@ -54,7 +54,7 @@ bool Geometry::SetVertexBuffer(i32 index, VertexBuffer* buffer)
 
     if (index >= vertexBuffers_.Size())
     {
-        URHO3D_LOGERROR("Stream index out of bounds");
+        DV_LOGERROR("Stream index out of bounds");
         return false;
     }
 
@@ -74,12 +74,12 @@ bool Geometry::SetDrawRange(PrimitiveType type, i32 indexStart, i32 indexCount, 
 
     if (!indexBuffer_ && !rawIndexData_)
     {
-        URHO3D_LOGERROR("Null index buffer and no raw index data, can not define indexed draw range");
+        DV_LOGERROR("Null index buffer and no raw index data, can not define indexed draw range");
         return false;
     }
     if (indexBuffer_ && indexStart + indexCount > indexBuffer_->GetIndexCount())
     {
-        URHO3D_LOGERROR("Illegal draw range " + String(indexStart) + " to " + String(indexStart + indexCount - 1) + ", index buffer has " +
+        DV_LOGERROR("Illegal draw range " + String(indexStart) + " to " + String(indexStart + indexCount - 1) + ", index buffer has " +
                  String(indexBuffer_->GetIndexCount()) + " indices");
         return false;
     }
@@ -119,7 +119,7 @@ bool Geometry::SetDrawRange(PrimitiveType type, i32 indexStart, i32 indexCount, 
         // We can allow setting an illegal draw range now if the caller guarantees to resize / fill the buffer later
         if (checkIllegal && indexStart + indexCount > indexBuffer_->GetIndexCount())
         {
-            URHO3D_LOGERROR("Illegal draw range " + String(indexStart) + " to " + String(indexStart + indexCount - 1) +
+            DV_LOGERROR("Illegal draw range " + String(indexStart) + " to " + String(indexStart + indexCount - 1) +
                      ", index buffer has " + String(indexBuffer_->GetIndexCount()) + " indices");
             return false;
         }
@@ -313,7 +313,7 @@ float Geometry::GetHitDistance(const Ray& ray, Vector3* outNormal, Vector2* outU
     if (outUV && uvOffset == NINDEX)
     {
         // requested UV output, but no texture data in vertex buffer
-        URHO3D_LOGWARNING("Illegal GetHitDistance call: UV return requested on vertex buffer without UV coords");
+        DV_LOGWARNING("Illegal GetHitDistance call: UV return requested on vertex buffer without UV coords");
         *outUV = Vector2::ZERO;
         outUV = nullptr;
     }

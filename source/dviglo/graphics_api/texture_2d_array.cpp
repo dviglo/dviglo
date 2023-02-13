@@ -28,8 +28,8 @@ namespace dviglo
 Texture2DArray::Texture2DArray(Context* context) :
     Texture(context)
 {
-#ifdef URHO3D_OPENGL
-#ifndef URHO3D_GLES2
+#ifdef DV_OPENGL
+#ifndef DV_GLES2
     if (Graphics::GetGAPI() == GAPI_OPENGL)
         target_ = GL_TEXTURE_2D_ARRAY;
 #endif
@@ -57,7 +57,7 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
     // If device is lost, retry later
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture load while device is lost");
+        DV_LOGWARNING("Texture load while device is lost");
         dataPending_ = true;
         return true;
     }
@@ -137,12 +137,12 @@ bool Texture2DArray::SetSize(unsigned layers, int width, int height, unsigned fo
 {
     if (width <= 0 || height <= 0)
     {
-        URHO3D_LOGERROR("Zero or negative texture array size");
+        DV_LOGERROR("Zero or negative texture array size");
         return false;
     }
     if (usage == TEXTURE_DEPTHSTENCIL)
     {
-        URHO3D_LOGERROR("Depth-stencil usage not supported for texture arrays");
+        DV_LOGERROR("Depth-stencil usage not supported for texture arrays");
         return false;
     }
 
@@ -160,7 +160,7 @@ bool Texture2DArray::SetSize(unsigned layers, int width, int height, unsigned fo
     }
 
     if (usage == TEXTURE_RENDERTARGET)
-        SubscribeToEvent(E_RENDERSURFACEUPDATE, URHO3D_HANDLER(Texture2DArray, HandleRenderSurfaceUpdate));
+        SubscribeToEvent(E_RENDERSURFACEUPDATE, DV_HANDLER(Texture2DArray, HandleRenderSurfaceUpdate));
     else
         UnsubscribeFromEvent(E_RENDERSURFACEUPDATE);
 
@@ -193,12 +193,12 @@ void Texture2DArray::OnDeviceLost()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceLost_D3D11();
 #endif
@@ -208,12 +208,12 @@ void Texture2DArray::OnDeviceReset()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceReset_D3D11();
 #endif
@@ -223,12 +223,12 @@ void Texture2DArray::Release()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Release_D3D11();
 #endif
@@ -238,12 +238,12 @@ bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int w
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(layer, level, x, y, width, height, data);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(layer, level, x, y, width, height, data);
 #endif
@@ -255,12 +255,12 @@ bool Texture2DArray::SetData(unsigned layer, Deserializer& source)
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(layer, source);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(layer, source);
 #endif
@@ -272,12 +272,12 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(layer, image, useAlpha);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(layer, image, useAlpha);
 #endif
@@ -289,12 +289,12 @@ bool Texture2DArray::GetData(unsigned layer, unsigned level, void* dest) const
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetData_OGL(layer, level, dest);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return GetData_D3D11(layer, level, dest);
 #endif
@@ -306,12 +306,12 @@ bool Texture2DArray::Create()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Create_D3D11();
 #endif

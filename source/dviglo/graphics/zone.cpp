@@ -52,24 +52,24 @@ void Zone::RegisterObject(Context* context)
 {
     context->RegisterFactory<Zone>(SCENE_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Bounding Box Min", boundingBox_.min_, MarkNodeDirty, DEFAULT_BOUNDING_BOX_MIN, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Bounding Box Max", boundingBox_.max_, MarkNodeDirty, DEFAULT_BOUNDING_BOX_MAX, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Ambient Color", ambientColor_, DEFAULT_AMBIENT_COLOR, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Fog Color", fogColor_, DEFAULT_FOG_COLOR, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Fog Start", fogStart_, DEFAULT_FOG_START, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Fog End", fogEnd_, DEFAULT_FOG_END, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Fog Height", fogHeight_, DEFAULT_FOG_HEIGHT, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Fog Height Scale", fogHeightScale_, DEFAULT_FOG_HEIGHT_SCALE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Height Fog Mode", heightFog_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Override Mode", override_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Ambient Gradient", ambientGradient_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Priority", priority_, MarkNodeDirty, 0, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Zone Texture", GetZoneTextureAttr, SetZoneTextureAttr,
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Bounding Box Min", boundingBox_.min_, MarkNodeDirty, DEFAULT_BOUNDING_BOX_MIN, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Bounding Box Max", boundingBox_.max_, MarkNodeDirty, DEFAULT_BOUNDING_BOX_MAX, AM_DEFAULT);
+    DV_ATTRIBUTE("Ambient Color", ambientColor_, DEFAULT_AMBIENT_COLOR, AM_DEFAULT);
+    DV_ATTRIBUTE("Fog Color", fogColor_, DEFAULT_FOG_COLOR, AM_DEFAULT);
+    DV_ATTRIBUTE("Fog Start", fogStart_, DEFAULT_FOG_START, AM_DEFAULT);
+    DV_ATTRIBUTE("Fog End", fogEnd_, DEFAULT_FOG_END, AM_DEFAULT);
+    DV_ATTRIBUTE("Fog Height", fogHeight_, DEFAULT_FOG_HEIGHT, AM_DEFAULT);
+    DV_ATTRIBUTE("Fog Height Scale", fogHeightScale_, DEFAULT_FOG_HEIGHT_SCALE, AM_DEFAULT);
+    DV_ATTRIBUTE("Height Fog Mode", heightFog_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Override Mode", override_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Ambient Gradient", ambientGradient_, false, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Priority", priority_, MarkNodeDirty, 0, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Zone Texture", GetZoneTextureAttr, SetZoneTextureAttr,
         ResourceRef(TextureCube::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Shadow Mask", shadowMask_, DEFAULT_SHADOWMASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
+    DV_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
+    DV_ATTRIBUTE("Shadow Mask", shadowMask_, DEFAULT_SHADOWMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
 }
 
 void Zone::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)

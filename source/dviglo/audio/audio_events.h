@@ -10,11 +10,11 @@ namespace dviglo
 {
 
 /// Sound playback finished. Sent through the SoundSource's Node.
-URHO3D_EVENT(E_SOUNDFINISHED, SoundFinished)
+DV_EVENT(E_SOUNDFINISHED, SoundFinished)
 {
-    URHO3D_PARAM(P_NODE, Node);                     // Node pointer
-    URHO3D_PARAM(P_SOUNDSOURCE, SoundSource);       // SoundSource pointer
-    URHO3D_PARAM(P_SOUND, Sound);                   // Sound pointer
+    DV_PARAM(P_NODE, Node);                     // Node pointer
+    DV_PARAM(P_SOUNDSOURCE, SoundSource);       // SoundSource pointer
+    DV_PARAM(P_SOUND, Sound);                   // Sound pointer
 }
 
 }

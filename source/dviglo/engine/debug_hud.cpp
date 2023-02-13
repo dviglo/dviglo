@@ -81,7 +81,7 @@ DebugHud::DebugHud(Context* context) :
     eventProfilerText_->SetVisible(false);
     uiRoot->AddChild(eventProfilerText_);
 
-    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(DebugHud, HandlePostUpdate));
+    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(DebugHud, HandlePostUpdate));
 }
 
 DebugHud::~DebugHud()
@@ -156,7 +156,7 @@ void DebugHud::Update()
             renderer->GetMaxOccluderTriangles() > 0 ? "On" : "Off",
             renderer->GetDynamicInstancing() ? "On" : "Off",
             graphics->GetApiName().CString());
-    #ifdef URHO3D_OPENGL
+    #ifdef DV_OPENGL
         mode.AppendWithFormat(" Renderer:%s Version:%s", graphics->GetRendererName().CString(),
             graphics->GetVersionString().CString());
     #endif
@@ -219,7 +219,7 @@ void DebugHud::SetMode(DebugHudElements mode)
 
     memoryText_->SetPosition(0, modeText_->IsVisible() ? modeText_->GetHeight() * -2 : 0);
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     // Event profiler is created on engine initialization if "EventProfiler" parameter is set
     auto* eventProfiler = GetSubsystem<EventProfiler>();
     if (eventProfiler)

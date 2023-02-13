@@ -77,13 +77,13 @@ void CrowdManager::RegisterObject(Context* context)
 {
     context->RegisterFactory<CrowdManager>(NAVIGATION_CATEGORY);
 
-    URHO3D_ATTRIBUTE("Max Agents", maxAgents_, DEFAULT_MAX_AGENTS, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Max Agent Radius", maxAgentRadius_, DEFAULT_MAX_AGENT_RADIUS, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Navigation Mesh", navigationMeshId_, 0, AM_DEFAULT | AM_COMPONENTID);
-    URHO3D_ACCESSOR_ATTRIBUTE("Filter Types", GetQueryFilterTypesAttr, SetQueryFilterTypesAttr,
+    DV_ATTRIBUTE("Max Agents", maxAgents_, DEFAULT_MAX_AGENTS, AM_DEFAULT);
+    DV_ATTRIBUTE("Max Agent Radius", maxAgentRadius_, DEFAULT_MAX_AGENT_RADIUS, AM_DEFAULT);
+    DV_ATTRIBUTE("Navigation Mesh", navigationMeshId_, 0, AM_DEFAULT | AM_COMPONENTID);
+    DV_ACCESSOR_ATTRIBUTE("Filter Types", GetQueryFilterTypesAttr, SetQueryFilterTypesAttr,
         Variant::emptyVariantVector, AM_DEFAULT)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, filterTypesStructureElementNames);
-    URHO3D_ACCESSOR_ATTRIBUTE("Obstacle Avoidance Types", GetObstacleAvoidanceTypesAttr, SetObstacleAvoidanceTypesAttr,
+    DV_ACCESSOR_ATTRIBUTE("Obstacle Avoidance Types", GetObstacleAvoidanceTypesAttr, SetObstacleAvoidanceTypesAttr,
         Variant::emptyVariantVector, AM_DEFAULT)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, obstacleAvoidanceTypesStructureElementNames);
 }
@@ -250,8 +250,8 @@ void CrowdManager::SetNavigationMesh(NavigationMesh* navMesh)
 
         if (navMesh)
         {
-            SubscribeToEvent(navMesh, E_NAVIGATION_MESH_REBUILT, URHO3D_HANDLER(CrowdManager, HandleNavMeshChanged));
-            SubscribeToEvent(scene, E_COMPONENTREMOVED, URHO3D_HANDLER(CrowdManager, HandleNavMeshChanged));
+            SubscribeToEvent(navMesh, E_NAVIGATION_MESH_REBUILT, DV_HANDLER(CrowdManager, HandleNavMeshChanged));
+            SubscribeToEvent(scene, E_COMPONENTREMOVED, DV_HANDLER(CrowdManager, HandleNavMeshChanged));
         }
 
         CreateCrowd();
@@ -465,7 +465,7 @@ VariantVector CrowdManager::GetQueryFilterTypesAttr() const
 unsigned short CrowdManager::GetIncludeFlags(unsigned queryFilterType) const
 {
     if (queryFilterType >= numQueryFilterTypes_)
-        URHO3D_LOGWARNINGF("Query filter type %d is not configured yet, returning the default include flags initialized by dtCrowd",
+        DV_LOGWARNINGF("Query filter type %d is not configured yet, returning the default include flags initialized by dtCrowd",
             queryFilterType);
     const dtQueryFilter* filter = GetDetourQueryFilter(queryFilterType);
     return (unsigned short)(filter ? filter->getIncludeFlags() : 0xffff);
@@ -474,7 +474,7 @@ unsigned short CrowdManager::GetIncludeFlags(unsigned queryFilterType) const
 unsigned short CrowdManager::GetExcludeFlags(unsigned queryFilterType) const
 {
     if (queryFilterType >= numQueryFilterTypes_)
-        URHO3D_LOGWARNINGF("Query filter type %d is not configured yet, returning the default exclude flags initialized by dtCrowd",
+        DV_LOGWARNINGF("Query filter type %d is not configured yet, returning the default exclude flags initialized by dtCrowd",
             queryFilterType);
     const dtQueryFilter* filter = GetDetourQueryFilter(queryFilterType);
     return (unsigned short)(filter ? filter->getExcludeFlags() : 0);
@@ -483,7 +483,7 @@ unsigned short CrowdManager::GetExcludeFlags(unsigned queryFilterType) const
 float CrowdManager::GetAreaCost(unsigned queryFilterType, unsigned areaID) const
 {
     if (queryFilterType >= numQueryFilterTypes_ || areaID >= numAreas_[queryFilterType])
-        URHO3D_LOGWARNINGF(
+        DV_LOGWARNINGF(
             "Query filter type %d and/or area id %d are not configured yet, returning the default area cost initialized by dtCrowd",
             queryFilterType, areaID);
     const dtQueryFilter* filter = GetDetourQueryFilter(queryFilterType);
@@ -568,7 +568,7 @@ bool CrowdManager::CreateCrowd()
         maxAgentRadius_ = navigationMesh_->GetAgentRadius();
     if (!crowd_->init(maxAgents_, maxAgentRadius_, navigationMesh_->navMesh_, CrowdAgentUpdateCallback))
     {
-        URHO3D_LOGERROR("Could not initialize DetourCrowd");
+        DV_LOGERROR("Could not initialize DetourCrowd");
         return false;
     }
 
@@ -585,7 +585,7 @@ bool CrowdManager::CreateCrowd()
             // Keep adding until the crowd cannot take it anymore
             if (agents[i]->AddAgentToCrowd(true) == -1)
             {
-                URHO3D_LOGWARNINGF("CrowdManager: %d crowd agents orphaned", agents.Size() - i);
+                DV_LOGWARNINGF("CrowdManager: %d crowd agents orphaned", agents.Size() - i);
                 break;
             }
         }
@@ -627,11 +627,11 @@ void CrowdManager::OnSceneSet(Scene* scene)
     {
         if (scene != node_)
         {
-            URHO3D_LOGERROR("CrowdManager is a scene component and should only be attached to the scene node");
+            DV_LOGERROR("CrowdManager is a scene component and should only be attached to the scene node");
             return;
         }
 
-        SubscribeToEvent(scene, E_SCENESUBSYSTEMUPDATE, URHO3D_HANDLER(CrowdManager, HandleSceneSubsystemUpdate));
+        SubscribeToEvent(scene, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(CrowdManager, HandleSceneSubsystemUpdate));
 
         // Attempt to auto discover a NavigationMesh component (or its derivative) under the scene node
         if (navigationMeshId_ == 0)
@@ -642,7 +642,7 @@ void CrowdManager::OnSceneSet(Scene* scene)
             else
             {
                 // If not found, attempt to find in a delayed manner
-                SubscribeToEvent(scene, E_COMPONENTADDED, URHO3D_HANDLER(CrowdManager, HandleComponentAdded));
+                SubscribeToEvent(scene, E_COMPONENTADDED, DV_HANDLER(CrowdManager, HandleComponentAdded));
             }
         }
     }
@@ -660,7 +660,7 @@ void CrowdManager::OnSceneSet(Scene* scene)
 void CrowdManager::Update(float delta)
 {
     assert(crowd_ && navigationMesh_);
-    URHO3D_PROFILE(UpdateCrowd);
+    DV_PROFILE(UpdateCrowd);
     crowd_->update(delta, nullptr);
 }
 

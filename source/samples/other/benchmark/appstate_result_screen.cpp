@@ -26,7 +26,7 @@ void AppState_ResultScreen::OnEnter()
 
     GetSubsystem<Input>()->SetMouseVisible(true);
     SetupViewport();
-    SubscribeToEvent(scene_, E_SCENEUPDATE, URHO3D_HANDLER(AppState_ResultScreen, HandleSceneUpdate));
+    SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_ResultScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
     ShowResultWindow();
 }
@@ -83,7 +83,7 @@ void AppState_ResultScreen::ShowResultWindow()
     buttonText->SetText("Ok");
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
 
-    SubscribeToEvent(okButton, E_RELEASED, URHO3D_HANDLER(AppState_ResultScreen, HandleResultOkButtonPressed));
+    SubscribeToEvent(okButton, E_RELEASED, DV_HANDLER(AppState_ResultScreen, HandleResultOkButtonPressed));
 }
 
 void AppState_ResultScreen::DestroyResultWindow()

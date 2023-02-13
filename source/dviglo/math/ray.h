@@ -16,7 +16,7 @@ class Plane;
 class Sphere;
 
 /// Infinite straight line in three-dimensional space.
-class URHO3D_API Ray
+class DV_API Ray
 {
 public:
     /// Construct a degenerate ray with zero origin and direction.

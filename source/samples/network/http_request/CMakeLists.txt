@@ -9,8 +9,8 @@ endif()
 # Название таргета
 set(target_name net_http_request)
 
-#if (URHO3D_SSL)
-#    add_definitions (-DURHO3D_SSL)
+#if (DV_SSL)
+#    add_definitions (-DDV_SSL)
 #endif ()
 
 # Создаём список файлов

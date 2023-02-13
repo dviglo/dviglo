@@ -21,7 +21,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(L10n)
+DV_DEFINE_APPLICATION_MAIN(L10n)
 
 L10n::L10n(Context* context) :
     Sample(context)
@@ -61,7 +61,7 @@ void L10n::InitLocalizationSystem()
     l10n->LoadJSONFile("StringsDe.json");
     l10n->LoadJSONFile("StringsLv.json", "lv");
     // Hook up to the change language
-    SubscribeToEvent(E_CHANGELANGUAGE, URHO3D_HANDLER(L10n, HandleChangeLanguage));
+    SubscribeToEvent(E_CHANGELANGUAGE, DV_HANDLER(L10n, HandleChangeLanguage));
 }
 
 void L10n::CreateGUI()
@@ -110,7 +110,7 @@ void L10n::CreateGUI()
 
     t->SetAlignment(HA_CENTER, VA_CENTER);
     t->SetStyle("Text");
-    SubscribeToEvent(b, E_RELEASED, URHO3D_HANDLER(L10n, HandleChangeLangButtonPressed));
+    SubscribeToEvent(b, E_RELEASED, DV_HANDLER(L10n, HandleChangeLangButtonPressed));
 
     b = new Button(context_);
     window->AddChild(b);
@@ -123,7 +123,7 @@ void L10n::CreateGUI()
     // Manually set text in the current language
     t->SetText(l10n->Get("quit"));
 
-    SubscribeToEvent(b, E_RELEASED, URHO3D_HANDLER(L10n, HandleQuitButtonPressed));
+    SubscribeToEvent(b, E_RELEASED, DV_HANDLER(L10n, HandleQuitButtonPressed));
 }
 
 void L10n::CreateScene()
@@ -174,7 +174,7 @@ void L10n::CreateScene()
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(L10n, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(L10n, HandleUpdate));
 }
 
 void L10n::HandleUpdate(StringHash eventType, VariantMap& eventData)

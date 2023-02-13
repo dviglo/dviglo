@@ -26,7 +26,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(MultipleViewports)
+DV_DEFINE_APPLICATION_MAIN(MultipleViewports)
 
 MultipleViewports::MultipleViewports(Context* context) :
     Sample(context),
@@ -199,11 +199,11 @@ void MultipleViewports::SetupViewports()
 void MultipleViewports::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() method for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(MultipleViewports, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(MultipleViewports, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() method for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(MultipleViewports, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(MultipleViewports, HandlePostRenderUpdate));
 }
 
 void MultipleViewports::MoveCamera(float timeStep)

@@ -63,9 +63,9 @@ struct OcclusionBatch
 };
 
 /// Software renderer for occlusion.
-class URHO3D_API OcclusionBuffer : public Object
+class DV_API OcclusionBuffer : public Object
 {
-    URHO3D_OBJECT(OcclusionBuffer, Object);
+    DV_OBJECT(OcclusionBuffer, Object);
 
 public:
     /// Construct.

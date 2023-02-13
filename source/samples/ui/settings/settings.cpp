@@ -28,7 +28,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(WindowSettingsDemo)
+DV_DEFINE_APPLICATION_MAIN(WindowSettingsDemo)
 
 WindowSettingsDemo::WindowSettingsDemo(Context* context)
     : Sample(context)

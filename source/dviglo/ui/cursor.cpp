@@ -66,7 +66,7 @@ Cursor::Cursor(Context* context) :
         shapeInfos_[shapeNames[i]] = CursorShapeInfo(i);
 
     // Subscribe to OS mouse cursor visibility changes to be able to reapply the cursor shape
-    SubscribeToEvent(E_MOUSEVISIBLECHANGED, URHO3D_HANDLER(Cursor, HandleMouseVisibleChanged));
+    SubscribeToEvent(E_MOUSEVISIBLECHANGED, DV_HANDLER(Cursor, HandleMouseVisibleChanged));
 }
 
 Cursor::~Cursor()
@@ -85,10 +85,10 @@ void Cursor::RegisterObject(Context* context)
 {
     context->RegisterFactory<Cursor>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(BorderImage);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Priority", M_MAX_INT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Use System Shapes", GetUseSystemShapes, SetUseSystemShapes, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shapes", GetShapesAttr, SetShapesAttr, Variant::emptyVariantVector, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(BorderImage);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Priority", M_MAX_INT);
+    DV_ACCESSOR_ATTRIBUTE("Use System Shapes", GetUseSystemShapes, SetUseSystemShapes, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Shapes", GetShapesAttr, SetShapesAttr, Variant::emptyVariantVector, AM_FILE);
 }
 
 void Cursor::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor)
@@ -109,7 +109,7 @@ void Cursor::DefineShape(CursorShape shape, Image* image, const IntRect& imageRe
 {
     if (shape < CS_NORMAL || shape >= CS_MAX_SHAPES)
     {
-        URHO3D_LOGERROR("Shape index out of bounds, can not define cursor shape");
+        DV_LOGERROR("Shape index out of bounds, can not define cursor shape");
         return;
     }
 
@@ -260,7 +260,7 @@ void Cursor::ApplyOSCursorShape()
             info.osCursor_ = SDL_CreateSystemCursor((SDL_SystemCursor)osCursorLookup[info.systemCursor_]);
             info.systemDefined_ = true;
             if (!info.osCursor_)
-                URHO3D_LOGERROR("Could not create system cursor");
+                DV_LOGERROR("Could not create system cursor");
         }
         // Create from image
         else if (info.image_)
@@ -272,7 +272,7 @@ void Cursor::ApplyOSCursorShape()
                 info.osCursor_ = SDL_CreateColorCursor(surface, info.hotSpot_.x_, info.hotSpot_.y_);
                 info.systemDefined_ = false;
                 if (!info.osCursor_)
-                    URHO3D_LOGERROR("Could not create cursor from image " + info.image_->GetName());
+                    DV_LOGERROR("Could not create cursor from image " + info.image_->GetName());
                 SDL_DestroySurface(surface);
             }
         }

@@ -45,12 +45,12 @@ void Slider::RegisterObject(Context* context)
 {
     context->RegisterFactory<Slider>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(BorderImage);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Orientation", GetOrientation, SetOrientation, orientations, O_HORIZONTAL, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Range", GetRange, SetRange, 1.0f, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Value", GetValue, SetValue, 0.0f, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Repeat Rate", GetRepeatRate, SetRepeatRate, 0.0f, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(BorderImage);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Orientation", GetOrientation, SetOrientation, orientations, O_HORIZONTAL, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Range", GetRange, SetRange, 1.0f, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Value", GetValue, SetValue, 0.0f, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Repeat Rate", GetRepeatRate, SetRepeatRate, 0.0f, AM_FILE);
 }
 
 void Slider::Update(float timeStep)

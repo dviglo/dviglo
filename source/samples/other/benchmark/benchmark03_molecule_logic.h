@@ -13,7 +13,7 @@ using namespace dviglo::PrimitiveTypes;
 class Benchmark03_MoleculeLogic : public dv::LogicComponent
 {
 public:
-    URHO3D_OBJECT(Benchmark03_MoleculeLogic, LogicComponent);
+    DV_OBJECT(Benchmark03_MoleculeLogic, LogicComponent);
 
 private:
     i32 moleculeType_;

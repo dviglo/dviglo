@@ -16,9 +16,9 @@
 namespace dviglo
 {
 
-class URHO3D_API SpriteBatchBase : public Object
+class DV_API SpriteBatchBase : public Object
 {
-    URHO3D_OBJECT(SpriteBatchBase, Object);
+    DV_OBJECT(SpriteBatchBase, Object);
 
     // ============================ Пакетный рендеринг треугольников ============================
 

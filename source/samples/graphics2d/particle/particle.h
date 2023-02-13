@@ -19,7 +19,7 @@ namespace dviglo
 //     - Handling mouse move to move particle
 class Urho2DParticle : public Sample
 {
-    URHO3D_OBJECT(Urho2DParticle, Sample);
+    DV_OBJECT(Urho2DParticle, Sample);
 
 public:
     /// Construct.

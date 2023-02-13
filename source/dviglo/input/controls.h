@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// %Controls sent over the network.
-class URHO3D_API Controls
+class DV_API Controls
 {
 public:
     /// Construct.

@@ -25,7 +25,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(LightAnimation)
+DV_DEFINE_APPLICATION_MAIN(LightAnimation)
 
 LightAnimation::LightAnimation(Context* context) :
     Sample(context)
@@ -234,7 +234,7 @@ void LightAnimation::MoveCamera(float timeStep)
 void LightAnimation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(LightAnimation, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(LightAnimation, HandleUpdate));
 }
 
 void LightAnimation::HandleUpdate(StringHash eventType, VariantMap& eventData)

@@ -33,7 +33,7 @@ inline float FixedToFloat(FT_Pos value)
 /// FreeType library subsystem.
 class FreeTypeLibrary : public Object
 {
-    URHO3D_OBJECT(FreeTypeLibrary, Object);
+    DV_OBJECT(FreeTypeLibrary, Object);
 
 public:
     /// Construct.
@@ -42,7 +42,7 @@ public:
     {
         FT_Error error = FT_Init_FreeType(&library_);
         if (error)
-            URHO3D_LOGERROR("Could not initialize FreeType library");
+            DV_LOGERROR("Could not initialize FreeType library");
     }
 
     /// Destruct.
@@ -95,13 +95,13 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
 
     if (pointSize <= 0)
     {
-        URHO3D_LOGERROR("Zero or negative point size");
+        DV_LOGERROR("Zero or negative point size");
         return false;
     }
 
     if (!fontDataSize)
     {
-        URHO3D_LOGERROR("Could not create font face from zero size data");
+        DV_LOGERROR("Could not create font face from zero size data");
         return false;
     }
 
@@ -110,21 +110,21 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     FT_Error error = FT_New_Memory_Face(library, fontData, fontDataSize, 0, &face);
     if (error)
     {
-        URHO3D_LOGERROR("Could not create font face");
+        DV_LOGERROR("Could not create font face");
         return false;
     }
     error = FT_Set_Char_Size(face, 0, pointSize * 64, oversampling_ * FONT_DPI, FONT_DPI);
     if (error)
     {
         FT_Done_Face(face);
-        URHO3D_LOGERROR("Could not set font point size " + String(pointSize));
+        DV_LOGERROR("Could not set font point size " + String(pointSize));
         return false;
     }
 
     face_ = face;
 
     unsigned numGlyphs = (unsigned)face->num_glyphs;
-    URHO3D_LOGDEBUGF("Font face %s (%fpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
+    DV_LOGDEBUGF("Font face %s (%fpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
 
     // Load each of the glyphs to see the sizes & store other information
     loadMode_ = FT_LOAD_DEFAULT;
@@ -203,7 +203,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
         FT_Error error = FT_Load_Sfnt_Table(face, tagKern, 0, nullptr, &kerningTableSize);
         if (error)
         {
-            URHO3D_LOGERROR("Could not get kerning table length");
+            DV_LOGERROR("Could not get kerning table length");
             return false;
         }
 
@@ -211,7 +211,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
         error = FT_Load_Sfnt_Table(face, tagKern, 0, kerningTable, &kerningTableSize);
         if (error)
         {
-            URHO3D_LOGERROR("Could not load kerning table");
+            DV_LOGERROR("Could not load kerning table");
             return false;
         }
 
@@ -260,7 +260,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
             }
         }
         else
-            URHO3D_LOGWARNING("Can not read kerning information: not version 0");
+            DV_LOGWARNING("Can not read kerning information: not version 0");
     }
 
     if (!hasMutableGlyph_)
@@ -387,7 +387,7 @@ bool FontFaceFreeType::LoadCharGlyph(c32 charCode, Image* image)
     if (error)
     {
         const char* family = face->family_name ? face->family_name : "NULL";
-        URHO3D_LOGERRORF("FT_Load_Char failed (family: %s, char code: %u)", family, charCode);
+        DV_LOGERRORF("FT_Load_Char failed (family: %s, char code: %u)", family, charCode);
         fontGlyph.texWidth_ = 0;
         fontGlyph.texHeight_ = 0;
         fontGlyph.width_ = 0;
@@ -438,13 +438,13 @@ bool FontFaceFreeType::LoadCharGlyph(c32 charCode, Image* image)
             int h = allocator_.GetHeight();
             if (!SetupNextTexture(w, h))
             {
-                URHO3D_LOGWARNINGF("FontFaceFreeType::LoadCharGlyph: failed to allocate new %dx%d texture", w, h);
+                DV_LOGWARNINGF("FontFaceFreeType::LoadCharGlyph: failed to allocate new %dx%d texture", w, h);
                 return false;
             }
 
             if (!allocator_.Allocate(fontGlyph.texWidth_ + 1, fontGlyph.texHeight_ + 1, x, y))
             {
-                URHO3D_LOGWARNINGF("FontFaceFreeType::LoadCharGlyph: failed to position char code %u in blank page", charCode);
+                DV_LOGWARNINGF("FontFaceFreeType::LoadCharGlyph: failed to position char code %u in blank page", charCode);
                 return false;
             }
         }

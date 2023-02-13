@@ -58,18 +58,18 @@ void Node::RegisterObject(Context* context)
 {
     context->RegisterFactory<Node>();
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Tags", GetTags, SetTags, Variant::emptyStringVector, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, Vector3::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Scale", GetScale, SetScale, Vector3::ONE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Variables", vars_, Variant::emptyVariantMap, AM_FILE); // Network replication of vars uses custom data
-    URHO3D_ACCESSOR_ATTRIBUTE("Network Position", GetNetPositionAttr, SetNetPositionAttr, Vector3::ZERO,
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Tags", GetTags, SetTags, Variant::emptyStringVector, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, Vector3::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Scale", GetScale, SetScale, Vector3::ONE, AM_DEFAULT);
+    DV_ATTRIBUTE("Variables", vars_, Variant::emptyVariantMap, AM_FILE); // Network replication of vars uses custom data
+    DV_ACCESSOR_ATTRIBUTE("Network Position", GetNetPositionAttr, SetNetPositionAttr, Vector3::ZERO,
         AM_NET | AM_LATESTDATA | AM_NOEDIT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Network Rotation", GetNetRotationAttr, SetNetRotationAttr, Variant::emptyBuffer,
+    DV_ACCESSOR_ATTRIBUTE("Network Rotation", GetNetRotationAttr, SetNetRotationAttr, Variant::emptyBuffer,
         AM_NET | AM_LATESTDATA | AM_NOEDIT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Network Parent Node", GetNetParentAttr, SetNetParentAttr, Variant::emptyBuffer,
+    DV_ACCESSOR_ATTRIBUTE("Network Parent Node", GetNetParentAttr, SetNetParentAttr, Variant::emptyBuffer,
         AM_NET | AM_NOEDIT);
 }
 
@@ -898,7 +898,7 @@ Component* Node::CreateComponent(StringHash type, CreateMode mode, ComponentId i
     SharedPtr<Component> newComponent = DynamicCast<Component>(context_->CreateObject(type));
     if (!newComponent)
     {
-        URHO3D_LOGERROR("Could not create unknown component type " + type.ToString());
+        DV_LOGERROR("Could not create unknown component type " + type.ToString());
         return nullptr;
     }
 
@@ -919,7 +919,7 @@ Component* Node::CloneComponent(Component* component, ComponentId id)
 {
     if (!component)
     {
-        URHO3D_LOGERROR("Null source component given for CloneComponent");
+        DV_LOGERROR("Null source component given for CloneComponent");
         return nullptr;
     }
 
@@ -930,14 +930,14 @@ Component* Node::CloneComponent(Component* component, CreateMode mode, Component
 {
     if (!component)
     {
-        URHO3D_LOGERROR("Null source component given for CloneComponent");
+        DV_LOGERROR("Null source component given for CloneComponent");
         return nullptr;
     }
 
     Component* cloneComponent = SafeCreateComponent(component->GetTypeName(), component->GetType(), mode, 0);
     if (!cloneComponent)
     {
-        URHO3D_LOGERROR("Could not clone component " + component->GetTypeName());
+        DV_LOGERROR("Could not clone component " + component->GetTypeName());
         return nullptr;
     }
 
@@ -1081,11 +1081,11 @@ Node* Node::Clone(CreateMode mode)
     // The scene itself can not be cloned
     if (this == scene_ || !parent_)
     {
-        URHO3D_LOGERROR("Can not clone node without a parent");
+        DV_LOGERROR("Can not clone node without a parent");
         return nullptr;
     }
 
-    URHO3D_PROFILE(CloneNode);
+    DV_PROFILE(CloneNode);
 
     SceneResolver resolver;
     Node* clone = CloneRecursive(parent_, resolver, mode);
@@ -1282,7 +1282,7 @@ Node* Node::GetChild(i32 index) const
 
     if (index < 0 || index >= children_.Size())
     {
-        URHO3D_LOGWARNING("Node* Node::GetChild(i32 index) const: index out of range");
+        DV_LOGWARNING("Node* Node::GetChild(i32 index) const: index out of range");
         return nullptr;
     }
 
@@ -1476,7 +1476,7 @@ void Node::SetNetParentAttr(const Vector<byte>& value)
     Node* baseNode = scene->GetNode(baseNodeID);
     if (!baseNode)
     {
-        URHO3D_LOGWARNING("Failed to find parent node " + String(baseNodeID));
+        DV_LOGWARNING("Failed to find parent node " + String(baseNodeID));
         return;
     }
 
@@ -1489,7 +1489,7 @@ void Node::SetNetParentAttr(const Vector<byte>& value)
         StringHash nameHash = buf.ReadStringHash();
         Node* parentNode = baseNode->GetChild(nameHash, true);
         if (!parentNode)
-            URHO3D_LOGWARNING("Failed to find parent node with name hash " + nameHash.ToString());
+            DV_LOGWARNING("Failed to find parent node with name hash " + nameHash.ToString());
         else
             parentNode->AddChild(this);
     }
@@ -1815,7 +1815,7 @@ void Node::AddComponent(Component* component, ComponentId id, CreateMode mode)
     components_.Push(SharedPtr<Component>(component));
 
     if (component->GetNode())
-        URHO3D_LOGWARNING("Component " + component->GetTypeName() + " already belongs to a node!");
+        DV_LOGWARNING("Component " + component->GetTypeName() + " already belongs to a node!");
 
     component->SetNode(this);
 
@@ -1887,7 +1887,7 @@ void Node::SetTransformSilent(const Vector3& position, const Quaternion& rotatio
 void Node::OnAttributeAnimationAdded()
 {
     if (attributeAnimationInfos_.Size() == 1)
-        SubscribeToEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, URHO3D_HANDLER(Node, HandleAttributeAnimationUpdate));
+        SubscribeToEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Node, HandleAttributeAnimationUpdate));
 }
 
 void Node::OnAttributeAnimationRemoved()
@@ -1929,7 +1929,7 @@ Animatable* Node::FindAttributeAnimationTarget(const String& name, String& outNa
 
             if (!node)
             {
-                URHO3D_LOGERROR("Could not find node by name " + name);
+                DV_LOGERROR("Could not find node by name " + name);
                 return nullptr;
             }
         }
@@ -1942,7 +1942,7 @@ Animatable* Node::FindAttributeAnimationTarget(const String& name, String& outNa
 
         if (i != names.Size() - 2 || names[i].Front() != '@')
         {
-            URHO3D_LOGERROR("Invalid name " + name);
+            DV_LOGERROR("Invalid name " + name);
             return nullptr;
         }
 
@@ -1953,7 +1953,7 @@ Animatable* Node::FindAttributeAnimationTarget(const String& name, String& outNa
             Component* component = node->GetComponent(StringHash(componentNames.Front()));
             if (!component)
             {
-                URHO3D_LOGERROR("Could not find component by name " + name);
+                DV_LOGERROR("Could not find component by name " + name);
                 return nullptr;
             }
 
@@ -1967,7 +1967,7 @@ Animatable* Node::FindAttributeAnimationTarget(const String& name, String& outNa
             node->GetComponents(components, StringHash(componentNames.Front()));
             if (index >= components.Size())
             {
-                URHO3D_LOGERROR("Could not find component by name " + name);
+                DV_LOGERROR("Could not find component by name " + name);
                 return nullptr;
             }
 
@@ -1982,7 +1982,7 @@ void Node::SetEnabled(bool enable, bool recursive, bool storeSelf)
     // The enabled state of the whole scene can not be changed. SetUpdateEnabled() is used instead to start/stop updates.
     if (GetType() == Scene::GetTypeStatic())
     {
-        URHO3D_LOGERROR("Can not change enabled state of the Scene");
+        DV_LOGERROR("Can not change enabled state of the Scene");
         return;
     }
 
@@ -2057,7 +2057,7 @@ Component* Node::SafeCreateComponent(const String& typeName, StringHash type, Cr
         return CreateComponent(type, mode, id);
     else
     {
-        URHO3D_LOGWARNING("Component type " + type.ToString() + " not known, creating UnknownComponent as placeholder");
+        DV_LOGWARNING("Component type " + type.ToString() + " not known, creating UnknownComponent as placeholder");
         // Else create as UnknownComponent
         SharedPtr<UnknownComponent> newComponent(new UnknownComponent(context_));
         if (typeName.Empty() || typeName.StartsWith("Unknown", false))

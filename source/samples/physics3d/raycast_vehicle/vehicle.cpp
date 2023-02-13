@@ -28,9 +28,9 @@ const float CHASSIS_WIDTH = 2.6f;
 void Vehicle::RegisterObject(Context* context)
 {
     context->RegisterFactory<Vehicle>();
-    URHO3D_ATTRIBUTE("Steering", steering_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Steering", steering_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
 }
 
 Vehicle::Vehicle(dviglo::Context* context)
@@ -223,7 +223,7 @@ void Vehicle::PostUpdate(float timeStep)
             {
                 particleEmitter->SetEmitting(true);
             }
-            URHO3D_LOGDEBUG("GetWheelSkidInfoCumulative() = " +
+            DV_LOGDEBUG("GetWheelSkidInfoCumulative() = " +
                             String(vehicle->GetWheelSkidInfoCumulative(i)) + " " +
                             String(vehicle->GetMaxSideSlipSpeed()));
             /* TODO: Add skid marks here */

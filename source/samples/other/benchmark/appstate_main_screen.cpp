@@ -49,7 +49,7 @@ void AppState_MainScreen::CreateButton(const String& name, const String& text, W
     buttonText->SetText(text);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
 
-    SubscribeToEvent(button, E_RELEASED, URHO3D_HANDLER(AppState_MainScreen, HandleButtonPressed));
+    SubscribeToEvent(button, E_RELEASED, DV_HANDLER(AppState_MainScreen, HandleButtonPressed));
 }
 
 void AppState_MainScreen::CreateGui()
@@ -89,7 +89,7 @@ void AppState_MainScreen::OnEnter()
     CreateGui();
     SetupViewport();
     GetSubsystem<Input>()->SetMouseVisible(true);
-    SubscribeToEvent(scene_, E_SCENEUPDATE, URHO3D_HANDLER(AppState_MainScreen, HandleSceneUpdate));
+    SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
 }
 

@@ -21,7 +21,7 @@ class Scene;
 ///     - Optimizing physics simulation by leaving out collision event signaling
 class PhysicsStressTest : public Sample
 {
-    URHO3D_OBJECT(PhysicsStressTest, Sample);
+    DV_OBJECT(PhysicsStressTest, Sample);
 
 public:
     /// Construct.

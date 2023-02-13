@@ -10,38 +10,38 @@ namespace dviglo
 {
 
 /// Frame begin event.
-URHO3D_EVENT(E_BEGINFRAME, BeginFrame)
+DV_EVENT(E_BEGINFRAME, BeginFrame)
 {
-    URHO3D_PARAM(P_FRAMENUMBER, FrameNumber);      // i32
-    URHO3D_PARAM(P_TIMESTEP, TimeStep);            // float
+    DV_PARAM(P_FRAMENUMBER, FrameNumber);      // i32
+    DV_PARAM(P_TIMESTEP, TimeStep);            // float
 }
 
 /// Application-wide logic update event.
-URHO3D_EVENT(E_UPDATE, Update)
+DV_EVENT(E_UPDATE, Update)
 {
-    URHO3D_PARAM(P_TIMESTEP, TimeStep);            // float
+    DV_PARAM(P_TIMESTEP, TimeStep);            // float
 }
 
 /// Application-wide logic post-update event.
-URHO3D_EVENT(E_POSTUPDATE, PostUpdate)
+DV_EVENT(E_POSTUPDATE, PostUpdate)
 {
-    URHO3D_PARAM(P_TIMESTEP, TimeStep);            // float
+    DV_PARAM(P_TIMESTEP, TimeStep);            // float
 }
 
 /// Render update event.
-URHO3D_EVENT(E_RENDERUPDATE, RenderUpdate)
+DV_EVENT(E_RENDERUPDATE, RenderUpdate)
 {
-    URHO3D_PARAM(P_TIMESTEP, TimeStep);            // float
+    DV_PARAM(P_TIMESTEP, TimeStep);            // float
 }
 
 /// Post-render update event.
-URHO3D_EVENT(E_POSTRENDERUPDATE, PostRenderUpdate)
+DV_EVENT(E_POSTRENDERUPDATE, PostRenderUpdate)
 {
-    URHO3D_PARAM(P_TIMESTEP, TimeStep);            // float
+    DV_PARAM(P_TIMESTEP, TimeStep);            // float
 }
 
 /// Frame end event.
-URHO3D_EVENT(E_ENDFRAME, EndFrame)
+DV_EVENT(E_ENDFRAME, EndFrame)
 {
 }
 

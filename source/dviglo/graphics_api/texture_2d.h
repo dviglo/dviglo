@@ -15,9 +15,9 @@ class Image;
 class XMLFile;
 
 /// 2D texture resource.
-class URHO3D_API Texture2D : public Texture
+class DV_API Texture2D : public Texture
 {
-    URHO3D_OBJECT(Texture2D, Texture);
+    DV_OBJECT(Texture2D, Texture);
 
 public:
     /// Construct.
@@ -63,7 +63,7 @@ protected:
     bool Create() override;
 
 private:
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     void OnDeviceLost_OGL();
     void OnDeviceReset_OGL();
     void Release_OGL();
@@ -71,9 +71,9 @@ private:
     bool SetData_OGL(Image* image, bool useAlpha);
     bool GetData_OGL(unsigned level, void* dest) const;
     bool Create_OGL();
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     void OnDeviceLost_D3D11();
     void OnDeviceReset_D3D11();
     void Release_D3D11();
@@ -81,7 +81,7 @@ private:
     bool SetData_D3D11(Image* image, bool useAlpha);
     bool GetData_D3D11(unsigned level, void* dest) const;
     bool Create_D3D11();
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     /// Handle render surface update event.
     void HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& eventData);

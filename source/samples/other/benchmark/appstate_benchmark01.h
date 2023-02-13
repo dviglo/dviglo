@@ -9,7 +9,7 @@
 class AppState_Benchmark01 : public AppState_Base
 {
 public:
-    URHO3D_OBJECT(AppState_Benchmark01, AppState_Base);
+    DV_OBJECT(AppState_Benchmark01, AppState_Base);
 
 public:
     AppState_Benchmark01(dv::Context* context)

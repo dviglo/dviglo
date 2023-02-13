@@ -13,7 +13,7 @@ namespace dviglo
 
 /// Define bitwise operators for scoped enum.
 /// Use !! to convert scoped enum to bool
-#define URHO3D_FLAGS(EnumClass) \
+#define DV_FLAGS(EnumClass) \
     inline constexpr EnumClass operator |(const EnumClass lhs, const EnumClass rhs) \
     { \
         using UT = std::underlying_type_t<EnumClass>; \
@@ -79,15 +79,15 @@ namespace dviglo
     }
 
 /// Make bitwise operators (| & ^ ~) automatically construct FlagSet from Enum.
-#define URHO3D_AUTOMATIC_FLAGSET(Enum) \
+#define DV_AUTOMATIC_FLAGSET(Enum) \
     inline dviglo::FlagSet<Enum> operator | (const Enum lhs, const Enum rhs) { return dviglo::FlagSet<Enum>(lhs) | rhs; } \
     inline dviglo::FlagSet<Enum> operator & (const Enum lhs, const Enum rhs) { return dviglo::FlagSet<Enum>(lhs) & rhs; } \
     inline dviglo::FlagSet<Enum> operator ^ (const Enum lhs, const Enum rhs) { return dviglo::FlagSet<Enum>(lhs) ^ rhs; } \
     inline dviglo::FlagSet<Enum> operator ~ (const Enum rhs) { return ~dviglo::FlagSet<Enum>(rhs); }
 
 /// Declare FlagSet for specific enum and create operators for automatic FlagSet construction.
-#define URHO3D_FLAGSET(enumName, flagsetName) \
-    URHO3D_AUTOMATIC_FLAGSET(enumName) \
+#define DV_FLAGSET(enumName, flagsetName) \
+    DV_AUTOMATIC_FLAGSET(enumName) \
     using flagsetName = dviglo::FlagSet<enumName>
 
 /// A set of flags defined by an Enum.

@@ -10,10 +10,10 @@
 namespace dviglo
 {
 
-class URHO3D_API UISelectable : public UIElement
+class DV_API UISelectable : public UIElement
 {
 public:
-    URHO3D_OBJECT(UISelectable, UIElement);
+    DV_OBJECT(UISelectable, UIElement);
 
     /// Construct.
     using UIElement::UIElement;

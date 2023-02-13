@@ -75,7 +75,7 @@ struct HashIteratorBase
 /** Note that to prevent extra memory use due to vtable pointer, %HashBase intentionally does not declare a virtual destructor
     and therefore %HashBase pointers should never be used.
   */
-class URHO3D_API HashBase
+class DV_API HashBase
 {
 public:
     /// Initial amount of buckets.

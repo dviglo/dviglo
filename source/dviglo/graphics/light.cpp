@@ -103,47 +103,47 @@ void Light::RegisterObject(Context* context)
 {
     context->RegisterFactory<Light>(SCENE_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Light Type", GetLightType, SetLightType, typeNames, DEFAULT_LIGHTTYPE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Color", GetColor, SetColor, Color::WHITE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Specular Intensity", GetSpecularIntensity, SetSpecularIntensity, DEFAULT_SPECULARINTENSITY,
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Light Type", GetLightType, SetLightType, typeNames, DEFAULT_LIGHTTYPE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Color", GetColor, SetColor, Color::WHITE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Specular Intensity", GetSpecularIntensity, SetSpecularIntensity, DEFAULT_SPECULARINTENSITY,
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Brightness Multiplier", GetBrightness, SetBrightness, DEFAULT_BRIGHTNESS, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Temperature", GetTemperature, SetTemperature, DEFAULT_TEMPERATURE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Use Physical Values", usePhysicalValues_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, DEFAULT_RADIUS, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Length", GetLength, SetLength, DEFAULT_LENGTH, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Range", GetRange, SetRange, DEFAULT_RANGE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Spot FOV", GetFov, SetFov, DEFAULT_LIGHT_FOV, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Spot Aspect Ratio", GetAspectRatio, SetAspectRatio, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Attenuation Texture", GetRampTextureAttr, SetRampTextureAttr,
+    DV_ACCESSOR_ATTRIBUTE("Brightness Multiplier", GetBrightness, SetBrightness, DEFAULT_BRIGHTNESS, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Temperature", GetTemperature, SetTemperature, DEFAULT_TEMPERATURE, AM_DEFAULT);
+    DV_ATTRIBUTE("Use Physical Values", usePhysicalValues_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, DEFAULT_RADIUS, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Length", GetLength, SetLength, DEFAULT_LENGTH, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Range", GetRange, SetRange, DEFAULT_RANGE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Spot FOV", GetFov, SetFov, DEFAULT_LIGHT_FOV, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Spot Aspect Ratio", GetAspectRatio, SetAspectRatio, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Attenuation Texture", GetRampTextureAttr, SetRampTextureAttr,
         ResourceRef(Texture2D::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Light Shape Texture", GetShapeTextureAttr, SetShapeTextureAttr,
+    DV_ACCESSOR_ATTRIBUTE("Light Shape Texture", GetShapeTextureAttr, SetShapeTextureAttr,
         ResourceRef(Texture2D::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Per Vertex", perVertex_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Fade Distance", GetFadeDistance, SetFadeDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Fade Distance", GetShadowFadeDistance, SetShadowFadeDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Intensity", GetShadowIntensity, SetShadowIntensity, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Resolution", GetShadowResolution, SetShadowResolution, 1.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Focus To Scene", shadowFocus_.focus_, ValidateShadowFocus, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Non-uniform View", shadowFocus_.nonUniform_, ValidateShadowFocus, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Auto-Reduce Size", shadowFocus_.autoSize_, ValidateShadowFocus, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("CSM Splits", shadowCascade_.splits_, ValidateShadowCascade, Vector4(DEFAULT_SHADOWSPLIT, 0.0f, 0.0f, 0.0f), AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("CSM Fade Start", shadowCascade_.fadeStart_, ValidateShadowCascade, DEFAULT_SHADOWFADESTART, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("CSM Bias Auto Adjust", shadowCascade_.biasAutoAdjust_, ValidateShadowCascade, DEFAULT_BIASAUTOADJUST, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("View Size Quantize", shadowFocus_.quantize_, ValidateShadowFocus, DEFAULT_SHADOWQUANTIZE, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("View Size Minimum", shadowFocus_.minView_, ValidateShadowFocus, DEFAULT_SHADOWMINVIEW, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Depth Constant Bias", shadowBias_.constantBias_, ValidateShadowBias, DEFAULT_CONSTANTBIAS, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Depth Slope Bias", shadowBias_.slopeScaledBias_, ValidateShadowBias, DEFAULT_SLOPESCALEDBIAS, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Normal Offset", shadowBias_.normalOffset_, ValidateShadowBias, DEFAULT_NORMALOFFSET, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Near/Farclip Ratio", shadowNearFarRatio_, DEFAULT_SHADOWNEARFARRATIO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Extrusion", GetShadowMaxExtrusion, SetShadowMaxExtrusion, DEFAULT_SHADOWMAXEXTRUSION, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
+    DV_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("Per Vertex", perVertex_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Fade Distance", GetFadeDistance, SetFadeDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Fade Distance", GetShadowFadeDistance, SetShadowFadeDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Intensity", GetShadowIntensity, SetShadowIntensity, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Resolution", GetShadowResolution, SetShadowResolution, 1.0f, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Focus To Scene", shadowFocus_.focus_, ValidateShadowFocus, true, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Non-uniform View", shadowFocus_.nonUniform_, ValidateShadowFocus, true, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Auto-Reduce Size", shadowFocus_.autoSize_, ValidateShadowFocus, true, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("CSM Splits", shadowCascade_.splits_, ValidateShadowCascade, Vector4(DEFAULT_SHADOWSPLIT, 0.0f, 0.0f, 0.0f), AM_DEFAULT);
+    DV_ATTRIBUTE_EX("CSM Fade Start", shadowCascade_.fadeStart_, ValidateShadowCascade, DEFAULT_SHADOWFADESTART, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("CSM Bias Auto Adjust", shadowCascade_.biasAutoAdjust_, ValidateShadowCascade, DEFAULT_BIASAUTOADJUST, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("View Size Quantize", shadowFocus_.quantize_, ValidateShadowFocus, DEFAULT_SHADOWQUANTIZE, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("View Size Minimum", shadowFocus_.minView_, ValidateShadowFocus, DEFAULT_SHADOWMINVIEW, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Depth Constant Bias", shadowBias_.constantBias_, ValidateShadowBias, DEFAULT_CONSTANTBIAS, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Depth Slope Bias", shadowBias_.slopeScaledBias_, ValidateShadowBias, DEFAULT_SLOPESCALEDBIAS, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Normal Offset", shadowBias_.normalOffset_, ValidateShadowBias, DEFAULT_NORMALOFFSET, AM_DEFAULT);
+    DV_ATTRIBUTE("Near/Farclip Ratio", shadowNearFarRatio_, DEFAULT_SHADOWNEARFARRATIO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Extrusion", GetShadowMaxExtrusion, SetShadowMaxExtrusion, DEFAULT_SHADOWMAXEXTRUSION, AM_DEFAULT);
+    DV_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);
+    DV_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
 }
 
 void Light::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)
@@ -185,7 +185,7 @@ void Light::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>&
         break;
 
     case RAY_TRIANGLE_UV:
-        URHO3D_LOGWARNING("RAY_TRIANGLE_UV query level is not supported for Light component");
+        DV_LOGWARNING("RAY_TRIANGLE_UV query level is not supported for Light component");
         return;
     }
 

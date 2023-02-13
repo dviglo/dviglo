@@ -42,7 +42,7 @@ bool ConstantBuffer::SetSize_OGL(unsigned size)
 {
     if (!size)
     {
-        URHO3D_LOGERROR("Can not create zero-sized constant buffer");
+        DV_LOGERROR("Can not create zero-sized constant buffer");
         return false;
     }
 

@@ -24,7 +24,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(HugeObjectCount)
+DV_DEFINE_APPLICATION_MAIN(HugeObjectCount)
 
 HugeObjectCount::HugeObjectCount(Context* context) :
     Sample(context),
@@ -177,7 +177,7 @@ void HugeObjectCount::SetupViewport()
 void HugeObjectCount::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(HugeObjectCount, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(HugeObjectCount, HandleUpdate));
 }
 
 void HugeObjectCount::MoveCamera(float timeStep)
@@ -215,7 +215,7 @@ void HugeObjectCount::MoveCamera(float timeStep)
 
 void HugeObjectCount::AnimateObjects(float timeStep)
 {
-    URHO3D_PROFILE(AnimateObjects);
+    DV_PROFILE(AnimateObjects);
 
     const float ROTATE_SPEED = 15.0f;
     // Rotate about the Z axis (roll)

@@ -17,7 +17,7 @@ namespace dviglo
 {
 
 /// Operating system thread.
-class URHO3D_API Thread
+class DV_API Thread
 {
 public:
     /// Construct. Does not start the thread yet.

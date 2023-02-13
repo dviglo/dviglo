@@ -49,7 +49,7 @@ enum RenderTargetSizeMode
 };
 
 /// Rendertarget definition.
-struct URHO3D_API RenderTargetInfo
+struct DV_API RenderTargetInfo
 {
     /// Read from an XML element.
     void Load(const XMLElement& element);
@@ -81,7 +81,7 @@ struct URHO3D_API RenderTargetInfo
 };
 
 /// Rendering path command.
-struct URHO3D_API RenderPathCommand
+struct DV_API RenderPathCommand
 {
     /// Read from an XML element.
     void Load(const XMLElement& element);
@@ -171,7 +171,7 @@ struct URHO3D_API RenderPathCommand
 };
 
 /// Rendering path definition. A sequence of commands (e.g. clear screen, draw objects with specific pass) that yields the scene rendering result.
-class URHO3D_API RenderPath : public RefCounted
+class DV_API RenderPath : public RefCounted
 {
 public:
     /// Construct.

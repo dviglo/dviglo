@@ -36,12 +36,12 @@ enum AttributeMode
     /// Attribute is readonly. Can't be used with binary serialized objects.
     AM_FILEREADONLY = 0x81,
 };
-URHO3D_FLAGSET(AttributeMode, AttributeModeFlags);
+DV_FLAGSET(AttributeMode, AttributeModeFlags);
 
 class Serializable;
 
 /// Abstract base class for invoking attribute accessors.
-class URHO3D_API AttributeAccessor : public RefCounted
+class DV_API AttributeAccessor : public RefCounted
 {
 public:
     /// Get the attribute.

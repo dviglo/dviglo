@@ -41,19 +41,19 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Получаем доступ к макросу cmake_dependent_option
 include(CMakeDependentOption)
 
-option(URHO3D_LOGGING "Логирование" TRUE)
-option(URHO3D_THREADING "Многопоточность" TRUE)
-option(URHO3D_URHO2D "2D-графика" TRUE)
+option(DV_LOGGING "Логирование" TRUE)
+option(DV_THREADING "Многопоточность" TRUE)
+option(DV_URHO2D "2D-графика" TRUE)
 option(DV_NETWORK "Сеть" TRUE)
-option(URHO3D_FILEWATCHER "Filewatcher" TRUE)
+option(DV_FILEWATCHER "Filewatcher" TRUE)
 option(DV_BULLET "3D-физика" TRUE)
 option(DV_BOX2D "2D-физика" TRUE)
-option(URHO3D_TESTING "CTest")
-option(URHO3D_SAMPLES "Примеры" TRUE)
-option(URHO3D_TOOLS "Инструменты" TRUE)
+option(DV_TESTING "CTest")
+option(DV_SAMPLES "Примеры" TRUE)
+option(DV_TOOLS "Инструменты" TRUE)
 option(DV_NAVIGATION "Навигация" TRUE)
-cmake_dependent_option(URHO3D_OPENGL "OpenGL" TRUE "WIN32" TRUE) # Не на Windows всегда TRUE
-cmake_dependent_option(URHO3D_D3D11 "Direct3D 11" TRUE "WIN32" FALSE) # Не на Windows всегда FALSE
+cmake_dependent_option(DV_OPENGL "OpenGL" TRUE "WIN32" TRUE) # Не на Windows всегда TRUE
+cmake_dependent_option(DV_D3D11 "Direct3D 11" TRUE "WIN32" FALSE) # Не на Windows всегда FALSE
 cmake_dependent_option(DV_STATIC_RUNTIME "Сатическая линковка MSVC runtime" FALSE "MSVC" FALSE)
 
 if(DV_STATIC_RUNTIME)
@@ -64,7 +64,7 @@ else()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif()
 
-if(URHO3D_TESTING)
+if(DV_TESTING)
     enable_testing() # Должно быть в корневом CMakeLists.txt
 endif()
 
@@ -79,7 +79,7 @@ if(WIN32)
 
     find_package(DirectX REQUIRED ${DIRECTX_REQUIRED_COMPONENTS})
     if(DIRECTX_FOUND)
-        if(DIRECT3D_DLL AND URHO3D_D3D11)
+        if(DIRECT3D_DLL AND DV_D3D11)
             file(COPY ${DIRECT3D_DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
             file(COPY ${DIRECT3D_DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin/tool)
         endif()
@@ -152,7 +152,7 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
         unset(libs)
 
         # Если движок скомпилирован как динамическая библиотека, то добавляем её в список
-        if(URHO3D_LIB_TYPE STREQUAL "SHARED")
+        if(DV_LIB_TYPE STREQUAL "SHARED")
             list(APPEND libs "$<TARGET_FILE:dviglo>")
         endif()
 

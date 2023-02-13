@@ -68,29 +68,29 @@ void Texture3D::Release_OGL()
 
 bool Texture3D::SetData_OGL(unsigned level, int x, int y, int z, int width, int height, int depth, const void* data)
 {
-    URHO3D_PROFILE(SetTextureData);
+    DV_PROFILE(SetTextureData);
 
     if (!object_.name_ || !graphics_)
     {
-        URHO3D_LOGERROR("No texture created, can not set data");
+        DV_LOGERROR("No texture created, can not set data");
         return false;
     }
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null source for setting data");
+        DV_LOGERROR("Null source for setting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for setting data");
+        DV_LOGERROR("Illegal mip level for setting data");
         return false;
     }
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture data assignment while device is lost");
+        DV_LOGWARNING("Texture data assignment while device is lost");
         dataPending_ = true;
         return true;
     }
@@ -107,13 +107,13 @@ bool Texture3D::SetData_OGL(unsigned level, int x, int y, int z, int width, int 
     if (x < 0 || x + width > levelWidth || y < 0 || y + height > levelHeight || z < 0 || z + depth > levelDepth || width <= 0 ||
         height <= 0 || depth <= 0)
     {
-        URHO3D_LOGERROR("Illegal dimensions for setting data");
+        DV_LOGERROR("Illegal dimensions for setting data");
         return false;
     }
 
     graphics_->SetTextureForUpdate_OGL(this);
 
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     bool wholeLevel = x == 0 && y == 0 && z == 0 && width == levelWidth && height == levelHeight && depth == levelDepth;
     unsigned format = GetSRGB() ? GetSRGBFormat_OGL(format_) : format_;
 
@@ -142,7 +142,7 @@ bool Texture3D::SetData_OGL(Image* image, bool useAlpha)
 {
     if (!image)
     {
-        URHO3D_LOGERROR("Null image, can not set data");
+        DV_LOGERROR("Null image, can not set data");
         return false;
     }
 
@@ -282,25 +282,25 @@ bool Texture3D::GetData_OGL(unsigned level, void* dest) const
 #ifndef GL_ES_VERSION_2_0
     if (!object_.name_ || !graphics_)
     {
-        URHO3D_LOGERROR("No texture created, can not get data");
+        DV_LOGERROR("No texture created, can not get data");
         return false;
     }
 
     if (!dest)
     {
-        URHO3D_LOGERROR("Null destination for getting data");
+        DV_LOGERROR("Null destination for getting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for getting data");
+        DV_LOGERROR("Illegal mip level for getting data");
         return false;
     }
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Getting texture data while device is lost");
+        DV_LOGWARNING("Getting texture data while device is lost");
         return false;
     }
 
@@ -314,7 +314,7 @@ bool Texture3D::GetData_OGL(unsigned level, void* dest) const
     graphics_->SetTexture(0, nullptr);
     return true;
 #else
-    URHO3D_LOGERROR("Getting texture data not supported");
+    DV_LOGERROR("Getting texture data not supported");
     return false;
 #endif
 }
@@ -324,7 +324,7 @@ bool Texture3D::Create_OGL()
     Release_OGL();
 
 #if defined(GL_ES_VERSION_2_0) && !defined(GL_ES_VERSION_3_0)
-    URHO3D_LOGERROR("Failed to create 3D texture, currently unsupported on OpenGL ES 2");
+    DV_LOGERROR("Failed to create 3D texture, currently unsupported on OpenGL ES 2");
     return false;
 #else
     if (!graphics_ || !width_ || !height_ || !depth_)
@@ -332,7 +332,7 @@ bool Texture3D::Create_OGL()
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture creation while device is lost");
+        DV_LOGWARNING("Texture creation while device is lost");
         return true;
     }
 
@@ -354,7 +354,7 @@ bool Texture3D::Create_OGL()
         glTexImage3D(target_, 0, format, width_, height_, depth_, 0, externalFormat, dataType, nullptr);
         if (glGetError())
         {
-            URHO3D_LOGERROR("Failed to create 3D texture");
+            DV_LOGERROR("Failed to create 3D texture");
             success = false;
         }
     }

@@ -16,7 +16,7 @@ namespace dviglo
 class Mutex;
 
 /// Helper class used for StringHash reversing.
-class URHO3D_API StringHashRegister
+class DV_API StringHashRegister
 {
 public:
     /// Construct. threadSafe controls whether the RegisterString and GetStringCopy are thread-safe.

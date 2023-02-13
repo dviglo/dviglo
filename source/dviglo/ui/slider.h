@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// %Slider bar %UI element.
-class URHO3D_API Slider : public BorderImage
+class DV_API Slider : public BorderImage
 {
-    URHO3D_OBJECT(Slider, BorderImage);
+    DV_OBJECT(Slider, BorderImage);
 
 public:
     /// Construct.

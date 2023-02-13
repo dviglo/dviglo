@@ -87,29 +87,29 @@ void Texture2D::Release_OGL()
 
 bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height, const void* data)
 {
-    URHO3D_PROFILE(SetTextureData);
+    DV_PROFILE(SetTextureData);
 
     if (!object_.name_ || !graphics_)
     {
-        URHO3D_LOGERROR("No texture created, can not set data");
+        DV_LOGERROR("No texture created, can not set data");
         return false;
     }
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null source for setting data");
+        DV_LOGERROR("Null source for setting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for setting data");
+        DV_LOGERROR("Illegal mip level for setting data");
         return false;
     }
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture data assignment while device is lost");
+        DV_LOGWARNING("Texture data assignment while device is lost");
         dataPending_ = true;
         return true;
     }
@@ -124,7 +124,7 @@ bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height,
     int levelHeight = GetLevelHeight(level);
     if (x < 0 || x + width > levelWidth || y < 0 || y + height > levelHeight || width <= 0 || height <= 0)
     {
-        URHO3D_LOGERROR("Illegal dimensions for setting data");
+        DV_LOGERROR("Illegal dimensions for setting data");
         return false;
     }
 
@@ -156,7 +156,7 @@ bool Texture2D::SetData_OGL(Image* image, bool useAlpha)
 {
     if (!image)
     {
-        URHO3D_LOGERROR("Null image, can not set data");
+        DV_LOGERROR("Null image, can not set data");
         return false;
     }
 
@@ -290,32 +290,32 @@ bool Texture2D::GetData_OGL(unsigned level, void* dest) const
 {
     if (!object_.name_ || !graphics_)
     {
-        URHO3D_LOGERROR("No texture created, can not get data");
+        DV_LOGERROR("No texture created, can not get data");
         return false;
     }
 
 #ifndef GL_ES_VERSION_2_0
     if (!dest)
     {
-        URHO3D_LOGERROR("Null destination for getting data");
+        DV_LOGERROR("Null destination for getting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for getting data");
+        DV_LOGERROR("Illegal mip level for getting data");
         return false;
     }
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Getting texture data while device is lost");
+        DV_LOGWARNING("Getting texture data while device is lost");
         return false;
     }
 
     if (multiSample_ > 1 && !autoResolve_)
     {
-        URHO3D_LOGERROR("Can not get data from multisampled texture without autoresolve");
+        DV_LOGERROR("Can not get data from multisampled texture without autoresolve");
         return false;
     }
 
@@ -342,7 +342,7 @@ bool Texture2D::GetData_OGL(unsigned level, void* dest) const
         return true;
     }
 
-    URHO3D_LOGERROR("Getting texture data not supported");
+    DV_LOGERROR("Getting texture data not supported");
     return false;
 #endif
 }
@@ -356,14 +356,14 @@ bool Texture2D::Create_OGL()
 
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture creation while device is lost");
+        DV_LOGWARNING("Texture creation while device is lost");
         return true;
     }
 
 #ifdef GL_ES_VERSION_2_0
     if (multiSample_ > 1)
     {
-        URHO3D_LOGWARNING("Multisampled texture is not supported on OpenGL ES");
+        DV_LOGWARNING("Multisampled texture is not supported on OpenGL ES");
         multiSample_ = 1;
         autoResolve_ = false;
     }
@@ -405,7 +405,7 @@ bool Texture2D::Create_OGL()
 #ifndef GL_ES_VERSION_2_0
                 if (!Graphics::GetGL3Support() && !GLEW_ARB_texture_multisample)
                 {
-                    URHO3D_LOGERROR("Multisampled texture extension not available");
+                    DV_LOGERROR("Multisampled texture extension not available");
                     return false;
                 }
 
@@ -441,7 +441,7 @@ bool Texture2D::Create_OGL()
         GLenum err = glGetError();
         if (err)
         {
-            URHO3D_LOGERRORF("Failed to create 2D texture err=%d, target=%d, format=%d, externalFormat=%d, dataType=%d", err, target_, format, externalFormat, dataType);
+            DV_LOGERRORF("Failed to create 2D texture err=%d, target=%d, format=%d, externalFormat=%d, dataType=%d", err, target_, format, externalFormat, dataType);
             success = false;
         }
     }

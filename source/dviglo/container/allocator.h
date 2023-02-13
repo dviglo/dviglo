@@ -45,16 +45,16 @@ struct AllocatorNode
 };
 
 /// Initialize a fixed-size allocator with the node size and initial capacity.
-URHO3D_API AllocatorBlock* AllocatorInitialize(i32 nodeSize, i32 initialCapacity = 1);
+DV_API AllocatorBlock* AllocatorInitialize(i32 nodeSize, i32 initialCapacity = 1);
 
 /// Uninitialize a fixed-size allocator. Frees all blocks in the chain.
-URHO3D_API void AllocatorUninitialize(AllocatorBlock* allocator);
+DV_API void AllocatorUninitialize(AllocatorBlock* allocator);
 
 /// Reserve a node. Creates a new block if necessary.
-URHO3D_API void* AllocatorReserve(AllocatorBlock* allocator);
+DV_API void* AllocatorReserve(AllocatorBlock* allocator);
 
 /// Free a node. Does not free any blocks.
-URHO3D_API void AllocatorFree(AllocatorBlock* allocator, void* ptr);
+DV_API void AllocatorFree(AllocatorBlock* allocator, void* ptr);
 
 /// %Allocator template class. Allocates objects of a specific class.
 template <class T> class Allocator

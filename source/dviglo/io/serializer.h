@@ -23,7 +23,7 @@ class Vector3;
 class Vector4;
 
 /// Abstract stream for writing.
-class URHO3D_API Serializer
+class DV_API Serializer
 {
 public:
     /// Destruct.

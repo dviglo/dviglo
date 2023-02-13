@@ -22,11 +22,11 @@ enum class FlipModes : u32
     Vertically = 2,
     Both = Horizontally | Vertically
 };
-URHO3D_FLAGS(FlipModes);
+DV_FLAGS(FlipModes);
 
-class URHO3D_API SpriteBatch : public SpriteBatchBase
+class DV_API SpriteBatch : public SpriteBatchBase
 {
-    URHO3D_OBJECT(SpriteBatch, SpriteBatchBase);
+    DV_OBJECT(SpriteBatch, SpriteBatchBase);
 
     // ============================ Рисование фигур с помощью функции AddTriangle() ============================
 

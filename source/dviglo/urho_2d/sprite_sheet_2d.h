@@ -16,9 +16,9 @@ class XMLFile;
 class JSONFile;
 
 /// Sprite sheet.
-class URHO3D_API SpriteSheet2D : public Resource
+class DV_API SpriteSheet2D : public Resource
 {
-    URHO3D_OBJECT(SpriteSheet2D, Resource);
+    DV_OBJECT(SpriteSheet2D, Resource);
 
 public:
     /// Construct.

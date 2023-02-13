@@ -11,9 +11,9 @@ namespace dviglo
 {
 
 /// Tooltip %UI element.
-class URHO3D_API ToolTip : public UIElement
+class DV_API ToolTip : public UIElement
 {
-    URHO3D_OBJECT(ToolTip, UIElement);
+    DV_OBJECT(ToolTip, UIElement);
 
 public:
     /// Construct.

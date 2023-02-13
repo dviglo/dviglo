@@ -19,7 +19,7 @@ namespace dviglo
 ///     - Handling keyboard to move and zoom 2D camera
 class Urho2DSpriterAnimation : public Sample
 {
-    URHO3D_OBJECT(Urho2DSpriterAnimation, Sample);
+    DV_OBJECT(Urho2DSpriterAnimation, Sample);
 
 public:
     /// Construct.

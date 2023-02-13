@@ -19,7 +19,7 @@ static const unsigned NUM_SPRITES = 100;
 // Custom variable identifier for storing sprite velocity within the UI element
 static constexpr StringHash VAR_VELOCITY = "Velocity"_hash;
 
-URHO3D_DEFINE_APPLICATION_MAIN(Sprites)
+DV_DEFINE_APPLICATION_MAIN(Sprites)
 
 Sprites::Sprites(Context* context) :
     Sample(context)
@@ -116,7 +116,7 @@ void Sprites::MoveSprites(float timeStep)
 void Sprites::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Sprites, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Sprites, HandleUpdate));
 }
 
 void Sprites::HandleUpdate(StringHash eventType, VariantMap& eventData)

@@ -31,10 +31,10 @@ void CollisionCircle2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<CollisionCircle2D>(PHYSICS2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, DEFAULT_CLRCLE_RADIUS, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Center", GetCenter, SetCenter, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(CollisionShape2D);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, DEFAULT_CLRCLE_RADIUS, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Center", GetCenter, SetCenter, Vector2::ZERO, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(CollisionShape2D);
 }
 
 void CollisionCircle2D::SetRadius(float radius)

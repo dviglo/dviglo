@@ -19,9 +19,9 @@ class UIBatch;
 class VertexBuffer;
 class UIElement3D;
 
-class URHO3D_API UIComponent : public Component
+class DV_API UIComponent : public Component
 {
-    URHO3D_OBJECT(UIComponent, Component);
+    DV_OBJECT(UIComponent, Component);
 
 public:
     /// Construct.

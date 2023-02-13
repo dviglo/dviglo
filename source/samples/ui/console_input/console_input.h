@@ -13,7 +13,7 @@
 ///     - Adding autocomplete options to the engine console.
 class ConsoleInput : public Sample
 {
-    URHO3D_OBJECT(ConsoleInput, Sample);
+    DV_OBJECT(ConsoleInput, Sample);
 
 public:
     /// Construct.

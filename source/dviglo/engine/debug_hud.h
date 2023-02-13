@@ -25,12 +25,12 @@ enum class DebugHudElements
     EventProfiler = 1 << 4,
     All           = Stats | Mode | Profiler | Memory
 };
-URHO3D_FLAGS(DebugHudElements);
+DV_FLAGS(DebugHudElements);
 
 /// Displays rendering stats and profiling information.
-class URHO3D_API DebugHud : public Object
+class DV_API DebugHud : public Object
 {
-    URHO3D_OBJECT(DebugHud, Object);
+    DV_OBJECT(DebugHud, Object);
 
 public:
     /// Construct.

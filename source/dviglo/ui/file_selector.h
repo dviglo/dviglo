@@ -30,9 +30,9 @@ struct FileSelectorEntry
 };
 
 /// %File selector dialog.
-class URHO3D_API FileSelector : public Object
+class DV_API FileSelector : public Object
 {
-    URHO3D_OBJECT(FileSelector, Object);
+    DV_OBJECT(FileSelector, Object);
 
 public:
     /// Construct.

@@ -14,7 +14,7 @@ namespace dviglo
 {
 
 /// %Sound stream that supports manual buffering of data from the main thread.
-class URHO3D_API BufferedSoundStream : public SoundStream
+class DV_API BufferedSoundStream : public SoundStream
 {
 public:
     /// Construct.

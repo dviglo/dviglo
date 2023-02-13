@@ -17,7 +17,7 @@ using ComponentId = id32;
 using NodeId = id32;
 
 /// Utility class that resolves node & component IDs after a scene or partial scene load.
-class URHO3D_API SceneResolver
+class DV_API SceneResolver
 {
 public:
     /// Construct.

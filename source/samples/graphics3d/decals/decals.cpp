@@ -28,7 +28,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Decals)
+DV_DEFINE_APPLICATION_MAIN(Decals)
 
 Decals::Decals(Context* context) :
     Sample(context),
@@ -196,11 +196,11 @@ void Decals::SetupViewport()
 void Decals::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Decals, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Decals, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(Decals, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Decals, HandlePostRenderUpdate));
 }
 
 void Decals::MoveCamera(float timeStep)

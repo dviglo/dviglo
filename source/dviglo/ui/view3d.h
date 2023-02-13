@@ -16,9 +16,9 @@ class Texture2D;
 class Viewport;
 
 /// %UI element which renders a 3D scene.
-class URHO3D_API View3D : public Window
+class DV_API View3D : public Window
 {
-    URHO3D_OBJECT(View3D, Window);
+    DV_OBJECT(View3D, Window);
 
 public:
     /// Construct.

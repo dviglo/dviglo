@@ -48,9 +48,9 @@ struct ViewBatchInfo2D
 };
 
 /// 2D renderer component.
-class URHO3D_API Renderer2D : public Drawable
+class DV_API Renderer2D : public Drawable
 {
-    URHO3D_OBJECT(Renderer2D, Drawable);
+    DV_OBJECT(Renderer2D, Drawable);
 
     friend void CheckDrawableVisibilityWork(const WorkItem* item, i32 threadIndex);
 

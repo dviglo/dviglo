@@ -25,7 +25,7 @@ template <class T, class U> class HashMap;
 using StringMap = HashMap<StringHash, String>;
 
 /// %String class.
-class URHO3D_API String
+class DV_API String
 {
 public:
     using Iterator = RandomAccessIterator<char>;
@@ -597,7 +597,7 @@ inline String operator +(const wchar_t* lhs, const String& rhs)
 }
 
 /// Wide character string. Only meant for converting from String and passing to the operating system where necessary.
-class URHO3D_API WString
+class DV_API WString
 {
 public:
     /// Construct empty.

@@ -78,13 +78,13 @@ bool IndexBuffer::GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& 
 
     if (!shadowData_)
     {
-        URHO3D_LOGERROR("Used vertex range can only be queried from an index buffer with shadow data");
+        DV_LOGERROR("Used vertex range can only be queried from an index buffer with shadow data");
         return false;
     }
 
     if (start + count > indexCount_)
     {
-        URHO3D_LOGERROR("Illegal index range for querying used vertices");
+        DV_LOGERROR("Illegal index range for querying used vertices");
         return false;
     }
 
@@ -130,12 +130,12 @@ void IndexBuffer::OnDeviceLost()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceLost_D3D11();
 #endif
@@ -145,12 +145,12 @@ void IndexBuffer::OnDeviceReset()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceReset_D3D11();
 #endif
@@ -160,12 +160,12 @@ void IndexBuffer::Release()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Release_D3D11();
 #endif
@@ -175,12 +175,12 @@ bool IndexBuffer::SetData(const void* data)
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(data);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(data);;
 #endif
@@ -193,12 +193,12 @@ bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool disc
     assert(start >= 0 && count >= 0);
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDataRange_OGL(data, start, count, discard);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetDataRange_D3D11(data, start, count, discard);
 #endif
@@ -211,12 +211,12 @@ void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
     assert(start >= 0 && count >= 0);
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Lock_OGL(start, count, discard);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Lock_D3D11(start, count, discard);
 #endif
@@ -228,12 +228,12 @@ void IndexBuffer::Unlock()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Unlock_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Unlock_D3D11();
 #endif
@@ -243,12 +243,12 @@ bool IndexBuffer::Create()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Create_D3D11();
 #endif
@@ -260,12 +260,12 @@ bool IndexBuffer::UpdateToGPU()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return UpdateToGPU_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return UpdateToGPU_D3D11();
 #endif
@@ -278,12 +278,12 @@ void* IndexBuffer::MapBuffer(i32 start, i32 count, bool discard)
     assert(start >= 0 && count >= 0);
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return MapBuffer_OGL(start, count, discard);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return MapBuffer_D3D11(start, count, discard);
 #endif
@@ -295,12 +295,12 @@ void IndexBuffer::UnmapBuffer()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return UnmapBuffer_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return UnmapBuffer_D3D11();
 #endif

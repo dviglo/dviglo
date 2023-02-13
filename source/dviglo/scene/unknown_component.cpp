@@ -157,7 +157,7 @@ bool UnknownComponent::LoadJSON(const JSONValue& source)
 bool UnknownComponent::Save(Serializer& dest) const
 {
     if (useXML_)
-        URHO3D_LOGWARNING("UnknownComponent loaded in XML mode, attributes will be empty for binary save");
+        DV_LOGWARNING("UnknownComponent loaded in XML mode, attributes will be empty for binary save");
 
     // Write type and ID
     if (!dest.WriteStringHash(GetType()))
@@ -175,12 +175,12 @@ bool UnknownComponent::SaveXML(XMLElement& dest) const
 {
     if (dest.IsNull())
     {
-        URHO3D_LOGERROR("Could not save " + GetTypeName() + ", null destination element");
+        DV_LOGERROR("Could not save " + GetTypeName() + ", null destination element");
         return false;
     }
 
     if (!useXML_)
-        URHO3D_LOGWARNING("UnknownComponent loaded in binary or JSON mode, attributes will be empty for XML save");
+        DV_LOGWARNING("UnknownComponent loaded in binary or JSON mode, attributes will be empty for XML save");
 
     // Write type and ID
     if (!dest.SetString("type", GetTypeName()))
@@ -201,7 +201,7 @@ bool UnknownComponent::SaveXML(XMLElement& dest) const
 bool UnknownComponent::SaveJSON(JSONValue& dest) const
 {
     if (!useXML_)
-        URHO3D_LOGWARNING("UnknownComponent loaded in binary mode, attributes will be empty for JSON save");
+        DV_LOGWARNING("UnknownComponent loaded in binary mode, attributes will be empty for JSON save");
 
     // Write type and ID
     dest.Set("type", GetTypeName());

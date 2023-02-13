@@ -61,13 +61,13 @@ bool IndexBuffer::SetData_OGL(const void* data)
 {
     if (!data)
     {
-        URHO3D_LOGERROR("Null pointer for index buffer data");
+        DV_LOGERROR("Null pointer for index buffer data");
         return false;
     }
 
     if (!indexSize_)
     {
-        URHO3D_LOGERROR("Index size not defined, can not set index buffer data");
+        DV_LOGERROR("Index size not defined, can not set index buffer data");
         return false;
     }
 
@@ -83,7 +83,7 @@ bool IndexBuffer::SetData_OGL(const void* data)
         }
         else
         {
-            URHO3D_LOGWARNING("Index buffer data assignment while device is lost");
+            DV_LOGWARNING("Index buffer data assignment while device is lost");
             dataPending_ = true;
         }
     }
@@ -101,19 +101,19 @@ bool IndexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool 
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null pointer for index buffer data");
+        DV_LOGERROR("Null pointer for index buffer data");
         return false;
     }
 
     if (!indexSize_)
     {
-        URHO3D_LOGERROR("Index size not defined, can not set index buffer data");
+        DV_LOGERROR("Index size not defined, can not set index buffer data");
         return false;
     }
 
     if (start + count > indexCount_)
     {
-        URHO3D_LOGERROR("Illegal range for setting new index buffer data");
+        DV_LOGERROR("Illegal range for setting new index buffer data");
         return false;
     }
 
@@ -136,7 +136,7 @@ bool IndexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool 
         }
         else
         {
-            URHO3D_LOGWARNING("Index buffer data assignment while device is lost");
+            DV_LOGWARNING("Index buffer data assignment while device is lost");
             dataPending_ = true;
         }
     }
@@ -150,19 +150,19 @@ void* IndexBuffer::Lock_OGL(i32 start, i32 count, bool discard)
 
     if (lockState_ != LOCK_NONE)
     {
-        URHO3D_LOGERROR("Index buffer already locked");
+        DV_LOGERROR("Index buffer already locked");
         return nullptr;
     }
 
     if (!indexSize_)
     {
-        URHO3D_LOGERROR("Index size not defined, can not lock index buffer");
+        DV_LOGERROR("Index size not defined, can not lock index buffer");
         return nullptr;
     }
 
     if (start + count > indexCount_)
     {
-        URHO3D_LOGERROR("Illegal range for locking index buffer");
+        DV_LOGERROR("Illegal range for locking index buffer");
         return nullptr;
     }
 
@@ -222,7 +222,7 @@ bool IndexBuffer::Create_OGL()
     {
         if (graphics_->IsDeviceLost())
         {
-            URHO3D_LOGWARNING("Index buffer creation while device is lost");
+            DV_LOGWARNING("Index buffer creation while device is lost");
             return true;
         }
 
@@ -231,7 +231,7 @@ bool IndexBuffer::Create_OGL()
 
         if (!object_.name_)
         {
-            URHO3D_LOGERROR("Failed to create index buffer");
+            DV_LOGERROR("Failed to create index buffer");
             return false;
         }
 

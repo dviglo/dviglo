@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Generate tangents to indexed geometry.
-URHO3D_API void GenerateTangents
+DV_API void GenerateTangents
     (void* vertexData, unsigned vertexSize, const void* indexData, unsigned indexSize, unsigned indexStart, unsigned indexCount,
         unsigned normalOffset, unsigned texCoordOffset, unsigned tangentOffset);
 

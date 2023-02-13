@@ -30,15 +30,15 @@ void ConstraintDistance2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<ConstraintDistance2D>(PHYSICS2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Owner Body Anchor", GetOwnerBodyAnchor, SetOwnerBodyAnchor, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Other Body Anchor", GetOtherBodyAnchor, SetOtherBodyAnchor, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Stiffness", GetStiffness, SetStiffness, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Damping", GetDamping, SetDamping, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Length", GetLength, SetLength, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Min Length", GetMinLength, SetMinLength, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Length", GetMaxLength, SetMaxLength, FLT_MAX, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Constraint2D);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Owner Body Anchor", GetOwnerBodyAnchor, SetOwnerBodyAnchor, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Other Body Anchor", GetOtherBodyAnchor, SetOtherBodyAnchor, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Stiffness", GetStiffness, SetStiffness, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Damping", GetDamping, SetDamping, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Length", GetLength, SetLength, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Min Length", GetMinLength, SetMinLength, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Length", GetMaxLength, SetMaxLength, FLT_MAX, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
 void ConstraintDistance2D::SetOwnerBodyAnchor(const Vector2& anchor)

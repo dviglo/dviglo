@@ -9,9 +9,9 @@
 namespace dviglo
 {
 /// Stretchable sprite component.
-class URHO3D_API StretchableSprite2D : public StaticSprite2D
+class DV_API StretchableSprite2D : public StaticSprite2D
 {
-    URHO3D_OBJECT(StretchableSprite2D, StaticSprite2D);
+    DV_OBJECT(StretchableSprite2D, StaticSprite2D);
 
 public:
     /// Construct.

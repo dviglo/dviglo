@@ -17,7 +17,7 @@ static const int NUM_OCTANTS = 8;
 static const i32 ROOT_INDEX = NINDEX;
 
 /// %Octree octant.
-class URHO3D_API Octant
+class DV_API Octant
 {
 public:
     /// Construct.
@@ -138,9 +138,9 @@ protected:
 };
 
 /// %Octree component. Should be added only to the root scene node.
-class URHO3D_API Octree : public Component, public Octant
+class DV_API Octree : public Component, public Octant
 {
-    URHO3D_OBJECT(Octree, Component);
+    DV_OBJECT(Octree, Component);
 
 public:
     /// Construct.

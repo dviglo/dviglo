@@ -16,7 +16,7 @@ class Animation;
 struct Bone;
 
 /// Control data for an animation.
-struct URHO3D_API AnimationControl
+struct DV_API AnimationControl
 {
     /// Construct with defaults.
     AnimationControl() :
@@ -63,9 +63,9 @@ struct URHO3D_API AnimationControl
 };
 
 /// %Component that drives an AnimatedModel's animations.
-class URHO3D_API AnimationController : public Component
+class DV_API AnimationController : public Component
 {
-    URHO3D_OBJECT(AnimationController, Component);
+    DV_OBJECT(AnimationController, Component);
 
 public:
     /// Construct.

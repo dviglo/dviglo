@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// Static model component with fixed position in relation to the camera.
-class URHO3D_API Skybox : public StaticModel
+class DV_API Skybox : public StaticModel
 {
-    URHO3D_OBJECT(Skybox, StaticModel);
+    DV_OBJECT(Skybox, StaticModel);
 
 public:
     /// Construct.

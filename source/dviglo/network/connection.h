@@ -97,9 +97,9 @@ enum PacketType {
 };
 
 /// %Connection to a remote network host.
-class URHO3D_API Connection : public Object
+class DV_API Connection : public Object
 {
-    URHO3D_OBJECT(Connection, Object);
+    DV_OBJECT(Connection, Object);
 
 public:
     /// Construct with context, RakNet connection address and Raknet peer pointer.

@@ -52,7 +52,7 @@ bool SpriteSheet2D::BeginLoad(Deserializer& source)
         return BeginLoadFromJSONFile(source);
 
 
-    URHO3D_LOGERROR("Unsupported file type");
+    DV_LOGERROR("Unsupported file type");
     return false;
 }
 
@@ -109,7 +109,7 @@ bool SpriteSheet2D::BeginLoadFromPListFile(Deserializer& source)
     loadPListFile_ = new PListFile(context_);
     if (!loadPListFile_->Load(source))
     {
-        URHO3D_LOGERROR("Could not load sprite sheet");
+        DV_LOGERROR("Could not load sprite sheet");
         loadPListFile_.Reset();
         return false;
     }
@@ -134,7 +134,7 @@ bool SpriteSheet2D::EndLoadFromPListFile()
     texture_ = cache->GetResource<Texture2D>(loadTextureName_);
     if (!texture_)
     {
-        URHO3D_LOGERROR("Could not load texture " + loadTextureName_);
+        DV_LOGERROR("Could not load texture " + loadTextureName_);
         loadPListFile_.Reset();
         loadTextureName_.Clear();
         return false;
@@ -149,7 +149,7 @@ bool SpriteSheet2D::EndLoadFromPListFile()
         const PListValueMap& frameInfo = i->second_.GetValueMap();
         if (frameInfo["rotated"]->GetBool())
         {
-            URHO3D_LOGWARNING("Rotated sprite is not support now");
+            DV_LOGWARNING("Rotated sprite is not support now");
             continue;
         }
 
@@ -181,7 +181,7 @@ bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
     loadXMLFile_ = new XMLFile(context_);
     if (!loadXMLFile_->Load(source))
     {
-        URHO3D_LOGERROR("Could not load sprite sheet");
+        DV_LOGERROR("Could not load sprite sheet");
         loadXMLFile_.Reset();
         return false;
     }
@@ -191,7 +191,7 @@ bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
     XMLElement rootElem = loadXMLFile_->GetRoot("TextureAtlas");
     if (!rootElem)
     {
-        URHO3D_LOGERROR("Invalid sprite sheet");
+        DV_LOGERROR("Invalid sprite sheet");
         loadXMLFile_.Reset();
         return false;
     }
@@ -210,7 +210,7 @@ bool SpriteSheet2D::EndLoadFromXMLFile()
     texture_ = cache->GetResource<Texture2D>(loadTextureName_);
     if (!texture_)
     {
-        URHO3D_LOGERROR("Could not load texture " + loadTextureName_);
+        DV_LOGERROR("Could not load texture " + loadTextureName_);
         loadXMLFile_.Reset();
         loadTextureName_.Clear();
         return false;
@@ -255,7 +255,7 @@ bool SpriteSheet2D::BeginLoadFromJSONFile(Deserializer& source)
     loadJSONFile_ = new JSONFile(context_);
     if (!loadJSONFile_->Load(source))
     {
-        URHO3D_LOGERROR("Could not load sprite sheet");
+        DV_LOGERROR("Could not load sprite sheet");
         loadJSONFile_.Reset();
         return false;
     }
@@ -265,7 +265,7 @@ bool SpriteSheet2D::BeginLoadFromJSONFile(Deserializer& source)
     JSONValue rootElem = loadJSONFile_->GetRoot();
     if (rootElem.IsNull())
     {
-        URHO3D_LOGERROR("Invalid sprite sheet");
+        DV_LOGERROR("Invalid sprite sheet");
         loadJSONFile_.Reset();
         return false;
     }
@@ -284,7 +284,7 @@ bool SpriteSheet2D::EndLoadFromJSONFile()
     texture_ = cache->GetResource<Texture2D>(loadTextureName_);
     if (!texture_)
     {
-        URHO3D_LOGERROR("Could not load texture " + loadTextureName_);
+        DV_LOGERROR("Could not load texture " + loadTextureName_);
         loadJSONFile_.Reset();
         loadTextureName_.Clear();
         return false;

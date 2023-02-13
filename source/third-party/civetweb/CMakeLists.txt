@@ -36,15 +36,15 @@ elseif (APPLE AND (NOT IOS OR IPHONEOS_DEPLOYMENT_TARGET STREQUAL "" OR NOT IPHO
     endif ()
 endif ()
 
-if (NOT URHO3D_SSL)
+if (NOT DV_SSL)
     add_definitions(-DNO_SSL)
-elseif (NOT URHO3D_SSL_DYNAMIC)
+elseif (NOT DV_SSL_DYNAMIC)
     add_definitions(-DNO_SSL_DL)
 endif ()
 
 # Link OpenSSL libraries
-if (URHO3D_SSL)
-    if (URHO3D_SSL_DYNAMIC)
+if (DV_SSL)
+    if (DV_SSL_DYNAMIC)
         # Unix systems can define the dynamic library names to load
         if (UNIX AND NOT DARWIN)
             add_definitions(-DCRYPTO_LIB="libcrypto.so")

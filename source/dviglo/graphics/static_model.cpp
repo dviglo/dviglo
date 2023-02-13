@@ -39,18 +39,18 @@ void StaticModel::RegisterObject(Context* context)
 {
     context->RegisterFactory<StaticModel>(GEOMETRY_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Material", GetMaterialsAttr, SetMaterialsAttr, ResourceRefList(Material::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialsAttr, SetMaterialsAttr, ResourceRefList(Material::GetTypeStatic()),
         AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Is Occluder", occluder_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Drawable);
-    URHO3D_ATTRIBUTE("Occlusion LOD Level", occlusionLodLevel_, NINDEX, AM_DEFAULT);
+    DV_ATTRIBUTE("Is Occluder", occluder_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
+    DV_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Drawable);
+    DV_ATTRIBUTE("Occlusion LOD Level", occlusionLodLevel_, NINDEX, AM_DEFAULT);
 }
 
 void StaticModel::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)
@@ -219,7 +219,7 @@ void StaticModel::SetModel(Model* model)
 
     if (!node_)
     {
-        URHO3D_LOGERROR("Can not set model while model component is not attached to a scene node");
+        DV_LOGERROR("Can not set model while model component is not attached to a scene node");
         return;
     }
 
@@ -231,7 +231,7 @@ void StaticModel::SetModel(Model* model)
 
     if (model)
     {
-        SubscribeToEvent(model, E_RELOADFINISHED, URHO3D_HANDLER(StaticModel, HandleModelReloadFinished));
+        SubscribeToEvent(model, E_RELOADFINISHED, DV_HANDLER(StaticModel, HandleModelReloadFinished));
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());
@@ -269,7 +269,7 @@ bool StaticModel::SetMaterial(unsigned index, Material* material)
 {
     if (index >= batches_.Size())
     {
-        URHO3D_LOGERROR("Material index out of bounds");
+        DV_LOGERROR("Material index out of bounds");
         return false;
     }
 

@@ -2,7 +2,7 @@
 # License: MIT
 
 # Движок должен быть скомпилирован с поддержкой 2D-графики
-if(NOT URHO3D_URHO2D)
+if(NOT DV_URHO2D)
     return()
 endif()
 

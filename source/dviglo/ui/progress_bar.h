@@ -12,9 +12,9 @@ namespace dviglo
 {
 
 /// %ProgressBar bar %UI element.
-class URHO3D_API ProgressBar : public BorderImage
+class DV_API ProgressBar : public BorderImage
 {
-    URHO3D_OBJECT(ProgressBar, BorderImage);
+    DV_OBJECT(ProgressBar, BorderImage);
 
 public:
     /// Construct.

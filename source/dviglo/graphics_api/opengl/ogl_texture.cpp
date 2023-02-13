@@ -14,7 +14,7 @@
 
 #include "../../debug_new.h"
 
-#if URHO3D_GLES3
+#if DV_GLES3
 #define GL_COMPARE_R_TO_TEXTURE GL_COMPARE_REF_TO_TEXTURE
 #endif
 
@@ -87,7 +87,7 @@ void Texture::UpdateParameters_OGL()
     // Wrapping
     glTexParameteri(target_, GL_TEXTURE_WRAP_S, GetWrapMode(addressModes_[COORD_U]));
     glTexParameteri(target_, GL_TEXTURE_WRAP_T, GetWrapMode(addressModes_[COORD_V]));
-#if defined(URHO3D_GLES3) || (defined(DESKTOP_GRAPHICS) && !defined(__EMSCRIPTEN__))
+#if defined(DV_GLES3) || (defined(DESKTOP_GRAPHICS) && !defined(__EMSCRIPTEN__))
     glTexParameteri(target_, GL_TEXTURE_WRAP_R, GetWrapMode(addressModes_[COORD_W]));
 #endif
 
@@ -146,7 +146,7 @@ void Texture::UpdateParameters_OGL()
     glTexParameterfv(target_, GL_TEXTURE_BORDER_COLOR, borderColor_.Data());
 #endif
 
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     // Shadow compare
     if (shadowCompare_)
     {

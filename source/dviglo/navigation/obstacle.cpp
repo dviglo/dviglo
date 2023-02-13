@@ -36,9 +36,9 @@ Obstacle::~Obstacle()
 void Obstacle::RegisterObject(Context* context)
 {
     context->RegisterFactory<Obstacle>(NAVIGATION_CATEGORY);
-    URHO3D_COPY_BASE_ATTRIBUTES(Component);
-    URHO3D_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, 5.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Height", GetHeight, SetHeight, 5.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Component);
+    DV_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, 5.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Height", GetHeight, SetHeight, 5.0f, AM_DEFAULT);
 }
 
 void Obstacle::OnSetEnabled()
@@ -80,7 +80,7 @@ void Obstacle::OnSceneSet(Scene* scene)
     {
         if (scene == node_)
         {
-            URHO3D_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
+            DV_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
             return;
         }
         if (!ownerMesh_)
@@ -88,7 +88,7 @@ void Obstacle::OnSceneSet(Scene* scene)
         if (ownerMesh_)
         {
             ownerMesh_->AddObstacle(this);
-            SubscribeToEvent(ownerMesh_, E_NAVIGATION_TILE_ADDED, URHO3D_HANDLER(Obstacle, HandleNavigationTileAdded));
+            SubscribeToEvent(ownerMesh_, E_NAVIGATION_TILE_ADDED, DV_HANDLER(Obstacle, HandleNavigationTileAdded));
         }
     }
     else

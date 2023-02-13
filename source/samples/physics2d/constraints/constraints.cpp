@@ -43,7 +43,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Urho2DConstraints)
+DV_DEFINE_APPLICATION_MAIN(Urho2DConstraints)
 
 Node* pickedNode;
 RigidBody2D* dummyBody;
@@ -425,19 +425,19 @@ void Urho2DConstraints::MoveCamera(float timeStep)
 void Urho2DConstraints::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Urho2DConstraints, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DConstraints, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(Urho2DConstraints, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DConstraints, HandlePostRenderUpdate));
 
     // Subscribe to mouse click
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, URHO3D_HANDLER(Urho2DConstraints, HandleMouseButtonDown));
+    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DConstraints, HandleMouseButtonDown));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);
 
     // Overwrite the subscription from the base class
-    SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(Urho2DConstraints, HandleTouchBegin3));
+    SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(Urho2DConstraints, HandleTouchBegin3));
 }
 
 void Urho2DConstraints::HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -490,8 +490,8 @@ void Urho2DConstraints::HandleMouseButtonDown(StringHash eventType, VariantMap& 
         constraintMouse->SetOtherBody(dummyBody);  // Use dummy body instead of rigidBody. It's better to create a dummy body automatically in ConstraintMouse2D
         constraintMouse->SetLinearStiffness(5.0f, 0.7f);
     }
-    SubscribeToEvent(E_MOUSEMOVE, URHO3D_HANDLER(Urho2DConstraints, HandleMouseMove));
-    SubscribeToEvent(E_MOUSEBUTTONUP, URHO3D_HANDLER(Urho2DConstraints, HandleMouseButtonUp));
+    SubscribeToEvent(E_MOUSEMOVE, DV_HANDLER(Urho2DConstraints, HandleMouseMove));
+    SubscribeToEvent(E_MOUSEBUTTONUP, DV_HANDLER(Urho2DConstraints, HandleMouseButtonUp));
 }
 
 void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& eventData)
@@ -552,8 +552,8 @@ void Urho2DConstraints::HandleTouchBegin3(StringHash eventType, VariantMap& even
         constraintMouse->SetOtherBody(dummyBody);  // Use dummy body instead of rigidBody. It's better to create a dummy body automatically in ConstraintMouse2D
         constraintMouse->SetLinearStiffness(5.0f, 0.7f);
     }
-    SubscribeToEvent(E_TOUCHMOVE, URHO3D_HANDLER(Urho2DConstraints, HandleTouchMove3));
-    SubscribeToEvent(E_TOUCHEND, URHO3D_HANDLER(Urho2DConstraints, HandleTouchEnd3));
+    SubscribeToEvent(E_TOUCHMOVE, DV_HANDLER(Urho2DConstraints, HandleTouchMove3));
+    SubscribeToEvent(E_TOUCHEND, DV_HANDLER(Urho2DConstraints, HandleTouchEnd3));
 }
 
 void Urho2DConstraints::HandleTouchMove3(StringHash eventType, VariantMap& eventData)

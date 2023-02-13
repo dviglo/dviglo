@@ -23,7 +23,7 @@ class Vehicle;
 
 class RaycastVehicleDemo : public Sample
 {
-    URHO3D_OBJECT(RaycastVehicleDemo, Sample);
+    DV_OBJECT(RaycastVehicleDemo, Sample);
 
 public:
     /// Construct.

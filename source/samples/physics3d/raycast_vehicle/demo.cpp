@@ -34,7 +34,7 @@
 
 const float CAMERA_DISTANCE = 10.0f;
 
-URHO3D_DEFINE_APPLICATION_MAIN(RaycastVehicleDemo)
+DV_DEFINE_APPLICATION_MAIN(RaycastVehicleDemo)
 
 RaycastVehicleDemo::RaycastVehicleDemo(Context* context)
     : Sample(context)
@@ -160,10 +160,10 @@ void RaycastVehicleDemo::SubscribeToEvents()
 {
     // Subscribe to Update event for setting the vehicle controls before physics simulation
     SubscribeToEvent(E_UPDATE,
-                     URHO3D_HANDLER(RaycastVehicleDemo, HandleUpdate));
+                     DV_HANDLER(RaycastVehicleDemo, HandleUpdate));
     // Subscribe to PostUpdate event for updating the camera position after physics simulation
     SubscribeToEvent(E_POSTUPDATE,
-                     URHO3D_HANDLER(RaycastVehicleDemo,
+                     DV_HANDLER(RaycastVehicleDemo,
                                     HandlePostUpdate));
     // Unsubscribe the SceneUpdate event from base class as the camera node is being controlled in HandlePostUpdate() in this sample
     UnsubscribeFromEvent(E_SCENEUPDATE);

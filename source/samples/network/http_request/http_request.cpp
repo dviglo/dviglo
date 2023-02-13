@@ -15,7 +15,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(HttpRequestDemo)
+DV_DEFINE_APPLICATION_MAIN(HttpRequestDemo)
 
 HttpRequestDemo::HttpRequestDemo(Context* context) :
     Sample(context)
@@ -59,7 +59,7 @@ void HttpRequestDemo::CreateUI()
 void HttpRequestDemo::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing HTTP request
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(HttpRequestDemo, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(HttpRequestDemo, HandleUpdate));
 }
 
 void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -67,7 +67,7 @@ void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
     auto* network = GetSubsystem<Network>();
 
     if (httpRequest_.Null())
-#ifdef URHO3D_SSL
+#ifdef DV_SSL
         httpRequest_ = network->MakeHttpRequest("https://api.ipify.org/?format=json");
 #else
         httpRequest_ = network->MakeHttpRequest("http://httpbin.org/ip");
@@ -82,7 +82,7 @@ void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
         {
             text_->SetText("An error has occurred: " + httpRequest_->GetError());
             UnsubscribeFromEvent("Update");
-            URHO3D_LOGERRORF("HttpRequest error: %s", httpRequest_->GetError().CString());
+            DV_LOGERRORF("HttpRequest error: %s", httpRequest_->GetError().CString());
         }
         // Get message data
         else
@@ -96,7 +96,7 @@ void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
                 SharedPtr<JSONFile> json(new JSONFile(context_));
                 json->FromString(message_);
 
-#ifdef URHO3D_SSL
+#ifdef DV_SSL
                 JSONValue val = json->GetRoot().Get("ip");
 #else
                 JSONValue val = json->GetRoot().Get("origin");

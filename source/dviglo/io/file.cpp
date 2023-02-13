@@ -140,7 +140,7 @@ bool File::Open(PackageFile* package, const String& fileName)
     bool success = OpenInternal(package->GetName(), FILE_READ, true);
     if (!success)
     {
-        URHO3D_LOGERROR("Could not open package file " + fileName);
+        DV_LOGERROR("Could not open package file " + fileName);
         return false;
     }
 
@@ -167,7 +167,7 @@ i32 File::Read(void* dest, i32 size)
 
     if (mode_ == FILE_WRITE)
     {
-        URHO3D_LOGERROR("File not opened for reading");
+        DV_LOGERROR("File not opened for reading");
         return 0;
     }
 
@@ -263,7 +263,7 @@ i32 File::Read(void* dest, i32 size)
     {
         // Return to the position where the read began
         SeekInternal(position_ + offset_);
-        URHO3D_LOGERROR("Error while reading from file " + GetName());
+        DV_LOGERROR("Error while reading from file " + GetName());
         return 0;
     }
 
@@ -304,7 +304,7 @@ i64 File::Seek(i64 position)
                 Read(skipBuffer, Min(position - position_, SKIP_BUFFER_SIZE));
         }
         else
-            URHO3D_LOGERROR("Seeking backward in a compressed file is not supported");
+            DV_LOGERROR("Seeking backward in a compressed file is not supported");
 
         return position_;
     }
@@ -328,7 +328,7 @@ i32 File::Write(const void* data, i32 size)
 
     if (mode_ == FILE_READ)
     {
-        URHO3D_LOGERROR("File not opened for writing");
+        DV_LOGERROR("File not opened for writing");
         return 0;
     }
 
@@ -346,7 +346,7 @@ i32 File::Write(const void* data, i32 size)
     {
         // Return to the position where the write began
         FSeek64((FILE*)handle_, position_ + offset_, SEEK_SET);
-        URHO3D_LOGERROR("Error while writing to file " + GetName());
+        DV_LOGERROR("Error while writing to file " + GetName());
         return 0;
     }
 
@@ -369,7 +369,7 @@ hash32 File::GetChecksum()
 #endif
         return 0;
 
-    URHO3D_PROFILE(CalculateFileChecksum);
+    DV_PROFILE(CalculateFileChecksum);
 
     i64 oldPos = position_;
     checksum_ = 0;
@@ -437,29 +437,29 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
     auto* fileSystem = GetSubsystem<FileSystem>();
     if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
     {
-        URHO3D_LOGERRORF("Access denied to %s", fileName.CString());
+        DV_LOGERRORF("Access denied to %s", fileName.CString());
         return false;
     }
 
     if (fileName.Empty())
     {
-        URHO3D_LOGERROR("Could not open file with empty name");
+        DV_LOGERROR("Could not open file with empty name");
         return false;
     }
 
 #ifdef __ANDROID__
-    if (URHO3D_IS_ASSET(fileName))
+    if (DV_IS_ASSET(fileName))
     {
         if (mode != FILE_READ)
         {
-            URHO3D_LOGERROR("Only read mode is supported for Android asset files");
+            DV_LOGERROR("Only read mode is supported for Android asset files");
             return false;
         }
 
-        assetHandle_ = SDL_RWFromFile(URHO3D_ASSET(fileName), "rb");
+        assetHandle_ = SDL_RWFromFile(DV_ASSET(fileName), "rb");
         if (!assetHandle_)
         {
-            URHO3D_LOGERRORF("Could not open Android asset file %s", fileName.CString());
+            DV_LOGERRORF("Could not open Android asset file %s", fileName.CString());
             return false;
         }
         else
@@ -496,7 +496,7 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
 
     if (!handle_)
     {
-        URHO3D_LOGERRORF("Could not open file %s", fileName.CString());
+        DV_LOGERRORF("Could not open file %s", fileName.CString());
         return false;
     }
 
@@ -507,7 +507,7 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
         FSeek64((FILE*)handle_, 0, SEEK_SET);
         if (size > M_MAX_UNSIGNED)
         {
-            URHO3D_LOGERRORF("Could not open file %s which is larger than 4GB", fileName.CString());
+            DV_LOGERRORF("Could not open file %s which is larger than 4GB", fileName.CString());
             Close();
             size_ = 0;
             return false;

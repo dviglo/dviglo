@@ -19,7 +19,7 @@ class Drawable;
 class Node;
 
 /// Base class for octree queries.
-class URHO3D_API OctreeQuery
+class DV_API OctreeQuery
 {
 public:
     /// Construct with query parameters.
@@ -52,7 +52,7 @@ public:
 };
 
 /// Point octree query.
-class URHO3D_API PointOctreeQuery : public OctreeQuery
+class DV_API PointOctreeQuery : public OctreeQuery
 {
 public:
     /// Construct with point and query parameters.
@@ -73,7 +73,7 @@ public:
 };
 
 /// %Sphere octree query.
-class URHO3D_API SphereOctreeQuery : public OctreeQuery
+class DV_API SphereOctreeQuery : public OctreeQuery
 {
 public:
     /// Construct with sphere and query parameters.
@@ -94,7 +94,7 @@ public:
 };
 
 /// Bounding box octree query.
-class URHO3D_API BoxOctreeQuery : public OctreeQuery
+class DV_API BoxOctreeQuery : public OctreeQuery
 {
 public:
     /// Construct with bounding box and query parameters.
@@ -115,7 +115,7 @@ public:
 };
 
 /// %Frustum octree query.
-class URHO3D_API FrustumOctreeQuery : public OctreeQuery
+class DV_API FrustumOctreeQuery : public OctreeQuery
 {
 public:
     /// Construct with frustum and query parameters.
@@ -136,7 +136,7 @@ public:
 };
 
 /// General octree query result. Used for Lua bindings only.
-struct URHO3D_API OctreeQueryResult
+struct DV_API OctreeQueryResult
 {
     /// Construct with defaults.
     OctreeQueryResult() :
@@ -164,7 +164,7 @@ enum RayQueryLevel
 };
 
 /// Raycast result.
-struct URHO3D_API RayQueryResult
+struct DV_API RayQueryResult
 {
     /// Construct with defaults.
     RayQueryResult() :
@@ -202,7 +202,7 @@ struct URHO3D_API RayQueryResult
 };
 
 /// Raycast octree query.
-class URHO3D_API RayOctreeQuery
+class DV_API RayOctreeQuery
 {
 public:
     /// Construct with ray and query parameters.
@@ -236,7 +236,7 @@ public:
     RayQueryLevel level_;
 };
 
-class URHO3D_API AllContentOctreeQuery : public OctreeQuery
+class DV_API AllContentOctreeQuery : public OctreeQuery
 {
 public:
     /// Construct.

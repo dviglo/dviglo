@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Rectangular area allocator.
-class URHO3D_API AreaAllocator
+class DV_API AreaAllocator
 {
 public:
     /// Default construct with empty size.

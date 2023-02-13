@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Low-resolution operating system timer.
-class URHO3D_API Timer
+class DV_API Timer
 {
 public:
     /// Construct. Get the starting clock value.
@@ -27,7 +27,7 @@ private:
 };
 
 /// High-resolution operating system timer used in profiling.
-class URHO3D_API HiresTimer
+class DV_API HiresTimer
 {
     friend class Time;
 
@@ -57,9 +57,9 @@ private:
 };
 
 /// %Time and frame counter subsystem.
-class URHO3D_API Time : public Object
+class DV_API Time : public Object
 {
-    URHO3D_OBJECT(Time, Object);
+    DV_OBJECT(Time, Object);
 
 public:
     /// Construct.

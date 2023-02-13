@@ -14,9 +14,9 @@ namespace dviglo
 class RigidBody2D;
 
 /// 2D collision shape component.
-class URHO3D_API CollisionShape2D : public Component
+class DV_API CollisionShape2D : public Component
 {
-    URHO3D_OBJECT(CollisionShape2D, Component);
+    DV_OBJECT(CollisionShape2D, Component);
 
 public:
     /// Construct.

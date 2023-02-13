@@ -19,9 +19,9 @@ class SoundListener;
 class SoundSource;
 
 /// %Audio subsystem.
-class URHO3D_API Audio : public Object
+class DV_API Audio : public Object
 {
-    URHO3D_OBJECT(Audio, Object);
+    DV_OBJECT(Audio, Object);
 
 public:
     /// Construct.
@@ -134,6 +134,6 @@ private:
 };
 
 /// Register Audio library objects.
-void URHO3D_API RegisterAudioLibrary(Context* context);
+void DV_API RegisterAudioLibrary(Context* context);
 
 }

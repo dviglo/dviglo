@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// %Menu %UI element that optionally shows a popup.
-class URHO3D_API Menu : public Button
+class DV_API Menu : public Button
 {
-    URHO3D_OBJECT(Menu, Button);
+    DV_OBJECT(Menu, Button);
 
 public:
     /// Construct.

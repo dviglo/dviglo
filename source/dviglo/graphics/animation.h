@@ -22,7 +22,7 @@ enum class AnimationChannels : u8
     Rotation = 1 << 1,
     Scale    = 1 << 2,
 };
-URHO3D_FLAGS(AnimationChannels);
+DV_FLAGS(AnimationChannels);
 
 /// Skeletal animation keyframe.
 struct AnimationKeyFrame
@@ -45,7 +45,7 @@ struct AnimationKeyFrame
 };
 
 /// Skeletal animation track, stores keyframes of a single bone.
-struct URHO3D_API AnimationTrack
+struct DV_API AnimationTrack
 {
     /// Construct.
     AnimationTrack()
@@ -96,9 +96,9 @@ struct AnimationTriggerPoint
 };
 
 /// Skeletal animation resource.
-class URHO3D_API Animation : public ResourceWithMetadata
+class DV_API Animation : public ResourceWithMetadata
 {
-    URHO3D_OBJECT(Animation, ResourceWithMetadata);
+    DV_OBJECT(Animation, ResourceWithMetadata);
 
 public:
     /// Construct.

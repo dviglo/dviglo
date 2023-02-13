@@ -20,7 +20,7 @@ namespace dviglo
 ///     - Handling keyboard to transform nodes
 class Urho2DStretchableSprite : public Sample
 {
-    URHO3D_OBJECT(Urho2DStretchableSprite, Sample);
+    DV_OBJECT(Urho2DStretchableSprite, Sample);
 
 public:
     /// Construct.

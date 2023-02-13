@@ -22,9 +22,9 @@ namespace dviglo
 class OffMeshConnection;
 class Obstacle;
 
-class URHO3D_API DynamicNavigationMesh : public NavigationMesh
+class DV_API DynamicNavigationMesh : public NavigationMesh
 {
-    URHO3D_OBJECT(DynamicNavigationMesh, NavigationMesh);
+    DV_OBJECT(DynamicNavigationMesh, NavigationMesh);
 
     friend class Obstacle;
     friend struct MeshProcess;

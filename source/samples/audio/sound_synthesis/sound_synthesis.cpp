@@ -18,7 +18,7 @@
 #include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
-URHO3D_DEFINE_APPLICATION_MAIN(SoundSynthesis)
+DV_DEFINE_APPLICATION_MAIN(SoundSynthesis)
 
 SoundSynthesis::SoundSynthesis(Context* context) :
     Sample(context),
@@ -118,7 +118,7 @@ void SoundSynthesis::CreateInstructions()
 void SoundSynthesis::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(SoundSynthesis, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(SoundSynthesis, HandleUpdate));
 }
 
 void SoundSynthesis::HandleUpdate(StringHash eventType, VariantMap& eventData)

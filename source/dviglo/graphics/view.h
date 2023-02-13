@@ -88,12 +88,12 @@ struct PerThreadSceneResult
 inline constexpr i32 MAX_VIEWPORT_TEXTURES = 2;
 
 /// Internal structure for 3D rendering work. Created for each backbuffer and texture viewport, but not for shadow cameras.
-class URHO3D_API View : public Object
+class DV_API View : public Object
 {
     friend void CheckVisibilityWork(const WorkItem* item, i32 threadIndex);
     friend void ProcessLightWork(const WorkItem* item, i32 threadIndex);
 
-    URHO3D_OBJECT(View, Object);
+    DV_OBJECT(View, Object);
 
 public:
     /// Construct.

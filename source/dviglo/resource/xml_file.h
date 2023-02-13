@@ -22,9 +22,9 @@ namespace dviglo
 {
 
 /// XML document resource.
-class URHO3D_API XMLFile : public Resource
+class DV_API XMLFile : public Resource
 {
-    URHO3D_OBJECT(XMLFile, Resource);
+    DV_OBJECT(XMLFile, Resource);
 
 public:
     /// Construct.

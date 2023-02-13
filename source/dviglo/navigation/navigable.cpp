@@ -26,8 +26,8 @@ void Navigable::RegisterObject(Context* context)
 {
     context->RegisterFactory<Navigable>(NAVIGATION_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Recursive", recursive_, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ATTRIBUTE("Recursive", recursive_, true, AM_DEFAULT);
 }
 
 void Navigable::SetRecursive(bool enable)

@@ -101,7 +101,7 @@ void Skeleton::SetRootBoneIndex(i32 index)
     if (index >= 0 && index < bones_.Size())
         rootBoneIndex_ = index;
     else
-        URHO3D_LOGERROR("Root bone index out of bounds");
+        DV_LOGERROR("Root bone index out of bounds");
 }
 
 void Skeleton::ClearBones()

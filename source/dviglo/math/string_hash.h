@@ -13,7 +13,7 @@ namespace dviglo
 class StringHashRegister;
 
 /// 32-bit hash value for a string.
-class URHO3D_API StringHash
+class DV_API StringHash
 {
 public:
     /// Construct with zero value.
@@ -31,7 +31,7 @@ public:
     {
     }
 
-#ifdef URHO3D_HASH_DEBUG
+#ifdef DV_HASH_DEBUG
     /// Construct from a C string.
     StringHash(const char* str) noexcept;        // NOLINT(google-explicit-constructor)
 #else
@@ -83,7 +83,7 @@ public:
     /// Return as string.
     String ToString() const;
 
-    /// Return string which has specific hash value. Return first string if many (in order of calculation). Use for debug purposes only. Return empty string if URHO3D_HASH_DEBUG is off.
+    /// Return string which has specific hash value. Return first string if many (in order of calculation). Use for debug purposes only. Return empty string if DV_HASH_DEBUG is off.
     String Reverse() const;
 
     /// Return hash value for HashSet & HashMap.
@@ -101,7 +101,7 @@ public:
         return hash;
     }
 
-    /// Get global StringHashRegister. Use for debug purposes only. Return nullptr if URHO3D_HASH_DEBUG is off.
+    /// Get global StringHashRegister. Use for debug purposes only. Return nullptr if DV_HASH_DEBUG is off.
     static StringHashRegister* GetGlobalStringHashRegister();
 
     /// Zero hash.

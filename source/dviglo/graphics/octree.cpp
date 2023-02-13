@@ -302,7 +302,7 @@ Octree::Octree(Context* context) :
     // If the engine is running headless, subscribe to RenderUpdate events for manually updating the octree
     // to allow raycasts and animation update
     if (!GetSubsystem<Graphics>())
-        SubscribeToEvent(E_RENDERUPDATE, URHO3D_HANDLER(Octree, HandleRenderUpdate));
+        SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Octree, HandleRenderUpdate));
 }
 
 Octree::~Octree()
@@ -319,16 +319,16 @@ void Octree::RegisterObject(Context* context)
     Vector3 defaultBoundsMin = -Vector3::ONE * DEFAULT_OCTREE_SIZE;
     Vector3 defaultBoundsMax = Vector3::ONE * DEFAULT_OCTREE_SIZE;
 
-    URHO3D_ATTRIBUTE_EX("Bounding Box Min", worldBoundingBox_.min_, UpdateOctreeSize, defaultBoundsMin, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Bounding Box Max", worldBoundingBox_.max_, UpdateOctreeSize, defaultBoundsMax, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Number of Levels", numLevels_, UpdateOctreeSize, DEFAULT_OCTREE_LEVELS, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Bounding Box Min", worldBoundingBox_.min_, UpdateOctreeSize, defaultBoundsMin, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Bounding Box Max", worldBoundingBox_.max_, UpdateOctreeSize, defaultBoundsMax, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Number of Levels", numLevels_, UpdateOctreeSize, DEFAULT_OCTREE_LEVELS, AM_DEFAULT);
 }
 
 void Octree::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug)
     {
-        URHO3D_PROFILE(OctreeDrawDebug);
+        DV_PROFILE(OctreeDrawDebug);
 
         Octant::DrawDebugGeometry(debug, depthTest);
     }
@@ -338,7 +338,7 @@ void Octree::SetSize(const BoundingBox& box, i32 numLevels)
 {
     assert(numLevels >= 0);
 
-    URHO3D_PROFILE(ResizeOctree);
+    DV_PROFILE(ResizeOctree);
 
     // If drawables exist, they are temporarily moved to the root
     for (i32 i = 0; i < NUM_OCTANTS; ++i)
@@ -353,14 +353,14 @@ void Octree::Update(const FrameInfo& frame)
 {
     if (!Thread::IsMainThread())
     {
-        URHO3D_LOGERROR("Octree::Update() can not be called from worker threads");
+        DV_LOGERROR("Octree::Update() can not be called from worker threads");
         return;
     }
 
     // Let drawables update themselves before reinsertion. This can be used for animation
     if (!drawableUpdates_.Empty())
     {
-        URHO3D_PROFILE(UpdateDrawables);
+        DV_PROFILE(UpdateDrawables);
 
         // Perform updates in worker threads. Notify the scene that a threaded update is going on and components
         // (for example physics objects) should not perform non-threadsafe work when marked dirty
@@ -398,7 +398,7 @@ void Octree::Update(const FrameInfo& frame)
     // If any drawables were inserted during threaded update, update them now from the main thread
     if (!threadedDrawableUpdates_.Empty())
     {
-        URHO3D_PROFILE(UpdateDrawablesQueuedDuringUpdate);
+        DV_PROFILE(UpdateDrawablesQueuedDuringUpdate);
 
         for (Vector<Drawable*>::ConstIterator i = threadedDrawableUpdates_.Begin(); i != threadedDrawableUpdates_.End(); ++i)
         {
@@ -429,7 +429,7 @@ void Octree::Update(const FrameInfo& frame)
     // the proper octant yet
     if (!drawableUpdates_.Empty())
     {
-        URHO3D_PROFILE(ReinsertToOctree);
+        DV_PROFILE(ReinsertToOctree);
 
         for (Vector<Drawable*>::Iterator i = drawableUpdates_.Begin(); i != drawableUpdates_.End(); ++i)
         {
@@ -452,7 +452,7 @@ void Octree::Update(const FrameInfo& frame)
             octant = drawable->GetOctant();
             if (octant != this && octant->GetCullingBox().IsInside(box) != INSIDE)
             {
-                URHO3D_LOGERROR("Drawable is not fully inside its octant's culling bounds: drawable box " + box.ToString() +
+                DV_LOGERROR("Drawable is not fully inside its octant's culling bounds: drawable box " + box.ToString() +
                          " octant box " + octant->GetCullingBox().ToString());
             }
 #endif
@@ -488,7 +488,7 @@ void Octree::GetDrawables(OctreeQuery& query) const
 
 void Octree::Raycast(RayOctreeQuery& query) const
 {
-    URHO3D_PROFILE(Raycast);
+    DV_PROFILE(Raycast);
 
     query.result_.Clear();
     GetDrawablesInternal(query);
@@ -497,7 +497,7 @@ void Octree::Raycast(RayOctreeQuery& query) const
 
 void Octree::RaycastSingle(RayOctreeQuery& query) const
 {
-    URHO3D_PROFILE(Raycast);
+    DV_PROFILE(Raycast);
 
     query.result_.Clear();
     rayQueryDrawables_.Clear();

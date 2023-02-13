@@ -11,7 +11,7 @@ using namespace dviglo;
 /// Custom logic component for moving the animated model and rotating at area edges.
 class Mover : public LogicComponent
 {
-    URHO3D_OBJECT(Mover, LogicComponent);
+    DV_OBJECT(Mover, LogicComponent);
 
 public:
     /// Construct.

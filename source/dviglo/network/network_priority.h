@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// %Network interest management settings component.
-class URHO3D_API NetworkPriority : public Component
+class DV_API NetworkPriority : public Component
 {
-    URHO3D_OBJECT(NetworkPriority, Component);
+    DV_OBJECT(NetworkPriority, Component);
 
 public:
     /// Construct.

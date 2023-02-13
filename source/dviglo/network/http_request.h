@@ -25,7 +25,7 @@ enum HttpRequestState
 };
 
 /// An HTTP connection with response data stream.
-class URHO3D_API HttpRequest : public RefCounted, public Deserializer, public Thread
+class DV_API HttpRequest : public RefCounted, public Deserializer, public Thread
 {
 public:
     /// Construct with parameters.

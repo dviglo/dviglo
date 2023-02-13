@@ -20,7 +20,7 @@ class Sample2D;
 /// Note that this sample uses some functions from Sample2D utility class.
 class Urho2DIsometricDemo : public Sample
 {
-    URHO3D_OBJECT(Urho2DIsometricDemo, Sample);
+    DV_OBJECT(Urho2DIsometricDemo, Sample);
 
 public:
     /// Construct.

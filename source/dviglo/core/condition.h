@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// %Condition on which a thread can wait.
-class URHO3D_API Condition
+class DV_API Condition
 {
 public:
     /// Construct.

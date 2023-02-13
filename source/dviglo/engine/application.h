@@ -16,9 +16,9 @@ namespace dviglo
 class Engine;
 
 /// Base class for creating applications which initialize the Urho3D engine and run a main loop until exited.
-class URHO3D_API Application : public Object
+class DV_API Application : public Object
 {
-    URHO3D_OBJECT(Application, Object);
+    DV_OBJECT(Application, Object);
 
 public:
     /// Construct. Parse default engine parameters from the command line, and create the engine in an uninitialized state.
@@ -54,24 +54,24 @@ protected:
 
 // Macro for defining a main function which creates a Context and the application, then runs it
 #if !defined(IOS) && !defined(TVOS)
-#define URHO3D_DEFINE_APPLICATION_MAIN(className) \
+#define DV_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
     dviglo::SharedPtr<dviglo::Context> context(new dviglo::Context()); \
     dviglo::SharedPtr<className> application(new className(context)); \
     return application->Run(); \
 } \
-URHO3D_DEFINE_MAIN(RunApplication())
+DV_DEFINE_MAIN(RunApplication())
 #else
 // On iOS/tvOS we will let this function exit, so do not hold the context and application in SharedPtr's
-#define URHO3D_DEFINE_APPLICATION_MAIN(className) \
+#define DV_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
     dviglo::Context* context = new dviglo::Context(); \
     className* application = new className(context); \
     return application->Run(); \
 } \
-URHO3D_DEFINE_MAIN(RunApplication());
+DV_DEFINE_MAIN(RunApplication());
 #endif
 
 }

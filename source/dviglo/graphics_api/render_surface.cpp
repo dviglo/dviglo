@@ -95,7 +95,7 @@ RenderSurface::RenderSurface(Texture* parentTexture)
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
     {
         Constructor_OGL(parentTexture);
@@ -103,7 +103,7 @@ RenderSurface::RenderSurface(Texture* parentTexture)
     }
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
     {
         Constructor_D3D11(parentTexture);
@@ -116,12 +116,12 @@ bool RenderSurface::CreateRenderBuffer(unsigned width, unsigned height, unsigned
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return CreateRenderBuffer_OGL(width, height, format, multiSample);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return CreateRenderBuffer_D3D11(width, height, format, multiSample);
 #endif
@@ -133,12 +133,12 @@ void RenderSurface::OnDeviceLost()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceLost_D3D11();
 #endif
@@ -148,12 +148,12 @@ void RenderSurface::Release()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Release_D3D11();
 #endif

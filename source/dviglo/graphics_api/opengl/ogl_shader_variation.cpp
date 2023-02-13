@@ -112,7 +112,7 @@ bool ShaderVariation::Create_OGL()
     // Force GLSL version 150 if no version define and GL3 is being used
     if (!verEnd && Graphics::GetGL3Support())
     {
-#if defined(MOBILE_GRAPHICS) || URHO3D_GLES3
+#if defined(MOBILE_GRAPHICS) || DV_GLES3
         shaderCode += "#version 300 es\n";
 #else
         shaderCode += "#version 150\n";
@@ -142,7 +142,7 @@ bool ShaderVariation::Create_OGL()
 #ifdef _DEBUG
         String defineCheck = defineString.Substring(8, defineString.Find(' ', 8) - 8);
         if (originalShaderCode.Find(defineCheck) == String::NPOS)
-            URHO3D_LOGWARNING("Shader " + GetFullName() + " does not use the define " + defineCheck);
+            DV_LOGWARNING("Shader " + GetFullName() + " does not use the define " + defineCheck);
 #endif
     }
 

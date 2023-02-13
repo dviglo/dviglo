@@ -22,7 +22,7 @@ Potion::Potion(Context* context)
 
 void Potion::Start()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, URHO3D_HANDLER(Potion, HandleNodeCollision));
+    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(Potion, HandleNodeCollision));
 }
 
 void Potion::ObjectCollision(GameObject& otherObject, VariantMap& eventData)

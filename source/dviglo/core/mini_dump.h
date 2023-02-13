@@ -9,9 +9,9 @@
 namespace dviglo
 {
 
-#if defined(_MSC_VER) && defined(URHO3D_MINIDUMPS)
+#if defined(_MSC_VER) && defined(DV_MINIDUMPS)
 /// Write a minidump. Needs to be called from within a structured exception handler.
-URHO3D_API int WriteMiniDump(const char* applicationName, void* exceptionPointers);
+DV_API int WriteMiniDump(const char* applicationName, void* exceptionPointers);
 #endif
 
 }

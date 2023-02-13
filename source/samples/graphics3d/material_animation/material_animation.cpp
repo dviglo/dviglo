@@ -23,7 +23,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(MaterialAnimation)
+DV_DEFINE_APPLICATION_MAIN(MaterialAnimation)
 
 MaterialAnimation::MaterialAnimation(Context* context) :
     Sample(context)
@@ -182,7 +182,7 @@ void MaterialAnimation::MoveCamera(float timeStep)
 void MaterialAnimation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(MaterialAnimation, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(MaterialAnimation, HandleUpdate));
 }
 
 void MaterialAnimation::HandleUpdate(StringHash eventType, VariantMap& eventData)

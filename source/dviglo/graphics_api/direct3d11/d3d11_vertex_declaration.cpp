@@ -85,15 +85,15 @@ VertexDeclaration_D3D11::VertexDeclaration_D3D11(Graphics* graphics, ShaderVaria
         (SIZE_T)byteCode.Size(), (ID3D11InputLayout**)&inputLayout_);
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(inputLayout_);
-        URHO3D_LOGERRORF("Failed to create input layout for shader %s due to missing vertex element(s) (HRESULT %x)",
+        DV_SAFE_RELEASE(inputLayout_);
+        DV_LOGERRORF("Failed to create input layout for shader %s due to missing vertex element(s) (HRESULT %x)",
             vertexShader->GetFullName().CString(), (unsigned)hr);
     }
 }
 
 VertexDeclaration_D3D11::~VertexDeclaration_D3D11()
 {
-    URHO3D_SAFE_RELEASE(inputLayout_);
+    DV_SAFE_RELEASE(inputLayout_);
 }
 
 }

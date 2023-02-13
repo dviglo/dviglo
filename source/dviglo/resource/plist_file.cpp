@@ -298,14 +298,14 @@ bool PListFile::BeginLoad(Deserializer& source)
     XMLFile xmlFile(context_);
     if (!xmlFile.Load(source))
     {
-        URHO3D_LOGERROR("Could not load property list");
+        DV_LOGERROR("Could not load property list");
         return false;
     }
 
     XMLElement plistElem = xmlFile.GetRoot("plist");
     if (!plistElem)
     {
-        URHO3D_LOGERROR("Invalid property list file");
+        DV_LOGERROR("Invalid property list file");
         return false;
     }
 
@@ -389,7 +389,7 @@ bool PListFile::LoadValue(PListValue& value, const XMLElement& valueElem)
     }
     else
     {
-        URHO3D_LOGERROR("Supported value type");
+        DV_LOGERROR("Supported value type");
         return false;
     }
 

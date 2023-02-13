@@ -5,7 +5,7 @@ if(DVIGLO_IS_SUBPROJECT)
     return()
 endif()
 
-if(NOT URHO3D_SAMPLES)
+if(NOT DV_SAMPLES)
     return()
 endif()
 

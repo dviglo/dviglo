@@ -45,22 +45,22 @@ void StaticSprite2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Drawable2D);
-    URHO3D_ACCESSOR_ATTRIBUTE("Sprite", GetSpriteAttr, SetSpriteAttr, ResourceRef(Sprite2D::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Drawable2D);
+    DV_ACCESSOR_ATTRIBUTE("Sprite", GetSpriteAttr, SetSpriteAttr, ResourceRef(Sprite2D::GetTypeStatic()),
         AM_DEFAULT);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Flip X", GetFlipX, SetFlipX, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Flip Y", GetFlipY, SetFlipY, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Color", GetColor, SetColor, Color::WHITE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Custom material", GetCustomMaterialAttr, SetCustomMaterialAttr,
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Flip X", GetFlipX, SetFlipX, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Flip Y", GetFlipY, SetFlipY, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Color", GetColor, SetColor, Color::WHITE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Custom material", GetCustomMaterialAttr, SetCustomMaterialAttr,
         ResourceRef(Material::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Hot Spot", GetHotSpot, SetHotSpot, Vector2(0.5f, 0.5f), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Use Hot Spot", GetUseHotSpot, SetUseHotSpot, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Rectangle", GetDrawRect, SetDrawRect, Rect::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Use Draw Rectangle", GetUseDrawRect, SetUseDrawRect, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Texture Rectangle", GetTextureRect, SetTextureRect, Rect::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Use Texture Rectangle", GetUseTextureRect, SetUseTextureRect, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Hot Spot", GetHotSpot, SetHotSpot, Vector2(0.5f, 0.5f), AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Use Hot Spot", GetUseHotSpot, SetUseHotSpot, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Rectangle", GetDrawRect, SetDrawRect, Rect::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Use Draw Rectangle", GetUseDrawRect, SetUseDrawRect, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Texture Rectangle", GetTextureRect, SetTextureRect, Rect::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Use Texture Rectangle", GetUseTextureRect, SetUseTextureRect, false, AM_DEFAULT);
 }
 
 void StaticSprite2D::SetSprite(Sprite2D* sprite)

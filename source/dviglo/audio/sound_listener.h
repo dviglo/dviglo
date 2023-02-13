@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// %Sound listener component.
-class URHO3D_API SoundListener : public Component
+class DV_API SoundListener : public Component
 {
-    URHO3D_OBJECT(SoundListener, Component);
+    DV_OBJECT(SoundListener, Component);
 
 public:
     /// Construct.

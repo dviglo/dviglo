@@ -11,7 +11,7 @@ namespace dviglo
 
 class Potion : public GameObject
 {
-    URHO3D_OBJECT(Potion, GameObject);
+    DV_OBJECT(Potion, GameObject);
 
 private:
     i32 healAmount;

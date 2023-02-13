@@ -38,8 +38,8 @@ void RenderSurface::Release_D3D11()
             graphics->ResetDepthStencil();
     }
 
-    URHO3D_SAFE_RELEASE(renderTargetView_);
-    URHO3D_SAFE_RELEASE(readOnlyView_);
+    DV_SAFE_RELEASE(renderTargetView_);
+    DV_SAFE_RELEASE(readOnlyView_);
 }
 
 bool RenderSurface::CreateRenderBuffer_D3D11(unsigned width, unsigned height, unsigned format, int multiSample)

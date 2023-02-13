@@ -22,7 +22,7 @@ union GPUObjectHandle
 };
 
 /// Base class for GPU resources.
-class URHO3D_API GPUObject
+class DV_API GPUObject
 {
 public:
     /// Construct with graphics subsystem pointer.

@@ -83,7 +83,7 @@ public:
             Geometry* geometry = model->GetGeometry(i, lodLevel);
             if (!geometry)
             {
-                URHO3D_LOGWARNING("Skipping null geometry for triangle mesh collision");
+                DV_LOGWARNING("Skipping null geometry for triangle mesh collision");
                 continue;
             }
 
@@ -96,7 +96,7 @@ public:
             geometry->GetRawDataShared(vertexData, vertexSize, indexData, indexSize, elements);
             if (!vertexData || !indexData || !elements || VertexBuffer::GetElementOffset(*elements, TYPE_VECTOR3, SEM_POSITION) != 0)
             {
-                URHO3D_LOGWARNING("Skipping geometry with no or unsuitable CPU-side geometry data for triangle mesh collision");
+                DV_LOGWARNING("Skipping geometry with no or unsuitable CPU-side geometry data for triangle mesh collision");
                 continue;
             }
 
@@ -223,7 +223,7 @@ ConvexData::ConvexData(Model* model, i32 lodLevel)
         Geometry* geometry = model->GetGeometry(i, lodLevel);
         if (!geometry)
         {
-            URHO3D_LOGWARNING("Skipping null geometry for convex hull collision");
+            DV_LOGWARNING("Skipping null geometry for convex hull collision");
             continue;
         };
 
@@ -236,7 +236,7 @@ ConvexData::ConvexData(Model* model, i32 lodLevel)
         geometry->GetRawData(vertexData, vertexSize, indexData, indexSize, elements);
         if (!vertexData || VertexBuffer::GetElementOffset(*elements, TYPE_VECTOR3, SEM_POSITION) != 0)
         {
-            URHO3D_LOGWARNING("Skipping geometry with no or unsuitable CPU-side geometry data for convex hull collision");
+            DV_LOGWARNING("Skipping geometry with no or unsuitable CPU-side geometry data for convex hull collision");
             continue;
         }
 
@@ -474,15 +474,15 @@ void CollisionShape::RegisterObject(Context* context)
 {
     context->RegisterFactory<CollisionShape>(PHYSICS_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ENUM_ATTRIBUTE_EX("Shape Type", shapeType_, MarkShapeDirty, typeNames, SHAPE_BOX, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Size", size_, MarkShapeDirty, Vector3::ONE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Offset Position", GetPosition, SetPosition, Vector3::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Offset Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("LOD Level", lodLevel_, MarkShapeDirty, 0, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Collision Margin", margin_, MarkShapeDirty, DEFAULT_COLLISION_MARGIN, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("CustomGeometry ComponentID", customGeometryID_, MarkShapeDirty, 0, AM_DEFAULT | AM_COMPONENTID);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ENUM_ATTRIBUTE_EX("Shape Type", shapeType_, MarkShapeDirty, typeNames, SHAPE_BOX, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Size", size_, MarkShapeDirty, Vector3::ONE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Offset Position", GetPosition, SetPosition, Vector3::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Offset Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);
+    DV_ATTRIBUTE_EX("LOD Level", lodLevel_, MarkShapeDirty, 0, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Collision Margin", margin_, MarkShapeDirty, DEFAULT_COLLISION_MARGIN, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("CustomGeometry ComponentID", customGeometryID_, MarkShapeDirty, 0, AM_DEFAULT | AM_COMPONENTID);
 }
 
 void CollisionShape::ApplyAttributes()
@@ -707,7 +707,7 @@ void CollisionShape::SetTerrain(i32 lodLevel)
     Terrain* terrain = GetComponent<Terrain>();
     if (!terrain)
     {
-        URHO3D_LOGERROR("No terrain component, can not set terrain shape");
+        DV_LOGERROR("No terrain component, can not set terrain shape");
         return;
     }
 
@@ -910,7 +910,7 @@ void CollisionShape::OnNodeSet(Node* node)
         cachedWorldScale_ = node->GetWorldScale();
 
         // Terrain collision shape depends on the terrain component's geometry updates. Subscribe to them
-        SubscribeToEvent(node, E_TERRAINCREATED, URHO3D_HANDLER(CollisionShape, HandleTerrainCreated));
+        SubscribeToEvent(node, E_TERRAINCREATED, DV_HANDLER(CollisionShape, HandleTerrainCreated));
     }
 }
 
@@ -919,7 +919,7 @@ void CollisionShape::OnSceneSet(Scene* scene)
     if (scene)
     {
         if (scene == node_)
-            URHO3D_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
+            DV_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
 
         physicsWorld_ = scene->GetOrCreateComponent<PhysicsWorld>();
         physicsWorld_->AddCollisionShape(this);
@@ -999,7 +999,7 @@ btCompoundShape* CollisionShape::GetParentCompoundShape()
 
 void CollisionShape::UpdateShape()
 {
-    URHO3D_PROFILE(UpdateCollisionShape);
+    DV_PROFILE(UpdateCollisionShape);
 
     ReleaseShape();
 
@@ -1111,7 +1111,7 @@ void CollisionShape::UpdateCachedGeometryShape(CollisionGeometryDataCache& cache
             assert(shape_);
         }
         else
-            URHO3D_LOGWARNING("Could not find custom geometry component ID " + String(customGeometryID_) +
+            DV_LOGWARNING("Could not find custom geometry component ID " + String(customGeometryID_) +
                 " for collision shape creation");
     }
     else if (model_ && model_->GetNumGeometries())
@@ -1133,7 +1133,7 @@ void CollisionShape::UpdateCachedGeometryShape(CollisionGeometryDataCache& cache
         shape_.reset(CreateCollisionGeometryDataShape(shapeType_, geometry_.Get(), cachedWorldScale_ * size_));
         assert(shape_);
         // Watch for live reloads of the collision model to reload the geometry if necessary
-        SubscribeToEvent(model_, E_RELOADFINISHED, URHO3D_HANDLER(CollisionShape, HandleModelReloadFinished));
+        SubscribeToEvent(model_, E_RELOADFINISHED, DV_HANDLER(CollisionShape, HandleModelReloadFinished));
     }
 }
 
@@ -1144,7 +1144,7 @@ void CollisionShape::SetModelShape(ShapeType shapeType, Model* model, i32 lodLev
 
     if (!model)
     {
-        URHO3D_LOGERROR("Null model, can not set collsion shape");
+        DV_LOGERROR("Null model, can not set collsion shape");
         return;
     }
 
@@ -1169,12 +1169,12 @@ void CollisionShape::SetCustomShape(ShapeType shapeType, CustomGeometry* custom,
 {
     if (!custom)
     {
-        URHO3D_LOGERROR("Null custom geometry, can not set collsion shape");
+        DV_LOGERROR("Null custom geometry, can not set collsion shape");
         return;
     }
     if (custom->GetScene() != GetScene())
     {
-        URHO3D_LOGERROR("Custom geometry is not in the same scene as the collision shape, can not set collsion shape");
+        DV_LOGERROR("Custom geometry is not in the same scene as the collision shape, can not set collsion shape");
         return;
     }
 

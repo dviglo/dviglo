@@ -23,7 +23,7 @@ class Scene;
 ///     - Displaying renderer debug geometry to see the effect of occlusion
 class Decals : public Sample
 {
-    URHO3D_OBJECT(Decals, Sample);
+    DV_OBJECT(Decals, Sample);
 
 public:
     /// Construct.

@@ -23,7 +23,7 @@ class Scene;
 ///     - Displaying renderer debug geometry
 class SkeletalAnimation : public Sample
 {
-    URHO3D_OBJECT(SkeletalAnimation, Sample);
+    DV_OBJECT(SkeletalAnimation, Sample);
 
 public:
     /// Construct.
@@ -52,7 +52,7 @@ private:
     void CreateScene();
     /// Construct an instruction text to the UI.
     void CreateInstructions();
-#ifdef URHO3D_GLES3
+#ifdef DV_GLES3
     /// Create additional lights fo scene
     void CreateLights();
 #endif

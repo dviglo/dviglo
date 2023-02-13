@@ -30,7 +30,7 @@ enum GAPI
     GAPI_D3D11
 };
 
-#if defined(DESKTOP_GRAPHICS) || defined(URHO3D_GLES3)
+#if defined(DESKTOP_GRAPHICS) || defined(DV_GLES3)
 #define DESKTOP_GRAPHICS_OR_GLES3
 #endif
 
@@ -175,7 +175,7 @@ enum VertexElementSemantic
 };
 
 /// Vertex element description for arbitrary vertex declarations.
-struct URHO3D_API VertexElement
+struct DV_API VertexElement
 {
     /// Default-construct.
     VertexElement() noexcept :
@@ -219,10 +219,10 @@ struct URHO3D_API VertexElement
 };
 
 /// Sizes of vertex element types.
-extern URHO3D_API const i32 ELEMENT_TYPESIZES[];
+extern DV_API const i32 ELEMENT_TYPESIZES[];
 
 /// Vertex element definitions for the legacy elements.
-extern URHO3D_API const VertexElement LEGACY_VERTEXELEMENTS[];
+extern DV_API const VertexElement LEGACY_VERTEXELEMENTS[];
 
 /// Texture filtering mode.
 enum TextureFilterMode
@@ -454,7 +454,7 @@ enum ClearTarget : u32
     CLEAR_DEPTH = 0x2,
     CLEAR_STENCIL = 0x4,
 };
-URHO3D_FLAGSET(ClearTarget, ClearTargetFlags);
+DV_FLAGSET(ClearTarget, ClearTargetFlags);
 
 /// Legacy vertex element bitmasks.
 enum class VertexElements : u32
@@ -475,7 +475,7 @@ enum class VertexElements : u32
     InstanceMatrix3 = 1 << 12,
     ObjectIndex     = 1 << 13
 };
-URHO3D_FLAGS(VertexElements);
+DV_FLAGS(VertexElements);
 
 inline constexpr i32 MAX_RENDERTARGETS = 4;
 inline constexpr i32 MAX_VERTEX_STREAMS = 4;

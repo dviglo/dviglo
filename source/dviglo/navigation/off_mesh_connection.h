@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// A link between otherwise unconnected regions of the navigation mesh.
-class URHO3D_API OffMeshConnection : public Component
+class DV_API OffMeshConnection : public Component
 {
-    URHO3D_OBJECT(OffMeshConnection, Component);
+    DV_OBJECT(OffMeshConnection, Component);
 
 public:
     /// Construct.

@@ -11,7 +11,7 @@
 namespace dviglo
 {
 
-class URHO3D_API BigInt
+class DV_API BigInt
 {
 public:
     /// i64 can conatins 10^9 * 10^9.

@@ -34,7 +34,7 @@ using PListValueMap = HashMap<String, PListValue>;
 using PListValueVector = Vector<PListValue>;
 
 /// PList value.
-class URHO3D_API PListValue
+class DV_API PListValue
 {
 public:
     /// Construct.
@@ -121,9 +121,9 @@ private:
 };
 
 /// Property list (plist).
-class URHO3D_API PListFile : public Resource
+class DV_API PListFile : public Resource
 {
-    URHO3D_OBJECT(PListFile, Resource);
+    DV_OBJECT(PListFile, Resource);
 
 public:
     /// Construct.

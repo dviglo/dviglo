@@ -20,7 +20,7 @@ class Scene;
 ///     - Creating rendertarget texture and material programmatically
 class RenderToTexture : public Sample
 {
-    URHO3D_OBJECT(RenderToTexture, Sample);
+    DV_OBJECT(RenderToTexture, Sample);
 
 public:
     /// Construct.

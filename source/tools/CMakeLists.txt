@@ -24,10 +24,10 @@ set(CMAKE_FOLDER инструменты)
 #    else ()
 #        set (ALTERNATE_COMMAND CMAKE_COMMAND ${CMAKE_COMMAND} -E env CC=${SAVED_CC} CXX=${SAVED_CXX} CI=$ENV{CI} ${CMAKE_COMMAND})
 #    endif ()
-#    if (URHO3D_PACKAGING)
+#    if (DV_PACKAGING)
 #        ExternalProject_Add (PackageTool
 #            SOURCE_DIR ${CMAKE_SOURCE_DIR}/Source/Tools/PackageTool
-#            CMAKE_ARGS -D URHO3D_DEPLOYMENT_TARGET=generic -D DEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -D BAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -D BAKED_CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR} -D CMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
+#            CMAKE_ARGS -D DV_DEPLOYMENT_TARGET=generic -D DEST_RUNTIME_DIR=${CMAKE_BINARY_DIR}/bin/tool -D BAKED_CMAKE_SOURCE_DIR=${CMAKE_SOURCE_DIR} -D BAKED_CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR} -D CMAKE_MAKE_PROGRAM=${CMAKE_MAKE_PROGRAM}
 #            ${ALTERNATE_COMMAND})
 #        add_make_clean_files (${CMAKE_BINARY_DIR}/bin/tool/PackageTool)
 #        if (CMAKE_HOST_WIN32 AND NOT HAS_MKLINK)
@@ -40,14 +40,14 @@ set(CMAKE_FOLDER инструменты)
 # Папка для экзешников и динамических библиотек
 dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin/tool)
 
-if (URHO3D_TOOLS)
+if (DV_TOOLS)
     # Urho3D tools
     add_subdirectory(ogre_importer)
     add_subdirectory(package_tool)
     add_subdirectory(ramp_generator)
     add_subdirectory(sprite_packer)
     add_subdirectory(tests)
-elseif (NOT CMAKE_CROSSCOMPILING AND URHO3D_PACKAGING)
+elseif (NOT CMAKE_CROSSCOMPILING AND DV_PACKAGING)
     # PackageTool target is required but we are not cross-compiling, so build it as per normal
     add_subdirectory(package_tool)
 endif ()

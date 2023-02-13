@@ -27,15 +27,15 @@ void Vehicle::RegisterObject(Context* context)
 {
     context->RegisterFactory<Vehicle>();
 
-    URHO3D_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Steering", steering_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Steering", steering_, 0.0f, AM_DEFAULT);
     // Register wheel node IDs as attributes so that the wheel nodes can be reaquired on deserialization. They need to be tagged
     // as node ID's so that the deserialization code knows to rewrite the IDs in case they are different on load than on save
-    URHO3D_ATTRIBUTE("Front Left Node", frontLeftID_, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE("Front Right Node", frontRightID_, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE("Rear Left Node", rearLeftID_, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE("Rear Right Node", rearRightID_, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE("Front Left Node", frontLeftID_, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE("Front Right Node", frontRightID_, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE("Rear Left Node", rearLeftID_, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE("Rear Right Node", rearRightID_, 0, AM_DEFAULT | AM_NODEID);
 }
 
 void Vehicle::ApplyAttributes()

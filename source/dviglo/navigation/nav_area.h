@@ -10,9 +10,9 @@
 namespace dviglo
 {
 
-class URHO3D_API NavArea : public Component
+class DV_API NavArea : public Component
 {
-    URHO3D_OBJECT(NavArea, Component);
+    DV_OBJECT(NavArea, Component);
 
 public:
     /// Construct.

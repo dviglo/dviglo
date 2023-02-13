@@ -10,7 +10,7 @@
 
 class Clicker : public Sample
 {
-    URHO3D_OBJECT(Clicker, Sample);
+    DV_OBJECT(Clicker, Sample);
 
 public:
     /// Construct.

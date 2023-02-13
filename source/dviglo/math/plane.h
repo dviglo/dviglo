@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Surface in three-dimensional space.
-class URHO3D_API Plane
+class DV_API Plane
 {
 public:
     /// Construct a degenerate plane with zero normal and parameter.

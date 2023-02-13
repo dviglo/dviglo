@@ -26,7 +26,7 @@
 #ifdef DV_NETWORK
 #include "../network/network.h"
 #endif
-#ifdef URHO3D_DATABASE
+#ifdef DV_DATABASE
 #include "../database/database.h"
 #endif
 #ifdef DV_BULLET
@@ -41,11 +41,11 @@
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
 #include "../ui/ui.h"
-#ifdef URHO3D_URHO2D
+#ifdef DV_URHO2D
 #include "../urho_2d/urho_2d.h"
 #endif
 
-#if defined(__EMSCRIPTEN__) && defined(URHO3D_TESTING)
+#if defined(__EMSCRIPTEN__) && defined(DV_TESTING)
 #include <emscripten/emscripten.h>
 #endif
 
@@ -88,7 +88,7 @@ Engine::Engine(Context* context) :
     maxInactiveFps_(60),
     pauseMinimized_(false),
 #endif
-#ifdef URHO3D_TESTING
+#ifdef DV_TESTING
     timeOut_(0),
 #endif
     autoExit_(true),
@@ -103,11 +103,11 @@ Engine::Engine(Context* context) :
     // Create subsystems which do not depend on engine initialization or startup parameters
     context_->RegisterSubsystem(new Time(context_));
     context_->RegisterSubsystem(new WorkQueue(context_));
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     context_->RegisterSubsystem(new Profiler(context_));
 #endif
     context_->RegisterSubsystem(new FileSystem(context_));
-#ifdef URHO3D_LOGGING
+#ifdef DV_LOGGING
     context_->RegisterSubsystem(new Log(context_));
 #endif
     context_->RegisterSubsystem(new ResourceCache(context_));
@@ -115,7 +115,7 @@ Engine::Engine(Context* context) :
 #ifdef DV_NETWORK
     context_->RegisterSubsystem(new Network(context_));
 #endif
-#ifdef URHO3D_DATABASE
+#ifdef DV_DATABASE
     context_->RegisterSubsystem(new Database(context_));
 #endif
     context_->RegisterSubsystem(new Input(context_));
@@ -137,7 +137,7 @@ Engine::Engine(Context* context) :
     RegisterNavigationLibrary(context_);
 #endif
 
-    SubscribeToEvent(E_EXITREQUESTED, URHO3D_HANDLER(Engine, HandleExitRequested));
+    SubscribeToEvent(E_EXITREQUESTED, DV_HANDLER(Engine, HandleExitRequested));
 }
 
 Engine::~Engine() = default;
@@ -147,7 +147,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     if (initialized_)
         return true;
 
-    URHO3D_PROFILE(InitEngine);
+    DV_PROFILE(InitEngine);
 
     // Set headless mode
     headless_ = GetParameter(parameters, EP_HEADLESS, false).GetBool();
@@ -158,23 +158,23 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Try to set any possible graphics API as default
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     gapi = GAPI_OPENGL;
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     gapi = GAPI_D3D11;
 #endif
 
     // Use command line parameters
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     bool gapi_gl = GetParameter(parameters, EP_OPENGL, false).GetBool();
     if (gapi_gl)
         gapi = GAPI_OPENGL;
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     bool gapi_d3d11 = GetParameter(parameters, EP_DIRECT3D11, false).GetBool();
     if (gapi_d3d11)
         gapi = GAPI_D3D11;
@@ -182,7 +182,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     if (gapi == GAPI_NONE)
     {
-        URHO3D_LOGERROR("Graphics API not selected");
+        DV_LOGERROR("Graphics API not selected");
         return false;
     }
 
@@ -200,7 +200,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         RegisterGraphicsLibrary(context_);
     }
 
-#ifdef URHO3D_URHO2D
+#ifdef DV_URHO2D
     // 2D graphics library is dependent on 3D graphics library
     RegisterUrho2DLibrary(context_);
 #endif
@@ -224,13 +224,13 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Set amount of worker threads according to the available physical CPU cores. Using also hyperthreaded cores results in
     // unpredictable extra synchronization overhead. Also reserve one core for the main thread
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     unsigned numThreads = GetParameter(parameters, EP_WORKER_THREADS, true).GetBool() ? GetNumPhysicalCPUs() - 1 : 0;
     if (numThreads)
     {
         GetSubsystem<WorkQueue>()->CreateThreads(numThreads);
 
-        URHO3D_LOGINFOF("Created %u worker thread%s", numThreads, numThreads > 1 ? "s" : "");
+        DV_LOGINFOF("Created %u worker thread%s", numThreads, numThreads > 1 ? "s" : "");
     }
 #endif
 
@@ -318,12 +318,12 @@ bool Engine::Initialize(const VariantMap& parameters)
         GetSubsystem<Network>()->SetPackageCacheDir(GetParameter(parameters, EP_PACKAGE_CACHE_DIR).GetString());
 #endif
 
-#ifdef URHO3D_TESTING
+#ifdef DV_TESTING
     if (HasParameter(parameters, EP_TIME_OUT))
         timeOut_ = GetParameter(parameters, EP_TIME_OUT, 0).GetI32() * 1000000LL;
 #endif
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     if (GetParameter(parameters, EP_EVENT_PROFILER, true).GetBool())
     {
         context_->RegisterSubsystem(new EventProfiler(context_));
@@ -332,7 +332,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 #endif
     frameTimer_.Reset();
 
-    URHO3D_LOGINFO("Initialized engine");
+    DV_LOGINFO("Initialized engine");
     initialized_ = true;
     return true;
 }
@@ -389,7 +389,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             }
             if (j == resourcePrefixPaths.Size())
             {
-                URHO3D_LOGERRORF(
+                DV_LOGERRORF(
                     "Failed to add resource path '%s', check the documentation on how to set the 'resource prefix path'",
                     resourcePaths[i].CString());
                 return false;
@@ -421,7 +421,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         }
         if (j == resourcePrefixPaths.Size())
         {
-            URHO3D_LOGERRORF(
+            DV_LOGERRORF(
                 "Failed to add resource package '%s', check the documentation on how to set the 'resource prefix path'",
                 resourcePackages[i].CString());
             return false;
@@ -479,7 +479,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         // The cleaner approach is to not enable the autoload by default, i.e. do not use 'Autoload' as default value for 'AutoloadPaths' engine parameter
         // However, doing so will break the existing applications that rely on this
         if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "Autoload"))
-            URHO3D_LOGDEBUGF(
+            DV_LOGDEBUGF(
                 "Skipped autoload path '%s' as it does not exist, check the documentation on how to set the 'resource prefix path'",
                 autoLoadPaths[i].CString());
     }
@@ -504,7 +504,7 @@ void Engine::RunFrame()
     auto* input = GetSubsystem<Input>();
     auto* audio = GetSubsystem<Audio>();
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     if (EventProfiler::IsActive())
     {
         auto* eventProfiler = GetSubsystem<EventProfiler>();
@@ -542,7 +542,7 @@ void Engine::RunFrame()
     time->EndFrame();
 
     // Mark a frame for profiling
-    URHO3D_PROFILE_FRAME();
+    DV_PROFILE_FRAME();
 }
 
 Console* Engine::CreateConsole()
@@ -627,19 +627,19 @@ void Engine::Exit()
 
 void Engine::DumpProfiler()
 {
-#ifdef URHO3D_LOGGING
+#ifdef DV_LOGGING
     if (!Thread::IsMainThread())
         return;
 
     auto* profiler = GetSubsystem<Profiler>();
     if (profiler)
-        URHO3D_LOGRAW(profiler->PrintData(true, true) + "\n");
+        DV_LOGRAW(profiler->PrintData(true, true) + "\n");
 #endif
 }
 
 void Engine::DumpResources(bool dumpFileName)
 {
-#ifdef URHO3D_LOGGING
+#ifdef DV_LOGGING
     if (!Thread::IsMainThread())
         return;
 
@@ -647,25 +647,25 @@ void Engine::DumpResources(bool dumpFileName)
     const HashMap<StringHash, ResourceGroup>& resourceGroups = cache->GetAllResources();
     if (dumpFileName)
     {
-        URHO3D_LOGRAW("Used resources:\n");
+        DV_LOGRAW("Used resources:\n");
         for (HashMap<StringHash, ResourceGroup>::ConstIterator i = resourceGroups.Begin(); i != resourceGroups.End(); ++i)
         {
             const HashMap<StringHash, SharedPtr<Resource>>& resources = i->second_.resources_;
             if (dumpFileName)
             {
                 for (HashMap<StringHash, SharedPtr<Resource>>::ConstIterator j = resources.Begin(); j != resources.End(); ++j)
-                    URHO3D_LOGRAW(j->second_->GetName() + "\n");
+                    DV_LOGRAW(j->second_->GetName() + "\n");
             }
         }
     }
     else
-        URHO3D_LOGRAW(cache->PrintMemoryUsage() + "\n");
+        DV_LOGRAW(cache->PrintMemoryUsage() + "\n");
 #endif
 }
 
 void Engine::DumpMemory()
 {
-#ifdef URHO3D_LOGGING
+#ifdef DV_LOGGING
 #if defined(_MSC_VER) && defined(_DEBUG)
     _CrtMemState state;
     _CrtMemCheckpoint(&state);
@@ -686,9 +686,9 @@ void Engine::DumpMemory()
         if (block->nBlockUse > 0)
         {
             if (block->szFileName)
-                URHO3D_LOGRAW("Block " + String((int)block->lRequest) + ": " + String(block->nDataSize) + " bytes, file " + String(block->szFileName) + " line " + String(block->nLine) + "\n");
+                DV_LOGRAW("Block " + String((int)block->lRequest) + ": " + String(block->nDataSize) + " bytes, file " + String(block->szFileName) + " line " + String(block->nLine) + "\n");
             else
-                URHO3D_LOGRAW("Block " + String((int)block->lRequest) + ": " + String(block->nDataSize) + " bytes\n");
+                DV_LOGRAW("Block " + String((int)block->lRequest) + ": " + String(block->nDataSize) + " bytes\n");
 
             total += block->nDataSize;
             ++blocks;
@@ -696,16 +696,16 @@ void Engine::DumpMemory()
         block = block->pBlockHeaderPrev;
     }
 
-    URHO3D_LOGRAW("Total allocated memory " + String(total) + " bytes in " + String(blocks) + " blocks\n\n");
+    DV_LOGRAW("Total allocated memory " + String(total) + " bytes in " + String(blocks) + " blocks\n\n");
 #else
-    URHO3D_LOGRAW("DumpMemory() supported on MSVC debug mode only\n\n");
+    DV_LOGRAW("DumpMemory() supported on MSVC debug mode only\n\n");
 #endif
 #endif
 }
 
 void Engine::Update()
 {
-    URHO3D_PROFILE(Update);
+    DV_PROFILE(Update);
 
     // Logic update event
     using namespace Update;
@@ -729,7 +729,7 @@ void Engine::Render()
     if (headless_)
         return;
 
-    URHO3D_PROFILE(Render);
+    DV_PROFILE(Render);
 
     // If device is lost, BeginFrame will fail and we skip rendering
     auto* graphics = GetSubsystem<Graphics>();
@@ -763,7 +763,7 @@ void Engine::ApplyFrameLimit()
     if (maxFps < 60)
 #endif
     {
-        URHO3D_PROFILE(ApplyFrameLimit);
+        DV_PROFILE(ApplyFrameLimit);
 
         long long targetMax = 1000000LL / maxFps;
 
@@ -784,7 +784,7 @@ void Engine::ApplyFrameLimit()
 #endif
 
     elapsed = frameTimer_.GetUSec(true);
-#ifdef URHO3D_TESTING
+#ifdef DV_TESTING
     if (timeOut_ > 0)
     {
         timeOut_ -= elapsed;
@@ -821,7 +821,7 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
     VariantMap ret;
 
     // Pre-initialize the parameters with environment variable values when they are set
-    if (const char* paths = getenv("URHO3D_PREFIX_PATH"))
+    if (const char* paths = getenv("DV_PREFIX_PATH"))
         ret[EP_RESOURCE_PREFIX_PATHS] = paths;
 
     for (unsigned i = 0; i < arguments.Size(); ++i)
@@ -972,7 +972,7 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
             }
             else if (argument == "touch")
                 ret[EP_TOUCH_EMULATION] = true;
-#ifdef URHO3D_TESTING
+#ifdef DV_TESTING
             else if (argument == "timeout" && !value.Empty())
             {
                 ret[EP_TIME_OUT] = ToI32(value);
@@ -1015,7 +1015,7 @@ void Engine::DoExit()
         graphics->Close();
 
     exiting_ = true;
-#if defined(__EMSCRIPTEN__) && defined(URHO3D_TESTING)
+#if defined(__EMSCRIPTEN__) && defined(DV_TESTING)
     emscripten_force_exit(EXIT_SUCCESS);    // Some how this is required to signal emrun to stop
 #endif
 }

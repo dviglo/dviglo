@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 /// Rotation represented as a four-dimensional normalized vector.
-class URHO3D_API Quaternion
+class DV_API Quaternion
 {
 public:
 

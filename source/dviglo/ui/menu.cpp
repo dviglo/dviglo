@@ -33,10 +33,10 @@ Menu::Menu(Context* context) :
 {
     focusMode_ = FM_NOTFOCUSABLE;
 
-    SubscribeToEvent(this, E_PRESSED, URHO3D_HANDLER(Menu, HandlePressedReleased));
-    SubscribeToEvent(this, E_RELEASED, URHO3D_HANDLER(Menu, HandlePressedReleased));
-    SubscribeToEvent(E_UIMOUSECLICK, URHO3D_HANDLER(Menu, HandleFocusChanged));
-    SubscribeToEvent(E_FOCUSCHANGED, URHO3D_HANDLER(Menu, HandleFocusChanged));
+    SubscribeToEvent(this, E_PRESSED, DV_HANDLER(Menu, HandlePressedReleased));
+    SubscribeToEvent(this, E_RELEASED, DV_HANDLER(Menu, HandlePressedReleased));
+    SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(Menu, HandleFocusChanged));
+    SubscribeToEvent(E_FOCUSCHANGED, DV_HANDLER(Menu, HandleFocusChanged));
 }
 
 Menu::~Menu()
@@ -49,9 +49,9 @@ void Menu::RegisterObject(Context* context)
 {
     context->RegisterFactory<Menu>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(Button);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_NOTFOCUSABLE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Popup Offset", GetPopupOffset, SetPopupOffset, IntVector2::ZERO, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(Button);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_NOTFOCUSABLE);
+    DV_ACCESSOR_ATTRIBUTE("Popup Offset", GetPopupOffset, SetPopupOffset, IntVector2::ZERO, AM_FILE);
 }
 
 void Menu::Update(float timeStep)
@@ -162,7 +162,7 @@ bool Menu::LoadXML(const XMLElement& source, XMLFile* styleFile)
                 // Do not add the popup element as a child even temporarily, as that can break layouts
                 SharedPtr<UIElement> popup = DynamicCast<UIElement>(context_->CreateObject(typeName));
                 if (!popup)
-                    URHO3D_LOGERROR("Could not create popup element type " + typeName);
+                    DV_LOGERROR("Could not create popup element type " + typeName);
                 else
                 {
                     child = popup;
@@ -188,7 +188,7 @@ bool Menu::LoadXML(const XMLElement& source, XMLFile* styleFile)
                 }
 
                 if (!child)
-                    URHO3D_LOGWARNING("Could not find matching internal child element of type " + typeName + " in " + GetTypeName());
+                    DV_LOGWARNING("Could not find matching internal child element of type " + typeName + " in " + GetTypeName());
             }
         }
 
@@ -230,7 +230,7 @@ bool Menu::SaveXML(XMLElement& dest) const
         // Filter popup implicit attributes
         if (!FilterPopupImplicitAttributes(childElem))
         {
-            URHO3D_LOGERROR("Could not remove popup implicit attributes");
+            DV_LOGERROR("Could not remove popup implicit attributes");
             return false;
         }
     }
@@ -246,7 +246,7 @@ void Menu::SetPopup(UIElement* popup)
     // Currently only allow popup 'window'
     if (popup->GetType() != Window::GetTypeStatic())
     {
-        URHO3D_LOGERROR("Could not set popup element of type " + popup->GetTypeName() + ", only support popup window for now");
+        DV_LOGERROR("Could not set popup element of type " + popup->GetTypeName() + ", only support popup window for now");
         return;
     }
 
@@ -320,7 +320,7 @@ void Menu::SetAccelerator(int key, int qualifiers)
     acceleratorQualifiers_ = qualifiers;
 
     if (key)
-        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Menu, HandleKeyDown));
+        SubscribeToEvent(E_KEYDOWN, DV_HANDLER(Menu, HandleKeyDown));
     else
         UnsubscribeFromEvent(E_KEYDOWN);
 }

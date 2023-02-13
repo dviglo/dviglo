@@ -92,14 +92,14 @@ void Time::BeginFrame(float timeStep)
 
     timeStep_ = timeStep;
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     auto* profiler = GetSubsystem<Profiler>();
     if (profiler)
         profiler->BeginFrame();
 #endif
 
     {
-        URHO3D_PROFILE(BeginFrame);
+        DV_PROFILE(BeginFrame);
 
         // Frame begin event
         using namespace BeginFrame;
@@ -114,13 +114,13 @@ void Time::BeginFrame(float timeStep)
 void Time::EndFrame()
 {
     {
-        URHO3D_PROFILE(EndFrame);
+        DV_PROFILE(EndFrame);
 
         // Frame end event
         SendEvent(E_ENDFRAME);
     }
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     auto* profiler = GetSubsystem<Profiler>();
     if (profiler)
         profiler->EndFrame();

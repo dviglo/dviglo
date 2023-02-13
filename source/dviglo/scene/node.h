@@ -42,7 +42,7 @@ using ComponentId = id32;
 using NodeId = id32;
 
 /// Internal implementation structure for less performance-critical Node variables.
-struct URHO3D_API NodeImpl
+struct DV_API NodeImpl
 {
     /// Nodes this node depends on for network updates.
     Vector<Node*> dependencyNodes_;
@@ -59,9 +59,9 @@ struct URHO3D_API NodeImpl
 };
 
 /// %Scene node that may contain components and child nodes.
-class URHO3D_API Node : public Animatable
+class DV_API Node : public Animatable
 {
-    URHO3D_OBJECT(Node, Animatable);
+    DV_OBJECT(Node, Animatable);
 
     friend class Connection;
 

@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Event profiling data for one block in the event profiling tree.
-class URHO3D_API EventProfilerBlock : public ProfilerBlock
+class DV_API EventProfilerBlock : public ProfilerBlock
 {
 public:
     /// Construct with the specified parent block and event ID.
@@ -41,9 +41,9 @@ public:
 };
 
 /// Hierarchical performance event profiler subsystem.
-class URHO3D_API EventProfiler : public Profiler
+class DV_API EventProfiler : public Profiler
 {
-    URHO3D_OBJECT(EventProfiler, Profiler);
+    DV_OBJECT(EventProfiler, Profiler);
 
 public:
     /// Construct.

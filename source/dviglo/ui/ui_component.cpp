@@ -34,7 +34,7 @@ static int const UICOMPONENT_MAX_TEXTURE_SIZE = 4096;
 
 class UIElement3D : public UIElement
 {
-    URHO3D_OBJECT(UIElement3D, UIElement);
+    DV_OBJECT(UIElement3D, UIElement);
 public:
     /// Construct.
     explicit UIElement3D(Context* context) : UIElement(context) { }
@@ -47,7 +47,7 @@ public:
     /// Convert element coordinates to screen coordinates.
     IntVector2 ElementToScreen(const IntVector2& position) override
     {
-        URHO3D_LOGERROR("UIElement3D::ElementToScreen is not implemented.");
+        DV_LOGERROR("UIElement3D::ElementToScreen is not implemented.");
         return {-1, -1};
     }
     /// Convert screen coordinates to element coordinates.
@@ -77,7 +77,7 @@ public:
 
         if (viewport_->GetScene() != scene)
         {
-            URHO3D_LOGERROR("UIComponent and Viewport set to component's root element belong to different scenes.");
+            DV_LOGERROR("UIComponent and Viewport set to component's root element belong to different scenes.");
             return result;
         }
 
@@ -157,7 +157,7 @@ UIComponent::UIComponent(Context* context)
     material_->SetTechnique(0, GetSubsystem<ResourceCache>()->GetResource<Technique>("Techniques/Diff.xml"));
     material_->SetTexture(TU_DIFFUSE, texture_);
 
-    SubscribeToEvent(rootElement_, E_RESIZED, URHO3D_HANDLER(UIComponent, OnElementResized));
+    SubscribeToEvent(rootElement_, E_RESIZED, DV_HANDLER(UIComponent, OnElementResized));
 
     // Triggers resizing of texture.
     rootElement_->SetRenderTexture(texture_);
@@ -219,7 +219,7 @@ void UIComponent::OnElementResized(StringHash eventType, VariantMap& args)
     if (width < UICOMPONENT_MIN_TEXTURE_SIZE || width > UICOMPONENT_MAX_TEXTURE_SIZE ||
         height < UICOMPONENT_MIN_TEXTURE_SIZE || height > UICOMPONENT_MAX_TEXTURE_SIZE)
     {
-        URHO3D_LOGERRORF("UIComponent: Texture size %dx%d is not valid. Width and height should be between %d and %d.",
+        DV_LOGERRORF("UIComponent: Texture size %dx%d is not valid. Width and height should be between %d and %d.",
                          width, height, UICOMPONENT_MIN_TEXTURE_SIZE, UICOMPONENT_MAX_TEXTURE_SIZE);
         return;
     }
@@ -227,7 +227,7 @@ void UIComponent::OnElementResized(StringHash eventType, VariantMap& args)
     if (texture_->SetSize(width, height, Graphics::GetRGBAFormat(), TEXTURE_RENDERTARGET))
         texture_->GetRenderSurface()->SetUpdateMode(SURFACE_MANUALUPDATE);
     else
-        URHO3D_LOGERROR("UIComponent: resizing texture failed.");
+        DV_LOGERROR("UIComponent: resizing texture failed.");
 }
 
 void UIComponent::SetViewportIndex(unsigned int index)

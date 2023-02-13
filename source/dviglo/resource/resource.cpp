@@ -24,12 +24,12 @@ bool Resource::Load(Deserializer& source)
 {
     // Because BeginLoad() / EndLoad() can be called from worker threads, where profiling would be a no-op,
     // create a type name -based profile block here
-#ifdef URHO3D_TRACY_PROFILING
-    URHO3D_PROFILE_COLOR(Load, URHO3D_PROFILE_RESOURCE_COLOR);
+#ifdef DV_TRACY_PROFILING
+    DV_PROFILE_COLOR(Load, DV_PROFILE_RESOURCE_COLOR);
 
     String profileBlockName("Load" + GetTypeName());
-    URHO3D_PROFILE_STR(profileBlockName.CString(), profileBlockName.Length());
-#elif defined(URHO3D_PROFILING)
+    DV_PROFILE_STR(profileBlockName.CString(), profileBlockName.Length());
+#elif defined(DV_PROFILING)
     String profileBlockName("Load" + GetTypeName());
 
     auto* profiler = GetSubsystem<Profiler>();
@@ -45,7 +45,7 @@ bool Resource::Load(Deserializer& source)
         success &= EndLoad();
     SetAsyncLoadState(ASYNC_DONE);
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     if (profiler)
         profiler->EndBlock();
 #endif
@@ -67,7 +67,7 @@ bool Resource::EndLoad()
 
 bool Resource::Save(Serializer& dest) const
 {
-    URHO3D_LOGERROR("Save not supported for " + GetTypeName());
+    DV_LOGERROR("Save not supported for " + GetTypeName());
     return false;
 }
 

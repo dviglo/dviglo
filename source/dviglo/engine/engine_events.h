@@ -10,10 +10,10 @@ namespace dviglo
 {
 
 /// A command has been entered on the console.
-URHO3D_EVENT(E_CONSOLECOMMAND, ConsoleCommand)
+DV_EVENT(E_CONSOLECOMMAND, ConsoleCommand)
 {
-    URHO3D_PARAM(P_COMMAND, Command);              // String
-    URHO3D_PARAM(P_ID, Id);                        // String
+    DV_PARAM(P_COMMAND, Command);              // String
+    DV_PARAM(P_ID, Id);                        // String
 }
 
 }

@@ -28,7 +28,7 @@ enum InterpolationMode
 };
 
 /// Spline class to get a point on it based off the interpolation mode.
-class URHO3D_API Spline
+class DV_API Spline
 {
 public:
     /// Default constructor.

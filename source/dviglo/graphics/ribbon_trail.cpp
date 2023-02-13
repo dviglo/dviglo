@@ -88,23 +88,23 @@ void RibbonTrail::RegisterObject(Context* context)
 {
     context->RegisterFactory<RibbonTrail>(GEOMETRY_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled,true, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Drawable);
-    URHO3D_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Emitting", IsEmitting, SetEmitting, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Update Invisible", GetUpdateInvisible, SetUpdateInvisible, false, AM_DEFAULT);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Trail Type", GetTrailType, SetTrailType, trailTypeNames, TT_FACE_CAMERA, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Base Velocity", GetBaseVelocity, SetBaseVelocity, Vector3::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Tail Lifetime", GetLifetime, SetLifetime, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Tail Column", GetTailColumn, SetTailColumn, 0, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Vertex Distance", GetVertexDistance, SetVertexDistance, 0.1f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Width", GetWidth, SetWidth, 0.2f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Start Scale", GetStartScale, SetStartScale, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("End Scale", GetEndScale, SetEndScale, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Start Color", GetStartColor, SetStartColor, Color::WHITE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("End Color", GetEndColor, SetEndColor, Color(1.0f, 1.0f, 1.0f, 0.0f), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Animation LOD Bias", GetAnimationLodBias, SetAnimationLodBias, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Sort By Distance", IsSorted, SetSorted, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled,true, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Drawable);
+    DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()), AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Emitting", IsEmitting, SetEmitting, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Update Invisible", GetUpdateInvisible, SetUpdateInvisible, false, AM_DEFAULT);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Trail Type", GetTrailType, SetTrailType, trailTypeNames, TT_FACE_CAMERA, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Base Velocity", GetBaseVelocity, SetBaseVelocity, Vector3::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Tail Lifetime", GetLifetime, SetLifetime, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Tail Column", GetTailColumn, SetTailColumn, 0, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Vertex Distance", GetVertexDistance, SetVertexDistance, 0.1f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Width", GetWidth, SetWidth, 0.2f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Start Scale", GetStartScale, SetStartScale, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("End Scale", GetEndScale, SetEndScale, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Start Color", GetStartColor, SetStartColor, Color::WHITE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("End Color", GetEndColor, SetEndColor, Color(1.0f, 1.0f, 1.0f, 0.0f), AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Animation LOD Bias", GetAnimationLodBias, SetAnimationLodBias, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Sort By Distance", IsSorted, SetSorted, false, AM_DEFAULT);
 }
 
 void RibbonTrail::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)
@@ -153,7 +153,7 @@ void RibbonTrail::OnSetEnabled()
     if (scene)
     {
         if (IsEnabledEffective())
-            SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(RibbonTrail, HandleScenePostUpdate));
+            SubscribeToEvent(scene, E_SCENEPOSTUPDATE, DV_HANDLER(RibbonTrail, HandleScenePostUpdate));
         else
             UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
     }
@@ -338,7 +338,7 @@ void RibbonTrail::SetTailColumn(unsigned tailColumn)
 {
     if (tailColumn > MAX_TAIL_COLUMN)
     {
-        URHO3D_LOGWARNING("Max ribbon trail tail column is " + String(MAX_TAIL_COLUMN));
+        DV_LOGWARNING("Max ribbon trail tail column is " + String(MAX_TAIL_COLUMN));
         tailColumn_ = MAX_TAIL_COLUMN;
     }
     else if (tailColumn < 1)
@@ -404,7 +404,7 @@ void RibbonTrail::OnSceneSet(Scene* scene)
     Drawable::OnSceneSet(scene);
 
     if (scene && IsEnabledEffective())
-        SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(RibbonTrail, HandleScenePostUpdate));
+        SubscribeToEvent(scene, E_SCENEPOSTUPDATE, DV_HANDLER(RibbonTrail, HandleScenePostUpdate));
     else if (!scene)
          UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
 }
@@ -828,7 +828,7 @@ void RibbonTrail::SetTrailType(TrailType type)
 
     if (type == TT_BONE && (node_->GetParent() == nullptr || node_->GetParent() == node_->GetScene()))
     {
-        URHO3D_LOGWARNING("No parent node found, revert back to Face Camera type");
+        DV_LOGWARNING("No parent node found, revert back to Face Camera type");
         return;
     }
 

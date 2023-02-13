@@ -60,7 +60,7 @@ bool PackageFile::Open(const String& fileName, unsigned startOffset)
 
         if (id != "UPAK" && id != "ULZ4")
         {
-            URHO3D_LOGERROR(fileName + " is not a valid package file");
+            DV_LOGERROR(fileName + " is not a valid package file");
             return false;
         }
     }
@@ -82,7 +82,7 @@ bool PackageFile::Open(const String& fileName, unsigned startOffset)
         newEntry.checksum_ = file->ReadU32();
         if (!compressed_ && newEntry.offset_ + newEntry.size_ > totalSize_)
         {
-            URHO3D_LOGERROR("File entry " + entryName + " outside package file");
+            DV_LOGERROR("File entry " + entryName + " outside package file");
             return false;
         }
         else

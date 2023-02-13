@@ -29,13 +29,13 @@ void ConstraintMotor2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<ConstraintMotor2D>(PHYSICS2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Linear Offset", GetLinearOffset, SetLinearOffset, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Angular Offset", GetAngularOffset, SetAngularOffset, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Force", GetMaxForce, SetMaxForce, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Torque", GetMaxTorque, SetMaxTorque, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Correction Factor", GetCorrectionFactor, SetCorrectionFactor, 0.3f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Constraint2D);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Linear Offset", GetLinearOffset, SetLinearOffset, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Angular Offset", GetAngularOffset, SetAngularOffset, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Force", GetMaxForce, SetMaxForce, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Torque", GetMaxTorque, SetMaxTorque, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Correction Factor", GetCorrectionFactor, SetCorrectionFactor, 0.3f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
 void ConstraintMotor2D::SetLinearOffset(const Vector2& linearOffset)

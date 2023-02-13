@@ -60,20 +60,20 @@ void PhysicsWorld2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<PhysicsWorld2D>(SUBSYSTEM_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Shape", GetDrawShape, SetDrawShape, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Joint", GetDrawJoint, SetDrawJoint, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Aabb", GetDrawAabb, SetDrawAabb, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Pair", GetDrawPair, SetDrawPair, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw CenterOfMass", GetDrawCenterOfMass, SetDrawCenterOfMass, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Allow Sleeping", GetAllowSleeping, SetAllowSleeping, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Warm Starting", GetWarmStarting, SetWarmStarting, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Continuous Physics", GetContinuousPhysics, SetContinuousPhysics, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Sub Stepping", GetSubStepping, SetSubStepping, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Gravity", GetGravity, SetGravity, DEFAULT_GRAVITY, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Auto Clear Forces", GetAutoClearForces, SetAutoClearForces, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Velocity Iterations", GetVelocityIterations, SetVelocityIterations, DEFAULT_VELOCITY_ITERATIONS,
+    DV_ACCESSOR_ATTRIBUTE("Draw Shape", GetDrawShape, SetDrawShape, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Joint", GetDrawJoint, SetDrawJoint, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Aabb", GetDrawAabb, SetDrawAabb, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Pair", GetDrawPair, SetDrawPair, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw CenterOfMass", GetDrawCenterOfMass, SetDrawCenterOfMass, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Allow Sleeping", GetAllowSleeping, SetAllowSleeping, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Warm Starting", GetWarmStarting, SetWarmStarting, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Continuous Physics", GetContinuousPhysics, SetContinuousPhysics, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Sub Stepping", GetSubStepping, SetSubStepping, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Gravity", GetGravity, SetGravity, DEFAULT_GRAVITY, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Auto Clear Forces", GetAutoClearForces, SetAutoClearForces, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Velocity Iterations", GetVelocityIterations, SetVelocityIterations, DEFAULT_VELOCITY_ITERATIONS,
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Position Iterations", GetPositionIterations, SetPositionIterations, DEFAULT_POSITION_ITERATIONS,
+    DV_ACCESSOR_ATTRIBUTE("Position Iterations", GetPositionIterations, SetPositionIterations, DEFAULT_POSITION_ITERATIONS,
         AM_DEFAULT);
 }
 
@@ -81,7 +81,7 @@ void PhysicsWorld2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug)
     {
-        URHO3D_PROFILE(Physics2DDrawDebug);
+        DV_PROFILE(Physics2DDrawDebug);
 
         debugRenderer_ = debug;
         debugDepthTest_ = depthTest;
@@ -264,7 +264,7 @@ void PhysicsWorld2D::DrawTransform(const b2Transform& xf)
 
 void PhysicsWorld2D::Update(float timeStep)
 {
-    URHO3D_PROFILE(UpdatePhysics2D);
+    DV_PROFILE(UpdatePhysics2D);
 
     using namespace PhysicsPreStep;
 
@@ -692,7 +692,7 @@ void PhysicsWorld2D::OnSceneSet(Scene* scene)
 {
     // Subscribe to the scene subsystem update, which will trigger the physics simulation step
     if (scene)
-        SubscribeToEvent(scene, E_SCENESUBSYSTEMUPDATE, URHO3D_HANDLER(PhysicsWorld2D, HandleSceneSubsystemUpdate));
+        SubscribeToEvent(scene, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(PhysicsWorld2D, HandleSceneSubsystemUpdate));
     else
         UnsubscribeFromEvent(E_SCENESUBSYSTEMUPDATE);
 }

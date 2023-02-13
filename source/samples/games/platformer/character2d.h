@@ -15,7 +15,7 @@ const int LIFES = 3;
 /// Character2D component controling Imp behavior.
 class Character2D : public LogicComponent
 {
-    URHO3D_OBJECT(Character2D, LogicComponent);
+    DV_OBJECT(Character2D, LogicComponent);
 
 public:
     /// Construct.

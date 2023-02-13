@@ -16,16 +16,16 @@
 namespace dviglo
 {
 
-#define URHO3D_SAFE_RELEASE(p) if (p) { ((IUnknown*)p)->Release();  p = 0; }
+#define DV_SAFE_RELEASE(p) if (p) { ((IUnknown*)p)->Release();  p = 0; }
 
-#define URHO3D_LOGD3DERROR(msg, hr) URHO3D_LOGERRORF("%s (HRESULT %x)", msg, (unsigned)hr)
+#define DV_LOGD3DERROR(msg, hr) DV_LOGERRORF("%s (HRESULT %x)", msg, (unsigned)hr)
 
 using ShaderProgramMap_D3D11 = HashMap<Pair<ShaderVariation*, ShaderVariation*>, SharedPtr<ShaderProgram_D3D11>>;
 using VertexDeclarationMap_D3D11 = HashMap<hash64, SharedPtr<VertexDeclaration_D3D11>>;
 using ConstantBufferMap = HashMap<hash32, SharedPtr<ConstantBuffer>>;
 
 /// %Graphics implementation. Holds API-specific objects.
-class URHO3D_API GraphicsImpl_D3D11
+class DV_API GraphicsImpl_D3D11
 {
     friend class Graphics;
 

@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 /// Abstract stream for reading.
-class URHO3D_API Deserializer
+class DV_API Deserializer
 {
 public:
     /// Construct with zero size.

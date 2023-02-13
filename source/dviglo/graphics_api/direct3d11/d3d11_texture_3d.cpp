@@ -42,30 +42,30 @@ void Texture3D::Release_D3D11()
         }
     }
 
-    URHO3D_SAFE_RELEASE(object_.ptr_);
-    URHO3D_SAFE_RELEASE(shaderResourceView_);
-    URHO3D_SAFE_RELEASE(sampler_);
+    DV_SAFE_RELEASE(object_.ptr_);
+    DV_SAFE_RELEASE(shaderResourceView_);
+    DV_SAFE_RELEASE(sampler_);
 }
 
 bool Texture3D::SetData_D3D11(unsigned level, int x, int y, int z, int width, int height, int depth, const void* data)
 {
-    URHO3D_PROFILE(SetTextureData);
+    DV_PROFILE(SetTextureData);
 
     if (!object_.ptr_)
     {
-        URHO3D_LOGERROR("No texture created, can not set data");
+        DV_LOGERROR("No texture created, can not set data");
         return false;
     }
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null source for setting data");
+        DV_LOGERROR("Null source for setting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for setting data");
+        DV_LOGERROR("Illegal mip level for setting data");
         return false;
     }
 
@@ -75,7 +75,7 @@ bool Texture3D::SetData_D3D11(unsigned level, int x, int y, int z, int width, in
     if (x < 0 || x + width > levelWidth || y < 0 || y + height > levelHeight || z < 0 || z + depth > levelDepth || width <= 0 ||
         height <= 0 || depth <= 0)
     {
-        URHO3D_LOGERROR("Illegal dimensions for setting data");
+        DV_LOGERROR("Illegal dimensions for setting data");
         return false;
     }
 
@@ -110,7 +110,7 @@ bool Texture3D::SetData_D3D11(unsigned level, int x, int y, int z, int width, in
             &mappedData);
         if (FAILED(hr) || !mappedData.pData)
         {
-            URHO3D_LOGD3DERROR("Failed to map texture for update", hr);
+            DV_LOGD3DERROR("Failed to map texture for update", hr);
             return false;
         }
         else
@@ -151,7 +151,7 @@ bool Texture3D::SetData_D3D11(Image* image, bool useAlpha)
 {
     if (!image)
     {
-        URHO3D_LOGERROR("Null image, can not load texture");
+        DV_LOGERROR("Null image, can not load texture");
         return false;
     }
 
@@ -278,19 +278,19 @@ bool Texture3D::GetData_D3D11(unsigned level, void* dest) const
 {
     if (!object_.ptr_)
     {
-        URHO3D_LOGERROR("No texture created, can not get data");
+        DV_LOGERROR("No texture created, can not get data");
         return false;
     }
 
     if (!dest)
     {
-        URHO3D_LOGERROR("Null destination for getting data");
+        DV_LOGERROR("Null destination for getting data");
         return false;
     }
 
     if (level >= levels_)
     {
-        URHO3D_LOGERROR("Illegal mip level for getting data");
+        DV_LOGERROR("Illegal mip level for getting data");
         return false;
     }
 
@@ -312,8 +312,8 @@ bool Texture3D::GetData_D3D11(unsigned level, void* dest) const
     HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture3D(&textureDesc, nullptr, &stagingTexture);
     if (FAILED(hr))
     {
-        URHO3D_LOGD3DERROR("Failed to create staging texture for GetData", hr);
-        URHO3D_SAFE_RELEASE(stagingTexture);
+        DV_LOGD3DERROR("Failed to create staging texture for GetData", hr);
+        DV_SAFE_RELEASE(stagingTexture);
         return false;
     }
 
@@ -336,8 +336,8 @@ bool Texture3D::GetData_D3D11(unsigned level, void* dest) const
     hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)stagingTexture, 0, D3D11_MAP_READ, 0, &mappedData);
     if (FAILED(hr) || !mappedData.pData)
     {
-        URHO3D_LOGD3DERROR("Failed to map staging texture for GetData", hr);
-        URHO3D_SAFE_RELEASE(stagingTexture);
+        DV_LOGD3DERROR("Failed to map staging texture for GetData", hr);
+        DV_SAFE_RELEASE(stagingTexture);
         return false;
     }
     else
@@ -351,7 +351,7 @@ bool Texture3D::GetData_D3D11(unsigned level, void* dest) const
             }
         }
         graphics_->GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)stagingTexture, 0);
-        URHO3D_SAFE_RELEASE(stagingTexture);
+        DV_SAFE_RELEASE(stagingTexture);
         return true;
     }
 }
@@ -379,8 +379,8 @@ bool Texture3D::Create_D3D11()
     HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture3D(&textureDesc, nullptr, (ID3D11Texture3D**)&object_.ptr_);
     if (FAILED(hr))
     {
-        URHO3D_LOGD3DERROR("Failed to create texture", hr);
-        URHO3D_SAFE_RELEASE(object_.ptr_);
+        DV_LOGD3DERROR("Failed to create texture", hr);
+        DV_SAFE_RELEASE(object_.ptr_);
         return false;
     }
 
@@ -394,8 +394,8 @@ bool Texture3D::Create_D3D11()
         (ID3D11ShaderResourceView**)&shaderResourceView_);
     if (FAILED(hr))
     {
-        URHO3D_LOGD3DERROR("Failed to create shader resource view for texture", hr);
-        URHO3D_SAFE_RELEASE(shaderResourceView_);
+        DV_LOGD3DERROR("Failed to create shader resource view for texture", hr);
+        DV_SAFE_RELEASE(shaderResourceView_);
         return false;
     }
 

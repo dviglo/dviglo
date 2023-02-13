@@ -12,9 +12,9 @@ namespace dviglo
 {
 struct RaycastVehicleData;
 
-class URHO3D_API RaycastVehicle : public LogicComponent
+class DV_API RaycastVehicle : public LogicComponent
 {
-    URHO3D_OBJECT(RaycastVehicle, LogicComponent);
+    DV_OBJECT(RaycastVehicle, LogicComponent);
 
 public:
     /// Construct.

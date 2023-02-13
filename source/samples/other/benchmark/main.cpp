@@ -17,7 +17,7 @@ using namespace dviglo;
 
 class App : public Application
 {
-    URHO3D_OBJECT(App, Application);
+    DV_OBJECT(App, Application);
 
 public:
     App(Context* context)
@@ -26,7 +26,7 @@ public:
         // The first handler for the first event in each frame.
         // To prevent a crash, we can only change the current scene at the start of a frame,
         // before any scene events are processed
-        SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(App, ApplyAppState));
+        SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(App, ApplyAppState));
     }
 
     void Setup() override
@@ -69,4 +69,4 @@ public:
     }
 };
 
-URHO3D_DEFINE_APPLICATION_MAIN(App);
+DV_DEFINE_APPLICATION_MAIN(App);

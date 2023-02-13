@@ -17,9 +17,9 @@ class MemoryBuffer;
 class Scene;
 
 /// %Network subsystem. Manages client-server communications using the UDP protocol.
-class URHO3D_API Network : public Object
+class DV_API Network : public Object
 {
-    URHO3D_OBJECT(Network, Object);
+    DV_OBJECT(Network, Object);
 
 public:
     /// Construct.
@@ -175,6 +175,6 @@ private:
 };
 
 /// Register Network library objects.
-void URHO3D_API RegisterNetworkLibrary(Context* context);
+void DV_API RegisterNetworkLibrary(Context* context);
 
 }

@@ -17,9 +17,9 @@ class Node;
 class TerrainPatch;
 
 /// Heightmap terrain component.
-class URHO3D_API Terrain : public Component
+class DV_API Terrain : public Component
 {
-    URHO3D_OBJECT(Terrain, Component);
+    DV_OBJECT(Terrain, Component);
 
 public:
     /// Construct.

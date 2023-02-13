@@ -28,7 +28,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(SkeletalAnimation)
+DV_DEFINE_APPLICATION_MAIN(SkeletalAnimation)
 
 SkeletalAnimation::SkeletalAnimation(Context* context) :
     Sample(context),
@@ -132,7 +132,7 @@ void SkeletalAnimation::CreateScene()
         // Create our custom Mover component that will move & animate the model during each frame's update
         auto* mover = modelNode->CreateComponent<Mover>();
         mover->SetParameters(MODEL_MOVE_SPEED, MODEL_ROTATE_SPEED, bounds);
-#ifdef URHO3D_GLES3
+#ifdef DV_GLES3
         Node* nLight = modelNode->CreateChild("Light", LOCAL);
         nLight->SetPosition(Vector3(1.0f, 2.0f, 1.0f));
         nLight->LookAt(Vector3::ZERO, Vector3::UP, TransformSpace::Parent);
@@ -149,12 +149,12 @@ void SkeletalAnimation::CreateScene()
 
     // Set an initial position for the camera scene node above the plane
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
-#ifdef URHO3D_GLES3
+#ifdef DV_GLES3
     CreateLights();
 #endif
 }
 
-#ifdef URHO3D_GLES3
+#ifdef DV_GLES3
 void SkeletalAnimation::CreateLights() {
     for (unsigned i = 0; i < 40; i++) {
         Node* nLight = scene_->CreateChild("Light", LOCAL);
@@ -199,7 +199,7 @@ void SkeletalAnimation::SetupViewport()
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
-#ifdef URHO3D_GLES3
+#ifdef DV_GLES3
         SharedPtr<RenderPath> rp(new RenderPath);
         auto* cache = GetSubsystem<ResourceCache>();
         rp->Load(cache->GetResource<XMLFile>("RenderPaths/Deferred.xml"));
@@ -211,12 +211,12 @@ void SkeletalAnimation::SetupViewport()
 void SkeletalAnimation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(SkeletalAnimation, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(SkeletalAnimation, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, sent after Renderer subsystem is
     // done with defining the draw calls for the viewports (but before actually executing them.) We will request debug geometry
     // rendering during that event
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(SkeletalAnimation, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(SkeletalAnimation, HandlePostRenderUpdate));
 }
 
 void SkeletalAnimation::MoveCamera(float timeStep)

@@ -22,7 +22,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(StaticScene)
+DV_DEFINE_APPLICATION_MAIN(StaticScene)
 
 StaticScene::StaticScene(Context* context) :
     Sample(context)
@@ -170,7 +170,7 @@ void StaticScene::MoveCamera(float timeStep)
 void StaticScene::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(StaticScene, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(StaticScene, HandleUpdate));
 }
 
 void StaticScene::HandleUpdate(StringHash eventType, VariantMap& eventData)

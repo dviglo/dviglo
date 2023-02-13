@@ -16,7 +16,7 @@
 namespace dviglo
 {
 
-#ifdef URHO3D_HASH_DEBUG
+#ifdef DV_HASH_DEBUG
 
 // Expose map to let Visual Studio debugger access it if Urho3D is linked statically.
 const StringMap* hashReverseMap = nullptr;
@@ -33,7 +33,7 @@ static StringHashRegister& GetGlobalStringHashRegister()
 
 const StringHash StringHash::ZERO;
 
-#ifdef URHO3D_HASH_DEBUG
+#ifdef DV_HASH_DEBUG
 StringHash::StringHash(const char* str) noexcept :
     value_(Calculate(str))
 {
@@ -44,14 +44,14 @@ StringHash::StringHash(const char* str) noexcept :
 StringHash::StringHash(const String& str) noexcept :
     value_(Calculate(str.CString()))
 {
-#ifdef URHO3D_HASH_DEBUG
+#ifdef DV_HASH_DEBUG
     dviglo::GetGlobalStringHashRegister().RegisterString(*this, str.CString());
 #endif
 }
 
 StringHashRegister* StringHash::GetGlobalStringHashRegister()
 {
-#ifdef URHO3D_HASH_DEBUG
+#ifdef DV_HASH_DEBUG
     return &dviglo::GetGlobalStringHashRegister();
 #else
     return nullptr;
@@ -67,7 +67,7 @@ String StringHash::ToString() const
 
 String StringHash::Reverse() const
 {
-#ifdef URHO3D_HASH_DEBUG
+#ifdef DV_HASH_DEBUG
     return dviglo::GetGlobalStringHashRegister().GetStringCopy(*this);
 #else
     return String::EMPTY;

@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Dynamically sized buffer that can be read and written to as a stream.
-class URHO3D_API VectorBuffer : public AbstractFile
+class DV_API VectorBuffer : public AbstractFile
 {
 public:
     /// Construct an empty buffer.

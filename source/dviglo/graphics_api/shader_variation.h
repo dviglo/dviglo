@@ -60,7 +60,7 @@ struct ShaderParameter
 };
 
 /// Vertex or pixel shader on the GPU.
-class URHO3D_API ShaderVariation : public RefCounted, public GPUObject
+class DV_API ShaderVariation : public RefCounted, public GPUObject
 {
 public:
     /// Construct.
@@ -129,7 +129,7 @@ private:
 
     // Internal functions
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     /// Load bytecode from a file. Return true if successful.
     bool LoadByteCode_D3D11(const String& binaryShaderName);
 
@@ -144,23 +144,23 @@ private:
 
     /// Calculate constant buffer sizes from parameters.
     void CalculateConstantBufferSizes_D3D11();
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     // For proxy functions
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     void OnDeviceLost_OGL();
     void Release_OGL();
     bool Create_OGL();
     void SetDefines_OGL(const String& defines);
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     void OnDeviceLost_D3D11();
     void Release_D3D11();
     bool Create_D3D11();
     void SetDefines_D3D11(const String& defines);
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     /// Shader this variation belongs to.
     WeakPtr<Shader> owner_;

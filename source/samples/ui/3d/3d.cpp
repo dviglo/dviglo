@@ -28,7 +28,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Hello3DUI)
+DV_DEFINE_APPLICATION_MAIN(Hello3DUI)
 
 Hello3DUI::Hello3DUI(Context* context) :
     Sample(context),
@@ -163,10 +163,10 @@ void Hello3DUI::InitWindow()
     buttonClose->SetStyle("CloseButton");
 
     // Subscribe to buttonClose release (following a 'press') events
-    SubscribeToEvent(buttonClose, E_RELEASED, URHO3D_HANDLER(Hello3DUI, HandleClosePressed));
+    SubscribeToEvent(buttonClose, E_RELEASED, DV_HANDLER(Hello3DUI, HandleClosePressed));
 
     // Subscribe also to all UI mouse clicks just to see where we have clicked
-    SubscribeToEvent(E_UIMOUSECLICK, URHO3D_HANDLER(Hello3DUI, HandleControlClicked));
+    SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(Hello3DUI, HandleControlClicked));
 }
 
 void Hello3DUI::InitScene()
@@ -204,7 +204,7 @@ void Hello3DUI::InitScene()
     renderer->SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Hello3DUI, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Hello3DUI, HandleUpdate));
 }
 
 void Hello3DUI::CreateDraggableFish()
@@ -235,9 +235,9 @@ void Hello3DUI::CreateDraggableFish()
 
     // Subscribe draggableFish to Drag Events (in order to make it draggable)
     // See "Event list" in documentation's Main Page for reference on available Events and their eventData
-    SubscribeToEvent(draggableFish, E_DRAGBEGIN, URHO3D_HANDLER(Hello3DUI, HandleDragBegin));
-    SubscribeToEvent(draggableFish, E_DRAGMOVE, URHO3D_HANDLER(Hello3DUI, HandleDragMove));
-    SubscribeToEvent(draggableFish, E_DRAGEND, URHO3D_HANDLER(Hello3DUI, HandleDragEnd));
+    SubscribeToEvent(draggableFish, E_DRAGBEGIN, DV_HANDLER(Hello3DUI, HandleDragBegin));
+    SubscribeToEvent(draggableFish, E_DRAGMOVE, DV_HANDLER(Hello3DUI, HandleDragMove));
+    SubscribeToEvent(draggableFish, E_DRAGEND, DV_HANDLER(Hello3DUI, HandleDragEnd));
 }
 
 void Hello3DUI::HandleDragBegin(StringHash eventType, VariantMap& eventData)

@@ -46,9 +46,9 @@ struct SourceBatch2D
 };
 
 /// Base class for 2D visible components.
-class URHO3D_API Drawable2D : public Drawable
+class DV_API Drawable2D : public Drawable
 {
-    URHO3D_OBJECT(Drawable2D, Drawable);
+    DV_OBJECT(Drawable2D, Drawable);
 
 public:
     /// Construct.

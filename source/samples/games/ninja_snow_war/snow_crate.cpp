@@ -24,7 +24,7 @@ SnowCrate::SnowCrate(Context* context)
 
 void SnowCrate::Start()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, URHO3D_HANDLER(SnowCrate, HandleNodeCollision));
+    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(SnowCrate, HandleNodeCollision));
 }
 
 void SnowCrate::FixedUpdate(float timeStep)

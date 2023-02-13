@@ -38,7 +38,7 @@ const int MSG_CHAT = MSG_USER + 0;
 // UDP port we will use
 const unsigned short CHAT_SERVER_PORT = 2345;
 
-URHO3D_DEFINE_APPLICATION_MAIN(Chat)
+DV_DEFINE_APPLICATION_MAIN(Chat)
 
 Chat::Chat(Context* context) :
     Sample(context)
@@ -108,20 +108,20 @@ void Chat::CreateUI()
 void Chat::SubscribeToEvents()
 {
     // Subscribe to UI element events
-    SubscribeToEvent(textEdit_, E_TEXTFINISHED, URHO3D_HANDLER(Chat, HandleSend));
-    SubscribeToEvent(sendButton_, E_RELEASED, URHO3D_HANDLER(Chat, HandleSend));
-    SubscribeToEvent(connectButton_, E_RELEASED, URHO3D_HANDLER(Chat, HandleConnect));
-    SubscribeToEvent(disconnectButton_, E_RELEASED, URHO3D_HANDLER(Chat, HandleDisconnect));
-    SubscribeToEvent(startServerButton_, E_RELEASED, URHO3D_HANDLER(Chat, HandleStartServer));
+    SubscribeToEvent(textEdit_, E_TEXTFINISHED, DV_HANDLER(Chat, HandleSend));
+    SubscribeToEvent(sendButton_, E_RELEASED, DV_HANDLER(Chat, HandleSend));
+    SubscribeToEvent(connectButton_, E_RELEASED, DV_HANDLER(Chat, HandleConnect));
+    SubscribeToEvent(disconnectButton_, E_RELEASED, DV_HANDLER(Chat, HandleDisconnect));
+    SubscribeToEvent(startServerButton_, E_RELEASED, DV_HANDLER(Chat, HandleStartServer));
 
     // Subscribe to log messages so that we can pipe them to the chat window
-    SubscribeToEvent(E_LOGMESSAGE, URHO3D_HANDLER(Chat, HandleLogMessage));
+    SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Chat, HandleLogMessage));
 
     // Subscribe to network events
-    SubscribeToEvent(E_NETWORKMESSAGE, URHO3D_HANDLER(Chat, HandleNetworkMessage));
-    SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(Chat, HandleConnectionStatus));
-    SubscribeToEvent(E_SERVERDISCONNECTED, URHO3D_HANDLER(Chat, HandleConnectionStatus));
-    SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(Chat, HandleConnectionStatus));
+    SubscribeToEvent(E_NETWORKMESSAGE, DV_HANDLER(Chat, HandleNetworkMessage));
+    SubscribeToEvent(E_SERVERCONNECTED, DV_HANDLER(Chat, HandleConnectionStatus));
+    SubscribeToEvent(E_SERVERDISCONNECTED, DV_HANDLER(Chat, HandleConnectionStatus));
+    SubscribeToEvent(E_CONNECTFAILED, DV_HANDLER(Chat, HandleConnectionStatus));
 }
 
 Button* Chat::CreateButton(const String& text, int width)

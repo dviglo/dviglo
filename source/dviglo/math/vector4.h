@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Four-dimensional vector.
-class URHO3D_API Vector4
+class DV_API Vector4
 {
 public:
     /// Construct a zero vector.

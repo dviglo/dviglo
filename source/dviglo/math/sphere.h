@@ -14,7 +14,7 @@ class Polyhedron;
 class Frustum;
 
 /// %Sphere in three-dimensional space.
-class URHO3D_API Sphere
+class DV_API Sphere
 {
 public:
     /// Construct undefined.

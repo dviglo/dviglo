@@ -13,9 +13,9 @@ namespace dviglo
 {
 
 /// Hardware constant buffer.
-class URHO3D_API ConstantBuffer : public Object, public GPUObject
+class DV_API ConstantBuffer : public Object, public GPUObject
 {
-    URHO3D_OBJECT(ConstantBuffer, Object);
+    DV_OBJECT(ConstantBuffer, Object);
 
 public:
     /// Construct.
@@ -44,19 +44,19 @@ public:
     bool IsDirty() const { return dirty_; }
 
 private:
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     void Release_OGL();
     void OnDeviceReset_OGL();
     bool SetSize_OGL(unsigned size);
     void Apply_OGL();
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     void Release_D3D11();
     void OnDeviceReset_D3D11();
     bool SetSize_D3D11(unsigned size);
     void Apply_D3D11();
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     /// Shadow data.
     SharedArrayPtr<unsigned char> shadowData_;

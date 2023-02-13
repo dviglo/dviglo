@@ -15,9 +15,9 @@ namespace dviglo
 class FileSystem;
 
 /// Watches a directory and its subdirectories for files being modified.
-class URHO3D_API FileWatcher : public Object, public Thread
+class DV_API FileWatcher : public Object, public Thread
 {
-    URHO3D_OBJECT(FileWatcher, Object);
+    DV_OBJECT(FileWatcher, Object);
 
 public:
     /// Construct.

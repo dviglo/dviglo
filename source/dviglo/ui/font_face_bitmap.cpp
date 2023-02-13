@@ -38,21 +38,21 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
     MemoryBuffer memoryBuffer(fontData, fontDataSize);
     if (!xmlReader->Load(memoryBuffer))
     {
-        URHO3D_LOGERROR("Could not load XML file");
+        DV_LOGERROR("Could not load XML file");
         return false;
     }
 
     XMLElement root = xmlReader->GetRoot("font");
     if (root.IsNull())
     {
-        URHO3D_LOGERROR("Could not find Font element");
+        DV_LOGERROR("Could not find Font element");
         return false;
     }
 
     XMLElement pagesElem = root.GetChild("pages");
     if (pagesElem.IsNull())
     {
-        URHO3D_LOGERROR("Could not find Pages element");
+        DV_LOGERROR("Could not find Pages element");
         return false;
     }
 
@@ -74,7 +74,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
     {
         if (pageElem.IsNull())
         {
-            URHO3D_LOGERROR("Could not find Page element for page: " + String(i));
+            DV_LOGERROR("Could not find Page element for page: " + String(i));
             return false;
         }
 
@@ -86,7 +86,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
         SharedPtr<Image> fontImage(new Image(context));
         if (!fontFile || !fontImage->Load(*fontFile))
         {
-            URHO3D_LOGERROR("Failed to load font image file");
+            DV_LOGERROR("Failed to load font image file");
             return false;
         }
         SharedPtr<Texture2D> texture = LoadFaceTexture(fontImage);
@@ -143,7 +143,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
         }
     }
 
-    URHO3D_LOGDEBUGF("Bitmap font face %s has %d glyphs", GetFileName(font_->GetName()).CString(), count);
+    DV_LOGDEBUGF("Bitmap font face %s has %d glyphs", GetFileName(font_->GetName()).CString(), count);
 
     font_->SetMemoryUse(font_->GetMemoryUse() + totalTextureSize);
     return true;
@@ -342,7 +342,7 @@ SharedPtr<Image> FontFaceBitmap::SaveFaceTexture(Texture2D* texture)
     image->SetSize(texture->GetWidth(), texture->GetHeight(), ConvertFormatToNumComponents(texture->GetFormat()));
     if (!texture->GetData(0, image->GetData()))
     {
-        URHO3D_LOGERROR("Could not save texture to image resource");
+        DV_LOGERROR("Could not save texture to image resource");
         return SharedPtr<Image>();
     }
     return image;

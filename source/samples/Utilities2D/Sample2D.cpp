@@ -454,7 +454,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     exitText->SetAlignment(HA_CENTER, VA_CENTER);
     exitText->SetFont(font, 24);
     exitText->SetText("EXIT");
-    SubscribeToEvent(exitButton, E_RELEASED, URHO3D_HANDLER(Sample2D, HandleExitButton));
+    SubscribeToEvent(exitButton, E_RELEASED, DV_HANDLER(Sample2D, HandleExitButton));
 
     // Create the 'PLAY' button
     auto* playButton = ui->GetRoot()->CreateChild<Button>("PlayButton");

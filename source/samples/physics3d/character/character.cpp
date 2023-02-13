@@ -29,17 +29,17 @@ void Character::RegisterObject(Context* context)
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the Default attribute mode which means it will be used both for saving into file, and network replication
-    URHO3D_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("On Ground", onGround_, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("OK To Jump", okToJump_, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("In Air Timer", inAirTimer_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("On Ground", onGround_, false, AM_DEFAULT);
+    DV_ATTRIBUTE("OK To Jump", okToJump_, true, AM_DEFAULT);
+    DV_ATTRIBUTE("In Air Timer", inAirTimer_, 0.0f, AM_DEFAULT);
 }
 
 void Character::Start()
 {
     // Component has been inserted into its scene node. Subscribe to events now
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, URHO3D_HANDLER(Character, HandleNodeCollision));
+    SubscribeToEvent(GetNode(), E_NODECOLLISION, DV_HANDLER(Character, HandleNodeCollision));
 }
 
 void Character::FixedUpdate(float timeStep)

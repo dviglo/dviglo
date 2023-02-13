@@ -22,7 +22,7 @@ void AppState_Benchmark04::OnEnter()
     // Сцена и вьюпорт не нужны
 
     GetSubsystem<Input>()->SetMouseVisible(false);
-    SubscribeToEvent(E_ENDALLVIEWSRENDER, URHO3D_HANDLER(AppState_Benchmark04, HandleEndAllViewsRender));
+    SubscribeToEvent(E_ENDALLVIEWSRENDER, DV_HANDLER(AppState_Benchmark04, HandleEndAllViewsRender));
     fpsCounter_.Clear();
     spriteBatch_ = new SpriteBatch(context_);
 }

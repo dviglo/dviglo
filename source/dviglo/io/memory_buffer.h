@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Memory area that can be read and written to as a stream.
-class URHO3D_API MemoryBuffer : public AbstractFile
+class DV_API MemoryBuffer : public AbstractFile
 {
 public:
     /// Construct with a pointer and size.

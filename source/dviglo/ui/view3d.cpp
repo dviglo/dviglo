@@ -35,7 +35,7 @@ View3D::View3D(Context* context) :
     renderTexture_->SetNumLevels(1);
     depthTexture_->SetNumLevels(1);
 
-    SubscribeToEvent(E_RENDERSURFACEUPDATE, URHO3D_HANDLER(View3D, HandleRenderSurfaceUpdate));
+    SubscribeToEvent(E_RENDERSURFACEUPDATE, DV_HANDLER(View3D, HandleRenderSurfaceUpdate));
 }
 
 View3D::~View3D()
@@ -47,11 +47,11 @@ void View3D::RegisterObject(Context* context)
 {
     context->RegisterFactory<View3D>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(Window);
+    DV_COPY_BASE_ATTRIBUTES(Window);
     // The texture format is API specific, so do not register it as a serializable attribute
-    URHO3D_ACCESSOR_ATTRIBUTE("Auto Update", GetAutoUpdate, SetAutoUpdate, true, AM_FILE);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
+    DV_ACCESSOR_ATTRIBUTE("Auto Update", GetAutoUpdate, SetAutoUpdate, true, AM_FILE);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
 }
 
 void View3D::OnResize(const IntVector2& newSize, const IntVector2& delta)

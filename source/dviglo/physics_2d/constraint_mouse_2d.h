@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// 2D mouse constraint component.
-class URHO3D_API ConstraintMouse2D : public Constraint2D
+class DV_API ConstraintMouse2D : public Constraint2D
 {
-    URHO3D_OBJECT(ConstraintMouse2D, Constraint2D);
+    DV_OBJECT(ConstraintMouse2D, Constraint2D);
 
 public:
     /// Construct.

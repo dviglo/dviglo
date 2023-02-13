@@ -4,8 +4,8 @@
 
 #ifdef __cplusplus
 
-#ifndef URHO3D_PCH_INCLUDED
-#define URHO3D_PCH_INCLUDED
+#ifndef DV_PCH_INCLUDED
+#define DV_PCH_INCLUDED
 
 #include "container/hash_map.h"
 #include "container/hash_set.h"

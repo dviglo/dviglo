@@ -16,9 +16,9 @@ namespace dviglo
 {
 
 /// Named pipe for interprocess communication.
-class URHO3D_API NamedPipe : public Object, public AbstractFile
+class DV_API NamedPipe : public Object, public AbstractFile
 {
-    URHO3D_OBJECT(NamedPipe, Object);
+    DV_OBJECT(NamedPipe, Object);
 
 public:
     /// Construct.

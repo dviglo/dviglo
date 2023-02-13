@@ -28,7 +28,7 @@ static int ikInitCounter = 0;
 // Reroute all messages from the ik library to the Urho3D log
 static void HandleIKLog(const char* msg)
 {
-    URHO3D_LOGINFOF("[IK] %s", msg);
+    DV_LOGINFOF("[IK] %s", msg);
 }
 #endif
 
@@ -178,7 +178,7 @@ AttributeHandle Context::RegisterAttribute(StringHash objectType, const Attribut
     if (attr.type_ == VAR_NONE || attr.type_ == VAR_VOIDPTR || attr.type_ == VAR_PTR
         || attr.type_ == VAR_CUSTOM_HEAP || attr.type_ == VAR_CUSTOM_STACK)
     {
-        URHO3D_LOGWARNING("Attempt to register unsupported attribute type " + Variant::GetTypeName(attr.type_) + " to class " +
+        DV_LOGWARNING("Attempt to register unsupported attribute type " + Variant::GetTypeName(attr.type_) + " to class " +
             GetTypeName(objectType));
         return AttributeHandle();
     }
@@ -238,17 +238,17 @@ bool Context::RequireSDL(unsigned int sdlFlags)
     // Need to call SDL_Init() at least once before SDL_InitSubsystem()
     if (sdlInitCounter == 1)
     {
-        URHO3D_LOGDEBUG("Initialising SDL");
+        DV_LOGDEBUG("Initialising SDL");
 
         if (SDL_Init(0) != 0)
         {
-            URHO3D_LOGERRORF("Failed to initialise SDL: %s", SDL_GetError());
+            DV_LOGERRORF("Failed to initialise SDL: %s", SDL_GetError());
             return false;
         }
 
         if (Gesture_Init() != 0) // Начиная с SDL 3 Gesture больше не часть библиотеки
         {
-            URHO3D_LOGERRORF("Failed to initialise Gesture: %s", SDL_GetError());
+            DV_LOGERRORF("Failed to initialise Gesture: %s", SDL_GetError());
             return false;
         }
     }
@@ -258,7 +258,7 @@ bool Context::RequireSDL(unsigned int sdlFlags)
     {
         if (SDL_InitSubSystem(remainingFlags) != 0)
         {
-            URHO3D_LOGERRORF("Failed to initialise SDL subsystem: %s", SDL_GetError());
+            DV_LOGERRORF("Failed to initialise SDL subsystem: %s", SDL_GetError());
             return false;
         }
     }
@@ -272,14 +272,14 @@ void Context::ReleaseSDL()
 
     if (sdlInitCounter == 0)
     {
-        URHO3D_LOGDEBUG("Quitting SDL");
+        DV_LOGDEBUG("Quitting SDL");
         SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
         Gesture_Quit();
         SDL_Quit();
     }
 
     if (sdlInitCounter < 0)
-        URHO3D_LOGERROR("Too many calls to Context::ReleaseSDL()!");
+        DV_LOGERROR("Too many calls to Context::ReleaseSDL()!");
 }
 
 #endif // ifndef MINI_URHO
@@ -289,7 +289,7 @@ void Context::CopyBaseAttributes(StringHash baseType, StringHash derivedType)
     // Prevent endless loop if mistakenly copying attributes from same class as derived
     if (baseType == derivedType)
     {
-        URHO3D_LOGWARNING("Attempt to copy base attributes to itself for class " + GetTypeName(baseType));
+        DV_LOGWARNING("Attempt to copy base attributes to itself for class " + GetTypeName(baseType));
         return;
     }
 
@@ -408,7 +408,7 @@ void Context::RemoveEventReceiver(Object* receiver, Object* sender, StringHash e
 
 void Context::BeginSendEvent(Object* sender, StringHash eventType)
 {
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     if (EventProfiler::IsActive())
     {
         auto* eventProfiler = GetSubsystem<EventProfiler>();
@@ -424,7 +424,7 @@ void Context::EndSendEvent()
 {
     eventSenders_.Pop();
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
     if (EventProfiler::IsActive())
     {
         auto* eventProfiler = GetSubsystem<EventProfiler>();

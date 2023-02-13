@@ -21,9 +21,9 @@ struct StaticModelGeometryData
 };
 
 /// Static model component.
-class URHO3D_API StaticModel : public Drawable
+class DV_API StaticModel : public Drawable
 {
-    URHO3D_OBJECT(StaticModel, Drawable);
+    DV_OBJECT(StaticModel, Drawable);
 
 public:
     /// Construct.

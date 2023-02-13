@@ -103,7 +103,7 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog, Context* cont
     while (!feof(file))
     {
         if (fgets(buffer, sizeof(buffer), file))
-            URHO3D_LOGRAW(String(buffer));
+            DV_LOGRAW(String(buffer));
     }
     int exitCode = pclose(file);
 
@@ -229,7 +229,7 @@ public:
     /// The function to run in the thread.
     void ThreadFunction() override
     {
-        URHO3D_PROFILE_THREAD("AsyncSystemCommand Thread");
+        DV_PROFILE_THREAD("AsyncSystemCommand Thread");
 
         exitCode_ = DoSystemCommand(commandLine_, false, nullptr);
         completed_ = true;
@@ -256,7 +256,7 @@ public:
     /// The function to run in the thread.
     void ThreadFunction() override
     {
-        URHO3D_PROFILE_THREAD("AsyncSystemRun Thread");
+        DV_PROFILE_THREAD("AsyncSystemRun Thread");
 
         exitCode_ = DoSystemRun(fileName_, arguments_);
         completed_ = true;
@@ -272,7 +272,7 @@ private:
 FileSystem::FileSystem(Context* context) :
     Object(context)
 {
-    SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(FileSystem, HandleBeginFrame));
+    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(FileSystem, HandleBeginFrame));
 
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
@@ -294,19 +294,19 @@ bool FileSystem::SetCurrentDir(const String& pathName)
 {
     if (!CheckAccess(pathName))
     {
-        URHO3D_LOGERROR("Access denied to " + pathName);
+        DV_LOGERROR("Access denied to " + pathName);
         return false;
     }
 #ifdef _WIN32
     if (SetCurrentDirectoryW(GetWideNativePath(pathName).CString()) == FALSE)
     {
-        URHO3D_LOGERROR("Failed to change directory to " + pathName);
+        DV_LOGERROR("Failed to change directory to " + pathName);
         return false;
     }
 #else
     if (chdir(GetNativePath(pathName).CString()) != 0)
     {
-        URHO3D_LOGERROR("Failed to change directory to " + pathName);
+        DV_LOGERROR("Failed to change directory to " + pathName);
         return false;
     }
 #endif
@@ -318,7 +318,7 @@ bool FileSystem::CreateDir(const String& pathName)
 {
     if (!CheckAccess(pathName))
     {
-        URHO3D_LOGERROR("Access denied to " + pathName);
+        DV_LOGERROR("Access denied to " + pathName);
         return false;
     }
 
@@ -338,9 +338,9 @@ bool FileSystem::CreateDir(const String& pathName)
 #endif
 
     if (success)
-        URHO3D_LOGDEBUG("Created directory " + pathName);
+        DV_LOGDEBUG("Created directory " + pathName);
     else
-        URHO3D_LOGERROR("Failed to create directory " + pathName);
+        DV_LOGERROR("Failed to create directory " + pathName);
 
     return success;
 }
@@ -352,7 +352,7 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
 
     executeConsoleCommands_ = enable;
     if (enable)
-        SubscribeToEvent(E_CONSOLECOMMAND, URHO3D_HANDLER(FileSystem, HandleConsoleCommand));
+        SubscribeToEvent(E_CONSOLECOMMAND, DV_HANDLER(FileSystem, HandleConsoleCommand));
     else
         UnsubscribeFromEvent(E_CONSOLECOMMAND);
 }
@@ -363,7 +363,7 @@ int FileSystem::SystemCommand(const String& commandLine, bool redirectStdOutToLo
         return DoSystemCommand(commandLine, redirectStdOutToLog, context_);
     else
     {
-        URHO3D_LOGERROR("Executing an external command is not allowed");
+        DV_LOGERROR("Executing an external command is not allowed");
         return -1;
     }
 }
@@ -374,14 +374,14 @@ int FileSystem::SystemRun(const String& fileName, const Vector<String>& argument
         return DoSystemRun(fileName, arguments);
     else
     {
-        URHO3D_LOGERROR("Executing an external command is not allowed");
+        DV_LOGERROR("Executing an external command is not allowed");
         return -1;
     }
 }
 
 unsigned FileSystem::SystemCommandAsync(const String& commandLine)
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     if (allowedPaths_.Empty())
     {
         unsigned requestID = nextAsyncExecID_;
@@ -391,18 +391,18 @@ unsigned FileSystem::SystemCommandAsync(const String& commandLine)
     }
     else
     {
-        URHO3D_LOGERROR("Executing an external command is not allowed");
+        DV_LOGERROR("Executing an external command is not allowed");
         return M_MAX_UNSIGNED;
     }
 #else
-    URHO3D_LOGERROR("Can not execute an asynchronous command as threading is disabled");
+    DV_LOGERROR("Can not execute an asynchronous command as threading is disabled");
     return M_MAX_UNSIGNED;
 #endif
 }
 
 unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>& arguments)
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     if (allowedPaths_.Empty())
     {
         unsigned requestID = nextAsyncExecID_;
@@ -412,11 +412,11 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
     }
     else
     {
-        URHO3D_LOGERROR("Executing an external command is not allowed");
+        DV_LOGERROR("Executing an external command is not allowed");
         return M_MAX_UNSIGNED;
     }
 #else
-    URHO3D_LOGERROR("Can not run asynchronously as threading is disabled");
+    DV_LOGERROR("Can not run asynchronously as threading is disabled");
     return M_MAX_UNSIGNED;
 #endif
 }
@@ -427,7 +427,7 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
     {
         if (!FileExists(fileName) && !DirExists(fileName))
         {
-            URHO3D_LOGERROR("File or directory " + fileName + " not found");
+            DV_LOGERROR("File or directory " + fileName + " not found");
             return false;
         }
 
@@ -446,12 +446,12 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
             arguments) == 0;
 #endif
         if (!success)
-            URHO3D_LOGERROR("Failed to open " + fileName + " externally");
+            DV_LOGERROR("Failed to open " + fileName + " externally");
         return success;
     }
     else
     {
-        URHO3D_LOGERROR("Opening a file externally is not allowed");
+        DV_LOGERROR("Opening a file externally is not allowed");
         return false;
     }
 }
@@ -460,12 +460,12 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 {
     if (!CheckAccess(GetPath(srcFileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + srcFileName);
+        DV_LOGERROR("Access denied to " + srcFileName);
         return false;
     }
     if (!CheckAccess(GetPath(destFileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + destFileName);
+        DV_LOGERROR("Access denied to " + destFileName);
         return false;
     }
 
@@ -488,12 +488,12 @@ bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 {
     if (!CheckAccess(GetPath(srcFileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + srcFileName);
+        DV_LOGERROR("Access denied to " + srcFileName);
         return false;
     }
     if (!CheckAccess(GetPath(destFileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + destFileName);
+        DV_LOGERROR("Access denied to " + destFileName);
         return false;
     }
 
@@ -508,7 +508,7 @@ bool FileSystem::Delete(const String& fileName)
 {
     if (!CheckAccess(GetPath(fileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + fileName);
+        DV_LOGERROR("Access denied to " + fileName);
         return false;
     }
 
@@ -583,9 +583,9 @@ bool FileSystem::FileExists(const String& fileName) const
         return false;
 
 #ifdef __ANDROID__
-    if (URHO3D_IS_ASSET(fileName))
+    if (DV_IS_ASSET(fileName))
     {
-        SDL_RWops* rwOps = SDL_RWFromFile(URHO3D_ASSET(fileName), "rb");
+        SDL_RWops* rwOps = SDL_RWFromFile(DV_ASSET(fileName), "rb");
         if (rwOps)
         {
             SDL_RWclose(rwOps);
@@ -625,10 +625,10 @@ bool FileSystem::DirExists(const String& pathName) const
     String fixedName = GetNativePath(RemoveTrailingSlash(pathName));
 
 #ifdef __ANDROID__
-    if (URHO3D_IS_ASSET(fixedName))
+    if (DV_IS_ASSET(fixedName))
     {
         // Split the pathname into two components: the longest parent directory path and the last name component
-        String assetPath(URHO3D_ASSET((fixedName + "/")));
+        String assetPath(DV_ASSET((fixedName + "/")));
         String parentPath;
         i32 pos = assetPath.FindLast('/', assetPath.Length() - 2);
         if (pos != String::NPOS)
@@ -738,7 +738,7 @@ String FileSystem::GetAppPreferencesDir(const String& org, const String& app) co
     }
     else
 #endif
-        URHO3D_LOGWARNING("Could not get application preferences directory");
+        DV_LOGWARNING("Could not get application preferences directory");
 
     return dir;
 }
@@ -788,9 +788,9 @@ void FileSystem::ScanDirInternal(Vector<String>& result, String path, const Stri
         filterExtension.Clear();
 
 #ifdef __ANDROID__
-    if (URHO3D_IS_ASSET(path))
+    if (DV_IS_ASSET(path))
     {
-        String assetPath(URHO3D_ASSET(path));
+        String assetPath(DV_ASSET(path));
         assetPath.Resize(assetPath.Length() - 1);       // AssetManager.list() does not like trailing slash
         int count;
         char** list = SDL_Android_GetFileList(assetPath.CString(), &count);

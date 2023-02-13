@@ -56,7 +56,7 @@ bool RenderSurface::CreateRenderBuffer_OGL(unsigned width, unsigned height, unsi
     {
         glGenRenderbuffersEXT(1, &renderBuffer_);
         glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, renderBuffer_);
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
         if (multiSample > 1)
             glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, multiSample, format, width, height);
         else

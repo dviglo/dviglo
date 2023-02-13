@@ -27,7 +27,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(RenderToTexture)
+DV_DEFINE_APPLICATION_MAIN(RenderToTexture)
 
 RenderToTexture::RenderToTexture(Context* context) :
     Sample(context)
@@ -256,7 +256,7 @@ void RenderToTexture::MoveCamera(float timeStep)
 void RenderToTexture::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(RenderToTexture, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(RenderToTexture, HandleUpdate));
 }
 
 void RenderToTexture::HandleUpdate(StringHash eventType, VariantMap& eventData)

@@ -41,7 +41,7 @@ class XMLElement;
 struct CollisionGeometryData;
 
 /// Physics raycast hit.
-struct URHO3D_API PhysicsRaycastResult
+struct DV_API PhysicsRaycastResult
 {
     /// Test for inequality, added to prevent GCC from complaining.
     bool operator !=(const PhysicsRaycastResult& rhs) const
@@ -109,9 +109,9 @@ inline constexpr float DEFAULT_MAX_NETWORK_ANGULAR_VELOCITY = 100.0f;
 using CollisionGeometryDataCache = HashMap<Pair<Model*, i32>, SharedPtr<CollisionGeometryData>>;
 
 /// Physics simulation world component. Should be added only to the root scene node.
-class URHO3D_API PhysicsWorld : public Component, public btIDebugDraw
+class DV_API PhysicsWorld : public Component, public btIDebugDraw
 {
-    URHO3D_OBJECT(PhysicsWorld, Component);
+    DV_OBJECT(PhysicsWorld, Component);
 
     friend void InternalPreTickCallback(btDynamicsWorld* world, btScalar timeStep);
     friend void InternalTickCallback(btDynamicsWorld* world, btScalar timeStep);
@@ -352,6 +352,6 @@ private:
 };
 
 /// Register Physics library objects.
-void URHO3D_API RegisterPhysicsLibrary(Context* context);
+void DV_API RegisterPhysicsLibrary(Context* context);
 
 }

@@ -12,9 +12,9 @@ namespace dviglo
 class ListView;
 
 /// %Menu %UI element that displays a popup list view.
-class URHO3D_API DropDownList : public Menu
+class DV_API DropDownList : public Menu
 {
-    URHO3D_OBJECT(DropDownList, Menu);
+    DV_OBJECT(DropDownList, Menu);
 
 public:
     /// Construct.

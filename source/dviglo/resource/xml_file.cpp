@@ -67,7 +67,7 @@ bool XMLFile::BeginLoad(Deserializer& source)
     unsigned dataSize = source.GetSize();
     if (!dataSize && !source.GetName().Empty())
     {
-        URHO3D_LOGERROR("Zero sized XML data in " + source.GetName());
+        DV_LOGERROR("Zero sized XML data in " + source.GetName());
         return false;
     }
 
@@ -77,7 +77,7 @@ bool XMLFile::BeginLoad(Deserializer& source)
 
     if (!document_->load_buffer(buffer.Get(), dataSize))
     {
-        URHO3D_LOGERROR("Could not parse XML data from " + source.GetName());
+        DV_LOGERROR("Could not parse XML data from " + source.GetName());
         document_->reset();
         return false;
     }
@@ -93,7 +93,7 @@ bool XMLFile::BeginLoad(Deserializer& source)
             cache->GetTempResource<XMLFile>(inherit);
         if (!inheritedXMLFile)
         {
-            URHO3D_LOGERRORF("Could not find inherited XML file: %s", inherit.CString());
+            DV_LOGERRORF("Could not find inherited XML file: %s", inherit.CString());
             return false;
         }
 
@@ -141,7 +141,7 @@ XMLElement XMLFile::GetOrCreateRoot(const String& name)
         return root;
     root = GetRoot();
     if (root.NotNull())
-        URHO3D_LOGWARNING("XMLFile already has root " + root.GetName() + ", deleting it and creating root " + name);
+        DV_LOGWARNING("XMLFile already has root " + root.GetName() + ", deleting it and creating root " + name);
     return CreateRoot(name);
 }
 
@@ -188,7 +188,7 @@ void XMLFile::Patch(const XMLElement& patchElement)
         pugi::xml_attribute sel = patch.attribute("sel");
         if (sel.empty())
         {
-            URHO3D_LOGERROR("XML Patch failed due to node not having a sel attribute.");
+            DV_LOGERROR("XML Patch failed due to node not having a sel attribute.");
             continue;
         }
 
@@ -196,7 +196,7 @@ void XMLFile::Patch(const XMLElement& patchElement)
         pugi::xpath_node original = document_->select_node(sel.value());
         if (!original)
         {
-            URHO3D_LOGERRORF("XML Patch failed with bad select: %s.", sel.value());
+            DV_LOGERRORF("XML Patch failed with bad select: %s.", sel.value());
             continue;
         }
 
@@ -207,7 +207,7 @@ void XMLFile::Patch(const XMLElement& patchElement)
         else if (strcmp(patch.name(), "remove") == 0)
             PatchRemove(original);
         else
-            URHO3D_LOGERROR("XMLFiles used for patching should only use 'add', 'replace' or 'remove' elements.");
+            DV_LOGERROR("XMLFiles used for patching should only use 'add', 'replace' or 'remove' elements.");
     }
 }
 
@@ -216,7 +216,7 @@ void XMLFile::PatchAdd(const pugi::xml_node& patch, pugi::xpath_node& original) 
     // If not a node, log an error
     if (original.attribute())
     {
-        URHO3D_LOGERRORF("XML Patch failed calling Add due to not selecting a node, %s attribute was selected.",
+        DV_LOGERRORF("XML Patch failed calling Add due to not selecting a node, %s attribute was selected.",
             original.attribute().name());
         return;
     }
@@ -336,7 +336,7 @@ void XMLFile::AddAttribute(const pugi::xml_node& patch, const pugi::xpath_node& 
 
     if (!patch.first_child() && patch.first_child().type() != pugi::node_pcdata)
     {
-        URHO3D_LOGERRORF("XML Patch failed calling Add due to attempting to add non text to an attribute for %s.", attribute.value());
+        DV_LOGERRORF("XML Patch failed calling Add due to attempting to add non text to an attribute for %s.", attribute.value());
         return;
     }
 

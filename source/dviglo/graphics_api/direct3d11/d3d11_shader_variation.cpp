@@ -82,7 +82,7 @@ bool ShaderVariation::Create_D3D11()
             HRESULT hr = device->CreateVertexShader(&byteCode_[0], byteCode_.Size(), nullptr, (ID3D11VertexShader**)&object_.ptr_);
             if (FAILED(hr))
             {
-                URHO3D_SAFE_RELEASE(object_.ptr_);
+                DV_SAFE_RELEASE(object_.ptr_);
                 compilerOutput_ = "Could not create vertex shader (HRESULT " + ToStringHex((unsigned)hr) + ")";
             }
         }
@@ -96,7 +96,7 @@ bool ShaderVariation::Create_D3D11()
             HRESULT hr = device->CreatePixelShader(&byteCode_[0], byteCode_.Size(), nullptr, (ID3D11PixelShader**)&object_.ptr_);
             if (FAILED(hr))
             {
-                URHO3D_SAFE_RELEASE(object_.ptr_);
+                DV_SAFE_RELEASE(object_.ptr_);
                 compilerOutput_ = "Could not create pixel shader (HRESULT " + ToStringHex((unsigned)hr) + ")";
             }
         }
@@ -127,7 +127,7 @@ void ShaderVariation::Release_D3D11()
                 graphics_->SetShaders(nullptr, nullptr);
         }
 
-        URHO3D_SAFE_RELEASE(object_.ptr_);
+        DV_SAFE_RELEASE(object_.ptr_);
     }
 
     compilerOutput_.Clear();
@@ -167,7 +167,7 @@ bool ShaderVariation::LoadByteCode_D3D11(const String& binaryShaderName)
     SharedPtr<File> file = cache->GetFile(binaryShaderName);
     if (!file || file->ReadFileID() != "USHD")
     {
-        URHO3D_LOGERROR(binaryShaderName + " is not a valid shader bytecode file");
+        DV_LOGERROR(binaryShaderName + " is not a valid shader bytecode file");
         return false;
     }
 
@@ -205,16 +205,16 @@ bool ShaderVariation::LoadByteCode_D3D11(const String& binaryShaderName)
         file->Read(&byteCode_[0], byteCodeSize);
 
         if (type_ == VS)
-            URHO3D_LOGDEBUG("Loaded cached vertex shader " + GetFullName());
+            DV_LOGDEBUG("Loaded cached vertex shader " + GetFullName());
         else
-            URHO3D_LOGDEBUG("Loaded cached pixel shader " + GetFullName());
+            DV_LOGDEBUG("Loaded cached pixel shader " + GetFullName());
 
         CalculateConstantBufferSizes_D3D11();
         return true;
     }
     else
     {
-        URHO3D_LOGERROR(binaryShaderName + " has zero length bytecode");
+        DV_LOGERROR(binaryShaderName + " has zero length bytecode");
         return false;
     }
 }
@@ -272,7 +272,7 @@ bool ShaderVariation::Compile_D3D11()
         // In debug mode, check that all defines are referenced by the shader code
 #ifdef _DEBUG
         if (sourceCode.Find(defines[i]) == String::NPOS)
-            URHO3D_LOGWARNING("Shader " + GetFullName() + " does not use the define " + defines[i]);
+            DV_LOGWARNING("Shader " + GetFullName() + " does not use the define " + defines[i]);
 #endif
     }
 
@@ -295,9 +295,9 @@ bool ShaderVariation::Compile_D3D11()
     else
     {
         if (type_ == VS)
-            URHO3D_LOGDEBUG("Compiled vertex shader " + GetFullName());
+            DV_LOGDEBUG("Compiled vertex shader " + GetFullName());
         else
-            URHO3D_LOGDEBUG("Compiled pixel shader " + GetFullName());
+            DV_LOGDEBUG("Compiled pixel shader " + GetFullName());
 
         unsigned char* bufData = (unsigned char*)shaderCode->GetBufferPointer();
         unsigned bufSize = (unsigned)shaderCode->GetBufferSize();
@@ -314,8 +314,8 @@ bool ShaderVariation::Compile_D3D11()
         strippedCode->Release();
     }
 
-    URHO3D_SAFE_RELEASE(shaderCode);
-    URHO3D_SAFE_RELEASE(errorMsgs);
+    DV_SAFE_RELEASE(shaderCode);
+    DV_SAFE_RELEASE(errorMsgs);
 
     return !byteCode_.Empty();
 }
@@ -328,8 +328,8 @@ void ShaderVariation::ParseParameters_D3D11(unsigned char* bufData, unsigned buf
     HRESULT hr = D3DReflect(bufData, bufSize, IID_ID3D11ShaderReflection, (void**)&reflection);
     if (FAILED(hr) || !reflection)
     {
-        URHO3D_SAFE_RELEASE(reflection);
-        URHO3D_LOGD3DERROR("Failed to reflect vertex shader's input signature", hr);
+        DV_SAFE_RELEASE(reflection);
+        DV_LOGD3DERROR("Failed to reflect vertex shader's input signature", hr);
         return;
     }
 

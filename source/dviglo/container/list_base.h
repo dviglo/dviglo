@@ -68,7 +68,7 @@ struct ListIteratorBase
 };
 
 /// Doubly-linked list base class.
-class URHO3D_API ListBase
+class DV_API ListBase
 {
 public:
     /// Construct.

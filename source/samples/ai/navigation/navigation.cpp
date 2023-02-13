@@ -26,7 +26,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Navigation)
+DV_DEFINE_APPLICATION_MAIN(Navigation)
 
 Navigation::Navigation(Context* context) :
     Sample(context),
@@ -196,11 +196,11 @@ void Navigation::SetupViewport()
 void Navigation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Navigation, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Navigation, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(Navigation, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Navigation, HandlePostRenderUpdate));
 }
 
 void Navigation::MoveCamera(float timeStep)

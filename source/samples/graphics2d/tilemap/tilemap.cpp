@@ -22,7 +22,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Urho2DTileMap)
+DV_DEFINE_APPLICATION_MAIN(Urho2DTileMap)
 
 Urho2DTileMap::Urho2DTileMap(Context* context) :
     Sample(context)
@@ -152,10 +152,10 @@ void Urho2DTileMap::MoveCamera(float timeStep)
 void Urho2DTileMap::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Urho2DTileMap, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DTileMap, HandleUpdate));
 
     // Listen to mouse clicks
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, URHO3D_HANDLER(Urho2DTileMap, HandleMouseButtonDown));
+    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DTileMap, HandleMouseButtonDown));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);

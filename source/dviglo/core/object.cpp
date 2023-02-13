@@ -284,18 +284,18 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
 {
     if (!Thread::IsMainThread())
     {
-        URHO3D_LOGERROR("Sending events is only supported from the main thread");
+        DV_LOGERROR("Sending events is only supported from the main thread");
         return;
     }
 
     if (blockEvents_)
         return;
 
-#ifdef URHO3D_TRACY_PROFILING
-    URHO3D_PROFILE_COLOR(SendEvent, URHO3D_PROFILE_EVENT_COLOR);
+#ifdef DV_TRACY_PROFILING
+    DV_PROFILE_COLOR(SendEvent, DV_PROFILE_EVENT_COLOR);
 
     const String& eventName = GetEventNameRegister().GetString(eventType);
-    URHO3D_PROFILE_STR(eventName.CString(), eventName.Length());
+    DV_PROFILE_STR(eventName.CString(), eventName.Length());
 #endif
 
     // Make a weak pointer to self to check for destruction during event handling

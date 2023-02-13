@@ -24,7 +24,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(RibbonTrailDemo)
+DV_DEFINE_APPLICATION_MAIN(RibbonTrailDemo)
 
 RibbonTrailDemo::RibbonTrailDemo(Context* context) :
     Sample(context),
@@ -224,7 +224,7 @@ void RibbonTrailDemo::MoveCamera(float timeStep)
 void RibbonTrailDemo::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(RibbonTrailDemo, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(RibbonTrailDemo, HandleUpdate));
 }
 
 void RibbonTrailDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)

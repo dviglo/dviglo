@@ -24,7 +24,7 @@ const int SERVER_PORT = 54654;
 ///     - Implementing simple chat functionality with network messages
 class LANDiscovery : public Sample
 {
-    URHO3D_OBJECT(LANDiscovery, Sample);
+    DV_OBJECT(LANDiscovery, Sample);
 
 public:
     /// Construct.

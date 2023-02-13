@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
 
 #include "../precompiled.h"
 
@@ -32,7 +32,7 @@ BackgroundLoader::~BackgroundLoader()
 
 void BackgroundLoader::ThreadFunction()
 {
-    URHO3D_PROFILE_THREAD("BackgroundLoader Thread");
+    DV_PROFILE_THREAD("BackgroundLoader Thread");
 
     while (shouldRun_)
     {
@@ -111,7 +111,7 @@ bool BackgroundLoader::QueueResource(StringHash type, const String& name, bool s
     item.resource_ = DynamicCast<Resource>(owner_->GetContext()->CreateObject(type));
     if (!item.resource_)
     {
-        URHO3D_LOGERROR("Could not load unknown resource type " + String(type));
+        DV_LOGERROR("Could not load unknown resource type " + String(type));
 
         if (sendEventOnFailure && Thread::IsMainThread())
         {
@@ -126,7 +126,7 @@ bool BackgroundLoader::QueueResource(StringHash type, const String& name, bool s
         return false;
     }
 
-    URHO3D_LOGDEBUG("Background loading resource " + name);
+    DV_LOGDEBUG("Background loading resource " + name);
 
     item.resource_->SetName(name);
     item.resource_->SetAsyncLoadState(ASYNC_QUEUED);
@@ -143,7 +143,7 @@ bool BackgroundLoader::QueueResource(StringHash type, const String& name, bool s
             callerItem.dependencies_.Insert(key);
         }
         else
-            URHO3D_LOGWARNING("Resource " + caller->GetName() +
+            DV_LOGWARNING("Resource " + caller->GetName() +
                        " requested for a background loaded resource but was not in the background load queue");
     }
 
@@ -184,7 +184,7 @@ void BackgroundLoader::WaitForResource(StringHash type, StringHash nameHash)
             }
 
             if (didWait)
-                URHO3D_LOGDEBUG("Waited " + String(waitTimer.GetUSec(false) / 1000) + " ms for background loaded resource " +
+                DV_LOGDEBUG("Waited " + String(waitTimer.GetUSec(false) / 1000) + " ms for background loaded resource " +
                          resource->GetName());
         }
 
@@ -248,12 +248,12 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
     // If BeginLoad() phase was successful, call EndLoad() and get the final success/failure result
     if (success)
     {
-#ifdef URHO3D_TRACY_PROFILING
-        URHO3D_PROFILE_COLOR(FinishBackgroundLoading, URHO3D_PROFILE_RESOURCE_COLOR);
+#ifdef DV_TRACY_PROFILING
+        DV_PROFILE_COLOR(FinishBackgroundLoading, DV_PROFILE_RESOURCE_COLOR);
 
         String profileBlockName("Finish" + resource->GetTypeName());
-        URHO3D_PROFILE_STR(profileBlockName.CString(), profileBlockName.Length());
-#elif defined(URHO3D_PROFILING)
+        DV_PROFILE_STR(profileBlockName.CString(), profileBlockName.Length());
+#elif defined(DV_PROFILING)
         String profileBlockName("Finish" + resource->GetTypeName());
 
         auto* profiler = owner_->GetSubsystem<Profiler>();
@@ -261,10 +261,10 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
             profiler->BeginBlock(profileBlockName.CString());
 #endif
 
-        URHO3D_LOGDEBUG("Finishing background loaded resource " + resource->GetName());
+        DV_LOGDEBUG("Finishing background loaded resource " + resource->GetName());
         success = resource->EndLoad();
 
-#ifdef URHO3D_PROFILING
+#ifdef DV_PROFILING
         if (profiler)
             profiler->EndBlock();
 #endif

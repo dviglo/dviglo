@@ -17,7 +17,7 @@
 #include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
-URHO3D_DEFINE_APPLICATION_MAIN(ConsoleInput)
+DV_DEFINE_APPLICATION_MAIN(ConsoleInput)
 
 // Hunger level descriptions
 const char* hungerLevels[] = {
@@ -47,11 +47,11 @@ void ConsoleInput::Start()
     Sample::Start();
 
     // Subscribe to console commands and the frame update
-    SubscribeToEvent(E_CONSOLECOMMAND, URHO3D_HANDLER(ConsoleInput, HandleConsoleCommand));
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(ConsoleInput, HandleUpdate));
+    SubscribeToEvent(E_CONSOLECOMMAND, DV_HANDLER(ConsoleInput, HandleConsoleCommand));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(ConsoleInput, HandleUpdate));
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(ConsoleInput, HandleEscKeyDown));
+    SubscribeToEvent(E_KEYDOWN, DV_HANDLER(ConsoleInput, HandleEscKeyDown));
     UnsubscribeFromEvent(E_KEYUP);
 
     // Hide logo to make room for the console
@@ -261,5 +261,5 @@ void ConsoleInput::HandleInput(const String& input)
 void ConsoleInput::Print(const String& output)
 {
     // Logging appears both in the engine console and stdout
-    URHO3D_LOGRAW(output + "\n");
+    DV_LOGRAW(output + "\n");
 }

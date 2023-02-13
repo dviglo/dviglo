@@ -10,7 +10,7 @@
 
 #include <memory>
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
 struct spAnimationState;
 struct spAnimationStateData;
 struct spSkeleton;
@@ -38,9 +38,9 @@ namespace Spriter
 class AnimationSet2D;
 
 /// Animated sprite component, it uses to play animation created by Spine (http://www.esotericsoftware.com) and Spriter (http://www.brashmonkey.com/).
-class URHO3D_API AnimatedSprite2D : public StaticSprite2D
+class DV_API AnimatedSprite2D : public StaticSprite2D
 {
-    URHO3D_OBJECT(AnimatedSprite2D, StaticSprite2D);
+    DV_OBJECT(AnimatedSprite2D, StaticSprite2D);
 
 public:
     /// Construct.
@@ -91,7 +91,7 @@ protected:
     void HandleScenePostUpdate(StringHash eventType, VariantMap& eventData);
     /// Update animation.
     void UpdateAnimation(float timeStep);
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     /// Handle set spine animation.
     void SetSpineAnimation();
     /// Update spine animation.
@@ -119,7 +119,7 @@ protected:
     /// Loop mode.
     LoopMode2D loopMode_;
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     /// Skeleton.
     spSkeleton* skeleton_;
     /// Animation state data.

@@ -12,9 +12,9 @@ namespace dviglo
 class Sprite2D;
 
 /// Static sprite component.
-class URHO3D_API StaticSprite2D : public Drawable2D
+class DV_API StaticSprite2D : public Drawable2D
 {
-    URHO3D_OBJECT(StaticSprite2D, Drawable2D);
+    DV_OBJECT(StaticSprite2D, Drawable2D);
 
 public:
     /// Construct.

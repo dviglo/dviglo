@@ -11,7 +11,7 @@ namespace dviglo
 {
 
 /// Three-dimensional vector with integer values.
-class URHO3D_API IntVector3
+class DV_API IntVector3
 {
 public:
     /// Construct a zero vector.
@@ -163,7 +163,7 @@ public:
 };
 
 /// Three-dimensional vector.
-class URHO3D_API Vector3
+class DV_API Vector3
 {
 public:
     /// Construct a zero vector.

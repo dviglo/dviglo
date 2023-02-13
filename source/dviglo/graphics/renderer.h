@@ -154,9 +154,9 @@ enum DeferredLightPSVariation
 };
 
 /// High-level rendering subsystem. Manages drawing of 3D views.
-class URHO3D_API Renderer : public Object
+class DV_API Renderer : public Object
 {
-    URHO3D_OBJECT(Renderer, Object);
+    DV_OBJECT(Renderer, Object);
 
 public:
     using ShadowMapFilter = void(Object::*)(View* view, Texture2D* shadowMap, float blurScale);

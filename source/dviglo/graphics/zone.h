@@ -12,9 +12,9 @@ namespace dviglo
 {
 
 /// %Component that describes global rendering properties.
-class URHO3D_API Zone : public Drawable
+class DV_API Zone : public Drawable
 {
-    URHO3D_OBJECT(Zone, Drawable);
+    DV_OBJECT(Zone, Drawable);
 
 public:
     /// Construct.

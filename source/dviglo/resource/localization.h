@@ -11,9 +11,9 @@ namespace dviglo
 {
 
 /// %Localization subsystem. Stores all the strings in all languages.
-class URHO3D_API Localization : public Object
+class DV_API Localization : public Object
 {
-    URHO3D_OBJECT(Localization, Object);
+    DV_OBJECT(Localization, Object);
 
 public:
     /// Construct.

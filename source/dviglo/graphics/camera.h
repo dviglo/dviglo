@@ -26,12 +26,12 @@ enum ViewOverride : unsigned
     VO_DISABLE_SHADOWS = 0x2,
     VO_DISABLE_OCCLUSION = 0x4,
 };
-URHO3D_FLAGSET(ViewOverride, ViewOverrideFlags);
+DV_FLAGSET(ViewOverride, ViewOverrideFlags);
 
 /// %Camera component.
-class URHO3D_API Camera : public Component
+class DV_API Camera : public Component
 {
-    URHO3D_OBJECT(Camera, Component);
+    DV_OBJECT(Camera, Component);
 
 public:
     /// Construct.

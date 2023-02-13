@@ -12,7 +12,7 @@ using namespace dviglo;
 /// Custom component that creates a ragdoll upon collision.
 class CreateRagdoll : public Component
 {
-    URHO3D_OBJECT(CreateRagdoll, Component);
+    DV_OBJECT(CreateRagdoll, Component);
 
 public:
     /// Construct.

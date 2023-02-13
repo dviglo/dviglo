@@ -28,10 +28,10 @@ public:
     /// Process work items until stopped.
     void ThreadFunction() override
     {
-#ifdef URHO3D_TRACY_PROFILING
+#ifdef DV_TRACY_PROFILING
         String name;
         name.AppendWithFormat("WorkerThread #%d", index_);
-        URHO3D_PROFILE_THREAD(name.CString());
+        DV_PROFILE_THREAD(name.CString());
 #endif
         // Init FPU state first
         InitFPU();
@@ -58,7 +58,7 @@ WorkQueue::WorkQueue(Context* context) :
     lastSize_(0),
     maxNonThreadedWorkMs_(5)
 {
-    SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(WorkQueue, HandleBeginFrame));
+    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(WorkQueue, HandleBeginFrame));
 }
 
 WorkQueue::~WorkQueue()
@@ -73,7 +73,7 @@ WorkQueue::~WorkQueue()
 
 void WorkQueue::CreateThreads(i32 numThreads)
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     assert(numThreads >= 0);
 
     // Other subsystems may initialize themselves according to the number of threads.
@@ -91,7 +91,7 @@ void WorkQueue::CreateThreads(i32 numThreads)
         threads_.Push(thread);
     }
 #else
-    URHO3D_LOGERROR("Can not create worker threads as threading is disabled");
+    DV_LOGERROR("Can not create worker threads as threading is disabled");
 #endif
 }
 
@@ -116,7 +116,7 @@ void WorkQueue::AddWorkItem(const SharedPtr<WorkItem>& item)
 {
     if (!item)
     {
-        URHO3D_LOGERROR("Null work item submitted to the work queue");
+        DV_LOGERROR("Null work item submitted to the work queue");
         return;
     }
 
@@ -399,7 +399,7 @@ void WorkQueue::HandleBeginFrame(StringHash eventType, VariantMap& eventData)
     // If no worker threads, complete low-priority work here
     if (threads_.Empty() && !queue_.Empty())
     {
-        URHO3D_PROFILE(CompleteWorkNonthreaded);
+        DV_PROFILE(CompleteWorkNonthreaded);
 
         HiresTimer timer;
 

@@ -247,7 +247,7 @@ Renderer::Renderer(Context* context) :
     Object(context),
     defaultZone_(new Zone(context))
 {
-    SubscribeToEvent(E_SCREENMODE, URHO3D_HANDLER(Renderer, HandleScreenMode));
+    SubscribeToEvent(E_SCREENMODE, DV_HANDLER(Renderer, HandleScreenMode));
 
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
@@ -630,7 +630,7 @@ i32 Renderer::GetNumOccluders(bool allViews) const
 
 void Renderer::Update(float timeStep)
 {
-    URHO3D_PROFILE(UpdateViews);
+    DV_PROFILE(UpdateViews);
 
     views_.Clear();
     preparedViews_.Clear();
@@ -678,7 +678,7 @@ void Renderer::Render()
     // Engine does not render when window is closed or device is lost
     assert(graphics_ && graphics_->IsInitialized() && !graphics_->IsDeviceLost());
 
-    URHO3D_PROFILE(RenderViews);
+    DV_PROFILE(RenderViews);
 
     // If the indirection textures have lost content (OpenGL mode only), restore them now
     if (faceSelectCubeMap_ && faceSelectCubeMap_->IsDataLost())
@@ -734,7 +734,7 @@ void Renderer::Render()
 
 void Renderer::DrawDebugGeometry(bool depthTest)
 {
-    URHO3D_PROFILE(RendererDrawDebug);
+    DV_PROFILE(RendererDrawDebug);
 
     /// \todo Because debug geometry is per-scene, if two cameras show views of the same area, occlusion is not shown correctly
     HashSet<Drawable*> processedGeometries;
@@ -944,7 +944,7 @@ Texture2D* Renderer::GetShadowMap(Light* light, Camera* camera, i32 viewWidth, i
         }
         else
         {
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
             // OpenGL (desktop) and D3D11: shadow compare mode needs to be specifically enabled for the shadow map
             newShadowMap->SetFilterMode(FILTER_BILINEAR);
             newShadowMap->SetShadowCompare(shadowMapUsage == TEXTURE_DEPTHSTENCIL);
@@ -1038,7 +1038,7 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
             newTex2D->SetNumLevels(1);
             newTex2D->SetSize(width, height, format, depthStencil ? TEXTURE_DEPTHSTENCIL : TEXTURE_RENDERTARGET, multiSample, autoResolve);
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
             // OpenGL hack: clear persistent floating point screen buffers to ensure the initial contents aren't illegal (NaN)?
             // Otherwise eg. the AutoExposure post process will not work correctly
             if (Graphics::GetGAPI() == GAPI_OPENGL && persistentKey && Texture::GetDataType_OGL(format) == GL_FLOAT)
@@ -1068,7 +1068,7 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
         newBuffer->ResetUseTimer();
         screenBuffers_[searchKey].Push(newBuffer);
 
-        URHO3D_LOGDEBUG("Allocated new screen buffer size " + String(width) + "x" + String(height) + " format " + String(format));
+        DV_LOGDEBUG("Allocated new screen buffer size " + String(width) + "x" + String(height) + " format " + String(format));
         return newBuffer;
     }
     else
@@ -1262,7 +1262,7 @@ void Renderer::SetBatchShaders(Batch& batch, Technique* tech, bool allowShadows,
         if (!shaderErrorDisplayed_.Contains(tech))
         {
             shaderErrorDisplayed_.Insert(tech);
-            URHO3D_LOGERROR("Technique " + tech->GetName() + " has missing shaders");
+            DV_LOGERROR("Technique " + tech->GetName() + " has missing shaders");
         }
     }
 }
@@ -1354,13 +1354,13 @@ bool Renderer::ResizeInstancingBuffer(i32 numInstances)
     const Vector<VertexElement> instancingBufferElements = CreateInstancingBufferElements(numExtraInstancingBufferElements_);
     if (!instancingBuffer_->SetSize(newSize, instancingBufferElements, true))
     {
-        URHO3D_LOGERROR("Failed to resize instancing buffer to " + String(newSize));
+        DV_LOGERROR("Failed to resize instancing buffer to " + String(newSize));
         // If failed, try to restore the old size
         instancingBuffer_->SetSize(oldSize, instancingBufferElements, true);
         return false;
     }
 
-    URHO3D_LOGDEBUG("Resized instancing buffer to " + String(newSize));
+    DV_LOGDEBUG("Resized instancing buffer to " + String(newSize));
     return true;
 }
 
@@ -1533,7 +1533,7 @@ void Renderer::RemoveUnusedBuffers()
     {
         if (occlusionBuffers_[i]->GetUseTimer() > MAX_BUFFER_AGE)
         {
-            URHO3D_LOGDEBUG("Removed unused occlusion buffer");
+            DV_LOGDEBUG("Removed unused occlusion buffer");
             occlusionBuffers_.Erase(i);
         }
     }
@@ -1547,7 +1547,7 @@ void Renderer::RemoveUnusedBuffers()
             Texture* buffer = buffers[j];
             if (buffer->GetUseTimer() > MAX_BUFFER_AGE)
             {
-                URHO3D_LOGDEBUG("Removed unused screen buffer size " + String(buffer->GetWidth()) + "x" + String(buffer->GetHeight()) +
+                DV_LOGDEBUG("Removed unused screen buffer size " + String(buffer->GetWidth()) + "x" + String(buffer->GetHeight()) +
                          " format " + String(buffer->GetFormat()));
                 buffers.Erase(j);
             }
@@ -1580,7 +1580,7 @@ void Renderer::Initialize()
     if (!graphics || !graphics->IsInitialized() || !cache)
         return;
 
-    URHO3D_PROFILE(InitRenderer);
+    DV_PROFILE(InitRenderer);
 
     graphics_ = graphics;
 
@@ -1605,14 +1605,14 @@ void Renderer::Initialize()
 
     initialized_ = true;
 
-    SubscribeToEvent(E_RENDERUPDATE, URHO3D_HANDLER(Renderer, HandleRenderUpdate));
+    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Renderer, HandleRenderUpdate));
 
-    URHO3D_LOGINFO("Initialized renderer");
+    DV_LOGINFO("Initialized renderer");
 }
 
 void Renderer::LoadShaders()
 {
-    URHO3D_LOGDEBUG("Reloading shaders");
+    DV_LOGDEBUG("Reloading shaders");
 
     // Release old material shaders, mark them for reload
     ReleaseMaterialShaders();
@@ -1635,7 +1635,7 @@ void Renderer::LoadShaders()
 
 void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& vertexShaders, Vector<SharedPtr<ShaderVariation>>& pixelShaders, const BatchQueue& queue)
 {
-    URHO3D_PROFILE(LoadPassShaders);
+    DV_PROFILE(LoadPassShaders);
 
     // Forget all the old shaders
     vertexShaders.Clear();
@@ -1809,7 +1809,7 @@ void Renderer::CreateGeometries()
     pointLightGeometry_->SetIndexBuffer(plib);
     pointLightGeometry_->SetDrawRange(TRIANGLE_LIST, 0, plib->GetIndexCount());
 
-#if !defined(URHO3D_GLES2)
+#if !defined(DV_GLES2)
     if (graphics_->GetShadowMapFormat())
     {
         faceSelectCubeMap_ = new TextureCube(context_);

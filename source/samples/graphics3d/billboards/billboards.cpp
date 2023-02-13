@@ -26,7 +26,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Billboards)
+DV_DEFINE_APPLICATION_MAIN(Billboards)
 
 Billboards::Billboards(Context* context) :
     Sample(context),
@@ -224,11 +224,11 @@ void Billboards::SetupViewport()
 void Billboards::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Billboards, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Billboards, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, URHO3D_HANDLER(Billboards, HandlePostRenderUpdate));
+    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Billboards, HandlePostRenderUpdate));
 }
 
 void Billboards::MoveCamera(float timeStep)

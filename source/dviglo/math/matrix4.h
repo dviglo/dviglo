@@ -15,7 +15,7 @@ namespace dviglo
 class Matrix3x4;
 
 /// 4x4 matrix for arbitrary linear transforms including projection.
-class URHO3D_API Matrix4
+class DV_API Matrix4
 {
 public:
 

@@ -94,24 +94,24 @@ void BillboardSet::RegisterObject(Context* context)
 {
     context->RegisterFactory<BillboardSet>(GEOMETRY_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Relative Position", IsRelative, SetRelative, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Relative Scale", IsScaled, SetScaled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Sort By Distance", IsSorted, SetSorted, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Fixed Screen Size", IsFixedScreenSize, SetFixedScreenSize, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Face Camera Mode", GetFaceCameraMode, SetFaceCameraMode, faceCameraModeNames, FC_ROTATE_XYZ, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Min Angle", GetMinAngle, SetMinAngle, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Animation LOD Bias", GetAnimationLodBias, SetAnimationLodBias, 1.0f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Drawable);
-    URHO3D_ACCESSOR_ATTRIBUTE("Billboards", GetBillboardsAttr, SetBillboardsAttr, Variant::emptyVariantVector, AM_FILE)
+    DV_ACCESSOR_ATTRIBUTE("Relative Position", IsRelative, SetRelative, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Relative Scale", IsScaled, SetScaled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Sort By Distance", IsSorted, SetSorted, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Fixed Screen Size", IsFixedScreenSize, SetFixedScreenSize, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
+    DV_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Face Camera Mode", GetFaceCameraMode, SetFaceCameraMode, faceCameraModeNames, FC_ROTATE_XYZ, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Min Angle", GetMinAngle, SetMinAngle, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Animation LOD Bias", GetAnimationLodBias, SetAnimationLodBias, 1.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Drawable);
+    DV_ACCESSOR_ATTRIBUTE("Billboards", GetBillboardsAttr, SetBillboardsAttr, Variant::emptyVariantVector, AM_FILE)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, billboardsStructureElementNames);
-    URHO3D_ACCESSOR_ATTRIBUTE("Network Billboards", GetNetBillboardsAttr, SetNetBillboardsAttr,
+    DV_ACCESSOR_ATTRIBUTE("Network Billboards", GetNetBillboardsAttr, SetNetBillboardsAttr,
         Variant::emptyBuffer, AM_NET | AM_NOEDIT);
 }
 
@@ -246,7 +246,7 @@ void BillboardSet::SetNumBillboards(i32 num)
     // Prevent negative value being assigned from the editor
     if (num < 0)
     {
-        URHO3D_LOGWARNING("BillboardSet::SetNumBillboards(i32): num < 0");
+        DV_LOGWARNING("BillboardSet::SetNumBillboards(i32): num < 0");
         num = 0;
     }
 
@@ -344,7 +344,7 @@ Billboard* BillboardSet::GetBillboard(i32 index)
 {
     if (index < 0 || index >= billboards_.Size())
     {
-        URHO3D_LOGWARNING("BillboardSet::GetBillboard(i32): index out of range");
+        DV_LOGWARNING("BillboardSet::GetBillboard(i32): index out of range");
         return nullptr;
     }
 

@@ -79,37 +79,37 @@ void RigidBody::RegisterObject(Context* context)
 {
     context->RegisterFactory<RigidBody>(PHYSICS_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Physics Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE | AM_NOEDIT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Physics Position", GetPosition, SetPosition, Vector3::ZERO, AM_FILE | AM_NOEDIT);
-    URHO3D_ATTRIBUTE_EX("Mass", mass_, MarkBodyDirty, DEFAULT_MASS, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Friction", GetFriction, SetFriction, DEFAULT_FRICTION, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Anisotropic Friction", GetAnisotropicFriction, SetAnisotropicFriction, Vector3::ONE,
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Physics Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE | AM_NOEDIT);
+    DV_ACCESSOR_ATTRIBUTE("Physics Position", GetPosition, SetPosition, Vector3::ZERO, AM_FILE | AM_NOEDIT);
+    DV_ATTRIBUTE_EX("Mass", mass_, MarkBodyDirty, DEFAULT_MASS, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Friction", GetFriction, SetFriction, DEFAULT_FRICTION, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Anisotropic Friction", GetAnisotropicFriction, SetAnisotropicFriction, Vector3::ONE,
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Rolling Friction", GetRollingFriction, SetRollingFriction, DEFAULT_ROLLING_FRICTION, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Restitution", GetRestitution, SetRestitution, DEFAULT_RESTITUTION, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Linear Velocity", GetLinearVelocity, SetLinearVelocity, Vector3::ZERO,
+    DV_ACCESSOR_ATTRIBUTE("Rolling Friction", GetRollingFriction, SetRollingFriction, DEFAULT_ROLLING_FRICTION, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Restitution", GetRestitution, SetRestitution, DEFAULT_RESTITUTION, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Linear Velocity", GetLinearVelocity, SetLinearVelocity, Vector3::ZERO,
         AM_DEFAULT | AM_LATESTDATA);
-    URHO3D_ACCESSOR_ATTRIBUTE("Angular Velocity", GetAngularVelocity, SetAngularVelocity, Vector3::ZERO, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Linear Factor", GetLinearFactor, SetLinearFactor, Vector3::ONE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Angular Factor", GetAngularFactor, SetAngularFactor, Vector3::ONE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Linear Damping", GetLinearDamping, SetLinearDamping, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Angular Damping", GetAngularDamping, SetAngularDamping, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Linear Rest Threshold", GetLinearRestThreshold, SetLinearRestThreshold, 0.8f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Angular Rest Threshold", GetAngularRestThreshold, SetAngularRestThreshold, 1.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Collision Layer", collisionLayer_, MarkBodyDirty, DEFAULT_COLLISION_LAYER, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Collision Mask", collisionMask_, MarkBodyDirty, DEFAULT_COLLISION_MASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Contact Threshold", GetContactProcessingThreshold, SetContactProcessingThreshold, BT_LARGE_FLOAT,
+    DV_ACCESSOR_ATTRIBUTE("Angular Velocity", GetAngularVelocity, SetAngularVelocity, Vector3::ZERO, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Linear Factor", GetLinearFactor, SetLinearFactor, Vector3::ONE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Angular Factor", GetAngularFactor, SetAngularFactor, Vector3::ONE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Linear Damping", GetLinearDamping, SetLinearDamping, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Angular Damping", GetAngularDamping, SetAngularDamping, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Linear Rest Threshold", GetLinearRestThreshold, SetLinearRestThreshold, 0.8f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Angular Rest Threshold", GetAngularRestThreshold, SetAngularRestThreshold, 1.0f, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Collision Layer", collisionLayer_, MarkBodyDirty, DEFAULT_COLLISION_LAYER, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Collision Mask", collisionMask_, MarkBodyDirty, DEFAULT_COLLISION_MASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Contact Threshold", GetContactProcessingThreshold, SetContactProcessingThreshold, BT_LARGE_FLOAT,
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("CCD Radius", GetCcdRadius, SetCcdRadius, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("CCD Motion Threshold", GetCcdMotionThreshold, SetCcdMotionThreshold, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Network Angular Velocity", GetNetAngularVelocityAttr, SetNetAngularVelocityAttr,
+    DV_ACCESSOR_ATTRIBUTE("CCD Radius", GetCcdRadius, SetCcdRadius, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("CCD Motion Threshold", GetCcdMotionThreshold, SetCcdMotionThreshold, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Network Angular Velocity", GetNetAngularVelocityAttr, SetNetAngularVelocityAttr,
         Variant::emptyBuffer, AM_NET | AM_LATESTDATA | AM_NOEDIT);
-    URHO3D_ENUM_ATTRIBUTE_EX("Collision Event Mode", collisionEventMode_, MarkBodyDirty, collisionEventModeNames, COLLISION_ACTIVE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Use Gravity", GetUseGravity, SetUseGravity, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Is Kinematic", kinematic_, MarkBodyDirty, false, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Is Trigger", trigger_, MarkBodyDirty, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Gravity Override", GetGravityOverride, SetGravityOverride, Vector3::ZERO, AM_DEFAULT);
+    DV_ENUM_ATTRIBUTE_EX("Collision Event Mode", collisionEventMode_, MarkBodyDirty, collisionEventModeNames, COLLISION_ACTIVE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Use Gravity", GetUseGravity, SetUseGravity, true, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Is Kinematic", kinematic_, MarkBodyDirty, false, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Is Trigger", trigger_, MarkBodyDirty, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Gravity Override", GetGravityOverride, SetGravityOverride, Vector3::ZERO, AM_DEFAULT);
 }
 
 void RigidBody::ApplyAttributes()
@@ -917,7 +917,7 @@ void RigidBody::OnSceneSet(Scene* scene)
     if (scene)
     {
         if (scene == node_)
-            URHO3D_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
+            DV_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
 
         physicsWorld_ = scene->GetOrCreateComponent<PhysicsWorld>();
         physicsWorld_->AddRigidBody(this);
@@ -938,7 +938,7 @@ void RigidBody::AddBodyToWorld()
     if (!physicsWorld_)
         return;
 
-    URHO3D_PROFILE(AddBodyToWorld);
+    DV_PROFILE(AddBodyToWorld);
 
     if (mass_ < 0.0f)
         mass_ = 0.0f;
@@ -957,8 +957,8 @@ void RigidBody::AddBodyToWorld()
         smoothedTransform_ = GetComponent<SmoothedTransform>();
         if (smoothedTransform_)
         {
-            SubscribeToEvent(smoothedTransform_, E_TARGETPOSITION, URHO3D_HANDLER(RigidBody, HandleTargetPosition));
-            SubscribeToEvent(smoothedTransform_, E_TARGETROTATION, URHO3D_HANDLER(RigidBody, HandleTargetRotation));
+            SubscribeToEvent(smoothedTransform_, E_TARGETPOSITION, DV_HANDLER(RigidBody, HandleTargetPosition));
+            SubscribeToEvent(smoothedTransform_, E_TARGETROTATION, DV_HANDLER(RigidBody, HandleTargetRotation));
         }
 
         // Check if CollisionShapes already exist in the node and add them to the compound shape.

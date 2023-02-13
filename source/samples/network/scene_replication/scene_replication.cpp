@@ -49,7 +49,7 @@ static const unsigned CTRL_BACK = 2;
 static const unsigned CTRL_LEFT = 4;
 static const unsigned CTRL_RIGHT = 8;
 
-URHO3D_DEFINE_APPLICATION_MAIN(SceneReplication)
+DV_DEFINE_APPLICATION_MAIN(SceneReplication)
 
 SceneReplication::SceneReplication(Context* context) :
     Sample(context)
@@ -209,26 +209,26 @@ void SceneReplication::SetupViewport()
 void SceneReplication::SubscribeToEvents()
 {
     // Subscribe to fixed timestep physics updates for setting or applying controls
-    SubscribeToEvent(E_PHYSICSPRESTEP, URHO3D_HANDLER(SceneReplication, HandlePhysicsPreStep));
+    SubscribeToEvent(E_PHYSICSPRESTEP, DV_HANDLER(SceneReplication, HandlePhysicsPreStep));
 
     // Subscribe HandlePostUpdate() method for processing update events. Subscribe to PostUpdate instead
     // of the usual Update so that physics simulation has already proceeded for the frame, and can
     // accurately follow the object with the camera
-    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(SceneReplication, HandlePostUpdate));
+    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(SceneReplication, HandlePostUpdate));
 
     // Subscribe to button actions
-    SubscribeToEvent(connectButton_, E_RELEASED, URHO3D_HANDLER(SceneReplication, HandleConnect));
-    SubscribeToEvent(disconnectButton_, E_RELEASED, URHO3D_HANDLER(SceneReplication, HandleDisconnect));
-    SubscribeToEvent(startServerButton_, E_RELEASED, URHO3D_HANDLER(SceneReplication, HandleStartServer));
+    SubscribeToEvent(connectButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleConnect));
+    SubscribeToEvent(disconnectButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleDisconnect));
+    SubscribeToEvent(startServerButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleStartServer));
 
     // Subscribe to network events
-    SubscribeToEvent(E_SERVERCONNECTED, URHO3D_HANDLER(SceneReplication, HandleConnectionStatus));
-    SubscribeToEvent(E_SERVERDISCONNECTED, URHO3D_HANDLER(SceneReplication, HandleConnectionStatus));
-    SubscribeToEvent(E_CONNECTFAILED, URHO3D_HANDLER(SceneReplication, HandleConnectionStatus));
-    SubscribeToEvent(E_CLIENTCONNECTED, URHO3D_HANDLER(SceneReplication, HandleClientConnected));
-    SubscribeToEvent(E_CLIENTDISCONNECTED, URHO3D_HANDLER(SceneReplication, HandleClientDisconnected));
+    SubscribeToEvent(E_SERVERCONNECTED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
+    SubscribeToEvent(E_SERVERDISCONNECTED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
+    SubscribeToEvent(E_CONNECTFAILED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
+    SubscribeToEvent(E_CLIENTCONNECTED, DV_HANDLER(SceneReplication, HandleClientConnected));
+    SubscribeToEvent(E_CLIENTDISCONNECTED, DV_HANDLER(SceneReplication, HandleClientDisconnected));
     // This is a custom event, sent from the server to the client. It tells the node ID of the object the client should control
-    SubscribeToEvent(E_CLIENTOBJECTID, URHO3D_HANDLER(SceneReplication, HandleClientObjectID));
+    SubscribeToEvent(E_CLIENTOBJECTID, DV_HANDLER(SceneReplication, HandleClientObjectID));
     // Events sent between client & server (remote events) must be explicitly registered or else they are not allowed to be received
     GetSubsystem<Network>()->RegisterRemoteEvent(E_CLIENTOBJECTID);
 }

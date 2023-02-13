@@ -16,7 +16,7 @@
 #include <stb/stb_image.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb/stb_image_write.h>
-#ifdef URHO3D_WEBP
+#ifdef DV_WEBP
 #include <webp/decode.h>
 #include <webp/encode.h>
 #include <webp/mux.h>
@@ -285,7 +285,7 @@ bool Image::BeginLoad(Deserializer& source)
                 fourCC = 0;
                 break;
             default:
-                URHO3D_LOGERROR("Unrecognized DDS DXGI image format");
+                DV_LOGERROR("Unrecognized DDS DXGI image format");
                 return false;
             }
 
@@ -334,7 +334,7 @@ bool Image::BeginLoad(Deserializer& source)
             if (ddsd.ddpfPixelFormat_.dwRGBBitCount_ != 32 && ddsd.ddpfPixelFormat_.dwRGBBitCount_ != 24 &&
                 ddsd.ddpfPixelFormat_.dwRGBBitCount_ != 16)
             {
-                URHO3D_LOGERROR("Unsupported DDS pixel byte size");
+                DV_LOGERROR("Unsupported DDS pixel byte size");
                 return false;
             }
             compressedFormat_ = CF_RGBA;
@@ -342,7 +342,7 @@ bool Image::BeginLoad(Deserializer& source)
             break;
 
         default:
-            URHO3D_LOGERROR("Unrecognized DDS image format");
+            DV_LOGERROR("Unrecognized DDS image format");
             return false;
         }
 
@@ -426,7 +426,7 @@ bool Image::BeginLoad(Deserializer& source)
         // If uncompressed DDS, convert the data to 8bit RGBA as the texture classes can not currently use eg. RGB565 format
         if (compressedFormat_ == CF_RGBA)
         {
-            URHO3D_PROFILE(ConvertDDSToRGBA);
+            DV_PROFILE(ConvertDDSToRGBA);
 
             currentImage = this;
 
@@ -539,25 +539,25 @@ bool Image::BeginLoad(Deserializer& source)
 
         if (endianness != 0x04030201)
         {
-            URHO3D_LOGERROR("Big-endian KTX files not supported");
+            DV_LOGERROR("Big-endian KTX files not supported");
             return false;
         }
 
         if (type != 0 || format != 0)
         {
-            URHO3D_LOGERROR("Uncompressed KTX files not supported");
+            DV_LOGERROR("Uncompressed KTX files not supported");
             return false;
         }
 
         if (faces > 1 || depth > 1)
         {
-            URHO3D_LOGERROR("3D or cube KTX files not supported");
+            DV_LOGERROR("3D or cube KTX files not supported");
             return false;
         }
 
         if (mipmaps == 0)
         {
-            URHO3D_LOGERROR("KTX files without explicitly specified mipmap count not supported");
+            DV_LOGERROR("KTX files without explicitly specified mipmap count not supported");
             return false;
         }
 
@@ -620,7 +620,7 @@ bool Image::BeginLoad(Deserializer& source)
 
         if (compressedFormat_ == CF_NONE)
         {
-            URHO3D_LOGERROR("Unsupported texture format in KTX file");
+            DV_LOGERROR("Unsupported texture format in KTX file");
             return false;
         }
 
@@ -638,7 +638,7 @@ bool Image::BeginLoad(Deserializer& source)
             unsigned levelSize = source.ReadU32();
             if (levelSize + dataOffset > dataSize)
             {
-                URHO3D_LOGERROR("KTX mipmap level data size exceeds file size");
+                DV_LOGERROR("KTX mipmap level data size exceeds file size");
                 return false;
             }
 
@@ -667,13 +667,13 @@ bool Image::BeginLoad(Deserializer& source)
 
         if (depth > 1 || numFaces > 1)
         {
-            URHO3D_LOGERROR("3D or cube PVR files not supported");
+            DV_LOGERROR("3D or cube PVR files not supported");
             return false;
         }
 
         if (mipmapCount == 0)
         {
-            URHO3D_LOGERROR("PVR files without explicitly specified mipmap count not supported");
+            DV_LOGERROR("PVR files without explicitly specified mipmap count not supported");
             return false;
         }
 
@@ -737,7 +737,7 @@ bool Image::BeginLoad(Deserializer& source)
 
         if (compressedFormat_ == CF_NONE)
         {
-            URHO3D_LOGERROR("Unsupported texture format in PVR file");
+            DV_LOGERROR("Unsupported texture format in PVR file");
             return false;
         }
 
@@ -752,7 +752,7 @@ bool Image::BeginLoad(Deserializer& source)
         source.Read(data_.Get(), dataSize);
         SetMemoryUse(dataSize);
     }
-#ifdef URHO3D_WEBP
+#ifdef DV_WEBP
     else if (fileID == "RIFF")
     {
         // WebP: https://developers.google.com/speed/webp/docs/api
@@ -772,14 +772,14 @@ bool Image::BeginLoad(Deserializer& source)
         if (bytesRead != TAG_SIZE)
         {
             // Truncated.
-            URHO3D_LOGERROR("Truncated RIFF data");
+            DV_LOGERROR("Truncated RIFF data");
             return false;
         }
         const uint8_t WEBP[TAG_SIZE] = {'W', 'E', 'B', 'P'};
         if (memcmp(fourCC, WEBP, TAG_SIZE) != 0)
         {
             // VP8_STATUS_BITSTREAM_ERROR
-            URHO3D_LOGERROR("Invalid header");
+            DV_LOGERROR("Invalid header");
             return false;
         }
 
@@ -795,7 +795,7 @@ bool Image::BeginLoad(Deserializer& source)
 
         if (WebPGetFeatures(data.Get(), dataSize, &features) != VP8_STATUS_OK)
         {
-            URHO3D_LOGERROR("Error reading WebP image: " + source.GetName());
+            DV_LOGERROR("Error reading WebP image: " + source.GetName());
             return false;
         }
 
@@ -813,7 +813,7 @@ bool Image::BeginLoad(Deserializer& source)
         }
         if (decodeError)
         {
-            URHO3D_LOGERROR("Error decoding WebP image:" + source.GetName());
+            DV_LOGERROR("Error decoding WebP image:" + source.GetName());
             return false;
         }
 
@@ -830,7 +830,7 @@ bool Image::BeginLoad(Deserializer& source)
         unsigned char* pixelData = GetImageData(source, width, height, components);
         if (!pixelData)
         {
-            URHO3D_LOGERROR("Could not load image " + source.GetName() + ": " + String(stbi_failure_reason()));
+            DV_LOGERROR("Could not load image " + source.GetName() + ": " + String(stbi_failure_reason()));
             return false;
         }
         SetSize(width, height, components);
@@ -843,17 +843,17 @@ bool Image::BeginLoad(Deserializer& source)
 
 bool Image::Save(Serializer& dest) const
 {
-    URHO3D_PROFILE(SaveImage);
+    DV_PROFILE(SaveImage);
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not save compressed image " + GetName());
+        DV_LOGERROR("Can not save compressed image " + GetName());
         return false;
     }
 
     if (!data_)
     {
-        URHO3D_LOGERROR("Can not save zero-sized image " + GetName());
+        DV_LOGERROR("Can not save zero-sized image " + GetName());
         return false;
     }
 
@@ -874,7 +874,7 @@ bool Image::SaveFile(const String& fileName) const
         return SaveJPG(fileName, 100);
     else if (fileName.EndsWith(".tga", false))
         return SaveTGA(fileName);
-#ifdef URHO3D_WEBP
+#ifdef DV_WEBP
     else if (fileName.EndsWith(".webp", false))
         return SaveWEBP(fileName, 100.0f);
 #endif
@@ -897,7 +897,7 @@ bool Image::SetSize(int width, int height, int depth, unsigned components)
 
     if (components > 4)
     {
-        URHO3D_LOGERROR("More than 4 color components are not supported");
+        DV_LOGERROR("More than 4 color components are not supported");
         return false;
     }
 
@@ -961,7 +961,7 @@ void Image::SetData(const unsigned char* pixelData)
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not set new pixel data for a compressed image");
+        DV_LOGERROR("Can not set new pixel data for a compressed image");
         return;
     }
 
@@ -979,7 +979,7 @@ bool Image::LoadColorLUT(Deserializer& source)
 
     if (fileID == "DDS " || fileID == "\253KTX" || fileID == "PVR\3")
     {
-        URHO3D_LOGERROR("Invalid image format, can not load image");
+        DV_LOGERROR("Invalid image format, can not load image");
         return false;
     }
 
@@ -989,12 +989,12 @@ bool Image::LoadColorLUT(Deserializer& source)
     unsigned char* pixelDataIn = GetImageData(source, width, height, components);
     if (!pixelDataIn)
     {
-        URHO3D_LOGERROR("Could not load image " + source.GetName() + ": " + String(stbi_failure_reason()));
+        DV_LOGERROR("Could not load image " + source.GetName() + ": " + String(stbi_failure_reason()));
         return false;
     }
     if (components != 3)
     {
-        URHO3D_LOGERROR("Invalid image format, can not load image");
+        DV_LOGERROR("Invalid image format, can not load image");
         return false;
     }
 
@@ -1031,7 +1031,7 @@ bool Image::FlipHorizontal()
 
     if (depth_ > 1)
     {
-        URHO3D_LOGERROR("FlipHorizontal not supported for 3D images");
+        DV_LOGERROR("FlipHorizontal not supported for 3D images");
         return false;
     }
 
@@ -1055,7 +1055,7 @@ bool Image::FlipHorizontal()
     {
         if (compressedFormat_ > CF_DXT5)
         {
-            URHO3D_LOGERROR("FlipHorizontal not yet implemented for other compressed formats than RGBA & DXT1,3,5");
+            DV_LOGERROR("FlipHorizontal not yet implemented for other compressed formats than RGBA & DXT1,3,5");
             return false;
         }
 
@@ -1068,7 +1068,7 @@ bool Image::FlipHorizontal()
             CompressedLevel level = GetCompressedLevel(i);
             if (!level.data_)
             {
-                URHO3D_LOGERROR("Got compressed level with no data, aborting horizontal flip");
+                DV_LOGERROR("Got compressed level with no data, aborting horizontal flip");
                 return false;
             }
 
@@ -1098,7 +1098,7 @@ bool Image::FlipVertical()
 
     if (depth_ > 1)
     {
-        URHO3D_LOGERROR("FlipVertical not supported for 3D images");
+        DV_LOGERROR("FlipVertical not supported for 3D images");
         return false;
     }
 
@@ -1116,7 +1116,7 @@ bool Image::FlipVertical()
     {
         if (compressedFormat_ > CF_DXT5)
         {
-            URHO3D_LOGERROR("FlipVertical not yet implemented for other compressed formats than DXT1,3,5");
+            DV_LOGERROR("FlipVertical not yet implemented for other compressed formats than DXT1,3,5");
             return false;
         }
 
@@ -1129,7 +1129,7 @@ bool Image::FlipVertical()
             CompressedLevel level = GetCompressedLevel(i);
             if (!level.data_)
             {
-                URHO3D_LOGERROR("Got compressed level with no data, aborting vertical flip");
+                DV_LOGERROR("Got compressed level with no data, aborting vertical flip");
                 return false;
             }
 
@@ -1153,17 +1153,17 @@ bool Image::FlipVertical()
 
 bool Image::Resize(int width, int height)
 {
-    URHO3D_PROFILE(ResizeImage);
+    DV_PROFILE(ResizeImage);
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Resize not supported for compressed images");
+        DV_LOGERROR("Resize not supported for compressed images");
         return false;
     }
 
     if (depth_ > 1)
     {
-        URHO3D_LOGERROR("Resize not supported for 3D images");
+        DV_LOGERROR("Resize not supported for 3D images");
         return false;
     }
 
@@ -1215,14 +1215,14 @@ void Image::Clear(const Color& color)
 
 void Image::Clear(color32 uintColor)
 {
-    URHO3D_PROFILE(ClearImage);
+    DV_PROFILE(ClearImage);
 
     if (!data_)
         return;
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Clear not supported for compressed images");
+        DV_LOGERROR("Clear not supported for compressed images");
         return;
     }
 
@@ -1244,18 +1244,18 @@ void Image::Clear(color32 uintColor)
 
 bool Image::SaveBMP(const String& fileName) const
 {
-    URHO3D_PROFILE(SaveImageBMP);
+    DV_PROFILE(SaveImageBMP);
 
     auto* fileSystem = GetSubsystem<FileSystem>();
     if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + fileName);
+        DV_LOGERROR("Access denied to " + fileName);
         return false;
     }
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not save compressed image to BMP");
+        DV_LOGERROR("Can not save compressed image to BMP");
         return false;
     }
 
@@ -1267,7 +1267,7 @@ bool Image::SaveBMP(const String& fileName) const
 
 bool Image::SavePNG(const String& fileName) const
 {
-    URHO3D_PROFILE(SaveImagePNG);
+    DV_PROFILE(SaveImagePNG);
 
     File outFile(context_, fileName, FILE_WRITE);
     if (outFile.IsOpen())
@@ -1278,18 +1278,18 @@ bool Image::SavePNG(const String& fileName) const
 
 bool Image::SaveTGA(const String& fileName) const
 {
-    URHO3D_PROFILE(SaveImageTGA);
+    DV_PROFILE(SaveImageTGA);
 
     auto* fileSystem = GetSubsystem<FileSystem>();
     if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + fileName);
+        DV_LOGERROR("Access denied to " + fileName);
         return false;
     }
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not save compressed image to TGA");
+        DV_LOGERROR("Can not save compressed image to TGA");
         return false;
     }
 
@@ -1301,18 +1301,18 @@ bool Image::SaveTGA(const String& fileName) const
 
 bool Image::SaveJPG(const String& fileName, int quality) const
 {
-    URHO3D_PROFILE(SaveImageJPG);
+    DV_PROFILE(SaveImageJPG);
 
     auto* fileSystem = GetSubsystem<FileSystem>();
     if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + fileName);
+        DV_LOGERROR("Access denied to " + fileName);
         return false;
     }
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not save compressed image to JPG");
+        DV_LOGERROR("Can not save compressed image to JPG");
         return false;
     }
 
@@ -1324,24 +1324,24 @@ bool Image::SaveJPG(const String& fileName, int quality) const
 
 bool Image::SaveDDS(const String& fileName) const
 {
-    URHO3D_PROFILE(SaveImageDDS);
+    DV_PROFILE(SaveImageDDS);
 
     File outFile(context_, fileName, FILE_WRITE);
     if (!outFile.IsOpen())
     {
-        URHO3D_LOGERROR("Access denied to " + fileName);
+        DV_LOGERROR("Access denied to " + fileName);
         return false;
     }
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not save compressed image to DDS");
+        DV_LOGERROR("Can not save compressed image to DDS");
         return false;
     }
 
     if (components_ != 4)
     {
-        URHO3D_LOGERRORF("Can not save image with %u components to DDS", components_);
+        DV_LOGERRORF("Can not save image with %u components to DDS", components_);
         return false;
     }
 
@@ -1377,39 +1377,39 @@ bool Image::SaveDDS(const String& fileName) const
 
 bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) const
 {
-#ifdef URHO3D_WEBP
-    URHO3D_PROFILE(SaveImageWEBP);
+#ifdef DV_WEBP
+    DV_PROFILE(SaveImageWEBP);
 
     auto* fileSystem(GetSubsystem<FileSystem>());
     File outFile(context_, fileName, FILE_WRITE);
 
     if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
     {
-        URHO3D_LOGERROR("Access denied to " + fileName);
+        DV_LOGERROR("Access denied to " + fileName);
         return false;
     }
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not save compressed image to WebP");
+        DV_LOGERROR("Can not save compressed image to WebP");
         return false;
     }
 
     if (height_ > WEBP_MAX_DIMENSION || width_ > WEBP_MAX_DIMENSION)
     {
-        URHO3D_LOGERROR("Maximum dimension supported by WebP is " + String(WEBP_MAX_DIMENSION));
+        DV_LOGERROR("Maximum dimension supported by WebP is " + String(WEBP_MAX_DIMENSION));
         return false;
     }
 
     if (components_ != 4 && components_ != 3)
     {
-        URHO3D_LOGERRORF("Can not save image with %u components to WebP, which requires 3 or 4; Try ConvertToRGBA first?", components_);
+        DV_LOGERRORF("Can not save image with %u components to WebP, which requires 3 or 4; Try ConvertToRGBA first?", components_);
         return false;
     }
 
     if (!data_)
     {
-        URHO3D_LOGERROR("No image data to save");
+        DV_LOGERROR("No image data to save");
         return false;
     }
 
@@ -1421,7 +1421,7 @@ bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) con
 
     if (!WebPConfigPreset(&config, WEBP_PRESET_DEFAULT, compression) || !WebPPictureInit(&pic))
     {
-        URHO3D_LOGERROR("WebP initialization failed; check installation");
+        DV_LOGERROR("WebP initialization failed; check installation");
         return false;
     }
     config.lossless = 1;
@@ -1441,7 +1441,7 @@ bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) con
 
     if (!importResult)
     {
-        URHO3D_LOGERROR("WebP import of image data failed (truncated RGBA/RGB data or memory error?)");
+        DV_LOGERROR("WebP import of image data failed (truncated RGBA/RGB data or memory error?)");
         WebPPictureFree(&pic);
         WebPMemoryWriterClear(&wrt);
         return false;
@@ -1451,7 +1451,7 @@ bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) con
     // Check only general failure. WebPEncode() sets pic.error_code with specific error.
     if (!encodeResult)
     {
-        URHO3D_LOGERRORF("WebP encoding failed (memory error?). WebPEncodingError = %d", pic.error_code);
+        DV_LOGERRORF("WebP encoding failed (memory error?). WebPEncodingError = %d", pic.error_code);
         WebPPictureFree(&pic);
         WebPMemoryWriterClear(&wrt);
         return false;
@@ -1463,7 +1463,7 @@ bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) con
 
     return true;
 #else
-    URHO3D_LOGERROR("Cannot save in WEBP format, support not compiled in");
+    DV_LOGERROR("Cannot save in WEBP format, support not compiled in");
     return false;
 #endif
 }
@@ -1589,19 +1589,19 @@ SharedPtr<Image> Image::GetNextLevel() const
 {
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not generate mip level from compressed data");
+        DV_LOGERROR("Can not generate mip level from compressed data");
         return SharedPtr<Image>();
     }
     if (components_ < 1 || components_ > 4)
     {
-        URHO3D_LOGERROR("Illegal number of image components for mip level generation");
+        DV_LOGERROR("Illegal number of image components for mip level generation");
         return SharedPtr<Image>();
     }
 
     if (nextLevel_)
         return nextLevel_;
 
-    URHO3D_PROFILE(CalculateImageMipLevel);
+    DV_PROFILE(CalculateImageMipLevel);
 
     int widthOut = width_ / 2;
     int heightOut = height_ / 2;
@@ -1894,17 +1894,17 @@ SharedPtr<Image> Image::ConvertToRGBA() const
 {
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not convert compressed image to RGBA");
+        DV_LOGERROR("Can not convert compressed image to RGBA");
         return SharedPtr<Image>();
     }
     if (components_ < 1 || components_ > 4)
     {
-        URHO3D_LOGERROR("Illegal number of image components for conversion to RGBA");
+        DV_LOGERROR("Illegal number of image components for conversion to RGBA");
         return SharedPtr<Image>();
     }
     if (!data_)
     {
-        URHO3D_LOGERROR("Can not convert image without data to RGBA");
+        DV_LOGERROR("Can not convert image without data to RGBA");
         return SharedPtr<Image>();
     }
 
@@ -1966,12 +1966,12 @@ CompressedLevel Image::GetCompressedLevel(unsigned index) const
 
     if (compressedFormat_ == CF_NONE)
     {
-        URHO3D_LOGERROR("Image is not compressed");
+        DV_LOGERROR("Image is not compressed");
         return level;
     }
     if (index >= numCompressedLevels_)
     {
-        URHO3D_LOGERROR("Compressed image mip level out of bounds");
+        DV_LOGERROR("Compressed image mip level out of bounds");
         return level;
     }
 
@@ -2002,7 +2002,7 @@ CompressedLevel Image::GetCompressedLevel(unsigned index) const
 
             if (offset + level.dataSize_ > GetMemoryUse())
             {
-                URHO3D_LOGERROR("Compressed level is outside image data. Offset: " + String(offset) + " Size: " + String(level.dataSize_) +
+                DV_LOGERROR("Compressed level is outside image data. Offset: " + String(offset) + " Size: " + String(level.dataSize_) +
                          " Datasize: " + String(GetMemoryUse()));
                 level.data_ = nullptr;
                 return level;
@@ -2040,7 +2040,7 @@ CompressedLevel Image::GetCompressedLevel(unsigned index) const
 
             if (offset + level.dataSize_ > GetMemoryUse())
             {
-                URHO3D_LOGERROR("Compressed level is outside image data. Offset: " + String(offset) + " Size: " + String(level.dataSize_) +
+                DV_LOGERROR("Compressed level is outside image data. Offset: " + String(offset) + " Size: " + String(level.dataSize_) +
                          " Datasize: " + String(GetMemoryUse()));
                 level.data_ = nullptr;
                 return level;
@@ -2078,7 +2078,7 @@ CompressedLevel Image::GetCompressedLevel(unsigned index) const
 
             if (offset + level.dataSize_ > GetMemoryUse())
             {
-                URHO3D_LOGERROR("Compressed level is outside image data. Offset: " + String(offset) + " Size: " + String(level.dataSize_) +
+                DV_LOGERROR("Compressed level is outside image data. Offset: " + String(offset) + " Size: " + String(level.dataSize_) +
                          " Datasize: " + String(GetMemoryUse()));
                 level.data_ = nullptr;
                 return level;
@@ -2116,13 +2116,13 @@ Image* Image::GetSubimage(const IntRect& rect) const
 
     if (depth_ > 1)
     {
-        URHO3D_LOGERROR("Subimage not supported for 3D images");
+        DV_LOGERROR("Subimage not supported for 3D images");
         return nullptr;
     }
 
     if (rect.left_ < 0 || rect.top_ < 0 || rect.right_ > width_ || rect.bottom_ > height_ || !rect.Width() || !rect.Height())
     {
-        URHO3D_LOGERROR("Can not get subimage from image " + GetName() + " with invalid region");
+        DV_LOGERROR("Can not get subimage from image " + GetName() + " with invalid region");
         return nullptr;
     }
 
@@ -2198,7 +2198,7 @@ Image* Image::GetSubimage(const IntRect& rect) const
 
         if (!subimageLevels)
         {
-            URHO3D_LOGERROR("Subimage region from compressed image " + GetName() + " did not produce any data");
+            DV_LOGERROR("Subimage region from compressed image " + GetName() + " did not produce any data");
             return nullptr;
         }
 
@@ -2224,19 +2224,19 @@ SDL_Surface* Image::GetSDLSurface(const IntRect& rect) const
 
     if (depth_ > 1)
     {
-        URHO3D_LOGERROR("Can not get SDL surface from 3D image");
+        DV_LOGERROR("Can not get SDL surface from 3D image");
         return nullptr;
     }
 
     if (IsCompressed())
     {
-        URHO3D_LOGERROR("Can not get SDL surface from compressed image " + GetName());
+        DV_LOGERROR("Can not get SDL surface from compressed image " + GetName());
         return nullptr;
     }
 
     if (components_ < 3)
     {
-        URHO3D_LOGERROR("Can not get SDL surface from image " + GetName() + " with less than 3 components");
+        DV_LOGERROR("Can not get SDL surface from image " + GetName() + " with less than 3 components");
         return nullptr;
     }
 
@@ -2272,7 +2272,7 @@ SDL_Surface* Image::GetSDLSurface(const IntRect& rect) const
         SDL_UnlockSurface(surface);
     }
     else
-        URHO3D_LOGERROR("Failed to create SDL surface from image " + GetName());
+        DV_LOGERROR("Failed to create SDL surface from image " + GetName());
 
     return surface;
 }
@@ -2282,7 +2282,7 @@ void Image::PrecalculateLevels()
     if (!data_ || IsCompressed())
         return;
 
-    URHO3D_PROFILE(PrecalculateImageMipLevels);
+    DV_PROFILE(PrecalculateImageMipLevels);
 
     nextLevel_.Reset();
 
@@ -2357,19 +2357,19 @@ bool Image::SetSubimage(const Image* image, const IntRect& rect)
 
     if (depth_ > 1 || IsCompressed())
     {
-        URHO3D_LOGERROR("Image::SetSubimage is not supported for compressed or 3D images");
+        DV_LOGERROR("Image::SetSubimage is not supported for compressed or 3D images");
         return false;
     }
 
     if (components_ != image->components_)
     {
-        URHO3D_LOGERROR("Can not set subimage in image " + GetName() + " with different number of components");
+        DV_LOGERROR("Can not set subimage in image " + GetName() + " with different number of components");
         return false;
     }
 
     if (rect.left_ < 0 || rect.top_ < 0 || rect.right_ > width_ || rect.bottom_ > height_ || !rect.Width() || !rect.Height())
     {
-        URHO3D_LOGERROR("Can not set subimage in image " + GetName() + " with invalid region");
+        DV_LOGERROR("Can not set subimage in image " + GetName() + " with invalid region");
         return false;
     }
 

@@ -404,7 +404,7 @@ Variant ValueAnimation::LinearInterpolation(unsigned index1, unsigned index2, fl
         return value1.GetDouble() * (1.0f - t) + value2.GetDouble() * t;
 
     default:
-        URHO3D_LOGERROR("Invalid value type for linear interpolation");
+        DV_LOGERROR("Invalid value type for linear interpolation");
         return Variant::EMPTY;
     }
 }
@@ -456,7 +456,7 @@ Variant ValueAnimation::SplineInterpolation(unsigned index1, unsigned index2, fl
         return v1.GetDouble() * h1 + v2.GetDouble() * h2 + t1.GetDouble() * h3 + t2.GetDouble() * h4;
 
     default:
-        URHO3D_LOGERROR("Invalid value type for spline interpolation");
+        DV_LOGERROR("Invalid value type for spline interpolation");
         return Variant::EMPTY;
     }
 }
@@ -511,7 +511,7 @@ Variant ValueAnimation::SubstractAndMultiply(const Variant& value1, const Varian
         return (value1.GetDouble() - value2.GetDouble()) * t;
 
     default:
-        URHO3D_LOGERROR("Invalid value type for spline interpolation's subtract and multiply operation");
+        DV_LOGERROR("Invalid value type for spline interpolation's subtract and multiply operation");
         return Variant::EMPTY;
     }
 }

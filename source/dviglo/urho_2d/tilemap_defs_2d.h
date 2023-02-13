@@ -28,7 +28,7 @@ enum Orientation2D
 };
 
 /// Tile map information.
-struct URHO3D_API TileMapInfo2D
+struct DV_API TileMapInfo2D
 {
     /// Orientation.
     Orientation2D orientation_;
@@ -84,7 +84,7 @@ enum TileMapObjectType2D
 };
 
 /// Property set.
-class URHO3D_API PropertySet2D : public RefCounted
+class DV_API PropertySet2D : public RefCounted
 {
 public:
     PropertySet2D();
@@ -110,7 +110,7 @@ static const unsigned FLIP_RESERVED   = 0x10000000u;
 static const unsigned FLIP_ALL = FLIP_HORIZONTAL | FLIP_VERTICAL | FLIP_DIAGONAL | FLIP_RESERVED;
 
 /// Tile define.
-class URHO3D_API Tile2D : public RefCounted
+class DV_API Tile2D : public RefCounted
 {
 public:
     /// Construct.
@@ -144,7 +144,7 @@ private:
 };
 
 /// Tile map object.
-class URHO3D_API TileMapObject2D : public RefCounted
+class DV_API TileMapObject2D : public RefCounted
 {
 public:
     TileMapObject2D();

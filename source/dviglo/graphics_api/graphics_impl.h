@@ -7,10 +7,10 @@
 // Note: GraphicsImpl class is purposefully API-specific. It should not be used by Urho3D client applications,
 // unless required for e.g. integration of 3rd party libraries that interface directly with the graphics device.
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
 #include "opengl/ogl_graphics_impl.h"
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
 #include "direct3d11/d3d11_graphics_impl.h"
 #endif

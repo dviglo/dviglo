@@ -114,16 +114,16 @@ void SoundSource::RegisterObject(Context* context)
 {
     context->RegisterFactory<SoundSource>(AUDIO_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Sound", GetSoundAttr, SetSoundAttr, ResourceRef(Sound::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Type", GetSoundType, SetSoundType, SOUND_EFFECT, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Frequency", frequency_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Gain", gain_, 1.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Attenuation", attenuation_, 1.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Panning", panning_, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Playing", IsPlaying, SetPlayingAttr, false, AM_DEFAULT);
-    URHO3D_ENUM_ATTRIBUTE("Autoremove Mode", autoRemove_, autoRemoveModeNames, REMOVE_DISABLED, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Play Position", GetPositionAttr, SetPositionAttr, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Sound", GetSoundAttr, SetSoundAttr, ResourceRef(Sound::GetTypeStatic()), AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Type", GetSoundType, SetSoundType, SOUND_EFFECT, AM_DEFAULT);
+    DV_ATTRIBUTE("Frequency", frequency_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Gain", gain_, 1.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Attenuation", attenuation_, 1.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Panning", panning_, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Is Playing", IsPlaying, SetPlayingAttr, false, AM_DEFAULT);
+    DV_ENUM_ATTRIBUTE("Autoremove Mode", autoRemove_, autoRemoveModeNames, REMOVE_DISABLED, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Play Position", GetPositionAttr, SetPositionAttr, 0, AM_FILE);
 }
 
 void SoundSource::Seek(float seekTime)

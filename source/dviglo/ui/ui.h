@@ -39,9 +39,9 @@ class RenderSurface;
 class UIComponent;
 
 /// %UI subsystem. Manages the graphical user interface.
-class URHO3D_API UI : public Object
+class DV_API UI : public Object
 {
-    URHO3D_OBJECT(UI, Object);
+    DV_OBJECT(UI, Object);
 
 public:
     /// Construct.
@@ -424,6 +424,6 @@ private:
 };
 
 /// Register UI library objects.
-void URHO3D_API RegisterUILibrary(Context* context);
+void DV_API RegisterUILibrary(Context* context);
 
 }

@@ -43,9 +43,9 @@ DropDownList::DropDownList(Context* context) :
     text->SetInternal(true);
     text->SetVisible(false);
 
-    SubscribeToEvent(listView_, E_ITEMCLICKED, URHO3D_HANDLER(DropDownList, HandleItemClicked));
-    SubscribeToEvent(listView_, E_UNHANDLEDKEY, URHO3D_HANDLER(DropDownList, HandleListViewKey));
-    SubscribeToEvent(listView_, E_SELECTIONCHANGED, URHO3D_HANDLER(DropDownList, HandleSelectionChanged));
+    SubscribeToEvent(listView_, E_ITEMCLICKED, DV_HANDLER(DropDownList, HandleItemClicked));
+    SubscribeToEvent(listView_, E_UNHANDLEDKEY, DV_HANDLER(DropDownList, HandleListViewKey));
+    SubscribeToEvent(listView_, E_SELECTIONCHANGED, DV_HANDLER(DropDownList, HandleSelectionChanged));
 }
 
 DropDownList::~DropDownList() = default;
@@ -54,10 +54,10 @@ void DropDownList::RegisterObject(Context* context)
 {
     context->RegisterFactory<DropDownList>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(Menu);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Selection", GetSelection, SetSelectionAttr, 0, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Resize Popup", GetResizePopup, SetResizePopup, false, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(Menu);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);
+    DV_ACCESSOR_ATTRIBUTE("Selection", GetSelection, SetSelectionAttr, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Resize Popup", GetResizePopup, SetResizePopup, false, AM_FILE);
 }
 
 void DropDownList::ApplyAttributes()

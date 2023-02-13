@@ -24,7 +24,7 @@ class Zone;
 /// CoreData/RenderPaths/PBRDeferred.xml or CoreData/RenderPaths/PBRDeferredHWDepth.xml
 class PBRMaterials : public Sample
 {
-    URHO3D_OBJECT(PBRMaterials, Sample);
+    DV_OBJECT(PBRMaterials, Sample);
 
 public:
     /// Construct.

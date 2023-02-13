@@ -28,7 +28,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(DynamicGeometry)
+DV_DEFINE_APPLICATION_MAIN(DynamicGeometry)
 
 DynamicGeometry::DynamicGeometry(Context* context) :
     Sample(context),
@@ -88,7 +88,7 @@ void DynamicGeometry::CreateScene()
     auto* originalModel = cache->GetResource<Model>("Models/Box.mdl");
     if (!originalModel)
     {
-        URHO3D_LOGERROR("Model not found, cannot initialize example scene");
+        DV_LOGERROR("Model not found, cannot initialize example scene");
         return;
     }
     // Get the vertex buffer from the first geometry's first LOD level
@@ -123,7 +123,7 @@ void DynamicGeometry::CreateScene()
     }
     else
     {
-        URHO3D_LOGERROR("Failed to lock the model vertex buffer to get original vertices");
+        DV_LOGERROR("Failed to lock the model vertex buffer to get original vertices");
         return;
     }
 
@@ -284,7 +284,7 @@ void DynamicGeometry::SetupViewport()
 void DynamicGeometry::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(DynamicGeometry, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(DynamicGeometry, HandleUpdate));
 }
 
 void DynamicGeometry::MoveCamera(float timeStep)
@@ -322,7 +322,7 @@ void DynamicGeometry::MoveCamera(float timeStep)
 
 void DynamicGeometry::AnimateObjects(float timeStep)
 {
-    URHO3D_PROFILE(AnimateObjects);
+    DV_PROFILE(AnimateObjects);
 
     time_ += timeStep * 100.0f;
 

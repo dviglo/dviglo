@@ -22,7 +22,7 @@ class Scene;
 ///     - Handling keyboard and mouse input to move a freelook camera
 class SignedDistanceFieldText : public Sample
 {
-    URHO3D_OBJECT(SignedDistanceFieldText, Sample);
+    DV_OBJECT(SignedDistanceFieldText, Sample);
 
 public:
     /// Construct.

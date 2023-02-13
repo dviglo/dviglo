@@ -13,7 +13,7 @@ namespace dviglo
 class Sound;
 
 /// Ogg Vorbis sound stream.
-class URHO3D_API OggVorbisSoundStream : public SoundStream
+class DV_API OggVorbisSoundStream : public SoundStream
 {
 public:
     /// Construct from an Ogg Vorbis compressed sound.

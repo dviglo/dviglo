@@ -11,7 +11,7 @@ namespace dviglo
 
 class FootSteps : public LogicComponent
 {
-    URHO3D_OBJECT(FootSteps, LogicComponent);
+    DV_OBJECT(FootSteps, LogicComponent);
 
 public:
     static void RegisterObject(Context* context);

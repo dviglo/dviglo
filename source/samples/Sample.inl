@@ -59,7 +59,7 @@ void Sample::Start()
         InitTouchInput();
     else if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
         // On desktop platform, do not detect touch when we already got a joystick
-        SubscribeToEvent(E_TOUCHBEGIN, URHO3D_HANDLER(Sample, HandleTouchBegin));
+        SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(Sample, HandleTouchBegin));
 
     // Create logo
     CreateLogo();
@@ -71,11 +71,11 @@ void Sample::Start()
     CreateConsoleAndDebugHud();
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(Sample, HandleKeyDown));
+    SubscribeToEvent(E_KEYDOWN, DV_HANDLER(Sample, HandleKeyDown));
     // Subscribe key up event
-    SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Sample, HandleKeyUp));
+    SubscribeToEvent(E_KEYUP, DV_HANDLER(Sample, HandleKeyUp));
     // Subscribe scene update event
-    SubscribeToEvent(E_SCENEUPDATE, URHO3D_HANDLER(Sample, HandleSceneUpdate));
+    SubscribeToEvent(E_SCENEUPDATE, DV_HANDLER(Sample, HandleSceneUpdate));
 }
 
 void Sample::Stop()
@@ -124,8 +124,8 @@ void Sample::InitMouseMode(MouseMode mode)
     else
     {
         input->SetMouseVisible(true);
-        SubscribeToEvent(E_MOUSEBUTTONDOWN, URHO3D_HANDLER(Sample, HandleMouseModeRequest));
-        SubscribeToEvent(E_MOUSEMODECHANGED, URHO3D_HANDLER(Sample, HandleMouseModeChange));
+        SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Sample, HandleMouseModeRequest));
+        SubscribeToEvent(E_MOUSEMODECHANGED, DV_HANDLER(Sample, HandleMouseModeChange));
     }
 }
 

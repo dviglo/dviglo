@@ -13,7 +13,7 @@ namespace dviglo
 class Texture;
 
 /// %Color or depth-stencil surface that can be rendered into.
-class URHO3D_API RenderSurface : public RefCounted
+class DV_API RenderSurface : public RefCounted
 {
     friend class Texture2D;
     friend class Texture2DArray;
@@ -105,19 +105,19 @@ public:
     void SetResolveDirty(bool enable) { resolveDirty_ = enable; }
 
 private:
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     void Constructor_OGL(Texture* parentTexture);
     bool CreateRenderBuffer_OGL(unsigned width, unsigned height, unsigned format, int multiSample);
     void OnDeviceLost_OGL();
     void Release_OGL();
-#endif // def URHO3D_OPENGL
+#endif // def DV_OPENGL
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     void Constructor_D3D11(Texture* parentTexture);
     bool CreateRenderBuffer_D3D11(unsigned width, unsigned height, unsigned format, int multiSample);
     void OnDeviceLost_D3D11();
     void Release_D3D11();
-#endif // def URHO3D_D3D11
+#endif // def DV_D3D11
 
     /// Parent texture.
     Texture* parentTexture_;

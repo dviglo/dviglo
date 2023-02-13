@@ -14,9 +14,9 @@ class Console;
 class DebugHud;
 
 /// Urho3D engine. Creates the other subsystems.
-class URHO3D_API Engine : public Object
+class DV_API Engine : public Object
 {
-    URHO3D_OBJECT(Engine, Object);
+    DV_OBJECT(Engine, Object);
 
 public:
     /// Construct.
@@ -124,7 +124,7 @@ private:
     unsigned maxInactiveFps_;
     /// Pause when minimized flag.
     bool pauseMinimized_;
-#ifdef URHO3D_TESTING
+#ifdef DV_TESTING
     /// Time out counter for testing.
     long long timeOut_;
 #endif

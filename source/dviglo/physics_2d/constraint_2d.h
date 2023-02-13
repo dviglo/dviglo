@@ -15,9 +15,9 @@ class RigidBody2D;
 class PhysicsWorld2D;
 
 /// 2D physics constraint component.
-class URHO3D_API Constraint2D : public Component
+class DV_API Constraint2D : public Component
 {
-    URHO3D_OBJECT(Constraint2D, Component);
+    DV_OBJECT(Constraint2D, Component);
 
 public:
     /// Construct.

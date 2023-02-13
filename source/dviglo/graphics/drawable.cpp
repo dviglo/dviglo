@@ -63,9 +63,9 @@ Drawable::Drawable(Context* context, DrawableTypes drawableType) :
     firstLight_(nullptr)
 {
     if (drawableType == DrawableTypes::Undefined)
-        URHO3D_LOGERROR("Drawable with undefined drawableType");
+        DV_LOGERROR("Drawable with undefined drawableType");
     else if (CountSetBits((u32)drawableType) != 1)
-        URHO3D_LOGERROR("Drawable with incorrect drawableType");
+        DV_LOGERROR("Drawable with incorrect drawableType");
 }
 
 Drawable::~Drawable()
@@ -75,11 +75,11 @@ Drawable::~Drawable()
 
 void Drawable::RegisterObject(Context* context)
 {
-    URHO3D_ATTRIBUTE("Max Lights", maxLights_, 0, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Shadow Mask", shadowMask_, DEFAULT_SHADOWMASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
+    DV_ATTRIBUTE("Max Lights", maxLights_, 0, AM_DEFAULT);
+    DV_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);
+    DV_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
+    DV_ATTRIBUTE("Shadow Mask", shadowMask_, DEFAULT_SHADOWMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
 }
 
 void Drawable::OnSetEnabled()
@@ -378,12 +378,12 @@ void Drawable::AddToOctree()
         if (octree)
             octree->InsertDrawable(this);
         else
-            URHO3D_LOGERROR("No Octree component in scene, drawable will not render");
+            DV_LOGERROR("No Octree component in scene, drawable will not render");
     }
     else
     {
         // We have a mechanism for adding detached nodes to an octree manually, so do not log this error
-        //URHO3D_LOGERROR("Node is detached from scene, drawable will not render");
+        //DV_LOGERROR("Node is detached from scene, drawable will not render");
     }
 }
 
@@ -435,7 +435,7 @@ bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, b
                 continue;
             if (geo->GetPrimitiveType() != TRIANGLE_LIST)
             {
-                URHO3D_LOGERRORF("%s (%u) %s (%u) Geometry %u contains an unsupported geometry type %u", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex, (unsigned)geo->GetPrimitiveType());
+                DV_LOGERRORF("%s (%u) %s (%u) Geometry %u contains an unsupported geometry type %u", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex, (unsigned)geo->GetPrimitiveType());
                 continue;
             }
 
@@ -453,7 +453,7 @@ bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, b
             bool hasPosition = VertexBuffer::HasElement(*elements, TYPE_VECTOR3, SEM_POSITION);
             if (!hasPosition)
             {
-                URHO3D_LOGERRORF("%s (%u) %s (%u) Geometry %u contains does not have Vector3 type positions in vertex data", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex);
+                DV_LOGERRORF("%s (%u) %s (%u) Geometry %u contains does not have Vector3 type positions in vertex data", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex);
                 continue;
             }
 

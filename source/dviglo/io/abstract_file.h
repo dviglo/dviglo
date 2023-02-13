@@ -11,7 +11,7 @@ namespace dviglo
 {
 
 /// A common root class for objects that implement both Serializer and Deserializer.
-class URHO3D_API AbstractFile : public Deserializer, public Serializer
+class DV_API AbstractFile : public Deserializer, public Serializer
 {
 public:
     /// Construct.

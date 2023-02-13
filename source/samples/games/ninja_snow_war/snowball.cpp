@@ -29,7 +29,7 @@ Snowball::Snowball(Context* context)
 
 void Snowball::Start()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, URHO3D_HANDLER(Snowball, HandleNodeCollision));
+    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(Snowball, HandleNodeCollision));
 }
 
 void Snowball::FixedUpdate(float timeStep)

@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// Push button %UI element.
-class URHO3D_API Button : public BorderImage
+class DV_API Button : public BorderImage
 {
-    URHO3D_OBJECT(Button, BorderImage);
+    DV_OBJECT(Button, BorderImage);
 
 public:
     /// Construct.

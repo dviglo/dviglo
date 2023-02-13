@@ -22,7 +22,7 @@ class Scene;
 ///     - Saving a scene to a file and loading it to restore a previous state
 class Physics : public Sample
 {
-    URHO3D_OBJECT(Physics, Sample);
+    DV_OBJECT(Physics, Sample);
 
 public:
     /// Construct.

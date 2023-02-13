@@ -24,7 +24,7 @@ class Window;
 ///     - Accessing available Events data (eventData)
 class HelloGUI : public Sample
 {
-    URHO3D_OBJECT(HelloGUI, Sample);
+    DV_OBJECT(HelloGUI, Sample);
 
 public:
     /// Construct.

@@ -24,7 +24,7 @@ enum ClipMask : unsigned
     CLIPMASK_Z_POS = 0x10,
     CLIPMASK_Z_NEG = 0x20,
 };
-URHO3D_FLAGSET(ClipMask, ClipMaskFlags);
+DV_FLAGSET(ClipMask, ClipMaskFlags);
 
 static constexpr int OCCLUSION_MIN_SIZE = 8;
 static constexpr int OCCLUSION_DEFAULT_MAX_TRIANGLES = 5000;
@@ -62,7 +62,7 @@ bool OcclusionBuffer::SetSize(int width, int height, bool threaded)
 
     if (!IsPowerOfTwo((unsigned)width))
     {
-        URHO3D_LOGERRORF("Requested occlusion buffer width %d is not a power of two", width);
+        DV_LOGERRORF("Requested occlusion buffer width %d is not a power of two", width);
         return false;
     }
 
@@ -95,7 +95,7 @@ bool OcclusionBuffer::SetSize(int width, int height, bool threaded)
             break;
     }
 
-    URHO3D_LOGDEBUG("Set occlusion buffer size " + String(width_) + "x" + String(height_) + " with " +
+    DV_LOGDEBUG("Set occlusion buffer size " + String(width_) + "x" + String(height_) + " with " +
              String(mipBuffers_.Size()) + " mip levels and " + String(numThreadBuffers) + " thread buffers");
 
     CalculateViewport();
@@ -226,7 +226,7 @@ void OcclusionBuffer::BuildDepthHierarchy()
     if (buffers_.Empty() || !depthHierarchyDirty_)
         return;
 
-    URHO3D_PROFILE(BuildDepthHierarchy);
+    DV_PROFILE(BuildDepthHierarchy);
 
     // Build the first mip level from the pixel-level data
     int width = (width_ + 1) / 2;
@@ -999,7 +999,7 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
 
 void OcclusionBuffer::MergeBuffers()
 {
-    URHO3D_PROFILE(MergeBuffers);
+    DV_PROFILE(MergeBuffers);
 
     for (i32 i = 1; i < buffers_.Size(); ++i)
     {

@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// 2D prismatic constraint component.
-class URHO3D_API ConstraintPrismatic2D : public Constraint2D
+class DV_API ConstraintPrismatic2D : public Constraint2D
 {
-    URHO3D_OBJECT(ConstraintPrismatic2D, Constraint2D);
+    DV_OBJECT(ConstraintPrismatic2D, Constraint2D);
 
 public:
     /// Construct.

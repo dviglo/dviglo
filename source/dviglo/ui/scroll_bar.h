@@ -13,9 +13,9 @@ class Button;
 class Slider;
 
 /// Scroll bar %UI element with forward and back buttons.
-class URHO3D_API ScrollBar : public BorderImage
+class DV_API ScrollBar : public BorderImage
 {
-    URHO3D_OBJECT(ScrollBar, BorderImage);
+    DV_OBJECT(ScrollBar, BorderImage);
 
 public:
     /// Construct.

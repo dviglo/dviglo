@@ -81,14 +81,14 @@ bool TmxTileLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
     XMLElement dataElem = element.GetChild("data");
     if (!dataElem)
     {
-        URHO3D_LOGERROR("Could not find data in layer");
+        DV_LOGERROR("Could not find data in layer");
         return false;
     }
 
     LayerEncoding encoding;
     if (dataElem.HasAttribute("compression"))
     {
-        URHO3D_LOGERROR("Compression not supported now");
+        DV_LOGERROR("Compression not supported now");
         return false;
     }
 
@@ -103,7 +103,7 @@ bool TmxTileLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
             encoding = Base64;
         else
         {
-            URHO3D_LOGERROR("Invalid encoding: " + encodingAttribute);
+            DV_LOGERROR("Invalid encoding: " + encodingAttribute);
             return false;
         }
     }
@@ -332,7 +332,7 @@ bool TmxImageLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
     SharedPtr<Texture2D> texture(cache->GetResource<Texture2D>(textureFilePath));
     if (!texture)
     {
-        URHO3D_LOGERROR("Could not load texture " + textureFilePath);
+        DV_LOGERROR("Could not load texture " + textureFilePath);
         return false;
     }
 
@@ -378,7 +378,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
     loadXMLFile_ = new XMLFile(context_);
     if (!loadXMLFile_->Load(source))
     {
-        URHO3D_LOGERROR("Load XML failed " + source.GetName());
+        DV_LOGERROR("Load XML failed " + source.GetName());
         loadXMLFile_.Reset();
         return false;
     }
@@ -386,7 +386,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
     XMLElement rootElem = loadXMLFile_->GetRoot("map");
     if (!rootElem)
     {
-        URHO3D_LOGERROR("Invalid tmx file " + source.GetName());
+        DV_LOGERROR("Invalid tmx file " + source.GetName());
         loadXMLFile_.Reset();
         return false;
     }
@@ -437,7 +437,7 @@ bool TmxFile2D::EndLoad()
     String version = rootElem.GetAttribute("version");
     if (!version.StartsWith("1."))
     {
-        URHO3D_LOGERRORF("Invalid TMX version: %s", version.CString());
+        DV_LOGERRORF("Invalid TMX version: %s", version.CString());
         return false;
     }
 
@@ -452,7 +452,7 @@ bool TmxFile2D::EndLoad()
         info_.orientation_ = O_HEXAGONAL;
     else
     {
-        URHO3D_LOGERROR("Unsupported orientation type " + orientation);
+        DV_LOGERROR("Unsupported orientation type " + orientation);
         return false;
     }
 
@@ -581,7 +581,7 @@ SharedPtr<XMLFile> TmxFile2D::LoadTSXFile(const String& source)
     SharedPtr<XMLFile> tsxXMLFile(new XMLFile(context_));
     if (!tsxFile || !tsxXMLFile->Load(*tsxFile))
     {
-        URHO3D_LOGERROR("Load TSX file failed " + tsxFilePath);
+        DV_LOGERROR("Load TSX file failed " + tsxFilePath);
         return SharedPtr<XMLFile>();
     }
 
@@ -641,7 +641,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
             SharedPtr<Texture2D> texture(cache->GetResource<Texture2D>(textureFilePath));
             if (!texture)
             {
-                URHO3D_LOGERROR("Could not load texture " + textureFilePath);
+                DV_LOGERROR("Could not load texture " + textureFilePath);
                 return false;
             }
 
@@ -686,7 +686,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
                 SharedPtr<Image> image(cache->GetResource<Image>(textureFilePath));
                 if (!image)
                 {
-                    URHO3D_LOGERROR("Could not load image " + textureFilePath);
+                    DV_LOGERROR("Could not load image " + textureFilePath);
                     return false;
                 }
                 tileWidth = imageWidth = imageElem.GetI32("width");
@@ -732,7 +732,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
             TileImageInfo& info = tileImageInfos[i];
             if (!allocator.Allocate(info.imageWidth + 1, info.imageHeight + 1, info.x, info.y))
             {
-                URHO3D_LOGERROR("Could not allocate area");
+                DV_LOGERROR("Could not allocate area");
                 return false;
             }
         }

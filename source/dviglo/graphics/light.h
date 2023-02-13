@@ -35,7 +35,7 @@ inline constexpr i32 MAX_CASCADE_SPLITS = 1;
 #endif
 
 /// Depth bias parameters. Used both by lights (for shadow mapping) and materials.
-struct URHO3D_API BiasParameters
+struct DV_API BiasParameters
 {
     /// Construct undefined.
     BiasParameters() = default;
@@ -60,7 +60,7 @@ struct URHO3D_API BiasParameters
 };
 
 /// Cascaded shadow map parameters.
-struct URHO3D_API CascadeParameters
+struct DV_API CascadeParameters
 {
     /// Construct undefined.
     CascadeParameters() = default;
@@ -98,7 +98,7 @@ struct URHO3D_API CascadeParameters
 };
 
 /// Shadow map focusing parameters.
-struct URHO3D_API FocusParameters
+struct DV_API FocusParameters
 {
     /// Construct undefined.
     FocusParameters() = default;
@@ -129,9 +129,9 @@ struct URHO3D_API FocusParameters
 };
 
 /// %Light component.
-class URHO3D_API Light : public Drawable
+class DV_API Light : public Drawable
 {
-    URHO3D_OBJECT(Light, Drawable);
+    DV_OBJECT(Light, Drawable);
 
 public:
     /// Construct.

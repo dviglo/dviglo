@@ -11,7 +11,7 @@ namespace dviglo
 
 class LightFlash : public GameObject
 {
-    URHO3D_OBJECT(LightFlash, GameObject);
+    DV_OBJECT(LightFlash, GameObject);
 
 public:
     static void RegisterObject(Context* context);

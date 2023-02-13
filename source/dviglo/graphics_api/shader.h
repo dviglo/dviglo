@@ -14,9 +14,9 @@ namespace dviglo
 class ShaderVariation;
 
 /// %Shader resource consisting of several shader variations.
-class URHO3D_API Shader : public Resource
+class DV_API Shader : public Resource
 {
-    URHO3D_OBJECT(Shader, Resource);
+    DV_OBJECT(Shader, Resource);
 
 public:
     /// Construct.

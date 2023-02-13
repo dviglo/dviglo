@@ -31,11 +31,11 @@ void CheckBox::RegisterObject(Context* context)
 {
     context->RegisterFactory<CheckBox>(UI_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(BorderImage);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
-    URHO3D_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Checked", IsChecked, SetChecked, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Checked Image Offset", GetCheckedOffset, SetCheckedOffset, IntVector2::ZERO, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(BorderImage);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
+    DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);
+    DV_ACCESSOR_ATTRIBUTE("Is Checked", IsChecked, SetChecked, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Checked Image Offset", GetCheckedOffset, SetCheckedOffset, IntVector2::ZERO, AM_FILE);
 }
 
 void CheckBox::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor)

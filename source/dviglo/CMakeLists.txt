@@ -50,13 +50,13 @@ list(REMOVE_ITEM dviglo_all_content "debug_new.h" "dviglo_config.h")
 # Обрамляем каждый элемент в списке
 list(TRANSFORM dviglo_all_content REPLACE "(.+)" "#include <dviglo/\\1>")
 
-if(URHO3D_D3D11)
+if(DV_D3D11)
     # Пополняем список исходников
     file(GLOB tmp_var graphics_api/direct3d11/*.cpp graphics_api/direct3d11/*.h)
     list(APPEND source_files ${tmp_var})
 endif()
 
-if(URHO3D_OPENGL)
+if(DV_OPENGL)
     # Пополняем список исходников
     file(GLOB tmp_var graphics_api/opengl/*.cpp graphics_api/opengl/*.h)
     list(APPEND source_files ${tmp_var})
@@ -114,7 +114,7 @@ if(DV_BOX2D)
     list(APPEND dviglo_all_content "#endif // DV_BOX2D")
 endif()
 
-if(URHO3D_URHO2D)
+if(DV_URHO2D)
     # Пополняем список исходников
     file(GLOB tmp_var urho_2d/*.cpp urho_2d/*.h)
     list(APPEND source_files ${tmp_var})
@@ -122,15 +122,15 @@ if(URHO3D_URHO2D)
     # Пополняем содержимое файла dviglo_all.h
     file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} urho_2d/*.h)
     list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
-    list(APPEND dviglo_all_content ";#if URHO3D_URHO2D")
+    list(APPEND dviglo_all_content ";#if DV_URHO2D")
     list(APPEND dviglo_all_content ${tmp_var})
-    list(APPEND dviglo_all_content "#endif // URHO3D_URHO2D")
+    list(APPEND dviglo_all_content "#endif // DV_URHO2D")
 endif()
 
 # Список генерируемых файлов
 set(generated_src_files "${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h")
 
-if(URHO3D_LIB_TYPE STREQUAL "SHARED")
+if(DV_LIB_TYPE STREQUAL "SHARED")
     # Создаём динамическую библиотеку
     add_library(${target_name} SHARED ${source_files} ${generated_src_files})
     target_compile_definitions(${target_name} PUBLIC DVIGLO_SHARED=1)
@@ -150,13 +150,13 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
     target_link_libraries(${target_name} PUBLIC libcpuid)
 endif()
 
-if(URHO3D_D3D11)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_D3D11=1)
+if(DV_D3D11)
+    target_compile_definitions(${target_name} PUBLIC DV_D3D11=1)
     target_link_libraries(${target_name} PUBLIC ${DIRECT3D_LIBRARIES})
 endif()
 
-if(URHO3D_OPENGL)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_OPENGL=1)
+if(DV_OPENGL)
+    target_compile_definitions(${target_name} PUBLIC DV_OPENGL=1)
     target_link_libraries(${target_name} PUBLIC glew)
 
     if(NOT WIN32) # Целевая ОС - Linux
@@ -164,8 +164,8 @@ if(URHO3D_OPENGL)
     endif()
 endif()
 
-if(URHO3D_MINIDUMPS)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_MINIDUMPS=1)
+if(DV_MINIDUMPS)
+    target_compile_definitions(${target_name} PUBLIC DV_MINIDUMPS=1)
     target_link_libraries(${target_name} PUBLIC dbghelp)
 endif()
 
@@ -189,19 +189,19 @@ if(DV_BOX2D)
     target_link_libraries(${target_name} PUBLIC box2d)
 endif()
 
-if(URHO3D_TRACY_PROFILING)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_TRACY_PROFILING=1)
+if(DV_TRACY_PROFILING)
+    target_compile_definitions(${target_name} PUBLIC DV_TRACY_PROFILING=1)
     target_link_libraries(${target_name} PUBLIC tracy)
 endif()
 
 # Опции, которые не требуют ничего, кроме создания дефайнов
 foreach(opt
-            URHO3D_LOGGING
-            URHO3D_TESTING # enable_testing() вызывается в common.cmake
-            URHO3D_FILEWATCHER
-            URHO3D_PROFILING
-            URHO3D_THREADING
-            URHO3D_URHO2D)
+            DV_LOGGING
+            DV_TESTING # enable_testing() вызывается в common.cmake
+            DV_FILEWATCHER
+            DV_PROFILING
+            DV_THREADING
+            DV_URHO2D)
     if(${opt})
         target_compile_definitions(${target_name} PUBLIC ${opt}=1)
     endif()

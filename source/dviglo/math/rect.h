@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Two-dimensional bounding rectangle.
-class URHO3D_API Rect
+class DV_API Rect
 {
 public:
     /// Construct an undefined rect.
@@ -251,7 +251,7 @@ public:
 };
 
 /// Two-dimensional bounding rectangle with integer values.
-class URHO3D_API IntRect
+class DV_API IntRect
 {
 public:
     /// Construct a zero rect.

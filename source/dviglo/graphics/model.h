@@ -87,9 +87,9 @@ struct GeometryDesc
 };
 
 /// 3D model resource.
-class URHO3D_API Model : public ResourceWithMetadata
+class DV_API Model : public ResourceWithMetadata
 {
-    URHO3D_OBJECT(Model, ResourceWithMetadata);
+    DV_OBJECT(Model, ResourceWithMetadata);
 
 public:
     /// Construct.

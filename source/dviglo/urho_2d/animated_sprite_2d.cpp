@@ -16,7 +16,7 @@
 
 #include "../debug_new.h"
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
 #include <spine/spine.h>
 #endif
 
@@ -38,7 +38,7 @@ const char* loopModeNames[] =
 
 AnimatedSprite2D::AnimatedSprite2D(Context* context) :
     StaticSprite2D(context),
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     skeleton_(0),
     animationStateData_(0),
     animationState_(0),
@@ -57,14 +57,14 @@ void AnimatedSprite2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<AnimatedSprite2D>(URHO2D_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(StaticSprite2D);
-    URHO3D_REMOVE_ATTRIBUTE("Sprite");
-    URHO3D_ACCESSOR_ATTRIBUTE("Speed", GetSpeed, SetSpeed, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Entity", GetEntity, SetEntity, String::EMPTY, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Animation Set", GetAnimationSetAttr, SetAnimationSetAttr,
+    DV_COPY_BASE_ATTRIBUTES(StaticSprite2D);
+    DV_REMOVE_ATTRIBUTE("Sprite");
+    DV_ACCESSOR_ATTRIBUTE("Speed", GetSpeed, SetSpeed, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Entity", GetEntity, SetEntity, String::EMPTY, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Animation Set", GetAnimationSetAttr, SetAnimationSetAttr,
         ResourceRef(AnimatedSprite2D::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Animation", GetAnimation, SetAnimationAttr, String::EMPTY, AM_DEFAULT);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Loop Mode", GetLoopMode, SetLoopMode, loopModeNames, LM_DEFAULT, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Animation", GetAnimation, SetAnimationAttr, String::EMPTY, AM_DEFAULT);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Loop Mode", GetLoopMode, SetLoopMode, loopModeNames, LM_DEFAULT, AM_DEFAULT);
 }
 
 void AnimatedSprite2D::OnSetEnabled()
@@ -77,7 +77,7 @@ void AnimatedSprite2D::OnSetEnabled()
     if (scene)
     {
         if (enabled)
-            SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(AnimatedSprite2D, HandleScenePostUpdate));
+            SubscribeToEvent(scene, E_SCENEPOSTUPDATE, DV_HANDLER(AnimatedSprite2D, HandleScenePostUpdate));
         else
             UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
     }
@@ -96,7 +96,7 @@ void AnimatedSprite2D::SetAnimationSet(AnimationSet2D* animationSet)
 
     SetSprite(animationSet_->GetSprite());
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     if (animationSet_->GetSkeletonData())
     {
         spSkeletonData* skeletonData = animationSet->GetSkeletonData();
@@ -142,7 +142,7 @@ void AnimatedSprite2D::SetEntity(const String& entity)
 
     entity_ = entity;
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     if (skeleton_)
         spSkeleton_setSkinByName(skeleton_, entity_.CString());
 #endif
@@ -158,7 +158,7 @@ void AnimatedSprite2D::SetAnimation(const String& name, LoopMode2D loopMode)
     if (!animationSet_ || !animationSet_->HasAnimation(animationName_))
         return;
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     if (skeleton_)
         SetSpineAnimation();
 #endif
@@ -200,9 +200,9 @@ void AnimatedSprite2D::OnSceneSet(Scene* scene)
     if (scene)
     {
         if (scene == node_)
-            URHO3D_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
+            DV_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
         if (IsEnabledEffective())
-            SubscribeToEvent(scene, E_SCENEPOSTUPDATE, URHO3D_HANDLER(AnimatedSprite2D, HandleScenePostUpdate));
+            SubscribeToEvent(scene, E_SCENEPOSTUPDATE, DV_HANDLER(AnimatedSprite2D, HandleScenePostUpdate));
     }
     else
         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
@@ -216,7 +216,7 @@ void AnimatedSprite2D::SetAnimationAttr(const String& name)
 
 void AnimatedSprite2D::UpdateSourceBatches()
 {
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     if (skeleton_ && animationState_)
         UpdateSourceBatchesSpine();
 #endif
@@ -235,7 +235,7 @@ void AnimatedSprite2D::HandleScenePostUpdate(StringHash eventType, VariantMap& e
 
 void AnimatedSprite2D::UpdateAnimation(float timeStep)
 {
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     if (skeleton_ && animationState_)
         UpdateSpineAnimation(timeStep);
 #endif
@@ -243,7 +243,7 @@ void AnimatedSprite2D::UpdateAnimation(float timeStep)
         UpdateSpriterAnimation(timeStep);
 }
 
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
 void AnimatedSprite2D::SetSpineAnimation()
 {
     if (!animationStateData_)
@@ -251,7 +251,7 @@ void AnimatedSprite2D::SetSpineAnimation()
         animationStateData_ = spAnimationStateData_create(animationSet_->GetSkeletonData());
         if (!animationStateData_)
         {
-            URHO3D_LOGERROR("Create animation state data failed");
+            DV_LOGERROR("Create animation state data failed");
             return;
         }
     }
@@ -261,7 +261,7 @@ void AnimatedSprite2D::SetSpineAnimation()
         animationState_ = spAnimationState_create(animationStateData_);
         if (!animationState_)
         {
-            URHO3D_LOGERROR("Create animation state failed");
+            DV_LOGERROR("Create animation state failed");
             return;
         }
     }
@@ -381,13 +381,13 @@ void AnimatedSprite2D::SetSpriterAnimation()
 
     if (!spriterInstance_->SetEntity(entity_.CString()))
     {
-        URHO3D_LOGERROR("Set entity failed");
+        DV_LOGERROR("Set entity failed");
         return;
     }
 
     if (!spriterInstance_->SetAnimation(animationName_.CString(), (Spriter::LoopMode)loopMode_))
     {
-        URHO3D_LOGERROR("Set animation failed");
+        DV_LOGERROR("Set animation failed");
         return;
     }
 
@@ -479,7 +479,7 @@ void AnimatedSprite2D::UpdateSourceBatchesSpriter()
 
 void AnimatedSprite2D::Dispose()
 {
-#ifdef URHO3D_SPINE
+#ifdef DV_SPINE
     if (animationState_)
     {
         spAnimationState_dispose(animationState_);

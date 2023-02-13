@@ -22,7 +22,7 @@ void checkBorder(int border, float drawSize)
 {
     /* not clamping yet, as drawSize may still change and come to accommodate large borders */
     if (border < 0 || border * PIXEL_SIZE > drawSize)
-        URHO3D_LOGWARNINGF("Border out of bounds (%d), may be clamped", border);
+        DV_LOGWARNINGF("Border out of bounds (%d), may be clamped", border);
 }
 
 Rect calcEffectiveBorder(const IntRect& border, const Vector2& drawSize)
@@ -110,8 +110,8 @@ void StretchableSprite2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<StretchableSprite2D>(URHO2D_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(StaticSprite2D);
-    URHO3D_ACCESSOR_ATTRIBUTE("Border", GetBorder, SetBorder, IntRect::ZERO, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(StaticSprite2D);
+    DV_ACCESSOR_ATTRIBUTE("Border", GetBorder, SetBorder, IntRect::ZERO, AM_DEFAULT);
 }
 
 void StretchableSprite2D::SetBorder(const IntRect& border)

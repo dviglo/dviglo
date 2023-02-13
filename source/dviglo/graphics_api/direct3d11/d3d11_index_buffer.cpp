@@ -32,20 +32,20 @@ void IndexBuffer::Release_D3D11()
     if (graphics_ && graphics_->GetIndexBuffer() == this)
         graphics_->SetIndexBuffer(nullptr);
 
-    URHO3D_SAFE_RELEASE(object_.ptr_);
+    DV_SAFE_RELEASE(object_.ptr_);
 }
 
 bool IndexBuffer::SetData_D3D11(const void* data)
 {
     if (!data)
     {
-        URHO3D_LOGERROR("Null pointer for index buffer data");
+        DV_LOGERROR("Null pointer for index buffer data");
         return false;
     }
 
     if (!indexSize_)
     {
-        URHO3D_LOGERROR("Index size not defined, can not set index buffer data");
+        DV_LOGERROR("Index size not defined, can not set index buffer data");
         return false;
     }
 
@@ -91,19 +91,19 @@ bool IndexBuffer::SetDataRange_D3D11(const void* data, i32 start, i32 count, boo
 
     if (!data)
     {
-        URHO3D_LOGERROR("Null pointer for index buffer data");
+        DV_LOGERROR("Null pointer for index buffer data");
         return false;
     }
 
     if (!indexSize_)
     {
-        URHO3D_LOGERROR("Index size not defined, can not set index buffer data");
+        DV_LOGERROR("Index size not defined, can not set index buffer data");
         return false;
     }
 
     if (start + count > indexCount_)
     {
-        URHO3D_LOGERROR("Illegal range for setting new index buffer data");
+        DV_LOGERROR("Illegal range for setting new index buffer data");
         return false;
     }
 
@@ -150,19 +150,19 @@ void* IndexBuffer::Lock_D3D11(i32 start, i32 count, bool discard)
 
     if (lockState_ != LOCK_NONE)
     {
-        URHO3D_LOGERROR("Index buffer already locked");
+        DV_LOGERROR("Index buffer already locked");
         return nullptr;
     }
 
     if (!indexSize_)
     {
-        URHO3D_LOGERROR("Index size not defined, can not lock index buffer");
+        DV_LOGERROR("Index size not defined, can not lock index buffer");
         return nullptr;
     }
 
     if (start + count > indexCount_)
     {
-        URHO3D_LOGERROR("Illegal range for locking index buffer");
+        DV_LOGERROR("Illegal range for locking index buffer");
         return nullptr;
     }
 
@@ -234,8 +234,8 @@ bool IndexBuffer::Create_D3D11()
         HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, nullptr, (ID3D11Buffer**)&object_.ptr_);
         if (FAILED(hr))
         {
-            URHO3D_SAFE_RELEASE(object_.ptr_);
-            URHO3D_LOGD3DERROR("Failed to create index buffer", hr);
+            DV_SAFE_RELEASE(object_.ptr_);
+            DV_LOGD3DERROR("Failed to create index buffer", hr);
             return false;
         }
     }
@@ -264,7 +264,7 @@ void* IndexBuffer::MapBuffer_D3D11(i32 start, i32 count, bool discard)
         HRESULT hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Buffer*)object_.ptr_, 0, discard ? D3D11_MAP_WRITE_DISCARD :
             D3D11_MAP_WRITE, 0, &mappedData);
         if (FAILED(hr) || !mappedData.pData)
-            URHO3D_LOGD3DERROR("Failed to map index buffer", hr);
+            DV_LOGD3DERROR("Failed to map index buffer", hr);
         else
         {
             hwData = mappedData.pData;

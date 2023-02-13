@@ -21,7 +21,7 @@ FootSteps::FootSteps(Context* context)
 void FootSteps::Start()
 {
     // Subscribe to animation triggers, which are sent by the AnimatedModel's node (same as our node)
-    SubscribeToEvent(node_, E_ANIMATIONTRIGGER, URHO3D_HANDLER(FootSteps, HandleAnimationTrigger));
+    SubscribeToEvent(node_, E_ANIMATIONTRIGGER, DV_HANDLER(FootSteps, HandleAnimationTrigger));
 }
 
 void FootSteps::HandleAnimationTrigger(StringHash eventType, VariantMap& eventData)

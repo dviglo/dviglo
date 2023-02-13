@@ -41,7 +41,7 @@ Audio::Audio(Context* context) :
     // Register Audio library object factories
     RegisterAudioLibrary(context_);
 
-    SubscribeToEvent(E_RENDERUPDATE, URHO3D_HANDLER(Audio, HandleRenderUpdate));
+    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
 }
 
 Audio::~Audio()
@@ -91,14 +91,14 @@ bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpo
 
         if (!deviceID_)
         {
-            URHO3D_LOGERROR("Could not initialize audio output");
+            DV_LOGERROR("Could not initialize audio output");
             return false;
         }
     }
 
     if (obtained.format != AUDIO_S16)
     {
-        URHO3D_LOGERROR("Could not initialize audio output, 16-bit buffer format not supported");
+        DV_LOGERROR("Could not initialize audio output, 16-bit buffer format not supported");
         SDL_CloseAudioDevice(deviceID_);
         deviceID_ = 0;
         return false;
@@ -112,7 +112,7 @@ bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpo
     interpolation_ = interpolation;
     clipBuffer_ = new i32[stereo ? fragmentSize_ << 1u : fragmentSize_];
 
-    URHO3D_LOGINFO("Set audio mode " + String(mixRate_) + " Hz " + (stereo_ ? "stereo" : "mono") + (interpolation_ ? " interpolated" : ""));
+    DV_LOGINFO("Set audio mode " + String(mixRate_) + " Hz " + (stereo_ ? "stereo" : "mono") + (interpolation_ ? " interpolated" : ""));
 
     return Play();
 }
@@ -132,7 +132,7 @@ bool Audio::Play()
 
     if (!deviceID_)
     {
-        URHO3D_LOGERROR("No audio mode set, can not start playback");
+        DV_LOGERROR("No audio mode set, can not start playback");
         return false;
     }
 
@@ -318,7 +318,7 @@ void Audio::Release()
 
 void Audio::UpdateInternal(float timeStep)
 {
-    URHO3D_PROFILE(UpdateAudio);
+    DV_PROFILE(UpdateAudio);
 
     // Update in reverse order, because sound sources might remove themselves
     for (i32 i = soundSources_.Size() - 1; i >= 0; --i)

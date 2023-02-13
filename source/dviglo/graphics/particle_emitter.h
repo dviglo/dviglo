@@ -33,9 +33,9 @@ struct Particle
 };
 
 /// %Particle emitter component.
-class URHO3D_API ParticleEmitter : public BillboardSet
+class DV_API ParticleEmitter : public BillboardSet
 {
-    URHO3D_OBJECT(ParticleEmitter, BillboardSet);
+    DV_OBJECT(ParticleEmitter, BillboardSet);
 
 public:
     /// Construct.

@@ -60,18 +60,18 @@ ResourceCache::ResourceCache(Context* context) :
     // Register Resource library object factories
     RegisterResourceLibrary(context_);
 
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // Create resource background loader. Its thread will start on the first background request
     backgroundLoader_ = new BackgroundLoader(this);
 #endif
 
     // Subscribe BeginFrame for handling directory watchers and background loaded resource finalization
-    SubscribeToEvent(E_BEGINFRAME, URHO3D_HANDLER(ResourceCache, HandleBeginFrame));
+    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(ResourceCache, HandleBeginFrame));
 }
 
 ResourceCache::~ResourceCache()
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // Shut down the background loader first
     backgroundLoader_.Reset();
 #endif
@@ -86,7 +86,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
     auto* fileSystem = GetSubsystem<FileSystem>();
     if (!fileSystem || !fileSystem->DirExists(pathName))
     {
-        URHO3D_LOGERROR("Could not open directory " + pathName);
+        DV_LOGERROR("Could not open directory " + pathName);
         return false;
     }
 
@@ -113,7 +113,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
         fileWatchers_.Push(watcher);
     }
 
-    URHO3D_LOGINFO("Added resource path " + fixedPath);
+    DV_LOGINFO("Added resource path " + fixedPath);
     return true;
 }
 
@@ -126,7 +126,7 @@ bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
     // Do not add packages that failed to load
     if (!package || !package->GetNumFiles())
     {
-        URHO3D_LOGERRORF("Could not add package file %s due to load failure", package->GetName().CString());
+        DV_LOGERRORF("Could not add package file %s due to load failure", package->GetName().CString());
         return false;
     }
 
@@ -135,7 +135,7 @@ bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
     else
         packages_.Push(SharedPtr<PackageFile>(package));
 
-    URHO3D_LOGINFO("Added resource package " + package->GetName());
+    DV_LOGINFO("Added resource package " + package->GetName());
     return true;
 }
 
@@ -150,14 +150,14 @@ bool ResourceCache::AddManualResource(Resource* resource)
 {
     if (!resource)
     {
-        URHO3D_LOGERROR("Null manual resource");
+        DV_LOGERROR("Null manual resource");
         return false;
     }
 
     const String& name = resource->GetName();
     if (name.Empty())
     {
-        URHO3D_LOGERROR("Manual resource with empty name, can not add");
+        DV_LOGERROR("Manual resource with empty name, can not add");
         return false;
     }
 
@@ -187,7 +187,7 @@ void ResourceCache::RemoveResourceDir(const String& pathName)
                     break;
                 }
             }
-            URHO3D_LOGINFO("Removed resource path " + fixedPath);
+            DV_LOGINFO("Removed resource path " + fixedPath);
             return;
         }
     }
@@ -203,7 +203,7 @@ void ResourceCache::RemovePackageFile(PackageFile* package, bool releaseResource
         {
             if (releaseResources)
                 ReleasePackageResources(*i, forceRelease);
-            URHO3D_LOGINFO("Removed resource package " + (*i)->GetName());
+            DV_LOGINFO("Removed resource package " + (*i)->GetName());
             packages_.Erase(i);
             return;
         }
@@ -223,7 +223,7 @@ void ResourceCache::RemovePackageFile(const String& fileName, bool releaseResour
         {
             if (releaseResources)
                 ReleasePackageResources(*i, forceRelease);
-            URHO3D_LOGINFO("Removed resource package " + (*i)->GetName());
+            DV_LOGINFO("Removed resource package " + (*i)->GetName());
             packages_.Erase(i);
             return;
         }
@@ -389,7 +389,7 @@ void ResourceCache::ReloadResourceWithDependencies(const String& fileName)
     const SharedPtr<Resource>& resource = FindResource(fileNameHash);
     if (resource)
     {
-        URHO3D_LOGDEBUG("Reloading changed resource " + fileName);
+        DV_LOGDEBUG("Reloading changed resource " + fileName);
         ReloadResource(resource);
     }
     // Always perform dependency resource check for resource loaded from XML file as it could be used in inheritance
@@ -413,7 +413,7 @@ void ResourceCache::ReloadResourceWithDependencies(const String& fileName)
 
             for (const SharedPtr<Resource>& dependent : dependents)
             {
-                URHO3D_LOGDEBUG("Reloading resource " + dependent->GetName() + " depending on " + fileName);
+                DV_LOGDEBUG("Reloading resource " + dependent->GetName() + " depending on " + fileName);
                 ReloadResource(dependent);
             }
         }
@@ -514,9 +514,9 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
     if (sendEventOnFailure)
     {
         if (resourceRouters_.Size() && sanitatedName.Empty() && !name.Empty())
-            URHO3D_LOGERROR("Resource request " + name + " was blocked");
+            DV_LOGERROR("Resource request " + name + " was blocked");
         else
-            URHO3D_LOGERROR("Could not find resource " + sanitatedName);
+            DV_LOGERROR("Could not find resource " + sanitatedName);
 
         if (Thread::IsMainThread())
         {
@@ -537,7 +537,7 @@ Resource* ResourceCache::GetExistingResource(StringHash type, const String& name
 
     if (!Thread::IsMainThread())
     {
-        URHO3D_LOGERROR("Attempted to get resource " + sanitatedName + " from outside the main thread");
+        DV_LOGERROR("Attempted to get resource " + sanitatedName + " from outside the main thread");
         return nullptr;
     }
 
@@ -557,7 +557,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
 
     if (!Thread::IsMainThread())
     {
-        URHO3D_LOGERROR("Attempted to get resource " + sanitatedName + " from outside the main thread");
+        DV_LOGERROR("Attempted to get resource " + sanitatedName + " from outside the main thread");
         return nullptr;
     }
 
@@ -567,7 +567,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
 
     StringHash nameHash(sanitatedName);
 
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // Check if the resource is being background loaded but is now needed immediately
     backgroundLoader_->WaitForResource(type, nameHash);
 #endif
@@ -581,7 +581,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     resource = DynamicCast<Resource>(context_->CreateObject(type));
     if (!resource)
     {
-        URHO3D_LOGERROR("Could not load unknown resource type " + String(type));
+        DV_LOGERROR("Could not load unknown resource type " + String(type));
 
         if (sendEventOnFailure)
         {
@@ -600,7 +600,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     if (!file)
         return nullptr;   // Error is already logged
 
-    URHO3D_LOGDEBUG("Loading resource " + sanitatedName);
+    DV_LOGDEBUG("Loading resource " + sanitatedName);
     resource->SetName(sanitatedName);
 
     if (!resource->Load(*(file.Get())))
@@ -629,7 +629,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
 
 bool ResourceCache::BackgroundLoadResource(StringHash type, const String& name, bool sendEventOnFailure, Resource* caller)
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // If empty name, fail immediately
     String sanitatedName = SanitateResourceName(name);
     if (sanitatedName.Empty())
@@ -660,7 +660,7 @@ SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String
     resource = DynamicCast<Resource>(context_->CreateObject(type));
     if (!resource)
     {
-        URHO3D_LOGERROR("Could not load unknown resource type " + String(type));
+        DV_LOGERROR("Could not load unknown resource type " + String(type));
 
         if (sendEventOnFailure)
         {
@@ -679,7 +679,7 @@ SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String
     if (!file)
         return SharedPtr<Resource>();  // Error is already logged
 
-    URHO3D_LOGDEBUG("Loading temporary resource " + sanitatedName);
+    DV_LOGDEBUG("Loading temporary resource " + sanitatedName);
     resource->SetName(file->GetName());
 
     if (!resource->Load(*(file.Get())))
@@ -702,7 +702,7 @@ SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String
 
 unsigned ResourceCache::GetNumBackgroundLoadResources() const
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     return backgroundLoader_->GetNumQueuedResources();
 #else
     return 0;
@@ -1058,7 +1058,7 @@ void ResourceCache::UpdateResourceGroup(StringHash type)
         if (i->second_.memoryBudget_ && i->second_.memoryUse_ > i->second_.memoryBudget_ &&
             oldestResource != i->second_.resources_.End())
         {
-            URHO3D_LOGDEBUG("Resource group " + oldestResource->second_->GetTypeName() + " over memory budget, releasing resource " +
+            DV_LOGDEBUG("Resource group " + oldestResource->second_->GetTypeName() + " over memory budget, releasing resource " +
                      oldestResource->second_->GetName());
             i->second_.resources_.Erase(oldestResource);
         }
@@ -1087,9 +1087,9 @@ void ResourceCache::HandleBeginFrame(StringHash eventType, VariantMap& eventData
     }
 
     // Check for background loaded resources that can be finished
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     {
-        URHO3D_PROFILE(FinishBackgroundResources);
+        DV_PROFILE(FinishBackgroundResources);
         backgroundLoader_->FinishResources(finishBackgroundResourcesMs_);
     }
 #endif

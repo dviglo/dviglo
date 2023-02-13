@@ -21,7 +21,7 @@ inline constexpr AppStateId APPSTATEID_BENCHMARK04 = 6;
 class AppStateManager : public dv::Object
 {
 public:
-    URHO3D_OBJECT(AppStateManager, Object);
+    DV_OBJECT(AppStateManager, Object);
 
 private:
     dv::HashMap<AppStateId, dv::SharedPtr<AppState_Base>> appStates_;

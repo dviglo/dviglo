@@ -43,7 +43,7 @@ static SharedPtr<Image> GetTileImage(Image* src, int tileX, int tileY, int tileW
 TextureCube::TextureCube(Context* context) :
     Texture(context)
 {
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (Graphics::GetGAPI() == GAPI_OPENGL)
         target_ = GL_TEXTURE_CUBE_MAP;
 #endif
@@ -75,7 +75,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
     // If device is lost, retry later
     if (graphics_->IsDeviceLost())
     {
-        URHO3D_LOGWARNING("Texture load while device is lost");
+        DV_LOGWARNING("Texture load while device is lost");
         dataPending_ = true;
         return true;
     }
@@ -242,19 +242,19 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
 {
     if (size <= 0)
     {
-        URHO3D_LOGERROR("Zero or negative cube texture size");
+        DV_LOGERROR("Zero or negative cube texture size");
         return false;
     }
     if (usage == TEXTURE_DEPTHSTENCIL)
     {
-        URHO3D_LOGERROR("Depth-stencil usage not supported for cube textures");
+        DV_LOGERROR("Depth-stencil usage not supported for cube textures");
         return false;
     }
 
     multiSample = Clamp(multiSample, 1, 16);
     if (multiSample > 1 && usage < TEXTURE_RENDERTARGET)
     {
-        URHO3D_LOGERROR("Multisampling is only supported for rendertarget cube textures");
+        DV_LOGERROR("Multisampling is only supported for rendertarget cube textures");
         return false;
     }
 
@@ -272,7 +272,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
         for (unsigned i = 0; i < MAX_CUBEMAP_FACES; ++i)
         {
             renderSurfaces_[i] = new RenderSurface(this);
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
             if (Graphics::GetGAPI() == GAPI_OPENGL)
                 renderSurfaces_[i]->target_ = GL_TEXTURE_CUBE_MAP_POSITIVE_X + i;
 #endif
@@ -283,7 +283,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
     }
 
     if (usage == TEXTURE_RENDERTARGET)
-        SubscribeToEvent(E_RENDERSURFACEUPDATE, URHO3D_HANDLER(TextureCube, HandleRenderSurfaceUpdate));
+        SubscribeToEvent(E_RENDERSURFACEUPDATE, DV_HANDLER(TextureCube, HandleRenderSurfaceUpdate));
     else
         UnsubscribeFromEvent(E_RENDERSURFACEUPDATE);
 
@@ -301,7 +301,7 @@ SharedPtr<Image> TextureCube::GetImage(CubeMapFace face) const
 {
     if (format_ != Graphics::GetRGBAFormat() && format_ != Graphics::GetRGBFormat())
     {
-        URHO3D_LOGERROR("Unsupported texture format, can not convert to Image");
+        DV_LOGERROR("Unsupported texture format, can not convert to Image");
         return SharedPtr<Image>();
     }
 
@@ -336,12 +336,12 @@ void TextureCube::OnDeviceLost()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceLost_D3D11();
 #endif
@@ -351,12 +351,12 @@ void TextureCube::OnDeviceReset()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return OnDeviceReset_D3D11();
 #endif
@@ -366,12 +366,12 @@ void TextureCube::Release()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Release_D3D11();
 #endif
@@ -381,12 +381,12 @@ bool TextureCube::SetData(CubeMapFace face, unsigned level, int x, int y, int wi
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(face, level, x, y, width, height, data);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(face, level, x, y, width, height, data);
 #endif
@@ -398,12 +398,12 @@ bool TextureCube::SetData(CubeMapFace face, Deserializer& source)
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(face, source);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(face, source);
 #endif
@@ -415,12 +415,12 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(face, image, useAlpha);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return SetData_D3D11(face, image, useAlpha);
 #endif
@@ -432,12 +432,12 @@ bool TextureCube::GetData(CubeMapFace face, unsigned level, void* dest) const
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetData_OGL(face, level, dest);
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return GetData_D3D11(face, level, dest);
 #endif
@@ -449,12 +449,12 @@ bool TextureCube::Create()
 {
     GAPI gapi = Graphics::GetGAPI();
 
-#ifdef URHO3D_OPENGL
+#ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
 #endif
 
-#ifdef URHO3D_D3D11
+#ifdef DV_D3D11
     if (gapi == GAPI_D3D11)
         return Create_D3D11();
 #endif

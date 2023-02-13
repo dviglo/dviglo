@@ -32,7 +32,7 @@
 #undef SendMessage
 #endif
 
-URHO3D_DEFINE_APPLICATION_MAIN(LANDiscovery)
+DV_DEFINE_APPLICATION_MAIN(LANDiscovery)
 
 LANDiscovery::LANDiscovery(Context* context) :
     Sample(context)
@@ -89,11 +89,11 @@ void LANDiscovery::CreateUI()
 
 void LANDiscovery::SubscribeToEvents()
 {
-    SubscribeToEvent(E_NETWORKHOSTDISCOVERED, URHO3D_HANDLER(LANDiscovery, HandleNetworkHostDiscovered));
+    SubscribeToEvent(E_NETWORKHOSTDISCOVERED, DV_HANDLER(LANDiscovery, HandleNetworkHostDiscovered));
 
-    SubscribeToEvent(startServer_, "Released", URHO3D_HANDLER(LANDiscovery, HandleStartServer));
-    SubscribeToEvent(stopServer_, "Released", URHO3D_HANDLER(LANDiscovery, HandleStopServer));
-    SubscribeToEvent(refreshServerList_, "Released", URHO3D_HANDLER(LANDiscovery, HandleDoNetworkDiscovery));
+    SubscribeToEvent(startServer_, "Released", DV_HANDLER(LANDiscovery, HandleStartServer));
+    SubscribeToEvent(stopServer_, "Released", DV_HANDLER(LANDiscovery, HandleStopServer));
+    SubscribeToEvent(refreshServerList_, "Released", DV_HANDLER(LANDiscovery, HandleDoNetworkDiscovery));
 }
 
 Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 position)
@@ -131,7 +131,7 @@ Text* LANDiscovery::CreateLabel(const String& text, IntVector2 pos)
 void LANDiscovery::HandleNetworkHostDiscovered(StringHash eventType, VariantMap& eventData)
 {
     using namespace NetworkHostDiscovered;
-    URHO3D_LOGINFO("Server discovered!");
+    DV_LOGINFO("Server discovered!");
     String text = serverList_->GetText();
     VariantMap data = eventData[P_BEACON].GetVariantMap();
     text += "\n" + data["Name"].GetString() + "(" + String(data["Players"].GetI32()) + ")" + eventData[P_ADDRESS].GetString() + ":" + String(eventData[P_PORT].GetI32());

@@ -9,9 +9,9 @@
 namespace dviglo
 {
 /// 2D chain collision component.
-class URHO3D_API CollisionChain2D : public CollisionShape2D
+class DV_API CollisionChain2D : public CollisionShape2D
 {
-    URHO3D_OBJECT(CollisionChain2D, CollisionShape2D);
+    DV_OBJECT(CollisionChain2D, CollisionShape2D);
 
 public:
     /// Construct.

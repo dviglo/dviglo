@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Placeholder for allowing unregistered components to be loaded & saved along with scenes.
-class URHO3D_API UnknownComponent : public Component
+class DV_API UnknownComponent : public Component
 {
 public:
     /// Construct.

@@ -11,7 +11,7 @@ namespace dviglo
 
 class SnowCrate : public GameObject
 {
-    URHO3D_OBJECT(SnowCrate, GameObject);
+    DV_OBJECT(SnowCrate, GameObject);
 
 public:
     static void RegisterObject(Context* context);

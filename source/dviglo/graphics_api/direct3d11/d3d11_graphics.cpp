@@ -205,30 +205,30 @@ void Graphics::Destructor_D3D11()
 
     for (HashMap<hash32, ID3D11BlendState*>::Iterator i = impl->blendStates_.Begin(); i != impl->blendStates_.End(); ++i)
     {
-        URHO3D_SAFE_RELEASE(i->second_);
+        DV_SAFE_RELEASE(i->second_);
     }
     impl->blendStates_.Clear();
 
     for (HashMap<hash32, ID3D11DepthStencilState*>::Iterator i = impl->depthStates_.Begin(); i != impl->depthStates_.End(); ++i)
     {
-        URHO3D_SAFE_RELEASE(i->second_);
+        DV_SAFE_RELEASE(i->second_);
     }
     impl->depthStates_.Clear();
 
     for (HashMap<hash32, ID3D11RasterizerState*>::Iterator i = impl->rasterizerStates_.Begin();
          i != impl->rasterizerStates_.End(); ++i)
     {
-        URHO3D_SAFE_RELEASE(i->second_);
+        DV_SAFE_RELEASE(i->second_);
     }
     impl->rasterizerStates_.Clear();
 
-    URHO3D_SAFE_RELEASE(impl->defaultRenderTargetView_);
-    URHO3D_SAFE_RELEASE(impl->defaultDepthStencilView_);
-    URHO3D_SAFE_RELEASE(impl->defaultDepthTexture_);
-    URHO3D_SAFE_RELEASE(impl->resolveTexture_);
-    URHO3D_SAFE_RELEASE(impl->swapChain_);
-    URHO3D_SAFE_RELEASE(impl->deviceContext_);
-    URHO3D_SAFE_RELEASE(impl->device_);
+    DV_SAFE_RELEASE(impl->defaultRenderTargetView_);
+    DV_SAFE_RELEASE(impl->defaultDepthStencilView_);
+    DV_SAFE_RELEASE(impl->defaultDepthTexture_);
+    DV_SAFE_RELEASE(impl->resolveTexture_);
+    DV_SAFE_RELEASE(impl->swapChain_);
+    DV_SAFE_RELEASE(impl->deviceContext_);
+    DV_SAFE_RELEASE(impl->device_);
 
     if (window_)
     {
@@ -245,7 +245,7 @@ void Graphics::Destructor_D3D11()
 
 bool Graphics::SetScreenMode_D3D11(int width, int height, const ScreenModeParams& params, bool maximize)
 {
-    URHO3D_PROFILE(SetScreenMode_D3D11);
+    DV_PROFILE(SetScreenMode_D3D11);
 
     // Ensure that parameters are properly filled
     ScreenModeParams newParams = params;
@@ -348,7 +348,7 @@ void Graphics::Close_D3D11()
 
 bool Graphics::TakeScreenShot_D3D11(Image& destImage)
 {
-    URHO3D_PROFILE(TakeScreenShot_D3D11);
+    DV_PROFILE(TakeScreenShot_D3D11);
 
     GraphicsImpl_D3D11* impl = GetImpl_D3D11();
 
@@ -371,8 +371,8 @@ bool Graphics::TakeScreenShot_D3D11(Image& destImage)
     HRESULT hr = impl->device_->CreateTexture2D(&textureDesc, nullptr, &stagingTexture);
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(stagingTexture);
-        URHO3D_LOGD3DERROR("Could not create staging texture for screenshot", hr);
+        DV_SAFE_RELEASE(stagingTexture);
+        DV_LOGD3DERROR("Could not create staging texture for screenshot", hr);
         return false;
     }
 
@@ -404,7 +404,7 @@ bool Graphics::TakeScreenShot_D3D11(Image& destImage)
     hr = impl->deviceContext_->Map(stagingTexture, 0, D3D11_MAP_READ, 0, &mappedData);
     if (FAILED(hr) || !mappedData.pData)
     {
-        URHO3D_LOGD3DERROR("Could not map staging texture for screenshot", hr);
+        DV_LOGD3DERROR("Could not map staging texture for screenshot", hr);
         stagingTexture->Release();
         return false;
     }
@@ -470,7 +470,7 @@ void Graphics::EndFrame_D3D11()
         return;
 
     {
-        URHO3D_PROFILE(Present);
+        DV_PROFILE(Present);
 
         SendEvent(E_ENDRENDERING);
         GetImpl_D3D11()->swapChain_->Present(screenParams_.vsync_ ? 1 : 0, 0);
@@ -551,7 +551,7 @@ bool Graphics::ResolveToTexture_D3D11(Texture2D* destination, const IntRect& vie
     if (!destination || !destination->GetRenderSurface())
         return false;
 
-    URHO3D_PROFILE(ResolveToTexture_D3D11);
+    DV_PROFILE(ResolveToTexture_D3D11);
 
     IntRect vpCopy = viewport;
     if (vpCopy.right_ <= vpCopy.left_)
@@ -798,7 +798,7 @@ bool Graphics::SetVertexBuffers_D3D11(const Vector<VertexBuffer*>& buffers, unsi
 {
     if (buffers.Size() > MAX_VERTEX_STREAMS)
     {
-        URHO3D_LOGERROR("Too many vertex buffers");
+        DV_LOGERROR("Too many vertex buffers");
         return false;
     }
 
@@ -898,12 +898,12 @@ void Graphics::SetShaders_D3D11(ShaderVariation* vs, ShaderVariation* ps)
         {
             if (vs->GetCompilerOutput().Empty())
             {
-                URHO3D_PROFILE(CompileVertexShader);
+                DV_PROFILE(CompileVertexShader);
 
                 bool success = vs->Create();
                 if (!success)
                 {
-                    URHO3D_LOGERROR("Failed to compile vertex shader " + vs->GetFullName() + ":\n" + vs->GetCompilerOutput());
+                    DV_LOGERROR("Failed to compile vertex shader " + vs->GetFullName() + ":\n" + vs->GetCompilerOutput());
                     vs = nullptr;
                 }
             }
@@ -922,12 +922,12 @@ void Graphics::SetShaders_D3D11(ShaderVariation* vs, ShaderVariation* ps)
         {
             if (ps->GetCompilerOutput().Empty())
             {
-                URHO3D_PROFILE(CompilePixelShader);
+                DV_PROFILE(CompilePixelShader);
 
                 bool success = ps->Create();
                 if (!success)
                 {
-                    URHO3D_LOGERROR("Failed to compile pixel shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
+                    DV_LOGERROR("Failed to compile pixel shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
                     ps = nullptr;
                 }
             }
@@ -1764,7 +1764,7 @@ void Graphics::OnWindowResized_D3D11()
     // Reset rendertargets and viewport for the new screen size
     ResetRenderTargets_D3D11();
 
-    URHO3D_LOGDEBUGF("Window was resized to %dx%d", width_, height_);
+    DV_LOGDEBUGF("Window was resized to %dx%d", width_, height_);
 
     using namespace ScreenMode;
 
@@ -1792,7 +1792,7 @@ void Graphics::OnWindowMoved_D3D11()
     position_.x_ = newX;
     position_.y_ = newY;
 
-    URHO3D_LOGTRACEF("Window was moved to %d,%d", position_.x_, position_.y_);
+    DV_LOGTRACEF("Window was moved to %d,%d", position_.x_, position_.y_);
 
     using namespace WindowPos;
 
@@ -1985,7 +1985,7 @@ bool Graphics::OpenWindow_D3D11(int width, int height, bool resizable, bool bord
 
     if (!window_)
     {
-        URHO3D_LOGERRORF("Could not create window, root cause: '%s'", SDL_GetError());
+        DV_LOGERRORF("Could not create window, root cause: '%s'", SDL_GetError());
         return false;
     }
 
@@ -2077,9 +2077,9 @@ bool Graphics::CreateDevice_D3D11(int width, int height)
 
         if (FAILED(hr))
         {
-            URHO3D_SAFE_RELEASE(impl->device_);
-            URHO3D_SAFE_RELEASE(impl->deviceContext_);
-            URHO3D_LOGD3DERROR("Failed to create D3D11 device", hr);
+            DV_SAFE_RELEASE(impl->device_);
+            DV_SAFE_RELEASE(impl->deviceContext_);
+            DV_LOGD3DERROR("Failed to create D3D11 device", hr);
             return false;
         }
 
@@ -2163,11 +2163,11 @@ bool Graphics::CreateDevice_D3D11(int width, int height)
     // (the application will switch manually if it wants to)
     dxgiFactory->MakeWindowAssociation(GetWindowHandle(window_), DXGI_MWA_NO_ALT_ENTER);
 
-#ifdef URHO3D_LOGGING
+#ifdef DV_LOGGING
     DXGI_ADAPTER_DESC desc;
     dxgiAdapter->GetDesc(&desc);
     String adapterDesc(desc.Description);
-    URHO3D_LOGINFO("Adapter used " + adapterDesc);
+    DV_LOGINFO("Adapter used " + adapterDesc);
 #endif
 
     dxgiFactory->Release();
@@ -2176,8 +2176,8 @@ bool Graphics::CreateDevice_D3D11(int width, int height)
 
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(impl->swapChain_);
-        URHO3D_LOGD3DERROR("Failed to create D3D11 swap chain", hr);
+        DV_SAFE_RELEASE(impl->swapChain_);
+        DV_LOGD3DERROR("Failed to create D3D11 swap chain", hr);
         return false;
     }
 
@@ -2225,8 +2225,8 @@ bool Graphics::UpdateSwapChain_D3D11(int width, int height)
     HRESULT hr = impl->swapChain_->GetBuffer(0, IID_ID3D11Texture2D, (void**)&backbufferTexture);
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(backbufferTexture);
-        URHO3D_LOGD3DERROR("Failed to get backbuffer texture", hr);
+        DV_SAFE_RELEASE(backbufferTexture);
+        DV_LOGD3DERROR("Failed to get backbuffer texture", hr);
         success = false;
     }
     else
@@ -2235,8 +2235,8 @@ bool Graphics::UpdateSwapChain_D3D11(int width, int height)
         backbufferTexture->Release();
         if (FAILED(hr))
         {
-            URHO3D_SAFE_RELEASE(impl->defaultRenderTargetView_);
-            URHO3D_LOGD3DERROR("Failed to create backbuffer rendertarget view", hr);
+            DV_SAFE_RELEASE(impl->defaultRenderTargetView_);
+            DV_LOGD3DERROR("Failed to create backbuffer rendertarget view", hr);
             success = false;
         }
     }
@@ -2258,8 +2258,8 @@ bool Graphics::UpdateSwapChain_D3D11(int width, int height)
     hr = impl->device_->CreateTexture2D(&depthDesc, nullptr, &impl->defaultDepthTexture_);
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(impl->defaultDepthTexture_);
-        URHO3D_LOGD3DERROR("Failed to create backbuffer depth-stencil texture", hr);
+        DV_SAFE_RELEASE(impl->defaultDepthTexture_);
+        DV_LOGD3DERROR("Failed to create backbuffer depth-stencil texture", hr);
         success = false;
     }
     else
@@ -2267,8 +2267,8 @@ bool Graphics::UpdateSwapChain_D3D11(int width, int height)
         hr = impl->device_->CreateDepthStencilView(impl->defaultDepthTexture_, nullptr, &impl->defaultDepthStencilView_);
         if (FAILED(hr))
         {
-            URHO3D_SAFE_RELEASE(impl->defaultDepthStencilView_);
-            URHO3D_LOGD3DERROR("Failed to create backbuffer depth-stencil view", hr);
+            DV_SAFE_RELEASE(impl->defaultDepthStencilView_);
+            DV_LOGD3DERROR("Failed to create backbuffer depth-stencil view", hr);
             success = false;
         }
     }
@@ -2465,7 +2465,7 @@ void Graphics::PrepareDraw_D3D11()
             HashMap<hash32, ID3D11BlendState*>::Iterator i = impl->blendStates_.Find(newBlendStateHash);
             if (i == impl->blendStates_.End())
             {
-                URHO3D_PROFILE(CreateBlendState);
+                DV_PROFILE(CreateBlendState);
 
                 D3D11_BLEND_DESC stateDesc;
                 memset(&stateDesc, 0, sizeof stateDesc);
@@ -2484,8 +2484,8 @@ void Graphics::PrepareDraw_D3D11()
                 HRESULT hr = impl->device_->CreateBlendState(&stateDesc, &newBlendState);
                 if (FAILED(hr))
                 {
-                    URHO3D_SAFE_RELEASE(newBlendState);
-                    URHO3D_LOGD3DERROR("Failed to create blend state", hr);
+                    DV_SAFE_RELEASE(newBlendState);
+                    DV_LOGD3DERROR("Failed to create blend state", hr);
                 }
 
                 i = impl->blendStates_.Insert(MakePair(newBlendStateHash, newBlendState));
@@ -2509,7 +2509,7 @@ void Graphics::PrepareDraw_D3D11()
             HashMap<hash32, ID3D11DepthStencilState*>::Iterator i = impl->depthStates_.Find(newDepthStateHash);
             if (i == impl->depthStates_.End())
             {
-                URHO3D_PROFILE(CreateDepthState);
+                DV_PROFILE(CreateDepthState);
 
                 D3D11_DEPTH_STENCIL_DESC stateDesc;
                 memset(&stateDesc, 0, sizeof stateDesc);
@@ -2532,8 +2532,8 @@ void Graphics::PrepareDraw_D3D11()
                 HRESULT hr = impl->device_->CreateDepthStencilState(&stateDesc, &newDepthState);
                 if (FAILED(hr))
                 {
-                    URHO3D_SAFE_RELEASE(newDepthState);
-                    URHO3D_LOGD3DERROR("Failed to create depth state", hr);
+                    DV_SAFE_RELEASE(newDepthState);
+                    DV_LOGD3DERROR("Failed to create depth state", hr);
                 }
 
                 i = impl->depthStates_.Insert(MakePair(newDepthStateHash, newDepthState));
@@ -2562,7 +2562,7 @@ void Graphics::PrepareDraw_D3D11()
             HashMap<hash32, ID3D11RasterizerState*>::Iterator i = impl->rasterizerStates_.Find(newRasterizerStateHash);
             if (i == impl->rasterizerStates_.End())
             {
-                URHO3D_PROFILE(CreateRasterizerState);
+                DV_PROFILE(CreateRasterizerState);
 
                 D3D11_RASTERIZER_DESC stateDesc;
                 memset(&stateDesc, 0, sizeof stateDesc);
@@ -2581,8 +2581,8 @@ void Graphics::PrepareDraw_D3D11()
                 HRESULT hr = impl->device_->CreateRasterizerState(&stateDesc, &newRasterizerState);
                 if (FAILED(hr))
                 {
-                    URHO3D_SAFE_RELEASE(newRasterizerState);
-                    URHO3D_LOGD3DERROR("Failed to create rasterizer state", hr);
+                    DV_SAFE_RELEASE(newRasterizerState);
+                    DV_LOGD3DERROR("Failed to create rasterizer state", hr);
                 }
 
                 i = impl->rasterizerStates_.Insert(MakePair(newRasterizerStateHash, newRasterizerState));
@@ -2633,8 +2633,8 @@ void Graphics::CreateResolveTexture_D3D11()
     HRESULT hr = impl->device_->CreateTexture2D(&textureDesc, nullptr, &impl->resolveTexture_);
     if (FAILED(hr))
     {
-        URHO3D_SAFE_RELEASE(impl->resolveTexture_);
-        URHO3D_LOGD3DERROR("Could not create resolve texture", hr);
+        DV_SAFE_RELEASE(impl->resolveTexture_);
+        DV_LOGD3DERROR("Could not create resolve texture", hr);
     }
 }
 

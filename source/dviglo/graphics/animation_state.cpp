@@ -71,7 +71,7 @@ AnimationState::AnimationState(Node* node, Animation* animation) :
                     if (targetNode)
                         stateTrack.node_ = targetNode;
                     else
-                        URHO3D_LOGWARNING("Node " + i->second_.name_ + " not found for node animation " + animation_->GetName());
+                        DV_LOGWARNING("Node " + i->second_.name_ + " not found for node animation " + animation_->GetName());
                 }
 
                 if (stateTrack.node_)

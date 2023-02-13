@@ -17,7 +17,7 @@
 namespace dviglo
 {
 
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
 #ifdef _WIN32
 
 static DWORD WINAPI ThreadFunctionStatic(void* data)
@@ -38,7 +38,7 @@ static void* ThreadFunctionStatic(void* data)
 }
 
 #endif
-#endif // URHO3D_THREADING
+#endif // DV_THREADING
 
 ThreadID Thread::mainThreadID;
 
@@ -55,7 +55,7 @@ Thread::~Thread()
 
 bool Thread::Run()
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // Check if already running
     if (handle_)
         return false;
@@ -73,12 +73,12 @@ bool Thread::Run()
     return handle_ != nullptr;
 #else
     return false;
-#endif // URHO3D_THREADING
+#endif // DV_THREADING
 }
 
 void Thread::Stop()
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // Check if already stopped
     if (!handle_)
         return;
@@ -94,12 +94,12 @@ void Thread::Stop()
     delete thread;
 #endif
     handle_ = nullptr;
-#endif // URHO3D_THREADING
+#endif // DV_THREADING
 }
 
 void Thread::SetPriority(int priority)
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
 #ifdef _WIN32
     if (handle_)
         SetThreadPriority((HANDLE)handle_, priority);
@@ -108,7 +108,7 @@ void Thread::SetPriority(int priority)
     if (thread)
         pthread_setschedprio(*thread, priority);
 #endif
-#endif // URHO3D_THREADING
+#endif // DV_THREADING
 }
 
 void Thread::SetMainThread()
@@ -118,7 +118,7 @@ void Thread::SetMainThread()
 
 ThreadID Thread::GetCurrentThreadID()
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
 #ifdef _WIN32
     return GetCurrentThreadId();
 #else
@@ -126,16 +126,16 @@ ThreadID Thread::GetCurrentThreadID()
 #endif
 #else
     return ThreadID();
-#endif // URHO3D_THREADING
+#endif // DV_THREADING
 }
 
 bool Thread::IsMainThread()
 {
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     return GetCurrentThreadID() == mainThreadID;
 #else
     return true;
-#endif // URHO3D_THREADING
+#endif // DV_THREADING
 }
 
 }

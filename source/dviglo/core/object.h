@@ -17,7 +17,7 @@ class Context;
 class EventHandler;
 
 /// Type info.
-class URHO3D_API TypeInfo
+class DV_API TypeInfo
 {
 public:
     /// Construct.
@@ -48,7 +48,7 @@ private:
     const TypeInfo* baseTypeInfo_;
 };
 
-#define URHO3D_OBJECT(typeName, baseTypeName) \
+#define DV_OBJECT(typeName, baseTypeName) \
     public: \
         using ClassName = typeName; \
         using BaseClassName = baseTypeName; \
@@ -60,7 +60,7 @@ private:
         static const dviglo::TypeInfo* GetTypeInfoStatic() { static const dviglo::TypeInfo typeInfoStatic(#typeName, BaseClassName::GetTypeInfoStatic()); return &typeInfoStatic; }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
-class URHO3D_API Object : public RefCounted
+class DV_API Object : public RefCounted
 {
     friend class Context;
 
@@ -178,7 +178,7 @@ private:
 template <class T> T* Object::GetSubsystem() const { return static_cast<T*>(GetSubsystem(T::GetTypeStatic())); }
 
 /// Base class for object factories.
-class URHO3D_API ObjectFactory : public RefCounted
+class DV_API ObjectFactory : public RefCounted
 {
 public:
     /// Construct.
@@ -226,7 +226,7 @@ public:
 };
 
 /// Internal helper class for invoking event handler functions.
-class URHO3D_API EventHandler : public LinkedListNode
+class DV_API EventHandler : public LinkedListNode
 {
 public:
     /// Construct with specified receiver and userdata.
@@ -338,15 +338,15 @@ private:
 };
 
 /// Get register of event names.
-URHO3D_API StringHashRegister& GetEventNameRegister();
+DV_API StringHashRegister& GetEventNameRegister();
 
 /// Describe an event's hash ID and begin a namespace in which to define its parameters.
-#define URHO3D_EVENT(eventID, eventName) static const dviglo::StringHash eventID(dviglo::GetEventNameRegister().RegisterString(#eventName)); namespace eventName
+#define DV_EVENT(eventID, eventName) static const dviglo::StringHash eventID(dviglo::GetEventNameRegister().RegisterString(#eventName)); namespace eventName
 /// Describe an event's parameter hash ID. Should be used inside an event namespace.
-#define URHO3D_PARAM(paramID, paramName) static const dviglo::StringHash paramID(#paramName)
+#define DV_PARAM(paramID, paramName) static const dviglo::StringHash paramID(#paramName)
 /// Convenience macro to construct an EventHandler that points to a receiver object and its member function.
-#define URHO3D_HANDLER(className, function) (new dviglo::EventHandlerImpl<className>(this, &className::function))
+#define DV_HANDLER(className, function) (new dviglo::EventHandlerImpl<className>(this, &className::function))
 /// Convenience macro to construct an EventHandler that points to a receiver object and its member function, and also defines a userdata pointer.
-#define URHO3D_HANDLER_USERDATA(className, function, userData) (new dviglo::EventHandlerImpl<className>(this, &className::function, userData))
+#define DV_HANDLER_USERDATA(className, function, userData) (new dviglo::EventHandlerImpl<className>(this, &className::function, userData))
 
 }

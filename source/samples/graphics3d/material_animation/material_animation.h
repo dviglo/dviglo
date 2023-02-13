@@ -19,7 +19,7 @@ class Scene;
 ///     - Usage of material shader animation for mush room material
 class MaterialAnimation : public Sample
 {
-    URHO3D_OBJECT(MaterialAnimation, Sample);
+    DV_OBJECT(MaterialAnimation, Sample);
 
 public:
     /// Construct.

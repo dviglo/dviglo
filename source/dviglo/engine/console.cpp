@@ -84,14 +84,14 @@ Console::Console(Context* context) :
 
     SetNumRows(DEFAULT_CONSOLE_ROWS);
 
-    SubscribeToEvent(interpreters_, E_ITEMSELECTED, URHO3D_HANDLER(Console, HandleInterpreterSelected));
-    SubscribeToEvent(lineEdit_, E_TEXTCHANGED, URHO3D_HANDLER(Console, HandleTextChanged));
-    SubscribeToEvent(lineEdit_, E_TEXTFINISHED, URHO3D_HANDLER(Console, HandleTextFinished));
-    SubscribeToEvent(lineEdit_, E_UNHANDLEDKEY, URHO3D_HANDLER(Console, HandleLineEditKey));
-    SubscribeToEvent(closeButton_, E_RELEASED, URHO3D_HANDLER(Console, HandleCloseButtonPressed));
-    SubscribeToEvent(uiRoot, E_RESIZED, URHO3D_HANDLER(Console, HandleRootElementResized));
-    SubscribeToEvent(E_LOGMESSAGE, URHO3D_HANDLER(Console, HandleLogMessage));
-    SubscribeToEvent(E_POSTUPDATE, URHO3D_HANDLER(Console, HandlePostUpdate));
+    SubscribeToEvent(interpreters_, E_ITEMSELECTED, DV_HANDLER(Console, HandleInterpreterSelected));
+    SubscribeToEvent(lineEdit_, E_TEXTCHANGED, DV_HANDLER(Console, HandleTextChanged));
+    SubscribeToEvent(lineEdit_, E_TEXTFINISHED, DV_HANDLER(Console, HandleTextFinished));
+    SubscribeToEvent(lineEdit_, E_UNHANDLEDKEY, DV_HANDLER(Console, HandleLineEditKey));
+    SubscribeToEvent(closeButton_, E_RELEASED, DV_HANDLER(Console, HandleCloseButtonPressed));
+    SubscribeToEvent(uiRoot, E_RESIZED, DV_HANDLER(Console, HandleRootElementResized));
+    SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Console, HandleLogMessage));
+    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(Console, HandlePostUpdate));
 }
 
 Console::~Console()

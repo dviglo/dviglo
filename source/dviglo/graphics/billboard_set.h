@@ -17,7 +17,7 @@ class IndexBuffer;
 class VertexBuffer;
 
 /// One billboard in the billboard set.
-struct URHO3D_API Billboard
+struct DV_API Billboard
 {
     /// Position.
     Vector3 position_;
@@ -40,9 +40,9 @@ struct URHO3D_API Billboard
 };
 
 /// %Billboard component.
-class URHO3D_API BillboardSet : public Drawable
+class DV_API BillboardSet : public Drawable
 {
-    URHO3D_OBJECT(BillboardSet, Drawable);
+    DV_OBJECT(BillboardSet, Drawable);
 
 public:
     /// Construct.

@@ -67,18 +67,18 @@ void Constraint::RegisterObject(Context* context)
 {
     context->RegisterFactory<Constraint>(PHYSICS_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ENUM_ATTRIBUTE_EX("Constraint Type", constraintType_, MarkConstraintDirty, typeNames, CONSTRAINT_POINT, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Position", position_, AdjustOtherBodyPosition, Vector3::ZERO, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Rotation", rotation_, MarkFramesDirty, Quaternion::IDENTITY, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Other Body Position", otherPosition_, MarkFramesDirty, Vector3::ZERO, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Other Body Rotation", otherRotation_, MarkFramesDirty, Quaternion::IDENTITY, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Other Body NodeID", otherBodyNodeID_, MarkConstraintDirty, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ACCESSOR_ATTRIBUTE("High Limit", GetHighLimit, SetHighLimit, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Low Limit", GetLowLimit, SetLowLimit, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("ERP Parameter", GetERP, SetERP, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("CFM Parameter", GetCFM, SetCFM, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Disable Collision", disableCollision_, MarkConstraintDirty, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ENUM_ATTRIBUTE_EX("Constraint Type", constraintType_, MarkConstraintDirty, typeNames, CONSTRAINT_POINT, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Position", position_, AdjustOtherBodyPosition, Vector3::ZERO, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Rotation", rotation_, MarkFramesDirty, Quaternion::IDENTITY, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Other Body Position", otherPosition_, MarkFramesDirty, Vector3::ZERO, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Other Body Rotation", otherRotation_, MarkFramesDirty, Quaternion::IDENTITY, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Other Body NodeID", otherBodyNodeID_, MarkConstraintDirty, 0, AM_DEFAULT | AM_NODEID);
+    DV_ACCESSOR_ATTRIBUTE("High Limit", GetHighLimit, SetHighLimit, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Low Limit", GetLowLimit, SetLowLimit, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("ERP Parameter", GetERP, SetERP, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("CFM Parameter", GetCFM, SetCFM, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Disable Collision", disableCollision_, MarkConstraintDirty, false, AM_DEFAULT);
 }
 
 void Constraint::ApplyAttributes()
@@ -260,7 +260,7 @@ void Constraint::SetWorldPosition(const Vector3& position)
         MarkNetworkUpdate();
     }
     else
-        URHO3D_LOGWARNING("Constraint not created, world position could not be stored");
+        DV_LOGWARNING("Constraint not created, world position could not be stored");
 }
 
 void Constraint::SetHighLimit(const Vector2& limit)
@@ -411,7 +411,7 @@ void Constraint::OnSceneSet(Scene* scene)
     if (scene)
     {
         if (scene == node_)
-            URHO3D_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
+            DV_LOGWARNING(GetTypeName() + " should not be created to the root scene node");
 
         physicsWorld_ = scene->GetOrCreateComponent<PhysicsWorld>();
         physicsWorld_->AddConstraint(this);
@@ -441,7 +441,7 @@ void Constraint::OnMarkedDirty(Node* node)
 
 void Constraint::CreateConstraint()
 {
-    URHO3D_PROFILE(CreateConstraint);
+    DV_PROFILE(CreateConstraint);
 
     cachedWorldScale_ = node_->GetWorldScale();
 

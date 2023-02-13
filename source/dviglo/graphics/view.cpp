@@ -358,7 +358,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
 
     if (Graphics::GetGAPI() == GAPI_OPENGL)
     {
-#if defined(URHO3D_GLES2)
+#if defined(DV_GLES2)
         // On OpenGL ES we assume a stencil is not available or would not give a good performance, and disable light stencil
         // optimizations in any case
         noStencil_ = true;
@@ -567,7 +567,7 @@ void View::Render()
         camera_->SetAspectRatioInternal((float)(viewSize_.x_) / (float)(viewSize_.y_));
 
     // Bind the face selection and indirection cube maps for point light shadows
-#ifndef URHO3D_GLES2
+#ifndef DV_GLES2
     if (renderer_->GetDrawShadows())
     {
         graphics_->SetTexture(TU_FACESELECT, renderer_->GetFaceSelectCubeMap());
@@ -781,7 +781,7 @@ void View::GetDrawables()
     if (!octree_ || !cullCamera_)
         return;
 
-    URHO3D_PROFILE(GetDrawables);
+    DV_PROFILE(GetDrawables);
 
     auto* queue = GetSubsystem<WorkQueue>();
     Vector<Drawable*>& tempDrawables = tempDrawables_[0];
@@ -847,7 +847,7 @@ void View::GetDrawables()
         UpdateOccluders(occluders_, cullCamera_);
         if (occluders_.Size())
         {
-            URHO3D_PROFILE(DrawOcclusion);
+            DV_PROFILE(DrawOcclusion);
 
             occlusionBuffer_ = renderer_->GetOcclusionBuffer(cullCamera_);
             DrawOccluders(occlusionBuffer_, occluders_);
@@ -960,7 +960,7 @@ void View::GetBatches()
 void View::ProcessLights()
 {
     // Process lit geometries and shadow casters for each light
-    URHO3D_PROFILE(ProcessLights);
+    DV_PROFILE(ProcessLights);
 
     auto* queue = GetSubsystem<WorkQueue>();
     lightQueryResults_.Resize(lights_.Size());
@@ -989,7 +989,7 @@ void View::GetLightBatches()
 
     // Build light queues and lit batches
     {
-        URHO3D_PROFILE(GetLightBatches);
+        DV_PROFILE(GetLightBatches);
 
         // Preallocate light queues: per-pixel lights which have lit geometries
         i32 numLightQueues = 0;
@@ -1150,7 +1150,7 @@ void View::GetLightBatches()
     // Process drawables with limited per-pixel light count
     if (maxLightsDrawables_.Size())
     {
-        URHO3D_PROFILE(GetMaxLightsBatches);
+        DV_PROFILE(GetMaxLightsBatches);
 
         for (HashSet<Drawable*>::Iterator i = maxLightsDrawables_.Begin(); i != maxLightsDrawables_.End(); ++i)
         {
@@ -1172,7 +1172,7 @@ void View::GetLightBatches()
 
 void View::GetBaseBatches()
 {
-    URHO3D_PROFILE(GetBaseBatches);
+    DV_PROFILE(GetBaseBatches);
 
     for (Vector<Drawable*>::ConstIterator i = geometries_.Begin(); i != geometries_.End(); ++i)
     {
@@ -1266,7 +1266,7 @@ void View::UpdateGeometries()
         return;
     }
 
-    URHO3D_PROFILE(SortAndUpdateGeometry);
+    DV_PROFILE(SortAndUpdateGeometry);
 
     auto* queue = GetSubsystem<WorkQueue>();
 
@@ -1433,7 +1433,7 @@ void View::ExecuteRenderPathCommands()
     // If not reusing shadowmaps, render all of them first
     if (!renderer_->GetReuseShadowMaps() && renderer_->GetDrawShadows() && !actualView->lightQueues_.Empty())
     {
-        URHO3D_PROFILE(RenderShadowMaps);
+        DV_PROFILE(RenderShadowMaps);
 
         for (Vector<LightBatchQueue>::Iterator i = actualView->lightQueues_.Begin(); i != actualView->lightQueues_.End(); ++i)
         {
@@ -1443,7 +1443,7 @@ void View::ExecuteRenderPathCommands()
     }
 
     {
-        URHO3D_PROFILE(ExecuteRenderPath);
+        DV_PROFILE(ExecuteRenderPath);
 
         // Set for safety in case of empty renderpath
         currentRenderTarget_ = substituteRenderTarget_ ? substituteRenderTarget_ : renderTarget_;
@@ -1548,7 +1548,7 @@ void View::ExecuteRenderPathCommands()
             {
             case CMD_CLEAR:
                 {
-                    URHO3D_PROFILE(ClearRenderTarget);
+                    DV_PROFILE(ClearRenderTarget);
 
                     Color clearColor = command.clearColor_;
                     if (command.useFogColor_)
@@ -1564,7 +1564,7 @@ void View::ExecuteRenderPathCommands()
                     BatchQueue& queue = actualView->batchQueues_[command.passIndex_];
                     if (!queue.IsEmpty())
                     {
-                        URHO3D_PROFILE(RenderScenePass);
+                        DV_PROFILE(RenderScenePass);
 
                         SetRenderTargets(command);
                         bool allowDepthWrite = SetTextures(command);
@@ -1588,7 +1588,7 @@ void View::ExecuteRenderPathCommands()
 
             case CMD_QUAD:
                 {
-                    URHO3D_PROFILE(RenderQuad);
+                    DV_PROFILE(RenderQuad);
 
                     SetRenderTargets(command);
                     SetTextures(command);
@@ -1600,7 +1600,7 @@ void View::ExecuteRenderPathCommands()
                 // Render shadow maps + opaque objects' additive lighting
                 if (!actualView->lightQueues_.Empty())
                 {
-                    URHO3D_PROFILE(RenderLights);
+                    DV_PROFILE(RenderLights);
 
                     SetRenderTargets(command);
 
@@ -1647,7 +1647,7 @@ void View::ExecuteRenderPathCommands()
                 // Render shadow maps + light volumes
                 if (!actualView->lightQueues_.Empty())
                 {
-                    URHO3D_PROFILE(RenderLightVolumes);
+                    DV_PROFILE(RenderLightVolumes);
 
                     SetRenderTargets(command);
                     for (Vector<LightBatchQueue>::Iterator i = actualView->lightQueues_.Begin(); i != actualView->lightQueues_.End(); ++i)
@@ -2006,7 +2006,7 @@ void View::AllocateScreenBuffers()
 
         // If OpenGL ES, use substitute target to avoid resolve from the backbuffer, which may be slow. However if multisampling
         // is specified, there is no choice
-#ifdef URHO3D_GLES2
+#ifdef DV_GLES2
         if (!renderTarget_ && graphics_->GetMultiSample() < 2)
             needSubstitute = true;
 #endif
@@ -2075,7 +2075,7 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
     if (!source)
         return;
 
-    URHO3D_PROFILE(BlitFramebuffer);
+    DV_PROFILE(BlitFramebuffer);
 
     // If blitting to the destination rendertarget, use the actual viewport. Intermediate textures on the other hand
     // are always viewport-sized
@@ -2265,7 +2265,7 @@ void View::ProcessLight(LightQueryResult& query, i32 threadIndex)
     if (isShadowed && light->GetShadowDistance() > 0.0f && light->GetDistance() > light->GetShadowDistance())
         isShadowed = false;
     // OpenGL ES can not support point light shadows
-#if defined(URHO3D_GLES2)
+#if defined(DV_GLES2)
     if (isShadowed && type == LIGHT_POINT)
         isShadowed = false;
 #endif
@@ -2941,7 +2941,7 @@ void View::PrepareInstancingBuffer()
         return;
     }
 
-    URHO3D_PROFILE(PrepareInstancingBuffer);
+    DV_PROFILE(PrepareInstancingBuffer);
 
     i32 totalInstances = 0;
 
@@ -3040,7 +3040,7 @@ bool View::NeedRenderShadowMap(const LightBatchQueue& queue)
 
 void View::RenderShadowMap(const LightBatchQueue& queue)
 {
-    URHO3D_PROFILE(RenderShadowMap);
+    DV_PROFILE(RenderShadowMap);
 
     Texture2D* shadowMap = queue.shadowMap_;
     graphics_->SetTexture(TU_SHADOWMAP, nullptr);

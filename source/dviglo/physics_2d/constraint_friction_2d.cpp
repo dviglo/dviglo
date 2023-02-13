@@ -29,11 +29,11 @@ void ConstraintFriction2D::RegisterObject(Context* context)
 {
     context->RegisterFactory<ConstraintFriction2D>(PHYSICS2D_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Force", GetMaxForce, SetMaxForce, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Torque", GetMaxTorque, SetMaxTorque, 0.0f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Constraint2D);
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Force", GetMaxForce, SetMaxForce, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Torque", GetMaxTorque, SetMaxTorque, 0.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Constraint2D);
 }
 
 void ConstraintFriction2D::SetAnchor(const Vector2& anchor)

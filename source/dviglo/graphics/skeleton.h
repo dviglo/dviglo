@@ -18,7 +18,7 @@ enum BoneCollisionShape : unsigned char
     BONECOLLISION_SPHERE = 0x1,
     BONECOLLISION_BOX = 0x2,
 };
-URHO3D_FLAGSET(BoneCollisionShape, BoneCollisionShapeFlags);
+DV_FLAGSET(BoneCollisionShape, BoneCollisionShapeFlags);
 
 class Deserializer;
 class ResourceCache;
@@ -65,7 +65,7 @@ struct Bone
 };
 
 /// Hierarchical collection of bones.
-class URHO3D_API Skeleton
+class DV_API Skeleton
 {
 public:
     /// Construct an empty skeleton.

@@ -10,9 +10,9 @@ namespace dviglo
 {
 
 /// 2D revolute constraint component.
-class URHO3D_API ConstraintRevolute2D : public Constraint2D
+class DV_API ConstraintRevolute2D : public Constraint2D
 {
-    URHO3D_OBJECT(ConstraintRevolute2D, Constraint2D);
+    DV_OBJECT(ConstraintRevolute2D, Constraint2D);
 
 public:
     /// Construct.

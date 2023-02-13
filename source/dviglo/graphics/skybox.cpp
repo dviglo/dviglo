@@ -29,7 +29,7 @@ void Skybox::RegisterObject(Context* context)
 {
     context->RegisterFactory<Skybox>(GEOMETRY_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(StaticModel);
+    DV_COPY_BASE_ATTRIBUTES(StaticModel);
 }
 
 void Skybox::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)

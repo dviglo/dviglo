@@ -103,31 +103,31 @@ void Terrain::RegisterObject(Context* context)
 {
     context->RegisterFactory<Terrain>(GEOMETRY_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Height Map", GetHeightMapAttr, SetHeightMapAttr, ResourceRef(Image::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Height Map", GetHeightMapAttr, SetHeightMapAttr, ResourceRef(Image::GetTypeStatic()),
         AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
+    DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
         AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("North Neighbor NodeID", northID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE_EX("South Neighbor NodeID", southID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE_EX("West Neighbor NodeID", westID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE_EX("East Neighbor NodeID", eastID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
-    URHO3D_ATTRIBUTE_EX("Vertex Spacing", spacing_, MarkTerrainDirty, DEFAULT_SPACING, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Patch Size", GetPatchSize, SetPatchSizeAttr, DEFAULT_PATCH_SIZE, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max LOD Levels", GetMaxLodLevels, SetMaxLodLevelsAttr, MAX_LOD_LEVELS, AM_DEFAULT);
-    URHO3D_ATTRIBUTE_EX("Smooth Height Map", smoothing_, MarkTerrainDirty, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Occluder", IsOccluder, SetOccluder, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Cast Shadows", GetCastShadows, SetCastShadows, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Max Lights", GetMaxLights, SetMaxLights, 0, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("View Mask", GetViewMask, SetViewMask, DEFAULT_VIEWMASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Light Mask", GetLightMask, SetLightMask, DEFAULT_LIGHTMASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Mask", GetShadowMask, SetShadowMask, DEFAULT_SHADOWMASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Occlusion LOD level", GetOcclusionLodLevel, SetOcclusionLodLevelAttr, NINDEX, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("North Neighbor NodeID", northID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE_EX("South Neighbor NodeID", southID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE_EX("West Neighbor NodeID", westID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE_EX("East Neighbor NodeID", eastID_, MarkNeighborsDirty, 0, AM_DEFAULT | AM_NODEID);
+    DV_ATTRIBUTE_EX("Vertex Spacing", spacing_, MarkTerrainDirty, DEFAULT_SPACING, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Patch Size", GetPatchSize, SetPatchSizeAttr, DEFAULT_PATCH_SIZE, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max LOD Levels", GetMaxLodLevels, SetMaxLodLevelsAttr, MAX_LOD_LEVELS, AM_DEFAULT);
+    DV_ATTRIBUTE_EX("Smooth Height Map", smoothing_, MarkTerrainDirty, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Is Occluder", IsOccluder, SetOccluder, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Cast Shadows", GetCastShadows, SetCastShadows, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Lights", GetMaxLights, SetMaxLights, 0, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("View Mask", GetViewMask, SetViewMask, DEFAULT_VIEWMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Light Mask", GetLightMask, SetLightMask, DEFAULT_LIGHTMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Mask", GetShadowMask, SetShadowMask, DEFAULT_SHADOWMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Occlusion LOD level", GetOcclusionLodLevel, SetOcclusionLodLevelAttr, NINDEX, AM_DEFAULT);
 }
 
 void Terrain::ApplyAttributes()
@@ -258,7 +258,7 @@ void Terrain::SetNorthNeighbor(Terrain* north)
     if (north_ && north_->GetNode())
     {
         northID_ = north_->GetNode()->GetID();
-        SubscribeToEvent(north_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(north_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -277,7 +277,7 @@ void Terrain::SetSouthNeighbor(Terrain* south)
     if (south_ && south_->GetNode())
     {
         southID_ = south_->GetNode()->GetID();
-        SubscribeToEvent(south_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(south_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -296,7 +296,7 @@ void Terrain::SetWestNeighbor(Terrain* west)
     if (west_ && west_->GetNode())
     {
         westID_ = west_->GetNode()->GetID();
-        SubscribeToEvent(west_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(west_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -315,7 +315,7 @@ void Terrain::SetEastNeighbor(Terrain* east)
     if (east_ && east_->GetNode())
     {
         eastID_ = east_->GetNode()->GetID();
-        SubscribeToEvent(east_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(east_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -337,25 +337,25 @@ void Terrain::SetNeighbors(Terrain* north, Terrain* south, Terrain* west, Terrai
     if (north_ && north_->GetNode())
     {
         northID_ = north_->GetNode()->GetID();
-        SubscribeToEvent(north_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(north_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
     south_ = south;
     if (south_ && south_->GetNode())
     {
         southID_ = south_->GetNode()->GetID();
-        SubscribeToEvent(south_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(south_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
     west_ = west;
     if (west_ && west_->GetNode())
     {
         westID_ = west_->GetNode()->GetID();
-        SubscribeToEvent(west_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(west_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
     east_ = east;
     if (east_ && east_->GetNode())
     {
         eastID_ = east_->GetNode()->GetID();
-        SubscribeToEvent(east_->GetNode(), E_TERRAINCREATED, URHO3D_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        SubscribeToEvent(east_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -647,7 +647,7 @@ Vector3 Terrain::HeightMapToWorld(const IntVector2& pixelPosition) const
 
 void Terrain::CreatePatchGeometry(TerrainPatch* patch)
 {
-    URHO3D_PROFILE(CreatePatchGeometry);
+    DV_PROFILE(CreatePatchGeometry);
 
     auto row = (unsigned)(patchSize_ + 1);
     VertexBuffer* vertexBuffer = patch->GetVertexBuffer();
@@ -854,7 +854,7 @@ void Terrain::CreateGeometry()
     if (!node_)
         return;
 
-    URHO3D_PROFILE(CreateTerrainGeometry);
+    DV_PROFILE(CreateTerrainGeometry);
 
     unsigned prevNumPatches = patches_.Size();
 
@@ -910,7 +910,7 @@ void Terrain::CreateGeometry()
     // Remove old patch nodes which are not needed
     if (updateAll)
     {
-        URHO3D_PROFILE(RemoveOldPatches);
+        DV_PROFILE(RemoveOldPatches);
 
         Vector<Node*> oldPatchNodes;
         node_->GetChildrenWithComponent<TerrainPatch>(oldPatchNodes);
@@ -947,7 +947,7 @@ void Terrain::CreateGeometry()
 
         if (imgComps == 1)
         {
-            URHO3D_PROFILE(CopyHeightData);
+            DV_PROFILE(CopyHeightData);
 
             for (int z = 0; z < numVertices_.y_; ++z)
             {
@@ -972,7 +972,7 @@ void Terrain::CreateGeometry()
         }
         else
         {
-            URHO3D_PROFILE(CopyHeightData);
+            DV_PROFILE(CopyHeightData);
 
             // If more than 1 component, use the green channel for more accuracy
             for (int z = 0; z < numVertices_.y_; ++z)
@@ -1024,7 +1024,7 @@ void Terrain::CreateGeometry()
         bool enabled = IsEnabledEffective();
 
         {
-            URHO3D_PROFILE(CreatePatches);
+            DV_PROFILE(CreatePatches);
 
             // Create patches and set node transforms
             for (int z = 0; z < numPatches_.y_; ++z)
@@ -1079,7 +1079,7 @@ void Terrain::CreateGeometry()
         // Create vertex data for patches. First update smoothing to ensure normals are calculated correctly across patch borders
         if (smoothing_)
         {
-            URHO3D_PROFILE(UpdateSmoothing);
+            DV_PROFILE(UpdateSmoothing);
 
             for (i32 i = 0; i < patches_.Size(); ++i)
             {
@@ -1136,7 +1136,7 @@ void Terrain::CreateGeometry()
 
 void Terrain::CreateIndexData()
 {
-    URHO3D_PROFILE(CreateIndexData);
+    DV_PROFILE(CreateIndexData);
 
     Vector<unsigned short> indices;
     drawRanges_.Clear();
@@ -1364,7 +1364,7 @@ Vector3 Terrain::GetRawNormal(int x, int z) const
 
 void Terrain::CalculateLodErrors(TerrainPatch* patch)
 {
-    URHO3D_PROFILE(CalculateLodErrors);
+    DV_PROFILE(CalculateLodErrors);
 
     const IntVector2& coords = patch->GetCoordinates();
     Vector<float>& lodErrors = patch->GetLodErrors();
@@ -1417,7 +1417,7 @@ bool Terrain::SetHeightMapInternal(Image* image, bool recreateNow)
 {
     if (image && image->IsCompressed())
     {
-        URHO3D_LOGERROR("Can not use a compressed image as a terrain heightmap");
+        DV_LOGERROR("Can not use a compressed image as a terrain heightmap");
         return false;
     }
 
@@ -1425,7 +1425,7 @@ bool Terrain::SetHeightMapInternal(Image* image, bool recreateNow)
     if (heightMap_)
         UnsubscribeFromEvent(heightMap_, E_RELOADFINISHED);
     if (image)
-        SubscribeToEvent(image, E_RELOADFINISHED, URHO3D_HANDLER(Terrain, HandleHeightMapReloadFinished));
+        SubscribeToEvent(image, E_RELOADFINISHED, DV_HANDLER(Terrain, HandleHeightMapReloadFinished));
 
     heightMap_ = image;
 

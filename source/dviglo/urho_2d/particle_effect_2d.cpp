@@ -198,7 +198,7 @@ bool ParticleEffect2D::EndLoad()
         auto* cache = GetSubsystem<ResourceCache>();
         sprite_ = cache->GetResource<Sprite2D>(loadSpriteName_);
         if (!sprite_)
-            URHO3D_LOGERROR("Could not load sprite " + loadSpriteName_ + " for particle effect");
+            DV_LOGERROR("Could not load sprite " + loadSpriteName_ + " for particle effect");
 
         loadSpriteName_.Clear();
     }

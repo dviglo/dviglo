@@ -62,7 +62,7 @@ enum NavigationPathPointFlag
     NAVPATHFLAG_OFF_MESH = 0x04
 };
 
-struct URHO3D_API NavigationPathPoint
+struct DV_API NavigationPathPoint
 {
     /// World-space position of the path point.
     Vector3 position_;
@@ -73,9 +73,9 @@ struct URHO3D_API NavigationPathPoint
 };
 
 /// Navigation mesh component. Collects the navigation geometry from child nodes with the Navigable component and responds to path queries.
-class URHO3D_API NavigationMesh : public Component
+class DV_API NavigationMesh : public Component
 {
-    URHO3D_OBJECT(NavigationMesh, Component);
+    DV_OBJECT(NavigationMesh, Component);
 
     friend class CrowdManager;
 
@@ -344,6 +344,6 @@ protected:
 };
 
 /// Register Navigation library objects.
-void URHO3D_API RegisterNavigationLibrary(Context* context);
+void DV_API RegisterNavigationLibrary(Context* context);
 
 }

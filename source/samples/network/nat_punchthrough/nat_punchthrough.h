@@ -24,7 +24,7 @@ const int SERVER_PORT = 54654;
 ///     - Implementing simple chat functionality with network messages
 class NATPunchtrough : public Sample
 {
-    URHO3D_OBJECT(NATPunchtrough, Sample);
+    DV_OBJECT(NATPunchtrough, Sample);
 
 public:
     /// Construct.

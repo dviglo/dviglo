@@ -112,9 +112,9 @@ jobs:
           ARGS+=(-D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }})
         fi
 
-        ARGS+=(-D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE }})
-        ARGS+=(-D URHO3D_64BIT=1 -D URHO3D_TESTING=1)
-        ARGS+=(-D URHO3D_OPENGL=1 -D URHO3D_D3D11=1)
+        ARGS+=(-D DV_LIB_TYPE=${{ matrix.LIB_TYPE }})
+        ARGS+=(-D DV_64BIT=1 -D DV_TESTING=1)
+        ARGS+=(-D DV_OPENGL=1 -D DV_D3D11=1)
 
         cmake "${ARGS[@]}"
 
@@ -265,8 +265,8 @@ jobs:
 
         cmake engine_repo -B engine_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
-          -D URHO3D_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
+          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build engine_build
 
@@ -289,8 +289,8 @@ jobs:
       if: false
       run: |
         #cmake --install engine_build --prefix=$HOME/installed_engine # Not works
-        #URHO3D_HOME=$HOME/installed_engine # Not works (add export?)
-        #URHO3D_HOME=$GITHUB_WORKSPACE/engine_build # Not works
+        #DV_HOME=$HOME/installed_engine # Not works (add export?)
+        #DV_HOME=$GITHUB_WORKSPACE/engine_build # Not works
         sudo cmake --build engine_build --target install
         cd engine_repo
         rake new
@@ -305,8 +305,8 @@ jobs:
 
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
-          -D URHO3D_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
+          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build
         xvfb-run ctest --test-dir $HOME/projects/UrhoApp_build
@@ -385,10 +385,10 @@ jobs:
         TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
 
         cmake engine_repo -B engine_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
-          -D URHO3D_OPENGL=1 -D URHO3D_D3D11=1 \
+          -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build engine_build
 
@@ -396,7 +396,7 @@ jobs:
       if: false
       run: |
         #sudo cmake --build engine_build --target install
-        export URHO3D_HOME=$GITHUB_WORKSPACE/engine_build
+        export DV_HOME=$GITHUB_WORKSPACE/engine_build
 
         cd engine_repo
         rake new
@@ -418,9 +418,9 @@ jobs:
         TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
 
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
-          -D URHO3D_OPENGL=1 -D URHO3D_D3D11=1 \
+          -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D URHO3D_64BIT=$BITS64 -D URHO3D_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build

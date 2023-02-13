@@ -55,9 +55,9 @@ struct Particle2D
 };
 
 /// 2D particle emitter component.
-class URHO3D_API ParticleEmitter2D : public Drawable2D
+class DV_API ParticleEmitter2D : public Drawable2D
 {
-    URHO3D_OBJECT(ParticleEmitter2D, Drawable2D);
+    DV_OBJECT(ParticleEmitter2D, Drawable2D);
 
 public:
     /// Construct.

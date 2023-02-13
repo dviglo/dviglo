@@ -14,7 +14,7 @@
 class Sprites : public Sample
 {
     // Enable type information.
-    URHO3D_OBJECT(Sprites, Sample);
+    DV_OBJECT(Sprites, Sample);
 
 public:
     /// Construct.

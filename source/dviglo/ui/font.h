@@ -27,9 +27,9 @@ enum FontType
 };
 
 /// %Font resource.
-class URHO3D_API Font : public Resource
+class DV_API Font : public Resource
 {
-    URHO3D_OBJECT(Font, Resource);
+    DV_OBJECT(Font, Resource);
 
 public:
     /// Construct.

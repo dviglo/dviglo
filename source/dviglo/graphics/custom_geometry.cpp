@@ -45,19 +45,19 @@ void CustomGeometry::RegisterObject(Context* context)
 {
     context->RegisterFactory<CustomGeometry>(GEOMETRY_CATEGORY);
 
-    URHO3D_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Dynamic Vertex Buffer", dynamic_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Geometry Data", GetGeometryDataAttr, SetGeometryDataAttr,
+    DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
+    DV_ATTRIBUTE("Dynamic Vertex Buffer", dynamic_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Geometry Data", GetGeometryDataAttr, SetGeometryDataAttr,
                                     Variant::emptyBuffer, AM_FILE | AM_NOEDIT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Materials", GetMaterialsAttr, SetMaterialsAttr,
+    DV_ACCESSOR_ATTRIBUTE("Materials", GetMaterialsAttr, SetMaterialsAttr,
                               ResourceRefList(Material::GetTypeStatic()), AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Is Occluder", occluder_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
-    URHO3D_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
-    URHO3D_COPY_BASE_ATTRIBUTES(Drawable);
+    DV_ATTRIBUTE("Is Occluder", occluder_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Can Be Occluded", IsOccludee, SetOccludee, true, AM_DEFAULT);
+    DV_ATTRIBUTE("Cast Shadows", castShadows_, false, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
+    DV_COPY_BASE_ATTRIBUTES(Drawable);
 }
 
 void CustomGeometry::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)
@@ -113,7 +113,7 @@ void CustomGeometry::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQuer
     break;
 
     case RAY_TRIANGLE_UV:
-        URHO3D_LOGWARNING("RAY_TRIANGLE_UV query level is not supported for CustomGeometry component");
+        DV_LOGWARNING("RAY_TRIANGLE_UV query level is not supported for CustomGeometry component");
         break;
     }
 }
@@ -226,7 +226,7 @@ void CustomGeometry::BeginGeometry(unsigned index, PrimitiveType type)
 {
     if (index > geometries_.Size())
     {
-        URHO3D_LOGERROR("Geometry index out of bounds");
+        DV_LOGERROR("Geometry index out of bounds");
         return;
     }
 
@@ -289,7 +289,7 @@ void CustomGeometry::DefineGeometry(unsigned index, PrimitiveType type, unsigned
 {
     if (index > geometries_.Size())
     {
-        URHO3D_LOGERROR("Geometry index out of bounds");
+        DV_LOGERROR("Geometry index out of bounds");
         return;
     }
 
@@ -312,7 +312,7 @@ void CustomGeometry::DefineGeometry(unsigned index, PrimitiveType type, unsigned
 
 void CustomGeometry::Commit()
 {
-    URHO3D_PROFILE(CommitCustomGeometry);
+    DV_PROFILE(CommitCustomGeometry);
 
     unsigned totalVertices = 0;
     boundingBox_.Clear();
@@ -381,7 +381,7 @@ void CustomGeometry::Commit()
             vertexBuffer_->Unlock();
         }
         else
-            URHO3D_LOGERROR("Failed to lock custom geometry vertex buffer");
+            DV_LOGERROR("Failed to lock custom geometry vertex buffer");
     }
     else
     {
@@ -407,7 +407,7 @@ bool CustomGeometry::SetMaterial(unsigned index, Material* material)
 {
     if (index >= batches_.Size())
     {
-        URHO3D_LOGERROR("Material index out of bounds");
+        DV_LOGERROR("Material index out of bounds");
         return false;
     }
 

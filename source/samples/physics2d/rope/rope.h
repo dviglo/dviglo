@@ -20,7 +20,7 @@ namespace dviglo
 ///     - Displaying physics debug geometry
 class Urho2DPhysicsRope : public Sample
 {
-    URHO3D_OBJECT(Urho2DPhysicsRope, Sample);
+    DV_OBJECT(Urho2DPhysicsRope, Sample);
 
 public:
     /// Construct.

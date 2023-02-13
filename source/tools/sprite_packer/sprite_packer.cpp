@@ -146,7 +146,7 @@ void Run(Vector<String>& arguments)
     if (inputFiles.Size() > 1)
     {
         outputFile = inputFiles[inputFiles.Size() - 1];
-        URHO3D_LOGINFO("Output file set to " + outputFile + ".");
+        DV_LOGINFO("Output file set to " + outputFile + ".");
         inputFiles.Erase(inputFiles.Size() - 1);
     }
 
@@ -160,7 +160,7 @@ void Run(Vector<String>& arguments)
     // check all input files exist
     for (const String& inputFile : inputFiles)
     {
-        URHO3D_LOGINFO("Checking " + inputFile + " to see if file exists.");
+        DV_LOGINFO("Checking " + inputFile + " to see if file exists.");
         if (!fileSystem->FileExists(inputFile))
             ErrorExit("File " + inputFile + " does not exist.");
     }
@@ -325,7 +325,7 @@ void Run(Vector<String>& arguments)
             subTexture.SetI32("offsetY", packerInfo->offsetY);
         }
 
-        URHO3D_LOGINFO("Transferring " + packerInfo->path + " to sprite sheet.");
+        DV_LOGINFO("Transferring " + packerInfo->path + " to sprite sheet.");
 
         File file(context, packerInfo->path);
         Image image(context);
@@ -349,7 +349,7 @@ void Run(Vector<String>& arguments)
         unsigned OUTER_BOUNDS_DEBUG_COLOR = Color::BLUE.ToU32();
         unsigned INNER_BOUNDS_DEBUG_COLOR = Color::GREEN.ToU32();
 
-        URHO3D_LOGINFO("Drawing debug information.");
+        DV_LOGINFO("Drawing debug information.");
         for (const SharedPtr<PackerInfo>& packerInfo : packerInfos)
         {
             // Draw outer bounds
@@ -378,10 +378,10 @@ void Run(Vector<String>& arguments)
         }
     }
 
-    URHO3D_LOGINFO("Saving output image.");
+    DV_LOGINFO("Saving output image.");
     spriteSheetImage.SavePNG(outputFile);
 
-    URHO3D_LOGINFO("Saving SpriteSheet xml file.");
+    DV_LOGINFO("Saving SpriteSheet xml file.");
     File spriteSheetFile(context);
     spriteSheetFile.Open(spriteSheetFileName, FILE_WRITE);
     xml.Save(spriteSheetFile);

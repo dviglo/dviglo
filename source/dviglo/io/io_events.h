@@ -10,17 +10,17 @@ namespace dviglo
 {
 
 /// Log message event.
-URHO3D_EVENT(E_LOGMESSAGE, LogMessage)
+DV_EVENT(E_LOGMESSAGE, LogMessage)
 {
-    URHO3D_PARAM(P_MESSAGE, Message);              // String
-    URHO3D_PARAM(P_LEVEL, Level);                  // int
+    DV_PARAM(P_MESSAGE, Message);              // String
+    DV_PARAM(P_LEVEL, Level);                  // int
 }
 
 /// Async system command execution finished.
-URHO3D_EVENT(E_ASYNCEXECFINISHED, AsyncExecFinished)
+DV_EVENT(E_ASYNCEXECFINISHED, AsyncExecFinished)
 {
-    URHO3D_PARAM(P_REQUESTID, RequestID);          // unsigned
-    URHO3D_PARAM(P_EXITCODE, ExitCode);            // int
+    DV_PARAM(P_REQUESTID, RequestID);          // unsigned
+    DV_PARAM(P_EXITCODE, ExitCode);            // int
 }
 
 }

@@ -42,7 +42,7 @@ Classes that derive from Object contain type-identification, they can be created
 
 %Object factory registration and object creation through factories are directly accessible only in C++, not in script.
 
-The definition of an Object subclass must contain the URHO3D_OBJECT(className, baseTypeName) macro. Type identification is available both as text (GetTypeName() or GetTypeNameStatic()) and as a 32-bit hash of the type name (GetType() or GetTypeStatic()).
+The definition of an Object subclass must contain the DV_OBJECT(className, baseTypeName) macro. Type identification is available both as text (GetTypeName() or GetTypeNameStatic()) and as a 32-bit hash of the type name (GetType() or GetTypeStatic()).
 
 To register an object factory for a specific type, call the \ref Context::RegisterFactory "RegisterFactory()" template function on Context. You can get its pointer from any Object either via the \ref Object::context_ "context_" member variable, or by calling \ref Object::GetContext "GetContext()". An example:
 
@@ -93,12 +93,12 @@ time, fileSystem, log, cache, network, input, ui, audio, engine, graphics, rende
 
 The Urho3D event system allows for data transport and function invocation without the sender and receiver having to explicitly know of each other. Both the event sender and receiver must derive from Object. An event receiver must subscribe to each event type it wishes to receive: one can either subscribe to the event coming from any sender, or from a specific sender. The latter is useful for example when handling events from the user interface elements.
 
-Events themselves do not need to be registered. They are identified by 32-bit hashes of their names. Event parameters (the data payload) are optional and are contained inside a VariantMap, identified by 32-bit parameter name hashes. For the inbuilt Urho3D events, event type (E_UPDATE, E_KEYDOWN, E_MOUSEMOVE etc.) and parameter hashes (P_TIMESTEP, P_DX, P_DY etc.) are defined as namespaced constants inside include files such as CoreEvents.h or InputEvents.h, using the helper macros URHO3D_EVENT & URHO3D_PARAM.
+Events themselves do not need to be registered. They are identified by 32-bit hashes of their names. Event parameters (the data payload) are optional and are contained inside a VariantMap, identified by 32-bit parameter name hashes. For the inbuilt Urho3D events, event type (E_UPDATE, E_KEYDOWN, E_MOUSEMOVE etc.) and parameter hashes (P_TIMESTEP, P_DX, P_DY etc.) are defined as namespaced constants inside include files such as CoreEvents.h or InputEvents.h, using the helper macros DV_EVENT & DV_PARAM.
 
-When subscribing to an event, a handler function must be specified. In C++ these must have the signature void HandleEvent(StringHash eventType, VariantMap& eventData). The URHO3D_HANDLER(className, function) macro helps in defining the required class-specific function pointers. For example:
+When subscribing to an event, a handler function must be specified. In C++ these must have the signature void HandleEvent(StringHash eventType, VariantMap& eventData). The DV_HANDLER(className, function) macro helps in defining the required class-specific function pointers. For example:
 
 \code
-SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(MyClass, MyEventHandler));
+SubscribeToEvent(E_UPDATE, DV_HANDLER(MyClass, MyEventHandler));
 \endcode
 
 In script events are identified by their string names instead of name hashes (though these are internally converted to hashes.) %Script event handlers can either have the same signature as in C++, or a simplified signature void HandleEvent() when event type and parameters are not required. The same event subscription would look like:
@@ -189,7 +189,7 @@ The full list of supported parameters, their datatypes and default values: (also
 - FrameLimiter (bool) Whether to cap maximum framerate to 200 (desktop) or 60 (Android/iOS/tvOS). Default true.
 - WorkerThreads (bool) Whether to create worker threads for the %WorkQueue subsystem according to available CPU cores. Default true.
 - %EventProfiler (bool) Whether to create the EventProfiler subsystem. Default true.
-- ResourcePrefixPaths (string) A semicolon-separated list of resource prefix paths to use. If not specified then the default prefix path is set to executable path. The resource prefix paths can also be defined using URHO3D_PREFIX_PATH env-var. When both are defined, the paths set by -pp takes higher precedence.
+- ResourcePrefixPaths (string) A semicolon-separated list of resource prefix paths to use. If not specified then the default prefix path is set to executable path. The resource prefix paths can also be defined using DV_PREFIX_PATH env-var. When both are defined, the paths set by -pp takes higher precedence.
 - ResourcePaths (string) A semicolon-separated list of resource paths to use. If corresponding packages (ie. Data.pak for Data directory) exist they will be used instead. Default "Data;CoreData".
 - ResourcePackages (string) A semicolon-separated list of resource packages to use. Default empty.
 - AutoloadPaths (string) A semicolon-separated list of autoload paths to use. Any resource packages and subdirectories inside an autoload path will be added to the resource system. Default "Autoload".
@@ -295,7 +295,7 @@ public:
     virtual void Start()
     {
         // Called after engine initialization. Setup application & subscribe to events here
-        SubscribeToEvent(E_KEYDOWN, URHO3D_HANDLER(MyApp, HandleKeyDown));
+        SubscribeToEvent(E_KEYDOWN, DV_HANDLER(MyApp, HandleKeyDown));
     }
 
     virtual void Stop()
@@ -314,7 +314,7 @@ public:
     }
 };
 
-URHO3D_DEFINE_APPLICATION_MAIN(MyApp)
+DV_DEFINE_APPLICATION_MAIN(MyApp)
 \endcode
 
 \page SceneModel Scene model
@@ -541,7 +541,7 @@ l10n->SetLanguage("language 2");
 When the language is changed, the E_CHANGELANGUAGE event will be sent. Subscribe to it to perform the necessary relocalization of your user interface (texts, sprites etc.)
 
 \code
-SubscribeToEvent(E_CHANGELANGUAGE, URHO3D_HANDLER(Game, HandleChangeLanguage));
+SubscribeToEvent(E_CHANGELANGUAGE, DV_HANDLER(Game, HandleChangeLanguage));
 
 void Game::HandleChangeLanguage(StringHash eventType, VariantMap& eventData)
 {
@@ -788,7 +788,7 @@ In unmodified AngelScript, this would have to be written as:
 \page LuaScripting Lua scripting
 
 Lua scripting in Urho3D has its dedicated LuaScript subsystem that must be instantiated before the scripting capabilities can be used. Lua support is not compiled in by default but must be enabled by the CMake
-build option -DURHO3D_LUA=1. For more details see \ref Build_Options "Build options". Instantiating the subsystem is done like this:
+build option -DDV_LUA=1. For more details see \ref Build_Options "Build options". Instantiating the subsystem is done like this:
 
 \code
 context_->RegisterSubsystem(new LuaScript(context_));
@@ -817,7 +817,7 @@ For a single script that you wish to step through, you can use \ref LuaScript::E
 - The file has has to be on the file system, within a resource directory, and not packaged.
 - If the script uses require() to import a second script, then that second script will not be available for the debugger in the same way, since internally the second script is passed to Lua via the resource cache.
 
-To get around the second caveat, and avoid changing method calls, use the URHO3D_LUA_RAW_SCRIPT_LOADER build option.  This will force Urho3D to attempt to load scripts from the file system by default, before falling back on the resource cache.  You can then use \ref LuaScript::ExecuteFile "ExecuteFile()", as above, and disable the CMake option for production if required.
+To get around the second caveat, and avoid changing method calls, use the DV_LUA_RAW_SCRIPT_LOADER build option.  This will force Urho3D to attempt to load scripts from the file system by default, before falling back on the resource cache.  You can then use \ref LuaScript::ExecuteFile "ExecuteFile()", as above, and disable the CMake option for production if required.
 
 \section LuaScripting_ScriptObjects Script objects
 
@@ -2351,7 +2351,7 @@ And here's how you manually invoke the solver.
 // C++
 void MyLogic::Setup()
 {
-    SubscribeToEvent(GetScene(), E_SCENEDRAWABLEUPDATEFINISHED, URHO3D_HANDLER(MyLogic, HandleSceneDrawableUpdateFinished));
+    SubscribeToEvent(GetScene(), E_SCENEDRAWABLEUPDATEFINISHED, DV_HANDLER(MyLogic, HandleSceneDrawableUpdateFinished));
 }
 void MyLogic::HandleSceneDrawableUpdateFinished(StringHash eventType, VariantMap& eventData)
 {
@@ -3002,14 +3002,14 @@ Zero-based enumerations are also supported, so that the enum values can be store
 
 The folowing macros can be used to define an attribute:
 
-- `URHO3D_ATTRIBUTE`: Member of the object. Shall be convertible from and to specified type.
-- `URHO3D_ATTRIBUTE_EX`: Member of the object. Post-set member function callback is called when attribute is set.
-- `URHO3D_ACCESSOR_ATTRIBUTE`: Getter and setter member functions. Attribute value of specified type is passed into setter and expected to be returned from getter.
-- `URHO3D_CUSTOM_ATTRIBUTE`: Getter and setter functional objects that are directly working with Variant value. See \ref MakeVariantAttributeAccessor "MakeVariantAttributeAccessor()"
-- `URHO3D_ENUM_ATTRIBUTE`: 32-bit integer zero-based enumeration with human-readable names.
-- `URHO3D_ENUM_ATTRIBUTE_EX`: The same as `URHO3D_ATTRIBUTE_EX`, used for enumerations.
-- `URHO3D_ENUM_ACCESSOR_ATTRIBUTE`: The same as `URHO3D_ACCESSOR_ATTRIBUTE`, used for enumerations.
-- `URHO3D_CUSTOM_ENUM_ATTRIBUTE`: The same as `URHO3D_CUSTOM_ATTRIBUTE`, used for enumerations.
+- `DV_ATTRIBUTE`: Member of the object. Shall be convertible from and to specified type.
+- `DV_ATTRIBUTE_EX`: Member of the object. Post-set member function callback is called when attribute is set.
+- `DV_ACCESSOR_ATTRIBUTE`: Getter and setter member functions. Attribute value of specified type is passed into setter and expected to be returned from getter.
+- `DV_CUSTOM_ATTRIBUTE`: Getter and setter functional objects that are directly working with Variant value. See \ref MakeVariantAttributeAccessor "MakeVariantAttributeAccessor()"
+- `DV_ENUM_ATTRIBUTE`: 32-bit integer zero-based enumeration with human-readable names.
+- `DV_ENUM_ATTRIBUTE_EX`: The same as `DV_ATTRIBUTE_EX`, used for enumerations.
+- `DV_ENUM_ACCESSOR_ATTRIBUTE`: The same as `DV_ACCESSOR_ATTRIBUTE`, used for enumerations.
+- `DV_CUSTOM_ENUM_ATTRIBUTE`: The same as `DV_CUSTOM_ATTRIBUTE`, used for enumerations.
 
 To implement side effects to attributes, the default attribute access functions in Serializable can be overridden. See \ref Serializable::OnSetAttribute "OnSetAttribute()" and \ref Serializable::OnGetAttribute "OnGetAttribute()".
 
@@ -3025,7 +3025,7 @@ Each attribute can have a combination of the following flags:
 
 The default flags are `AM_FILE` and `AM_NET`. Note that it is legal to define neither `AM_FILE` or `AM_NET`, meaning the attribute has only run-time significance (perhaps for editing.)
 
-See the existing engine classes e.g. in the %Scene or %Graphics subdirectories for examples on registering attributes using the URHO3D_ATTRIBUTE family of helper macros.
+See the existing engine classes e.g. in the %Scene or %Graphics subdirectories for examples on registering attributes using the DV_ATTRIBUTE family of helper macros.
 
 \page Network Networking
 
@@ -3178,7 +3178,7 @@ The Network subsystem can optionally add delay to sending packets, as well as si
 
 \page Database Database
 
-The Database subsystem is built into the Urho3D library only when one of these two \ref Build_Options "build options" are enabled: URHO3D_DATABASE_ODBC and URHO3D_DATABASE_SQLITE. When both options are enabled then URHO3D_DATABASE_ODBC takes precedence. These build options determine which database API the subsystem will use. The ODBC DB API is more suitable for native application, especially the game server, where it allows the app to establish connection to any ODBC compliant databases like SQLite, MySQL/MariaDB, PostgreSQL, Sybase SQL, Oracle, etc. The SQLite DB API, on the other hand, is suitable for mobile application which embeds the SQLite database and its engine into the app itself. The Database subsystem wraps the underlying DB API using a unified URHO3D API, so no or minimal code changes are required to the library user when switching between these two build options.
+The Database subsystem is built into the Urho3D library only when one of these two \ref Build_Options "build options" are enabled: DV_DATABASE_ODBC and DV_DATABASE_SQLITE. When both options are enabled then DV_DATABASE_ODBC takes precedence. These build options determine which database API the subsystem will use. The ODBC DB API is more suitable for native application, especially the game server, where it allows the app to establish connection to any ODBC compliant databases like SQLite, MySQL/MariaDB, PostgreSQL, Sybase SQL, Oracle, etc. The SQLite DB API, on the other hand, is suitable for mobile application which embeds the SQLite database and its engine into the app itself. The Database subsystem wraps the underlying DB API using a unified URHO3D API, so no or minimal code changes are required to the library user when switching between these two build options.
 
 Currently the implementation just supports immediate SQL statement execution. Prepared statements and transaction management will be added later when the need arises. The subsystem has a simple database connection pooling capability. This internal database connection pool should not be confused with ODBC connection pool option when ODBC DB API is being used. The internal pooling is enabled by default, except when ODBC DB API is being used and when ODBC driver manager 3.0 or later is being detected in the host system, in which case the ODBC connection pool option should be used instead to manage the database connection pooling.
 
@@ -3940,7 +3940,7 @@ Third, there are requirements for new code that come from Urho3D striving to be 
 
 - Define \ref Events "events" where you anticipate that an external party may want to hook up to something happening. For example the editor updates its scene hierarchy window by subscribing to the scene change events: child node added/removed, component added/removed.
 
-- Mark all application-usable classes, structs and functions with the macro URHO3D_API so that they are exported correctly in a shared library build.
+- Mark all application-usable classes, structs and functions with the macro DV_API so that they are exported correctly in a shared library build.
 
 - Please heed all the \ref CodingConventions "coding conventions" and study existing code where unsure. Ensure that your text editor or IDE is configured to show whitespace, so that you don't accidentally mix spaces and tabs.
 

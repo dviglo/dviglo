@@ -65,7 +65,7 @@ static const char* pipePath = "\\\\.\\pipe\\";
 
 bool NamedPipe::Open(const String& name, bool isServer)
 {
-    URHO3D_PROFILE(OpenNamedPipe);
+    DV_PROFILE(OpenNamedPipe);
 
     Close();
 
@@ -85,12 +85,12 @@ bool NamedPipe::Open(const String& name, bool isServer)
 
         if (handle_ == INVALID_HANDLE_VALUE)
         {
-            URHO3D_LOGERROR("Failed to create named pipe " + name);
+            DV_LOGERROR("Failed to create named pipe " + name);
             return false;
         }
         else
         {
-            URHO3D_LOGDEBUG("Created named pipe " + name);
+            DV_LOGDEBUG("Created named pipe " + name);
             name_ = name;
             isServer_ = true;
             return true;
@@ -110,12 +110,12 @@ bool NamedPipe::Open(const String& name, bool isServer)
 
         if (handle_ == INVALID_HANDLE_VALUE)
         {
-            URHO3D_LOGERROR("Failed to connect to named pipe " + name);
+            DV_LOGERROR("Failed to connect to named pipe " + name);
             return false;
         }
         else
         {
-            URHO3D_LOGDEBUG("Connected to named pipe " + name);
+            DV_LOGDEBUG("Connected to named pipe " + name);
             name_ = name;
             return true;
         }
@@ -154,7 +154,7 @@ void NamedPipe::Close()
 {
     if (handle_ != INVALID_HANDLE_VALUE)
     {
-        URHO3D_PROFILE(CloseNamedPipe);
+        DV_PROFILE(CloseNamedPipe);
 
         if (isServer_)
         {
@@ -166,7 +166,7 @@ void NamedPipe::Close()
         handle_ = INVALID_HANDLE_VALUE;
         name_.Clear();
 
-        URHO3D_LOGDEBUG("Closed named pipe " + name_);
+        DV_LOGDEBUG("Closed named pipe " + name_);
     }
 }
 
@@ -196,10 +196,10 @@ static const char* pipePath = "/tmp/";
 bool NamedPipe::Open(const String& name, bool isServer)
 {
 #ifdef __EMSCRIPTEN__
-    URHO3D_LOGERROR("Opening a named pipe not supported on Web platform");
+    DV_LOGERROR("Opening a named pipe not supported on Web platform");
     return false;
 #else
-    URHO3D_PROFILE(OpenNamedPipe);
+    DV_PROFILE(OpenNamedPipe);
 
     Close();
 
@@ -221,7 +221,7 @@ bool NamedPipe::Open(const String& name, bool isServer)
 
         if (readHandle_ == -1 && writeHandle_ == -1)
         {
-            URHO3D_LOGERROR("Failed to create named pipe " + name);
+            DV_LOGERROR("Failed to create named pipe " + name);
             SAFE_CLOSE(readHandle_);
             SAFE_CLOSE(writeHandle_);
             unlink(serverReadName.CString());
@@ -230,7 +230,7 @@ bool NamedPipe::Open(const String& name, bool isServer)
         }
         else
         {
-            URHO3D_LOGDEBUG("Created named pipe " + name);
+            DV_LOGDEBUG("Created named pipe " + name);
             name_ = name;
             isServer_ = true;
             return true;
@@ -242,14 +242,14 @@ bool NamedPipe::Open(const String& name, bool isServer)
         writeHandle_ = open(serverReadName.CString(), O_WRONLY | O_NDELAY);
         if (readHandle_ == -1 && writeHandle_ == -1)
         {
-            URHO3D_LOGERROR("Failed to connect to named pipe " + name);
+            DV_LOGERROR("Failed to connect to named pipe " + name);
             SAFE_CLOSE(readHandle_);
             SAFE_CLOSE(writeHandle_);
             return false;
         }
         else
         {
-            URHO3D_LOGDEBUG("Connected to named pipe " + name);
+            DV_LOGDEBUG("Connected to named pipe " + name);
             name_ = name;
             return true;
         }
@@ -314,7 +314,7 @@ void NamedPipe::Close()
 {
     if (readHandle_ != -1 || writeHandle_ != -1)
     {
-        URHO3D_PROFILE(CloseNamedPipe);
+        DV_PROFILE(CloseNamedPipe);
         SAFE_CLOSE(readHandle_);
         SAFE_CLOSE(writeHandle_);
 
@@ -368,7 +368,7 @@ bool NamedPipe::IsEof() const
 
 void NamedPipe::SetName(const String &name)
 {
-    URHO3D_LOGERROR("Cannot change name of the NamedPipe!");
+    DV_LOGERROR("Cannot change name of the NamedPipe!");
     assert(0);
 }
 

@@ -13,9 +13,9 @@ namespace dviglo
 class SoundStream;
 
 /// %Sound resource.
-class URHO3D_API Sound : public ResourceWithMetadata
+class DV_API Sound : public ResourceWithMetadata
 {
-    URHO3D_OBJECT(Sound, ResourceWithMetadata);
+    DV_OBJECT(Sound, ResourceWithMetadata);
 
 public:
     /// Construct.

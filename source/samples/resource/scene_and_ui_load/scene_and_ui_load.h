@@ -22,7 +22,7 @@ class Scene;
 ///      - Subscribing to the UI layout's events
 class SceneAndUILoad : public Sample
 {
-    URHO3D_OBJECT(SceneAndUILoad, Sample);
+    DV_OBJECT(SceneAndUILoad, Sample);
 
 public:
     /// Construct.

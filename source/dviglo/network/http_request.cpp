@@ -33,9 +33,9 @@ HttpRequest::HttpRequest(const String& url, const String& verb, const Vector<Str
     // to maximum value once the request is done, signaling end for Deserializer::IsEof().
     size_ = M_MAX_UNSIGNED;
 
-    URHO3D_LOGDEBUG("HTTP " + verb_ + " request to URL " + url_);
+    DV_LOGDEBUG("HTTP " + verb_ + " request to URL " + url_);
 
-#ifdef URHO3D_SSL
+#ifdef DV_SSL
     static bool sslInitialized = false;
     if (!sslInitialized)
     {
@@ -44,11 +44,11 @@ HttpRequest::HttpRequest(const String& url, const String& verb, const Vector<Str
     }
 #endif
 
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     // Start the worker thread to actually create the connection and read the response data.
     Run();
 #else
-    URHO3D_LOGERROR("HTTP request will not execute as threading is disabled");
+    DV_LOGERROR("HTTP request will not execute as threading is disabled");
 #endif
 }
 
@@ -59,7 +59,7 @@ HttpRequest::~HttpRequest()
 
 void HttpRequest::ThreadFunction()
 {
-    URHO3D_PROFILE_THREAD("HttpRequest Thread");
+    DV_PROFILE_THREAD("HttpRequest Thread");
 
     String protocol = "http";
     String host;
@@ -194,7 +194,7 @@ i32 HttpRequest::Read(void* dest, i32 size)
 {
     assert(size >= 0);
 
-#ifdef URHO3D_THREADING
+#ifdef DV_THREADING
     mutex_.Acquire();
 
     u8* destPtr = (u8*)dest;

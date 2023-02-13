@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#if defined(_MSC_VER) && defined(URHO3D_MINIDUMPS)
+#if defined(_MSC_VER) && defined(DV_MINIDUMPS)
 
 #include "../precompiled.h"
 

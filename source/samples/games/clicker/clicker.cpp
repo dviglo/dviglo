@@ -14,7 +14,7 @@
 #include <dviglo/debug_new.h>
 
 // Expands to this example's entry-point
-URHO3D_DEFINE_APPLICATION_MAIN(Clicker)
+DV_DEFINE_APPLICATION_MAIN(Clicker)
 
 Clicker::Clicker(Context* context)
     : Sample(context)
@@ -53,8 +53,8 @@ void Clicker::CreateUI()
 
 void Clicker::SubscribeToEvents()
 {
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Clicker, HandleUpdate));
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, URHO3D_HANDLER(Clicker, HandleMouseButtonDown));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Clicker, HandleUpdate));
+    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Clicker, HandleMouseButtonDown));
 }
 
 static String ShortNumberRepresentation(const BigInt& value)

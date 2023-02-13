@@ -28,7 +28,7 @@ struct NodeReplicationState;
 struct SceneReplicationState;
 
 /// Dirty attribute bits structure for network replication.
-struct URHO3D_API DirtyBits
+struct DV_API DirtyBits
 {
     /// Construct empty.
     DirtyBits() = default;
@@ -100,7 +100,7 @@ struct URHO3D_API DirtyBits
 };
 
 /// Per-object attribute state for network replication, allocated on demand.
-struct URHO3D_API NetworkState
+struct DV_API NetworkState
 {
     /// Cached network attribute infos.
     const Vector<AttributeInfo>* attributes_{};
@@ -117,14 +117,14 @@ struct URHO3D_API NetworkState
 };
 
 /// Base class for per-user network replication states.
-struct URHO3D_API ReplicationState
+struct DV_API ReplicationState
 {
     /// Parent network connection.
     Connection* connection_;
 };
 
 /// Per-user component network replication state.
-struct URHO3D_API ComponentReplicationState : public ReplicationState
+struct DV_API ComponentReplicationState : public ReplicationState
 {
     /// Parent node replication state.
     NodeReplicationState* nodeState_{};
@@ -135,7 +135,7 @@ struct URHO3D_API ComponentReplicationState : public ReplicationState
 };
 
 /// Per-user node network replication state.
-struct URHO3D_API NodeReplicationState : public ReplicationState
+struct DV_API NodeReplicationState : public ReplicationState
 {
     /// Parent scene replication state.
     SceneReplicationState* sceneState_;
@@ -154,7 +154,7 @@ struct URHO3D_API NodeReplicationState : public ReplicationState
 };
 
 /// Per-user scene network replication state.
-struct URHO3D_API SceneReplicationState : public ReplicationState
+struct DV_API SceneReplicationState : public ReplicationState
 {
     /// Nodes by ID.
     HashMap<unsigned, NodeReplicationState> nodeStates_;

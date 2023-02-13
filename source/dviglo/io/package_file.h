@@ -23,9 +23,9 @@ struct PackageEntry
 };
 
 /// Stores files of a directory tree sequentially for convenient access.
-class URHO3D_API PackageFile : public Object
+class DV_API PackageFile : public Object
 {
-    URHO3D_OBJECT(PackageFile, Object);
+    DV_OBJECT(PackageFile, Object);
 
 public:
     /// Construct.

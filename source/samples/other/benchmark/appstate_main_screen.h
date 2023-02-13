@@ -14,7 +14,7 @@ namespace dviglo
 class AppState_MainScreen : public AppState_Base
 {
 public:
-    URHO3D_OBJECT(AppState_MainScreen, AppState_Base);
+    DV_OBJECT(AppState_MainScreen, AppState_Base);
 
 private:
     void HandleButtonPressed(dv::StringHash eventType, dv::VariantMap& eventData);

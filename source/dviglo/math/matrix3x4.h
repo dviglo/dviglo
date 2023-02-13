@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 /// 3x4 matrix for scene node transform calculations.
-class URHO3D_API Matrix3x4
+class DV_API Matrix3x4
 {
 public:
 

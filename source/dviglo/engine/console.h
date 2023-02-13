@@ -21,9 +21,9 @@ class UIElement;
 class XMLFile;
 
 /// %Console window with log history and command line prompt.
-class URHO3D_API Console : public Object
+class DV_API Console : public Object
 {
-    URHO3D_OBJECT(Console, Object);
+    DV_OBJECT(Console, Object);
 
 public:
     /// Construct.

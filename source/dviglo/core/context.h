@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 /// Tracking structure for event receivers.
-class URHO3D_API EventReceiverGroup : public RefCounted
+class DV_API EventReceiverGroup : public RefCounted
 {
 public:
     /// Construct.
@@ -45,7 +45,7 @@ private:
 };
 
 /// Urho3D execution context. Provides access to subsystems, object factories and attributes, and event receivers.
-class URHO3D_API Context : public RefCounted
+class DV_API Context : public RefCounted
 {
     friend class Object;
 

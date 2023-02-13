@@ -41,8 +41,8 @@ void StaticModelGroup::RegisterObject(Context* context)
 {
     context->RegisterFactory<StaticModelGroup>(GEOMETRY_CATEGORY);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(StaticModel);
-    URHO3D_ACCESSOR_ATTRIBUTE("Instance Nodes", GetNodeIDsAttr, SetNodeIDsAttr,
+    DV_COPY_BASE_ATTRIBUTES(StaticModel);
+    DV_ACCESSOR_ATTRIBUTE("Instance Nodes", GetNodeIDsAttr, SetNodeIDsAttr,
         Variant::emptyVariantVector, AM_DEFAULT | AM_NODEIDVECTOR)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, instanceNodesStructureElementNames);
 }

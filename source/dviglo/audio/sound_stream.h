@@ -10,7 +10,7 @@ namespace dviglo
 {
 
 /// Base class for sound streams.
-class URHO3D_API SoundStream : public RefCounted
+class DV_API SoundStream : public RefCounted
 {
 public:
     /// Construct.

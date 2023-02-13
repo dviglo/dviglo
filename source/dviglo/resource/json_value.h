@@ -54,7 +54,7 @@ using JSONObjectIterator = JSONObject::Iterator;
 using ConstJSONObjectIterator = JSONObject::ConstIterator;
 
 /// JSON value class.
-class URHO3D_API JSONValue
+class DV_API JSONValue
 {
 public:
 

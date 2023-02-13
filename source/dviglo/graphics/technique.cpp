@@ -333,7 +333,7 @@ bool Technique::BeginLoad(Deserializer& source)
                 newPass->SetAlphaToCoverage(passElem.GetBool("alphatocoverage"));
         }
         else
-            URHO3D_LOGERROR("Missing pass name");
+            DV_LOGERROR("Missing pass name");
 
         passElem = passElem.GetNext("pass");
     }

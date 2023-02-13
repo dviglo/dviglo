@@ -21,7 +21,7 @@
 
 #include <dviglo/debug_new.h>
 
-URHO3D_DEFINE_APPLICATION_MAIN(Urho2DStretchableSprite)
+DV_DEFINE_APPLICATION_MAIN(Urho2DStretchableSprite)
 
 Urho2DStretchableSprite::Urho2DStretchableSprite(Context* context) :
     Sample(context)
@@ -114,10 +114,10 @@ void Urho2DStretchableSprite::SetupViewport()
 
 void Urho2DStretchableSprite::SubscribeToEvents()
 {
-    SubscribeToEvent(E_KEYUP, URHO3D_HANDLER(Urho2DStretchableSprite, OnKeyUp));
+    SubscribeToEvent(E_KEYUP, DV_HANDLER(Urho2DStretchableSprite, OnKeyUp));
 
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Urho2DStretchableSprite, HandleUpdate));
+    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DStretchableSprite, HandleUpdate));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);
@@ -138,7 +138,7 @@ void Urho2DStretchableSprite::HandleUpdate(StringHash /*eventType*/, VariantMap&
         break;
     case 2: TranslateSprites(timeStep);
         break;
-    default: URHO3D_LOGERRORF("bad transform selection: %d", selectTransform_);
+    default: DV_LOGERRORF("bad transform selection: %d", selectTransform_);
     }
 }
 

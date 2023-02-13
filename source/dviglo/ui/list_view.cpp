@@ -55,7 +55,7 @@ void SetItemHierarchyParent(UIElement* item, bool enable)
 /// Hierarchy container (used by ListView internally when in hierarchy mode).
 class HierarchyContainer : public UIElement
 {
-    URHO3D_OBJECT(HierarchyContainer, UIElement);
+    DV_OBJECT(HierarchyContainer, UIElement);
 
 public:
     /// Construct.
@@ -64,9 +64,9 @@ public:
         listView_(listView),
         overlayContainer_(overlayContainer)
     {
-        SubscribeToEvent(this, E_LAYOUTUPDATED, URHO3D_HANDLER(HierarchyContainer, HandleLayoutUpdated));
-        SubscribeToEvent(overlayContainer->GetParent(), E_VIEWCHANGED, URHO3D_HANDLER(HierarchyContainer, HandleViewChanged));
-        SubscribeToEvent(E_UIMOUSECLICK, URHO3D_HANDLER(HierarchyContainer, HandleUIMouseClick));
+        SubscribeToEvent(this, E_LAYOUTUPDATED, DV_HANDLER(HierarchyContainer, HandleLayoutUpdated));
+        SubscribeToEvent(overlayContainer->GetParent(), E_VIEWCHANGED, DV_HANDLER(HierarchyContainer, HandleViewChanged));
+        SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(HierarchyContainer, HandleUIMouseClick));
     }
 
     /// Register object factory.
@@ -143,7 +143,7 @@ private:
 
 void HierarchyContainer::RegisterObject(Context* context)
 {
-    URHO3D_COPY_BASE_ATTRIBUTES(UIElement);
+    DV_COPY_BASE_ATTRIBUTES(UIElement);
 }
 
 ListView::ListView(Context* context) :
@@ -160,10 +160,10 @@ ListView::ListView(Context* context) :
     // By default list view is set to non-hierarchy mode
     SetHierarchyMode(false);
 
-    SubscribeToEvent(E_UIMOUSEDOUBLECLICK, URHO3D_HANDLER(ListView, HandleUIMouseDoubleClick));
-    SubscribeToEvent(E_FOCUSCHANGED, URHO3D_HANDLER(ListView, HandleItemFocusChanged));
-    SubscribeToEvent(this, E_DEFOCUSED, URHO3D_HANDLER(ListView, HandleFocusChanged));
-    SubscribeToEvent(this, E_FOCUSED, URHO3D_HANDLER(ListView, HandleFocusChanged));
+    SubscribeToEvent(E_UIMOUSEDOUBLECLICK, DV_HANDLER(ListView, HandleUIMouseDoubleClick));
+    SubscribeToEvent(E_FOCUSCHANGED, DV_HANDLER(ListView, HandleItemFocusChanged));
+    SubscribeToEvent(this, E_DEFOCUSED, DV_HANDLER(ListView, HandleFocusChanged));
+    SubscribeToEvent(this, E_FOCUSED, DV_HANDLER(ListView, HandleFocusChanged));
 
     UpdateUIClickSubscription();
 }
@@ -176,13 +176,13 @@ void ListView::RegisterObject(Context* context)
 
     HierarchyContainer::RegisterObject(context);
 
-    URHO3D_COPY_BASE_ATTRIBUTES(ScrollView);
-    URHO3D_ENUM_ACCESSOR_ATTRIBUTE("Highlight Mode", GetHighlightMode, SetHighlightMode, highlightModes, HM_FOCUS, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Multiselect", GetMultiselect, SetMultiselect, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Hierarchy Mode", GetHierarchyMode, SetHierarchyMode, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Base Indent", GetBaseIndent, SetBaseIndent, 0, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Clear Sel. On Defocus", GetClearSelectionOnDefocus, SetClearSelectionOnDefocus, false, AM_FILE);
-    URHO3D_ACCESSOR_ATTRIBUTE("Select On Click End", GetSelectOnClickEnd, SetSelectOnClickEnd, false, AM_FILE);
+    DV_COPY_BASE_ATTRIBUTES(ScrollView);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Highlight Mode", GetHighlightMode, SetHighlightMode, highlightModes, HM_FOCUS, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Multiselect", GetMultiselect, SetMultiselect, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Hierarchy Mode", GetHierarchyMode, SetHierarchyMode, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Base Indent", GetBaseIndent, SetBaseIndent, 0, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Clear Sel. On Defocus", GetClearSelectionOnDefocus, SetClearSelectionOnDefocus, false, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Select On Click End", GetSelectOnClickEnd, SetSelectOnClickEnd, false, AM_FILE);
 }
 
 void ListView::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifiers)
@@ -1166,7 +1166,7 @@ void ListView::UpdateUIClickSubscription()
 {
     UnsubscribeFromEvent(E_UIMOUSECLICK);
     UnsubscribeFromEvent(E_UIMOUSECLICKEND);
-    SubscribeToEvent(selectOnClickEnd_ ? E_UIMOUSECLICKEND : E_UIMOUSECLICK, URHO3D_HANDLER(ListView, HandleUIMouseClick));
+    SubscribeToEvent(selectOnClickEnd_ ? E_UIMOUSECLICKEND : E_UIMOUSECLICK, DV_HANDLER(ListView, HandleUIMouseClick));
 }
 
 }

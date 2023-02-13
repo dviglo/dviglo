@@ -317,7 +317,7 @@ const Vector<String>& GetArguments()
 String GetConsoleInput()
 {
     String ret;
-#ifdef URHO3D_TESTING
+#ifdef DV_TESTING
     // When we are running automated tests, reading the console may block. Just return empty in that case
     return ret;
 #else

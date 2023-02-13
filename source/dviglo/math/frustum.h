@@ -30,7 +30,7 @@ inline constexpr i32 NUM_FRUSTUM_PLANES = 6;
 inline constexpr i32 NUM_FRUSTUM_VERTICES = 8;
 
 /// Convex constructed of 6 planes.
-class URHO3D_API Frustum
+class DV_API Frustum
 {
 public:
     /// Construct a degenerate frustum with all points at origin.

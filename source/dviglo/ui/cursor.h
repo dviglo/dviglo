@@ -34,7 +34,7 @@ enum CursorShape
 };
 
 /// %Cursor image and hotspot information.
-struct URHO3D_API CursorShapeInfo
+struct DV_API CursorShapeInfo
 {
     /// Construct with defaults.
     CursorShapeInfo() :
@@ -73,9 +73,9 @@ struct URHO3D_API CursorShapeInfo
 };
 
 /// Mouse cursor %UI element.
-class URHO3D_API Cursor : public BorderImage
+class DV_API Cursor : public BorderImage
 {
-    URHO3D_OBJECT(Cursor, BorderImage);
+    DV_OBJECT(Cursor, BorderImage);
 
 public:
     /// Construct.

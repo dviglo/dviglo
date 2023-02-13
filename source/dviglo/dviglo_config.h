@@ -7,15 +7,15 @@
 #ifdef DVIGLO_SHARED // Динамическая версия движка
 #    if _WIN32 // Visual Studio или MinGW
 #        ifdef DVIGLO_IS_BUILDING // Компиляция движка
-#            define URHO3D_API __declspec(dllexport)
+#            define DV_API __declspec(dllexport)
 #        else // Использование движка
-#            define URHO3D_API __declspec(dllimport)
+#            define DV_API __declspec(dllimport)
 #        endif
 #    else // Linux
-#        define URHO3D_API __attribute__((visibility("default")))
+#        define DV_API __attribute__((visibility("default")))
 #    endif
 #else // Статическая версия движка
-#    define URHO3D_API
+#    define DV_API
 #endif
 
 // Macros with identifiers of c++ version.

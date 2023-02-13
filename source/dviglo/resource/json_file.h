@@ -11,9 +11,9 @@ namespace dviglo
 {
 
 /// JSON document resource.
-class URHO3D_API JSONFile : public Resource
+class DV_API JSONFile : public Resource
 {
-    URHO3D_OBJECT(JSONFile, Resource);
+    DV_OBJECT(JSONFile, Resource);
 
 public:
     /// Construct.

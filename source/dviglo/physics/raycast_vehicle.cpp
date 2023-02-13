@@ -167,11 +167,11 @@ static const StringVector wheelElementNames =
 void RaycastVehicle::RegisterObject(Context* context)
 {
     context->RegisterFactory<RaycastVehicle>();
-    URHO3D_ACCESSOR_ATTRIBUTE("Wheel data", GetWheelDataAttr, SetWheelDataAttr, Variant::emptyVariantVector, AM_DEFAULT)
+    DV_ACCESSOR_ATTRIBUTE("Wheel data", GetWheelDataAttr, SetWheelDataAttr, Variant::emptyVariantVector, AM_DEFAULT)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, wheelElementNames);
-    URHO3D_ATTRIBUTE("Maximum side slip threshold", maxSideSlipSpeed_, 4.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("RPM for wheel motors in air (0=calculate)", inAirRPM_, 0.0f, AM_DEFAULT);
-    URHO3D_ATTRIBUTE("Coordinate system", coordinateSystem_, RIGHT_UP_FORWARD, AM_DEFAULT);
+    DV_ATTRIBUTE("Maximum side slip threshold", maxSideSlipSpeed_, 4.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("RPM for wheel motors in air (0=calculate)", inAirRPM_, 0.0f, AM_DEFAULT);
+    DV_ATTRIBUTE("Coordinate system", coordinateSystem_, RIGHT_UP_FORWARD, AM_DEFAULT);
 }
 
 void RaycastVehicle::OnSetEnabled()
@@ -222,7 +222,7 @@ void RaycastVehicle::ApplyAttributes()
         Node* wheelNode = GetScene()->GetNode(node_id);
         if (!wheelNode)
         {
-            URHO3D_LOGERROR("RaycastVehicle: Incorrect node id = " + String(node_id) + " index: " + String(index));
+            DV_LOGERROR("RaycastVehicle: Incorrect node id = " + String(node_id) + " index: " + String(index));
             continue;
         }
         btRaycastVehicle* vehicle = vehicleData_->Get();
@@ -256,9 +256,9 @@ void RaycastVehicle::ApplyAttributes()
         wheel.m_skidInfo = skidInfo;
         wheelIndex++;
     }
-    URHO3D_LOGDEBUG("maxSideSlipSpeed_ value: " + String(maxSideSlipSpeed_));
-    URHO3D_LOGDEBUG("loaded items: " + String(index));
-    URHO3D_LOGDEBUG("loaded wheels: " + String(GetNumWheels()));
+    DV_LOGDEBUG("maxSideSlipSpeed_ value: " + String(maxSideSlipSpeed_));
+    DV_LOGDEBUG("loaded items: " + String(index));
+    DV_LOGDEBUG("loaded wheels: " + String(GetNumWheels()));
 }
 
 void RaycastVehicle::Init()
@@ -707,7 +707,7 @@ VariantVector RaycastVehicle::GetWheelDataAttr() const
     {
         Node* wNode = GetWheelNode(i);
         int node_id = wNode->GetID();
-        URHO3D_LOGDEBUG("RaycastVehicle: Saving node id = " + String(node_id));
+        DV_LOGDEBUG("RaycastVehicle: Saving node id = " + String(node_id));
         ret.Push(node_id);
         ret.Push(GetWheelDirection(i));
         ret.Push(GetWheelAxle(i));
@@ -732,8 +732,8 @@ VariantVector RaycastVehicle::GetWheelDataAttr() const
         ret.Push(GetBrake(i));
         ret.Push(GetWheelSkidInfo(i));
     }
-    URHO3D_LOGDEBUG("RaycastVehicle: saved items: " + String(ret.Size()));
-    URHO3D_LOGDEBUG("maxSideSlipSpeed_ value save: " + String(maxSideSlipSpeed_));
+    DV_LOGDEBUG("RaycastVehicle: saved items: " + String(ret.Size()));
+    DV_LOGDEBUG("maxSideSlipSpeed_ value save: " + String(maxSideSlipSpeed_));
     return ret;
 }
 
@@ -741,12 +741,12 @@ void RaycastVehicle::SetWheelDataAttr(const VariantVector& value)
 {
     if (!vehicleData_)
     {
-        URHO3D_LOGERROR("RaycastVehicle: vehicleData doesn't exist");
+        DV_LOGERROR("RaycastVehicle: vehicleData doesn't exist");
         return;
     }
     if (value.Size() < 2)
     {
-        URHO3D_LOGERROR("RaycastVehicle: Incorrect vehicleData");
+        DV_LOGERROR("RaycastVehicle: Incorrect vehicleData");
         return;
     }
 

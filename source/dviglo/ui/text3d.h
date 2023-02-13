@@ -15,9 +15,9 @@ namespace dviglo
 class Text;
 
 /// 3D text component.
-class URHO3D_API Text3D : public Drawable
+class DV_API Text3D : public Drawable
 {
-    URHO3D_OBJECT(Text3D, Drawable);
+    DV_OBJECT(Text3D, Drawable);
 
 public:
     /// Construct.

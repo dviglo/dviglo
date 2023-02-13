@@ -32,12 +32,12 @@ enum class LogicComponentEvents
     /// Use all events
     All             = Update | PostUpdate | FixedUpdate | FixedPostUpdate
 };
-URHO3D_FLAGS(LogicComponentEvents);
+DV_FLAGS(LogicComponentEvents);
 
 /// Helper base class for user-defined game logic components that hooks up to update events and forwards them to virtual functions similar to ScriptInstance class.
-class URHO3D_API LogicComponent : public Component
+class DV_API LogicComponent : public Component
 {
-    URHO3D_OBJECT(LogicComponent, Component);
+    DV_OBJECT(LogicComponent, Component);
 
 public:
     /// Construct.

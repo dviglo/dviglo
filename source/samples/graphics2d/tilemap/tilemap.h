@@ -14,7 +14,7 @@
 ///     - Interacting with the tile map
 class Urho2DTileMap : public Sample
 {
-    URHO3D_OBJECT(Urho2DTileMap, Sample);
+    DV_OBJECT(Urho2DTileMap, Sample);
 
 public:
     /// Construct.

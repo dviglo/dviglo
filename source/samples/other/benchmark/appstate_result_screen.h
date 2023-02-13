@@ -9,7 +9,7 @@
 class AppState_ResultScreen : public AppState_Base
 {
 public:
-    URHO3D_OBJECT(AppState_ResultScreen, AppState_Base);
+    DV_OBJECT(AppState_ResultScreen, AppState_Base);
 
 public:
     AppState_ResultScreen(dv::Context* context)

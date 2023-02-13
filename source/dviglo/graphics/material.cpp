@@ -100,7 +100,7 @@ TextureUnit ParseTextureUnitName(String name)
     }
 
     if (unit == MAX_TEXTURE_UNITS)
-        URHO3D_LOGERROR("Unknown texture unit name " + name);
+        DV_LOGERROR("Unknown texture unit name " + name);
 
     return unit;
 }
@@ -380,7 +380,7 @@ bool Material::Load(const XMLElement& source)
 
     if (source.IsNull())
     {
-        URHO3D_LOGERROR("Can not load material from null XML element");
+        DV_LOGERROR("Can not load material from null XML element");
         return false;
     }
 
@@ -467,7 +467,7 @@ bool Material::Load(const XMLElement& source)
         SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
         if (!animation->LoadXML(parameterAnimationElem))
         {
-            URHO3D_LOGERROR("Could not load parameter animation");
+            DV_LOGERROR("Could not load parameter animation");
             return false;
         }
 
@@ -531,7 +531,7 @@ bool Material::Load(const JSONValue& source)
 
     if (source.IsNull())
     {
-        URHO3D_LOGERROR("Can not load material from null JSON element");
+        DV_LOGERROR("Can not load material from null JSON element");
         return false;
     }
 
@@ -629,7 +629,7 @@ bool Material::Load(const JSONValue& source)
         SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
         if (!animation->LoadJSON(paramAnimVal))
         {
-            URHO3D_LOGERROR("Could not load parameter animation");
+            DV_LOGERROR("Could not load parameter animation");
             return false;
         }
 
@@ -689,7 +689,7 @@ bool Material::Save(XMLElement& dest) const
 {
     if (dest.IsNull())
     {
-        URHO3D_LOGERROR("Can not save material to null XML element");
+        DV_LOGERROR("Can not save material to null XML element");
         return false;
     }
 
@@ -977,7 +977,7 @@ void Material::SetShaderParameterAnimation(const String& name, ValueAnimation* a
 
         if (shaderParameters_.Find(name) == shaderParameters_.End())
         {
-            URHO3D_LOGERROR(GetName() + " has no shader parameter: " + name);
+            DV_LOGERROR(GetName() + " has no shader parameter: " + name);
             return;
         }
 
@@ -1311,9 +1311,9 @@ void Material::UpdateEventSubscription()
     if (shaderParameterAnimationInfos_.Size() && !subscribed_)
     {
         if (scene_)
-            SubscribeToEvent(scene_, E_ATTRIBUTEANIMATIONUPDATE, URHO3D_HANDLER(Material, HandleAttributeAnimationUpdate));
+            SubscribeToEvent(scene_, E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Material, HandleAttributeAnimationUpdate));
         else
-            SubscribeToEvent(E_UPDATE, URHO3D_HANDLER(Material, HandleAttributeAnimationUpdate));
+            SubscribeToEvent(E_UPDATE, DV_HANDLER(Material, HandleAttributeAnimationUpdate));
         subscribed_ = true;
     }
     else if (subscribed_ && shaderParameterAnimationInfos_.Empty())

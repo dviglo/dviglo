@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 /// Singly-linked list node base class.
-struct URHO3D_API LinkedListNode
+struct DV_API LinkedListNode
 {
     /// Construct.
     LinkedListNode() :

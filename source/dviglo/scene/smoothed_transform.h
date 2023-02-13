@@ -20,12 +20,12 @@ enum SmoothingType : unsigned
     /// Ongoing rotation smoothing.
     SMOOTH_ROTATION = 2,
 };
-URHO3D_FLAGSET(SmoothingType, SmoothingTypeFlags);
+DV_FLAGSET(SmoothingType, SmoothingTypeFlags);
 
 /// Transform smoothing component for network updates.
-class URHO3D_API SmoothedTransform : public Component
+class DV_API SmoothedTransform : public Component
 {
-    URHO3D_OBJECT(SmoothedTransform, Component);
+    DV_OBJECT(SmoothedTransform, Component);
 
 public:
     /// Construct.

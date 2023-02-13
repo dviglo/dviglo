@@ -30,7 +30,7 @@ const float MAX_WHEEL_ANGLE = 22.5f;
 // Encapsulates RaycastVehicle
 class Vehicle : public LogicComponent
 {
-    URHO3D_OBJECT(Vehicle, LogicComponent)
+    DV_OBJECT(Vehicle, LogicComponent)
 
 public :
     /// Construct.

@@ -33,9 +33,9 @@ enum AsyncLoadState
 };
 
 /// Base class for resources.
-class URHO3D_API Resource : public Object
+class DV_API Resource : public Object
 {
-    URHO3D_OBJECT(Resource, Object);
+    DV_OBJECT(Resource, Object);
 
 public:
     /// Construct.
@@ -93,9 +93,9 @@ private:
 };
 
 /// Base class for resources that support arbitrary metadata stored. Metadata serialization shall be implemented in derived classes.
-class URHO3D_API ResourceWithMetadata : public Resource
+class DV_API ResourceWithMetadata : public Resource
 {
-    URHO3D_OBJECT(ResourceWithMetadata, Resource);
+    DV_OBJECT(ResourceWithMetadata, Resource);
 
 public:
     /// Construct.

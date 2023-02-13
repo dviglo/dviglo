@@ -54,7 +54,7 @@ Log::Log(Context* context) :
 {
     logInstance = this;
 
-    SubscribeToEvent(E_ENDFRAME, URHO3D_HANDLER(Log, HandleEndFrame));
+    SubscribeToEvent(E_ENDFRAME, DV_HANDLER(Log, HandleEndFrame));
 }
 
 Log::~Log()
@@ -101,7 +101,7 @@ void Log::SetLevel(int level)
 {
     if (level < LOG_TRACE || level > LOG_NONE)
     {
-        URHO3D_LOGERRORF("Attempted to set erroneous log level %d", level);
+        DV_LOGERRORF("Attempted to set erroneous log level %d", level);
         return;
     }
 

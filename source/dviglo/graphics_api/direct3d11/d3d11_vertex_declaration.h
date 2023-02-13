@@ -16,7 +16,7 @@ class ShaderVariation;
 class VertexBuffer;
 
 /// Vertex declaration.
-class URHO3D_API VertexDeclaration_D3D11 : public RefCounted
+class DV_API VertexDeclaration_D3D11 : public RefCounted
 {
 public:
     /// Construct with vertex buffers and element masks to base declaration on.

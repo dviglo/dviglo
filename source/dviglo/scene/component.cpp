@@ -204,7 +204,7 @@ void Component::CleanupConnection(Connection* connection)
 void Component::OnAttributeAnimationAdded()
 {
     if (attributeAnimationInfos_.Size() == 1)
-        SubscribeToEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, URHO3D_HANDLER(Component, HandleAttributeAnimationUpdate));
+        SubscribeToEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Component, HandleAttributeAnimationUpdate));
 }
 
 void Component::OnAttributeAnimationRemoved()

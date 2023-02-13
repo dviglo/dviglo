@@ -14,9 +14,9 @@ namespace dviglo
 {
 
 /// Work item completed event.
-URHO3D_EVENT(E_WORKITEMCOMPLETED, WorkItemCompleted)
+DV_EVENT(E_WORKITEMCOMPLETED, WorkItemCompleted)
 {
-    URHO3D_PARAM(P_ITEM, Item);                        // WorkItem ptr
+    DV_PARAM(P_ITEM, Item);                        // WorkItem ptr
 }
 
 inline constexpr i32 WI_MAX_PRIORITY = M_MAX_INT;
@@ -49,9 +49,9 @@ private:
 };
 
 /// Work queue subsystem for multithreading.
-class URHO3D_API WorkQueue : public Object
+class DV_API WorkQueue : public Object
 {
-    URHO3D_OBJECT(WorkQueue, Object);
+    DV_OBJECT(WorkQueue, Object);
 
     friend class WorkerThread;
 

@@ -13,9 +13,9 @@ class Font;
 class Text;
 
 /// Single-line text editor %UI element.
-class URHO3D_API LineEdit : public BorderImage
+class DV_API LineEdit : public BorderImage
 {
-    URHO3D_OBJECT(LineEdit, BorderImage);
+    DV_OBJECT(LineEdit, BorderImage);
 
 public:
     /// Construct.

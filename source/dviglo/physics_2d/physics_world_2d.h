@@ -19,7 +19,7 @@ class CollisionShape2D;
 class RigidBody2D;
 
 /// 2D Physics raycast hit.
-struct URHO3D_API PhysicsRaycastResult2D
+struct DV_API PhysicsRaycastResult2D
 {
     /// Test for inequality, added to prevent GCC from complaining.
     bool operator !=(const PhysicsRaycastResult2D& rhs) const
@@ -51,9 +51,9 @@ struct DelayedWorldTransform2D
 };
 
 /// 2D physics simulation world component. Should be added only to the root scene node.
-class URHO3D_API PhysicsWorld2D : public Component, public b2ContactListener, public b2Draw
+class DV_API PhysicsWorld2D : public Component, public b2ContactListener, public b2Draw
 {
-    URHO3D_OBJECT(PhysicsWorld2D, Component);
+    DV_OBJECT(PhysicsWorld2D, Component);
 
 public:
     /// Construct.
