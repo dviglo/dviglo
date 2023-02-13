@@ -75,7 +75,7 @@ if(DV_NAVIGATION)
     list(APPEND dviglo_all_content "#endif // DV_NAVIGATION")
 endif()
 
-if(URHO3D_NETWORK)
+if(DV_NETWORK)
     # Пополняем список исходников
     file(GLOB tmp_var network/*.cpp network/*.h)
     list(APPEND source_files ${tmp_var})
@@ -83,9 +83,9 @@ if(URHO3D_NETWORK)
     # Пополняем содержимое файла dviglo_all.h
     file(GLOB tmp_var RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} network/*.h)
     list(TRANSFORM tmp_var REPLACE "(.+)" "#include <dviglo/\\1>")
-    list(APPEND dviglo_all_content ";#if URHO3D_NETWORK")
+    list(APPEND dviglo_all_content ";#if DV_NETWORK")
     list(APPEND dviglo_all_content ${tmp_var})
-    list(APPEND dviglo_all_content "#endif // URHO3D_NETWORK")
+    list(APPEND dviglo_all_content "#endif // DV_NETWORK")
 endif()
 
 if(DV_BULLET)
@@ -174,8 +174,8 @@ if(DV_NAVIGATION)
     target_link_libraries(${target_name} PUBLIC detour detour_crowd detour_tile_cache recast)
 endif()
 
-if(URHO3D_NETWORK)
-    target_compile_definitions(${target_name} PUBLIC URHO3D_NETWORK=1)
+if(DV_NETWORK)
+    target_compile_definitions(${target_name} PUBLIC DV_NETWORK=1)
     target_link_libraries(${target_name} PUBLIC civetweb slikenet)
 endif()
 
@@ -199,7 +199,6 @@ foreach(opt
             URHO3D_LOGGING
             URHO3D_TESTING # enable_testing() вызывается в common.cmake
             URHO3D_FILEWATCHER
-            URHO3D_NETWORK
             URHO3D_PROFILING
             URHO3D_THREADING
             URHO3D_URHO2D)

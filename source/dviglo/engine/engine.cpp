@@ -23,7 +23,7 @@
 #ifdef DV_NAVIGATION
 #include "../navigation/navigation_mesh.h"
 #endif
-#ifdef URHO3D_NETWORK
+#ifdef DV_NETWORK
 #include "../network/network.h"
 #endif
 #ifdef URHO3D_DATABASE
@@ -112,7 +112,7 @@ Engine::Engine(Context* context) :
 #endif
     context_->RegisterSubsystem(new ResourceCache(context_));
     context_->RegisterSubsystem(new Localization(context_));
-#ifdef URHO3D_NETWORK
+#ifdef DV_NETWORK
     context_->RegisterSubsystem(new Network(context_));
 #endif
 #ifdef URHO3D_DATABASE
@@ -313,7 +313,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         GetSubsystem<Input>()->SetTouchEmulation(GetParameter(parameters, EP_TOUCH_EMULATION).GetBool());
 
     // Initialize network
-#ifdef URHO3D_NETWORK
+#ifdef DV_NETWORK
     if (HasParameter(parameters, EP_PACKAGE_CACHE_DIR))
         GetSubsystem<Network>()->SetPackageCacheDir(GetParameter(parameters, EP_PACKAGE_CACHE_DIR).GetString());
 #endif

@@ -2,7 +2,7 @@
 # License: MIT
 
 # Движок должен быть скомпилирован с поддержкой сети
-if(NOT URHO3D_NETWORK)
+if(NOT DV_NETWORK)
     return()
 endif()
 

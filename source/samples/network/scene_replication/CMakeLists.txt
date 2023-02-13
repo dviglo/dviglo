@@ -2,7 +2,7 @@
 # License: MIT
 
 # Движок должен быть скомпилирован с поддержкой сети и 3D-физики
-if(NOT URHO3D_NETWORK OR NOT DV_BULLET)
+if(NOT DV_NETWORK OR NOT DV_BULLET)
     return()
 endif()
 
