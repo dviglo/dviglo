@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Pixel size.

@@ -11,7 +11,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 SceneResolver::SceneResolver() = default;

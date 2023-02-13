@@ -12,7 +12,7 @@
 
 #include "../../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void IndexBuffer::OnDeviceLost_D3D11()
@@ -284,4 +284,4 @@ void IndexBuffer::UnmapBuffer_D3D11()
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

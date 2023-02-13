@@ -7,7 +7,7 @@
 #include "../scene/component.h"
 #include "../ui/ui_element.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Material;

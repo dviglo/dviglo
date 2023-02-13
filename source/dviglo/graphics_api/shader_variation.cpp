@@ -10,7 +10,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 ShaderParameter::ShaderParameter(const String& name, unsigned glType, int location) :   // NOLINT(hicpp-member-init)

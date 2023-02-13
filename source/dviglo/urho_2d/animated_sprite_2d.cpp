@@ -22,7 +22,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* URHO2D_CATEGORY;

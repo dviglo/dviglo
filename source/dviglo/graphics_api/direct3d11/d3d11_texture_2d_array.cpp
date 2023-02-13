@@ -22,7 +22,7 @@
 #pragma warning(disable:4355)
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 void Texture2DArray::OnDeviceLost_D3D11()

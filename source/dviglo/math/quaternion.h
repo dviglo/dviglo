@@ -8,7 +8,7 @@
 
 #include <emmintrin.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Rotation represented as a four-dimensional normalized vector.
@@ -277,7 +277,7 @@ public:
     {
         /*
         float lenSquared = LengthSquared();
-        if (!Urho3D::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
+        if (!dviglo::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
         {
             float invLen = 1.0f / sqrtf(lenSquared);
             w_ *= invLen;
@@ -302,7 +302,7 @@ public:
     {
         /*
         float lenSquared = LengthSquared();
-        if (!Urho3D::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
+        if (!dviglo::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)
         {
             float invLen = 1.0f / sqrtf(lenSquared);
             return *this * invLen;
@@ -366,14 +366,14 @@ public:
     /// Test for equality with another quaternion with epsilon.
     bool Equals(const Quaternion& rhs) const
     {
-        return Urho3D::Equals(w_, rhs.w_) && Urho3D::Equals(x_, rhs.x_) && Urho3D::Equals(y_, rhs.y_) && Urho3D::Equals(z_, rhs.z_);
+        return dviglo::Equals(w_, rhs.w_) && dviglo::Equals(x_, rhs.x_) && dviglo::Equals(y_, rhs.y_) && dviglo::Equals(z_, rhs.z_);
     }
 
     /// Return whether any element is NaN.
-    bool IsNaN() const { return Urho3D::IsNaN(w_) || Urho3D::IsNaN(x_) || Urho3D::IsNaN(y_) || Urho3D::IsNaN(z_); }
+    bool IsNaN() const { return dviglo::IsNaN(w_) || dviglo::IsNaN(x_) || dviglo::IsNaN(y_) || dviglo::IsNaN(z_); }
 
     /// Return whether any element is Inf.
-    bool IsInf() const { return Urho3D::IsInf(w_) || Urho3D::IsInf(x_) || Urho3D::IsInf(y_) || Urho3D::IsInf(z_); }
+    bool IsInf() const { return dviglo::IsInf(w_) || dviglo::IsInf(x_) || dviglo::IsInf(y_) || dviglo::IsInf(z_); }
 
     /// Return conjugate.
     Quaternion Conjugate() const

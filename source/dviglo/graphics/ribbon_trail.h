@@ -8,7 +8,7 @@
 
 #include "../graphics/drawable.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum TrailType

@@ -15,7 +15,7 @@ struct spSkeletonData;
 struct spAnimationStateData;
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 namespace Spriter

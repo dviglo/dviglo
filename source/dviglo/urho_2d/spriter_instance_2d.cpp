@@ -11,7 +11,7 @@
 
 #include <cmath>
 
-namespace Urho3D
+namespace dviglo
 {
 
 namespace Spriter
@@ -289,4 +289,4 @@ void SpriterInstance::Clear()
 
 } // namespace Spriter
 
-} // namespace Urho3D
+} // namespace dviglo

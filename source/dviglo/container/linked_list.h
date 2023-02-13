@@ -8,7 +8,7 @@
 
 #include <initializer_list>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Singly-linked list node base class.

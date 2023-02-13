@@ -6,7 +6,7 @@
 
 #include "../core/variant.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Controls sent over the network.

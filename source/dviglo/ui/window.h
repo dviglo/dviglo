@@ -8,7 +8,7 @@
 
 #include "../ui/border_image.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Window movement and resizing modes.

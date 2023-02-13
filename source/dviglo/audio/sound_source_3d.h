@@ -6,7 +6,7 @@
 
 #include "../audio/sound_source.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Audio;

@@ -11,7 +11,7 @@
 #include "../math/string_hash.h"
 #include "../math/vector3.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Vector3;
@@ -483,4 +483,4 @@ inline constexpr i32 MAX_CONSTANT_REGISTERS = 256;
 
 inline constexpr i32 BITS_PER_COMPONENT = 8;
 
-} // namespace Urho3D
+} // namespace dviglo

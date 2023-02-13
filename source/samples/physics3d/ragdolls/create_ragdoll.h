@@ -7,7 +7,7 @@
 #include <dviglo/physics/collision_shape.h>
 #include <dviglo/physics/constraint.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 /// Custom component that creates a ragdoll upon collision.
 class CreateRagdoll : public Component

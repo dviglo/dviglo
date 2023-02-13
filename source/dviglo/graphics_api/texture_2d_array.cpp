@@ -22,7 +22,7 @@
 #pragma warning(disable:4355)
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 Texture2DArray::Texture2DArray(Context* context) :

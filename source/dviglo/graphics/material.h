@@ -10,7 +10,7 @@
 #include "../resource/resource.h"
 #include "../scene/value_animation_info.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Material;

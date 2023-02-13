@@ -12,7 +12,7 @@
 #include "../graphics_api/graphics_defs.h"
 #include "../math/frustum.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class BoundingBox;

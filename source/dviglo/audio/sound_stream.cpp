@@ -6,7 +6,7 @@
 
 #include "../audio/sound_stream.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 SoundStream::SoundStream() :

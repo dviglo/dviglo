@@ -8,7 +8,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void SinCos(float angle, float& sin, float& cos)

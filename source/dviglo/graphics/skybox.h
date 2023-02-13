@@ -6,7 +6,7 @@
 
 #include "../graphics/static_model.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Static model component with fixed position in relation to the camera.

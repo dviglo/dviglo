@@ -10,7 +10,7 @@
 // on whether 3D physics support or Bullet has been compiled in.
 #include "../physics/physics_events.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Physics update contact. Global event sent by PhysicsWorld2D.

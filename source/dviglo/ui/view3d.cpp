@@ -16,7 +16,7 @@
 #include "../ui/ui_events.h"
 #include "../ui/view3d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* UI_CATEGORY;

@@ -23,7 +23,7 @@ namespace SLNet
     class RakPeerInterface;
 }
 
-namespace Urho3D
+namespace dviglo
 {
 
 class File;

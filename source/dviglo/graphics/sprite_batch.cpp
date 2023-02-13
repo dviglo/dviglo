@@ -6,7 +6,7 @@
 
 #include "../ui/font_face.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 SpriteBatch::SpriteBatch(Context* context) : SpriteBatchBase(context)

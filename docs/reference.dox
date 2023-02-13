@@ -1,4 +1,4 @@
-namespace Urho3D
+namespace dviglo
 {
 
 /**
@@ -277,7 +277,7 @@ will instantiate the Context object and then the user-specified application clas
 #include <Urho3D/Engine/Engine.h>
 #include <Urho3D/Input/InputEvents.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 class MyApp : public Application
 {

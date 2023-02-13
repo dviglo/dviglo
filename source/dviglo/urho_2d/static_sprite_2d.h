@@ -6,7 +6,7 @@
 
 #include "../urho_2d/drawable_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Sprite2D;

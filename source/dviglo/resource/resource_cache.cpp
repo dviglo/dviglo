@@ -24,7 +24,7 @@
 
 #include <cstdio>
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const char* checkDirs[] =

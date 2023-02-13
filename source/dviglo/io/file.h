@@ -14,7 +14,7 @@
 struct SDL_RWops;
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 #ifdef __ANDROID__

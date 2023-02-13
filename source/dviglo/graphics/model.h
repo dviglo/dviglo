@@ -11,7 +11,7 @@
 #include "../math/bounding_box.h"
 #include "../resource/resource.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Geometry;

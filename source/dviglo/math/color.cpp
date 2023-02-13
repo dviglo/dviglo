@@ -10,7 +10,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 color32 Color::ToU32() const
@@ -246,9 +246,9 @@ float Color::Hue(float min, float max) const
         return 0.0f;
 
     // Calculate and return hue
-    if (Urho3D::Equals(g_, max))
+    if (dviglo::Equals(g_, max))
         return (b_ + 2.0f * chroma - r_) / (6.0f * chroma);
-    else if (Urho3D::Equals(b_, max))
+    else if (dviglo::Equals(b_, max))
         return (4.0f * chroma - g_ + r_) / (6.0f * chroma);
     else
     {
@@ -289,7 +289,7 @@ void Color::FromHCM(float h, float c, float m)
         h -= floorf(h);
 
     float hs = h * 6.0f;
-    float x = c * (1.0f - Urho3D::Abs(fmodf(hs, 2.0f) - 1.0f));
+    float x = c * (1.0f - dviglo::Abs(fmodf(hs, 2.0f) - 1.0f));
 
     // Reconstruct r', g', b' from hue
     if (hs < 2.0f)

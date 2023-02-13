@@ -15,7 +15,7 @@
 #include "../ui/ui_events.h"
 #include "../ui/window.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 MessageBox::MessageBox(Context* context, const String& messageString, const String& titleString, XMLFile* layoutFile,

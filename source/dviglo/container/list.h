@@ -7,7 +7,7 @@
 #include "../container/list_base.h"
 #include <initializer_list>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Doubly-linked list template class.
@@ -476,12 +476,12 @@ private:
     }
 };
 
-template <class T> typename Urho3D::List<T>::ConstIterator begin(const Urho3D::List<T>& v) { return v.Begin(); }
+template <class T> typename dviglo::List<T>::ConstIterator begin(const dviglo::List<T>& v) { return v.Begin(); }
 
-template <class T> typename Urho3D::List<T>::ConstIterator end(const Urho3D::List<T>& v) { return v.End(); }
+template <class T> typename dviglo::List<T>::ConstIterator end(const dviglo::List<T>& v) { return v.End(); }
 
-template <class T> typename Urho3D::List<T>::Iterator begin(Urho3D::List<T>& v) { return v.Begin(); }
+template <class T> typename dviglo::List<T>::Iterator begin(dviglo::List<T>& v) { return v.Begin(); }
 
-template <class T> typename Urho3D::List<T>::Iterator end(Urho3D::List<T>& v) { return v.End(); }
+template <class T> typename dviglo::List<T>::Iterator end(dviglo::List<T>& v) { return v.End(); }
 
 }

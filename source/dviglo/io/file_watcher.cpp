@@ -26,7 +26,7 @@ extern "C"
 }
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 #ifndef __APPLE__
 static const unsigned BUFFERSIZE = 4096;

@@ -6,7 +6,7 @@
 
 #include "../core/object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Complete rebuild of navigation mesh.

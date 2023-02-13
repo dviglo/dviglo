@@ -6,7 +6,7 @@
 
 #include "../ui/menu.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class ListView;

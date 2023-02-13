@@ -9,7 +9,7 @@
 #include <detour_tile_cache/DetourTileCacheBuilder.h>
 #include <recast/Recast.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 NavBuildData::NavBuildData() :

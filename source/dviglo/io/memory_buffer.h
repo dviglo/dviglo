@@ -6,7 +6,7 @@
 
 #include "../io/abstract_file.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Memory area that can be read and written to as a stream.

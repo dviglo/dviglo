@@ -25,7 +25,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static int const UICOMPONENT_DEFAULT_TEXTURE_SIZE = 512;

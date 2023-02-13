@@ -11,7 +11,7 @@
 #undef GetObject
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 class DebugRenderer;

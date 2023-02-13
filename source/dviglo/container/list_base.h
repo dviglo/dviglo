@@ -9,7 +9,7 @@
 #include "../container/allocator.h"
 #include "../container/swap.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Doubly-linked list node base class.
@@ -83,10 +83,10 @@ public:
     /// Swap with another linked list.
     void Swap(ListBase& rhs)
     {
-        Urho3D::Swap(head_, rhs.head_);
-        Urho3D::Swap(tail_, rhs.tail_);
-        Urho3D::Swap(allocator_, rhs.allocator_);
-        Urho3D::Swap(size_, rhs.size_);
+        dviglo::Swap(head_, rhs.head_);
+        dviglo::Swap(tail_, rhs.tail_);
+        dviglo::Swap(allocator_, rhs.allocator_);
+        dviglo::Swap(size_, rhs.size_);
     }
 
 protected:

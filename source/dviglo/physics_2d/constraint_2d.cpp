@@ -15,7 +15,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Constraint2D::Constraint2D(Context* context) :

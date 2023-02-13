@@ -8,7 +8,7 @@
 #include "../container/vector.h"
 #include "math_defs.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class URHO3D_API BigInt
@@ -113,4 +113,4 @@ inline BigInt operator %(u64 lhs, const BigInt& rhs) { return BigInt(lhs) % rhs;
 
 inline BigInt Abs(const BigInt& value) { return value.IsNegative() ? -value : value; }
 
-} // namespace Urho3D
+} // namespace dviglo

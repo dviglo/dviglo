@@ -6,7 +6,7 @@
 
 #include "network.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void ParseNetworkArguments()
@@ -46,4 +46,4 @@ void ParseNetworkArguments()
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

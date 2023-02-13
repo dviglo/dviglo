@@ -7,7 +7,7 @@
 #include "../container/swap.h"
 #include "../container/vector_base.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const int QUICKSORT_THRESHOLD = 16;

@@ -15,7 +15,7 @@
 
 #include <SDL3/SDL.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 StringHash VAR_DRAGDROPCONTENT("DragDropContent");

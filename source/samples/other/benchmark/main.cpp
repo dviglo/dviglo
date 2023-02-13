@@ -13,7 +13,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 class App : public Application
 {

@@ -8,7 +8,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Intersection PointOctreeQuery::TestOctant(const BoundingBox& box, bool inside)

@@ -7,7 +7,7 @@
 #include "../resource/resource.h"
 #include "../urho_2d/tilemap_defs_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Sprite2D;
@@ -160,7 +160,7 @@ public:
     void AddLayer(unsigned index, TmxLayer2D *layer);
 
     /// Append layer to end.
-    void AddLayer(Urho3D::TmxLayer2D* layer);
+    void AddLayer(dviglo::TmxLayer2D* layer);
 
     /// Return Tilemap information.
     const TileMapInfo2D& GetInfo() const { return info_; }

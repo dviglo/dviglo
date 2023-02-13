@@ -8,7 +8,7 @@
 #include "../graphics/skeleton.h"
 #include "../graphics/static_model.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Animation;

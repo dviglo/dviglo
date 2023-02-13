@@ -7,7 +7,7 @@
 #include "../container/array_ptr.h"
 #include "../math/area_allocator.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Font;

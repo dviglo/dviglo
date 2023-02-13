@@ -12,7 +12,7 @@
 #include <SDL3/SDL_rwops.h>
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Named pipe for interprocess communication.

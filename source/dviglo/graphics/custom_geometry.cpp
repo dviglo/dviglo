@@ -22,7 +22,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* GEOMETRY_CATEGORY;
@@ -519,4 +519,4 @@ void CustomGeometry::OnWorldBoundingBoxUpdate()
     worldBoundingBox_ = boundingBox_.Transformed(node_->GetWorldTransform());
 }
 
-} // namespace Urho3D
+} // namespace dviglo

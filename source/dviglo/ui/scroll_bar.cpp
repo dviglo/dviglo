@@ -11,7 +11,7 @@
 #include "../ui/slider.h"
 #include "../ui/ui_events.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const float DEFAULT_SCROLL_STEP = 0.1f;

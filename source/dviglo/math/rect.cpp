@@ -10,7 +10,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const Rect Rect::FULL(-1.0f, -1.0f, 1.0f, 1.0f);

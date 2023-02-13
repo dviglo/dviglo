@@ -6,7 +6,7 @@
 
 #include "../ui/font_face.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Image;

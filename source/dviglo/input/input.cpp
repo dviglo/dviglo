@@ -47,7 +47,7 @@ extern "C" int SDL_AddTouch(SDL_TouchID touchID, SDL_TouchDeviceType type, const
 
 // TODO: Gestures не протестированы и джойстик тоже. После обновления SDL до 3й версии по индексам к джойстикам обращаться нельзя
 
-namespace Urho3D
+namespace dviglo
 {
 
 const int SCREEN_JOYSTICK_START_ID = 0x40000000;

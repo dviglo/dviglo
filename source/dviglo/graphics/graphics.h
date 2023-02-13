@@ -17,7 +17,7 @@
 
 struct SDL_Window;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class ConstantBuffer;
@@ -1158,5 +1158,5 @@ private:
 /// Register Graphics library objects.
 void URHO3D_API RegisterGraphicsLibrary(Context* context);
 
-} // namespace Urho3D
+} // namespace dviglo
 

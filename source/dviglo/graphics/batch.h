@@ -11,7 +11,7 @@
 #include "../math/matrix3x4.h"
 #include "../math/rect.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Camera;

@@ -10,7 +10,7 @@
 #include "../container/hash.h"
 #include "../container/swap.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Hash set/map node base class.
@@ -96,10 +96,10 @@ public:
     /// Swap with another hash set or map.
     void Swap(HashBase& rhs)
     {
-        Urho3D::Swap(head_, rhs.head_);
-        Urho3D::Swap(tail_, rhs.tail_);
-        Urho3D::Swap(ptrs_, rhs.ptrs_);
-        Urho3D::Swap(allocator_, rhs.allocator_);
+        dviglo::Swap(head_, rhs.head_);
+        dviglo::Swap(tail_, rhs.tail_);
+        dviglo::Swap(ptrs_, rhs.ptrs_);
+        dviglo::Swap(allocator_, rhs.allocator_);
     }
 
     /// Return number of elements.

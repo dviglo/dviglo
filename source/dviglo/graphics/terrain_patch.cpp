@@ -20,7 +20,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const float LOD_CONSTANT = 1.0f / 150.0f;

@@ -6,7 +6,7 @@
 
 #include "../container/hash.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Pair template class.
@@ -64,12 +64,12 @@ template <class T, class U> Pair<T, U> MakePair(const T& first, const U& second)
     return Pair<T, U>(first, second);
 }
 
-template <class T> T begin(Urho3D::Pair<T, T>& range) { return range.first_; }
+template <class T> T begin(dviglo::Pair<T, T>& range) { return range.first_; }
 
-template <class T> T end(Urho3D::Pair<T, T>& range) { return range.second_; }
+template <class T> T end(dviglo::Pair<T, T>& range) { return range.second_; }
 
-template <class T> T begin(const Urho3D::Pair<T, T>& range) { return range.first_; }
+template <class T> T begin(const dviglo::Pair<T, T>& range) { return range.first_; }
 
-template <class T> T end(const Urho3D::Pair<T, T>& range) { return range.second_; }
+template <class T> T end(const dviglo::Pair<T, T>& range) { return range.second_; }
 
 }

@@ -19,7 +19,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 inline bool CompareTriggers(AnimationTriggerPoint& lhs, AnimationTriggerPoint& rhs)
@@ -39,7 +39,7 @@ void AnimationTrack::SetKeyFrame(i32 index, const AnimationKeyFrame& keyFrame)
     if (index < keyFrames_.Size())
     {
         keyFrames_[index] = keyFrame;
-        Urho3D::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        dviglo::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
     }
     else if (index == keyFrames_.Size())
         AddKeyFrame(keyFrame);
@@ -50,14 +50,14 @@ void AnimationTrack::AddKeyFrame(const AnimationKeyFrame& keyFrame)
     bool needSort = keyFrames_.Size() ? keyFrames_.Back().time_ > keyFrame.time_ : false;
     keyFrames_.Push(keyFrame);
     if (needSort)
-        Urho3D::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        dviglo::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
 }
 
 void AnimationTrack::InsertKeyFrame(i32 index, const AnimationKeyFrame& keyFrame)
 {
     assert(index >= 0);
     keyFrames_.Insert(index, keyFrame);
-    Urho3D::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+    dviglo::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
 }
 
 void AnimationTrack::RemoveKeyFrame(i32 index)

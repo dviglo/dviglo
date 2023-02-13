@@ -10,7 +10,7 @@
 
 // TODO: После обновления SDL до 3й версии поменялись функции Read и Write. Они нужны для Gestures
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Template wrapper class for using Serializer / Deserializer or their subclasses through SDL's RWOps structure.

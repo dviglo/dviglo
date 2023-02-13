@@ -10,7 +10,7 @@
 #include "../resource/resource.h"
 #include "../resource/xml_element.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Resource::Resource(Context* context) :
@@ -137,7 +137,7 @@ void ResourceWithMetadata::RemoveAllMetadata()
     metadataKeys_.Clear();
 }
 
-const Urho3D::Variant& ResourceWithMetadata::GetMetadata(const String& name) const
+const dviglo::Variant& ResourceWithMetadata::GetMetadata(const String& name) const
 {
     const Variant* value = metadata_[name];
     return value ? *value : Variant::EMPTY;

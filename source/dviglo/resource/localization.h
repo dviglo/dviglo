@@ -7,7 +7,7 @@
 #include "../core/context.h"
 #include "../resource/json_value.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Localization subsystem. Stores all the strings in all languages.

@@ -12,7 +12,7 @@
 
 #include <cstddef>
 
-namespace Urho3D
+namespace dviglo
 {
 
 struct AllocatorNode;

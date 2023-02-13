@@ -6,7 +6,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static AllocatorBlock* AllocatorReserveBlock(AllocatorBlock* allocator, i32 nodeSize, i32 capacity)

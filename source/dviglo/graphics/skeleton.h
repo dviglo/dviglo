@@ -9,7 +9,7 @@
 #include "../math/bounding_box.h"
 #include "../scene/node.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum BoneCollisionShape : unsigned char

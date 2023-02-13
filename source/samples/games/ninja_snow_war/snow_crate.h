@@ -6,7 +6,7 @@
 
 #include "game_object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class SnowCrate : public GameObject
@@ -22,4 +22,4 @@ public:
     void FixedUpdate(float timeStep) override;
 };
 
-} // namespace Urho3D
+} // namespace dviglo

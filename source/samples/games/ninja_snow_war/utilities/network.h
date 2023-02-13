@@ -6,7 +6,7 @@
 
 #include <dviglo/container/str.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 inline bool runServer = false;
@@ -18,4 +18,4 @@ inline bool nobgm = false; // Без фоновой музыки
 
 void ParseNetworkArguments();
 
-} // namespace Urho3D
+} // namespace dviglo

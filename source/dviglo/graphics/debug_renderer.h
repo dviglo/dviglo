@@ -8,7 +8,7 @@
 #include "../math/frustum.h"
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class BoundingBox;

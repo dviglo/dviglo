@@ -19,7 +19,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static constexpr i32 PIPE_BUFFER_SIZE = 65536;

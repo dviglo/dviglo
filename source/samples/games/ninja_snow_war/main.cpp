@@ -26,7 +26,7 @@
 #include "utilities/network.h"
 #include "utilities/spawn.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static constexpr float MOUSE_SENSITIVITY = 0.125f;
@@ -1202,6 +1202,6 @@ public:
     }
 };
 
-} // namespace Urho3D
+} // namespace dviglo
 
-URHO3D_DEFINE_APPLICATION_MAIN(Urho3D::App);
+URHO3D_DEFINE_APPLICATION_MAIN(dviglo::App);

@@ -10,7 +10,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 Benchmark02_WomanMover::Benchmark02_WomanMover(Context* context)
     : LogicComponent(context)

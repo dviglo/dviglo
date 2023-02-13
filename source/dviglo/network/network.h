@@ -9,7 +9,7 @@
 #include "../io/vector_buffer.h"
 #include "../network/connection.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class HttpRequest;

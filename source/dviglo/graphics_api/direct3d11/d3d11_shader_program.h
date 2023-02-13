@@ -9,7 +9,7 @@
 #include "../../graphics_api/constant_buffer.h"
 #include "../../graphics_api/shader_variation.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Combined information for specific vertex and pixel shaders.

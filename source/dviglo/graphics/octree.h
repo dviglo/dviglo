@@ -8,7 +8,7 @@
 #include "../graphics/drawable.h"
 #include "../graphics/octree_query.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Octree;

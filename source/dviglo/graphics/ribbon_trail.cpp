@@ -17,7 +17,7 @@
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* GEOMETRY_CATEGORY;

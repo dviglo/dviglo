@@ -9,7 +9,7 @@
 #include "../container/swap.h"
 #include "iter.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Vector base class.
@@ -30,9 +30,9 @@ public:
     /// Swap with another vector.
     void Swap(VectorBase& rhs)
     {
-        Urho3D::Swap(size_, rhs.size_);
-        Urho3D::Swap(capacity_, rhs.capacity_);
-        Urho3D::Swap(buffer_, rhs.buffer_);
+        dviglo::Swap(size_, rhs.size_);
+        dviglo::Swap(capacity_, rhs.capacity_);
+        dviglo::Swap(buffer_, rhs.buffer_);
     }
 
 protected:

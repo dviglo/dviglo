@@ -4,7 +4,7 @@
 
 #include "light_flash.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void LightFlash::RegisterObject(Context* context)
@@ -27,4 +27,4 @@ void LightFlash::FixedUpdate(float timeStep)
     GameObject::FixedUpdate(timeStep);
 }
 
-} // namespace Urho3D
+} // namespace dviglo

@@ -15,7 +15,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 TileMapLayer2D::TileMapLayer2D(Context* context) :

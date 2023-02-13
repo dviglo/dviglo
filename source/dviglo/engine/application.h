@@ -10,7 +10,7 @@
 #include "../core/main.h"
 #include "../engine/engine.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Engine;
@@ -57,8 +57,8 @@ protected:
 #define URHO3D_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
-    Urho3D::SharedPtr<Urho3D::Context> context(new Urho3D::Context()); \
-    Urho3D::SharedPtr<className> application(new className(context)); \
+    dviglo::SharedPtr<dviglo::Context> context(new dviglo::Context()); \
+    dviglo::SharedPtr<className> application(new className(context)); \
     return application->Run(); \
 } \
 URHO3D_DEFINE_MAIN(RunApplication())
@@ -67,7 +67,7 @@ URHO3D_DEFINE_MAIN(RunApplication())
 #define URHO3D_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
-    Urho3D::Context* context = new Urho3D::Context(); \
+    dviglo::Context* context = new dviglo::Context(); \
     className* application = new className(context); \
     return application->Run(); \
 } \

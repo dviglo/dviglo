@@ -8,7 +8,7 @@
 
 #include "../urho_2d/spriter_data_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Component;

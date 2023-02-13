@@ -11,7 +11,7 @@
 #include "../ui/cursor.h"
 #include "../ui/ui_batch.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Font hinting level (only used for FreeType fonts).

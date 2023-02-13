@@ -6,7 +6,7 @@
 
 #include <dviglo/core/object.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Node;
@@ -16,8 +16,8 @@ class Scene;
 
 class Character2D;
 
-// All Urho3D classes reside in namespace Urho3D
-using namespace Urho3D;
+// All Urho3D classes reside in namespace dviglo
+using namespace dviglo;
 
 const float CAMERA_MIN_DIST = 0.1f;
 const float CAMERA_MAX_DIST = 6.0f;

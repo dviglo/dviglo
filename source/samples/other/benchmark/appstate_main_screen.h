@@ -6,7 +6,7 @@
 
 #include "appstate_base.h"
 
-namespace Urho3D
+namespace dviglo
 {
     class Window;
 }

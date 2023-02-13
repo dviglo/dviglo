@@ -10,7 +10,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const Vector2 Vector2::ZERO;

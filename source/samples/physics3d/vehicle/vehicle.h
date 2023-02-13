@@ -7,7 +7,7 @@
 #include <dviglo/input/controls.h>
 #include <dviglo/scene/logic_component.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Constraint;
@@ -16,7 +16,7 @@ class RigidBody;
 
 }
 
-using namespace Urho3D;
+using namespace dviglo;
 
 const unsigned CTRL_FORWARD = 1;
 const unsigned CTRL_BACK = 2;

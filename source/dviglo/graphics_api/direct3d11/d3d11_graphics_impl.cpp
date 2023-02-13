@@ -9,7 +9,7 @@
 
 #include "../../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 GraphicsImpl_D3D11::GraphicsImpl_D3D11() :

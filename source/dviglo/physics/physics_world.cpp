@@ -34,7 +34,7 @@ extern ContactAddedCallback gContactAddedCallback;
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 const char* PHYSICS_CATEGORY = "Physics";

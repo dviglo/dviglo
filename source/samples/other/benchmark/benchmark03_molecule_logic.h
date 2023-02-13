@@ -8,7 +8,7 @@
 #include <dviglo/base/primitive_types.h>
 
 namespace U3D = Urho3D;
-using namespace Urho3D::PrimitiveTypes;
+using namespace dviglo::PrimitiveTypes;
 
 class Benchmark03_MoleculeLogic : public U3D::LogicComponent
 {

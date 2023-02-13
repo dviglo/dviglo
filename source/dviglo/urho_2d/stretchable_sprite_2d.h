@@ -6,7 +6,7 @@
 
 #include "../urho_2d/static_sprite_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 /// Stretchable sprite component.
 class URHO3D_API StretchableSprite2D : public StaticSprite2D

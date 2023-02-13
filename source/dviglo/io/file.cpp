@@ -20,7 +20,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #ifdef _WIN32

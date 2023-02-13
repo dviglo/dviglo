@@ -6,7 +6,7 @@
 
 #include "../../Sample.h"
 
-namespace Urho3D
+namespace dviglo
 {
     class Node;
     class Scene;

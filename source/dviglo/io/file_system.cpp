@@ -63,7 +63,7 @@ const char* SDL_IOS_GetDocumentsDir();
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 int DoSystemCommand(const String& commandLine, bool redirectToLog, Context* context)

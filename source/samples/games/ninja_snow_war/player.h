@@ -6,7 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 struct Player
@@ -26,5 +26,5 @@ struct HiscoreEntry
     String name;
 };
 
-} // namespace Urho3D
+} // namespace dviglo
 

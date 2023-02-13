@@ -7,7 +7,7 @@
 #include "../graphics_api/graphics_defs.h"
 #include "../ui/ui_element.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Tooltip %UI element.

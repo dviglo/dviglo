@@ -8,7 +8,7 @@
 #include "../scene/serializable.h"
 #include "../scene/value_animation_info.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Animatable;

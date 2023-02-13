@@ -18,7 +18,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 FontFaceBitmap::FontFaceBitmap(Font* font) :

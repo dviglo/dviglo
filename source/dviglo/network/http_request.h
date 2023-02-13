@@ -12,7 +12,7 @@
 #include "../core/thread.h"
 #include "../io/deserializer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// HTTP connection state.

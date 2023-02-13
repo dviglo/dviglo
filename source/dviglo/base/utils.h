@@ -8,7 +8,7 @@
 
 #include <type_traits>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Converts enum class to u8 if underlying type is u8
@@ -25,4 +25,4 @@ inline constexpr std::enable_if_t<std::is_same_v<std::underlying_type_t<EnumClas
 	return static_cast<u32>(enumClass);
 }
 
-} // namespace Urho3D
+} // namespace dviglo

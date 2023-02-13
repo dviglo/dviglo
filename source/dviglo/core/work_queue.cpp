@@ -10,7 +10,7 @@
 #include "../core/work_queue.h"
 #include "../io/log.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Worker thread managed by the work queue.

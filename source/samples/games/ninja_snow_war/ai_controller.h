@@ -6,7 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Ninja;
@@ -27,4 +27,4 @@ public:
     void GetNewTarget(Node* ownNode);
 };
 
-} // namespace Urho3D
+} // namespace dviglo

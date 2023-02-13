@@ -13,7 +13,7 @@
 #include <d3d11.h>
 #include <dxgi.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 #define URHO3D_SAFE_RELEASE(p) if (p) { ((IUnknown*)p)->Release();  p = 0; }

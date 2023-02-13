@@ -6,7 +6,7 @@
 
 #include "../ui/button.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Menu %UI element that optionally shows a popup.

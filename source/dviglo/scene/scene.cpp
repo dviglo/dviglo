@@ -27,7 +27,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const char* SCENE_CATEGORY = "Scene";

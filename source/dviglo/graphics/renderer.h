@@ -13,7 +13,7 @@
 #include "../graphics/viewport.h"
 #include "../math/color.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Geometry;

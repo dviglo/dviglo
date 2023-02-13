@@ -6,7 +6,7 @@
 
 #include "../dviglo_config.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #if defined(_MSC_VER) && defined(URHO3D_MINIDUMPS)

@@ -14,7 +14,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #ifdef URHO3D_THREADING

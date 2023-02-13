@@ -4,7 +4,7 @@
 
 #include "player.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Player::Player()
@@ -13,4 +13,4 @@ Player::Player()
 {
 }
 
-} // namespace Urho3D
+} // namespace dviglo

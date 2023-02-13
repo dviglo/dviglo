@@ -4,7 +4,7 @@
 
 #include "game_object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 void GameObject::RegisterObject(Context* context)
@@ -150,4 +150,4 @@ void GameObject::ResetWorldCollision()
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

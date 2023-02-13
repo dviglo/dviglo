@@ -6,7 +6,7 @@
 
 #include "../io/vector_buffer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 VectorBuffer::VectorBuffer() = default;

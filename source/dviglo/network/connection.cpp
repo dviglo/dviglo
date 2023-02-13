@@ -32,7 +32,7 @@
 
 #include <cstdio>
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const int STATS_INTERVAL_MSEC = 2000;

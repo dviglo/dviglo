@@ -12,7 +12,7 @@
 #include <bullet/LinearMath/btVector3.h>
 #include <bullet/LinearMath/btQuaternion.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 inline btVector3 ToBtVector3(const Vector3& vector)

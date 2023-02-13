@@ -6,7 +6,7 @@
 
 #include <dviglo/scene/logic_component.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 /// Custom logic component for moving the animated model and rotating at area edges.
 class Mover : public LogicComponent

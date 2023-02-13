@@ -6,7 +6,7 @@
 
 #include "../dviglo_config.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Condition on which a thread can wait.

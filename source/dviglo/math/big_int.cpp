@@ -9,7 +9,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #if true
@@ -216,7 +216,7 @@ BigInt::BigInt(const String& str)
 BigInt::BigInt(i32 value)
 {
     positive_ = (value >= 0);
-    value = Urho3D::Abs(value);
+    value = dviglo::Abs(value);
 
     while (value != 0)
     {
@@ -232,7 +232,7 @@ BigInt::BigInt(i32 value)
 BigInt::BigInt(i64 value)
 {
     positive_ = (value >= 0);
-    value = Urho3D::Abs(value);
+    value = dviglo::Abs(value);
 
     while (value != 0)
     {
@@ -471,4 +471,4 @@ BigInt& BigInt::operator %=(const BigInt& rhs)
     return *this;
 }
 
-} // namespace Urho3D
+} // namespace dviglo

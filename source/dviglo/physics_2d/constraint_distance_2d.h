@@ -6,7 +6,7 @@
 
 #include "../physics_2d/constraint_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// 2D distance constraint component.

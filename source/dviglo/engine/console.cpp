@@ -26,7 +26,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const int DEFAULT_CONSOLE_ROWS = 16;

@@ -6,7 +6,7 @@
 
 #include "../scene/component.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %Network interest management settings component.

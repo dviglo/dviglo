@@ -22,7 +22,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const char* typeNames[] =

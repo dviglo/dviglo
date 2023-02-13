@@ -6,7 +6,7 @@
 
 #include "../math/rect.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Rectangular area allocator.

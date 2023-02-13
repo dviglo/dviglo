@@ -13,7 +13,7 @@
 #include "../graphics_api/texture_2d.h"
 #include "../graphics_api/vertex_buffer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class URHO3D_API SpriteBatchBase : public Object
@@ -169,4 +169,4 @@ public:
     Vector2 GetVirtualPos(const Vector2& realPos);
 };
 
-} // namespace Urho3D
+} // namespace dviglo

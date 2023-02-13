@@ -6,7 +6,7 @@
 
 #include "../graphics/billboard_set.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class ParticleEffect;

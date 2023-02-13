@@ -15,7 +15,7 @@
 
 #include <dviglo/debug_new.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 static const U3D::String RESULT_WINDOW_STR = "Result Window";
 

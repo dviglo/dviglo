@@ -8,7 +8,7 @@
 #include "../math/vector2.h"
 #include "text.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %ProgressBar bar %UI element.

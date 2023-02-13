@@ -12,7 +12,7 @@
 #include <dviglo/math/bounding_box.h>
 #include <dviglo/math/matrix3x4.h>
 
-using namespace Urho3D;
+using namespace dviglo;
 
 struct Triangle
 {

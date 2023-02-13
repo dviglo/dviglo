@@ -9,7 +9,7 @@
 
 #include <cstring>
 
-namespace Urho3D
+namespace dviglo
 {
 
 const Variant Variant::EMPTY { };

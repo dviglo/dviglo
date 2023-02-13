@@ -9,7 +9,7 @@
 #include "../container/ref_counted.h"
 #include "../urho_2d/sprite_2d.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class XMLElement;

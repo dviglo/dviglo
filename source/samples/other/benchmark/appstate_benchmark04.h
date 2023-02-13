@@ -24,7 +24,7 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    Urho3D::SharedPtr<Urho3D::SpriteBatch> spriteBatch_;
+    dviglo::SharedPtr<dviglo::SpriteBatch> spriteBatch_;
     float angle_ = 0.f;
     float scale_ = 0.f;
 

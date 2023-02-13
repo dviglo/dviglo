@@ -7,7 +7,7 @@
 #include "../container/str.h"
 #include "../math/math_defs.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class StringHashRegister;

@@ -27,7 +27,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const char* PHYSICS2D_CATEGORY = "Physics2D";

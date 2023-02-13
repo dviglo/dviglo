@@ -8,7 +8,7 @@
 #include "../physics/physics_utils.h"
 #include "../physics/rigid_body.h"
 
-namespace Urho3D
+namespace dviglo
 {
 struct RaycastVehicleData;
 
@@ -18,7 +18,7 @@ class URHO3D_API RaycastVehicle : public LogicComponent
 
 public:
     /// Construct.
-    explicit RaycastVehicle(Urho3D::Context* context);
+    explicit RaycastVehicle(dviglo::Context* context);
     /// Destruct.
     ~RaycastVehicle() override;
 

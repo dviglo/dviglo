@@ -7,7 +7,7 @@
 #include "../core/object.h"
 #include "../core/timer.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Engine;

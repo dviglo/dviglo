@@ -6,7 +6,7 @@
 
 #include "ninja.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static constexpr float INITIAL_AGGRESSION = 0.0020f;
@@ -198,4 +198,4 @@ void AIController::GetNewTarget(Node* ownNode)
     }
 }
 
-} // namespace Urho3D
+} // namespace dviglo

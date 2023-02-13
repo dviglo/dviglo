@@ -15,7 +15,7 @@
 #include <SDL3/SDL_mouse.h>
 
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum MouseButton : unsigned

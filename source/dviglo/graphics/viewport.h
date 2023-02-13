@@ -10,7 +10,7 @@
 #include "../math/rect.h"
 #include "../math/vector2.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Camera;

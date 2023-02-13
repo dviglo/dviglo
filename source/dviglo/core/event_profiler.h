@@ -6,7 +6,7 @@
 
 #include "../core/profiler.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Event profiling data for one block in the event profiling tree.

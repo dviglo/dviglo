@@ -7,7 +7,7 @@
 #include "../resource/resource.h"
 #include "../resource/json_value.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// JSON document resource.

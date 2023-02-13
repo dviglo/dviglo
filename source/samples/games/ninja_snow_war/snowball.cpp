@@ -5,7 +5,7 @@
 #include "snowball.h"
 #include "utilities/spawn.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 static constexpr float SNOWBALL_MIN_HIT_SPEED = 1.f;
@@ -86,4 +86,4 @@ void Snowball::ObjectCollision(GameObject& otherObject, VariantMap& eventData)
         duration = SNOWBALL_OBJECT_HIT_DURATION;
 }
 
-} // namespace Urho3D
+} // namespace dviglo

@@ -9,7 +9,7 @@
 
 #include <xmmintrin.h>
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Polyhedron;

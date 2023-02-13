@@ -21,7 +21,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 bool HiresTimer::supported(false);

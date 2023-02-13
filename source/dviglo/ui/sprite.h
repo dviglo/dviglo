@@ -7,7 +7,7 @@
 #include "../math/matrix3x4.h"
 #include "../ui/ui_element.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// %UI element which allows sub-pixel positioning and size, as well as rotation. Only other Sprites should be added as child elements.

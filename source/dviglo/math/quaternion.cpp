@@ -10,7 +10,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 const Quaternion Quaternion::IDENTITY;
@@ -203,7 +203,7 @@ float Quaternion::RollAngle() const
     return EulerAngles().z_;
 }
 
-Urho3D::Vector3 Quaternion::Axis() const
+dviglo::Vector3 Quaternion::Axis() const
 {
     return Vector3(x_, y_, z_) / sqrt(1. - w_ * w_);
 }

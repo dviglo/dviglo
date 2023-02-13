@@ -10,7 +10,7 @@
 #include "../container/ptr.h"
 #include "../core/variant.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum AttributeMode

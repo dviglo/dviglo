@@ -10,7 +10,7 @@
 #include "../core/mutex.h"
 #include "../core/object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class AudioImpl;

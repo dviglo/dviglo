@@ -8,7 +8,7 @@
 #include "../core/attribute.h"
 #include "../core/object.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Tracking structure for event receivers.

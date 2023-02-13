@@ -16,7 +16,7 @@ struct dtTileCacheLayer;
 struct dtTileCacheContourSet;
 struct dtTileCachePolyMesh;
 
-namespace Urho3D
+namespace dviglo
 {
 
 class OffMeshConnection;

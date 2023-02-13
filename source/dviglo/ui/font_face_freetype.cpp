@@ -22,7 +22,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 inline float FixedToFloat(FT_Pos value)

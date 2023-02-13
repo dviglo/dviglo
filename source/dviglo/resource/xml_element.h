@@ -22,7 +22,7 @@ class xpath_variable_set;
 
 }
 
-namespace Urho3D
+namespace dviglo
 {
 
 class XMLFile;

@@ -22,7 +22,7 @@
 
 using namespace std;
 
-namespace Urho3D
+namespace dviglo
 {
 
 Node::Node(Context* context) :

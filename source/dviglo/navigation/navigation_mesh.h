@@ -24,7 +24,7 @@ class dtNavMesh;
 class dtNavMeshQuery;
 class dtQueryFilter;
 
-namespace Urho3D
+namespace dviglo
 {
 
 enum NavmeshPartitionType

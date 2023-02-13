@@ -21,7 +21,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 extern const char* GEOMETRY_CATEGORY;

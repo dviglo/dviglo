@@ -6,7 +6,7 @@
 
 #include "../core/variant.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Parse a bool from a string. Check for the first non-empty character (converted to lowercase) being either 't', 'y' or '1'.

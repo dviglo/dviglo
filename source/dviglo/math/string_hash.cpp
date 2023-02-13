@@ -13,7 +13,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 #ifdef URHO3D_HASH_DEBUG
@@ -37,7 +37,7 @@ const StringHash StringHash::ZERO;
 StringHash::StringHash(const char* str) noexcept :
     value_(Calculate(str))
 {
-    Urho3D::GetGlobalStringHashRegister().RegisterString(*this, str);
+    dviglo::GetGlobalStringHashRegister().RegisterString(*this, str);
 }
 #endif
 
@@ -45,14 +45,14 @@ StringHash::StringHash(const String& str) noexcept :
     value_(Calculate(str.CString()))
 {
 #ifdef URHO3D_HASH_DEBUG
-    Urho3D::GetGlobalStringHashRegister().RegisterString(*this, str.CString());
+    dviglo::GetGlobalStringHashRegister().RegisterString(*this, str.CString());
 #endif
 }
 
 StringHashRegister* StringHash::GetGlobalStringHashRegister()
 {
 #ifdef URHO3D_HASH_DEBUG
-    return &Urho3D::GetGlobalStringHashRegister();
+    return &dviglo::GetGlobalStringHashRegister();
 #else
     return nullptr;
 #endif
@@ -68,7 +68,7 @@ String StringHash::ToString() const
 String StringHash::Reverse() const
 {
 #ifdef URHO3D_HASH_DEBUG
-    return Urho3D::GetGlobalStringHashRegister().GetStringCopy(*this);
+    return dviglo::GetGlobalStringHashRegister().GetStringCopy(*this);
 #else
     return String::EMPTY;
 #endif

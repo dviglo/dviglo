@@ -22,7 +22,7 @@
 #pragma warning(disable:4355)
 #endif
 
-namespace Urho3D
+namespace dviglo
 {
 
 static const char* cubeMapLayoutNames[] = {

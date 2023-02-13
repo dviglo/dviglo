@@ -14,7 +14,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 Sprite2D::Sprite2D(Context* context) :

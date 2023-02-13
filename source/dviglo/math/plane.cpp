@@ -8,7 +8,7 @@
 
 #include "../debug_new.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 // Static initialization order can not be relied on, so do not use Vector3 constants

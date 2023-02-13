@@ -12,7 +12,7 @@
 #include "../math/ray.h"
 #include "../math/sphere.h"
 
-namespace Urho3D
+namespace dviglo
 {
 
 class Drawable;

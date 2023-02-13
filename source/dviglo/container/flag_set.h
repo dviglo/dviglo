@@ -8,7 +8,7 @@
 
 #include <type_traits>
 
-namespace Urho3D
+namespace dviglo
 {
 
 /// Define bitwise operators for scoped enum.
@@ -80,15 +80,15 @@ namespace Urho3D
 
 /// Make bitwise operators (| & ^ ~) automatically construct FlagSet from Enum.
 #define URHO3D_AUTOMATIC_FLAGSET(Enum) \
-    inline Urho3D::FlagSet<Enum> operator | (const Enum lhs, const Enum rhs) { return Urho3D::FlagSet<Enum>(lhs) | rhs; } \
-    inline Urho3D::FlagSet<Enum> operator & (const Enum lhs, const Enum rhs) { return Urho3D::FlagSet<Enum>(lhs) & rhs; } \
-    inline Urho3D::FlagSet<Enum> operator ^ (const Enum lhs, const Enum rhs) { return Urho3D::FlagSet<Enum>(lhs) ^ rhs; } \
-    inline Urho3D::FlagSet<Enum> operator ~ (const Enum rhs) { return ~Urho3D::FlagSet<Enum>(rhs); }
+    inline dviglo::FlagSet<Enum> operator | (const Enum lhs, const Enum rhs) { return dviglo::FlagSet<Enum>(lhs) | rhs; } \
+    inline dviglo::FlagSet<Enum> operator & (const Enum lhs, const Enum rhs) { return dviglo::FlagSet<Enum>(lhs) & rhs; } \
+    inline dviglo::FlagSet<Enum> operator ^ (const Enum lhs, const Enum rhs) { return dviglo::FlagSet<Enum>(lhs) ^ rhs; } \
+    inline dviglo::FlagSet<Enum> operator ~ (const Enum rhs) { return ~dviglo::FlagSet<Enum>(rhs); }
 
 /// Declare FlagSet for specific enum and create operators for automatic FlagSet construction.
 #define URHO3D_FLAGSET(enumName, flagsetName) \
     URHO3D_AUTOMATIC_FLAGSET(enumName) \
-    using flagsetName = Urho3D::FlagSet<enumName>
+    using flagsetName = dviglo::FlagSet<enumName>
 
 /// A set of flags defined by an Enum.
 template <class E>
