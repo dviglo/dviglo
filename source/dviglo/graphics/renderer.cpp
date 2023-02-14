@@ -1113,7 +1113,7 @@ OcclusionBuffer* Renderer::GetOcclusionBuffer(Camera* camera)
 
 Camera* Renderer::GetShadowCamera()
 {
-    MutexLock lock(rendererMutex_);
+    std::scoped_lock lock(rendererMutex_);
 
     assert(numShadowCameras_ <= shadowCameraNodes_.Size());
     if (numShadowCameras_ == shadowCameraNodes_.Size())

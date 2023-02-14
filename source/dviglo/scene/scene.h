@@ -7,11 +7,12 @@
 #pragma once
 
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../resource/xml_element.h"
 #include "../resource/json_file.h"
 #include "../scene/node.h"
 #include "../scene/scene_resolver.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -289,7 +290,7 @@ private:
     /// Delayed dirty notification queue for components.
     Vector<Component*> delayedDirtyComponents_;
     /// Mutex for the delayed dirty notification queue.
-    Mutex sceneMutex_;
+    std::mutex sceneMutex_;
     /// Preallocated event data map for smoothing update events.
     VariantMap smoothingData_;
     /// Next free non-local node ID.

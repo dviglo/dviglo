@@ -6,7 +6,6 @@
 
 #include "../container/array_ptr.h"
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../core/object.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../graphics_api/shader_variation.h"
@@ -14,6 +13,8 @@
 #include "../math/plane.h"
 #include "../math/rect.h"
 #include "../resource/image.h"
+
+#include <mutex>
 
 struct SDL_Window;
 
@@ -987,7 +988,7 @@ private:
 #endif // def DV_D3D11
 
     /// Mutex for accessing the GPU objects vector from several threads.
-    Mutex gpuObjectMutex_;
+    std::recursive_mutex gpuObjectMutex_;
     /// Implementation.
     void* impl_;
     /// SDL window.

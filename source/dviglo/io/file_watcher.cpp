@@ -308,7 +308,7 @@ void FileWatcher::ThreadFunction()
 
 void FileWatcher::AddChange(const String& fileName)
 {
-    MutexLock lock(changesMutex_);
+    std::scoped_lock lock(changesMutex_);
 
     // Reset the timer associated with the filename. Will be notified once timer exceeds the delay
     changes_[fileName].Reset();
@@ -316,7 +316,7 @@ void FileWatcher::AddChange(const String& fileName)
 
 bool FileWatcher::GetNextChange(String& dest)
 {
-    MutexLock lock(changesMutex_);
+    std::scoped_lock lock(changesMutex_);
 
     auto delayMsec = (unsigned)(delay_ * 1000.0f);
 

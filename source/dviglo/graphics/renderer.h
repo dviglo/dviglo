@@ -7,11 +7,12 @@
 #pragma once
 
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../graphics/batch.h"
 #include "../graphics/drawable.h"
 #include "../graphics/viewport.h"
 #include "../math/color.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -511,7 +512,7 @@ private:
     /// Techniques for which missing shader error has been displayed.
     HashSet<Technique*> shaderErrorDisplayed_;
     /// Mutex for shadow camera allocation.
-    Mutex rendererMutex_;
+    std::mutex rendererMutex_;
     /// Current variation names for deferred light volume shaders.
     Vector<String> deferredLightPSVariations_;
     /// Frame info for rendering.

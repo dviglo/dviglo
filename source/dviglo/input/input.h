@@ -8,7 +8,6 @@
 
 #include "../container/flag_set.h"
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../core/object.h"
 #include "../container/list.h"
 #include "../input/input_events.h"

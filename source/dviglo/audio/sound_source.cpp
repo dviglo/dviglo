@@ -160,7 +160,7 @@ void SoundSource::Play(Sound* sound)
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        MutexLock lock(audio_->GetMutex());
+        std::scoped_lock lock(audio_->GetMutex());
         PlayLockless(sound);
     }
     else
@@ -219,7 +219,7 @@ void SoundSource::Play(SoundStream* stream)
     // requested, clear the existing sound if any
     if (position_)
     {
-        MutexLock lock(audio_->GetMutex());
+        std::scoped_lock lock(audio_->GetMutex());
         sound_.Reset();
         PlayLockless(streamPtr);
     }
@@ -240,7 +240,7 @@ void SoundSource::Stop()
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        MutexLock lock(audio_->GetMutex());
+        std::scoped_lock lock(audio_->GetMutex());
         StopLockless();
     }
     else
@@ -302,7 +302,7 @@ void SoundSource::SetPlayPosition(signed char* pos)
     if (!audio_ || !sound_ || soundStream_)
         return;
 
-    MutexLock lock(audio_->GetMutex());
+    std::scoped_lock lock(audio_->GetMutex());
     SetPlayPositionLockless(pos);
 }
 

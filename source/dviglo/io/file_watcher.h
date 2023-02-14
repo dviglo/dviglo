@@ -4,10 +4,11 @@
 
 #pragma once
 
-#include "../core/mutex.h"
 #include "../core/object.h"
 #include "../core/thread.h"
 #include "../core/timer.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -53,7 +54,7 @@ private:
     /// Pending changes. These will be returned and removed from the list when their timer has exceeded the delay.
     HashMap<String, Timer> changes_;
     /// Mutex for the change buffer.
-    Mutex changesMutex_;
+    std::mutex changesMutex_;
     /// Delay in seconds for notifying changes.
     float delay_;
     /// Watch subdirectories flag.

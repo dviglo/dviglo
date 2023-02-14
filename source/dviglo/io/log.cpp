@@ -156,7 +156,7 @@ void Log::Write(int level, const String& message)
     {
         if (logInstance)
         {
-            MutexLock lock(logInstance->logMutex_);
+            std::scoped_lock lock(logInstance->logMutex_);
             logInstance->threadMessages_.Push(StoredLogMessage(message, level, false));
         }
 
@@ -215,7 +215,7 @@ void Log::WriteRaw(const String& message, bool error)
     {
         if (logInstance)
         {
-            MutexLock lock(logInstance->logMutex_);
+            std::scoped_lock lock(logInstance->logMutex_);
             logInstance->threadMessages_.Push(StoredLogMessage(message, LOG_RAW, error));
         }
 
@@ -280,7 +280,7 @@ void Log::HandleEndFrame(StringHash eventType, VariantMap& eventData)
         return;
     }
 
-    MutexLock lock(logMutex_);
+    std::scoped_lock lock(logMutex_);
 
     // Process messages accumulated from other threads (if any)
     while (!threadMessages_.Empty())

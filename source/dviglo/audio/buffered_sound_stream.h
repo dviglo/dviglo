@@ -7,8 +7,9 @@
 #include "../audio/sound_stream.h"
 #include "../container/array_ptr.h"
 #include "../container/list.h"
-#include "../core/mutex.h"
 #include "../container/pair.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -45,7 +46,7 @@ private:
     /// Byte position in the front most buffer.
     unsigned position_;
     /// Mutex for buffer data.
-    mutable Mutex bufferMutex_;
+    mutable std::mutex bufferMutex_;
 };
 
 }

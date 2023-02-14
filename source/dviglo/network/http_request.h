@@ -7,10 +7,11 @@
 #pragma once
 
 #include "../container/array_ptr.h"
-#include "../core/mutex.h"
 #include "../container/ref_counted.h"
 #include "../core/thread.h"
 #include "../io/deserializer.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -76,7 +77,7 @@ private:
     /// Connection state.
     HttpRequestState state_;
     /// Mutex for synchronizing the worker and the main thread.
-    mutable Mutex mutex_;
+    mutable std::mutex mutex_;
     /// Read buffer for the worker thread.
     SharedArrayPtr<u8> httpReadBuffer_;
     /// Read buffer for the main thread.

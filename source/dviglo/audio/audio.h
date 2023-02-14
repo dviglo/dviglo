@@ -7,8 +7,9 @@
 #include "../audio/audio_defs.h"
 #include "../container/array_ptr.h"
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../core/object.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -89,7 +90,7 @@ public:
     void RemoveSoundSource(SoundSource* soundSource);
 
     /// Return audio thread mutex.
-    Mutex& GetMutex() { return audioMutex_; }
+    std::mutex& GetMutex() { return audioMutex_; }
 
     /// Return sound type specific gain multiplied by master gain.
     float GetSoundSourceMasterGain(StringHash typeHash) const;
@@ -108,7 +109,7 @@ private:
     /// Clipping buffer for mixing.
     SharedArrayPtr<i32> clipBuffer_;
     /// Audio thread mutex.
-    Mutex audioMutex_;
+    std::mutex audioMutex_;
     /// SDL audio device ID.
     u32 deviceID_{};
     /// Sample size.

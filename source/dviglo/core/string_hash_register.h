@@ -9,11 +9,10 @@
 #include "../math/string_hash.h"
 
 #include <memory>
+#include <mutex>
 
 namespace dviglo
 {
-
-class Mutex;
 
 /// Helper class used for StringHash reversing.
 class DV_API StringHashRegister
@@ -43,7 +42,7 @@ private:
     StringMap map_;
 
     /// Mutex.
-    std::unique_ptr<Mutex> mutex_;
+    std::unique_ptr<std::mutex> mutex_;
 };
 
 }

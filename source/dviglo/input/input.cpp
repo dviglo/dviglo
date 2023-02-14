@@ -4,7 +4,6 @@
 
 #include "../core/context.h"
 #include "../core/core_events.h"
-#include "../core/mutex.h"
 #include "../core/process_utils.h"
 #include "../core/profiler.h"
 #include "../core/string_utils.h"

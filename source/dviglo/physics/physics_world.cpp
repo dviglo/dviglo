@@ -3,7 +3,6 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../core/mutex.h"
 #include "../core/profiler.h"
 #include "../graphics/debug_renderer.h"
 #include "../graphics/model.h"

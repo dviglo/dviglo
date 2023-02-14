@@ -3,7 +3,6 @@
 // License: MIT
 
 #include "../../core/context.h"
-#include "../../core/mutex.h"
 #include "../../core/process_utils.h"
 #include "../../core/profiler.h"
 #include "../../graphics/graphics.h"
@@ -1644,7 +1643,7 @@ void Graphics::SetDefaultTextureAnisotropy_OGL(unsigned level)
 
 void Graphics::SetTextureParametersDirty_OGL()
 {
-    MutexLock lock(gpuObjectMutex_);
+    std::scoped_lock lock(gpuObjectMutex_);
 
     for (Vector<GPUObject*>::Iterator i = gpuObjects_.Begin(); i != gpuObjects_.End(); ++i)
     {
@@ -2411,7 +2410,7 @@ void Graphics::Release_OGL(bool clearGPUObjects, bool closeWindow)
     GraphicsImpl_OGL* impl = GetImpl_OGL();
 
     {
-        MutexLock lock(gpuObjectMutex_);
+        std::scoped_lock lock(gpuObjectMutex_);
 
         if (clearGPUObjects)
         {
@@ -2571,7 +2570,7 @@ void Graphics::Restore_OGL()
     }
 
     {
-        MutexLock lock(gpuObjectMutex_);
+        std::scoped_lock lock(gpuObjectMutex_);
 
         for (Vector<GPUObject*>::Iterator i = gpuObjects_.Begin(); i != gpuObjects_.End(); ++i)
             (*i)->OnDeviceReset();

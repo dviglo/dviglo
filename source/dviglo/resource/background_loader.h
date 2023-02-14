@@ -6,11 +6,12 @@
 
 #include "../container/hash_map.h"
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../container/ptr.h"
 #include "../container/ref_counted.h"
 #include "../core/thread.h"
 #include "../math/string_hash.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -61,7 +62,7 @@ private:
     /// Resource cache.
     ResourceCache* owner_;
     /// Mutex for thread-safe access to the background load queue.
-    mutable Mutex backgroundLoadMutex_;
+    mutable std::mutex backgroundLoadMutex_;
     /// Resources that are queued for background loading.
     HashMap<Pair<StringHash, StringHash>, BackgroundLoadItem> backgroundLoadQueue_;
 };
