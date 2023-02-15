@@ -4,7 +4,6 @@
 
 #include "ui.h"
 
-#include "../container/sort.h"
 #include "../core/context.h"
 #include "../core/core_events.h"
 #include "../core/profiler.h"
@@ -44,6 +43,7 @@
 #include "../ui/view3d.h"
 #include "../ui/window.h"
 
+#include <algorithm>
 #include <cassert>
 #include <SDL3/SDL.h>
 

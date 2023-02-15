@@ -298,7 +298,7 @@ void FileSelector::RefreshFiles()
 
     // Sort and add to the list view
     // While items are being added, disable layout update for performance optimization
-    Sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
+    std::sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
     UIElement* listContent = fileList_->GetContentElement();
     listContent->DisableLayoutUpdate();
     for (unsigned i = 0; i < fileEntries_.Size(); ++i)

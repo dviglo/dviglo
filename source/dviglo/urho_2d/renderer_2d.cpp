@@ -91,7 +91,7 @@ void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryRes
     }
 
     if (results.Size() != resultSize)
-        Sort(results.Begin() + resultSize, results.End(), CompareRayQueryResults);
+        std::sort(results.Begin() + resultSize, results.End(), CompareRayQueryResults);
 }
 
 void Renderer2D::UpdateBatches(const FrameInfo& frame)
@@ -424,7 +424,7 @@ void Renderer2D::UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* cam
         sourceBatch->distance_ = camera->GetDistance(worldPos);
     }
 
-    Sort(sourceBatches.Begin(), sourceBatches.End(), CompareSourceBatch2Ds);
+    std::sort(sourceBatches.Begin(), sourceBatches.End(), CompareSourceBatch2Ds);
 
     viewBatchInfo.batchCount_ = 0;
     Material* currMaterial = nullptr;

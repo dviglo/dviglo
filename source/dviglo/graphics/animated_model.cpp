@@ -1268,7 +1268,7 @@ void AnimatedModel::ApplyAnimation()
     // Make sure animations are in ascending priority order
     if (animationOrderDirty_)
     {
-        Sort(animationStates_.Begin(), animationStates_.End(), CompareAnimationOrder);
+        std::sort(animationStates_.Begin(), animationStates_.End(), CompareAnimationOrder);
         animationOrderDirty_ = false;
     }
 

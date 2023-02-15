@@ -189,7 +189,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
 String Shader::NormalizeDefines(const String& defines)
 {
     Vector<String> definesVec = defines.ToUpper().Split(' ');
-    Sort(definesVec.Begin(), definesVec.End());
+    std::sort(definesVec.Begin(), definesVec.End());
     return String::Joined(definesVec, " ");
 }
 

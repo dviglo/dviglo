@@ -311,7 +311,7 @@ void Drawable::LimitLights()
     for (unsigned i = 0; i < lights_.Size(); ++i)
         lights_[i]->SetIntensitySortValue(box);
 
-    Sort(lights_.Begin(), lights_.End(), CompareDrawables);
+    std::sort(lights_.Begin(), lights_.End(), CompareDrawables);
     vertexLights_.Insert(vertexLights_.End(), lights_.Begin() + maxLights_, lights_.End());
     lights_.Resize(maxLights_);
 }
@@ -334,7 +334,7 @@ void Drawable::LimitVertexLights(bool removeConvertedLights)
     for (unsigned i = 0; i < vertexLights_.Size(); ++i)
         vertexLights_[i]->SetIntensitySortValue(box);
 
-    Sort(vertexLights_.Begin(), vertexLights_.End(), CompareDrawables);
+    std::sort(vertexLights_.Begin(), vertexLights_.End(), CompareDrawables);
     vertexLights_.Resize(MAX_VERTEX_LIGHTS);
 }
 

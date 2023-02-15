@@ -5,7 +5,6 @@
 #include "../core/context.h"
 #include "../core/core_events.h"
 #include "../container/hash_set.h"
-#include "../container/sort.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../scene/object_animation.h"
@@ -13,6 +12,8 @@
 #include "../ui/ui.h"
 #include "../ui/ui_element.h"
 #include "../ui/ui_events.h"
+
+#include <algorithm>
 
 #include "../debug_new.h"
 

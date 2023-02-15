@@ -490,7 +490,7 @@ void Octree::Raycast(RayOctreeQuery& query) const
 
     query.result_.Clear();
     GetDrawablesInternal(query);
-    Sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
+    std::sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
 }
 
 void Octree::RaycastSingle(RayOctreeQuery& query) const
@@ -508,7 +508,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
         drawable->SetSortValue(query.ray_.HitDistance(drawable->GetWorldBoundingBox()));
     }
 
-    Sort(rayQueryDrawables_.Begin(), rayQueryDrawables_.End(), CompareDrawables);
+    std::sort(rayQueryDrawables_.Begin(), rayQueryDrawables_.End(), CompareDrawables);
 
     // Then do the actual test according to the query, and early-out as possible
     float closestHit = M_INFINITY;
@@ -528,7 +528,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
 
     if (query.result_.Size() > 1)
     {
-        Sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
+        std::sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
         query.result_.Resize(1);
     }
 }

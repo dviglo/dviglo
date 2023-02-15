@@ -939,7 +939,7 @@ void View::GetDrawables()
         light->SetLightQueue(nullptr);
     }
 
-    Sort(lights_.Begin(), lights_.End(), CompareLights);
+    std::sort(lights_.Begin(), lights_.End(), CompareLights);
 }
 
 void View::GetBatches()
@@ -2200,7 +2200,7 @@ void View::UpdateOccluders(Vector<Drawable*>& occluders, Camera* camera)
 
     // Sort occluders so that if triangle budget is exceeded, best occluders have been drawn
     if (occluders.Size())
-        Sort(occluders.Begin(), occluders.End(), CompareDrawables);
+        std::sort(occluders.Begin(), occluders.End(), CompareDrawables);
 }
 
 void View::DrawOccluders(OcclusionBuffer* buffer, const Vector<Drawable*>& occluders)

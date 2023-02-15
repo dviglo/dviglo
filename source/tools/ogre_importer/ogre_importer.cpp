@@ -491,7 +491,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                         subGeometryLodLevel.boneWeights_.Begin(); i != subGeometryLodLevel.boneWeights_.End(); ++i)
                     {
                         // Sort the bone assigns by weight
-                        Sort(i->second_.Begin(), i->second_.End(), CompareWeights);
+                        std::sort(i->second_.Begin(), i->second_.End(), CompareWeights);
 
                         // Use only the first 4 weights
                         for (unsigned j = 0; j < i->second_.Size() && j < 4; ++j)
@@ -523,7 +523,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                 {
                     // Sort the bone assigns by weight, if not sorted yet in bone remapping pass
                     if (!sorted)
-                        Sort(i->second_.Begin(), i->second_.End(), CompareWeights);
+                        std::sort(i->second_.Begin(), i->second_.End(), CompareWeights);
 
                     float totalWeight = 0.0f;
                     float normalizationFactor = 0.0f;
@@ -993,7 +993,7 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
                     }
 
                     // Make sure keyframes are sorted from beginning to end
-                    Sort(newAnimationTrack.keyFrames_.Begin(), newAnimationTrack.keyFrames_.End(), CompareKeyFrames);
+                    std::sort(newAnimationTrack.keyFrames_.Begin(), newAnimationTrack.keyFrames_.End(), CompareKeyFrames);
 
                     // Do not add tracks with no keyframes
                     if (newAnimationTrack.keyFrames_.Size())
