@@ -188,7 +188,7 @@ void Graphics::Constructor_D3D11()
 void Graphics::Destructor_D3D11()
 {
     {
-        MutexLock lock(gpuObjectMutex_);
+        std::scoped_lock lock(gpuObjectMutex_);
 
         // Release all GPU objects that still exist
         for (Vector<GPUObject*>::Iterator i = gpuObjects_.Begin(); i != gpuObjects_.End(); ++i)
@@ -1259,7 +1259,7 @@ void Graphics::SetDefaultTextureAnisotropy_D3D11(unsigned level)
 
 void Graphics::SetTextureParametersDirty_D3D11()
 {
-    MutexLock lock(gpuObjectMutex_);
+    std::scoped_lock lock(gpuObjectMutex_);
 
     for (Vector<GPUObject*>::Iterator i = gpuObjects_.Begin(); i != gpuObjects_.End(); ++i)
     {

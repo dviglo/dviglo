@@ -5,9 +5,10 @@
 #pragma once
 
 #include "../container/list.h"
-#include "../core/mutex.h"
 #include "../core/object.h"
 #include "../core/string_utils.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -97,7 +98,7 @@ private:
     void HandleEndFrame(StringHash eventType, VariantMap& eventData);
 
     /// Mutex for threaded operation.
-    Mutex logMutex_;
+    std::mutex logMutex_;
     /// Log messages from other threads.
     List<StoredLogMessage> threadMessages_;
     /// Log file.

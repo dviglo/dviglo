@@ -4,9 +4,10 @@
 
 #pragma once
 
-#include "../core/mutex.h"
 #include "../graphics/drawable.h"
 #include "../graphics/octree_query.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -190,7 +191,7 @@ private:
     /// Drawable objects that were inserted during threaded update phase.
     Vector<Drawable*> threadedDrawableUpdates_;
     /// Mutex for octree reinsertions.
-    Mutex octreeMutex_;
+    std::mutex octreeMutex_;
     /// Ray query temporary list of drawables.
     mutable Vector<Drawable*> rayQueryDrawables_;
     /// Subdivision level.

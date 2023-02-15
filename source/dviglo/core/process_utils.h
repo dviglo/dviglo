@@ -11,8 +11,6 @@
 namespace dviglo
 {
 
-class Mutex;
-
 /// Initialize the FPU to round-to-nearest, single precision mode.
 DV_API void InitFPU();
 /// Display an error dialog with the specified title and message.

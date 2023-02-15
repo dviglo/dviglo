@@ -79,7 +79,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
 
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     auto* fileSystem = GetSubsystem<FileSystem>();
     if (!fileSystem || !fileSystem->DirExists(pathName))
@@ -119,7 +119,7 @@ bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
 
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     // Do not add packages that failed to load
     if (!package || !package->GetNumFiles())
@@ -167,7 +167,7 @@ bool ResourceCache::AddManualResource(Resource* resource)
 
 void ResourceCache::RemoveResourceDir(const String& pathName)
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     String fixedPath = SanitateResourceDirName(pathName);
 
@@ -193,7 +193,7 @@ void ResourceCache::RemoveResourceDir(const String& pathName)
 
 void ResourceCache::RemovePackageFile(PackageFile* package, bool releaseResources, bool forceRelease)
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     for (Vector<SharedPtr<PackageFile>>::Iterator i = packages_.Begin(); i != packages_.End(); ++i)
     {
@@ -210,7 +210,7 @@ void ResourceCache::RemovePackageFile(PackageFile* package, bool releaseResource
 
 void ResourceCache::RemovePackageFile(const String& fileName, bool releaseResources, bool forceRelease)
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     // Compare the name and extension only, not the path
     String fileNameNoPath = GetFileNameAndExtension(fileName);
@@ -474,7 +474,7 @@ void ResourceCache::RemoveResourceRouter(ResourceRouter* router)
 
 SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailure)
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     String sanitatedName = SanitateResourceName(name);
 
@@ -721,7 +721,7 @@ void ResourceCache::GetResources(Vector<Resource*>& result, StringHash type) con
 
 bool ResourceCache::Exists(const String& name) const
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     String sanitatedName = SanitateResourceName(name);
 
@@ -881,7 +881,7 @@ void ResourceCache::StoreResourceDependency(Resource* resource, const String& de
     if (!resource)
         return;
 
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     StringHash nameHash(resource->GetName());
     HashSet<StringHash>& dependents = dependentResources_[dependency];
@@ -893,7 +893,7 @@ void ResourceCache::ResetDependencies(Resource* resource)
     if (!resource)
         return;
 
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     StringHash nameHash(resource->GetName());
 
@@ -969,7 +969,7 @@ String ResourceCache::PrintMemoryUsage() const
 
 const SharedPtr<Resource>& ResourceCache::FindResource(StringHash type, StringHash nameHash)
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     HashMap<StringHash, ResourceGroup>::Iterator i = resourceGroups_.Find(type);
     if (i == resourceGroups_.End())
@@ -983,7 +983,7 @@ const SharedPtr<Resource>& ResourceCache::FindResource(StringHash type, StringHa
 
 const SharedPtr<Resource>& ResourceCache::FindResource(StringHash nameHash)
 {
-    MutexLock lock(resourceMutex_);
+    std::scoped_lock lock(resourceMutex_);
 
     for (HashMap<StringHash, ResourceGroup>::Iterator i = resourceGroups_.Begin(); i != resourceGroups_.End(); ++i)
     {

@@ -7,9 +7,10 @@
 #pragma once
 
 #include "../container/hash_set.h"
-#include "../core/mutex.h"
 #include "../io/file.h"
 #include "../resource/resource.h"
+
+#include <mutex>
 
 namespace dviglo
 {
@@ -210,7 +211,7 @@ private:
     File* SearchPackages(const String& name);
 
     /// Mutex for thread-safe access to the resource directories, resource packages and resource dependencies.
-    mutable Mutex resourceMutex_;
+    mutable std::mutex resourceMutex_;
     /// Resources by type.
     HashMap<StringHash, ResourceGroup> resourceGroups_;
     /// Resource load directories.

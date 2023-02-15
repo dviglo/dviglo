@@ -5,10 +5,10 @@
 #pragma once
 
 #include "../container/list.h"
-#include "../core/mutex.h"
 #include "../core/object.h"
 
 #include <atomic>
+#include <mutex>
 
 namespace dviglo
 {
@@ -119,7 +119,7 @@ private:
     /// Work item prioritized queue for worker threads. Pointers are guaranteed to be valid (point to workItems).
     List<WorkItem*> queue_;
     /// Worker queue mutex.
-    Mutex queueMutex_;
+    std::mutex queueMutex_;
     /// Shutting down flag.
     std::atomic<bool> shutDown_;
     /// Pausing flag. Indicates the worker threads should not contend for the queue mutex.

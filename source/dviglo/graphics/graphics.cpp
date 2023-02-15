@@ -363,14 +363,14 @@ void Graphics::SetShaderCacheDir(const String& path)
 
 void Graphics::AddGPUObject(GPUObject* object)
 {
-    MutexLock lock(gpuObjectMutex_);
+    std::scoped_lock lock(gpuObjectMutex_);
 
     gpuObjects_.Push(object);
 }
 
 void Graphics::RemoveGPUObject(GPUObject* object)
 {
-    MutexLock lock(gpuObjectMutex_);
+    std::scoped_lock lock(gpuObjectMutex_);
 
     gpuObjects_.Remove(object);
 }

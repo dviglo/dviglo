@@ -3,7 +3,6 @@
 // License: MIT
 
 #include "../core/string_hash_register.h"
-#include "../core/mutex.h"
 #include "../io/log.h"
 
 #include <cstdio>
@@ -18,7 +17,7 @@ namespace dviglo
 StringHashRegister::StringHashRegister(bool threadSafe)
 {
     if (threadSafe)
-        mutex_ = make_unique<Mutex>();
+        mutex_ = make_unique<std::mutex>();
 }
 
 
@@ -30,7 +29,7 @@ StringHashRegister::~StringHashRegister()       // NOLINT(hicpp-use-equals-defau
 StringHash StringHashRegister::RegisterString(const StringHash& hash, const char* string)
 {
     if (mutex_)
-        mutex_->Acquire();
+        mutex_->lock();
 
     auto iter = map_.Find(hash);
     if (iter == map_.End())
@@ -44,7 +43,7 @@ StringHash StringHashRegister::RegisterString(const StringHash& hash, const char
     }
 
     if (mutex_)
-        mutex_->Release();
+        mutex_->unlock();
 
     return hash;
 }
@@ -58,12 +57,12 @@ StringHash StringHashRegister::RegisterString(const char* string)
 String StringHashRegister::GetStringCopy(const StringHash& hash) const
 {
     if (mutex_)
-        mutex_->Acquire();
+        mutex_->lock();
 
     const String copy = GetString(hash);
 
     if (mutex_)
-        mutex_->Release();
+        mutex_->unlock();
 
     return copy;
 }
@@ -71,12 +70,12 @@ String StringHashRegister::GetStringCopy(const StringHash& hash) const
 bool StringHashRegister::Contains(const StringHash& hash) const
 {
     if (mutex_)
-        mutex_->Acquire();
+        mutex_->lock();
 
     const bool contains = map_.Contains(hash);
 
     if (mutex_)
-        mutex_->Release();
+        mutex_->unlock();
 
     return contains;
 }

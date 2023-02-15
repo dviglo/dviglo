@@ -158,13 +158,13 @@ void Audio::SetMasterGain(const String& type, float gain)
 
 void Audio::PauseSoundType(const String& type)
 {
-    MutexLock lock(audioMutex_);
+    std::scoped_lock lock(audioMutex_);
     pausedSoundTypes_.Insert(type);
 }
 
 void Audio::ResumeSoundType(const String& type)
 {
-    MutexLock lock(audioMutex_);
+    std::scoped_lock lock(audioMutex_);
     pausedSoundTypes_.Erase(type);
     // Update sound sources before resuming playback to make sure 3D positions are up to date
     // Done under mutex to ensure no mixing happens before we are ready
@@ -173,7 +173,7 @@ void Audio::ResumeSoundType(const String& type)
 
 void Audio::ResumeAll()
 {
-    MutexLock lock(audioMutex_);
+    std::scoped_lock lock(audioMutex_);
     pausedSoundTypes_.Clear();
     UpdateInternal(0.0f);
 }
@@ -214,7 +214,7 @@ SoundListener* Audio::GetListener() const
 
 void Audio::AddSoundSource(SoundSource* soundSource)
 {
-    MutexLock lock(audioMutex_);
+    std::scoped_lock lock(audioMutex_);
     soundSources_.Push(soundSource);
 }
 
@@ -223,7 +223,7 @@ void Audio::RemoveSoundSource(SoundSource* soundSource)
     Vector<SoundSource*>::Iterator i = soundSources_.Find(soundSource);
     if (i != soundSources_.End())
     {
-        MutexLock lock(audioMutex_);
+        std::scoped_lock lock(audioMutex_);
         soundSources_.Erase(i);
     }
 }
@@ -247,7 +247,7 @@ void SDLAudioCallback(void* userdata, Uint8* stream, i32 len)
 {
     auto* audio = static_cast<Audio*>(userdata);
     {
-        MutexLock Lock(audio->GetMutex());
+        std::scoped_lock Lock(audio->GetMutex());
         audio->MixOutput(stream, len / audio->GetSampleSize());
     }
 }
