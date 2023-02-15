@@ -309,7 +309,7 @@ bool Console::PopulateInterpreter()
         if (receiver)
             names.Push(receiver->GetTypeName());
     }
-    Sort(names.Begin(), names.End());
+    std::sort(names.Begin(), names.End());
 
     i32 selection = NINDEX;
     for (i32 i = 0; i < names.Size(); ++i)

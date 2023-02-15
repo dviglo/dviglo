@@ -5,7 +5,6 @@
 #include "animation.h"
 
 #include "../base/utils.h"
-#include "../container/sort.h"
 #include "../core/context.h"
 #include "../core/profiler.h"
 #include "../io/deserializer.h"
@@ -15,6 +14,8 @@
 #include "../resource/json_file.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
+
+#include <algorithm>
 
 #include "../debug_new.h"
 
@@ -38,7 +39,7 @@ void AnimationTrack::SetKeyFrame(i32 index, const AnimationKeyFrame& keyFrame)
     if (index < keyFrames_.Size())
     {
         keyFrames_[index] = keyFrame;
-        dviglo::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        std::sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
     }
     else if (index == keyFrames_.Size())
         AddKeyFrame(keyFrame);
@@ -49,14 +50,14 @@ void AnimationTrack::AddKeyFrame(const AnimationKeyFrame& keyFrame)
     bool needSort = keyFrames_.Size() ? keyFrames_.Back().time_ > keyFrame.time_ : false;
     keyFrames_.Push(keyFrame);
     if (needSort)
-        dviglo::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        std::sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
 }
 
 void AnimationTrack::InsertKeyFrame(i32 index, const AnimationKeyFrame& keyFrame)
 {
     assert(index >= 0);
     keyFrames_.Insert(index, keyFrame);
-    dviglo::Sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+    std::sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
 }
 
 void AnimationTrack::RemoveKeyFrame(i32 index)
@@ -322,14 +323,14 @@ void Animation::SetTrigger(i32 index, const AnimationTriggerPoint& trigger)
     else if (index < triggers_.Size())
     {
         triggers_[index] = trigger;
-        Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+        std::sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
     }
 }
 
 void Animation::AddTrigger(const AnimationTriggerPoint& trigger)
 {
     triggers_.Push(trigger);
-    Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+    std::sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
 }
 
 void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant& data)
@@ -339,7 +340,7 @@ void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant& dat
     newTrigger.data_ = data;
     triggers_.Push(newTrigger);
 
-    Sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+    std::sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
 }
 
 void Animation::RemoveTrigger(i32 index)

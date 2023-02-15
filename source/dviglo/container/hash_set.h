@@ -5,9 +5,10 @@
 #pragma once
 
 #include "../container/hash_base.h"
-#include "../container/sort.h"
+#include "../container/vector_base.h"
 #include "../math/math_defs.h"
 
+#include <algorithm>
 #include <cassert>
 #include <initializer_list>
 
@@ -406,7 +407,7 @@ public:
             ptr = ptr->Next();
         }
 
-        dviglo::Sort(RandomAccessIterator<Node*>(ptrs), RandomAccessIterator<Node*>(ptrs + numKeys), CompareNodes);
+        std::sort(RandomAccessIterator<Node*>(ptrs), RandomAccessIterator<Node*>(ptrs + numKeys), CompareNodes);
 
         head_ = ptrs[0];
         ptrs[0]->prev_ = 0;

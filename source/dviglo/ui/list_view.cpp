@@ -570,7 +570,7 @@ void ListView::SetSelections(const Vector<i32>& indices)
 
     // Re-sort selections if necessary
     if (added)
-        Sort(selections_.Begin(), selections_.End());
+        std::sort(selections_.Begin(), selections_.End());
 
     UpdateSelectionEffect();
     SendEvent(E_SELECTIONCHANGED);
@@ -604,7 +604,7 @@ void ListView::AddSelection(i32 index)
             if (self.Expired())
                 return;
 
-            Sort(selections_.Begin(), selections_.End());
+            std::sort(selections_.Begin(), selections_.End());
         }
 
         EnsureItemVisibility(index);
