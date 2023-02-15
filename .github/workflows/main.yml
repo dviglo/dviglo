@@ -314,7 +314,7 @@ jobs:
   Linux_MinGW:
     runs-on: ubuntu-22.04
     needs: init
-    if: needs.init.outputs.skip == '0'
+    if: false # Не работает в Ubuntu 22.04
 
     strategy:
       fail-fast: false
