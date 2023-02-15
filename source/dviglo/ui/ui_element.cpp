@@ -13,8 +13,6 @@
 #include "../ui/ui_element.h"
 #include "../ui/ui_events.h"
 
-#include <algorithm>
-
 #include "../debug_new.h"
 
 namespace dviglo

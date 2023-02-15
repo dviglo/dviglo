@@ -43,7 +43,6 @@
 #include "../ui/view3d.h"
 #include "../ui/window.h"
 
-#include <algorithm>
 #include <cassert>
 #include <SDL3/SDL.h>
 
