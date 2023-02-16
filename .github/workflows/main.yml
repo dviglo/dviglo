@@ -113,7 +113,7 @@ jobs:
 
         if [ "${{ matrix.COMPILER }}" == "vs" ]
         then
-          ARGS+=(-G "Visual Studio 17 2022" -A x64)
+          ARGS+=(-G "Visual Studio 17 2022")
         else
           ARGS+=(-G "MinGW Makefiles")
           # Для MinGW тип сбоки задаётся при генерации проектов
@@ -121,7 +121,7 @@ jobs:
         fi
 
         ARGS+=(-D DV_SHARED=${{ matrix.DV_SHARED.VALUE }})
-        ARGS+=(-D DV_64BIT=1 -D DV_TESTING=1)
+        ARGS+=(-D DV_TESTING=1)
         ARGS+=(-D DV_OPENGL=1 -D DV_D3D11=1)
 
         cmake "${ARGS[@]}"
@@ -196,8 +196,6 @@ jobs:
             C: clang,
             CXX: clang++,
           }
-        BITS:
-        - 64
         DV_SHARED:
         - {
             ID: static,
@@ -217,7 +215,7 @@ jobs:
             VALUE: Release,
           }
 
-    name: 🐧-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
+    name: 🐧-${{ matrix.COMPILER.ID }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
     steps:
     - name: Checkout
@@ -226,14 +224,8 @@ jobs:
 
     - name: Install dependencies
       run: |
-        if [ "${{ matrix.BITS }}" == "32" ]; then
-          sudo dpkg --add-architecture i386
-          sudo apt update
-          sudo apt install gcc-multilib g++-multilib libxext-dev:i386 libgl1-mesa-dev:i386
-        else
-          sudo apt update
-          sudo apt install libgl1-mesa-dev
-        fi
+        sudo apt update
+        sudo apt install libgl1-mesa-dev
 
         # Репозиторий Ubuntu содержит устаревшую версию Doxygen 1.9.1. Качаем собственную сборку
         mkdir $HOME/programs
@@ -245,8 +237,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: engine_build
-        key: linux-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
-        restore-keys: linux-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
+        key: linux-${{ matrix.COMPILER.ID }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
+        restore-keys: linux-${{ matrix.COMPILER.ID }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
       # https://docs.github.com/en/actions/learn-github-actions/expressions
       # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
@@ -264,17 +256,10 @@ jobs:
         #set -x # Echo commands
         echo "Current dir: $PWD"
 
-        if [ "${{ matrix.BITS }}" == "32" ]
-        then
-          BITS64=0
-        else
-          BITS64=1
-        fi
-
         cmake engine_repo -B engine_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
           -D DV_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
+          -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build engine_build
 
@@ -304,17 +289,10 @@ jobs:
         rake new
         cd ..
 
-        if [ "${{ matrix.BITS }}" == "32" ]
-        then
-          BITS64=0
-        else
-          BITS64=1
-        fi
-
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
           -D DV_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
+          -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build
         xvfb-run ctest --test-dir $HOME/projects/UrhoApp_build
@@ -327,8 +305,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        BITS:
-        - 64
         DV_SHARED:
         - {
             ID: static,
@@ -348,7 +324,7 @@ jobs:
             VALUE: Release,
           }
 
-    name: 🐧-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
+    name: 🐧-mingw-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
     steps:
     - name: Checkout
@@ -362,8 +338,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: engine_build
-        key: linux-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
-        restore-keys: linux-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
+        key: linux-mingw-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
+        restore-keys: linux-mingw-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
     - name: Удаляем кэш по запросу пользователя
       if: |
@@ -377,18 +353,9 @@ jobs:
         #set -x # Echo commands
         echo "Current dir: $PWD" # $GITHUB_WORKSPACE
 
-        if [ "${{ matrix.BITS }}" == "32" ]
-        then
-          export MINGW_PREFIX=/usr/bin/i686-w64-mingw32
-          BITS64=0
-          DX_INC=/usr/i686-w64-mingw32/include
-          DX_LIB=/usr/i686-w64-mingw32/lib
-        else
-          export MINGW_PREFIX=/usr/bin/x86_64-w64-mingw32
-          BITS64=1
-          DX_INC=/usr/x86_64-w64-mingw32/include
-          DX_LIB=/usr/x86_64-w64-mingw32/lib
-        fi
+        export MINGW_PREFIX=/usr/bin/x86_64-w64-mingw32
+        DX_INC=/usr/x86_64-w64-mingw32/include
+        DX_LIB=/usr/x86_64-w64-mingw32/lib
 
         TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
 
@@ -396,7 +363,7 @@ jobs:
           -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
+          -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build engine_build
 
@@ -410,18 +377,9 @@ jobs:
         rake new
         cd ..
 
-        if [ "${{ matrix.BITS }}" == "32" ]
-        then
-          export MINGW_PREFIX=/usr/bin/i686-w64-mingw32
-          BITS64=0
-          DX_INC=/usr/i686-w64-mingw32/include
-          DX_LIB=/usr/i686-w64-mingw32/lib
-        else
-          export MINGW_PREFIX=/usr/bin/x86_64-w64-mingw32
-          BITS64=1
-          DX_INC=/usr/x86_64-w64-mingw32/include
-          DX_LIB=/usr/x86_64-w64-mingw32/lib
-        fi
+        export MINGW_PREFIX=/usr/bin/x86_64-w64-mingw32
+        DX_INC=/usr/x86_64-w64-mingw32/include
+        DX_LIB=/usr/x86_64-w64-mingw32/lib
 
         TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
 
@@ -429,6 +387,6 @@ jobs:
           -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
+          -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build
