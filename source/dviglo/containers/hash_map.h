@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "../container/hash_base.h"
-#include "../container/pair.h"
-#include "../container/vector.h"
 #include "../math/math_defs.h"
+#include "hash_base.h"
+#include "pair.h"
+#include "vector.h"
 
 #include <algorithm>
 #include <cassert>

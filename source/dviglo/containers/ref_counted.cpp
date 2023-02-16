@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../container/ref_counted.h"
+#include "ref_counted.h"
 
 #include <cassert>
 

@@ -6,10 +6,10 @@
 
 #pragma once
 
-#include "../container/flag_set.h"
-#include "../container/hash_set.h"
+#include "../containers/flag_set.h"
+#include "../containers/hash_set.h"
 #include "../core/object.h"
-#include "../container/list.h"
+#include "../containers/list.h"
 #include "../input/input_events.h"
 #include "../ui/cursor.h"
 

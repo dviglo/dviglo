@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../container/hash_base.h"
-#include "../container/vector_base.h"
 #include "../math/math_defs.h"
+#include "hash_base.h"
+#include "vector_base.h"
 
 #include <algorithm>
 #include <cassert>

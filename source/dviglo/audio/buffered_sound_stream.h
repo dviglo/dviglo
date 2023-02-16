@@ -5,9 +5,9 @@
 #pragma once
 
 #include "../audio/sound_stream.h"
-#include "../container/array_ptr.h"
-#include "../container/list.h"
-#include "../container/pair.h"
+#include "../containers/array_ptr.h"
+#include "../containers/list.h"
+#include "../containers/pair.h"
 
 #include <mutex>
 

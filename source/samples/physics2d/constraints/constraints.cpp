@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include <dviglo/container/vector.h>
+#include <dviglo/containers/vector.h>
 #include <dviglo/core/core_events.h>
 #include <dviglo/engine/engine.h>
 #include <dviglo/graphics/camera.h>

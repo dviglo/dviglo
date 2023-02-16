@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../container/array_ptr.h"
+#include "../containers/array_ptr.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../resource/resource.h"
 

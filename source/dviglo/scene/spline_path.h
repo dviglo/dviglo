@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../container/ptr.h"
+#include "../containers/ptr.h"
 #include "../core/variant.h"
-#include "../container/vector.h"
+#include "../containers/vector.h"
 #include "../core/spline.h"
 #include "../graphics/debug_renderer.h"
 #include "../math/math_defs.h"

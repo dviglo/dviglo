@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../container/flag_set.h"
-#include "../container/ptr.h"
+#include "../containers/flag_set.h"
+#include "../containers/ptr.h"
 #include "../math/quaternion.h"
 #include "../math/vector3.h"
 #include "../resource/resource.h"

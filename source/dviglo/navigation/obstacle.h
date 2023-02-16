@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../container/ptr.h"
+#include "../containers/ptr.h"
 #include "../scene/component.h"
 
 namespace dviglo

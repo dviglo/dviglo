@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../container/array_ptr.h"
-#include "../container/hash_map.h"
-#include "../container/ref_counted.h"
+#include "../containers/array_ptr.h"
+#include "../containers/hash_map.h"
+#include "../containers/ref_counted.h"
 #include "../graphics_api/gpu_object.h"
 #include "../graphics_api/graphics_defs.h"
 

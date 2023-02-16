@@ -6,7 +6,7 @@
 
 #include "appstate_base.h"
 
-#include <dviglo/container/hash_map.h>
+#include <dviglo/containers/hash_map.h>
 
 using AppStateId = u32;
 

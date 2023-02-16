@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../container/array_ptr.h"
-#include "../container/hash_set.h"
+#include "../containers/array_ptr.h"
+#include "../containers/hash_set.h"
 #include "../math/bounding_box.h"
 #include "../math/matrix3x4.h"
 #include "../scene/component.h"

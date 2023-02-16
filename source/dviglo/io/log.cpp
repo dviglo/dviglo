@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../container/str.h"
+#include "../containers/str.h"
 #include "../core/context.h"
 #include "../core/core_events.h"
 #include "../core/process_utils.h"

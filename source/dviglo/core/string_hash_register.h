@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../container/hash_map.h"
-#include "../container/ptr.h"
+#include "../containers/hash_map.h"
+#include "../containers/ptr.h"
 #include "../math/string_hash.h"
 
 #include <memory>

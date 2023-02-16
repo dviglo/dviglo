@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../container/str.h"
+#include "../containers/str.h"
 #include "../math/math_defs.h"
 
 namespace dviglo

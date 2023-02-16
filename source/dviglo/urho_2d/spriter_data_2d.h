@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../container/str.h"
+#include "../containers/str.h"
 
 namespace pugi
 {

@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../container/flag_set.h"
-#include "../container/hash_base.h"
+#include "../containers/flag_set.h"
+#include "../containers/hash_base.h"
 #include "../math/string_hash.h"
 #include "../math/vector3.h"
 

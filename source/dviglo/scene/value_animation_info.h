@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../container/ptr.h"
-#include "../container/ref_counted.h"
-#include "../container/vector.h"
+#include "../containers/ptr.h"
+#include "../containers/ref_counted.h"
+#include "../containers/vector.h"
 #include "../scene/animation_defs.h"
 
 namespace dviglo

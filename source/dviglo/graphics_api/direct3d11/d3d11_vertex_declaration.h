@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../../container/ref_counted.h"
-#include "../../container/vector.h"
+#include "../../containers/ref_counted.h"
+#include "../../containers/vector.h"
 #include "../../graphics_api/graphics_defs.h"
 
 namespace dviglo

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../container/flag_set.h"
+#include "../containers/flag_set.h"
 #include "../math/math_defs.h"
 
 #include <SDL3/SDL_joystick.h>

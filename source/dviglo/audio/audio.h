@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../audio/audio_defs.h"
-#include "../container/array_ptr.h"
-#include "../container/hash_set.h"
+#include "../containers/array_ptr.h"
+#include "../containers/hash_set.h"
 #include "../core/object.h"
 
 #include <mutex>

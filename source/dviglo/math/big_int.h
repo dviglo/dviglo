@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../container/str.h"
-#include "../container/vector.h"
+#include "../containers/str.h"
+#include "../containers/vector.h"
 #include "math_defs.h"
 
 namespace dviglo

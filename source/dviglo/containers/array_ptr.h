@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../container/hash_base.h"
-#include "../container/ref_counted.h"
+#include "hash_base.h"
+#include "ref_counted.h"
 
 #include <cassert>
 

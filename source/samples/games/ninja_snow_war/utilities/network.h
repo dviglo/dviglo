@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <dviglo/container/str.h>
+#include <dviglo/containers/str.h>
 
 namespace dviglo
 {

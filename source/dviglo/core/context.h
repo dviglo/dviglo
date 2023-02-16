@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../container/hash_set.h"
+#include "../containers/hash_set.h"
 #include "../core/attribute.h"
 #include "../core/object.h"
 

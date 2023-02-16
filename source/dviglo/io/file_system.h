@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../container/hash_set.h"
-#include "../container/list.h"
+#include "../containers/hash_set.h"
+#include "../containers/list.h"
 #include "../core/object.h"
 
 namespace dviglo

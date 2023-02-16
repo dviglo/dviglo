@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../container/vector_base.h"
+#include "vector_base.h"
 
 #include "../common/debug_new.h"
 

@@ -8,7 +8,7 @@
 
 #include "../core/object.h"
 #include "../core/timer.h"
-#include "../container/array_ptr.h"
+#include "../containers/array_ptr.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../math/frustum.h"
 

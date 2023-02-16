@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../container/array_ptr.h"
-#include "../container/hash_set.h"
+#include "../containers/array_ptr.h"
+#include "../containers/hash_set.h"
 #include "../core/object.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../graphics_api/shader_variation.h"

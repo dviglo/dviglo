@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../common/primitive_types.h"
-#include "../container/ref_counted.h"
+#include "ref_counted.h"
 
 #include <cassert>
 #include <cstddef>

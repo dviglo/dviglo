@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "../container/list_base.h"
+#include "list_base.h"
+
 #include <initializer_list>
 
 namespace dviglo

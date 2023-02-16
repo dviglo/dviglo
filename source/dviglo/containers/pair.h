@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../container/hash.h"
+#include "hash.h"
 
 namespace dviglo
 {

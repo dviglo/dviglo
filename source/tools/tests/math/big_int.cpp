@@ -4,7 +4,7 @@
 
 #include "../force_assert.h"
 
-#include <dviglo/container/str.h>
+#include <dviglo/containers/str.h>
 #include <dviglo/math/big_int.h>
 
 #include <dviglo/common/debug_new.h>

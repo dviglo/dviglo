@@ -6,8 +6,8 @@
 
 #include "../common/config.h"
 
-#include "../container/allocator.h"
-#include "../container/hash.h"
+#include "allocator.h"
+#include "hash.h"
 
 #include <utility>
 

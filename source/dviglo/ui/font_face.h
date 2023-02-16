@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../container/array_ptr.h"
+#include "../containers/array_ptr.h"
 #include "../math/area_allocator.h"
 
 namespace dviglo

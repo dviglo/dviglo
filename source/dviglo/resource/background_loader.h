@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "../container/hash_map.h"
-#include "../container/hash_set.h"
-#include "../container/ptr.h"
-#include "../container/ref_counted.h"
+#include "../containers/hash_map.h"
+#include "../containers/hash_set.h"
+#include "../containers/ptr.h"
+#include "../containers/ref_counted.h"
 #include "../core/thread.h"
 #include "../math/string_hash.h"
 

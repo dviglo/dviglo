@@ -5,9 +5,9 @@
 #pragma once
 
 #include "../core/attribute.h"
-#include "../container/hash_map.h"
-#include "../container/hash_set.h"
-#include "../container/ptr.h"
+#include "../containers/hash_map.h"
+#include "../containers/hash_set.h"
+#include "../containers/ptr.h"
 #include "../math/string_hash.h"
 
 #include <cstring>

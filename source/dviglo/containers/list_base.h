@@ -6,7 +6,7 @@
 
 #include "../common/config.h"
 
-#include "../container/allocator.h"
+#include "allocator.h"
 
 namespace dviglo
 {

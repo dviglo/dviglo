@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../container/flag_set.h"
-#include "../container/ptr.h"
+#include "../containers/flag_set.h"
+#include "../containers/ptr.h"
 #include "../core/variant.h"
 
 namespace dviglo

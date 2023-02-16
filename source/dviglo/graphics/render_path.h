@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../container/ptr.h"
-#include "../container/ref_counted.h"
+#include "../containers/ptr.h"
+#include "../containers/ref_counted.h"
 #include "../core/variant.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../math/color.h"

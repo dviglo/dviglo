@@ -6,8 +6,8 @@
 
 #pragma once
 
-#include "../container/hash_map.h"
-#include "../container/ptr.h"
+#include "../containers/hash_map.h"
+#include "../containers/ptr.h"
 #include "../math/color.h"
 #include "../math/matrix3.h"
 #include "../math/matrix3x4.h"

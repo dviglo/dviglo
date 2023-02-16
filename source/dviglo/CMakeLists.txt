@@ -12,7 +12,7 @@ set(CMAKE_DEBUG_POSTFIX _d)
 file(GLOB source_files
     audio/*.cpp        audio/*.h
     common/*.cpp       common/*.h
-    container/*.cpp    container/*.h
+    containers/*.cpp   containers/*.h
     core/*.cpp         core/*.h
     engine/*.cpp       engine/*.h
     graphics/*.cpp     graphics/*.h
@@ -29,7 +29,7 @@ file(GLOB source_files
 file(GLOB dviglo_all_content RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     audio/*.h
     common/*.h
-    container/*.h
+    containers/*.h
     core/*.h
     engine/*.h
     graphics/*.h

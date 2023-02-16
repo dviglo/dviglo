@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../container/hash_set.h"
+#include "../containers/hash_set.h"
 #include "../resource/xml_element.h"
 #include "../resource/json_file.h"
 #include "../scene/node.h"

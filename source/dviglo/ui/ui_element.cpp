@@ -4,7 +4,7 @@
 
 #include "../core/context.h"
 #include "../core/core_events.h"
-#include "../container/hash_set.h"
+#include "../containers/hash_set.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../scene/object_animation.h"
