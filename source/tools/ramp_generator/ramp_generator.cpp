@@ -13,7 +13,7 @@
 #include <dviglo/engine/win_wrapped.h>
 #endif
 
-#ifdef DVIGLO_SHARED
+#ifdef DV_SHARED
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #endif
 #include <stb/stb_image_write.h>

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#ifdef DVIGLO_SHARED // Динамическая версия движка
+#ifdef DV_SHARED // Динамическая версия движка
 #    if _WIN32 // Visual Studio или MinGW
 #        ifdef DVIGLO_IS_BUILDING // Компиляция движка
 #            define DV_API __declspec(dllexport)
