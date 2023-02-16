@@ -200,21 +200,21 @@ jobs:
         - 64
         DV_SHARED:
         - {
-            ID: shared,
-            VALUE: 1,
-          }
-        - {
             ID: static,
             VALUE: 0,
           }
-        BUILD_TYPE:
         - {
-            ID: rel,
-            VALUE: Release,
+            ID: shared,
+            VALUE: 1,
           }
+        BUILD_TYPE:
         - {
             ID: dbg,
             VALUE: Debug,
+          }
+        - {
+            ID: rel,
+            VALUE: Release,
           }
 
     name: 🐧-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
@@ -331,21 +331,21 @@ jobs:
         - 64
         DV_SHARED:
         - {
-            ID: shared,
-            VALUE: 1,
-          }
-        - {
             ID: static,
             VALUE: 0,
           }
-        BUILD_TYPE:
         - {
-            ID: rel,
-            VALUE: Release,
+            ID: shared,
+            VALUE: 1,
           }
+        BUILD_TYPE:
         - {
             ID: dbg,
             VALUE: Debug,
+          }
+        - {
+            ID: rel,
+            VALUE: Release,
           }
 
     name: 🐧-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
