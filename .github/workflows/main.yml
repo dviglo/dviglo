@@ -35,12 +35,20 @@ jobs:
       fail-fast: false
       matrix:
         COMPILER: [vs, mingw]
-        LIB_TYPE: [static, shared]
+        DV_SHARED:
+        - {
+            ID: static,
+            VALUE: 0,
+          }
+        - {
+            ID: shared,
+            VALUE: 1,
+          }
         BUILD_TYPE: [debug, release]
 
     # Отображаемое имя job
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idname
-    name: 🔲-${{ matrix.COMPILER }}-${{ matrix.LIB_TYPE }}-${{ matrix.BUILD_TYPE }}
+    name: 🔲-${{ matrix.COMPILER }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE }}
 
     steps:
       # Используем MSYS2 вместо устаревшего MinGW
@@ -83,8 +91,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: build
-        key: windows-${{ matrix.COMPILER }}-${{ matrix.LIB_TYPE }}-${{ matrix.BUILD_TYPE }}-${{ github.sha }}
-        restore-keys: windows-${{ matrix.COMPILER }}-${{ matrix.LIB_TYPE }}-${{ matrix.BUILD_TYPE }}
+        key: windows-${{ matrix.COMPILER }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE }}-${{ github.sha }}
+        restore-keys: windows-${{ matrix.COMPILER }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE }}
 
       # https://docs.github.com/en/actions/learn-github-actions/expressions
       # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
@@ -112,7 +120,7 @@ jobs:
           ARGS+=(-D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }})
         fi
 
-        ARGS+=(-D DV_LIB_TYPE=${{ matrix.LIB_TYPE }})
+        ARGS+=(-D DV_SHARED=${{ matrix.DV_SHARED.VALUE }})
         ARGS+=(-D DV_64BIT=1 -D DV_TESTING=1)
         ARGS+=(-D DV_OPENGL=1 -D DV_D3D11=1)
 
@@ -190,14 +198,14 @@ jobs:
           }
         BITS:
         - 64
-        LIB_TYPE:
+        DV_SHARED:
         - {
             ID: shared,
-            VALUE: SHARED,
+            VALUE: 1,
           }
         - {
             ID: static,
-            VALUE: STATIC,
+            VALUE: 0,
           }
         BUILD_TYPE:
         - {
@@ -209,7 +217,7 @@ jobs:
             VALUE: Debug,
           }
 
-    name: 🐧-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.LIB_TYPE.ID }}-${{ matrix.BUILD_TYPE.ID }}
+    name: 🐧-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
     steps:
     - name: Checkout
@@ -237,8 +245,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: engine_build
-        key: linux-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.LIB_TYPE.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
-        restore-keys: linux-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.LIB_TYPE.ID }}-${{ matrix.BUILD_TYPE.ID }}
+        key: linux-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
+        restore-keys: linux-${{ matrix.COMPILER.ID }}-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
       # https://docs.github.com/en/actions/learn-github-actions/expressions
       # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
@@ -266,7 +274,7 @@ jobs:
         cmake engine_repo -B engine_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
           -D DV_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build engine_build
 
@@ -306,7 +314,7 @@ jobs:
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -G "Unix Makefiles" \
           -D CMAKE_C_COMPILER=${{ matrix.COMPILER.C }} -D CMAKE_CXX_COMPILER=${{ matrix.COMPILER.CXX }} \
           -D DV_TESTING=1 -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build
         xvfb-run ctest --test-dir $HOME/projects/UrhoApp_build
@@ -321,14 +329,14 @@ jobs:
       matrix:
         BITS:
         - 64
-        LIB_TYPE:
+        DV_SHARED:
         - {
             ID: shared,
-            VALUE: SHARED,
+            VALUE: 1,
           }
         - {
             ID: static,
-            VALUE: STATIC,
+            VALUE: 0,
           }
         BUILD_TYPE:
         - {
@@ -340,7 +348,7 @@ jobs:
             VALUE: Debug,
           }
 
-    name: 🐧-mingw-${{ matrix.BITS }}-${{ matrix.LIB_TYPE.ID }}-${{ matrix.BUILD_TYPE.ID }}
+    name: 🐧-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
     steps:
     - name: Checkout
@@ -354,8 +362,8 @@ jobs:
       uses: actions/cache@v3
       with:
         path: engine_build
-        key: linux-mingw-${{ matrix.BITS }}-${{ matrix.LIB_TYPE.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
-        restore-keys: linux-mingw-${{ matrix.BITS }}-${{ matrix.LIB_TYPE.ID }}-${{ matrix.BUILD_TYPE.ID }}
+        key: linux-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}-${{ github.sha }}
+        restore-keys: linux-mingw-${{ matrix.BITS }}-${{ matrix.DV_SHARED.ID }}-${{ matrix.BUILD_TYPE.ID }}
 
     - name: Удаляем кэш по запросу пользователя
       if: |
@@ -388,7 +396,7 @@ jobs:
           -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build engine_build
 
@@ -421,6 +429,6 @@ jobs:
           -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
-          -D DV_64BIT=$BITS64 -D DV_LIB_TYPE=${{ matrix.LIB_TYPE.VALUE }}
+          -D DV_64BIT=$BITS64 -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
 
         cmake --build $HOME/projects/UrhoApp_build

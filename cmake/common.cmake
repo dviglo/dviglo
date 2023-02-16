@@ -41,6 +41,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Получаем доступ к макросу cmake_dependent_option
 include(CMakeDependentOption)
 
+option(DV_SHARED "Динамическая версия (а не статическая)" FALSE)
 option(DV_LOGGING "Логирование" TRUE)
 option(DV_THREADING "Многопоточность" TRUE)
 option(DV_URHO2D "2D-графика" TRUE)
@@ -153,7 +154,7 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
         unset(libs)
 
         # Если движок скомпилирован как динамическая библиотека, то добавляем её в список
-        if(DV_LIB_TYPE STREQUAL "SHARED")
+        if(DV_SHARED)
             list(APPEND libs "$<TARGET_FILE:dviglo>")
         endif()
 

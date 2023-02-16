@@ -128,7 +128,7 @@ endif()
 # Список генерируемых файлов
 set(generated_src_files "${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h")
 
-if(DV_LIB_TYPE STREQUAL "SHARED")
+if(DV_SHARED)
     # Создаём динамическую библиотеку
     add_library(${target_name} SHARED ${source_files} ${generated_src_files})
     target_compile_definitions(${target_name} PUBLIC DV_SHARED=1)

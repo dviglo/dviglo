@@ -54,7 +54,7 @@ if (NOT VSNPRINTFS_FUNCTION_EXISTS)
     add_definitions(-DVSNPRINTFS_FUNCTION_MISSING=1)
 endif()
 
-if (DV_LIB_TYPE STREQUAL SHARED)
+if (DV_SHARED)
     add_definitions(-D_RAKNET_DLL=1)
 endif ()
 
@@ -75,7 +75,7 @@ if (MINGW)
     target_link_libraries(${target_name} PRIVATE iphlpapi)
 endif ()
 
-if (MINGW AND NOT DV_LIB_TYPE STREQUAL SHARED)
+if (MINGW AND NOT DV_SHARED)
     # Требуется для компиляции статической версии движка в MinGW
     target_link_libraries(${target_name} PRIVATE ws2_32)
 endif ()
