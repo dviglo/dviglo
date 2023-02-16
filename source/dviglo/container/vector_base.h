@@ -6,7 +6,6 @@
 
 #include "../dviglo_config.h"
 
-#include "../container/swap.h"
 #include "iter.h"
 
 namespace dviglo
@@ -30,9 +29,9 @@ public:
     /// Swap with another vector.
     void Swap(VectorBase& rhs)
     {
-        dviglo::Swap(size_, rhs.size_);
-        dviglo::Swap(capacity_, rhs.capacity_);
-        dviglo::Swap(buffer_, rhs.buffer_);
+        std::swap(size_, rhs.size_);
+        std::swap(capacity_, rhs.capacity_);
+        std::swap(buffer_, rhs.buffer_);
     }
 
 protected:

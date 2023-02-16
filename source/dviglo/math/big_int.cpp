@@ -434,40 +434,40 @@ BigInt BigInt::operator -() const
 BigInt& BigInt::operator +=(const BigInt& rhs)
 {
     BigInt result = *this + rhs;
-    Swap(this->positive_, result.positive_);
-    Swap(this->magnitude_, result.magnitude_);
+    std::swap(this->positive_, result.positive_);
+    std::swap(this->magnitude_, result.magnitude_);
     return *this;
 }
 
 BigInt& BigInt::operator -=(const BigInt& rhs)
 {
     BigInt result = *this - rhs;
-    Swap(this->positive_, result.positive_);
-    Swap(this->magnitude_, result.magnitude_);
+    std::swap(this->positive_, result.positive_);
+    std::swap(this->magnitude_, result.magnitude_);
     return *this;
 }
 
 BigInt& BigInt::operator *=(const BigInt& rhs)
 {
     BigInt result = *this * rhs;
-    Swap(this->positive_, result.positive_);
-    Swap(this->magnitude_, result.magnitude_);
+    std::swap(this->positive_, result.positive_);
+    std::swap(this->magnitude_, result.magnitude_);
     return *this;
 }
 
 BigInt& BigInt::operator /=(const BigInt& rhs)
 {
     BigInt result = *this / rhs;
-    Swap(this->positive_, result.positive_);
-    Swap(this->magnitude_, result.magnitude_);
+    std::swap(this->positive_, result.positive_);
+    std::swap(this->magnitude_, result.magnitude_);
     return *this;
 }
 
 BigInt& BigInt::operator %=(const BigInt& rhs)
 {
     BigInt result = *this % rhs;
-    Swap(this->positive_, result.positive_);
-    Swap(this->magnitude_, result.magnitude_);
+    std::swap(this->positive_, result.positive_);
+    std::swap(this->magnitude_, result.magnitude_);
     return *this;
 }
 

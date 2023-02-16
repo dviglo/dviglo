@@ -8,7 +8,8 @@
 
 #include "../container/allocator.h"
 #include "../container/hash.h"
-#include "../container/swap.h"
+
+#include <utility>
 
 namespace dviglo
 {
@@ -96,10 +97,10 @@ public:
     /// Swap with another hash set or map.
     void Swap(HashBase& rhs)
     {
-        dviglo::Swap(head_, rhs.head_);
-        dviglo::Swap(tail_, rhs.tail_);
-        dviglo::Swap(ptrs_, rhs.ptrs_);
-        dviglo::Swap(allocator_, rhs.allocator_);
+        std::swap(head_, rhs.head_);
+        std::swap(tail_, rhs.tail_);
+        std::swap(ptrs_, rhs.ptrs_);
+        std::swap(allocator_, rhs.allocator_);
     }
 
     /// Return number of elements.

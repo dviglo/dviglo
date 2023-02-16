@@ -215,7 +215,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
 
         // Convert big endian to little endian
         for (unsigned i = 0; i < kerningTableSize; i += 2)
-            Swap(kerningTable[i], kerningTable[i + 1]);
+            std::swap(kerningTable[i], kerningTable[i + 1]);
         MemoryBuffer deserializer(kerningTable, (unsigned)kerningTableSize);
 
         unsigned short version = deserializer.ReadU16();

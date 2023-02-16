@@ -6,7 +6,6 @@
 
 #include "../base/primitive_types.h"
 #include "../container/ref_counted.h"
-#include "../container/swap.h"
 
 #include <cassert>
 #include <cstddef>
@@ -144,7 +143,7 @@ public:
     operator T*() const { return ptr_; }    // NOLINT(google-explicit-constructor)
 
     /// Swap with another SharedPtr.
-    void Swap(SharedPtr<T>& rhs) { dviglo::Swap(ptr_, rhs.ptr_); }
+    void Swap(SharedPtr<T>& rhs) { std::swap(ptr_, rhs.ptr_); }
 
     /// Reset with another pointer.
     void Reset(T* ptr = nullptr)
@@ -424,8 +423,8 @@ public:
     /// Swap with another WeakPtr.
     void Swap(WeakPtr<T>& rhs)
     {
-        dviglo::Swap(ptr_, rhs.ptr_);
-        dviglo::Swap(refCount_, rhs.refCount_);
+        std::swap(ptr_, rhs.ptr_);
+        std::swap(refCount_, rhs.refCount_);
     }
 
     /// Reset with another pointer.

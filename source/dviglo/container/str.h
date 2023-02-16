@@ -19,6 +19,7 @@ static const int MATRIX_CONVERSION_BUFFER_LENGTH = 256;
 class WString;
 
 class StringHash;
+class String;
 template <class T, class U> class HashMap;
 
 /// Map of strings.

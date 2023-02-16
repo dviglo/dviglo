@@ -7,7 +7,6 @@
 #include "../dviglo_config.h"
 
 #include "../container/allocator.h"
-#include "../container/swap.h"
 
 namespace dviglo
 {
@@ -78,15 +77,6 @@ public:
         allocator_(nullptr),
         size_(0)
     {
-    }
-
-    /// Swap with another linked list.
-    void Swap(ListBase& rhs)
-    {
-        dviglo::Swap(head_, rhs.head_);
-        dviglo::Swap(tail_, rhs.tail_);
-        dviglo::Swap(allocator_, rhs.allocator_);
-        dviglo::Swap(size_, rhs.size_);
     }
 
 protected:

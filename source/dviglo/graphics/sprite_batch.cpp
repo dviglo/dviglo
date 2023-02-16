@@ -186,10 +186,10 @@ void SpriteBatch::DrawSpriteInternal()
     }
 
     if (!!(sprite_.flipModes_ & FlipModes::Horizontally))
-        Swap(sprite_.sourceUV_.min_.x_, sprite_.sourceUV_.max_.x_);
+        std::swap(sprite_.sourceUV_.min_.x_, sprite_.sourceUV_.max_.x_);
 
     if (!!(sprite_.flipModes_ & FlipModes::Vertically))
-        Swap(sprite_.sourceUV_.min_.y_, sprite_.sourceUV_.max_.y_);
+        std::swap(sprite_.sourceUV_.min_.y_, sprite_.sourceUV_.max_.y_);
 
     quad_.v0_.color_ = sprite_.color0_;
     quad_.v0_.uv_ = sprite_.sourceUV_.min_;

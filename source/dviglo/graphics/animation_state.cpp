@@ -311,7 +311,7 @@ void AnimationState::AddTime(float delta)
             }
         }
         if (oldTime > time)
-            Swap(oldTime, time);
+            std::swap(oldTime, time);
 
         const Vector<AnimationTriggerPoint>& triggers = animation_->GetTriggers();
         for (Vector<AnimationTriggerPoint>::ConstIterator i = triggers.Begin(); i != triggers.End(); ++i)

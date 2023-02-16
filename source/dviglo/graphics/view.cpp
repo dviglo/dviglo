@@ -925,8 +925,8 @@ void View::GetDrawables()
         PerThreadSceneResult& result = sceneResults_[0];
         minZ_ = result.minZ_;
         maxZ_ = result.maxZ_;
-        Swap(geometries_, result.geometries_);
-        Swap(lights_, result.lights_);
+        std::swap(geometries_, result.geometries_);
+        std::swap(lights_, result.lights_);
     }
 
     if (minZ_ == M_INFINITY)
