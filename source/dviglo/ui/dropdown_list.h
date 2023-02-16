@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../ui/menu.h"
+#include "menu.h"
 
 namespace dviglo
 {

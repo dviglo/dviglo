@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../graphics/billboard_set.h"
+#include "billboard_set.h"
 
 namespace dviglo
 {

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../containers/array_ptr.h"
-#include "../graphics_api/graphics_defs.h"
+#include "graphics_defs.h"
 #include "../resource/resource.h"
 
 namespace dviglo

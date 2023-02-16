@@ -6,8 +6,8 @@
 #include "../io/log.h"
 #include "../graphics_api/texture_2d.h"
 #include "../resource/image.h"
-#include "../ui/font.h"
-#include "../ui/font_face.h"
+#include "font.h"
+#include "font_face.h"
 
 #include "../common/debug_new.h"
 

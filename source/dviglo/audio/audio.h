@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../audio/audio_defs.h"
+#include "audio_defs.h"
 #include "../containers/array_ptr.h"
 #include "../containers/hash_set.h"
 #include "../core/object.h"

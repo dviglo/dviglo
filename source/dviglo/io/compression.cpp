@@ -3,10 +3,10 @@
 // License: MIT
 
 #include "../containers/array_ptr.h"
-#include "../io/compression.h"
-#include "../io/deserializer.h"
-#include "../io/serializer.h"
-#include "../io/vector_buffer.h"
+#include "compression.h"
+#include "deserializer.h"
+#include "serializer.h"
+#include "vector_buffer.h"
 
 #include <lz4/lz4.h>
 #include <lz4/lz4hc.h>

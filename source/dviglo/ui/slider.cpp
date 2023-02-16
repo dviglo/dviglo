@@ -5,8 +5,8 @@
 #include "../core/context.h"
 #include "../input/input_events.h"
 #include "../io/log.h"
-#include "../ui/slider.h"
-#include "../ui/ui_events.h"
+#include "slider.h"
+#include "ui_events.h"
 
 #include "../common/debug_new.h"
 

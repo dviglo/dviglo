@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/ptr.h"
-#include "../graphics_api/render_surface.h"
-#include "../graphics_api/texture.h"
+#include "render_surface.h"
+#include "texture.h"
 
 namespace dviglo
 {

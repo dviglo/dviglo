@@ -7,10 +7,10 @@
 #include "../resource/resource_cache.h"
 #include "../resource/json_value.h"
 #include "../resource/xml_element.h"
-#include "../scene/animatable.h"
-#include "../scene/object_animation.h"
-#include "../scene/scene_events.h"
-#include "../scene/value_animation.h"
+#include "animatable.h"
+#include "object_animation.h"
+#include "scene_events.h"
+#include "value_animation.h"
 
 #include "../common/debug_new.h"
 

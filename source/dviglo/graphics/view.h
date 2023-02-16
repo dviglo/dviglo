@@ -6,9 +6,9 @@
 
 #include "../containers/hash_set.h"
 #include "../core/object.h"
-#include "../graphics/batch.h"
-#include "../graphics/light.h"
-#include "../graphics/zone.h"
+#include "batch.h"
+#include "light.h"
+#include "zone.h"
 #include "../math/polyhedron.h"
 
 namespace dviglo

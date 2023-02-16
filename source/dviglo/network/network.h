@@ -7,7 +7,7 @@
 #include "../containers/hash_set.h"
 #include "../core/object.h"
 #include "../io/vector_buffer.h"
-#include "../network/connection.h"
+#include "connection.h"
 
 namespace dviglo
 {

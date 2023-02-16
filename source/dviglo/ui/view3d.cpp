@@ -10,9 +10,9 @@
 #include "../graphics/zone.h"
 #include "../graphics_api/texture_2d.h"
 #include "../scene/scene.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
-#include "../ui/view3d.h"
+#include "ui.h"
+#include "ui_events.h"
+#include "view3d.h"
 
 namespace dviglo
 {

@@ -6,9 +6,9 @@
 #include "../graphics_api/texture_2d.h"
 #include "../io/deserializer.h"
 #include "../resource/resource_cache.h"
-#include "../urho_2d/drawable_2d.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/sprite_sheet_2d.h"
+#include "drawable_2d.h"
+#include "sprite_2d.h"
+#include "sprite_sheet_2d.h"
 
 #include "../common/debug_new.h"
 

@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../graphics/graphics.h"
-#include "../graphics_api/constant_buffer.h"
+#include "constant_buffer.h"
 #include "../io/log.h"
 
 #include "../common/debug_new.h"

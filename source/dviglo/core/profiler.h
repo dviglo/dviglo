@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/str.h"
-#include "../core/thread.h"
-#include "../core/timer.h"
+#include "thread.h"
+#include "timer.h"
 
 #ifdef DV_TRACY_PROFILING
 #define TRACY_ENABLE 1

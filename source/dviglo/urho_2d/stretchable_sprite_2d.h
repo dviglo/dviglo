@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../urho_2d/static_sprite_2d.h"
+#include "static_sprite_2d.h"
 
 namespace dviglo
 {

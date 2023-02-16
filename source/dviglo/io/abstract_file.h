@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../io/serializer.h"
-#include "../io/deserializer.h"
+#include "serializer.h"
+#include "deserializer.h"
 
 namespace dviglo
 {

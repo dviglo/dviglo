@@ -2,10 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/animated_model.h"
-#include "../graphics/animation.h"
-#include "../graphics/animation_state.h"
-#include "../graphics/drawable_events.h"
+#include "animated_model.h"
+#include "animation.h"
+#include "animation_state.h"
+#include "drawable_events.h"
 #include "../io/log.h"
 
 #include "../common/debug_new.h"

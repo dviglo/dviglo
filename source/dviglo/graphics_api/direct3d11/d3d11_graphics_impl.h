@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "../../graphics_api/constant_buffer.h"
-#include "../../graphics_api/direct3d11/d3d11_shader_program.h"
-#include "../../graphics_api/direct3d11/d3d11_vertex_declaration.h"
-#include "../../graphics_api/graphics_defs.h"
+#include "../constant_buffer.h"
+#include "d3d11_shader_program.h"
+#include "d3d11_vertex_declaration.h"
+#include "../graphics_defs.h"
 #include "../../math/color.h"
 
 #include <d3d11.h>

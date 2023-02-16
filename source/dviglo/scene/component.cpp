@@ -4,10 +4,10 @@
 
 #include "../core/context.h"
 #include "../resource/json_value.h"
-#include "../scene/component.h"
-#include "../scene/replication_state.h"
-#include "../scene/scene.h"
-#include "../scene/scene_events.h"
+#include "component.h"
+#include "replication_state.h"
+#include "scene.h"
+#include "scene_events.h"
 #ifdef DV_BULLET
 #include "../physics/physics_world.h"
 #endif

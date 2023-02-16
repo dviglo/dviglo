@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/string_hash_register.h"
+#include "string_hash_register.h"
 #include "../io/log.h"
 
 #include <cstdio>

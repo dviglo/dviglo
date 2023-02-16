@@ -2,8 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/geometry.h"
-#include "../graphics/graphics.h"
+#include "geometry.h"
+#include "graphics.h"
 #include "../graphics_api/index_buffer.h"
 #include "../graphics_api/vertex_buffer.h"
 #include "../io/log.h"

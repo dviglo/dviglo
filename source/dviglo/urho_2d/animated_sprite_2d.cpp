@@ -7,10 +7,10 @@
 #include "../resource/resource_cache.h"
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
-#include "../urho_2d/animated_sprite_2d.h"
-#include "../urho_2d/animation_set_2d.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/spriter_instance_2d.h"
+#include "animated_sprite_2d.h"
+#include "animation_set_2d.h"
+#include "sprite_2d.h"
+#include "spriter_instance_2d.h"
 
 #include "../common/debug_new.h"
 

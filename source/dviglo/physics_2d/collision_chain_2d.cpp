@@ -5,8 +5,8 @@
 #include "../core/context.h"
 #include "../io/memory_buffer.h"
 #include "../io/vector_buffer.h"
-#include "../physics_2d/collision_chain_2d.h"
-#include "../physics_2d/physics_utils_2d.h"
+#include "collision_chain_2d.h"
+#include "physics_utils_2d.h"
 
 #include "../common/debug_new.h"
 

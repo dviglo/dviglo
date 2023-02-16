@@ -5,12 +5,12 @@
 #include "../core/context.h"
 #include "../input/input_events.h"
 #include "../io/log.h"
-#include "../ui/dropdown_list.h"
-#include "../ui/list_view.h"
-#include "../ui/text.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
-#include "../ui/window.h"
+#include "dropdown_list.h"
+#include "list_view.h"
+#include "text.h"
+#include "ui.h"
+#include "ui_events.h"
+#include "window.h"
 
 #include "../common/debug_new.h"
 

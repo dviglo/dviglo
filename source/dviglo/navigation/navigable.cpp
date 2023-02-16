@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../navigation/navigable.h"
+#include "navigable.h"
 
 #include "../common/debug_new.h"
 

@@ -7,7 +7,7 @@
 #include "../graphics/drawable.h"
 #include "../graphics_api/vertex_buffer.h"
 #include "../math/matrix3x4.h"
-#include "../ui/text.h"
+#include "text.h"
 
 namespace dviglo
 {

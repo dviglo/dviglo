@@ -5,8 +5,8 @@
 #include "../core/context.h"
 #include "../io/deserializer.h"
 #include "../io/log.h"
-#include "../resource/plist_file.h"
-#include "../resource/xml_file.h"
+#include "plist_file.h"
+#include "xml_file.h"
 
 #include <cstdio>
 

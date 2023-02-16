@@ -8,7 +8,7 @@
 
 #include "../containers/flag_set.h"
 #include "../containers/ptr.h"
-#include "../core/variant.h"
+#include "variant.h"
 
 namespace dviglo
 {

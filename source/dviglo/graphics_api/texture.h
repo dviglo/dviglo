@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../graphics_api/gpu_object.h"
-#include "../graphics_api/graphics_defs.h"
+#include "gpu_object.h"
+#include "graphics_defs.h"
 #include "../math/color.h"
 #include "../resource/resource.h"
 

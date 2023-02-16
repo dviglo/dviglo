@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../ui/button.h"
+#include "button.h"
 
 namespace dviglo
 {

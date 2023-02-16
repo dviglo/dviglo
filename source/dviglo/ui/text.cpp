@@ -9,9 +9,9 @@
 #include "../resource/localization.h"
 #include "../resource/resource_cache.h"
 #include "../resource/resource_events.h"
-#include "../ui/font.h"
-#include "../ui/font_face.h"
-#include "../ui/text.h"
+#include "font.h"
+#include "font_face.h"
+#include "text.h"
 
 #include "../common/debug_new.h"
 

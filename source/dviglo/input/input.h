@@ -10,7 +10,7 @@
 #include "../containers/hash_set.h"
 #include "../core/object.h"
 #include "../containers/list.h"
-#include "../input/input_events.h"
+#include "input_events.h"
 #include "../ui/cursor.h"
 
 namespace dviglo

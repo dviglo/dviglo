@@ -7,7 +7,7 @@
 #include "../io/file.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
-#include "../resource/decompress.h"
+#include "decompress.h"
 
 #include <SDL3/SDL_surface.h>
 #define STB_IMAGE_IMPLEMENTATION

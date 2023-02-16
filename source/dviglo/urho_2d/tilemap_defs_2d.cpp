@@ -4,7 +4,7 @@
 
 #include "../resource/xml_element.h"
 #include "../resource/json_file.h"
-#include "../urho_2d/tilemap_defs_2d.h"
+#include "tilemap_defs_2d.h"
 
 #include "../common/debug_new.h"
 

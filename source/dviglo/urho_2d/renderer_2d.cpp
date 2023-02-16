@@ -18,8 +18,8 @@
 #include "../io/log.h"
 #include "../scene/node.h"
 #include "../scene/scene.h"
-#include "../urho_2d/drawable_2d.h"
-#include "../urho_2d/renderer_2d.h"
+#include "drawable_2d.h"
+#include "renderer_2d.h"
 
 #include "../common/debug_new.h"
 

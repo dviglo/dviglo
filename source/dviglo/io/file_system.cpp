@@ -8,10 +8,10 @@
 #include "../core/thread.h"
 #include "../core/profiler.h"
 #include "../engine/engine_events.h"
-#include "../io/file.h"
-#include "../io/file_system.h"
-#include "../io/io_events.h"
-#include "../io/log.h"
+#include "file.h"
+#include "file_system.h"
+#include "io_events.h"
+#include "log.h"
 
 #ifdef __ANDROID__
 #include <SDL3/SDL_rwops.h>

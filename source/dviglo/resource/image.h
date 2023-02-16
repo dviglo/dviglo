@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../containers/array_ptr.h"
-#include "../resource/resource.h"
+#include "resource.h"
 
 struct SDL_Surface;
 

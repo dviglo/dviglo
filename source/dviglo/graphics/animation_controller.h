@@ -6,7 +6,7 @@
 
 #include "../io/vector_buffer.h"
 #include "../scene/component.h"
-#include "../graphics/animation_state.h"
+#include "animation_state.h"
 
 namespace dviglo
 {

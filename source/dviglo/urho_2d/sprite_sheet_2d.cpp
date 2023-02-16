@@ -11,8 +11,8 @@
 #include "../resource/plist_file.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/sprite_sheet_2d.h"
+#include "sprite_2d.h"
+#include "sprite_sheet_2d.h"
 
 #include "../common/debug_new.h"
 

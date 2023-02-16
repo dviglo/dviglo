@@ -5,8 +5,8 @@
 #include "../io/log.h"
 #include "../core/context.h"
 #include "../scene/node.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/stretchable_sprite_2d.h"
+#include "sprite_2d.h"
+#include "stretchable_sprite_2d.h"
 
 #include "../common/debug_new.h"
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/thread.h"
+#include "thread.h"
 
 #ifdef _WIN32
 #include "../engine/win_wrapped.h"

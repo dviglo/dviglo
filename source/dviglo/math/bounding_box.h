@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../math/rect.h"
-#include "../math/vector3.h"
+#include "rect.h"
+#include "vector3.h"
 
 #include <xmmintrin.h>
 

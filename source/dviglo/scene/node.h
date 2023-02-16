@@ -8,7 +8,7 @@
 
 #include "../io/vector_buffer.h"
 #include "../math/matrix3x4.h"
-#include "../scene/animatable.h"
+#include "animatable.h"
 
 #include <memory>
 

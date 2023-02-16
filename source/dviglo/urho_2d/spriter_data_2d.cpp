@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../math/math_defs.h"
-#include "../urho_2d/spriter_data_2d.h"
+#include "spriter_data_2d.h"
 
 #include <pugixml/pugixml.hpp>
 

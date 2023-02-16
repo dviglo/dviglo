@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../ui/border_image.h"
+#include "border_image.h"
 
 namespace dviglo
 {

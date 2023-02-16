@@ -12,7 +12,7 @@
 #pragma warning(disable:4702) // unreachable code
 #endif
 
-#include "../math/random.h"
+#include "random.h"
 
 #include <cstdlib>
 #include <cmath>

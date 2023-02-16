@@ -5,11 +5,11 @@
 #include "../core/context.h"
 #include "../input/input_events.h"
 #include "../io/log.h"
-#include "../ui/line_edit.h"
-#include "../ui/menu.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
-#include "../ui/window.h"
+#include "line_edit.h"
+#include "menu.h"
+#include "ui.h"
+#include "ui_events.h"
+#include "window.h"
 
 #include "../common/debug_new.h"
 

@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../scene/animatable.h"
+#include "animatable.h"
 
 namespace dviglo
 {

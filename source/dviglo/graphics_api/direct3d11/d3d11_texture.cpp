@@ -5,7 +5,7 @@
 #include "../../core/profiler.h"
 #include "../../graphics/graphics.h"
 #include "../../graphics/material.h"
-#include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"
+#include "d3d11_graphics_impl.h"
 #include "../../io/file_system.h"
 #include "../../io/log.h"
 #include "../../resource/resource_cache.h"

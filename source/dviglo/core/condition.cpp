@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/condition.h"
+#include "condition.h"
 
 #ifdef _WIN32
 #include "../engine/win_wrapped.h"

@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/ptr.h"
-#include "../graphics/drawable.h"
-#include "../graphics/material.h"
+#include "drawable.h"
+#include "material.h"
 #include "../math/math_defs.h"
 #include "../math/matrix3x4.h"
 #include "../math/rect.h"

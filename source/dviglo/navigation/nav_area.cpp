@@ -5,7 +5,7 @@
 #include "../core/context.h"
 #include "../graphics/debug_renderer.h"
 #include "../io/log.h"
-#include "../navigation/nav_area.h"
+#include "nav_area.h"
 #include "../scene/node.h"
 
 namespace dviglo

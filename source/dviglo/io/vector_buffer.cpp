@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../io/vector_buffer.h"
+#include "vector_buffer.h"
 
 namespace dviglo
 {

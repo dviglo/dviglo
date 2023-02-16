@@ -7,8 +7,8 @@
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#include "../urho_2d/particle_effect_2d.h"
-#include "../urho_2d/sprite_2d.h"
+#include "particle_effect_2d.h"
+#include "sprite_2d.h"
 
 #include "../common/debug_new.h"
 

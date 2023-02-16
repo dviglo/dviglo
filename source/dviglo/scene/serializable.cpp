@@ -8,9 +8,9 @@
 #include "../io/serializer.h"
 #include "../resource/xml_element.h"
 #include "../resource/json_value.h"
-#include "../scene/replication_state.h"
-#include "../scene/scene_events.h"
-#include "../scene/serializable.h"
+#include "replication_state.h"
+#include "scene_events.h"
+#include "serializable.h"
 
 #include "../common/debug_new.h"
 

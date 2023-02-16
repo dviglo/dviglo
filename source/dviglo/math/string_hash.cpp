@@ -5,7 +5,7 @@
 #include "../containers/hash_map.h"
 #include "../core/string_hash_register.h"
 #include "../io/log.h"
-#include "../math/string_hash.h"
+#include "string_hash.h"
 
 #include <cstdio>
 

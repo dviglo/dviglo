@@ -6,10 +6,10 @@
 #include "../core/profiler.h"
 #include "../graphics/debug_renderer.h"
 #include "../io/log.h"
-#include "../physics/constraint.h"
-#include "../physics/physics_utils.h"
-#include "../physics/physics_world.h"
-#include "../physics/rigid_body.h"
+#include "constraint.h"
+#include "physics_utils.h"
+#include "physics_world.h"
+#include "rigid_body.h"
 #include "../scene/scene.h"
 
 #include <bullet/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h>

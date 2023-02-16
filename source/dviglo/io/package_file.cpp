@@ -2,9 +2,9 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../io/file.h"
-#include "../io/log.h"
-#include "../io/package_file.h"
+#include "file.h"
+#include "log.h"
+#include "package_file.h"
 
 namespace dviglo
 {

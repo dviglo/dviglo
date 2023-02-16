@@ -4,7 +4,7 @@
 
 #include "../graphics/graphics.h"
 #include "../graphics_api/texture.h"
-#include "../ui/ui_element.h"
+#include "ui_element.h"
 
 #include "../common/debug_new.h"
 

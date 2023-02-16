@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../resource/resource.h"
-#include "../resource/json_value.h"
+#include "resource.h"
+#include "json_value.h"
 
 namespace dviglo
 {

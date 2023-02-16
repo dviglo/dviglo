@@ -6,7 +6,7 @@
 
 #include "../containers/array_ptr.h"
 #include "../core/object.h"
-#include "../io/abstract_file.h"
+#include "abstract_file.h"
 
 #ifdef __ANDROID__
 #include <SDL3/SDL_rwops.h>

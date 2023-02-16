@@ -4,8 +4,8 @@
 
 #include "../core/context.h"
 #include "../io/log.h"
-#include "../scene/scene.h"
-#include "../scene/spline_path.h"
+#include "scene.h"
+#include "spline_path.h"
 
 namespace dviglo
 {

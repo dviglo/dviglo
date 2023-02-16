@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../math/rect.h"
+#include "rect.h"
 
 namespace dviglo
 {

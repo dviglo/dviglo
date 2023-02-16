@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../scene/component.h"
+#include "component.h"
 
 namespace dviglo
 {

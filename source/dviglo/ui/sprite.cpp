@@ -5,7 +5,7 @@
 #include "../core/context.h"
 #include "../graphics_api/texture_2d.h"
 #include "../resource/resource_cache.h"
-#include "../ui/sprite.h"
+#include "sprite.h"
 
 #include "../common/debug_new.h"
 

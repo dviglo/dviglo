@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/hash_set.h"
-#include "../scene/serializable.h"
-#include "../scene/value_animation_info.h"
+#include "serializable.h"
+#include "value_animation_info.h"
 
 namespace dviglo
 {

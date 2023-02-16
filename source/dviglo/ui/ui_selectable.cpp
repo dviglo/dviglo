@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../ui/ui_selectable.h"
+#include "ui_selectable.h"
 
 namespace dviglo
 {

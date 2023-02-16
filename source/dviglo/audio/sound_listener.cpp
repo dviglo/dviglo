@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../audio/sound_listener.h"
+#include "sound_listener.h"
 #include "../core/context.h"
 
 namespace dviglo

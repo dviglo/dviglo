@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../core/variant.h"
+#include "variant.h"
 #include "../math/color.h"
 #include "../math/vector2.h"
 #include "../math/vector3.h"

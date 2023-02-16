@@ -4,9 +4,9 @@
 
 #include "../core/context.h"
 #include "../input/input_events.h"
-#include "../ui/button.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
+#include "button.h"
+#include "ui.h"
+#include "ui_events.h"
 
 #include "../common/debug_new.h"
 

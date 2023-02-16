@@ -9,8 +9,8 @@
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
 #include "../io/vector_buffer.h"
-#include "../resource/resource_cache.h"
-#include "../resource/xml_file.h"
+#include "resource_cache.h"
+#include "xml_file.h"
 
 #include <pugixml/pugixml.hpp>
 

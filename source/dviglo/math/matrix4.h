@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../math/quaternion.h"
-#include "../math/vector4.h"
+#include "quaternion.h"
+#include "vector4.h"
 
 #include <emmintrin.h>
 

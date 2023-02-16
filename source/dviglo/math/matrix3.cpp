@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/matrix3.h"
+#include "matrix3.h"
 
 #include <cstdio>
 

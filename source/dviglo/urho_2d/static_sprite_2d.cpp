@@ -7,9 +7,9 @@
 #include "../graphics_api/texture_2d.h"
 #include "../resource/resource_cache.h"
 #include "../scene/scene.h"
-#include "../urho_2d/renderer_2d.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/static_sprite_2d.h"
+#include "renderer_2d.h"
+#include "sprite_2d.h"
+#include "static_sprite_2d.h"
 
 #include "../common/debug_new.h"
 

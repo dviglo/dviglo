@@ -6,10 +6,10 @@
 #include "../graphics/debug_renderer.h"
 #include "../resource/resource_cache.h"
 #include "../scene/node.h"
-#include "../urho_2d/static_sprite_2d.h"
-#include "../urho_2d/tilemap_2d.h"
-#include "../urho_2d/tilemap_layer_2d.h"
-#include "../urho_2d/tmx_file_2d.h"
+#include "static_sprite_2d.h"
+#include "tilemap_2d.h"
+#include "tilemap_layer_2d.h"
+#include "tmx_file_2d.h"
 
 #include "../common/debug_new.h"
 

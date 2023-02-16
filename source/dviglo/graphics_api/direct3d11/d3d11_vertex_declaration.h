@@ -6,7 +6,7 @@
 
 #include "../../containers/ref_counted.h"
 #include "../../containers/vector.h"
-#include "../../graphics_api/graphics_defs.h"
+#include "../graphics_defs.h"
 
 namespace dviglo
 {

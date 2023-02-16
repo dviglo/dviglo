@@ -10,9 +10,9 @@
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
 #include "../resource/resource_cache.h"
-#include "../ui/font.h"
-#include "../ui/font_face_bitmap.h"
-#include "../ui/ui.h"
+#include "font.h"
+#include "font_face_bitmap.h"
+#include "ui.h"
 
 #include "../common/debug_new.h"
 

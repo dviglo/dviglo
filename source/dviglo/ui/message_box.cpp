@@ -6,12 +6,12 @@
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#include "../ui/button.h"
-#include "../ui/message_box.h"
-#include "../ui/text.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
-#include "../ui/window.h"
+#include "button.h"
+#include "message_box.h"
+#include "text.h"
+#include "ui.h"
+#include "ui_events.h"
+#include "window.h"
 
 namespace dviglo
 {

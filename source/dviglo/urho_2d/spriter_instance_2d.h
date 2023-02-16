@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../urho_2d/spriter_data_2d.h"
+#include "spriter_data_2d.h"
 
 namespace dviglo
 {

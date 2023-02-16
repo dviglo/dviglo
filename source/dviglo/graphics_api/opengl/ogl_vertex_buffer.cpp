@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/graphics_impl.h"
-#include "../../graphics_api/vertex_buffer.h"
+#include "../graphics_impl.h"
+#include "../vertex_buffer.h"
 #include "../../io/log.h"
 
 #include "../../common/debug_new.h"

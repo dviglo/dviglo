@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/linked_list.h"
-#include "../core/string_hash_register.h"
-#include "../core/variant.h"
+#include "string_hash_register.h"
+#include "variant.h"
 #include <functional>
 #include <utility>
 

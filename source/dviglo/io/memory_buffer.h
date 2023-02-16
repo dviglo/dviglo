@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../io/abstract_file.h"
+#include "abstract_file.h"
 
 namespace dviglo
 {

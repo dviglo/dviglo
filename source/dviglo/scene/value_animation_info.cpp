@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../io/log.h"
-#include "../scene/value_animation.h"
-#include "../scene/value_animation_info.h"
+#include "value_animation.h"
+#include "value_animation_info.h"
 
 #include "../common/debug_new.h"
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../math/matrix3x4.h"
+#include "matrix3x4.h"
 
 namespace dviglo
 {

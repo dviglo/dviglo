@@ -8,8 +8,8 @@
 #include "../io/deserializer.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
-#include "../resource/json_file.h"
-#include "../resource/resource_cache.h"
+#include "json_file.h"
+#include "resource_cache.h"
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>

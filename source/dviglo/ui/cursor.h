@@ -8,7 +8,7 @@
 
 #include "../graphics_api/texture.h"
 #include "../resource/image.h"
-#include "../ui/border_image.h"
+#include "border_image.h"
 
 struct SDL_Cursor;
 

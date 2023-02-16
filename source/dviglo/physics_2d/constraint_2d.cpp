@@ -4,10 +4,10 @@
 
 #include "../core/context.h"
 #include "../io/log.h"
-#include "../physics_2d/constraint_2d.h"
-#include "../physics_2d/physics_utils_2d.h"
-#include "../physics_2d/physics_world_2d.h"
-#include "../physics_2d/rigid_body_2d.h"
+#include "constraint_2d.h"
+#include "physics_utils_2d.h"
+#include "physics_world_2d.h"
+#include "rigid_body_2d.h"
 #include "../scene/node.h"
 #include "../scene/scene.h"
 

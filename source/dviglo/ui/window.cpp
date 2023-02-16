@@ -4,10 +4,10 @@
 
 #include "../core/context.h"
 #include "../input/input_events.h"
-#include "../ui/cursor.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
-#include "../ui/window.h"
+#include "cursor.h"
+#include "ui.h"
+#include "ui_events.h"
+#include "window.h"
 
 #include "../common/debug_new.h"
 

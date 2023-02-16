@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"
-#include "../../graphics_api/shader_variation.h"
-#include "../../graphics_api/vertex_buffer.h"
+#include "d3d11_graphics_impl.h"
+#include "../shader_variation.h"
+#include "../vertex_buffer.h"
 #include "../../io/log.h"
 #include "d3d11_vertex_declaration.h"
 

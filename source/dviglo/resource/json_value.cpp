@@ -5,7 +5,7 @@
 #include "../core/context.h"
 #include "../core/string_utils.h"
 #include "../io/log.h"
-#include "../resource/json_value.h"
+#include "json_value.h"
 
 #include "../common/debug_new.h"
 

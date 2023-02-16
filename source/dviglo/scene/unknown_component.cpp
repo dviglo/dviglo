@@ -8,7 +8,7 @@
 #include "../io/serializer.h"
 #include "../resource/xml_element.h"
 #include "../resource/json_value.h"
-#include "../scene/unknown_component.h"
+#include "unknown_component.h"
 
 #include "../common/debug_new.h"
 

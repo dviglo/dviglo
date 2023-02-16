@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../core/object.h"
+#include "object.h"
 
 namespace dviglo
 {

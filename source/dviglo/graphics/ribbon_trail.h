@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../graphics/drawable.h"
+#include "drawable.h"
 
 namespace dviglo
 {

@@ -8,7 +8,7 @@
 
 #include "../containers/hash_set.h"
 #include "../io/file.h"
-#include "../resource/resource.h"
+#include "resource.h"
 
 #include <mutex>
 

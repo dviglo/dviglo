@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../physics_2d/constraint_mouse_2d.h"
-#include "../physics_2d/physics_utils_2d.h"
-#include "../physics_2d/rigid_body_2d.h"
+#include "constraint_mouse_2d.h"
+#include "physics_utils_2d.h"
+#include "rigid_body_2d.h"
 
 #include "../common/debug_new.h"
 

@@ -6,7 +6,7 @@
 
 #include "../graphics/drawable.h"
 #include "../graphics_api/graphics_defs.h"
-#include "../urho_2d/urho_2d.h"
+#include "urho_2d.h"
 
 namespace dviglo
 {

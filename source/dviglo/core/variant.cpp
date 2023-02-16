@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/string_utils.h"
+#include "string_utils.h"
 #include "../io/vector_buffer.h"
 
 #include <cstring>

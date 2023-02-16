@@ -6,9 +6,9 @@
 
 #include "../../containers/hash_map.h"
 #include "../../containers/ref_counted.h"
-#include "../../graphics_api/gpu_object.h"
-#include "../../graphics_api/graphics_defs.h"
-#include "../../graphics_api/shader_variation.h"
+#include "../gpu_object.h"
+#include "../graphics_defs.h"
+#include "../shader_variation.h"
 
 namespace dviglo
 {

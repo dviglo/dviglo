@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/spline.h"
+#include "spline.h"
 #include "../io/log.h"
 
 namespace dviglo

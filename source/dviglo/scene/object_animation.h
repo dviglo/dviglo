@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../resource/resource.h"
-#include "../scene/animation_defs.h"
+#include "animation_defs.h"
 
 namespace dviglo
 {

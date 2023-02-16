@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../resource/resource.h"
-#include "../urho_2d/urho_2d.h"
+#include "urho_2d.h"
 
 namespace dviglo
 {

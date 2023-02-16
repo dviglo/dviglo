@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../graphics_api/graphics_defs.h"
-#include "../ui/ui_element.h"
+#include "ui_element.h"
 
 namespace dviglo
 {

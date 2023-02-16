@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../scene/scene.h"
-#include "../scene/scene_events.h"
-#include "../scene/smoothed_transform.h"
+#include "scene.h"
+#include "scene_events.h"
+#include "smoothed_transform.h"
 
 #include "../common/debug_new.h"
 

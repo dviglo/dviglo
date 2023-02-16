@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../graphics/debug_renderer.h"
-#include "../graphics/octree.h"
-#include "../graphics/zone.h"
+#include "debug_renderer.h"
+#include "octree.h"
+#include "zone.h"
 #include "../graphics_api/texture_cube.h"
 #include "../resource/resource_cache.h"
 #include "../scene/node.h"

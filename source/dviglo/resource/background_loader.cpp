@@ -7,9 +7,9 @@
 #include "../core/context.h"
 #include "../core/profiler.h"
 #include "../io/log.h"
-#include "../resource/background_loader.h"
-#include "../resource/resource_cache.h"
-#include "../resource/resource_events.h"
+#include "background_loader.h"
+#include "resource_cache.h"
+#include "resource_events.h"
 
 #include "../common/debug_new.h"
 

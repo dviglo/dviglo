@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/plane.h"
+#include "plane.h"
 
 #include "../common/debug_new.h"
 

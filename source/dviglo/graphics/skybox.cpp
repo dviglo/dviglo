@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../graphics/batch.h"
-#include "../graphics/camera.h"
-#include "../graphics/skybox.h"
+#include "batch.h"
+#include "camera.h"
+#include "skybox.h"
 #include "../scene/node.h"
 
 #include "../common/debug_new.h"

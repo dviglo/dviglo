@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../graphics/light.h"
+#include "light.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../math/vector4.h"
 #include "../resource/resource.h"

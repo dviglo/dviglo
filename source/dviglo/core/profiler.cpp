@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/profiler.h"
+#include "profiler.h"
 
 #include <cstdio>
 

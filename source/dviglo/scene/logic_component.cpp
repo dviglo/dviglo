@@ -6,9 +6,9 @@
 #if defined(DV_BULLET) || defined(DV_BOX2D)
 #include "../physics/physics_events.h"
 #endif
-#include "../scene/logic_component.h"
-#include "../scene/scene.h"
-#include "../scene/scene_events.h"
+#include "logic_component.h"
+#include "scene.h"
+#include "scene_events.h"
 
 namespace dviglo
 {

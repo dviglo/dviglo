@@ -2,9 +2,9 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/bounding_box.h"
-#include "../math/frustum.h"
-#include "../math/ray.h"
+#include "bounding_box.h"
+#include "frustum.h"
+#include "ray.h"
 
 #include "../common/debug_new.h"
 

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../resource/resource.h"
-#include "../urho_2d/tilemap_defs_2d.h"
+#include "tilemap_defs_2d.h"
 
 namespace dviglo
 {

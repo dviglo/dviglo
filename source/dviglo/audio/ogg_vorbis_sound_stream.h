@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../audio/sound_stream.h"
+#include "sound_stream.h"
 #include "../containers/array_ptr.h"
 
 namespace dviglo

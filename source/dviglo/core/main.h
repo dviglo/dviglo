@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "../core/process_utils.h"
+#include "process_utils.h"
 
 #if defined(_WIN32) && !defined(DV_WIN32_CONSOLE)
-#include "../core/mini_dump.h"
+#include "mini_dump.h"
 #include "../engine/win_wrapped.h"
 #ifdef _MSC_VER
 #include <crtdbg.h>

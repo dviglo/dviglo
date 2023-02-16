@@ -5,7 +5,7 @@
 #include "../graphics/drawable_events.h"
 #include "../scene/component.h"
 #include "../scene/node.h"
-#include "../urho_2d/spriter_instance_2d.h"
+#include "spriter_instance_2d.h"
 
 #include <cmath>
 

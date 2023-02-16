@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../urho_2d/drawable_2d.h"
+#include "drawable_2d.h"
 
 namespace dviglo
 {

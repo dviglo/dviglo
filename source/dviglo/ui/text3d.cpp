@@ -12,9 +12,9 @@
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../scene/node.h"
-#include "../ui/font.h"
-#include "../ui/text.h"
-#include "../ui/text3d.h"
+#include "font.h"
+#include "text.h"
+#include "text3d.h"
 
 namespace dviglo
 {

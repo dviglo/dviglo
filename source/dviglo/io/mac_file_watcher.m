@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreServices/CoreServices.h>
 
-#include "../io/mac_file_watcher.h"
+#include "mac_file_watcher.h"
 
 static void CallbackFunction(ConstFSEventStreamRef streamRef, void* clientCallBackInfo, size_t numEvents, void* eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]);
 

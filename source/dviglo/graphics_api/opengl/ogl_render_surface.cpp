@@ -5,9 +5,9 @@
 #include "../../graphics/camera.h"
 #include "../../graphics/graphics.h"
 #include "../../graphics/renderer.h"
-#include "../../graphics_api/graphics_impl.h"
-#include "../../graphics_api/render_surface.h"
-#include "../../graphics_api/texture.h"
+#include "../graphics_impl.h"
+#include "../render_surface.h"
+#include "../texture.h"
 
 #include "../../common/debug_new.h"
 

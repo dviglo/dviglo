@@ -3,12 +3,12 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../physics/physics_utils.h"
-#include "../physics/rigid_body.h"
-#include "../physics/physics_world.h"
+#include "physics_utils.h"
+#include "rigid_body.h"
+#include "physics_world.h"
 #include "../scene/scene.h"
 #include "../io/log.h"
-#include "../physics/raycast_vehicle.h"
+#include "raycast_vehicle.h"
 
 #include <bullet/BulletDynamics/Vehicle/btRaycastVehicle.h>
 #include <bullet/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h>

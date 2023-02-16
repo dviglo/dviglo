@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../graphics/model.h"
-#include "../graphics/skeleton.h"
-#include "../graphics/static_model.h"
+#include "model.h"
+#include "skeleton.h"
+#include "static_model.h"
 
 namespace dviglo
 {

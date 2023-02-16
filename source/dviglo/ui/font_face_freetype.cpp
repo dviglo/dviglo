@@ -8,9 +8,9 @@
 #include "../io/file_system.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
-#include "../ui/font.h"
-#include "../ui/font_face_freetype.h"
-#include "../ui/ui.h"
+#include "font.h"
+#include "font_face_freetype.h"
+#include "ui.h"
 
 #include <cassert>
 

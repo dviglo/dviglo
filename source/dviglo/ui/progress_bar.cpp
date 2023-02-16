@@ -5,8 +5,8 @@
 #include "../core/context.h"
 #include "../input/input_events.h"
 #include "../io/log.h"
-#include "../ui/progress_bar.h"
-#include "../ui/ui_events.h"
+#include "progress_bar.h"
+#include "ui_events.h"
 
 namespace dviglo
 {

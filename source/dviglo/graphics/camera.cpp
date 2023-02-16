@@ -3,10 +3,10 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../graphics/camera.h"
-#include "../graphics/debug_renderer.h"
-#include "../graphics/drawable.h"
-#include "../graphics/graphics.h"
+#include "camera.h"
+#include "debug_renderer.h"
+#include "drawable.h"
+#include "graphics.h"
 #include "../scene/node.h"
 
 #include "../common/debug_new.h"

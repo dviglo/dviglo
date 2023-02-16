@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../graphics/drawable.h"
+#include "drawable.h"
 #include "../io/vector_buffer.h"
 #include "../math/color.h"
 #include "../math/matrix3x4.h"

@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/tangent.h"
+#include "tangent.h"
 #include "../math/vector4.h"
 
 namespace dviglo

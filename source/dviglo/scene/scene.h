@@ -9,8 +9,8 @@
 #include "../containers/hash_set.h"
 #include "../resource/xml_element.h"
 #include "../resource/json_file.h"
-#include "../scene/node.h"
-#include "../scene/scene_resolver.h"
+#include "node.h"
+#include "scene_resolver.h"
 
 #include <mutex>
 

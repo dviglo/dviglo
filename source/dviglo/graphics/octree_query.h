@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../graphics/drawable.h"
+#include "drawable.h"
 #include "../math/bounding_box.h"
 #include "../math/frustum.h"
 #include "../math/ray.h"

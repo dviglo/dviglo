@@ -7,9 +7,9 @@
 #include "../graphics/debug_renderer.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
-#include "../navigation/navigation_events.h"
-#include "../navigation/navigation_mesh.h"
-#include "../navigation/crowd_agent.h"
+#include "navigation_events.h"
+#include "navigation_mesh.h"
+#include "crowd_agent.h"
 #include "../scene/node.h"
 #include "../scene/scene.h"
 

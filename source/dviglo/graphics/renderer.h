@@ -7,9 +7,9 @@
 #pragma once
 
 #include "../containers/hash_set.h"
-#include "../graphics/batch.h"
-#include "../graphics/drawable.h"
-#include "../graphics/viewport.h"
+#include "batch.h"
+#include "drawable.h"
+#include "viewport.h"
 #include "../math/color.h"
 
 #include <mutex>

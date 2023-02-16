@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../physics_2d/constraint_2d.h"
+#include "constraint_2d.h"
 
 namespace dviglo
 {

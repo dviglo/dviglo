@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../core/object.h"
-#include "../input/input_constants.h"
+#include "input_constants.h"
 
 
 namespace dviglo

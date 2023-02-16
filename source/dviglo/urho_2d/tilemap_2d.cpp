@@ -7,9 +7,9 @@
 #include "../resource/resource_cache.h"
 #include "../scene/node.h"
 #include "../scene/scene.h"
-#include "../urho_2d/tilemap_2d.h"
-#include "../urho_2d/tilemap_layer_2d.h"
-#include "../urho_2d/tmx_file_2d.h"
+#include "tilemap_2d.h"
+#include "tilemap_layer_2d.h"
+#include "tmx_file_2d.h"
 
 #include "../common/debug_new.h"
 

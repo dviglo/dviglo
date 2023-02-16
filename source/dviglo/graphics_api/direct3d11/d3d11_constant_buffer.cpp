@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/constant_buffer.h"
-#include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"
+#include "../constant_buffer.h"
+#include "d3d11_graphics_impl.h"
 #include "../../io/log.h"
 
 #include "../../common/debug_new.h"

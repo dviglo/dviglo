@@ -3,11 +3,11 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../graphics/camera.h"
-#include "../graphics/geometry.h"
-#include "../graphics/material.h"
-#include "../graphics/octree_query.h"
-#include "../graphics/ribbon_trail.h"
+#include "camera.h"
+#include "geometry.h"
+#include "material.h"
+#include "octree_query.h"
+#include "ribbon_trail.h"
 #include "../graphics_api/index_buffer.h"
 #include "../graphics_api/vertex_buffer.h"
 #include "../io/log.h"

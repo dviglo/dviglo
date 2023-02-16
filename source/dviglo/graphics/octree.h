@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../graphics/drawable.h"
-#include "../graphics/octree_query.h"
+#include "drawable.h"
+#include "octree_query.h"
 
 #include <mutex>
 

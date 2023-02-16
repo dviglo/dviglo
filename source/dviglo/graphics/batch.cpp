@@ -2,14 +2,14 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/camera.h"
-#include "../graphics/geometry.h"
-#include "../graphics/graphics.h"
+#include "camera.h"
+#include "geometry.h"
+#include "graphics.h"
 #include "../graphics_api/graphics_defs.h"
-#include "../graphics/material.h"
-#include "../graphics/renderer.h"
-#include "../graphics/technique.h"
-#include "../graphics/view.h"
+#include "material.h"
+#include "renderer.h"
+#include "technique.h"
+#include "view.h"
 #include "../graphics_api/graphics_impl.h"
 #include "../graphics_api/shader_variation.h"
 #include "../graphics_api/texture_2d.h"

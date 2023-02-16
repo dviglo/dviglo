@@ -4,10 +4,10 @@
 
 #include "../core/context.h"
 #include "../input/input_events.h"
-#include "../ui/button.h"
-#include "../ui/scroll_bar.h"
-#include "../ui/slider.h"
-#include "../ui/ui_events.h"
+#include "button.h"
+#include "scroll_bar.h"
+#include "slider.h"
+#include "ui_events.h"
 
 namespace dviglo
 {

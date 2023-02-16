@@ -2,8 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/core_events.h"
-#include "../core/profiler.h"
+#include "core_events.h"
+#include "profiler.h"
 
 #include <ctime>
 

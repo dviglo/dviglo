@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../physics_2d/collision_circle_2d.h"
-#include "../physics_2d/physics_utils_2d.h"
+#include "collision_circle_2d.h"
+#include "physics_utils_2d.h"
 
 #include "../common/debug_new.h"
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../graphics/static_model.h"
+#include "static_model.h"
 
 namespace dviglo
 {

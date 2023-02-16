@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../ui/tooltip.h"
-#include "../ui/ui.h"
+#include "tooltip.h"
+#include "ui.h"
 
 namespace dviglo
 {

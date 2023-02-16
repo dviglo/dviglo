@@ -5,9 +5,9 @@
 #include "../core/context.h"
 #include "../graphics/debug_renderer.h"
 #include "../io/log.h"
-#include "../navigation/dynamic_navigation_mesh.h"
-#include "../navigation/obstacle.h"
-#include "../navigation/navigation_events.h"
+#include "dynamic_navigation_mesh.h"
+#include "obstacle.h"
+#include "navigation_events.h"
 #include "../scene/scene.h"
 
 #include "../common/debug_new.h"

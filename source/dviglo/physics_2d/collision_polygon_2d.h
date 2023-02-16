@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../physics_2d/collision_shape_2d.h"
+#include "collision_shape_2d.h"
 
 namespace dviglo
 {

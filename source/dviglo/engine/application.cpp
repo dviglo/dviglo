@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../engine/application.h"
+#include "application.h"
 #include "../io/io_events.h"
 #include "../io/log.h"
 

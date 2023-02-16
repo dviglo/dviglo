@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../resource/resource.h"
+#include "resource.h"
 
 namespace dviglo
 {

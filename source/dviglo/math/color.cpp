@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/color.h"
+#include "color.h"
 
 #include <cstdio>
 

@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../scene/component.h"
-#include "../ui/ui_element.h"
+#include "ui_element.h"
 
 namespace dviglo
 {

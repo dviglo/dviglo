@@ -4,8 +4,8 @@
 
 #include "../core/context.h"
 #include "../input/input_events.h"
-#include "../ui/check_box.h"
-#include "../ui/ui_events.h"
+#include "check_box.h"
+#include "ui_events.h"
 
 #include "../common/debug_new.h"
 

@@ -8,8 +8,8 @@
 
 #include "../core/object.h"
 #include "../graphics_api/vertex_buffer.h"
-#include "../ui/cursor.h"
-#include "../ui/ui_batch.h"
+#include "cursor.h"
+#include "ui_batch.h"
 
 namespace dviglo
 {

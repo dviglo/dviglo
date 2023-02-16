@@ -4,8 +4,8 @@
 
 #include "../../core/context.h"
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"
-#include "../../graphics_api/index_buffer.h"
+#include "d3d11_graphics_impl.h"
+#include "../index_buffer.h"
 #include "../../io/log.h"
 
 #include "../../common/debug_new.h"

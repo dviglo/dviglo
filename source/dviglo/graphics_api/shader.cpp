@@ -4,8 +4,8 @@
 
 #include "../core/context.h"
 #include "../graphics/graphics.h"
-#include "../graphics_api/shader.h"
-#include "../graphics_api/shader_variation.h"
+#include "shader.h"
+#include "shader_variation.h"
 #include "../io/deserializer.h"
 #include "../io/file_system.h"
 #include "../io/log.h"

@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics_api/gpu_object.h"
+#include "gpu_object.h"
 #include "../graphics/graphics.h"
 
 #include "../common/debug_new.h"

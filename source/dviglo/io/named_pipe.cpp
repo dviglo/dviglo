@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../core/profiler.h"
-#include "../io/named_pipe.h"
-#include "../io/log.h"
+#include "named_pipe.h"
+#include "log.h"
 
 #ifdef _WIN32
 #include "../engine/win_wrapped.h"

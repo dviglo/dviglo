@@ -4,8 +4,8 @@
 
 #include "../core/work_queue.h"
 #include "../core/profiler.h"
-#include "../graphics/camera.h"
-#include "../graphics/occlusion_buffer.h"
+#include "camera.h"
+#include "occlusion_buffer.h"
 #include "../io/log.h"
 
 #include "../common/debug_new.h"

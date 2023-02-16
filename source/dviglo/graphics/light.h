@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../graphics/drawable.h"
+#include "drawable.h"
 #include "../graphics_api/texture.h"
 #include "../math/color.h"
 #include "../math/frustum.h"

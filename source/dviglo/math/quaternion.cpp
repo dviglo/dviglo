@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/quaternion.h"
+#include "quaternion.h"
 
 #include <cstdio>
 

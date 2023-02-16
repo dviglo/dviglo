@@ -4,7 +4,7 @@
 
 #include "../core/context.h"
 #include "../graphics/debug_renderer.h"
-#include "../navigation/off_mesh_connection.h"
+#include "off_mesh_connection.h"
 #include "../scene/scene.h"
 
 #include "../common/debug_new.h"

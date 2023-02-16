@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../io/serializer.h"
+#include "serializer.h"
 
 #include "../common/debug_new.h"
 

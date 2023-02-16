@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../graphics/graphics.h"
-#include "../graphics_api/graphics_impl.h"
-#include "../graphics_api/shader_precache.h"
-#include "../graphics_api/shader_variation.h"
+#include "graphics_impl.h"
+#include "shader_precache.h"
+#include "shader_variation.h"
 #include "../io/file.h"
 #include "../io/file_system.h"
 #include "../io/log.h"

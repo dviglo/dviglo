@@ -9,9 +9,9 @@
 #include "../io/serializer.h"
 #include "../resource/xml_file.h"
 #include "../resource/json_file.h"
-#include "../scene/animatable.h"
-#include "../scene/object_animation.h"
-#include "../scene/value_animation.h"
+#include "animatable.h"
+#include "object_animation.h"
+#include "value_animation.h"
 
 #include "../common/debug_new.h"
 

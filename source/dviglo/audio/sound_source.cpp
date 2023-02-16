@@ -2,11 +2,11 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../audio/audio.h"
-#include "../audio/audio_events.h"
-#include "../audio/sound.h"
-#include "../audio/sound_source.h"
-#include "../audio/sound_stream.h"
+#include "audio.h"
+#include "audio_events.h"
+#include "sound.h"
+#include "sound_source.h"
+#include "sound_stream.h"
 #include "../core/context.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"

@@ -3,10 +3,10 @@
 // License: MIT
 
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/graphics_impl.h"
-#include "../../graphics_api/opengl/ogl_shader_program.h"
-#include "../../graphics_api/shader.h"
-#include "../../graphics_api/shader_variation.h"
+#include "../graphics_impl.h"
+#include "ogl_shader_program.h"
+#include "../shader.h"
+#include "../shader_variation.h"
 #include "../../io/log.h"
 
 #include "../../common/debug_new.h"

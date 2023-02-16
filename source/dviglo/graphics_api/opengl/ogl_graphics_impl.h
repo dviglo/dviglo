@@ -6,9 +6,9 @@
 
 #include "../../containers/hash_map.h"
 #include "../../core/timer.h"
-#include "../../graphics_api/constant_buffer.h"
-#include "../../graphics_api/opengl/ogl_shader_program.h"
-#include "../../graphics_api/texture_2d.h"
+#include "../constant_buffer.h"
+#include "ogl_shader_program.h"
+#include "../texture_2d.h"
 #include "../../math/color.h"
 
 #if defined(IOS) || defined(TVOS)

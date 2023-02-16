@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../navigation/navigation_mesh.h"
+#include "navigation_mesh.h"
 
 #include <memory>
 

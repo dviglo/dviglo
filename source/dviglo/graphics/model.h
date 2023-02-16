@@ -6,7 +6,7 @@
 
 #include "../containers/array_ptr.h"
 #include "../containers/ptr.h"
-#include "../graphics/skeleton.h"
+#include "skeleton.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../math/bounding_box.h"
 #include "../resource/resource.h"

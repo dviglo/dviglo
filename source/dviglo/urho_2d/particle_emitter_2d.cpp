@@ -8,11 +8,11 @@
 #include "../resource/resource_cache.h"
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
-#include "../urho_2d/particle_effect_2d.h"
-#include "../urho_2d/particle_emitter_2d.h"
-#include "../urho_2d/renderer_2d.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/urho_2d_events.h"
+#include "particle_effect_2d.h"
+#include "particle_emitter_2d.h"
+#include "renderer_2d.h"
+#include "sprite_2d.h"
+#include "urho_2d_events.h"
 
 #include "../common/debug_new.h"
 

@@ -4,7 +4,7 @@
 
 #include "../core/context.h"
 #include "../io/log.h"
-#include "../resource/xml_file.h"
+#include "xml_file.h"
 
 #include <pugixml/pugixml.hpp>
 

@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../core/object.h"
-#include "../graphics/graphics.h"
+#include "graphics.h"
 #include "../graphics_api/index_buffer.h"
 #include "../graphics_api/shader_variation.h"
 #include "../graphics_api/texture_2d.h"

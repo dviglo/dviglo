@@ -2,10 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../io/file.h"
-#include "../io/file_system.h"
-#include "../io/file_watcher.h"
-#include "../io/log.h"
+#include "file.h"
+#include "file_system.h"
+#include "file_watcher.h"
+#include "log.h"
 #include "../core/profiler.h"
 
 #ifdef _WIN32
@@ -20,7 +20,7 @@ extern "C"
 #elif defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
 extern "C"
 {
-#include "../io/mac_file_watcher.h"
+#include "mac_file_watcher.h"
 }
 #endif
 

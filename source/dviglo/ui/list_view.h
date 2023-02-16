@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../input/input_constants.h"
-#include "../ui/scroll_view.h"
+#include "scroll_view.h"
 
 namespace dviglo
 {

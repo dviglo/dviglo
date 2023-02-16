@@ -4,9 +4,9 @@
 
 #include "../core/context.h"
 #include "../io/log.h"
-#include "../physics_2d/collision_shape_2d.h"
-#include "../physics_2d/physics_utils_2d.h"
-#include "../physics_2d/rigid_body_2d.h"
+#include "collision_shape_2d.h"
+#include "physics_utils_2d.h"
+#include "rigid_body_2d.h"
 #include "../scene/node.h"
 #include "../scene/scene.h"
 

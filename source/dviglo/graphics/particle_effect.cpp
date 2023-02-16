@@ -4,9 +4,9 @@
 
 #include "../core/context.h"
 #include "../core/string_utils.h"
-#include "../graphics/material.h"
-#include "../graphics/particle_effect.h"
-#include "../graphics/billboard_set.h"
+#include "material.h"
+#include "particle_effect.h"
+#include "billboard_set.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"

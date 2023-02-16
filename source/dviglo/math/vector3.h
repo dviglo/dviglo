@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../math/vector2.h"
-#include "../math/math_defs.h"
+#include "vector2.h"
+#include "math_defs.h"
 
 namespace dviglo
 {

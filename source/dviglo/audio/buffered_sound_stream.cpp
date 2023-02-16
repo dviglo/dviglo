@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../audio/buffered_sound_stream.h"
+#include "buffered_sound_stream.h"
 
 #include <cstring>
 #include <iterator>

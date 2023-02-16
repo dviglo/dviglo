@@ -4,8 +4,8 @@
 
 #include "../core/context.h"
 #include "../core/core_events.h"
-#include "../engine/console.h"
-#include "../engine/engine_events.h"
+#include "console.h"
+#include "engine_events.h"
 #include "../graphics/graphics.h"
 #include "../input/input.h"
 #include "../io/io_events.h"

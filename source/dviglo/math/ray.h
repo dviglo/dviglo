@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../math/vector3.h"
-#include "../math/matrix3x4.h"
+#include "vector3.h"
+#include "matrix3x4.h"
 
 namespace dviglo
 {

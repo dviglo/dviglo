@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../ui/font_face.h"
+#include "font_face.h"
 
 namespace dviglo
 {

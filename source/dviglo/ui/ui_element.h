@@ -10,7 +10,7 @@
 #include "../input/input_constants.h"
 #include "../resource/xml_file.h"
 #include "../scene/animatable.h"
-#include "../ui/ui_batch.h"
+#include "ui_batch.h"
 
 namespace dviglo
 {

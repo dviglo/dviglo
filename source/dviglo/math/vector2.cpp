@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/vector2.h"
+#include "vector2.h"
 
 #include <cstdio>
 

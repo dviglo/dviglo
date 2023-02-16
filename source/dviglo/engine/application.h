@@ -8,7 +8,7 @@
 
 #include "../core/context.h"
 #include "../core/main.h"
-#include "../engine/engine.h"
+#include "engine.h"
 
 namespace dviglo
 {

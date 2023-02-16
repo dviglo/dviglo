@@ -11,10 +11,10 @@
 #include "../math/area_allocator.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#include "../urho_2d/animation_set_2d.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/spriter_data_2d.h"
-#include "../urho_2d/sprite_sheet_2d.h"
+#include "animation_set_2d.h"
+#include "sprite_2d.h"
+#include "spriter_data_2d.h"
+#include "sprite_sheet_2d.h"
 
 #include "../common/debug_new.h"
 

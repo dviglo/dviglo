@@ -11,8 +11,8 @@
 #include "../graphics/debug_renderer.h"
 #include "../math/math_defs.h"
 #include "../math/vector3.h"
-#include "../scene/component.h"
-#include "../scene/node.h"
+#include "component.h"
+#include "node.h"
 
 namespace dviglo
 {

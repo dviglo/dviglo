@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../containers/list.h"
-#include "../core/object.h"
+#include "object.h"
 
 #include <atomic>
 #include <mutex>

@@ -4,7 +4,7 @@
 
 #include "../core/profiler.h"
 #include "../io/log.h"
-#include "../network/http_request.h"
+#include "http_request.h"
 
 #include <civetweb/civetweb.h>
 

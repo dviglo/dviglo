@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../containers/ref_counted.h"
-#include "../urho_2d/sprite_2d.h"
+#include "sprite_2d.h"
 
 namespace dviglo
 {

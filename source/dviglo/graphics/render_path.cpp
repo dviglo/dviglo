@@ -2,9 +2,9 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/graphics.h"
-#include "../graphics/material.h"
-#include "../graphics/render_path.h"
+#include "graphics.h"
+#include "material.h"
+#include "render_path.h"
 #include "../io/log.h"
 #include "../resource/xml_file.h"
 

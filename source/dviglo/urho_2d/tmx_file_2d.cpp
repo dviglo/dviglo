@@ -10,8 +10,8 @@
 #include "../math/area_allocator.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#include "../urho_2d/sprite_2d.h"
-#include "../urho_2d/tmx_file_2d.h"
+#include "sprite_2d.h"
+#include "tmx_file_2d.h"
 
 #include "../common/debug_new.h"
 

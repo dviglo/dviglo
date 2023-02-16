@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../navigation/nav_build_data.h"
+#include "nav_build_data.h"
 
 #include <detour_tile_cache/DetourTileCacheBuilder.h>
 #include <recast/Recast.h>

@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/vector4.h"
+#include "vector4.h"
 
 #include <cstdio>
 

@@ -8,7 +8,7 @@
 
 #include "../core/object.h"
 #include "../core/timer.h"
-#include "../resource/json_value.h"
+#include "json_value.h"
 
 namespace dviglo
 {

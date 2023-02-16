@@ -2,10 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/context.h"
-#include "../core/process_utils.h"
-#include "../core/thread.h"
-#include "../core/profiler.h"
+#include "context.h"
+#include "process_utils.h"
+#include "thread.h"
+#include "profiler.h"
 #include "../io/log.h"
 
 #include "../common/debug_new.h"

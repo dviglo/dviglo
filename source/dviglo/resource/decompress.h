@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../resource/image.h"
+#include "image.h"
 
 namespace dviglo
 {

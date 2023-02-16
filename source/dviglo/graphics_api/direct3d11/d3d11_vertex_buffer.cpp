@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../../io/log.h"
-#include "../../graphics_api/vertex_buffer.h"
+#include "../vertex_buffer.h"
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"
+#include "d3d11_graphics_impl.h"
 
 #include "../../common/debug_new.h"
 

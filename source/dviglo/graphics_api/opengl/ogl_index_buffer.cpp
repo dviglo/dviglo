@@ -4,8 +4,8 @@
 
 #include "../../core/context.h"
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/graphics_impl.h"
-#include "../../graphics_api/index_buffer.h"
+#include "../graphics_impl.h"
+#include "../index_buffer.h"
 #include "../../io/log.h"
 
 #include "../../common/debug_new.h"

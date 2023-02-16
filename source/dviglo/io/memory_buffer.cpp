@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../io/memory_buffer.h"
+#include "memory_buffer.h"
 
 namespace dviglo
 {

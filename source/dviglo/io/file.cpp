@@ -3,11 +3,11 @@
 // License: MIT
 
 #include "../core/profiler.h"
-#include "../io/file.h"
-#include "../io/file_system.h"
-#include "../io/log.h"
-#include "../io/memory_buffer.h"
-#include "../io/package_file.h"
+#include "file.h"
+#include "file_system.h"
+#include "log.h"
+#include "memory_buffer.h"
+#include "package_file.h"
 
 #ifdef __ANDROID__
 #include <SDL3/SDL_rwops.h>

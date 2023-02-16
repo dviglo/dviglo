@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../audio/audio_defs.h"
+#include "audio_defs.h"
 #include "../scene/component.h"
 
 namespace dviglo

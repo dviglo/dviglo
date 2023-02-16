@@ -2,11 +2,11 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/camera.h"
-#include "../graphics/graphics.h"
-#include "../graphics/renderer.h"
-#include "../graphics/render_path.h"
-#include "../graphics/view.h"
+#include "camera.h"
+#include "graphics.h"
+#include "renderer.h"
+#include "render_path.h"
+#include "view.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
 #include "../scene/scene.h"

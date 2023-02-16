@@ -11,11 +11,11 @@
 #include "../io/io_events.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
-#include "../network/http_request.h"
-#include "../network/network.h"
-#include "../network/network_events.h"
-#include "../network/network_priority.h"
-#include "../network/protocol.h"
+#include "http_request.h"
+#include "network.h"
+#include "network_events.h"
+#include "network_priority.h"
+#include "protocol.h"
 #include "../scene/scene.h"
 
 #include <slikenet/MessageIdentifiers.h>

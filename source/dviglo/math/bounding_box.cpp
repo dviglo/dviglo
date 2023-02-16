@@ -2,8 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../math/frustum.h"
-#include "../math/polyhedron.h"
+#include "frustum.h"
+#include "polyhedron.h"
 
 #include "../common/debug_new.h"
 

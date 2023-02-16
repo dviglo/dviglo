@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/octree_query.h"
+#include "octree_query.h"
 
 #include "../common/debug_new.h"
 

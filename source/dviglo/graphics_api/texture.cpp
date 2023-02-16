@@ -4,7 +4,7 @@
 
 #include "../graphics/graphics.h"
 #include "../graphics/material.h"
-#include "../graphics_api/graphics_impl.h"
+#include "graphics_impl.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"

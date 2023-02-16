@@ -3,8 +3,8 @@
 // License: MIT
 
 #include "../graphics/graphics.h"
-#include "../graphics_api/shader.h"
-#include "../graphics_api/shader_variation.h"
+#include "shader.h"
+#include "shader_variation.h"
 
 #include "../common/debug_new.h"
 

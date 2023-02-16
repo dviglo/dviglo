@@ -7,7 +7,7 @@
 #include "../containers/ptr.h"
 #include "../containers/ref_counted.h"
 #include "../containers/vector.h"
-#include "../scene/animation_defs.h"
+#include "animation_defs.h"
 
 namespace dviglo
 {

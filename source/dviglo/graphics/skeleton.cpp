@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../graphics/skeleton.h"
+#include "skeleton.h"
 #include "../io/log.h"
 
 #include "../common/debug_new.h"

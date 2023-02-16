@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../core/profiler.h"
+#include "profiler.h"
 
 namespace dviglo
 {

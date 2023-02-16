@@ -6,11 +6,11 @@
 
 #pragma once
 
-#include "../math/bounding_box.h"
-#include "../math/matrix3x4.h"
-#include "../math/plane.h"
-#include "../math/rect.h"
-#include "../math/sphere.h"
+#include "bounding_box.h"
+#include "matrix3x4.h"
+#include "plane.h"
+#include "rect.h"
+#include "sphere.h"
 
 namespace dviglo
 {

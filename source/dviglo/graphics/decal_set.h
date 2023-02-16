@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/list.h"
-#include "../graphics/drawable.h"
-#include "../graphics/skeleton.h"
+#include "drawable.h"
+#include "skeleton.h"
 #include "../math/frustum.h"
 
 namespace dviglo

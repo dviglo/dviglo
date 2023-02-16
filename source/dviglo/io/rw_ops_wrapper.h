@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../io/file.h"
+#include "file.h"
 
 #include <SDL3/SDL_rwops.h>
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../math/matrix3.h"
+#include "matrix3.h"
 
 #include <emmintrin.h>
 

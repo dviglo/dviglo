@@ -4,9 +4,9 @@
 
 #include "../core/context.h"
 #include "../core/profiler.h"
-#include "../graphics/drawable_events.h"
-#include "../graphics/particle_effect.h"
-#include "../graphics/particle_emitter.h"
+#include "drawable_events.h"
+#include "particle_effect.h"
+#include "particle_emitter.h"
 #include "../resource/resource_cache.h"
 #include "../resource/resource_events.h"
 #include "../scene/scene.h"

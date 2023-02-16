@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../io/log.h"
-#include "../scene/component.h"
-#include "../scene/scene_resolver.h"
-#include "../scene/node.h"
+#include "component.h"
+#include "scene_resolver.h"
+#include "node.h"
 
 #include "../common/debug_new.h"
 

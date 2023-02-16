@@ -7,7 +7,7 @@
 #include "../input/input.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
-#include "../ui/ui.h"
+#include "ui.h"
 
 #include <SDL3/SDL_mouse.h>
 

@@ -2,10 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../resource/localization.h"
-#include "../resource/resource_cache.h"
-#include "../resource/json_file.h"
-#include "../resource/resource_events.h"
+#include "localization.h"
+#include "resource_cache.h"
+#include "json_file.h"
+#include "resource_events.h"
 #include "../io/log.h"
 
 #include "../common/debug_new.h"

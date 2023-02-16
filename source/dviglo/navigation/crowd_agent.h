@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "../navigation/crowd_manager.h"
+#include "crowd_manager.h"
 #include "../scene/component.h"
 
 namespace dviglo

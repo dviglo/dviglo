@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../containers/hash_set.h"
-#include "../core/attribute.h"
-#include "../core/object.h"
+#include "attribute.h"
+#include "object.h"
 
 namespace dviglo
 {

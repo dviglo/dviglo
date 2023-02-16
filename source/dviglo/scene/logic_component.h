@@ -7,7 +7,7 @@
 #pragma once
 
 #include "../containers/flag_set.h"
-#include "../scene/component.h"
+#include "component.h"
 
 namespace dviglo
 {

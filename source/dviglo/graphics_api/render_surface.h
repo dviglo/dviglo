@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../graphics/viewport.h"
-#include "../graphics_api/graphics_defs.h"
+#include "graphics_defs.h"
 
 namespace dviglo
 {

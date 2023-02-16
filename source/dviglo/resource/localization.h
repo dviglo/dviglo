@@ -5,7 +5,7 @@
 #pragma once
 
 #include "../core/context.h"
-#include "../resource/json_value.h"
+#include "json_value.h"
 
 namespace dviglo
 {

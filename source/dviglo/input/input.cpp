@@ -9,7 +9,7 @@
 #include "../core/string_utils.h"
 #include "../graphics/graphics.h"
 #include "../graphics/graphics_events.h"
-#include "../input/input.h"
+#include "input.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
 #include "../io/rw_ops_wrapper.h"

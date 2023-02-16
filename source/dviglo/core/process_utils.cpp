@@ -2,8 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/process_utils.h"
-#include "../core/string_utils.h"
+#include "process_utils.h"
+#include "string_utils.h"
 #include "../io/file_system.h"
 
 #include <cstdio>

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../ui/window.h"
+#include "window.h"
 
 namespace dviglo
 {

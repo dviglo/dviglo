@@ -8,9 +8,9 @@
 #include "../core/process_utils.h"
 #include "../core/thread.h"
 #include "../core/timer.h"
-#include "../io/file.h"
-#include "../io/io_events.h"
-#include "../io/log.h"
+#include "file.h"
+#include "io_events.h"
+#include "log.h"
 
 #include <cstdio>
 

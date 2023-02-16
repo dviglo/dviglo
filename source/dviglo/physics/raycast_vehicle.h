@@ -5,8 +5,8 @@
 #pragma once
 
 #include "../scene/logic_component.h"
-#include "../physics/physics_utils.h"
-#include "../physics/rigid_body.h"
+#include "physics_utils.h"
+#include "rigid_body.h"
 
 namespace dviglo
 {

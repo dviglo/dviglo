@@ -2,10 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/core_events.h"
-#include "../core/process_utils.h"
-#include "../core/profiler.h"
-#include "../core/work_queue.h"
+#include "core_events.h"
+#include "process_utils.h"
+#include "profiler.h"
+#include "work_queue.h"
 #include "../io/log.h"
 
 namespace dviglo

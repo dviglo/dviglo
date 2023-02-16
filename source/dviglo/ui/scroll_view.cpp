@@ -4,12 +4,12 @@
 
 #include "../core/context.h"
 #include "../input/input_events.h"
-#include "../ui/border_image.h"
-#include "../ui/scroll_bar.h"
-#include "../ui/scroll_view.h"
-#include "../ui/slider.h"
-#include "../ui/ui.h"
-#include "../ui/ui_events.h"
+#include "border_image.h"
+#include "scroll_bar.h"
+#include "scroll_view.h"
+#include "slider.h"
+#include "ui.h"
+#include "ui_events.h"
 
 #include "../common/debug_new.h"
 

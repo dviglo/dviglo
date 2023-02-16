@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../audio/sound_stream.h"
+#include "sound_stream.h"
 
 namespace dviglo
 {

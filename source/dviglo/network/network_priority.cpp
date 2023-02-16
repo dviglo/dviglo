@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../core/context.h"
-#include "../network/network_priority.h"
+#include "network_priority.h"
 
 #include "../common/debug_new.h"
 

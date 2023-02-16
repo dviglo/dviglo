@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../input/controls.h"
+#include "controls.h"
 
 namespace dviglo
 {

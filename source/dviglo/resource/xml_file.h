@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../resource/resource.h"
-#include "../resource/xml_element.h"
+#include "resource.h"
+#include "xml_element.h"
 
 #include <memory>
 

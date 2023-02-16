@@ -3,9 +3,9 @@
 // License: MIT
 
 #include "../../graphics/graphics.h"
-#include "../../graphics_api/constant_buffer.h"
-#include "../../graphics_api/graphics_impl.h"
-#include "../../graphics_api/shader_variation.h"
+#include "../constant_buffer.h"
+#include "../graphics_impl.h"
+#include "../shader_variation.h"
 #include "../../io/log.h"
 #include "ogl_shader_program.h"
 
