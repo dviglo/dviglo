@@ -47,7 +47,7 @@
 #include <emscripten/emscripten.h>
 #endif
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 
 #if defined(_MSC_VER) && defined(_DEBUG)

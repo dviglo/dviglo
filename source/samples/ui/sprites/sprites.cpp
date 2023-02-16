@@ -11,7 +11,7 @@
 
 #include "sprites.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 // Number of sprites to draw
 static const unsigned NUM_SPRITES = 100;

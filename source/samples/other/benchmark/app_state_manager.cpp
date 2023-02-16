@@ -11,7 +11,7 @@
 #include "appstate_main_screen.h"
 #include "appstate_result_screen.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

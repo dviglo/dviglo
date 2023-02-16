@@ -10,7 +10,7 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

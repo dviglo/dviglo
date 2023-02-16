@@ -25,7 +25,7 @@
 
 #include "lan_discovery.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 // Undefine Windows macro, as our Connection class has a function called SendMessage
 #ifdef SendMessage

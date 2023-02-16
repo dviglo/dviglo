@@ -8,7 +8,7 @@
 
 #include "mover.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 Mover::Mover(Context* context) :
     LogicComponent(context),

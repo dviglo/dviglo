@@ -14,7 +14,7 @@
 
 #include <pugixml/pugixml.hpp>
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 #include <memory>
 

@@ -20,7 +20,7 @@
 #include <webp/mux.h>
 #endif
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 #ifndef MAKEFOURCC
 #define MAKEFOURCC(ch0, ch1, ch2, ch3) ((unsigned)(ch0) | ((unsigned)(ch1) << 8) | ((unsigned)(ch2) << 16) | ((unsigned)(ch3) << 24))

@@ -9,7 +9,7 @@
 
 #include "create_ragdoll.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 CreateRagdoll::CreateRagdoll(Context* context) :
     Component(context)

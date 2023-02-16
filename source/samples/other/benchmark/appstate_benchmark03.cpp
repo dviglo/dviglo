@@ -16,7 +16,7 @@
 #include <dviglo/resource/resource_cache.h>
 #include <dviglo/scene/scene_events.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

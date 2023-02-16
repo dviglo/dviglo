@@ -24,7 +24,7 @@
 
 #include <SDL3/SDL.h>
 
-#include "../../debug_new.h"
+#include "../../common/debug_new.h"
 
 #ifdef DV_GLES2
 #ifndef GL_DEPTH_COMPONENT24

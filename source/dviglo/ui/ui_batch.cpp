@@ -6,7 +6,7 @@
 #include "../graphics_api/texture.h"
 #include "../ui/ui_element.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

@@ -15,7 +15,7 @@
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/prettywriter.h>
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 using namespace rapidjson;
 

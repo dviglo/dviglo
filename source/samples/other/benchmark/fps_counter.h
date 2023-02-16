@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <dviglo/base/primitive_types.h>
+#include <dviglo/common/primitive_types.h>
 
 using namespace dviglo::PrimitiveTypes;
 

@@ -24,7 +24,7 @@
 
 #include "navigation.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 DV_DEFINE_APPLICATION_MAIN(Navigation)
 

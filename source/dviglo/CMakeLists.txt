@@ -10,9 +10,8 @@ set(CMAKE_DEBUG_POSTFIX _d)
 
 # Начинаем формировать список исходников
 file(GLOB source_files
-                       *.h
     audio/*.cpp        audio/*.h
-    base/*.cpp         base/*.h
+    common/*.cpp       common/*.h
     container/*.cpp    container/*.h
     core/*.cpp         core/*.h
     engine/*.cpp       engine/*.h
@@ -28,9 +27,8 @@ file(GLOB source_files
 
 # Заодно начинаем формировать содержимое файла dviglo_all.h
 file(GLOB dviglo_all_content RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    *.h
     audio/*.h
-    base/*.h
+    common/*.h
     container/*.h
     core/*.h
     engine/*.h
@@ -45,7 +43,7 @@ file(GLOB dviglo_all_content RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Удаляем лишние элементы из списка
-list(REMOVE_ITEM dviglo_all_content "debug_new.h" "dviglo_config.h")
+list(REMOVE_ITEM dviglo_all_content "common/debug_new.h" "common/config.h")
 
 # Обрамляем каждый элемент в списке
 list(TRANSFORM dviglo_all_content REPLACE "(.+)" "#include <dviglo/\\1>")

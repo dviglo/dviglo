@@ -7,7 +7,7 @@
 #include <dviglo/container/str.h>
 #include <dviglo/math/big_int.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

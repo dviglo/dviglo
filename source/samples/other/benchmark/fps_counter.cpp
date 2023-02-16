@@ -6,7 +6,7 @@
 
 #include <dviglo/math/math_defs.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

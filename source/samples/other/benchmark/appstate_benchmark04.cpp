@@ -11,7 +11,7 @@
 #include <dviglo/input/input.h>
 #include <dviglo/resource/resource_cache.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

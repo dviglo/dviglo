@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "../dviglo_config.h"
+#include "../common/config.h"
 
-#include "../base/primitive_types.h"
+#include "../common/primitive_types.h"
 
 namespace dviglo
 {

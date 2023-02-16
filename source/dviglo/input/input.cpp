@@ -31,7 +31,7 @@
 #include <emscripten/html5.h>
 #endif
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 using namespace std;
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../base/primitive_types.h"
+#include "../common/primitive_types.h"
 
 #include <iterator>
 

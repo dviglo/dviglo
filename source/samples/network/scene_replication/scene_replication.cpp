@@ -34,7 +34,7 @@
 
 #include "scene_replication.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 // UDP port we will use
 static const unsigned short SERVER_PORT = 2345;

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <dviglo/base/utils.h>
+#include <dviglo/common/utils.h>
 #include <dviglo/graphics/animation.h>
 #include <dviglo/graphics/graphics.h>
 #include <dviglo/graphics_api/vertex_buffer.h>

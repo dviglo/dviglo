@@ -18,7 +18,7 @@
 #include FT_FREETYPE_H
 #include FT_TRUETYPE_TABLES_H
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

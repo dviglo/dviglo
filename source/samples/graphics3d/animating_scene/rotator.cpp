@@ -6,7 +6,7 @@
 
 #include "rotator.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 Rotator::Rotator(Context* context) :
     LogicComponent(context),

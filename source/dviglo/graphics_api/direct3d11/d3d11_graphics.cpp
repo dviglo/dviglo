@@ -25,7 +25,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_syswm.h>
 
-#include "../../debug_new.h"
+#include "../../common/debug_new.h"
 
 #ifdef _MSC_VER
 #pragma warning(disable:4355)

@@ -10,7 +10,7 @@
 #include "../urho_2d/sprite_2d.h"
 #include "../urho_2d/sprite_sheet_2d.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

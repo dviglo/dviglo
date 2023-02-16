@@ -35,7 +35,7 @@
 
 #include <SDL3/SDL.h>
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

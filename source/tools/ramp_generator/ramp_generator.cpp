@@ -18,7 +18,7 @@
 #endif
 #include <stb/stb_image_write.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

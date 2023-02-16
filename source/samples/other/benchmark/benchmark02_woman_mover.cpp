@@ -8,7 +8,7 @@
 #include <dviglo/graphics/animation_state.h>
 #include <dviglo/scene/scene.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

@@ -7,7 +7,7 @@
 
 #include <cstdio>
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 using namespace std;
 

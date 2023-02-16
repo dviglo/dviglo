@@ -20,7 +20,7 @@
 
 #include "sound_effects.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 // Custom variable identifier for storing sound effect name within the UI element
 static const StringHash VAR_SOUNDRESOURCE("SoundResource");

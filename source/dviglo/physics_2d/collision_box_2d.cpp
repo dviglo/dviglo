@@ -6,7 +6,7 @@
 #include "../physics_2d/collision_box_2d.h"
 #include "../physics_2d/physics_utils_2d.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

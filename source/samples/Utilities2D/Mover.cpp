@@ -9,7 +9,7 @@
 #include <dviglo/scene/scene.h>
 #include <dviglo/scene/scene_events.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 #include "Mover.h"
 

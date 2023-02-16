@@ -16,7 +16,7 @@
 #include <dviglo/engine/win_wrapped.h>
 #endif
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 static const int VERTEX_CACHE_SIZE = 32;
 

@@ -9,7 +9,7 @@
 #include "../graphics_api/render_surface.h"
 #include "../graphics_api/texture.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

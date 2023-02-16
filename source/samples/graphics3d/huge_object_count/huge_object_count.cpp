@@ -22,7 +22,7 @@
 
 #include "huge_object_count.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 DV_DEFINE_APPLICATION_MAIN(HugeObjectCount)
 

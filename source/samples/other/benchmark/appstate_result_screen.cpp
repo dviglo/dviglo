@@ -13,7 +13,7 @@
 #include <dviglo/ui/ui_events.h>
 #include <dviglo/ui/window.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

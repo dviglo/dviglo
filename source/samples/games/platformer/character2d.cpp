@@ -14,7 +14,7 @@
 #include <dviglo/urho_2d/animated_sprite_2d.h>
 #include <dviglo/urho_2d/animation_set_2d.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 #include "character2d.h"
 

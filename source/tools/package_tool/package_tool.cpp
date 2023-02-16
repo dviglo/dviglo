@@ -16,7 +16,7 @@
 #include <lz4/lz4.h>
 #include <lz4/lz4hc.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

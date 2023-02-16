@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../base/utils.h"
+#include "../common/utils.h"
 #include "../core/context.h"
 #include "../core/profiler.h"
 #include "../graphics/batch.h"
@@ -18,7 +18,7 @@
 #include "../resource/resource_cache.h"
 #include "../scene/node.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

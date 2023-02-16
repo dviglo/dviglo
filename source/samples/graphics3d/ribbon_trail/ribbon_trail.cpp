@@ -22,7 +22,7 @@
 
 #include "ribbon_trail.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 DV_DEFINE_APPLICATION_MAIN(RibbonTrailDemo)
 

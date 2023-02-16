@@ -7,7 +7,7 @@
 #include "../../graphics/graphics.h"
 #include "../../graphics_api/direct3d11/d3d11_graphics_impl.h"
 
-#include "../../debug_new.h"
+#include "../../common/debug_new.h"
 
 namespace dviglo
 {

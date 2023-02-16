@@ -1,0 +1,19 @@
+// Copyright (c) 2008-2023 the Urho3D project
+// Copyright (c) 2022-2023 the Dviglo project
+// License: MIT
+
+#pragma once
+
+#ifdef DVIGLO_SHARED // Динамическая версия движка
+#    if _WIN32 // Visual Studio или MinGW
+#        ifdef DVIGLO_IS_BUILDING // Компиляция движка
+#            define DV_API __declspec(dllexport)
+#        else // Использование движка
+#            define DV_API __declspec(dllimport)
+#        endif
+#    else // Linux
+#        define DV_API __attribute__((visibility("default")))
+#    endif
+#else // Статическая версия движка
+#    define DV_API
+#endif

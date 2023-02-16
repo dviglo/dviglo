@@ -4,7 +4,7 @@
 
 #include "animation.h"
 
-#include "../base/utils.h"
+#include "../common/utils.h"
 #include "../core/context.h"
 #include "../core/profiler.h"
 #include "../io/deserializer.h"
@@ -17,7 +17,7 @@
 
 #include <algorithm>
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

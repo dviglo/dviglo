@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../dviglo_config.h"
+#include "../common/config.h"
 
 #include "../container/allocator.h"
 

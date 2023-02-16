@@ -14,7 +14,7 @@
 
 #include "character2d.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 // Character2D logic component
 Character2D::Character2D(Context* context) :

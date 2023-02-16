@@ -6,7 +6,7 @@
 #include "../graphics_api/shader.h"
 #include "../graphics_api/shader_variation.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

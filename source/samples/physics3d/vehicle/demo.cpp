@@ -29,7 +29,7 @@
 #include "vehicle.h"
 #include "demo.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 const float CAMERA_DISTANCE = 10.0f;
 

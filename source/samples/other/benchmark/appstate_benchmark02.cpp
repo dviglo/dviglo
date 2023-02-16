@@ -16,7 +16,7 @@
 #include <dviglo/scene/scene_events.h>
 #include <dviglo/scene/spline_path.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
 

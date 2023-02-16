@@ -11,7 +11,7 @@
 
 #include "clicker.h"
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 // Expands to this example's entry-point
 DV_DEFINE_APPLICATION_MAIN(Clicker)

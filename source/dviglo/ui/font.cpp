@@ -14,7 +14,7 @@
 #include "../resource/xml_element.h"
 #include "../resource/xml_file.h"
 
-#include "../debug_new.h"
+#include "../common/debug_new.h"
 
 namespace dviglo
 {

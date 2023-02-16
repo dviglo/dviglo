@@ -31,7 +31,7 @@
 #include <dviglo/urho_2d/tilemap_layer_2d.h>
 #include <dviglo/urho_2d/tmx_file_2d.h>
 
-#include <dviglo/debug_new.h>
+#include <dviglo/common/debug_new.h>
 
 #include "character2d.h"
 #include "isometric.h"

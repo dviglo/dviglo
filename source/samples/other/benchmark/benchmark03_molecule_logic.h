@@ -5,7 +5,7 @@
 #pragma once
 
 #include <dviglo/scene/logic_component.h>
-#include <dviglo/base/primitive_types.h>
+#include <dviglo/common/primitive_types.h>
 
 namespace dv = dviglo;
 using namespace dviglo::PrimitiveTypes;

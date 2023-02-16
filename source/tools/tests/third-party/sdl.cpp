@@ -7,7 +7,7 @@
 
 #include <SDL3/SDL.h>
 
-#include <dviglo/dviglo_config.h> // DVIGLO_SHARED
+#include <dviglo/common/config.h> // DVIGLO_SHARED
 
 void test_third_party_sdl()
 {

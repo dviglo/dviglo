@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../dviglo_config.h"
+#include "../common/config.h"
 
 #ifndef _WIN32
 #include <pthread.h>
