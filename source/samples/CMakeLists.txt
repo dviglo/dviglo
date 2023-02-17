@@ -1,7 +1,7 @@
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
-if(DVIGLO_IS_SUBPROJECT)
+if(DV_IS_SUBPROJECT)
     return()
 endif()
 
