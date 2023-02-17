@@ -6,7 +6,7 @@
 
 #ifdef DV_SHARED // Динамическая версия движка
 #    if _WIN32 // Visual Studio или MinGW
-#        ifdef DVIGLO_IS_BUILDING // Компиляция движка
+#        ifdef DV_IS_BUILDING // Компиляция движка
 #            define DV_API __declspec(dllexport)
 #        else // Использование движка
 #            define DV_API __declspec(dllimport)

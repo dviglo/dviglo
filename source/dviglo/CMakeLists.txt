@@ -138,7 +138,7 @@ else()
 endif()
 
 # При компиляции библиотеки и при использовании библиотеки h-файлы отличаются
-target_compile_definitions(${target_name} PRIVATE DVIGLO_IS_BUILDING=1)
+target_compile_definitions(${target_name} PRIVATE DV_IS_BUILDING=1)
 
 # Подключаем библиотеки из папки third-party
 target_link_libraries(${target_name} PUBLIC SDL3-static stb rapidjson lz4 pugixml freetype etcpack)
