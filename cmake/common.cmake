@@ -72,7 +72,7 @@ endif()
 
 # ==================== Ищем DirectX ====================
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/Modules)
 
 # Копируем d3dcompiler_xx.dll в папку bin. Этот файл есть в Windows SDK,
 # но отсутствует в DirectX redist, поэтому его надо распространять вместе с игрой
