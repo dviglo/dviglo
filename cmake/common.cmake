@@ -74,18 +74,11 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/Modules)
 
-# Копируем d3dcompiler_xx.dll в папку bin. Этот файл есть в Windows SDK,
-# но отсутствует в DirectX redist, поэтому его надо распространять вместе с игрой
 if(WIN32)
-    set(DIRECTX_REQUIRED_COMPONENTS D3D11)
-
-    find_package(DirectX REQUIRED ${DIRECTX_REQUIRED_COMPONENTS})
-    if(DIRECTX_FOUND)
-        if(DIRECT3D_DLL AND DV_D3D11)
-            file(COPY ${DIRECT3D_DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
-            file(COPY ${DIRECT3D_DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin/tool)
-        endif()
-    endif ()
+    find_package(DirectX REQUIRED D3D11)
+    if(NOT DIRECTX_FOUND)
+        message(FATAL_ERROR "D3D11 не найден" )
+    endif()
 endif ()
 
 # ==================== Утилиты ====================
@@ -168,6 +161,12 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
             list(APPEND libs ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS})
         endif()
 
+        # Добавляем d3dcompiler_xx.dll в список. Этот файл есть в Windows SDK,
+        # но отсутствует в DirectX redist, поэтому его надо распространять вместе с игрой
+        if(WIN32)
+            list(APPEND libs ${DIRECT3D_DLL})
+        endif()
+
         # Если список пустой, то не создаём кастомный таргет
         if(NOT libs)
             return()
@@ -175,6 +174,7 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
 
         # Сам по себе таргет не активируется. Нужно использовать функцию add_dependencies
         add_custom_target(${copying_target_name}
+                      COMMAND ${CMAKE_COMMAND} -E make_directory "${exe_target_dir}"
                       COMMAND ${CMAKE_COMMAND} -E copy
                           ${libs}
                           "${exe_target_dir}"
