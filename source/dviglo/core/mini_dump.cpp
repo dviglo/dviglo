@@ -6,7 +6,7 @@
 
 #include "mini_dump.h"
 #include "process_utils.h"
-#include "../engine/win_wrapped.h"
+#include "../common/win_wrapped.h"
 
 #include <cstdio>
 #include <io.h>

@@ -12,9 +12,7 @@
 #include <dviglo/resource/xml_element.h>
 #include <dviglo/resource/xml_file.h>
 
-#ifdef WIN32
-#include <dviglo/engine/win_wrapped.h>
-#endif
+#include <dviglo/common/win_wrapped.h>
 
 #define STBRP_LARGE_RECTS
 #define STB_RECT_PACK_IMPLEMENTATION

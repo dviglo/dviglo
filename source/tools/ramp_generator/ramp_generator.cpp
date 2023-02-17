@@ -9,9 +9,7 @@
 #include <dviglo/core/process_utils.h>
 #include <dviglo/core/string_utils.h>
 
-#ifdef WIN32
-#include <dviglo/engine/win_wrapped.h>
-#endif
+#include <dviglo/common/win_wrapped.h>
 
 #ifdef DV_SHARED
 #define STB_IMAGE_WRITE_IMPLEMENTATION

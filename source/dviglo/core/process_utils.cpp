@@ -22,7 +22,7 @@ extern "C" unsigned SDL_TVOS_GetActiveProcessorCount();
 #endif
 
 #if defined(_WIN32)
-#include "../engine/win_wrapped.h"
+#include "../common/win_wrapped.h"
 #include <io.h>
 #if defined(_MSC_VER)
 #include <float.h>

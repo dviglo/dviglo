@@ -8,7 +8,7 @@
 
 #if defined(_WIN32) && !defined(DV_WIN32_CONSOLE)
 #include "mini_dump.h"
-#include "../engine/win_wrapped.h"
+#include "../common/win_wrapped.h"
 #ifdef _MSC_VER
 #include <crtdbg.h>
 #endif

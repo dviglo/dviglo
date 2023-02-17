@@ -9,7 +9,7 @@
 #include "../core/profiler.h"
 
 #ifdef _WIN32
-#include "../engine/win_wrapped.h"
+#include "../common/win_wrapped.h"
 #elif __linux__
 #include <sys/inotify.h>
 extern "C"

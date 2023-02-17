@@ -9,9 +9,7 @@
 #include <dviglo/io/file_system.h>
 #include <dviglo/io/package_file.h>
 
-#ifdef WIN32
-#include <dviglo/engine/win_wrapped.h>
-#endif
+#include <dviglo/common/win_wrapped.h>
 
 #include <lz4/lz4.h>
 #include <lz4/lz4hc.h>

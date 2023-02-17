@@ -12,9 +12,7 @@
 
 #include "ogre_importer_utils.h"
 
-#ifdef WIN32
-#include <dviglo/engine/win_wrapped.h>
-#endif
+#include <dviglo/common/win_wrapped.h>
 
 #include <dviglo/common/debug_new.h>
 
