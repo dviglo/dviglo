@@ -4,7 +4,7 @@
 
 #include <cstddef> // std::ptrdiff_t
 #include <cstdint> // std::intptr_t
-#include <limits> // std::numeric_limits
+#include <limits>  // std::numeric_limits
 
 // https://en.cppreference.com/w/cpp/language/types
 static_assert(std::numeric_limits<unsigned char>::digits == 8);
