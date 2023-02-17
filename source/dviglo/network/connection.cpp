@@ -18,9 +18,11 @@
 #include "../scene/scene_events.h"
 #include "../scene/smoothed_transform.h"
 
+#define byte BYTE // В файле rpcndr.h определён тип byte, который конфликтует с byte движка
 #include <slikenet/MessageIdentifiers.h>
 #include <slikenet/peerinterface.h>
 #include <slikenet/statistics.h>
+#undef byte
 
 #ifdef SendMessage
 #undef SendMessage

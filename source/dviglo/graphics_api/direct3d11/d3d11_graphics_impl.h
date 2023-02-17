@@ -10,6 +10,9 @@
 #include "../graphics_defs.h"
 #include "../../math/color.h"
 
+// Не позволяем заголовкам ниже подключить необёрнутый windows.h
+#include "../../common/win_wrapped.h"
+
 #include <d3d11.h>
 #include <dxgi.h>
 

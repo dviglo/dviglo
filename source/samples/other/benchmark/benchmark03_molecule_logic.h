@@ -8,7 +8,7 @@
 #include <dviglo/common/primitive_types.h>
 
 namespace dv = dviglo;
-using namespace dviglo::PrimitiveTypes;
+using namespace dvt;
 
 class Benchmark03_MoleculeLogic : public dv::LogicComponent
 {

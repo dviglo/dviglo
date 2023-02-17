@@ -6,8 +6,10 @@
 
 #include <cstddef> // std::byte
 
-// User can inject dviglo::PrimitiveTypes into other namespace
-namespace dviglo::PrimitiveTypes
+// Пользователь может инжектировать dvt (dviglo types) в любое пространство имён.
+// Для namespace используется короткое имя вместо dviglo::primitive_types, так как в
+// подсказах VS тип пишется вместе с пространством имён
+namespace dvt
 {
 
 // https://en.cppreference.com/w/cpp/language/types
@@ -23,29 +25,29 @@ using u64 = unsigned long long;
 // Unicode code point (UTF-32 code unit)
 using c32 = char32_t;
 
-// For raw data
+// Для сырых данных
 using std::byte;
 
-// Some hash value (checksum for example)
+// Некий хеш (например контрольная сумма)
 using hash16 = u16;
 using hash32 = u32;
 using hash64 = u64;
 
-// Some ID
+// Некий идентификатор
 using id32 = u32;
 
-// Some mask
+// Некая маска
 using mask32 = u32;
 
-// Some flags
+// Некий набор битовых флагов
 using flagset32 = u32;
 
-} // namespace dviglo::PrimitiveTypes
+} // namespace dvt
 
 namespace dviglo
 {
 
-using namespace dviglo::PrimitiveTypes;
+using namespace dvt;
 
 } // namespace dviglo
 

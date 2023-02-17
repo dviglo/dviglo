@@ -6,7 +6,7 @@
 
 #include <dviglo/common/primitive_types.h>
 
-using namespace dviglo::PrimitiveTypes;
+using namespace dvt;
 
 class FpsCounter
 {
