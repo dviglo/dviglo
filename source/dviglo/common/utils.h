@@ -11,18 +11,18 @@
 namespace dviglo
 {
 
-/// Converts enum class to u8 if underlying type is u8
+/// Преобразует enum class в u8, если базовый тип - u8
 template<typename EnumClass>
-inline constexpr std::enable_if_t<std::is_same_v<std::underlying_type_t<EnumClass>, u8>, u8> ToU8(EnumClass enumClass)
+constexpr std::enable_if_t<std::is_same_v<std::underlying_type_t<EnumClass>, u8>, u8> to_u8(EnumClass enum_class)
 {
-	return static_cast<u8>(enumClass);
+    return static_cast<u8>(enum_class);
 }
 
-/// Converts enum class to u32 if underlying type is u32
+/// Преобразует enum class в u32, если базовый тип - u32
 template<typename EnumClass>
-inline constexpr std::enable_if_t<std::is_same_v<std::underlying_type_t<EnumClass>, u32>, u32> ToU32(EnumClass enumClass)
+constexpr std::enable_if_t<std::is_same_v<std::underlying_type_t<EnumClass>, u32>, u32> to_u32(EnumClass enum_class)
 {
-	return static_cast<u32>(enumClass);
+    return static_cast<u32>(enum_class);
 }
 
 } // namespace dviglo

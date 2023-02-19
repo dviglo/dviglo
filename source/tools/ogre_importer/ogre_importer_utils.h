@@ -171,7 +171,7 @@ struct ModelMorph
         for (unsigned i = 0; i < buffers_.Size(); ++i)
         {
             dest.WriteU32(buffers_[i].vertexBuffer_);
-            dest.WriteU32(ToU32(buffers_[i].elementMask_));
+            dest.WriteU32(to_u32(buffers_[i].elementMask_));
             dest.WriteU32(buffers_[i].vertices_.Size());
             VertexElements elementMask = buffers_[i].elementMask_;
 

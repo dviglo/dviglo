@@ -477,7 +477,7 @@ Vector<byte> CustomGeometry::GetGeometryDataAttr() const
     VectorBuffer ret;
 
     ret.WriteVLE(geometries_.Size());
-    ret.WriteU32(ToU32(elementMask_));
+    ret.WriteU32(to_u32(elementMask_));
 
     for (unsigned i = 0; i < geometries_.Size(); ++i)
     {

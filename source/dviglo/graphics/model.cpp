@@ -415,7 +415,7 @@ bool Model::Save(Serializer& dest) const
              j != morphs_[i].buffers_.End(); ++j)
         {
             dest.WriteU32(j->first_);
-            dest.WriteU32(ToU32(j->second_.elementMask_));
+            dest.WriteU32(to_u32(j->second_.elementMask_));
             dest.WriteU32(j->second_.vertexCount_);
 
             // Base size: size of each vertex index

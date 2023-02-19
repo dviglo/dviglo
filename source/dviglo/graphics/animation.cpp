@@ -226,7 +226,7 @@ bool Animation::Save(Serializer& dest) const
     {
         const AnimationTrack& track = i->second_;
         dest.WriteString(track.name_);
-        dest.WriteU8(ToU8(track.channelMask_));
+        dest.WriteU8(to_u8(track.channelMask_));
         dest.WriteU32(track.keyFrames_.Size());
 
         // Write keyframes of the track

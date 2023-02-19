@@ -1016,7 +1016,7 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
                 {
                     AnimationTrack& track = newAnimation.tracks_[i];
                     dest.WriteString(track.name_);
-                    dest.WriteU8(ToU8(track.channelMask_));
+                    dest.WriteU8(to_u8(track.channelMask_));
                     dest.WriteU32(track.keyFrames_.Size());
                     for (unsigned j = 0; j < track.keyFrames_.Size(); ++j)
                     {
