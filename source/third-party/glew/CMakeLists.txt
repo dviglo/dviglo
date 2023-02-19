@@ -24,7 +24,7 @@ set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Подключаем OpenGL к таргетам, которые используют текущую библиотеку
 find_package(OpenGL)
-target_link_libraries(${target_name} INTERFACE ${OPENGL_gl_LIBRARY})
+target_link_libraries(${target_name} INTERFACE ${OPENGL_LIBRARIES})
 target_include_directories(${target_name} INTERFACE ${OPENGL_INCLUDE_DIR})
 
 # Заставляем VS отображать дерево каталогов

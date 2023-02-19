@@ -156,10 +156,6 @@ endif()
 if(DV_OPENGL)
     target_compile_definitions(${target_name} PUBLIC DV_OPENGL=1)
     target_link_libraries(${target_name} PUBLIC glew)
-
-    if(NOT WIN32) # Целевая ОС - Linux
-        target_link_libraries(${target_name} PUBLIC GL)
-    endif()
 endif()
 
 if(DV_MINIDUMPS)
