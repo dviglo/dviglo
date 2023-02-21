@@ -23,8 +23,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DParticle)
 
-Urho2DParticle::Urho2DParticle(Context* context) :
-    Sample(context)
+Urho2DParticle::Urho2DParticle()
 {
 }
 
@@ -55,7 +54,7 @@ void Urho2DParticle::Start()
 
 void Urho2DParticle::CreateScene()
 {
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
     // Create camera node
@@ -109,7 +108,7 @@ void Urho2DParticle::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

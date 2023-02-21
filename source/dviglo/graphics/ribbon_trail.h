@@ -50,11 +50,11 @@ class DV_API RibbonTrail : public Drawable
 
 public:
     /// Construct.
-    explicit RibbonTrail(Context* context);
+    explicit RibbonTrail();
     /// Destruct.
     ~RibbonTrail() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;
     /// Handle enabled/disabled state change.

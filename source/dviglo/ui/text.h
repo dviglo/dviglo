@@ -65,11 +65,11 @@ class DV_API Text : public UISelectable
 
 public:
     /// Construct.
-    explicit Text(Context* context);
+    explicit Text();
     /// Destruct.
     ~Text() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;

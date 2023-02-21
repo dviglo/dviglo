@@ -24,7 +24,7 @@ class DV_API Texture : public ResourceWithMetadata, public GPUObject
 
 public:
     /// Construct.
-    explicit Texture(Context* context);
+    explicit Texture();
     /// Destruct.
     ~Texture() override;
 

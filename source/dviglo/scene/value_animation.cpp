@@ -26,8 +26,7 @@ const char* interpMethodNames[] =
     nullptr
 };
 
-ValueAnimation::ValueAnimation(Context* context) :
-    Resource(context),
+ValueAnimation::ValueAnimation() :
     owner_(nullptr),
     interpolationMethod_(IM_LINEAR),
     splineTension_(0.5f),
@@ -41,14 +40,14 @@ ValueAnimation::ValueAnimation(Context* context) :
 
 ValueAnimation::~ValueAnimation() = default;
 
-void ValueAnimation::RegisterObject(Context* context)
+void ValueAnimation::RegisterObject()
 {
-    context->RegisterFactory<ValueAnimation>();
+    DV_CONTEXT.RegisterFactory<ValueAnimation>();
 }
 
 bool ValueAnimation::BeginLoad(Deserializer& source)
 {
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
     if (!xmlFile.Load(source))
         return false;
 
@@ -57,7 +56,7 @@ bool ValueAnimation::BeginLoad(Deserializer& source)
 
 bool ValueAnimation::Save(Serializer& dest) const
 {
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
 
     XMLElement rootElem = xmlFile.CreateRoot("valueanimation");
     if (!SaveXML(rootElem))

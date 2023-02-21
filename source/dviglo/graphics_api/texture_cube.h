@@ -21,11 +21,11 @@ class DV_API TextureCube : public Texture
 
 public:
     /// Construct.
-    explicit TextureCube(Context* context);
+    explicit TextureCube();
     /// Destruct.
     ~TextureCube() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

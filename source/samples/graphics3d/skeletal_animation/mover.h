@@ -15,7 +15,7 @@ class Mover : public LogicComponent
 
 public:
     /// Construct.
-    explicit Mover(Context* context);
+    explicit Mover();
 
     /// Set motion parameters: forward movement speed, rotation speed, and movement boundaries.
     void SetParameters(float moveSpeed, float rotationSpeed, const BoundingBox& bounds);

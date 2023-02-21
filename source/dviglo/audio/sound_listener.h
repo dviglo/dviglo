@@ -16,11 +16,11 @@ class DV_API SoundListener : public Component
 
 public:
     /// Construct.
-    explicit SoundListener(Context* context);
+    explicit SoundListener();
     /// Destruct.
     ~SoundListener() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 };
 
 }

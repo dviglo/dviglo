@@ -20,11 +20,11 @@ class DV_API BorderImage : public UIElement
 
 public:
     /// Construct.
-    explicit BorderImage(Context* context);
+    explicit BorderImage();
     /// Destruct.
     ~BorderImage() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Return UI rendering batches.
     void GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor) override;

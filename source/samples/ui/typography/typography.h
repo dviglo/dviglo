@@ -14,7 +14,7 @@ class Typography : public Sample
 
 public:
     /// Construct.
-    explicit Typography(Context* context);
+    explicit Typography();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

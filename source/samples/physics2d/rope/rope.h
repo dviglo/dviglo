@@ -24,7 +24,7 @@ class Urho2DPhysicsRope : public Sample
 
 public:
     /// Construct.
-    explicit Urho2DPhysicsRope(Context* context);
+    explicit Urho2DPhysicsRope();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -12,17 +12,16 @@ namespace dviglo
 
 extern const char* NAVIGATION_CATEGORY;
 
-Navigable::Navigable(Context* context) :
-    Component(context),
+Navigable::Navigable() :
     recursive_(true)
 {
 }
 
 Navigable::~Navigable() = default;
 
-void Navigable::RegisterObject(Context* context)
+void Navigable::RegisterObject()
 {
-    context->RegisterFactory<Navigable>(NAVIGATION_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Navigable>(NAVIGATION_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE("Recursive", recursive_, true, AM_DEFAULT);

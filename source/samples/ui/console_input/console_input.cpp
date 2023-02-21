@@ -36,8 +36,7 @@ const char* urhoThreatLevels[] = {
     "Urho is homing in on you mercilessly"
 };
 
-ConsoleInput::ConsoleInput(Context* context) :
-    Sample(context)
+ConsoleInput::ConsoleInput()
 {
 }
 

@@ -334,7 +334,7 @@ bool TmxImageLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
         return false;
     }
 
-    sprite_ = new Sprite2D(tmxFile_->GetContext());
+    sprite_ = new Sprite2D();
     sprite_->SetTexture(texture);
     sprite_->SetRectangle(IntRect(0, 0, texture->GetWidth(), texture->GetHeight()));
     // Set image hot spot at left top
@@ -351,8 +351,7 @@ Sprite2D* TmxImageLayer2D::GetSprite() const
     return sprite_;
 }
 
-TmxFile2D::TmxFile2D(Context* context) :
-    Resource(context),
+TmxFile2D::TmxFile2D() :
     edgeOffset_(0.f)
 {
 }
@@ -363,9 +362,9 @@ TmxFile2D::~TmxFile2D()
         delete layer;
 }
 
-void TmxFile2D::RegisterObject(Context* context)
+void TmxFile2D::RegisterObject()
 {
-    context->RegisterFactory<TmxFile2D>();
+    DV_CONTEXT.RegisterFactory<TmxFile2D>();
 }
 
 bool TmxFile2D::BeginLoad(Deserializer& source)
@@ -373,7 +372,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
     if (GetName().Empty())
         SetName(source.GetName());
 
-    loadXMLFile_ = new XMLFile(context_);
+    loadXMLFile_ = new XMLFile();
     if (!loadXMLFile_->Load(source))
     {
         DV_LOGERROR("Load XML failed " + source.GetName());
@@ -576,7 +575,7 @@ SharedPtr<XMLFile> TmxFile2D::LoadTSXFile(const String& source)
 {
     String tsxFilePath = GetParentPath(GetName()) + source;
     SharedPtr<File> tsxFile = GetSubsystem<ResourceCache>()->GetFile(tsxFilePath);
-    SharedPtr<XMLFile> tsxXMLFile(new XMLFile(context_));
+    SharedPtr<XMLFile> tsxXMLFile(new XMLFile());
     if (!tsxFile || !tsxXMLFile->Load(*tsxFile))
     {
         DV_LOGERROR("Load TSX file failed " + tsxFilePath);
@@ -660,7 +659,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
             {
                 for (int x = margin; x + tileWidth <= imageWidth - margin; x += tileWidth + spacing)
                 {
-                    SharedPtr<Sprite2D> sprite(new Sprite2D(context_));
+                    SharedPtr<Sprite2D> sprite(new Sprite2D());
                     sprite->SetTexture(texture);
                     sprite->SetRectangle(IntRect(x, y, x + tileWidth, y + tileHeight));
                     sprite->SetHotSpot(hotSpot);
@@ -735,7 +734,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
             }
         }
 
-        SharedPtr<Texture2D> texture(new Texture2D(context_));
+        SharedPtr<Texture2D> texture(new Texture2D());
         texture->SetMipsToSkip(QUALITY_LOW, 0);
         texture->SetNumLevels(1);
         texture->SetSize(allocator.GetWidth(), allocator.GetHeight(), Graphics::GetRGBAFormat());
@@ -755,7 +754,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
                     image->GetData() + y * image->GetWidth() * 4, (size_t)image->GetWidth() * 4);
             }
 
-            SharedPtr<Sprite2D> sprite(new Sprite2D(context_));
+            SharedPtr<Sprite2D> sprite(new Sprite2D());
             sprite->SetTexture(texture);
             sprite->SetRectangle(IntRect(info.x, info.y, info.x + info.imageWidth, info.y + info.imageHeight));
             sprite->SetHotSpot(Vector2::ZERO);

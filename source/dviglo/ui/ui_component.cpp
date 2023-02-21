@@ -35,7 +35,7 @@ class UIElement3D : public UIElement
     DV_OBJECT(UIElement3D, UIElement);
 public:
     /// Construct.
-    explicit UIElement3D(Context* context) : UIElement(context) { }
+    explicit UIElement3D() { }
     /// Destruct.
     ~UIElement3D() override = default;
     /// Set UIComponent which is using this element as root element.
@@ -137,21 +137,20 @@ protected:
     WeakPtr<Viewport> viewport_;
 };
 
-UIComponent::UIComponent(Context* context)
-    : Component(context),
-    viewportIndex_(0)
+UIComponent::UIComponent()
+    : viewportIndex_(0)
 {
-    texture_ = context_->CreateObject<Texture2D>();
+    texture_ = DV_CONTEXT.CreateObject<Texture2D>();
     texture_->SetFilterMode(FILTER_BILINEAR);
     texture_->SetAddressMode(COORD_U, ADDRESS_CLAMP);
     texture_->SetAddressMode(COORD_V, ADDRESS_CLAMP);
     texture_->SetNumLevels(1);                                        // No mipmaps
 
-    rootElement_ = context_->CreateObject<UIElement3D>();
+    rootElement_ = DV_CONTEXT.CreateObject<UIElement3D>();
     rootElement_->SetTraversalMode(TM_BREADTH_FIRST);
     rootElement_->SetEnabled(true);
 
-    material_ = context_->CreateObject<Material>();
+    material_ = DV_CONTEXT.CreateObject<Material>();
     material_->SetTechnique(0, GetSubsystem<ResourceCache>()->GetResource<Technique>("Techniques/Diff.xml"));
     material_->SetTexture(TU_DIFFUSE, texture_);
 
@@ -164,10 +163,10 @@ UIComponent::UIComponent(Context* context)
 
 UIComponent::~UIComponent() = default;
 
-void UIComponent::RegisterObject(Context* context)
+void UIComponent::RegisterObject()
 {
-    context->RegisterFactory<UIComponent>();
-    context->RegisterFactory<UIElement3D>();
+    DV_CONTEXT.RegisterFactory<UIComponent>();
+    DV_CONTEXT.RegisterFactory<UIElement3D>();
 }
 
 UIElement* UIComponent::GetRoot() const

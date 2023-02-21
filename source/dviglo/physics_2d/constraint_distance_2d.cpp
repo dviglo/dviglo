@@ -14,8 +14,7 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-ConstraintDistance2D::ConstraintDistance2D(Context* context) :
-    Constraint2D(context),
+ConstraintDistance2D::ConstraintDistance2D() :
     ownerBodyAnchor_(Vector2::ZERO),
     otherBodyAnchor_(Vector2::ZERO)
 {
@@ -24,9 +23,9 @@ ConstraintDistance2D::ConstraintDistance2D(Context* context) :
 
 ConstraintDistance2D::~ConstraintDistance2D() = default;
 
-void ConstraintDistance2D::RegisterObject(Context* context)
+void ConstraintDistance2D::RegisterObject()
 {
-    context->RegisterFactory<ConstraintDistance2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ConstraintDistance2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Owner Body Anchor", GetOwnerBodyAnchor, SetOwnerBodyAnchor, Vector2::ZERO, AM_DEFAULT);

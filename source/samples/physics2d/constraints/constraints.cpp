@@ -48,8 +48,7 @@ DV_DEFINE_APPLICATION_MAIN(Urho2DConstraints)
 Node* pickedNode;
 RigidBody2D* dummyBody;
 
-Urho2DConstraints::Urho2DConstraints(Context* context) :
-    Sample(context)
+Urho2DConstraints::Urho2DConstraints()
 {
 }
 
@@ -76,7 +75,7 @@ void Urho2DConstraints::Start()
 
 void Urho2DConstraints::CreateScene()
 {
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
     scene_->CreateComponent<DebugRenderer>();
     auto* physicsWorld = scene_->CreateComponent<PhysicsWorld2D>(); // Create 2D physics world component
@@ -96,7 +95,7 @@ void Urho2DConstraints::CreateScene()
     camera_->SetZoom(1.2f * Min((float)graphics->GetWidth() / 1280.0f, (float)graphics->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera_));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, camera_));
     auto* renderer = GetSubsystem<Renderer>();
     renderer->SetViewport(0, viewport);
 
@@ -459,7 +458,7 @@ void Urho2DConstraints::HandleUpdate(StringHash eventType, VariantMap& eventData
     // Save scene
     if (input->GetKeyPress(KEY_F5))
     {
-        File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/Constraints.xml", FILE_WRITE);
+        File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/Constraints.xml", FILE_WRITE);
         scene_->SaveXML(saveFile);
     }
 }

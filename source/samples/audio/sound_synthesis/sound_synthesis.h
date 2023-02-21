@@ -23,7 +23,7 @@ class SoundSynthesis : public Sample
 
 public:
     /// Construct.
-    explicit SoundSynthesis(Context* context);
+    explicit SoundSynthesis();
 
     /// Setup before engine initialization. Modifies the engine parameters.
     void Setup() override;

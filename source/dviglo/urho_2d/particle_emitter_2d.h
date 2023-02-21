@@ -61,11 +61,11 @@ class DV_API ParticleEmitter2D : public Drawable2D
 
 public:
     /// Construct.
-    explicit ParticleEmitter2D(Context* context);
+    explicit ParticleEmitter2D();
     /// Destruct.
     ~ParticleEmitter2D() override;
     /// Register object factory. Drawable2D must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

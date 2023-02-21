@@ -26,11 +26,10 @@
 
 DV_DEFINE_APPLICATION_MAIN(AnimatingScene)
 
-AnimatingScene::AnimatingScene(Context* context) :
-    Sample(context)
+AnimatingScene::AnimatingScene()
 {
     // Register an object factory for our custom Rotator component so that we can create them to scene nodes
-    context->RegisterFactory<Rotator>();
+    DV_CONTEXT.RegisterFactory<Rotator>();
 }
 
 void AnimatingScene::Start()
@@ -58,7 +57,7 @@ void AnimatingScene::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create the Octree component to the scene so that drawable objects can be rendered. Use default volume
     // (-1000, -1000, -1000) to (1000, 1000, 1000)
@@ -130,7 +129,7 @@ void AnimatingScene::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

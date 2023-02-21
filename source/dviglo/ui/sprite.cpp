@@ -17,8 +17,7 @@ extern const char* horizontalAlignments[];
 extern const char* verticalAlignments[];
 extern const char* UI_CATEGORY;
 
-Sprite::Sprite(Context* context) :
-    UIElement(context),
+Sprite::Sprite() :
     floatPosition_(Vector2::ZERO),
     hotSpot_(IntVector2::ZERO),
     scale_(Vector2::ONE),
@@ -30,9 +29,9 @@ Sprite::Sprite(Context* context) :
 
 Sprite::~Sprite() = default;
 
-void Sprite::RegisterObject(Context* context)
+void Sprite::RegisterObject()
 {
-    context->RegisterFactory<Sprite>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Sprite>(UI_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, Vector2::ZERO, AM_FILE);

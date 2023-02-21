@@ -17,11 +17,11 @@ class DV_API Sprite : public UIElement
 
 public:
     /// Construct.
-    explicit Sprite(Context* context);
+    explicit Sprite();
     /// Destruct.
     ~Sprite() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Return whether is visible and inside a scissor rectangle and should be rendered.
     bool IsWithinScissor(const IntRect& currentScissor) override;

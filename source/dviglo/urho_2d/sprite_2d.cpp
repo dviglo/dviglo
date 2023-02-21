@@ -15,20 +15,18 @@
 namespace dviglo
 {
 
-Sprite2D::Sprite2D(Context* context) :
-    Resource(context),
-    hotSpot_(0.5f, 0.5f),
-    offset_(0, 0),
-    edgeOffset_(M_LARGE_EPSILON)
+Sprite2D::Sprite2D()
+    : hotSpot_(0.5f, 0.5f)
+    , offset_(0, 0)
+    , edgeOffset_(M_LARGE_EPSILON)
 {
-
 }
 
 Sprite2D::~Sprite2D() = default;
 
-void Sprite2D::RegisterObject(Context* context)
+void Sprite2D::RegisterObject()
 {
-    context->RegisterFactory<Sprite2D>();
+    DV_CONTEXT.RegisterFactory<Sprite2D>();
 }
 
 bool Sprite2D::BeginLoad(Deserializer& source)
@@ -41,7 +39,7 @@ bool Sprite2D::BeginLoad(Deserializer& source)
         loadTexture_ = texture_;
     else
     {
-        loadTexture_ = new Texture2D(context_);
+        loadTexture_ = new Texture2D();
         loadTexture_->SetName(GetName());
     }
     // In case we're async loading, only call BeginLoad() for the texture (load image but do not upload to GPU)

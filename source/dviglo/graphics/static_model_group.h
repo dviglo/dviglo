@@ -16,11 +16,11 @@ class DV_API StaticModelGroup : public StaticModel
 
 public:
     /// Construct.
-    explicit StaticModelGroup(Context* context);
+    explicit StaticModelGroup();
     /// Destruct.
     ~StaticModelGroup() override;
     /// Register object factory. StaticModel must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;

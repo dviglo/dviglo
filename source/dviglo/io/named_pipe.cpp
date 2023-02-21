@@ -22,8 +22,7 @@ namespace dviglo
 
 static constexpr i32 PIPE_BUFFER_SIZE = 65536;
 
-NamedPipe::NamedPipe(Context* context) :
-    Object(context),
+NamedPipe::NamedPipe() :
     isServer_(false),
 #ifdef _WIN32
     handle_(INVALID_HANDLE_VALUE)
@@ -34,8 +33,7 @@ NamedPipe::NamedPipe(Context* context) :
 {
 }
 
-NamedPipe::NamedPipe(Context* context, const String& name, bool isServer) :
-    Object(context),
+NamedPipe::NamedPipe(const String& name, bool isServer) :
     isServer_(false),
 #ifdef _WIN32
     handle_(INVALID_HANDLE_VALUE)

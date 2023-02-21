@@ -25,7 +25,7 @@ class SoundEffects : public Sample
 
 public:
     /// Construct.
-    explicit SoundEffects(Context* context);
+    explicit SoundEffects();
 
     /// Setup before engine initialization. Modifies the engine parameters.
     void Setup() override;

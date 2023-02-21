@@ -47,7 +47,7 @@ class DV_API EventProfiler : public Profiler
 
 public:
     /// Construct.
-    explicit EventProfiler(Context* context);
+    explicit EventProfiler();
 
     /// Activate the event profiler to collect information. This incurs slight performance hit on each SendEvent. By default inactive.
     static void SetActive(bool newActive) { active = newActive; }

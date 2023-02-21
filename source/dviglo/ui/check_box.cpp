@@ -14,8 +14,7 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-CheckBox::CheckBox(Context* context) :
-    BorderImage(context),
+CheckBox::CheckBox() :
     checkedOffset_(IntVector2::ZERO),
     checked_(false)
 {
@@ -25,9 +24,9 @@ CheckBox::CheckBox(Context* context) :
 
 CheckBox::~CheckBox() = default;
 
-void CheckBox::RegisterObject(Context* context)
+void CheckBox::RegisterObject()
 {
-    context->RegisterFactory<CheckBox>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CheckBox>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

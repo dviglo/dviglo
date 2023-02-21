@@ -22,7 +22,7 @@ class WindowSettingsDemo : public Sample
 
 public:
     /// Construct.
-    explicit WindowSettingsDemo(Context* context);
+    explicit WindowSettingsDemo();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

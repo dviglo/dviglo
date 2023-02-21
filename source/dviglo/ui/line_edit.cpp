@@ -20,8 +20,7 @@ StringHash VAR_DRAGDROPCONTENT("DragDropContent");
 
 extern const char* UI_CATEGORY;
 
-LineEdit::LineEdit(Context* context) :
-    BorderImage(context),
+LineEdit::LineEdit() :
     lastFont_(nullptr),
     lastFontSize_(0),
     cursorPosition_(0),
@@ -51,9 +50,9 @@ LineEdit::LineEdit(Context* context) :
 
 LineEdit::~LineEdit() = default;
 
-void LineEdit::RegisterObject(Context* context)
+void LineEdit::RegisterObject()
 {
-    context->RegisterFactory<LineEdit>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<LineEdit>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);

@@ -16,11 +16,11 @@ class DV_API Menu : public Button
 
 public:
     /// Construct.
-    explicit Menu(Context* context);
+    explicit Menu();
     /// Destruct.
     ~Menu() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     using UIElement::LoadXML;
     using UIElement::SaveXML;

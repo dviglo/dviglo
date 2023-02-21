@@ -41,16 +41,15 @@ unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<SharedPtr<IndexBuff
     return 0;
 }
 
-Model::Model(Context* context) :
-    ResourceWithMetadata(context)
+Model::Model()
 {
 }
 
 Model::~Model() = default;
 
-void Model::RegisterObject(Context* context)
+void Model::RegisterObject()
 {
-    context->RegisterFactory<Model>();
+    DV_CONTEXT.RegisterFactory<Model>();
 }
 
 bool Model::BeginLoad(Deserializer& source)
@@ -108,7 +107,7 @@ bool Model::BeginLoad(Deserializer& source)
         morphRangeStarts_[i] = source.ReadU32();
         morphRangeCounts_[i] = source.ReadU32();
 
-        SharedPtr<VertexBuffer> buffer(new VertexBuffer(context_));
+        SharedPtr<VertexBuffer> buffer(new VertexBuffer());
         unsigned vertexSize = VertexBuffer::GetVertexSize(desc.vertexElements_);
         desc.dataSize_ = desc.vertexCount_ * vertexSize;
 
@@ -142,7 +141,7 @@ bool Model::BeginLoad(Deserializer& source)
         unsigned indexCount = source.ReadU32();
         unsigned indexSize = source.ReadU32();
 
-        SharedPtr<IndexBuffer> buffer(new IndexBuffer(context_));
+        SharedPtr<IndexBuffer> buffer(new IndexBuffer());
 
         // Prepare index buffer data to be uploaded during EndLoad()
         if (async)
@@ -215,7 +214,7 @@ bool Model::BeginLoad(Deserializer& source)
                 return false;
             }
 
-            SharedPtr<Geometry> geometry(new Geometry(context_));
+            SharedPtr<Geometry> geometry(new Geometry());
             geometry->SetLodDistance(distance);
 
             // Prepare geometry to be defined during EndLoad()
@@ -450,11 +449,11 @@ bool Model::Save(Serializer& dest) const
         {
             String xmlName = ReplaceExtension(destFile->GetName(), ".xml");
 
-            SharedPtr<XMLFile> xml(new XMLFile(context_));
+            SharedPtr<XMLFile> xml(new XMLFile());
             XMLElement rootElem = xml->CreateRoot("model");
             SaveMetadataToXML(rootElem);
 
-            File xmlFile(context_, xmlName, FILE_WRITE);
+            File xmlFile(xmlName, FILE_WRITE);
             xml->Save(xmlFile);
         }
         else
@@ -607,7 +606,7 @@ void Model::SetMorphs(const Vector<ModelMorph>& morphs)
 
 SharedPtr<Model> Model::Clone(const String& cloneName) const
 {
-    SharedPtr<Model> ret(new Model(context_));
+    SharedPtr<Model> ret(new Model());
 
     ret->SetName(cloneName);
     ret->boundingBox_ = boundingBox_;
@@ -627,7 +626,7 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
 
         if (origBuffer)
         {
-            cloneBuffer = new VertexBuffer(context_);
+            cloneBuffer = new VertexBuffer();
             cloneBuffer->SetSize(origBuffer->GetVertexCount(), origBuffer->GetElementMask(), origBuffer->IsDynamic());
             cloneBuffer->SetShadowed(origBuffer->IsShadowed());
             if (origBuffer->IsShadowed())
@@ -654,7 +653,7 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
 
         if (origBuffer)
         {
-            cloneBuffer = new IndexBuffer(context_);
+            cloneBuffer = new IndexBuffer();
             cloneBuffer->SetSize(origBuffer->GetIndexCount(), origBuffer->GetIndexSize() == sizeof(unsigned),
                 origBuffer->IsDynamic());
             cloneBuffer->SetShadowed(origBuffer->IsShadowed());
@@ -686,7 +685,7 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
 
             if (origGeometry)
             {
-                cloneGeometry = new Geometry(context_);
+                cloneGeometry = new Geometry();
                 cloneGeometry->SetIndexBuffer(ibMapping[origGeometry->GetIndexBuffer()]);
                 unsigned numVbs = origGeometry->GetNumVertexBuffers();
                 for (unsigned k = 0; k < numVbs; ++k)
@@ -701,7 +700,6 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
             ret->geometries_[i][j] = cloneGeometry;
         }
     }
-
 
     // Deep copy the morph data (if any) to allow modifying it
     for (Vector<ModelMorph>::Iterator i = ret->morphs_.Begin(); i != ret->morphs_.End(); ++i)

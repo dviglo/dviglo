@@ -40,8 +40,7 @@ static const char* soundResourceNames[] = {
 
 DV_DEFINE_APPLICATION_MAIN(SoundEffects)
 
-SoundEffects::SoundEffects(Context* context) :
-    Sample(context),
+SoundEffects::SoundEffects() :
     musicSource_(nullptr)
 {
 }
@@ -59,7 +58,7 @@ void SoundEffects::Start()
     Sample::Start();
 
     // Create a scene which will not be actually rendered, but is used to hold SoundSource components while they play sounds
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create music sound source
     musicSource_ = scene_->CreateComponent<SoundSource>();

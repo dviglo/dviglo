@@ -7,14 +7,13 @@
 namespace dviglo
 {
 
-void GameObject::RegisterObject(Context* context)
+void GameObject::RegisterObject()
 {
-    context->RegisterFactory<GameObject>();
+    DV_CONTEXT.RegisterFactory<GameObject>();
 }
 
-GameObject::GameObject(Context* context)
-    : LogicComponent(context)
-    , onGround(false)
+GameObject::GameObject()
+    : onGround(false)
     , isSliding(false)
     , duration(-1) // Бесконечно
     , health(0)

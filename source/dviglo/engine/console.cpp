@@ -40,8 +40,7 @@ const char* logStyles[] =
     "ConsoleText"
 };
 
-Console::Console(Context* context) :
-    Object(context),
+Console::Console() :
     autoVisibleOnError_(false),
     historyRows_(DEFAULT_HISTORY_SIZE),
     historyPosition_(0),
@@ -191,7 +190,7 @@ void Console::SetNumBufferedRows(i32 rows)
         // We have less, add more rows at the top
         for (int i = 0; i > delta; --i)
         {
-            auto* text = new Text(context_);
+            auto* text = new Text();
             // If style is already set, apply here to ensure proper height of the console when
             // amount of rows is changed
             if (background_->GetDefaultStyle())
@@ -299,7 +298,7 @@ bool Console::PopulateInterpreter()
 {
     interpreters_->RemoveAllItems();
 
-    EventReceiverGroup* group = context_->GetEventReceivers(E_CONSOLECOMMAND);
+    EventReceiverGroup* group = DV_CONTEXT.GetEventReceivers(E_CONSOLECOMMAND);
     if (!group || group->receivers_.Empty())
         return false;
 
@@ -317,7 +316,7 @@ bool Console::PopulateInterpreter()
         const String& name = names[i];
         if (name == commandInterpreter_)
             selection = i;
-        Text* text = new Text(context_);
+        Text* text = new Text();
         text->SetStyle("ConsoleText");
         text->SetText(name);
         interpreters_->AddItem(text);
@@ -554,7 +553,7 @@ void Console::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     for (const Pair<i32, String>& pendingRow : pendingRows_)
     {
         rowContainer_->RemoveItem(0);
-        text = new Text(context_);
+        text = new Text();
         text->SetText(pendingRow.second_);
 
         // Highlight console messages based on their type

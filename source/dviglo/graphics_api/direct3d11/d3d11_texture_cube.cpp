@@ -146,7 +146,7 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, unsigned level, int x, int y, 
 
 bool TextureCube::SetData_D3D11(CubeMapFace face, Deserializer& source)
 {
-    SharedPtr<Image> image(new Image(context_));
+    SharedPtr<Image> image(new Image());
     if (!image->Load(source))
         return false;
 

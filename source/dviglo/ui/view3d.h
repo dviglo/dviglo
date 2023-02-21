@@ -22,11 +22,11 @@ class DV_API View3D : public Window
 
 public:
     /// Construct.
-    explicit View3D(Context* context);
+    explicit View3D();
     /// Destruct.
     ~View3D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// React to resize.
     void OnResize(const IntVector2& newSize, const IntVector2& delta) override;

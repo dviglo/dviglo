@@ -27,7 +27,7 @@ class SkeletalAnimation : public Sample
 
 public:
     /// Construct.
-    explicit SkeletalAnimation(Context* context);
+    explicit SkeletalAnimation();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

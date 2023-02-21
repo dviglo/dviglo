@@ -16,11 +16,11 @@ class DV_API ConstraintGear2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintGear2D(Context* context);
+    explicit ConstraintGear2D();
     /// Destruct.
     ~ConstraintGear2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set owner constraint.
     void SetOwnerConstraint(Constraint2D* constraint);

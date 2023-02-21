@@ -34,8 +34,7 @@ const char* loopModeNames[] =
     nullptr
 };
 
-AnimatedSprite2D::AnimatedSprite2D(Context* context) :
-    StaticSprite2D(context),
+AnimatedSprite2D::AnimatedSprite2D() :
 #ifdef DV_SPINE
     skeleton_(0),
     animationStateData_(0),
@@ -51,9 +50,9 @@ AnimatedSprite2D::~AnimatedSprite2D()
     Dispose();
 }
 
-void AnimatedSprite2D::RegisterObject(Context* context)
+void AnimatedSprite2D::RegisterObject()
 {
-    context->RegisterFactory<AnimatedSprite2D>(URHO2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<AnimatedSprite2D>(URHO2D_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticSprite2D);
     DV_REMOVE_ATTRIBUTE("Sprite");

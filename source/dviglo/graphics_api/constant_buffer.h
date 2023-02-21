@@ -19,7 +19,7 @@ class DV_API ConstantBuffer : public Object, public GPUObject
 
 public:
     /// Construct.
-    explicit ConstantBuffer(Context* context);
+    explicit ConstantBuffer();
     /// Destruct.
     ~ConstantBuffer() override;
 

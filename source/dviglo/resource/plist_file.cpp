@@ -276,16 +276,15 @@ void PListValue::Reset()
     type_ = PLVT_NONE;
 }
 
-PListFile::PListFile(Context* context) :
-    Resource(context)
+PListFile::PListFile()
 {
 }
 
 PListFile::~PListFile() = default;
 
-void PListFile::RegisterObject(Context* context)
+void PListFile::RegisterObject()
 {
-    context->RegisterFactory<PListFile>();
+    DV_CONTEXT.RegisterFactory<PListFile>();
 }
 
 bool PListFile::BeginLoad(Deserializer& source)
@@ -293,7 +292,7 @@ bool PListFile::BeginLoad(Deserializer& source)
     if (GetName().Empty())
         SetName(source.GetName());
 
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
     if (!xmlFile.Load(source))
     {
         DV_LOGERROR("Could not load property list");

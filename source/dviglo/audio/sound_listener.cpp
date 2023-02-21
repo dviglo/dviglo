@@ -10,16 +10,15 @@ namespace dviglo
 
 extern const char* AUDIO_CATEGORY;
 
-SoundListener::SoundListener(Context* context) :
-    Component(context)
+SoundListener::SoundListener()
 {
 }
 
 SoundListener::~SoundListener() = default;
 
-void SoundListener::RegisterObject(Context* context)
+void SoundListener::RegisterObject()
 {
-    context->RegisterFactory<SoundListener>(AUDIO_CATEGORY);
+    DV_CONTEXT.RegisterFactory<SoundListener>(AUDIO_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
 }

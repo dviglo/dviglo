@@ -16,11 +16,11 @@ class DV_API NetworkPriority : public Component
 
 public:
     /// Construct.
-    explicit NetworkPriority(Context* context);
+    explicit NetworkPriority();
     /// Destruct.
     ~NetworkPriority() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set base priority. Default 100 (send updates at full frequency).
     void SetBasePriority(float priority);

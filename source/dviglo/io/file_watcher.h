@@ -22,7 +22,7 @@ class DV_API FileWatcher : public Object, public Thread
 
 public:
     /// Construct.
-    explicit FileWatcher(Context* context);
+    explicit FileWatcher();
     /// Destruct.
     ~FileWatcher() override;
 

@@ -20,13 +20,12 @@
 
 using namespace dviglo;
 
-AppState_Benchmark02::AppState_Benchmark02(Context* context)
-    : AppState_Base(context)
+AppState_Benchmark02::AppState_Benchmark02()
 {
     name_ = "Orcs & Humans";
 
     // This constructor is called once when the application runs, so we can register here
-    context->RegisterFactory<Benchmark02_WomanMover>();
+    DV_CONTEXT.RegisterFactory<Benchmark02_WomanMover>();
 }
 
 void AppState_Benchmark02::OnEnter()

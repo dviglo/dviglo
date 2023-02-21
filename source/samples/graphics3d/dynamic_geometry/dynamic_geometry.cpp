@@ -30,8 +30,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(DynamicGeometry)
 
-DynamicGeometry::DynamicGeometry(Context* context) :
-    Sample(context),
+DynamicGeometry::DynamicGeometry() :
     animate_(true),
     time_(0.0f)
 {
@@ -62,7 +61,7 @@ void DynamicGeometry::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create the Octree component to the scene so that drawable objects can be rendered. Use default volume
     // (-1000, -1000, -1000) to (1000, 1000, 1000)
@@ -198,10 +197,10 @@ void DynamicGeometry::CreateScene()
             n1 = n2 = n3 = edge1.CrossProduct(edge2).Normalized();
         }
 
-        SharedPtr<Model> fromScratchModel(new Model(context_));
-        SharedPtr<VertexBuffer> vb(new VertexBuffer(context_));
-        SharedPtr<IndexBuffer> ib(new IndexBuffer(context_));
-        SharedPtr<Geometry> geom(new Geometry(context_));
+        SharedPtr<Model> fromScratchModel(new Model());
+        SharedPtr<VertexBuffer> vb(new VertexBuffer());
+        SharedPtr<IndexBuffer> ib(new IndexBuffer());
+        SharedPtr<Geometry> geom(new Geometry());
 
         // Shadowed buffer needed for raycasts to work, and so that data can be automatically restored on device loss
         vb->SetShadowed(true);
@@ -245,7 +244,7 @@ void DynamicGeometry::CreateScene()
     }
 
     // Create the camera
-    cameraNode_ = new Node(context_);
+    cameraNode_ = new Node();
     cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -20.0f));
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
@@ -277,7 +276,7 @@ void DynamicGeometry::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

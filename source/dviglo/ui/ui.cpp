@@ -69,10 +69,9 @@ const int DEFAULT_FONT_TEXTURE_MAX_SIZE = 2048;
 
 const char* UI_CATEGORY = "UI";
 
-UI::UI(Context* context) :
-    Object(context),
-    rootElement_(new UIElement(context)),
-    rootModalElement_(new UIElement(context)),
+UI::UI() :
+    rootElement_(new UIElement()),
+    rootModalElement_(new UIElement()),
     doubleClickInterval_(DEFAULT_DOUBLECLICK_INTERVAL),
     dragBeginInterval_(DEFAULT_DRAGBEGIN_INTERVAL),
     defaultToolTipDelay_(DEFAULT_TOOLTIP_DELAY),
@@ -111,7 +110,7 @@ UI::UI(Context* context) :
     rootModalElement_->SetTraversalMode(TM_DEPTH_FIRST);
 
     // Register UI library object factories
-    RegisterUILibrary(context_);
+    RegisterUILibrary();
 
     SubscribeToEvent(E_SCREENMODE, DV_HANDLER(UI, HandleScreenMode));
     SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(UI, HandleMouseButtonDown));
@@ -551,7 +550,7 @@ void UI::DebugDraw(UIElement* element)
 
 SharedPtr<UIElement> UI::LoadLayout(Deserializer& source, XMLFile* styleFile)
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     if (!xml->Load(source))
         return SharedPtr<UIElement>();
     else
@@ -583,7 +582,7 @@ SharedPtr<UIElement> UI::LoadLayout(XMLFile* file, XMLFile* styleFile)
     if (typeName.Empty())
         typeName = "UIElement";
 
-    root = DynamicCast<UIElement>(context_->CreateObject(typeName));
+    root = DynamicCast<UIElement>(DV_CONTEXT.CreateObject(typeName));
     if (!root)
     {
         DV_LOGERROR("Could not create unknown UI element " + typeName);
@@ -928,8 +927,8 @@ void UI::Initialize()
     // Set initial root element size
     ResizeRootElement();
 
-    vertexBuffer_ = new VertexBuffer(context_);
-    debugVertexBuffer_ = new VertexBuffer(context_);
+    vertexBuffer_ = new VertexBuffer();
+    debugVertexBuffer_ = new VertexBuffer();
 
     initialized_ = true;
 
@@ -2170,8 +2169,8 @@ void UI::SetElementRenderTexture(UIElement* element, Texture2D* texture)
         RenderToTextureData data;
         data.texture_ = texture;
         data.rootElement_ = element;
-        data.vertexBuffer_ = new VertexBuffer(context_);
-        data.debugVertexBuffer_ = new VertexBuffer(context_);
+        data.vertexBuffer_ = new VertexBuffer();
+        data.debugVertexBuffer_ = new VertexBuffer();
         renderToTexture_[element] = data;
     }
     else if (it != renderToTexture_.End())
@@ -2183,33 +2182,33 @@ void UI::SetElementRenderTexture(UIElement* element, Texture2D* texture)
     }
 }
 
-void RegisterUILibrary(Context* context)
+void RegisterUILibrary()
 {
-    Font::RegisterObject(context);
+    Font::RegisterObject();
 
-    UIElement::RegisterObject(context);
-    UISelectable::RegisterObject(context);
-    BorderImage::RegisterObject(context);
-    Sprite::RegisterObject(context);
-    Button::RegisterObject(context);
-    CheckBox::RegisterObject(context);
-    Cursor::RegisterObject(context);
-    Text::RegisterObject(context);
-    Text3D::RegisterObject(context);
-    Window::RegisterObject(context);
-    View3D::RegisterObject(context);
-    LineEdit::RegisterObject(context);
-    Slider::RegisterObject(context);
-    ScrollBar::RegisterObject(context);
-    ScrollView::RegisterObject(context);
-    ListView::RegisterObject(context);
-    Menu::RegisterObject(context);
-    DropDownList::RegisterObject(context);
-    FileSelector::RegisterObject(context);
-    MessageBox::RegisterObject(context);
-    ProgressBar::RegisterObject(context);
-    ToolTip::RegisterObject(context);
-    UIComponent::RegisterObject(context);
+    UIElement::RegisterObject();
+    UISelectable::RegisterObject();
+    BorderImage::RegisterObject();
+    Sprite::RegisterObject();
+    Button::RegisterObject();
+    CheckBox::RegisterObject();
+    Cursor::RegisterObject();
+    Text::RegisterObject();
+    Text3D::RegisterObject();
+    Window::RegisterObject();
+    View3D::RegisterObject();
+    LineEdit::RegisterObject();
+    Slider::RegisterObject();
+    ScrollBar::RegisterObject();
+    ScrollView::RegisterObject();
+    ListView::RegisterObject();
+    Menu::RegisterObject();
+    DropDownList::RegisterObject();
+    FileSelector::RegisterObject();
+    MessageBox::RegisterObject();
+    ProgressBar::RegisterObject();
+    ToolTip::RegisterObject();
+    UIComponent::RegisterObject();
 }
 
 }

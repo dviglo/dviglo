@@ -175,8 +175,7 @@ static const char* RAKNET_MESSAGEID_STRINGS[] = {
 static const int DEFAULT_UPDATE_FPS = 30;
 static const int SERVER_TIMEOUT_TIME = 10000;
 
-Network::Network(Context* context) :
-    Object(context),
+Network::Network() :
     updateFps_(DEFAULT_UPDATE_FPS),
     simulatedLatency_(0),
     simulatedPacketLoss_(0.0f),
@@ -199,7 +198,7 @@ Network::Network(Context* context) :
     SetNATServerInfo("127.0.0.1", 61111);
 
     // Register Network library object factories
-    RegisterNetworkLibrary(context_);
+    RegisterNetworkLibrary();
 
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(Network, HandleBeginFrame));
     SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Network, HandleRenderUpdate));
@@ -290,7 +289,7 @@ void Network::HandleMessage(const SLNet::AddressOrGUID& source, int packetID, in
 void Network::NewConnectionEstablished(const SLNet::AddressOrGUID& connection)
 {
     // Create a new client connection corresponding to this MessageConnection
-    SharedPtr<Connection> newConnection(new Connection(context_, true, connection, rakPeer_));
+    SharedPtr<Connection> newConnection(new Connection(true, connection, rakPeer_));
     newConnection->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
     clientConnections_[connection] = newConnection;
     DV_LOGINFO("Client " + newConnection->ToString() + " connected");
@@ -364,7 +363,7 @@ bool Network::Connect(const String& address, unsigned short port, Scene* scene, 
     SLNet::ConnectionAttemptResult connectResult = rakPeerClient_->Connect(address.CString(), port, password_.CString(), password_.Length());
     if (connectResult == SLNet::CONNECTION_ATTEMPT_STARTED)
     {
-        serverConnection_ = new Connection(context_, false, rakPeerClient_->GetMyBoundAddress(), rakPeerClient_);
+        serverConnection_ = new Connection(false, rakPeerClient_->GetMyBoundAddress(), rakPeerClient_);
         serverConnection_->SetScene(scene);
         serverConnection_->SetIdentity(identity);
         serverConnection_->SetConnectPending(true);
@@ -822,7 +821,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
             using namespace NetworkHostDiscovered;
 
             dataStart += sizeof(SLNet::TimeMS);
-            VariantMap& eventMap = context_->GetEventDataMap();
+            VariantMap& eventMap = DV_CONTEXT.GetEventDataMap();
             if (packet->length > packet->length - dataStart) {
                 VectorBuffer buffer(packet->data + dataStart, packet->length - dataStart);
                 VariantMap srcData = buffer.ReadVariantMap();
@@ -1014,9 +1013,9 @@ void Network::ConfigureNetworkSimulator()
         i->second_->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
 }
 
-void RegisterNetworkLibrary(Context* context)
+void RegisterNetworkLibrary()
 {
-    NetworkPriority::RegisterObject(context);
+    NetworkPriority::RegisterObject();
 }
 
 }

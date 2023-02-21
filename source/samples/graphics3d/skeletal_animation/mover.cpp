@@ -10,8 +10,7 @@
 
 #include <dviglo/common/debug_new.h>
 
-Mover::Mover(Context* context) :
-    LogicComponent(context),
+Mover::Mover() :
     moveSpeed_(0.0f),
     rotationSpeed_(0.0f)
 {

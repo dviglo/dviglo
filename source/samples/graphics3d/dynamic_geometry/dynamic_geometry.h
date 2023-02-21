@@ -25,7 +25,7 @@ class DynamicGeometry : public Sample
 
 public:
     /// Construct.
-    explicit DynamicGeometry(Context* context);
+    explicit DynamicGeometry();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

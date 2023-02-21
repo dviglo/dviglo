@@ -18,11 +18,11 @@ class DV_API Zone : public Drawable
 
 public:
     /// Construct.
-    explicit Zone(Context* context);
+    explicit Zone();
     /// Destruct.
     ~Zone() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

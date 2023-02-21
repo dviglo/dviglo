@@ -17,9 +17,9 @@ private:
     i32 healAmount;
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
-    Potion(Context* context);
+    Potion();
     void Start() override;
     void ObjectCollision(GameObject& otherObject, VariantMap& eventData) override;
 };

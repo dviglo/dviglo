@@ -16,10 +16,8 @@
 namespace dviglo
 {
 
-Constraint2D::Constraint2D(Context* context) :
-    Component(context)
+Constraint2D::Constraint2D()
 {
-
 }
 
 Constraint2D::~Constraint2D()
@@ -27,7 +25,7 @@ Constraint2D::~Constraint2D()
     ReleaseJoint();
 }
 
-void Constraint2D::RegisterObject(Context* context)
+void Constraint2D::RegisterObject()
 {
     DV_ACCESSOR_ATTRIBUTE("Collide Connected", GetCollideConnected, SetCollideConnected, false, AM_DEFAULT);
     DV_ATTRIBUTE_EX("Other Body NodeID", otherBodyNodeID_, MarkOtherBodyNodeIDDirty, 0, AM_DEFAULT | AM_NODEID);

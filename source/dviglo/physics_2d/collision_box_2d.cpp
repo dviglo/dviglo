@@ -14,8 +14,7 @@ namespace dviglo
 extern const char* PHYSICS2D_CATEGORY;
 static const Vector2 DEFAULT_BOX_SIZE(0.01f, 0.01f);
 
-CollisionBox2D::CollisionBox2D(Context* context) :
-    CollisionShape2D(context),
+CollisionBox2D::CollisionBox2D() :
     size_(DEFAULT_BOX_SIZE),
     center_(Vector2::ZERO),
     angle_(0.0f)
@@ -28,9 +27,9 @@ CollisionBox2D::CollisionBox2D(Context* context) :
 
 CollisionBox2D::~CollisionBox2D() = default;
 
-void CollisionBox2D::RegisterObject(Context* context)
+void CollisionBox2D::RegisterObject()
 {
-    context->RegisterFactory<CollisionBox2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CollisionBox2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Size", GetSize, SetSize, DEFAULT_BOX_SIZE, AM_DEFAULT);

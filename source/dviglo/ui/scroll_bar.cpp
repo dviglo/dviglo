@@ -19,8 +19,7 @@ static const float DEFAULT_REPEAT_RATE = 20.0f;
 extern const char* orientations[];
 extern const char* UI_CATEGORY;
 
-ScrollBar::ScrollBar(Context* context) :
-    BorderImage(context),
+ScrollBar::ScrollBar() :
     scrollStep_(DEFAULT_SCROLL_STEP),
     stepFactor_(1.0f),
     leftRect_(IntRect::ZERO),
@@ -56,9 +55,9 @@ ScrollBar::ScrollBar(Context* context) :
 
 ScrollBar::~ScrollBar() = default;
 
-void ScrollBar::RegisterObject(Context* context)
+void ScrollBar::RegisterObject()
 {
-    context->RegisterFactory<ScrollBar>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ScrollBar>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

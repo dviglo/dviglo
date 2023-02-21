@@ -23,21 +23,20 @@ const char* wrapModeNames[] =
     nullptr
 };
 
-ObjectAnimation::ObjectAnimation(Context* context) :
-    Resource(context)
+ObjectAnimation::ObjectAnimation()
 {
 }
 
 ObjectAnimation::~ObjectAnimation() = default;
 
-void ObjectAnimation::RegisterObject(Context* context)
+void ObjectAnimation::RegisterObject()
 {
-    context->RegisterFactory<ObjectAnimation>();
+    DV_CONTEXT.RegisterFactory<ObjectAnimation>();
 }
 
 bool ObjectAnimation::BeginLoad(Deserializer& source)
 {
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
     if (!xmlFile.Load(source))
         return false;
 
@@ -46,7 +45,7 @@ bool ObjectAnimation::BeginLoad(Deserializer& source)
 
 bool ObjectAnimation::Save(Serializer& dest) const
 {
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
 
     XMLElement rootElem = xmlFile.CreateRoot("objectanimation");
     if (!SaveXML(rootElem))
@@ -65,7 +64,7 @@ bool ObjectAnimation::LoadXML(const XMLElement& source)
     {
         String name = animElem.GetAttribute("name");
 
-        SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> animation(new ValueAnimation());
         if (!animation->LoadXML(animElem))
             return false;
 
@@ -124,7 +123,7 @@ bool ObjectAnimation::LoadJSON(const JSONValue& source)
     {
         String name = it->first_;
         JSONValue value = it->second_;
-        SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> animation(new ValueAnimation());
         if (!animation->LoadJSON(value))
             return false;
 

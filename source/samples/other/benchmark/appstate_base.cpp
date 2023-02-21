@@ -17,7 +17,7 @@ using namespace dviglo;
 void AppState_Base::LoadSceneXml(const String& path)
 {
     assert(!scene_);
-    scene_ = MakeShared<Scene>(context_);
+    scene_ = MakeShared<Scene>();
     SharedPtr<File> file = GetSubsystem<ResourceCache>()->GetFile(path);
     scene_->LoadXML(*file);
 
@@ -40,7 +40,7 @@ void AppState_Base::SetupViewport()
 {
     Node* cameraNode = scene_->GetChild("Camera");
     Camera* camera = cameraNode->GetComponent<Camera>();
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, camera));
 
     Renderer* renderer = GetSubsystem<Renderer>();
     renderer->SetViewport(0, viewport);

@@ -15,8 +15,7 @@ public:
     DV_OBJECT(AppState_Benchmark04, AppState_Base);
 
 public:
-    AppState_Benchmark04(dv::Context* context)
-        : AppState_Base(context)
+    AppState_Benchmark04()
     {
         name_ = "SpriteBatch";
     }

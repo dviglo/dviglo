@@ -83,16 +83,15 @@ private:
     Vector<HiscoreEntry> hiscores;
 
 public:
-    App(Context* context)
-        : Application(context)
+    App()
     {
-        Ninja::RegisterObject(context);
-        FootSteps::RegisterObject(context);
-        GameObject::RegisterObject(context);
-        LightFlash::RegisterObject(context);
-        Potion::RegisterObject(context);
-        SnowCrate::RegisterObject(context);
-        Snowball::RegisterObject(context);
+        Ninja::RegisterObject();
+        FootSteps::RegisterObject();
+        GameObject::RegisterObject();
+        LightFlash::RegisterObject();
+        Potion::RegisterObject();
+        SnowCrate::RegisterObject();
+        Snowball::RegisterObject();
     }
 
     void Setup() override
@@ -157,7 +156,7 @@ public:
 
             // Note: the non-positional sound source component need to be attached to a node to become effective
             // Due to networked mode clearing the scene on connect, do not attach to the scene itself
-            musicNode = new Node(context_);
+            musicNode = new Node();
             musicSource = musicNode->CreateComponent<SoundSource>();
             musicSource->SetSoundType(SOUND_MUSIC);
             musicSource->Play(musicFile);
@@ -184,7 +183,7 @@ public:
 
     void InitScene()
     {
-        gameScene = new Scene(context_);
+        gameScene = new Scene();
         gameScene->SetName("NinjaSnowWar");
 
         // For the multiplayer client, do not load the scene, let it load from the server
@@ -267,7 +266,7 @@ public:
     void CreateCamera()
     {
         // Note: the camera is not in the scene
-        gameCameraNode = new Node(context_);
+        gameCameraNode = new Node();
         gameCameraNode->SetPosition(Vector3(0.f, 2.f, -10.f));
 
         gameCamera = gameCameraNode->CreateComponent<Camera>();
@@ -280,7 +279,7 @@ public:
 
         if (!engine->IsHeadless())
         {
-            SharedPtr<Viewport> viewport(new Viewport(context_, gameScene, gameCamera));
+            SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
             renderer->SetViewport(0, viewport);
             audio->SetListener(gameCameraNode->CreateComponent<SoundListener>());
         }
@@ -299,7 +298,7 @@ public:
         UI* ui = GetSubsystem<UI>();
         Input* input = GetSubsystem<Input>();
 
-        sight = new BorderImage(context_);
+        sight = new BorderImage();
         sight->SetTexture(cache->GetResource<Texture2D>("Textures/NinjaSnowWar/Sight.png"));
         sight->SetAlignment(HA_CENTER, VA_CENTER);
         sight->SetSize(height, height);
@@ -307,7 +306,7 @@ public:
 
         Font* font = cache->GetResource<Font>("Fonts/BlueHighway.ttf");
 
-        scoreText = new Text(context_);
+        scoreText = new Text();
         scoreText->SetFont(font, 13.f);
         scoreText->SetAlignment(HA_LEFT, VA_TOP);
         scoreText->SetPosition(5, 5);
@@ -315,7 +314,7 @@ public:
         scoreText->SetColor(C_BOTTOMRIGHT, Color(1.f, 1.f, 0.25f));
         ui->GetRoot()->AddChild(scoreText);
 
-        hiscoreText = new Text(context_);
+        hiscoreText = new Text();
         hiscoreText->SetFont(font, 13.f);
         hiscoreText->SetAlignment(HA_RIGHT, VA_TOP);
         hiscoreText->SetPosition(-5, 5);
@@ -323,21 +322,21 @@ public:
         hiscoreText->SetColor(C_BOTTOMRIGHT, Color(1.f, 1.f, 0.25f));
         ui->GetRoot()->AddChild(hiscoreText);
 
-        messageText = new Text(context_);
+        messageText = new Text();
         messageText->SetFont(font, 13.f);
         messageText->SetAlignment(HA_CENTER, VA_CENTER);
         messageText->SetPosition(0, -height * 2);
         messageText->SetColor(Color(1.f, 0.f, 0.f));
         ui->GetRoot()->AddChild(messageText);
 
-        SharedPtr<BorderImage> healthBorder(new BorderImage(context_));
+        SharedPtr<BorderImage> healthBorder(new BorderImage());
         healthBorder->SetTexture(cache->GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarBorder.png"));
         healthBorder->SetAlignment(HA_CENTER, VA_TOP);
         healthBorder->SetPosition(0, 8);
         healthBorder->SetSize(120, 20);
         ui->GetRoot()->AddChild(healthBorder);
 
-        healthBar = new BorderImage(context_);
+        healthBar = new BorderImage();
         healthBar->SetTexture(cache->GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarInside.png"));
         healthBar->SetPosition(2, 2);
         healthBar->SetSize(116, 16);
@@ -589,7 +588,7 @@ public:
         // Take screenshot
         else if (key == KEY_F6)
         {
-            Image screenshot(context_);
+            Image screenshot;
             graphics->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(fileSystem->GetProgramDir() + "Data/Screenshot_" +

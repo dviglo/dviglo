@@ -71,8 +71,7 @@ static bool CompareUIElements(const UIElement* lhs, const UIElement* rhs)
 
 XPathQuery UIElement::styleXPathQuery_("/elements/element[@type=$typeName]", "typeName:String");
 
-UIElement::UIElement(Context* context) :
-    Animatable(context),
+UIElement::UIElement() :
     pivot_(std::numeric_limits<float>::max(), std::numeric_limits<float>::max())
 {
     SetEnabled(false);
@@ -88,9 +87,9 @@ UIElement::~UIElement()
     }
 }
 
-void UIElement::RegisterObject(Context* context)
+void UIElement::RegisterObject()
 {
-    context->RegisterFactory<UIElement>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<UIElement>(UI_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, IntVector2::ZERO, AM_FILE);
@@ -451,13 +450,13 @@ IntVector2 UIElement::ElementToScreen(const IntVector2& position)
 
 bool UIElement::LoadXML(Deserializer& source)
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     return xml->Load(source) && LoadXML(xml->GetRoot());
 }
 
 bool UIElement::SaveXML(Serializer& dest, const String& indentation) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     XMLElement rootElem = xml->CreateRoot("element");
     return SaveXML(rootElem) && xml->Save(dest, indentation);
 }
@@ -1257,7 +1256,7 @@ UIElement* UIElement::CreateChild(StringHash type, const String& name, i32 index
     assert(index == ENDPOS || (index >= 0 && index <= children_.Size()));
 
     // Check that creation succeeds and that the object in fact is a UI element
-    SharedPtr<UIElement> newElement = DynamicCast<UIElement>(context_->CreateObject(type));
+    SharedPtr<UIElement> newElement = DynamicCast<UIElement>(DV_CONTEXT.CreateObject(type));
 
     if (!newElement)
     {

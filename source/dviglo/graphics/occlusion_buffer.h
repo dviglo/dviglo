@@ -69,7 +69,7 @@ class DV_API OcclusionBuffer : public Object
 
 public:
     /// Construct.
-    explicit OcclusionBuffer(Context* context);
+    explicit OcclusionBuffer();
     /// Destruct.
     ~OcclusionBuffer() override;
 

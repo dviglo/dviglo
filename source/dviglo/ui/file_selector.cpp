@@ -29,57 +29,56 @@ static bool CompareEntries(const FileSelectorEntry& lhs, const FileSelectorEntry
     return lhs.name_.Compare(rhs.name_, false) < 0;
 }
 
-FileSelector::FileSelector(Context* context) :
-    Object(context),
+FileSelector::FileSelector() :
     directoryMode_(false),
     ignoreEvents_(false)
 {
-    window_ = new Window(context_);
+    window_ = new Window();
     window_->SetLayout(LM_VERTICAL);
 
-    titleLayout = new UIElement(context_);
+    titleLayout = new UIElement();
     titleLayout->SetLayout(LM_HORIZONTAL);
     window_->AddChild(titleLayout);
 
-    titleText_ = new Text(context_);
+    titleText_ = new Text();
     titleLayout->AddChild(titleText_);
 
-    closeButton_ = new Button(context_);
+    closeButton_ = new Button();
     titleLayout->AddChild(closeButton_);
 
-    pathEdit_ = new LineEdit(context_);
+    pathEdit_ = new LineEdit();
     window_->AddChild(pathEdit_);
 
-    fileList_ = new ListView(context_);
+    fileList_ = new ListView();
     window_->AddChild(fileList_);
 
-    fileNameLayout_ = new UIElement(context_);
+    fileNameLayout_ = new UIElement();
     fileNameLayout_->SetLayout(LM_HORIZONTAL);
 
-    fileNameEdit_ = new LineEdit(context_);
+    fileNameEdit_ = new LineEdit();
     fileNameLayout_->AddChild(fileNameEdit_);
 
-    filterList_ = new DropDownList(context_);
+    filterList_ = new DropDownList();
     fileNameLayout_->AddChild(filterList_);
 
     window_->AddChild(fileNameLayout_);
 
-    separatorLayout_ = new UIElement(context_);
+    separatorLayout_ = new UIElement();
     window_->AddChild(separatorLayout_);
 
-    buttonLayout_ = new UIElement(context_);
+    buttonLayout_ = new UIElement();
     buttonLayout_->SetLayout(LM_HORIZONTAL);
 
-    buttonLayout_->AddChild(new UIElement(context_)); // Add spacer
+    buttonLayout_->AddChild(new UIElement()); // Add spacer
 
-    cancelButton_ = new Button(context_);
-    cancelButtonText_ = new Text(context_);
+    cancelButton_ = new Button();
+    cancelButtonText_ = new Text();
     cancelButtonText_->SetAlignment(HA_CENTER, VA_CENTER);
     cancelButton_->AddChild(cancelButtonText_);
     buttonLayout_->AddChild(cancelButton_);
 
-    okButton_ = new Button(context_);
-    okButtonText_ = new Text(context_);
+    okButton_ = new Button();
+    okButtonText_ = new Text();
     okButtonText_->SetAlignment(HA_CENTER, VA_CENTER);
     okButton_->AddChild(okButtonText_);
     buttonLayout_->AddChild(okButton_);
@@ -115,9 +114,9 @@ FileSelector::~FileSelector()
     window_->Remove();
 }
 
-void FileSelector::RegisterObject(Context* context)
+void FileSelector::RegisterObject()
 {
-    context->RegisterFactory<FileSelector>();
+    DV_CONTEXT.RegisterFactory<FileSelector>();
 }
 
 void FileSelector::SetDefaultStyle(XMLFile* style)
@@ -203,7 +202,7 @@ void FileSelector::SetFilters(const Vector<String>& filters, unsigned defaultInd
     filterList_->RemoveAllItems();
     for (unsigned i = 0; i < filters_.Size(); ++i)
     {
-        auto* filterText = new Text(context_);
+        auto* filterText = new Text();
         filterList_->AddItem(filterText);
         filterText->SetText(filters_[i]);
         filterText->SetStyle("FileSelectorFilterText");
@@ -309,7 +308,7 @@ void FileSelector::RefreshFiles()
         else
             displayName = fileEntries_[i].name_;
 
-        auto* entryText = new Text(context_);
+        auto* entryText = new Text();
         fileList_->AddItem(entryText);
         entryText->SetText(displayName);
         entryText->SetStyle("FileSelectorListText");

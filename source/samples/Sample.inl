@@ -24,8 +24,7 @@
 #include <dviglo/ui/sprite.h>
 #include <dviglo/ui/ui.h>
 
-Sample::Sample(Context* context) :
-    Application(context),
+Sample::Sample() :
     yaw_(0.0f),
     pitch_(0.0f),
     touchEnabled_(false),
@@ -94,7 +93,7 @@ void Sample::InitTouchInput()
     if (!patchString.Empty())
     {
         // Patch the screen joystick layout further on demand
-        SharedPtr<XMLFile> patchFile(new XMLFile(context_));
+        SharedPtr<XMLFile> patchFile(new XMLFile());
         if (patchFile->FromString(patchString))
             layout->Patch(patchFile);
     }
@@ -323,7 +322,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         else if (key == '9')
         {
             Graphics* graphics = GetSubsystem<Graphics>();
-            Image screenshot(context_);
+            Image screenshot;
             graphics->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +

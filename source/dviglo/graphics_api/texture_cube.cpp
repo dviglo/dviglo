@@ -38,8 +38,7 @@ static SharedPtr<Image> GetTileImage(Image* src, int tileX, int tileY, int tileW
         src->GetSubimage(IntRect(tileX * tileWidth, tileY * tileHeight, (tileX + 1) * tileWidth, (tileY + 1) * tileHeight)));
 }
 
-TextureCube::TextureCube(Context* context) :
-    Texture(context)
+TextureCube::TextureCube()
 {
 #ifdef DV_OPENGL
     if (Graphics::GetGAPI() == GAPI_OPENGL)
@@ -57,9 +56,9 @@ TextureCube::~TextureCube()
     Release();
 }
 
-void TextureCube::RegisterObject(Context* context)
+void TextureCube::RegisterObject()
 {
-    context->RegisterFactory<TextureCube>();
+    DV_CONTEXT.RegisterFactory<TextureCube>();
 }
 
 bool TextureCube::BeginLoad(Deserializer& source)
@@ -83,7 +82,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
     String texPath, texName, texExt;
     SplitPath(GetName(), texPath, texName, texExt);
 
-    loadParameters_ = (new XMLFile(context_));
+    loadParameters_ = (new XMLFile());
     if (!loadParameters_->Load(source))
     {
         loadParameters_.Reset();
@@ -303,7 +302,7 @@ SharedPtr<Image> TextureCube::GetImage(CubeMapFace face) const
         return SharedPtr<Image>();
     }
 
-    auto* rawImage = new Image(context_);
+    auto* rawImage = new Image();
     if (format_ == Graphics::GetRGBAFormat())
         rawImage->SetSize(width_, height_, 4);
     else if (format_ == Graphics::GetRGBFormat())

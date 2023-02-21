@@ -14,10 +14,10 @@ class DV_API UnknownComponent : public Component
 {
 public:
     /// Construct.
-    explicit UnknownComponent(Context* context);
+    explicit UnknownComponent();
 
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Return type of the stored component.
     StringHash GetType() const override { return typeHash_; }

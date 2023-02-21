@@ -407,7 +407,7 @@ void ShaderVariation::SaveByteCode_D3D11(const String& binaryShaderName)
     if (!fileSystem->DirExists(path))
         fileSystem->CreateDir(path);
 
-    SharedPtr<File> file(new File(owner_->GetContext(), fullName, FILE_WRITE));
+    SharedPtr<File> file(new File(fullName, FILE_WRITE));
     if (!file->IsOpen())
         return;
 

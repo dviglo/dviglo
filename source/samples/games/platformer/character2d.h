@@ -19,10 +19,10 @@ class Character2D : public LogicComponent
 
 public:
     /// Construct.
-    explicit Character2D(Context* context);
+    explicit Character2D();
 
     /// Register object factory and attributes.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle update. Called by LogicComponent base class.
     void Update(float timeStep) override;

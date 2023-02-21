@@ -35,8 +35,7 @@ class FreeTypeLibrary : public Object
 
 public:
     /// Construct.
-    explicit FreeTypeLibrary(Context* context) :
-        Object(context)
+    explicit FreeTypeLibrary()
     {
         FT_Error error = FT_Init_FreeType(&library_);
         if (error)
@@ -73,12 +72,10 @@ FontFaceFreeType::~FontFaceFreeType()
 
 bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
 {
-    Context* context = font_->GetContext();
-
     // Create & initialize FreeType library if it does not exist yet
     auto* freeType = font_->GetSubsystem<FreeTypeLibrary>();
     if (!freeType)
-        context->RegisterSubsystem(freeType = new FreeTypeLibrary(context));
+        DV_CONTEXT.RegisterSubsystem(freeType = new FreeTypeLibrary());
 
     // Ensure the FreeType library is kept alive as long as TTF font resources exist
     freeType_ = freeType;
@@ -160,7 +157,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     int textureHeight = maxTextureSize;
     hasMutableGlyph_ = false;
 
-    SharedPtr<Image> image(new Image(font_->GetContext()));
+    SharedPtr<Image> image(new Image());
     image->SetSize(textureWidth, textureHeight, 1);
     unsigned char* imageData = image->GetData();
     memset(imageData, 0, (size_t)image->GetWidth() * image->GetHeight());
@@ -296,7 +293,7 @@ const FontGlyph* FontFaceFreeType::GetGlyph(c32 c)
 
 bool FontFaceFreeType::SetupNextTexture(int textureWidth, int textureHeight)
 {
-    SharedPtr<Image> image(new Image(font_->GetContext()));
+    SharedPtr<Image> image(new Image());
     image->SetSize(textureWidth, textureHeight, 1);
     unsigned char* imageData = image->GetData();
     memset(imageData, 0, (size_t)image->GetWidth() * image->GetHeight());

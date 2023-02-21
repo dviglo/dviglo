@@ -33,16 +33,15 @@ static const unsigned MAX_NODE_ANIMATION_STATES = 256;
 
 extern const char* LOGIC_CATEGORY;
 
-AnimationController::AnimationController(Context* context) :
-    Component(context)
+AnimationController::AnimationController()
 {
 }
 
 AnimationController::~AnimationController() = default;
 
-void AnimationController::RegisterObject(Context* context)
+void AnimationController::RegisterObject()
 {
-    context->RegisterFactory<AnimationController>(LOGIC_CATEGORY);
+    DV_CONTEXT.RegisterFactory<AnimationController>(LOGIC_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Animations", GetAnimationsAttr, SetAnimationsAttr, Variant::emptyVariantVector,

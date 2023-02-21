@@ -14,8 +14,7 @@ namespace dviglo
 extern const char* PHYSICS2D_CATEGORY;
 static const float DEFAULT_CLRCLE_RADIUS(0.01f);
 
-CollisionCircle2D::CollisionCircle2D(Context* context) :
-    CollisionShape2D(context),
+CollisionCircle2D::CollisionCircle2D() :
     radius_(DEFAULT_CLRCLE_RADIUS),
     center_(Vector2::ZERO)
 {
@@ -25,9 +24,9 @@ CollisionCircle2D::CollisionCircle2D(Context* context) :
 
 CollisionCircle2D::~CollisionCircle2D() = default;
 
-void CollisionCircle2D::RegisterObject(Context* context)
+void CollisionCircle2D::RegisterObject()
 {
-    context->RegisterFactory<CollisionCircle2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CollisionCircle2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, DEFAULT_CLRCLE_RADIUS, AM_DEFAULT);

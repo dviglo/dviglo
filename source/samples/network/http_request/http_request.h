@@ -21,7 +21,7 @@ class HttpRequestDemo : public Sample
 
 public:
     /// Construct.
-    explicit HttpRequestDemo(Context* context);
+    explicit HttpRequestDemo();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -430,10 +430,7 @@ bool XMLElement::SetResourceRef(const ResourceRef& value)
     if (!file_ || (!node_ && !xpathNode_))
         return false;
 
-    // Need the context to query for the type
-    Context* context = file_->GetContext();
-
-    return SetAttribute("value", String(context->GetTypeName(value.type_)) + ";" + value.name_);
+    return SetAttribute("value", String(DV_CONTEXT.GetTypeName(value.type_)) + ";" + value.name_);
 }
 
 bool XMLElement::SetResourceRefList(const ResourceRefList& value)
@@ -441,10 +438,7 @@ bool XMLElement::SetResourceRefList(const ResourceRefList& value)
     if (!file_ || (!node_ && !xpathNode_))
         return false;
 
-    // Need the context to query for the type
-    Context* context = file_->GetContext();
-
-    String str(context->GetTypeName(value.type_));
+    String str(DV_CONTEXT.GetTypeName(value.type_));
     for (const String& name : value.names_)
     {
         str += ";";

@@ -26,8 +26,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(HugeObjectCount)
 
-HugeObjectCount::HugeObjectCount(Context* context) :
-    Sample(context),
+HugeObjectCount::HugeObjectCount() :
     animate_(false),
     useGroups_(false)
 {
@@ -59,7 +58,7 @@ void HugeObjectCount::CreateScene()
     auto* cache = GetSubsystem<ResourceCache>();
 
     if (!scene_)
-        scene_ = new Scene(context_);
+        scene_ = new Scene();
     else
     {
         scene_->Clear();
@@ -136,7 +135,7 @@ void HugeObjectCount::CreateScene()
     // Create the camera. Create it outside the scene so that we can clear the whole scene without affecting it
     if (!cameraNode_)
     {
-        cameraNode_ = new Node(context_);
+        cameraNode_ = new Node();
         cameraNode_->SetPosition(Vector3(0.0f, 10.0f, -100.0f));
         auto* camera = cameraNode_->CreateComponent<Camera>();
         camera->SetFarClip(300.0f);
@@ -170,7 +169,7 @@ void HugeObjectCount::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

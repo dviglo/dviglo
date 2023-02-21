@@ -31,8 +31,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(Water)
 
-Water::Water(Context* context) :
-    Sample(context)
+Water::Water()
 {
 }
 
@@ -61,7 +60,7 @@ void Water::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     scene_->CreateComponent<Octree>();
@@ -138,7 +137,7 @@ void Water::CreateScene()
 
     // Create the camera. Set far clip to match the fog. Note: now we actually create the camera node outside
     // the scene, because we want it to be unaffected by scene load / save
-    cameraNode_ = new Node(context_);
+    cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(750.0f);
 
@@ -170,7 +169,7 @@ void Water::SetupViewport()
     auto* cache = GetSubsystem<ResourceCache>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 
     // Create a mathematical plane to represent the water in calculations
@@ -199,11 +198,11 @@ void Water::SetupViewport()
     // Create a texture and setup viewport for water reflection. Assign the reflection texture to the diffuse
     // texture unit of the water material
     int texSize = 1024;
-    SharedPtr<Texture2D> renderTexture(new Texture2D(context_));
+    SharedPtr<Texture2D> renderTexture(new Texture2D());
     renderTexture->SetSize(texSize, texSize, Graphics::GetRGBFormat(), TEXTURE_RENDERTARGET);
     renderTexture->SetFilterMode(FILTER_BILINEAR);
     RenderSurface* surface = renderTexture->GetRenderSurface();
-    SharedPtr<Viewport> rttViewport(new Viewport(context_, scene_, reflectionCamera));
+    SharedPtr<Viewport> rttViewport(new Viewport(scene_, reflectionCamera));
     surface->SetViewport(0, rttViewport);
     auto* waterMat = cache->GetResource<Material>("Materials/Water.xml");
     waterMat->SetTexture(TU_DIFFUSE, renderTexture);

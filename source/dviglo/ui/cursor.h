@@ -79,11 +79,11 @@ class DV_API Cursor : public BorderImage
 
 public:
     /// Construct.
-    explicit Cursor(Context* context);
+    explicit Cursor();
     /// Destruct.
     ~Cursor() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Return UI rendering batches.
     void GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor) override;

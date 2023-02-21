@@ -26,7 +26,7 @@ class Chat : public Sample
 
 public:
     /// Construct.
-    explicit Chat(Context* context);
+    explicit Chat();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

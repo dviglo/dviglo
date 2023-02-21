@@ -15,8 +15,7 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-Button::Button(Context* context) :
-    BorderImage(context),
+Button::Button() :
     pressedOffset_(IntVector2::ZERO),
     pressedChildOffset_(IntVector2::ZERO),
     repeatDelay_(1.0f),
@@ -30,9 +29,9 @@ Button::Button(Context* context) :
 
 Button::~Button() = default;
 
-void Button::RegisterObject(Context* context)
+void Button::RegisterObject()
 {
-    context->RegisterFactory<Button>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Button>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

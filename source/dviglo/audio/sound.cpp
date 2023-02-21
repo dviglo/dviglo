@@ -40,8 +40,7 @@ struct WavHeader
 
 static const unsigned IP_SAFETY = 4;
 
-Sound::Sound(Context* context) :
-    ResourceWithMetadata(context),
+Sound::Sound() :
     repeat_(nullptr),
     end_(nullptr),
     dataSize_(0),
@@ -56,9 +55,9 @@ Sound::Sound(Context* context) :
 
 Sound::~Sound() = default;
 
-void Sound::RegisterObject(Context* context)
+void Sound::RegisterObject()
 {
-    context->RegisterFactory<Sound>();
+    DV_CONTEXT.RegisterFactory<Sound>();
 }
 
 bool Sound::BeginLoad(Deserializer& source)

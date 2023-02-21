@@ -19,15 +19,14 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-View3D::View3D(Context* context) :
-    Window(context),
+View3D::View3D() :
     ownScene_(true),
     rttFormat_(Graphics::GetRGBFormat()),
     autoUpdate_(true)
 {
-    renderTexture_ = new Texture2D(context_);
-    depthTexture_ = new Texture2D(context_);
-    viewport_ = new Viewport(context_);
+    renderTexture_ = new Texture2D();
+    depthTexture_ = new Texture2D();
+    viewport_ = new Viewport();
 
     // Disable mipmaps since the texel ratio should be 1:1
     renderTexture_->SetNumLevels(1);
@@ -41,9 +40,9 @@ View3D::~View3D()
     ResetScene();
 }
 
-void View3D::RegisterObject(Context* context)
+void View3D::RegisterObject()
 {
-    context->RegisterFactory<View3D>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<View3D>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Window);
     // The texture format is API specific, so do not register it as a serializable attribute

@@ -44,11 +44,11 @@ class DV_API AnimatedSprite2D : public StaticSprite2D
 
 public:
     /// Construct.
-    explicit AnimatedSprite2D(Context* context);
+    explicit AnimatedSprite2D();
     /// Destruct.
     ~AnimatedSprite2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

@@ -13,8 +13,7 @@
 namespace dviglo
 {
 
-LogicComponent::LogicComponent(Context* context) :
-    Component(context),
+LogicComponent::LogicComponent() :
     updateEventMask_(LogicComponentEvents::All),
     currentEventMask_(LogicComponentEvents::None),
     delayedStartCalled_(false)

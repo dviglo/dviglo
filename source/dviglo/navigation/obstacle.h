@@ -21,12 +21,12 @@ class DV_API Obstacle : public Component
 
 public:
     /// Construct.
-    explicit Obstacle(Context* context);
+    explicit Obstacle();
     /// Destruct.
     ~Obstacle() override;
 
     /// Register Obstacle with engine context.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Update the owning mesh when enabled status has changed.
     void OnSetEnabled() override;

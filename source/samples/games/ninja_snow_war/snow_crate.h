@@ -14,9 +14,9 @@ class SnowCrate : public GameObject
     DV_OBJECT(SnowCrate, GameObject);
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
-    SnowCrate(Context* context);
+    SnowCrate();
 
     void Start() override;
     void FixedUpdate(float timeStep) override;

@@ -37,7 +37,7 @@ class DV_API Component : public Animatable
 
 public:
     /// Construct.
-    explicit Component(Context* context);
+    explicit Component();
     /// Destruct.
     ~Component() override;
 

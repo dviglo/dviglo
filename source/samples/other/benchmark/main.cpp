@@ -20,8 +20,7 @@ class App : public Application
     DV_OBJECT(App, Application);
 
 public:
-    App(Context* context)
-        : Application(context)
+    App()
     {
         // The first handler for the first event in each frame.
         // To prevent a crash, we can only change the current scene at the start of a frame,
@@ -54,8 +53,8 @@ public:
 
     void Start() override
     {
-        context_->RegisterSubsystem(new AppStateManager(context_));
-        AppStateManager* appStateManager = context_->GetSubsystem<AppStateManager>();
+        DV_CONTEXT.RegisterSubsystem(new AppStateManager());
+        AppStateManager* appStateManager = DV_CONTEXT.GetSubsystem<AppStateManager>();
         appStateManager->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 
         GetSubsystem<Input>()->SetToggleFullscreen(false); // Block Alt+Enter
@@ -65,7 +64,7 @@ public:
 
     void ApplyAppState(StringHash eventType, VariantMap& eventData)
     {
-        context_->GetSubsystem<AppStateManager>()->Apply();
+        DV_CONTEXT.GetSubsystem<AppStateManager>()->Apply();
     }
 };
 

@@ -11,8 +11,7 @@
 namespace dviglo
 {
 
-Profiler::Profiler(Context* context) :
-    Object(context),
+Profiler::Profiler() :
     current_(nullptr),
     root_(nullptr),
     intervalFrames_(0)

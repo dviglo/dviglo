@@ -76,11 +76,11 @@ class DV_API DebugRenderer : public Component
 
 public:
     /// Construct.
-    explicit DebugRenderer(Context* context);
+    explicit DebugRenderer();
     /// Destruct.
     ~DebugRenderer() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set line antialiasing on/off. Default false.
     void SetLineAntiAlias(bool enable);

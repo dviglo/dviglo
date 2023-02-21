@@ -16,11 +16,11 @@ class DV_API ConstraintPrismatic2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintPrismatic2D(Context* context);
+    explicit ConstraintPrismatic2D();
     /// Destruct.
     ~ConstraintPrismatic2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set anchor.
     void SetAnchor(const Vector2& anchor);

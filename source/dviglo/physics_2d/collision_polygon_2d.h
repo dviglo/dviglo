@@ -16,11 +16,11 @@ class DV_API CollisionPolygon2D : public CollisionShape2D
 
 public:
     /// Construct.
-    explicit CollisionPolygon2D(Context* context);
+    explicit CollisionPolygon2D();
     /// Destruct.
     ~CollisionPolygon2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set vertex count.
     void SetVertexCount(i32 count);

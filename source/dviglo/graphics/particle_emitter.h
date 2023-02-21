@@ -39,11 +39,11 @@ class DV_API ParticleEmitter : public BillboardSet
 
 public:
     /// Construct.
-    explicit ParticleEmitter(Context* context);
+    explicit ParticleEmitter();
     /// Destruct.
     ~ParticleEmitter() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

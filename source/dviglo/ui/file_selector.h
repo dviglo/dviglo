@@ -36,11 +36,11 @@ class DV_API FileSelector : public Object
 
 public:
     /// Construct.
-    explicit FileSelector(Context* context);
+    explicit FileSelector();
     /// Destruct.
     ~FileSelector() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set fileselector UI style.
     void SetDefaultStyle(XMLFile* style);

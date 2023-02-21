@@ -40,94 +40,6 @@
 #define GL_DEPTH24_STENCIL8_EXT GL_DEPTH24_STENCIL8
 #endif
 
-
-#ifdef __EMSCRIPTEN__
-#include "../../Input/Input.h"
-#include "../../UI/Cursor.h"
-#include "../../UI/UI.h"
-#include <emscripten/emscripten.h>
-#include <emscripten/bind.h>
-
-// Emscripten provides even all GL extension functions via static linking. However there is
-// no GLES2-specific extension header at the moment to include instanced rendering declarations,
-// so declare them manually from GLES3 gl2ext.h. Emscripten will provide these when linking final output.
-extern "C"
-{
-    GL_APICALL void GL_APIENTRY glDrawArraysInstancedANGLE (GLenum mode, GLint first, GLsizei count, GLsizei primcount);
-    GL_APICALL void GL_APIENTRY glDrawElementsInstancedANGLE (GLenum mode, GLsizei count, GLenum type, const void *indices, GLsizei primcount);
-    GL_APICALL void GL_APIENTRY glVertexAttribDivisorANGLE (GLuint index, GLuint divisor);
-}
-
-// Helper functions to support emscripten canvas resolution change
-static const dviglo::Context *appContext;
-
-static void JSCanvasSize(int width, int height, bool fullscreen, float scale)
-{
-    DV_LOGINFOF("JSCanvasSize: width=%d height=%d fullscreen=%d ui scale=%f", width, height, fullscreen, scale);
-
-    using namespace dviglo;
-
-    if (appContext)
-    {
-        bool uiCursorVisible = false;
-        bool systemCursorVisible = false;
-        MouseMode mouseMode{};
-
-        // Detect current system pointer state
-        Input* input = appContext->GetSubsystem<Input>();
-        if (input)
-        {
-            systemCursorVisible = input->IsMouseVisible();
-            mouseMode = input->GetMouseMode();
-        }
-
-        UI* ui = appContext->GetSubsystem<UI>();
-        if (ui)
-        {
-            ui->SetScale(scale);
-
-            // Detect current UI pointer state
-            Cursor* cursor = ui->GetCursor();
-            if (cursor)
-                uiCursorVisible = cursor->IsVisible();
-        }
-
-        // Apply new resolution
-        appContext->GetSubsystem<Graphics>()->SetMode(width, height);
-
-        // Reset the pointer state as it was before resolution change
-        if (input)
-        {
-            if (uiCursorVisible)
-                input->SetMouseVisible(false);
-            else
-                input->SetMouseVisible(systemCursorVisible);
-
-            input->SetMouseMode(mouseMode);
-        }
-
-        if (ui)
-        {
-            Cursor* cursor = ui->GetCursor();
-            if (cursor)
-            {
-                cursor->SetVisible(uiCursorVisible);
-
-                IntVector2 pos = input->GetMousePosition();
-                pos = ui->ConvertSystemToUI(pos);
-
-                cursor->SetPosition(pos);
-            }
-        }
-    }
-}
-
-using namespace emscripten;
-EMSCRIPTEN_BINDINGS(Module) {
-    function("JSCanvasSize", &JSCanvasSize);
-}
-#endif
-
 namespace dviglo
 {
 
@@ -292,14 +204,10 @@ void Graphics::Constructor_OGL()
     SetTextureUnitMappings_OGL();
     ResetCachedState_OGL();
 
-    context_->RequireSDL(SDL_INIT_VIDEO);
+    DV_CONTEXT.RequireSDL(SDL_INIT_VIDEO);
 
     // Register Graphics library object factories
-    RegisterGraphicsLibrary(context_);
-
-#ifdef __EMSCRIPTEN__
-    appContext = context_;
-#endif
+    RegisterGraphicsLibrary();
 }
 
 void Graphics::Destructor_OGL()
@@ -309,7 +217,7 @@ void Graphics::Destructor_OGL()
     delete static_cast<GraphicsImpl_OGL*>(impl_);
     impl_ = nullptr;
 
-    context_->ReleaseSDL();
+    DV_CONTEXT.ReleaseSDL();
 }
 
 bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& params, bool maximize)
@@ -1739,7 +1647,7 @@ void Graphics::SetDepthStencil_OGL(RenderSurface* depthStencil)
                 depthStencil = i->second_->GetRenderSurface();
             else
             {
-                SharedPtr<Texture2D> newDepthTexture(new Texture2D(context_));
+                SharedPtr<Texture2D> newDepthTexture(new Texture2D());
                 newDepthTexture->SetSize(width, height, GetDepthStencilFormat_OGL(), TEXTURE_DEPTHSTENCIL);
                 impl->depthTextures_[searchKey] = newDepthTexture;
                 depthStencil = newDepthTexture->GetRenderSurface();
@@ -2396,7 +2304,7 @@ ConstantBuffer* Graphics::GetOrCreateConstantBuffer_OGL(ShaderType type,  unsign
     HashMap<unsigned, SharedPtr<ConstantBuffer>>::Iterator i = impl->allConstantBuffers_.Find(key);
     if (i == impl->allConstantBuffers_.End())
     {
-        i = impl->allConstantBuffers_.Insert(MakePair(key, SharedPtr<ConstantBuffer>(new ConstantBuffer(context_))));
+        i = impl->allConstantBuffers_.Insert(MakePair(key, SharedPtr<ConstantBuffer>(new ConstantBuffer())));
         i->second_->SetSize(size);
     }
     return i->second_.Get();

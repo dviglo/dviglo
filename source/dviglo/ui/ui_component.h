@@ -25,11 +25,11 @@ class DV_API UIComponent : public Component
 
 public:
     /// Construct.
-    explicit UIComponent(Context* context);
+    explicit UIComponent();
     /// Destruct.
     ~UIComponent() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Return UIElement.
     UIElement* GetRoot() const;

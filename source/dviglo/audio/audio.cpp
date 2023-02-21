@@ -28,16 +28,15 @@ static const StringHash SOUND_MASTER_HASH("Master");
 
 static void SDLAudioCallback(void* userdata, Uint8* stream, i32 len);
 
-Audio::Audio(Context* context) :
-    Object(context)
+Audio::Audio()
 {
-    context_->RequireSDL(SDL_INIT_AUDIO);
+    DV_CONTEXT.RequireSDL(SDL_INIT_AUDIO);
 
     // Set the master to the default value
     masterGain_[SOUND_MASTER_HASH] = 1.0f;
 
     // Register Audio library object factories
-    RegisterAudioLibrary(context_);
+    RegisterAudioLibrary();
 
     SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
 }
@@ -45,7 +44,7 @@ Audio::Audio(Context* context) :
 Audio::~Audio()
 {
     Release();
-    context_->ReleaseSDL();
+    DV_CONTEXT.ReleaseSDL();
 }
 
 bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpolation)
@@ -334,12 +333,12 @@ void Audio::UpdateInternal(float timeStep)
     }
 }
 
-void RegisterAudioLibrary(Context* context)
+void RegisterAudioLibrary()
 {
-    Sound::RegisterObject(context);
-    SoundSource::RegisterObject(context);
-    SoundSource3D::RegisterObject(context);
-    SoundListener::RegisterObject(context);
+    Sound::RegisterObject();
+    SoundSource::RegisterObject();
+    SoundSource3D::RegisterObject();
+    SoundListener::RegisterObject();
 }
 
 }

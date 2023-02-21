@@ -31,7 +31,7 @@ class CharacterDemo : public Sample
 
 public:
     /// Construct.
-    explicit CharacterDemo(Context* context);
+    explicit CharacterDemo();
     /// Destruct.
     ~CharacterDemo() override;
 

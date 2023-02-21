@@ -24,7 +24,7 @@ class Urho2DIsometricDemo : public Sample
 
 public:
     /// Construct.
-    explicit Urho2DIsometricDemo(Context* context);
+    explicit Urho2DIsometricDemo();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -35,10 +35,10 @@ class Vehicle : public LogicComponent
 
 public:
     /// Construct.
-    explicit Vehicle(Context* context);
+    explicit Vehicle();
 
     /// Register object factory and attributes.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Perform post-load after deserialization. Acquire the components from the scene nodes.
     void ApplyAttributes() override;

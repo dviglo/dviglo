@@ -13,8 +13,7 @@
 namespace dviglo
 {
 
-VertexBuffer::VertexBuffer(Context* context, bool forceHeadless) :
-    Object(context),
+VertexBuffer::VertexBuffer(bool forceHeadless) :
     GPUObject(forceHeadless ? nullptr : GetSubsystem<Graphics>())
 {
     UpdateOffsets();

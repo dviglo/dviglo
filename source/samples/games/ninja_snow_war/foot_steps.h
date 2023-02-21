@@ -14,9 +14,9 @@ class FootSteps : public LogicComponent
     DV_OBJECT(FootSteps, LogicComponent);
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
-    FootSteps(Context* context);
+    FootSteps();
 
     void Start() override;
     void HandleAnimationTrigger(StringHash eventType, VariantMap& eventData);

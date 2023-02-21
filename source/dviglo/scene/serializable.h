@@ -31,7 +31,7 @@ class DV_API Serializable : public Object
 
 public:
     /// Construct.
-    explicit Serializable(Context* context);
+    explicit Serializable();
     /// Destruct.
     ~Serializable() override;
 
@@ -216,60 +216,59 @@ namespace AttributeMetadata
 #define DV_GETTER_RETURN_TYPE(getFunction) \
     std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<decltype(&ClassName::getFunction), ClassName>>>
 
-// The following macros need to be used within a class member function such as ClassName::RegisterObject().
-// A variable called "context" needs to exist in the current scope and point to a valid Context object.
+// The following macros need to be used within a class member function such as ClassName::RegisterObject()
 
 /// Copy attributes from a base class.
-#define DV_COPY_BASE_ATTRIBUTES(sourceClassName) context->CopyBaseAttributes<sourceClassName, ClassName>()
+#define DV_COPY_BASE_ATTRIBUTES(sourceClassName) DV_CONTEXT.CopyBaseAttributes<sourceClassName, ClassName>()
 /// Update the default value of an already registered attribute.
-#define DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE(name, defaultValue) context->UpdateAttributeDefaultValue<ClassName>(name, defaultValue)
+#define DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE(name, defaultValue) DV_CONTEXT.UpdateAttributeDefaultValue<ClassName>(name, defaultValue)
 /// Remove attribute by name.
-#define DV_REMOVE_ATTRIBUTE(name) context->RemoveAttribute<ClassName>(name)
+#define DV_REMOVE_ATTRIBUTE(name) DV_CONTEXT.RemoveAttribute<ClassName>(name)
 
 /// Define an object member attribute.
-#define DV_ATTRIBUTE(name, variable, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ATTRIBUTE(name, variable, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<std::remove_reference_t<decltype(variable)>>(), name, DV_MAKE_MEMBER_ATTRIBUTE_ACCESSOR(std::remove_reference_t<decltype(variable)>, variable), nullptr, defaultValue, mode))
 
 /// Define an object member attribute with forced type. Allows use custom type convertible to variant type (e.g. serialize u8 as int).
-#define DV_ATTRIBUTE_FORCE_TYPE(name, typeName, variable, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ATTRIBUTE_FORCE_TYPE(name, typeName, variable, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<typeName>(), name, DV_MAKE_MEMBER_ATTRIBUTE_ACCESSOR(typeName, variable), nullptr, defaultValue, mode))
 
 /// Define an object member attribute. Post-set member function callback is called when attribute set.
-#define DV_ATTRIBUTE_EX(name, variable, postSetCallback, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ATTRIBUTE_EX(name, variable, postSetCallback, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<std::remove_reference_t<decltype(variable)>>(), name, DV_MAKE_MEMBER_ATTRIBUTE_ACCESSOR_EX(std::remove_reference_t<decltype(variable)>, variable, postSetCallback), nullptr, defaultValue, mode))
 
 /// Define an object member attribute with forced type. Allows use custom type convertible to variant type (e.g. serialize u8 as int). Post-set member function callback is called when attribute set.
-#define DV_ATTRIBUTE_FORCE_TYPE_EX(name, typeName, variable, postSetCallback, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ATTRIBUTE_FORCE_TYPE_EX(name, typeName, variable, postSetCallback, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<typeName>(), name, DV_MAKE_MEMBER_ATTRIBUTE_ACCESSOR_EX(typeName, variable, postSetCallback), nullptr, defaultValue, mode))
 
 /// Define an attribute that uses get and set functions.
-#define DV_ACCESSOR_ATTRIBUTE(name, getFunction, setFunction, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ACCESSOR_ATTRIBUTE(name, getFunction, setFunction, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<DV_GETTER_RETURN_TYPE(getFunction)>(), name, DV_MAKE_GET_SET_ATTRIBUTE_ACCESSOR(getFunction, setFunction, DV_GETTER_RETURN_TYPE(getFunction)), nullptr, defaultValue, mode))
 
 /// Define an attribute that uses get and set functions with forced type.
-#define DV_ACCESSOR_ATTRIBUTE_FORCE_TYPE(name, getFunction, setFunction, typeName, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ACCESSOR_ATTRIBUTE_FORCE_TYPE(name, getFunction, setFunction, typeName, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<typeName>(), name, DV_MAKE_GET_SET_ATTRIBUTE_ACCESSOR(getFunction, setFunction, typeName), nullptr, defaultValue, mode))
 
 /// Define an object member attribute. Zero-based enum values are mapped to names through an array of C string pointers.
-#define DV_ENUM_ATTRIBUTE(name, variable, enumNames, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ENUM_ATTRIBUTE(name, variable, enumNames, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::VAR_INT, name, DV_MAKE_MEMBER_ENUM_ATTRIBUTE_ACCESSOR(variable), enumNames, static_cast<int>(defaultValue), mode))
 /// Define an object member attribute. Zero-based enum values are mapped to names through an array of C string pointers. Post-set member function callback is called when attribute set.
-#define DV_ENUM_ATTRIBUTE_EX(name, variable, postSetCallback, enumNames, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ENUM_ATTRIBUTE_EX(name, variable, postSetCallback, enumNames, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::VAR_INT, name, DV_MAKE_MEMBER_ENUM_ATTRIBUTE_ACCESSOR_EX(variable, postSetCallback), enumNames, static_cast<int>(defaultValue), mode))
 
 /// Define an attribute that uses get and set functions. Zero-based enum values are mapped to names through an array of C string pointers.
-#define DV_ENUM_ACCESSOR_ATTRIBUTE(name, getFunction, setFunction, enumNames, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ENUM_ACCESSOR_ATTRIBUTE(name, getFunction, setFunction, enumNames, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::VAR_INT, name, DV_MAKE_GET_SET_ENUM_ATTRIBUTE_ACCESSOR(getFunction, setFunction, DV_GETTER_RETURN_TYPE(getFunction)), enumNames, static_cast<int>(defaultValue), mode))
 
 /// Define an attribute that uses get and set functions with forced type. Zero-based enum values are mapped to names through an array of C string pointers.
-#define DV_ENUM_ACCESSOR_ATTRIBUTE_FORCE_TYPE(name, getFunction, setFunction, typeName, enumNames, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_ENUM_ACCESSOR_ATTRIBUTE_FORCE_TYPE(name, getFunction, setFunction, typeName, enumNames, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::VAR_INT, name, DV_MAKE_GET_SET_ENUM_ATTRIBUTE_ACCESSOR(getFunction, setFunction, typeName), enumNames, static_cast<int>(defaultValue), mode))
 
 /// Define an attribute with custom setter and getter.
-#define DV_CUSTOM_ATTRIBUTE(name, getFunction, setFunction, typeName, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_CUSTOM_ATTRIBUTE(name, getFunction, setFunction, typeName, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::GetVariantType<typeName>(), name, dviglo::MakeVariantAttributeAccessor<ClassName>(getFunction, setFunction), nullptr, defaultValue, mode))
 /// Define an enum attribute with custom setter and getter. Zero-based enum values are mapped to names through an array of C string pointers.
-#define DV_CUSTOM_ENUM_ATTRIBUTE(name, getFunction, setFunction, enumNames, defaultValue, mode) context->RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
+#define DV_CUSTOM_ENUM_ATTRIBUTE(name, getFunction, setFunction, enumNames, defaultValue, mode) DV_CONTEXT.RegisterAttribute<ClassName>(dviglo::AttributeInfo( \
     dviglo::VAR_INT, name, dviglo::MakeVariantAttributeAccessor<ClassName>(getFunction, setFunction), enumNames, static_cast<int>(defaultValue), mode))
 
 }

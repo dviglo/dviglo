@@ -81,11 +81,11 @@ class DV_API NavigationMesh : public Component
 
 public:
     /// Construct.
-    explicit NavigationMesh(Context* context);
+    explicit NavigationMesh();
     /// Destruct.
     ~NavigationMesh() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
@@ -344,6 +344,6 @@ protected:
 };
 
 /// Register Navigation library objects.
-void DV_API RegisterNavigationLibrary(Context* context);
+void DV_API RegisterNavigationLibrary();
 
 }

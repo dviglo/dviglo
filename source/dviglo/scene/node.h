@@ -67,11 +67,11 @@ class DV_API Node : public Animatable
 
 public:
     /// Construct.
-    explicit Node(Context* context);
+    explicit Node();
     /// Destruct. Any child nodes are detached.
     ~Node() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;

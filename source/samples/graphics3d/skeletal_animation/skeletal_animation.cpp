@@ -30,12 +30,11 @@
 
 DV_DEFINE_APPLICATION_MAIN(SkeletalAnimation)
 
-SkeletalAnimation::SkeletalAnimation(Context* context) :
-    Sample(context),
+SkeletalAnimation::SkeletalAnimation() :
     drawDebug_(false)
 {
     // Register an object factory for our custom Mover component so that we can create them to scene nodes
-    context->RegisterFactory<Mover>();
+    DV_CONTEXT.RegisterFactory<Mover>();
 }
 
 void SkeletalAnimation::Start()
@@ -63,7 +62,7 @@ void SkeletalAnimation::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
@@ -198,7 +197,7 @@ void SkeletalAnimation::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
 #ifdef DV_GLES3
         SharedPtr<RenderPath> rp(new RenderPath);
         auto* cache = GetSubsystem<ResourceCache>();

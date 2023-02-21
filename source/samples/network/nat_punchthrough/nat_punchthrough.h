@@ -28,7 +28,7 @@ class NATPunchtrough : public Sample
 
 public:
     /// Construct.
-    explicit NATPunchtrough(Context* context);
+    explicit NATPunchtrough();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

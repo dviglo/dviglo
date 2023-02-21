@@ -31,12 +31,12 @@ class DV_API DynamicNavigationMesh : public NavigationMesh
 
 public:
     /// Constructor.
-    explicit DynamicNavigationMesh(Context* context);
+    explicit DynamicNavigationMesh();
     /// Destructor.
     ~DynamicNavigationMesh() override;
 
     /// Register with engine context.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Allocate the navigation mesh without building any tiles. Bounding box is not padded. Return true if successful.
     bool Allocate(const BoundingBox& boundingBox, unsigned maxTiles) override;

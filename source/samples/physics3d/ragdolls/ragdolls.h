@@ -25,7 +25,7 @@ class Ragdolls : public Sample
 
 public:
     /// Construct.
-    explicit Ragdolls(Context* context);
+    explicit Ragdolls();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

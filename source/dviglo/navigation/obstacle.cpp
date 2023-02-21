@@ -17,8 +17,7 @@ namespace dviglo
 
 extern const char* NAVIGATION_CATEGORY;
 
-Obstacle::Obstacle(Context* context) :
-    Component(context),
+Obstacle::Obstacle() :
     height_(5.0f),
     radius_(5.0f),
     obstacleId_(0)
@@ -31,9 +30,9 @@ Obstacle::~Obstacle()
         ownerMesh_->RemoveObstacle(this);
 }
 
-void Obstacle::RegisterObject(Context* context)
+void Obstacle::RegisterObject()
 {
-    context->RegisterFactory<Obstacle>(NAVIGATION_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Obstacle>(NAVIGATION_CATEGORY);
     DV_COPY_BASE_ATTRIBUTES(Component);
     DV_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, 5.0f, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Height", GetHeight, SetHeight, 5.0f, AM_DEFAULT);

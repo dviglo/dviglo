@@ -69,8 +69,8 @@ void FocusParameters::Validate()
     minView_ = Max(minView_, SHADOW_MIN_VIEW);
 }
 
-Light::Light(Context* context) :
-    Drawable(context, DrawableTypes::Light),
+Light::Light() :
+    Drawable(DrawableTypes::Light),
     lightType_(DEFAULT_LIGHTTYPE),
     shadowBias_(BiasParameters(DEFAULT_CONSTANTBIAS, DEFAULT_SLOPESCALEDBIAS)),
     shadowCascade_(CascadeParameters(DEFAULT_SHADOWSPLIT, 0.0f, 0.0f, 0.0f, DEFAULT_SHADOWFADESTART)),
@@ -97,9 +97,9 @@ Light::Light(Context* context) :
 
 Light::~Light() = default;
 
-void Light::RegisterObject(Context* context)
+void Light::RegisterObject()
 {
-    context->RegisterFactory<Light>(SCENE_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Light>(SCENE_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ACCESSOR_ATTRIBUTE("Light Type", GetLightType, SetLightType, typeNames, DEFAULT_LIGHTTYPE, AM_DEFAULT);

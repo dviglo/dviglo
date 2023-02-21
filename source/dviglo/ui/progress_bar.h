@@ -18,13 +18,13 @@ class DV_API ProgressBar : public BorderImage
 
 public:
     /// Construct.
-    explicit ProgressBar(Context *context);
+    explicit ProgressBar();
 
     /// Destruct.
     ~ProgressBar() override;
 
     /// Register object factory.
-    static void RegisterObject(Context *context);
+    static void RegisterObject();
 
     /// React to resize.
     void OnResize(const IntVector2& newSize, const IntVector2& delta) override;

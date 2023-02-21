@@ -88,11 +88,11 @@ class DV_API DecalSet : public Drawable
 
 public:
     /// Construct.
-    explicit DecalSet(Context* context);
+    explicit DecalSet();
     /// Destruct.
     ~DecalSet() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;

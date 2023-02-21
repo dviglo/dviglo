@@ -24,7 +24,7 @@ class MultipleViewports : public Sample
 
 public:
     /// Construct.
-    explicit MultipleViewports(Context* context);
+    explicit MultipleViewports();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

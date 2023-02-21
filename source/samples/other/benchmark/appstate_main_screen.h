@@ -23,8 +23,7 @@ private:
     void DestroyGui();
 
 public:
-    AppState_MainScreen(dv::Context* context)
-        : AppState_Base(context)
+    AppState_MainScreen()
     {
         name_ = "Main Screen";
     }

@@ -21,8 +21,7 @@ extern StringHash VAR_ORIGIN;
 
 extern const char* UI_CATEGORY;
 
-Menu::Menu(Context* context) :
-    Button(context),
+Menu::Menu() :
     popupOffset_(IntVector2::ZERO),
     showPopup_(false),
     acceleratorKey_(0),
@@ -43,9 +42,9 @@ Menu::~Menu()
         ShowPopup(false);
 }
 
-void Menu::RegisterObject(Context* context)
+void Menu::RegisterObject()
 {
-    context->RegisterFactory<Menu>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Menu>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Button);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_NOTFOCUSABLE);
@@ -158,7 +157,7 @@ bool Menu::LoadXML(const XMLElement& source, XMLFile* styleFile)
             else
             {
                 // Do not add the popup element as a child even temporarily, as that can break layouts
-                SharedPtr<UIElement> popup = DynamicCast<UIElement>(context_->CreateObject(typeName));
+                SharedPtr<UIElement> popup = DynamicCast<UIElement>(DV_CONTEXT.CreateObject(typeName));
                 if (!popup)
                     DV_LOGERROR("Could not create popup element type " + typeName);
                 else

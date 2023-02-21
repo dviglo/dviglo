@@ -30,29 +30,29 @@ namespace dviglo
 
 const char* PHYSICS2D_CATEGORY = "Physics2D";
 
-void RegisterPhysics2DLibrary(Context* context)
+void RegisterPhysics2DLibrary()
 {
-    PhysicsWorld2D::RegisterObject(context);
-    RigidBody2D::RegisterObject(context);
+    PhysicsWorld2D::RegisterObject();
+    RigidBody2D::RegisterObject();
 
-    CollisionShape2D::RegisterObject(context);
-    CollisionBox2D::RegisterObject(context);
-    CollisionChain2D::RegisterObject(context);
-    CollisionCircle2D::RegisterObject(context);
-    CollisionEdge2D::RegisterObject(context);
-    CollisionPolygon2D::RegisterObject(context);
+    CollisionShape2D::RegisterObject();
+    CollisionBox2D::RegisterObject();
+    CollisionChain2D::RegisterObject();
+    CollisionCircle2D::RegisterObject();
+    CollisionEdge2D::RegisterObject();
+    CollisionPolygon2D::RegisterObject();
 
-    Constraint2D::RegisterObject(context);
-    ConstraintDistance2D::RegisterObject(context);
-    ConstraintFriction2D::RegisterObject(context);
-    ConstraintGear2D::RegisterObject(context);
-    ConstraintMotor2D::RegisterObject(context);
-    ConstraintMouse2D::RegisterObject(context);
-    ConstraintPrismatic2D::RegisterObject(context);
-    ConstraintPulley2D::RegisterObject(context);
-    ConstraintRevolute2D::RegisterObject(context);
-    ConstraintWeld2D::RegisterObject(context);
-    ConstraintWheel2D::RegisterObject(context);
+    Constraint2D::RegisterObject();
+    ConstraintDistance2D::RegisterObject();
+    ConstraintFriction2D::RegisterObject();
+    ConstraintGear2D::RegisterObject();
+    ConstraintMotor2D::RegisterObject();
+    ConstraintMouse2D::RegisterObject();
+    ConstraintPrismatic2D::RegisterObject();
+    ConstraintPulley2D::RegisterObject();
+    ConstraintRevolute2D::RegisterObject();
+    ConstraintWeld2D::RegisterObject();
+    ConstraintWheel2D::RegisterObject();
 }
 
 }

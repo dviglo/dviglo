@@ -24,8 +24,8 @@ namespace dviglo
 
 extern const char* GEOMETRY_CATEGORY;
 
-StaticModel::StaticModel(Context* context) :
-    Drawable(context, DrawableTypes::Geometry),
+StaticModel::StaticModel() :
+    Drawable(DrawableTypes::Geometry),
     occlusionLodLevel_(NINDEX),
     materialsAttr_(Material::GetTypeStatic())
 {
@@ -33,9 +33,9 @@ StaticModel::StaticModel(Context* context) :
 
 StaticModel::~StaticModel() = default;
 
-void StaticModel::RegisterObject(Context* context)
+void StaticModel::RegisterObject()
 {
-    context->RegisterFactory<StaticModel>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<StaticModel>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);

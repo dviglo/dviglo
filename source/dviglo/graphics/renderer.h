@@ -163,7 +163,7 @@ public:
     using ShadowMapFilter = void(Object::*)(View* view, Texture2D* shadowMap, float blurScale);
 
     /// Construct.
-    explicit Renderer(Context* context);
+    explicit Renderer();
     /// Destruct.
     ~Renderer() override;
 

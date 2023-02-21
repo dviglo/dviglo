@@ -16,11 +16,11 @@ class DV_API ConstraintPulley2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintPulley2D(Context* context);
+    explicit ConstraintPulley2D();
     /// Destruct.
     ~ConstraintPulley2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set other body ground anchor point.
     void SetOwnerBodyGroundAnchor(const Vector2& groundAnchor);

@@ -218,8 +218,7 @@ i32 Technique::shadowPassIndex = 0;
 
 HashMap<String, i32> Technique::passIndices;
 
-Technique::Technique(Context* context) :
-    Resource(context),
+Technique::Technique() :
     isDesktop_(false)
 {
 #ifdef DESKTOP_GRAPHICS
@@ -231,9 +230,9 @@ Technique::Technique(Context* context) :
 
 Technique::~Technique() = default;
 
-void Technique::RegisterObject(Context* context)
+void Technique::RegisterObject()
 {
-    context->RegisterFactory<Technique>();
+    DV_CONTEXT.RegisterFactory<Technique>();
 }
 
 bool Technique::BeginLoad(Deserializer& source)
@@ -243,7 +242,7 @@ bool Technique::BeginLoad(Deserializer& source)
 
     SetMemoryUse(sizeof(Technique));
 
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     if (!xml->Load(source))
         return false;
 
@@ -356,7 +355,7 @@ void Technique::ReleaseShaders()
 
 SharedPtr<Technique> Technique::Clone(const String& cloneName) const
 {
-    SharedPtr<Technique> ret(new Technique(context_));
+    SharedPtr<Technique> ret(new Technique());
     ret->SetIsDesktop(isDesktop_);
     ret->SetName(cloneName);
 

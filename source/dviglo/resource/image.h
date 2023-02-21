@@ -66,11 +66,11 @@ class DV_API Image : public Resource
 
 public:
     /// Construct empty.
-    explicit Image(Context* context);
+    explicit Image();
     /// Destruct.
     ~Image() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

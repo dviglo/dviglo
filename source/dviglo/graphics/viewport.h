@@ -26,11 +26,11 @@ class DV_API Viewport : public Object
 
 public:
     /// Construct with defaults.
-    explicit Viewport(Context* context);
+    explicit Viewport();
     /// Construct with a full rectangle.
-    Viewport(Context* context, Scene* scene, Camera* camera, RenderPath* renderPath = nullptr);
+    Viewport(Scene* scene, Camera* camera, RenderPath* renderPath = nullptr);
     /// Construct with a specified rectangle.
-    Viewport(Context* context, Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath = nullptr);
+    Viewport(Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath = nullptr);
     /// Destruct.
     ~Viewport() override;
 

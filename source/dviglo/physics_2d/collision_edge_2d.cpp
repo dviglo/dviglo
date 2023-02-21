@@ -15,8 +15,7 @@ extern const char* PHYSICS2D_CATEGORY;
 static const Vector2 DEFAULT_VERTEX1(-0.01f, 0.0f);
 static const Vector2 DEFAULT_VERTEX2(0.01f, 0.0f);
 
-CollisionEdge2D::CollisionEdge2D(Context* context) :
-    CollisionShape2D(context),
+CollisionEdge2D::CollisionEdge2D() :
     vertex1_(DEFAULT_VERTEX1),
     vertex2_(DEFAULT_VERTEX2)
 {
@@ -28,9 +27,9 @@ CollisionEdge2D::CollisionEdge2D(Context* context) :
 
 CollisionEdge2D::~CollisionEdge2D() = default;
 
-void CollisionEdge2D::RegisterObject(Context* context)
+void CollisionEdge2D::RegisterObject()
 {
-    context->RegisterFactory<CollisionEdge2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CollisionEdge2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Vertex 1", GetVertex1, SetVertex1, DEFAULT_VERTEX1, AM_DEFAULT);

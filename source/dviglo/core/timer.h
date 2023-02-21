@@ -63,7 +63,7 @@ class DV_API Time : public Object
 
 public:
     /// Construct.
-    explicit Time(Context* context);
+    explicit Time();
     /// Destruct. Reset the low-resolution timer period if set.
     ~Time() override;
 

@@ -39,11 +39,11 @@ class DV_API RigidBody : public Component, public btMotionState
 
 public:
     /// Construct.
-    explicit RigidBody(Context* context);
+    explicit RigidBody();
     /// Destruct. Free the rigid body and geometries.
     ~RigidBody() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;

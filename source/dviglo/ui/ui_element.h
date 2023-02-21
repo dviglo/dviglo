@@ -107,11 +107,11 @@ class DV_API UIElement : public Animatable
 
 public:
     /// Construct.
-    explicit UIElement(Context* context);
+    explicit UIElement();
     /// Destruct.
     ~UIElement() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;

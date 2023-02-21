@@ -15,8 +15,7 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-CollisionChain2D::CollisionChain2D(Context* context) :
-    CollisionShape2D(context),
+CollisionChain2D::CollisionChain2D() :
     loop_(false)
 {
     fixtureDef_.shape = &chainShape_;
@@ -24,9 +23,9 @@ CollisionChain2D::CollisionChain2D(Context* context) :
 
 CollisionChain2D::~CollisionChain2D() = default;
 
-void CollisionChain2D::RegisterObject(Context* context)
+void CollisionChain2D::RegisterObject()
 {
-    context->RegisterFactory<CollisionChain2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CollisionChain2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Loop", GetLoop, SetLoop, false, AM_DEFAULT);

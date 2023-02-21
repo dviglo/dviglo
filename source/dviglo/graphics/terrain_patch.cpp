@@ -25,12 +25,12 @@ static const float LOD_CONSTANT = 1.0f / 150.0f;
 
 extern const char* GEOMETRY_CATEGORY;
 
-TerrainPatch::TerrainPatch(Context* context) :
-    Drawable(context, DrawableTypes::Geometry),
-    geometry_(new Geometry(context)),
-    maxLodGeometry_(new Geometry(context)),
-    occlusionGeometry_(new Geometry(context)),
-    vertexBuffer_(new VertexBuffer(context)),
+TerrainPatch::TerrainPatch() :
+    Drawable(DrawableTypes::Geometry),
+    geometry_(new Geometry()),
+    maxLodGeometry_(new Geometry()),
+    occlusionGeometry_(new Geometry()),
+    vertexBuffer_(new VertexBuffer()),
     coordinates_(IntVector2::ZERO),
     lodLevel_(0)
 {
@@ -45,9 +45,9 @@ TerrainPatch::TerrainPatch(Context* context) :
 
 TerrainPatch::~TerrainPatch() = default;
 
-void TerrainPatch::RegisterObject(Context* context)
+void TerrainPatch::RegisterObject()
 {
-    context->RegisterFactory<TerrainPatch>();
+    DV_CONTEXT.RegisterFactory<TerrainPatch>();
 }
 
 void TerrainPatch::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)

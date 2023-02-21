@@ -79,8 +79,6 @@ using SDL_GLContext = void *;
 namespace dviglo
 {
 
-class Context;
-
 using ConstantBufferMap = HashMap<unsigned, SharedPtr<ConstantBuffer>>;
 using ShaderProgramMap_OGL = HashMap<Pair<ShaderVariation*, ShaderVariation*>, SharedPtr<ShaderProgram_OGL>>;
 

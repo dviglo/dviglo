@@ -24,12 +24,12 @@ class DV_API SplinePath : public Component
 
 public:
     /// Construct an Empty SplinePath.
-    explicit SplinePath(Context* context);
+    explicit SplinePath();
 
     /// Destructor.
     ~SplinePath() override = default;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply Attributes to the SplinePath.
     void ApplyAttributes() override;

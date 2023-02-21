@@ -17,8 +17,7 @@ static const float DEFAULT_DISTANCE_FACTOR = 0.0f;
 static const float DEFAULT_MIN_PRIORITY = 0.0f;
 static const float UPDATE_THRESHOLD = 100.0f;
 
-NetworkPriority::NetworkPriority(Context* context) :
-    Component(context),
+NetworkPriority::NetworkPriority() :
     basePriority_(DEFAULT_BASE_PRIORITY),
     distanceFactor_(DEFAULT_DISTANCE_FACTOR),
     minPriority_(DEFAULT_MIN_PRIORITY),
@@ -28,9 +27,9 @@ NetworkPriority::NetworkPriority(Context* context) :
 
 NetworkPriority::~NetworkPriority() = default;
 
-void NetworkPriority::RegisterObject(Context* context)
+void NetworkPriority::RegisterObject()
 {
-    context->RegisterFactory<NetworkPriority>(NETWORK_CATEGORY);
+    DV_CONTEXT.RegisterFactory<NetworkPriority>(NETWORK_CATEGORY);
 
     DV_ATTRIBUTE("Base Priority", basePriority_, DEFAULT_BASE_PRIORITY, AM_DEFAULT);
     DV_ATTRIBUTE("Distance Factor", distanceFactor_, DEFAULT_DISTANCE_FACTOR, AM_DEFAULT);

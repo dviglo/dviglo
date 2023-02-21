@@ -28,8 +28,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(NATPunchtrough)
 
-NATPunchtrough::NATPunchtrough(Context* context) :
-    Sample(context)
+NATPunchtrough::NATPunchtrough()
 {
 }
 

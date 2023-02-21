@@ -16,9 +16,8 @@
 namespace dviglo
 {
 
-MessageBox::MessageBox(Context* context, const String& messageString, const String& titleString, XMLFile* layoutFile,
+MessageBox::MessageBox(const String& messageString, const String& titleString, XMLFile* layoutFile,
     XMLFile* styleFile) :
-    Object(context),
     window_(nullptr),
     titleText_(nullptr),
     messageText_(nullptr),
@@ -86,9 +85,9 @@ MessageBox::~MessageBox()
         window_->Remove();
 }
 
-void MessageBox::RegisterObject(Context* context)
+void MessageBox::RegisterObject()
 {
-    context->RegisterFactory<MessageBox>();
+    DV_CONTEXT.RegisterFactory<MessageBox>();
 }
 
 void MessageBox::SetTitle(const String& text)

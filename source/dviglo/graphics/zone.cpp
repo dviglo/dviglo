@@ -27,8 +27,8 @@ static const float DEFAULT_FOG_HEIGHT_SCALE = 0.5f;
 
 extern const char* SCENE_CATEGORY;
 
-Zone::Zone(Context* context) :
-    Drawable(context, DrawableTypes::Zone),
+Zone::Zone() :
+    Drawable(DrawableTypes::Zone),
     inverseWorldDirty_(true),
     heightFog_(false),
     override_(false),
@@ -46,9 +46,9 @@ Zone::Zone(Context* context) :
 
 Zone::~Zone() = default;
 
-void Zone::RegisterObject(Context* context)
+void Zone::RegisterObject()
 {
-    context->RegisterFactory<Zone>(SCENE_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Zone>(SCENE_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE_EX("Bounding Box Min", boundingBox_.min_, MarkNodeDirty, DEFAULT_BOUNDING_BOX_MIN, AM_DEFAULT);

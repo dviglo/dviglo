@@ -44,13 +44,12 @@
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DPlatformer)
 
-Urho2DPlatformer::Urho2DPlatformer(Context* context) :
-    Sample(context)
+Urho2DPlatformer::Urho2DPlatformer()
 {
     // Register factory for the Character2D component so it can be created via CreateComponent
-    Character2D::RegisterObject(context);
+    Character2D::RegisterObject();
     // Register factory and attributes for the Mover component so it can be created via CreateComponent, and loaded / saved
-    Mover::RegisterObject(context);
+    Mover::RegisterObject();
 }
 
 void Urho2DPlatformer::Setup()
@@ -64,7 +63,7 @@ void Urho2DPlatformer::Start()
     // Execute base class startup
     Sample::Start();
 
-    sample2D_ = new Sample2D(context_);
+    sample2D_ = new Sample2D();
 
     // Set filename for load/save functions
     sample2D_->demoFilename_ = "Platformer2D";
@@ -84,7 +83,7 @@ void Urho2DPlatformer::Start()
 
 void Urho2DPlatformer::CreateScene()
 {
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     sample2D_->scene_ = scene_;
 
     // Create the Octree, DebugRenderer and PhysicsWorld2D components to the scene
@@ -102,7 +101,7 @@ void Urho2DPlatformer::CreateScene()
     camera->SetZoom(2.0f * Min((float)graphics->GetWidth() / 1280.0f, (float)graphics->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (2.0) is set for full visibility at 1280x800 resolution)
 
     // Setup the viewport for displaying the scene
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, camera));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, camera));
     auto* renderer = GetSubsystem<Renderer>();
     renderer->SetViewport(0, viewport);
 
@@ -370,7 +369,7 @@ void Urho2DPlatformer::ReloadScene(bool reInit)
     if (!reInit)
         filename += "InGame";
 
-    File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/" + filename + ".xml", FILE_READ);
+    File loadFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/" + filename + ".xml", FILE_READ);
     scene_->LoadXML(loadFile);
     // After loading we have to reacquire the weak pointer to the Character2D component, as it has been recreated
     // Simply find the character's scene node by name as there's only one of them

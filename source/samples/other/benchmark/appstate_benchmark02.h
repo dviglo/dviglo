@@ -12,7 +12,7 @@ public:
     DV_OBJECT(AppState_Benchmark02, AppState_Base);
 
 public:
-    AppState_Benchmark02(dv::Context* context);
+    AppState_Benchmark02();
 
     void OnEnter() override;
     void OnLeave() override;

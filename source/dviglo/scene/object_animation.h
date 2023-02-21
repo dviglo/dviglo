@@ -22,11 +22,11 @@ class DV_API ObjectAnimation : public Resource
 
 public:
     /// Construct.
-    explicit ObjectAnimation(Context* context);
+    explicit ObjectAnimation();
     /// Destruct.
     ~ObjectAnimation() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

@@ -9,13 +9,12 @@ namespace dviglo
 
 static constexpr int POTION_HEAL_AMOUNT = 5;
 
-void Potion::RegisterObject(Context* context)
+void Potion::RegisterObject()
 {
-    context->RegisterFactory<Potion>();
+    DV_CONTEXT.RegisterFactory<Potion>();
 }
 
-Potion::Potion(Context* context)
-    : GameObject(context)
+Potion::Potion()
 {
     healAmount = POTION_HEAL_AMOUNT;
 }

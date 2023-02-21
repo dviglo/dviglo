@@ -16,11 +16,11 @@ class DV_API Slider : public BorderImage
 
 public:
     /// Construct.
-    explicit Slider(Context* context);
+    explicit Slider();
     /// Destruct.
     ~Slider() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Perform UI element update.
     void Update(float timeStep) override;

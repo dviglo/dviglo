@@ -12,8 +12,7 @@ public:
     DV_OBJECT(AppState_Benchmark01, AppState_Base);
 
 public:
-    AppState_Benchmark01(dv::Context* context)
-        : AppState_Base(context)
+    AppState_Benchmark01()
     {
         name_ = "Static Scene";
     }

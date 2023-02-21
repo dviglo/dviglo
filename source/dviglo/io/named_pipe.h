@@ -22,9 +22,9 @@ class DV_API NamedPipe : public Object, public AbstractFile
 
 public:
     /// Construct.
-    explicit NamedPipe(Context* context);
+    explicit NamedPipe();
     /// Construct and open in either server or client mode.
-    NamedPipe(Context* context, const String& name, bool isServer);
+    NamedPipe(const String& name, bool isServer);
     /// Destruct and close.
     ~NamedPipe() override;
 

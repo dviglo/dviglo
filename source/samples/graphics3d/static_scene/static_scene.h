@@ -25,7 +25,7 @@ class StaticScene : public Sample
 
 public:
     /// Construct.
-    explicit StaticScene(Context* context);
+    explicit StaticScene();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

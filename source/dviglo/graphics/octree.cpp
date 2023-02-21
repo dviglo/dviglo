@@ -292,8 +292,7 @@ void Octant::GetDrawablesOnlyInternal(RayOctreeQuery& query, Vector<Drawable*>& 
     }
 }
 
-Octree::Octree(Context* context) :
-    Component(context),
+Octree::Octree() :
     Octant(BoundingBox(-DEFAULT_OCTREE_SIZE, DEFAULT_OCTREE_SIZE), 0, nullptr, this),
     numLevels_(DEFAULT_OCTREE_LEVELS)
 {
@@ -310,9 +309,9 @@ Octree::~Octree()
     ResetRoot();
 }
 
-void Octree::RegisterObject(Context* context)
+void Octree::RegisterObject()
 {
-    context->RegisterFactory<Octree>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Octree>(SUBSYSTEM_CATEGORY);
 
     Vector3 defaultBoundsMin = -Vector3::ONE * DEFAULT_OCTREE_SIZE;
     Vector3 defaultBoundsMax = Vector3::ONE * DEFAULT_OCTREE_SIZE;

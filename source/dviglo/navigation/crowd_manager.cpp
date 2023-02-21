@@ -54,8 +54,7 @@ void CrowdAgentUpdateCallback(dtCrowdAgent* ag, float dt)
     static_cast<CrowdAgent*>(ag->params.userData)->OnCrowdUpdate(ag, dt);
 }
 
-CrowdManager::CrowdManager(Context* context) :
-    Component(context),
+CrowdManager::CrowdManager() :
     maxAgents_(DEFAULT_MAX_AGENTS),
     maxAgentRadius_(DEFAULT_MAX_AGENT_RADIUS)
 {
@@ -71,9 +70,9 @@ CrowdManager::~CrowdManager()
     crowd_ = nullptr;
 }
 
-void CrowdManager::RegisterObject(Context* context)
+void CrowdManager::RegisterObject()
 {
-    context->RegisterFactory<CrowdManager>(NAVIGATION_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CrowdManager>(NAVIGATION_CATEGORY);
 
     DV_ATTRIBUTE("Max Agents", maxAgents_, DEFAULT_MAX_AGENTS, AM_DEFAULT);
     DV_ATTRIBUTE("Max Agent Radius", maxAgentRadius_, DEFAULT_MAX_AGENT_RADIUS, AM_DEFAULT);

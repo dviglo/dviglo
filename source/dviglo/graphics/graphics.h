@@ -141,7 +141,7 @@ class DV_API Graphics : public Object
 
 public:
     /// Construct.
-    explicit Graphics(Context* context, GAPI gapi);
+    explicit Graphics(GAPI gapi);
     /// Destruct. Release the Direct3D11 device and close the window.
     ~Graphics() override;
 
@@ -1157,7 +1157,7 @@ private:
 };
 
 /// Register Graphics library objects.
-void DV_API RegisterGraphicsLibrary(Context* context);
+void DV_API RegisterGraphicsLibrary();
 
 } // namespace dviglo
 

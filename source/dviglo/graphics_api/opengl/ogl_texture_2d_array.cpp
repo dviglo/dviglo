@@ -159,7 +159,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, i
 
 bool Texture2DArray::SetData_OGL(unsigned layer, Deserializer& source)
 {
-    SharedPtr<Image> image(new Image(context_));
+    SharedPtr<Image> image(new Image());
     if (!image->Load(source))
         return false;
 

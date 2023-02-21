@@ -16,11 +16,11 @@ class DV_API CollisionBox2D : public CollisionShape2D
 
 public:
     /// Construct.
-    explicit CollisionBox2D(Context* context);
+    explicit CollisionBox2D();
     /// Destruct.
     ~CollisionBox2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set size.
     void SetSize(const Vector2& size);

@@ -18,8 +18,7 @@ static const unsigned DEFAULT_AREA_ID = 0;
 
 extern const char* NAVIGATION_CATEGORY;
 
-NavArea::NavArea(Context* context) :
-    Component(context),
+NavArea::NavArea() :
     areaID_(DEFAULT_AREA_ID),
     boundingBox_(DEFAULT_BOUNDING_BOX_MIN, DEFAULT_BOUNDING_BOX_MAX)
 {
@@ -27,9 +26,9 @@ NavArea::NavArea(Context* context) :
 
 NavArea::~NavArea() = default;
 
-void NavArea::RegisterObject(Context* context)
+void NavArea::RegisterObject()
 {
-    context->RegisterFactory<NavArea>(NAVIGATION_CATEGORY);
+    DV_CONTEXT.RegisterFactory<NavArea>(NAVIGATION_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Component);
     DV_ATTRIBUTE("Bounding Box Min", boundingBox_.min_, DEFAULT_BOUNDING_BOX_MIN, AM_DEFAULT);

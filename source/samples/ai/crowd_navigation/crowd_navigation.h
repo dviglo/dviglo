@@ -31,7 +31,7 @@ class CrowdNavigation : public Sample
 
 public:
     /// Construct.
-    explicit CrowdNavigation(Context* context);
+    explicit CrowdNavigation();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -47,8 +47,7 @@ static const char* checkDirs[] =
 
 static const SharedPtr<Resource> noResource;
 
-ResourceCache::ResourceCache(Context* context) :
-    Object(context),
+ResourceCache::ResourceCache() :
     autoReloadResources_(false),
     returnFailedResources_(false),
     searchPackagesFirst_(true),
@@ -56,7 +55,7 @@ ResourceCache::ResourceCache(Context* context) :
     finishBackgroundResourcesMs_(5)
 {
     // Register Resource library object factories
-    RegisterResourceLibrary(context_);
+    RegisterResourceLibrary();
 
 #ifdef DV_THREADING
     // Create resource background loader. Its thread will start on the first background request
@@ -106,7 +105,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
     // If resource auto-reloading active, create a file watcher for the directory
     if (autoReloadResources_)
     {
-        SharedPtr<FileWatcher> watcher(new FileWatcher(context_));
+        SharedPtr<FileWatcher> watcher(new FileWatcher());
         watcher->StartWatching(fixedPath, true);
         fileWatchers_.Push(watcher);
     }
@@ -140,7 +139,7 @@ bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
 bool ResourceCache::AddPackageFile(const String& fileName, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
-    SharedPtr<PackageFile> package(new PackageFile(context_));
+    SharedPtr<PackageFile> package(new PackageFile());
     return package->Open(fileName) && AddPackageFile(package, priority);
 }
 
@@ -431,7 +430,7 @@ void ResourceCache::SetAutoReloadResources(bool enable)
         {
             for (const String& resourceDir : resourceDirs_)
             {
-                SharedPtr<FileWatcher> watcher(new FileWatcher(context_));
+                SharedPtr<FileWatcher> watcher(new FileWatcher());
                 watcher->StartWatching(resourceDir, true);
                 fileWatchers_.Push(watcher);
             }
@@ -576,7 +575,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
 
     SharedPtr<Resource> resource;
     // Make sure the pointer is non-null and is a Resource subclass
-    resource = DynamicCast<Resource>(context_->CreateObject(type));
+    resource = DynamicCast<Resource>(DV_CONTEXT.CreateObject(type));
     if (!resource)
     {
         DV_LOGERROR("Could not load unknown resource type " + String(type));
@@ -655,7 +654,7 @@ SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String
 
     SharedPtr<Resource> resource;
     // Make sure the pointer is non-null and is a Resource subclass
-    resource = DynamicCast<Resource>(context_->CreateObject(type));
+    resource = DynamicCast<Resource>(DV_CONTEXT.CreateObject(type));
     if (!resource)
     {
         DV_LOGERROR("Could not load unknown resource type " + String(type));
@@ -942,7 +941,7 @@ String ResourceCache::PrintMemoryUsage() const
         const String memMaxString = GetFileSizeString(largest);
         const String memBudgetString = GetFileSizeString(cit->second_.memoryBudget_);
         const String memTotalString = GetFileSizeString(cit->second_.memoryUse_);
-        const String resTypeName = context_->GetTypeName(cit->first_);
+        const String resTypeName = DV_CONTEXT.GetTypeName(cit->first_);
 
         memset(outputLine, ' ', 256);
         outputLine[255] = 0;
@@ -1103,7 +1102,7 @@ File* ResourceCache::SearchResourceDirs(const String& name)
         {
             // Construct the file first with full path, then rename it to not contain the resource path,
             // so that the file's sanitatedName can be used in further GetFile() calls (for example over the network)
-            File* file(new File(context_, resourceDir + name));
+            File* file(new File(resourceDir + name));
             file->SetName(name);
             return file;
         }
@@ -1111,7 +1110,7 @@ File* ResourceCache::SearchResourceDirs(const String& name)
 
     // Fallback using absolute path
     if (fileSystem->FileExists(name))
-        return new File(context_, name);
+        return new File(name);
 
     return nullptr;
 }
@@ -1121,18 +1120,18 @@ File* ResourceCache::SearchPackages(const String& name)
     for (const SharedPtr<PackageFile>& package : packages_)
     {
         if (package->Exists(name))
-            return new File(context_, package, name);
+            return new File(package, name);
     }
 
     return nullptr;
 }
 
-void RegisterResourceLibrary(Context* context)
+void RegisterResourceLibrary()
 {
-    Image::RegisterObject(context);
-    JSONFile::RegisterObject(context);
-    PListFile::RegisterObject(context);
-    XMLFile::RegisterObject(context);
+    Image::RegisterObject();
+    JSONFile::RegisterObject();
+    PListFile::RegisterObject();
+    XMLFile::RegisterObject();
 }
 
 }

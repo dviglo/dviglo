@@ -24,11 +24,11 @@ class DV_API SoundSource : public Component
 
 public:
     /// Construct.
-    explicit SoundSource(Context* context);
+    explicit SoundSource();
     /// Destruct. Remove self from the audio subsystem.
     ~SoundSource() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Seek to time.
     void Seek(float seekTime);

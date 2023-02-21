@@ -139,11 +139,11 @@ void SpriteBatchBase::UpdateViewProjMatrix()
 
 using GpuIndex16 = u16;
 
-SpriteBatchBase::SpriteBatchBase(Context* context) : Object(context)
+SpriteBatchBase::SpriteBatchBase()
 {
     graphics_ = GetSubsystem<Graphics>();
 
-    qIndexBuffer_ = new IndexBuffer(context_);
+    qIndexBuffer_ = new IndexBuffer();
     qIndexBuffer_->SetShadowed(true);
 
     // Индексный буфер всегда содержит набор четырёхугольников, поэтому его можно сразу заполнить
@@ -163,10 +163,10 @@ SpriteBatchBase::SpriteBatchBase(Context* context) : Object(context)
     }
     qIndexBuffer_->Unlock();
 
-    qVertexBuffer_ = new VertexBuffer(context_);
+    qVertexBuffer_ = new VertexBuffer();
     qVertexBuffer_->SetSize(MAX_QUADS_IN_PORTION * VERTICES_PER_QUAD, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
 
-    tVertexBuffer_ = new VertexBuffer(context_);
+    tVertexBuffer_ = new VertexBuffer();
     tVertexBuffer_->SetSize(MAX_TRIANGLES_IN_PORTION * VERTICES_PER_TRIANGLE, VertexElements::Position | VertexElements::Color, true);
     tVertexShader_ = graphics_->GetShader(VS, "TriangleBatch");
     tPixelShader_ = graphics_->GetShader(PS, "TriangleBatch");

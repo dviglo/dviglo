@@ -27,7 +27,7 @@ class RaycastVehicleDemo : public Sample
 
 public:
     /// Construct.
-    explicit RaycastVehicleDemo(Context* context);
+    explicit RaycastVehicleDemo();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

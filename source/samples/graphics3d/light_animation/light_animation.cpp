@@ -27,8 +27,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(LightAnimation)
 
-LightAnimation::LightAnimation(Context* context) :
-    Sample(context)
+LightAnimation::LightAnimation()
 {
 }
 
@@ -57,7 +56,7 @@ void LightAnimation::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create the Octree component to the scene. This is required before adding any drawable components, or else nothing will
     // show up. The default octree volume will be from (-1000, -1000, -1000) to (1000, 1000, 1000) in world coordinates; it
@@ -81,10 +80,10 @@ void LightAnimation::CreateScene()
     light->SetRange(10.0f);
 
     // Create light animation
-    SharedPtr<ObjectAnimation> lightAnimation(new ObjectAnimation(context_));
+    SharedPtr<ObjectAnimation> lightAnimation(new ObjectAnimation());
 
     // Create light position animation
-    SharedPtr<ValueAnimation> positionAnimation(new ValueAnimation(context_));
+    SharedPtr<ValueAnimation> positionAnimation(new ValueAnimation());
     // Use spline interpolation method
     positionAnimation->SetInterpolationMethod(IM_SPLINE);
     // Set spline tension
@@ -98,7 +97,7 @@ void LightAnimation::CreateScene()
     lightAnimation->AddAttributeAnimation("Position", positionAnimation);
 
     // Create text animation
-    SharedPtr<ValueAnimation> textAnimation(new ValueAnimation(context_));
+    SharedPtr<ValueAnimation> textAnimation(new ValueAnimation());
     textAnimation->SetKeyFrame(0.0f, "WHITE");
     textAnimation->SetKeyFrame(1.0f, "RED");
     textAnimation->SetKeyFrame(2.0f, "YELLOW");
@@ -108,7 +107,7 @@ void LightAnimation::CreateScene()
 
     // Create UI element animation
     // (note: a spritesheet and "Image Rect" attribute should be used in real use cases for better performance)
-    SharedPtr<ValueAnimation> spriteAnimation(new ValueAnimation(context_));
+    SharedPtr<ValueAnimation> spriteAnimation(new ValueAnimation());
     spriteAnimation->SetKeyFrame(0.0f, ResourceRef("Texture2D", "Urho2D/GoldIcon/1.png"));
     spriteAnimation->SetKeyFrame(0.1f, ResourceRef("Texture2D", "Urho2D/GoldIcon/2.png"));
     spriteAnimation->SetKeyFrame(0.2f, ResourceRef("Texture2D", "Urho2D/GoldIcon/3.png"));
@@ -118,7 +117,7 @@ void LightAnimation::CreateScene()
     GetSubsystem<UI>()->GetRoot()->GetChild(String("animatingSprite"))->SetAttributeAnimation("Texture", spriteAnimation);
 
     // Create light color animation
-    SharedPtr<ValueAnimation> colorAnimation(new ValueAnimation(context_));
+    SharedPtr<ValueAnimation> colorAnimation(new ValueAnimation());
     colorAnimation->SetKeyFrame(0.0f, Color::WHITE);
     colorAnimation->SetKeyFrame(1.0f, Color::RED);
     colorAnimation->SetKeyFrame(2.0f, Color::YELLOW);
@@ -193,7 +192,7 @@ void LightAnimation::SetupViewport()
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen. We need to define the scene and the camera
     // at minimum. Additionally we could configure the viewport screen size and the rendering path (eg. forward / deferred) to
     // use, but now we just use full screen and default render path configured in the engine command line options
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

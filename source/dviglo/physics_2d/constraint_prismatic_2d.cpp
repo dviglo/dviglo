@@ -14,8 +14,7 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-ConstraintPrismatic2D::ConstraintPrismatic2D(Context* context) :
-    Constraint2D(context),
+ConstraintPrismatic2D::ConstraintPrismatic2D() :
     anchor_(Vector2::ZERO),
     axis_(Vector2::RIGHT)
 {
@@ -23,9 +22,9 @@ ConstraintPrismatic2D::ConstraintPrismatic2D(Context* context) :
 
 ConstraintPrismatic2D::~ConstraintPrismatic2D() = default;
 
-void ConstraintPrismatic2D::RegisterObject(Context* context)
+void ConstraintPrismatic2D::RegisterObject()
 {
-    context->RegisterFactory<ConstraintPrismatic2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ConstraintPrismatic2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);

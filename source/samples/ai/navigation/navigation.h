@@ -29,7 +29,7 @@ class Navigation : public Sample
 
 public:
     /// Construct.
-    explicit Navigation(Context* context);
+    explicit Navigation();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

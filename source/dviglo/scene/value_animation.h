@@ -53,11 +53,11 @@ class DV_API ValueAnimation : public Resource
 
 public:
     /// Construct.
-    explicit ValueAnimation(Context* context);
+    explicit ValueAnimation();
     /// Destruct.
     ~ValueAnimation() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

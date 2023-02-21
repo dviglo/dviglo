@@ -80,8 +80,7 @@ extern const char* AUDIO_CATEGORY;
 
 extern const char* autoRemoveModeNames[];
 
-SoundSource::SoundSource(Context* context) :
-    Component(context),
+SoundSource::SoundSource() :
     soundType_(SOUND_EFFECT),
     frequency_(0.0f),
     gain_(1.0f),
@@ -108,9 +107,9 @@ SoundSource::~SoundSource()
         audio_->RemoveSoundSource(this);
 }
 
-void SoundSource::RegisterObject(Context* context)
+void SoundSource::RegisterObject()
 {
-    context->RegisterFactory<SoundSource>(AUDIO_CATEGORY);
+    DV_CONTEXT.RegisterFactory<SoundSource>(AUDIO_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Sound", GetSoundAttr, SetSoundAttr, ResourceRef(Sound::GetTypeStatic()), AM_DEFAULT);
@@ -330,7 +329,7 @@ void SoundSource::Update(float timeStep)
 
         using namespace SoundFinished;
 
-        VariantMap& eventData = context_->GetEventDataMap();
+        VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
         eventData[P_NODE] = node_;
         eventData[P_SOUNDSOURCE] = this;
         eventData[P_SOUND] = sound_;
@@ -536,7 +535,7 @@ void SoundSource::PlayLockless(const SharedPtr<SoundStream>& stream)
         unsigned sampleSize = stream->GetSampleSize();
         unsigned streamBufferSize = sampleSize * stream->GetIntFrequency() * STREAM_BUFFER_LENGTH / 1000;
 
-        streamBuffer_ = new Sound(context_);
+        streamBuffer_ = new Sound();
         streamBuffer_->SetSize(streamBufferSize);
         streamBuffer_->SetFormat(stream->GetIntFrequency(), stream->IsSixteenBit(), stream->IsStereo());
         streamBuffer_->SetLooped(true);

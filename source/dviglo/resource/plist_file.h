@@ -127,11 +127,11 @@ class DV_API PListFile : public Resource
 
 public:
     /// Construct.
-    explicit PListFile(Context* context);
+    explicit PListFile();
     /// Destruct.
     ~PListFile() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

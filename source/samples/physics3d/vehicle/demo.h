@@ -27,7 +27,7 @@ class VehicleDemo : public Sample
 
 public:
     /// Construct.
-    explicit VehicleDemo(Context* context);
+    explicit VehicleDemo();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -150,7 +150,7 @@ bool Texture2DArray::SetData_D3D11(unsigned layer, unsigned level, int x, int y,
 
 bool Texture2DArray::SetData_D3D11(unsigned layer, Deserializer& source)
 {
-    SharedPtr<Image> image(new Image(context_));
+    SharedPtr<Image> image(new Image());
     if (!image->Load(source))
         return false;
 

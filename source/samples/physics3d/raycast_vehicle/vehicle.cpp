@@ -25,17 +25,16 @@ using namespace dviglo;
 
 const float CHASSIS_WIDTH = 2.6f;
 
-void Vehicle::RegisterObject(Context* context)
+void Vehicle::RegisterObject()
 {
-    context->RegisterFactory<Vehicle>();
+    DV_CONTEXT.RegisterFactory<Vehicle>();
     DV_ATTRIBUTE("Steering", steering_, 0.0f, AM_DEFAULT);
     DV_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
     DV_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);
 }
 
-Vehicle::Vehicle(dviglo::Context* context)
-    : LogicComponent(context),
-      steering_(0.0f)
+Vehicle::Vehicle()
+    : steering_(0.0f)
 {
     SetUpdateEventMask(LogicComponentEvents::FixedUpdate | LogicComponentEvents::PostUpdate);
     engineForce_ = 0.0f;

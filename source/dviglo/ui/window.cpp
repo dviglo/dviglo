@@ -18,8 +18,7 @@ static const int DEFAULT_RESIZE_BORDER = 4;
 
 extern const char* UI_CATEGORY;
 
-Window::Window(Context* context) :
-    BorderImage(context),
+Window::Window() :
     movable_(false),
     resizable_(false),
     fixedWidthResizing_(false),
@@ -39,9 +38,9 @@ Window::Window(Context* context) :
 
 Window::~Window() = default;
 
-void Window::RegisterObject(Context* context)
+void Window::RegisterObject()
 {
-    context->RegisterFactory<Window>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Window>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Bring To Front", true);

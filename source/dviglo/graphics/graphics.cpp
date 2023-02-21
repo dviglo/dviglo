@@ -339,7 +339,7 @@ void Graphics::Raise() const
 
 void Graphics::BeginDumpShaders(const String& fileName)
 {
-    shaderPrecache_ = new ShaderPrecache(context_, fileName);
+    shaderPrecache_ = new ShaderPrecache(fileName);
 }
 
 void Graphics::EndDumpShaders()
@@ -577,8 +577,7 @@ void Graphics::OnScreenModeChanged()
     SendEvent(E_SCREENMODE, eventData);
 }
 
-Graphics::Graphics(Context* context, GAPI gapi)
-    : Object(context)
+Graphics::Graphics(GAPI gapi)
 {
     Graphics::gapi = gapi;
 
@@ -2180,36 +2179,36 @@ unsigned Graphics::GetFormat(const String& formatName)
     return {}; // Prevent warning
 }
 
-void RegisterGraphicsLibrary(Context* context)
+void RegisterGraphicsLibrary()
 {
-    Animation::RegisterObject(context);
-    Material::RegisterObject(context);
-    Model::RegisterObject(context);
-    Shader::RegisterObject(context);
-    Technique::RegisterObject(context);
-    Texture2D::RegisterObject(context);
-    Texture2DArray::RegisterObject(context);
-    Texture3D::RegisterObject(context);
-    TextureCube::RegisterObject(context);
-    Camera::RegisterObject(context);
-    Drawable::RegisterObject(context);
-    Light::RegisterObject(context);
-    StaticModel::RegisterObject(context);
-    StaticModelGroup::RegisterObject(context);
-    Skybox::RegisterObject(context);
-    AnimatedModel::RegisterObject(context);
-    AnimationController::RegisterObject(context);
-    BillboardSet::RegisterObject(context);
-    ParticleEffect::RegisterObject(context);
-    ParticleEmitter::RegisterObject(context);
-    RibbonTrail::RegisterObject(context);
-    CustomGeometry::RegisterObject(context);
-    DecalSet::RegisterObject(context);
-    Terrain::RegisterObject(context);
-    TerrainPatch::RegisterObject(context);
-    DebugRenderer::RegisterObject(context);
-    Octree::RegisterObject(context);
-    Zone::RegisterObject(context);
+    Animation::RegisterObject();
+    Material::RegisterObject();
+    Model::RegisterObject();
+    Shader::RegisterObject();
+    Technique::RegisterObject();
+    Texture2D::RegisterObject();
+    Texture2DArray::RegisterObject();
+    Texture3D::RegisterObject();
+    TextureCube::RegisterObject();
+    Camera::RegisterObject();
+    Drawable::RegisterObject();
+    Light::RegisterObject();
+    StaticModel::RegisterObject();
+    StaticModelGroup::RegisterObject();
+    Skybox::RegisterObject();
+    AnimatedModel::RegisterObject();
+    AnimationController::RegisterObject();
+    BillboardSet::RegisterObject();
+    ParticleEffect::RegisterObject();
+    ParticleEmitter::RegisterObject();
+    RibbonTrail::RegisterObject();
+    CustomGeometry::RegisterObject();
+    DecalSet::RegisterObject();
+    Terrain::RegisterObject();
+    TerrainPatch::RegisterObject();
+    DebugRenderer::RegisterObject();
+    Octree::RegisterObject();
+    Zone::RegisterObject();
 }
 
 }

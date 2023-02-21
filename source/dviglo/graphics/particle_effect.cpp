@@ -36,8 +36,7 @@ static const float DEFAULT_VELOCITY = 1.0f;
 static const Vector3 DEFAULT_DIRECTION_MIN(-1.0f, -1.0f, -1.0f);
 static const Vector3 DEFAULT_DIRECTION_MAX(1.0f, 1.0f, 1.0f);
 
-ParticleEffect::ParticleEffect(Context* context) :
-    Resource(context),
+ParticleEffect::ParticleEffect() :
     numParticles_(DEFAULT_NUM_PARTICLES),
     updateInvisible_(false),
     relative_(true),
@@ -73,16 +72,16 @@ ParticleEffect::ParticleEffect(Context* context) :
 
 ParticleEffect::~ParticleEffect() = default;
 
-void ParticleEffect::RegisterObject(Context* context)
+void ParticleEffect::RegisterObject()
 {
-    context->RegisterFactory<ParticleEffect>();
+    DV_CONTEXT.RegisterFactory<ParticleEffect>();
 }
 
 bool ParticleEffect::BeginLoad(Deserializer& source)
 {
     loadMaterialName_.Clear();
 
-    XMLFile file(context_);
+    XMLFile file;
     if (!file.Load(source))
     {
         DV_LOGERROR("Load particle effect file failed");
@@ -299,7 +298,7 @@ bool ParticleEffect::Load(const XMLElement& source)
 
 bool ParticleEffect::Save(Serializer& dest) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     XMLElement materialElem = xml->CreateRoot("particleeffect");
 
     Save(materialElem);
@@ -715,7 +714,7 @@ void ParticleEffect::SortTextureFrames()
 
 SharedPtr<ParticleEffect> ParticleEffect::Clone(const String& cloneName) const
 {
-    SharedPtr<ParticleEffect> ret(new ParticleEffect(context_));
+    SharedPtr<ParticleEffect> ret(new ParticleEffect());
 
     ret->SetName(cloneName);
     ret->material_ = material_;

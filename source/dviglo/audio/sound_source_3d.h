@@ -18,9 +18,9 @@ class DV_API SoundSource3D : public SoundSource
 
 public:
     /// Construct.
-    explicit SoundSource3D(Context* context);
+    explicit SoundSource3D();
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

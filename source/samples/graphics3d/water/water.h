@@ -26,7 +26,7 @@ class Water : public Sample
 
 public:
     /// Construct.
-    explicit Water(Context* context);
+    explicit Water();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

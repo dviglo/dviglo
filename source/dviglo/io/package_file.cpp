@@ -9,8 +9,7 @@
 namespace dviglo
 {
 
-PackageFile::PackageFile(Context* context) :
-    Object(context),
+PackageFile::PackageFile() :
     totalSize_(0),
     totalDataSize_(0),
     checksum_(0),
@@ -18,8 +17,7 @@ PackageFile::PackageFile(Context* context) :
 {
 }
 
-PackageFile::PackageFile(Context* context, const String& fileName, unsigned startOffset) :
-    Object(context),
+PackageFile::PackageFile(const String& fileName, unsigned startOffset) :
     totalSize_(0),
     totalDataSize_(0),
     checksum_(0),
@@ -32,7 +30,7 @@ PackageFile::~PackageFile() = default;
 
 bool PackageFile::Open(const String& fileName, unsigned startOffset)
 {
-    SharedPtr<File> file(new File(context_, fileName));
+    SharedPtr<File> file(new File(fileName));
     if (!file->IsOpen())
         return false;
 

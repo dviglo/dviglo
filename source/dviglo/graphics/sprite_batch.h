@@ -104,7 +104,7 @@ private:
 
 public:
 
-    SpriteBatch(Context* context);
+    SpriteBatch();
 };
 
 }

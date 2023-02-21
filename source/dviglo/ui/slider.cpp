@@ -22,8 +22,7 @@ const char* orientations[] =
 
 extern const char* UI_CATEGORY;
 
-Slider::Slider(Context* context) :
-    BorderImage(context),
+Slider::Slider() :
     orientation_(O_HORIZONTAL),
     range_(1.0f),
     value_(0.0f),
@@ -39,9 +38,9 @@ Slider::Slider(Context* context) :
 
 Slider::~Slider() = default;
 
-void Slider::RegisterObject(Context* context)
+void Slider::RegisterObject()
 {
-    context->RegisterFactory<Slider>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Slider>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

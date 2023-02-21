@@ -26,7 +26,7 @@ class SceneAndUILoad : public Sample
 
 public:
     /// Construct.
-    explicit SceneAndUILoad(Context* context);
+    explicit SceneAndUILoad();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

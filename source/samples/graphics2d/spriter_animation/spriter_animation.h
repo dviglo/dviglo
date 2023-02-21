@@ -23,7 +23,7 @@ class Urho2DSpriterAnimation : public Sample
 
 public:
     /// Construct.
-    explicit Urho2DSpriterAnimation(Context* context);
+    explicit Urho2DSpriterAnimation();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

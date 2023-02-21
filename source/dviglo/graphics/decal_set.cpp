@@ -130,11 +130,11 @@ void Decal::CalculateBoundingBox()
         boundingBox_.Merge(vertices_[i].position_);
 }
 
-DecalSet::DecalSet(Context* context) :
-    Drawable(context, DrawableTypes::Geometry),
-    geometry_(new Geometry(context)),
-    vertexBuffer_(new VertexBuffer(context_)),
-    indexBuffer_(new IndexBuffer(context_)),
+DecalSet::DecalSet() :
+    Drawable(DrawableTypes::Geometry),
+    geometry_(new Geometry()),
+    vertexBuffer_(new VertexBuffer()),
+    indexBuffer_(new IndexBuffer()),
     numVertices_(0),
     numIndices_(0),
     maxVertices_(DEFAULT_MAX_VERTICES),
@@ -156,9 +156,9 @@ DecalSet::DecalSet(Context* context) :
 
 DecalSet::~DecalSet() = default;
 
-void DecalSet::RegisterObject(Context* context)
+void DecalSet::RegisterObject()
 {
-    context->RegisterFactory<DecalSet>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<DecalSet>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),

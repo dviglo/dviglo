@@ -31,8 +31,7 @@ static const float MIN_ROW_SPACING = 0.5f;
 extern const char* horizontalAlignments[];
 extern const char* UI_CATEGORY;
 
-Text::Text(Context* context) :
-    UISelectable(context),
+Text::Text() :
     fontSize_(DEFAULT_FONT_SIZE),
     textAlignment_(HA_LEFT),
     rowSpacing_(1.0f),
@@ -55,9 +54,9 @@ Text::Text(Context* context) :
 
 Text::~Text() = default;
 
-void Text::RegisterObject(Context* context)
+void Text::RegisterObject()
 {
-    context->RegisterFactory<Text>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Text>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UISelectable);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Use Derived Opacity", false);
@@ -75,7 +74,7 @@ void Text::RegisterObject(Context* context)
     DV_ACCESSOR_ATTRIBUTE("Effect Color", GetEffectColor, SetEffectColor, Color::BLACK, AM_FILE);
 
     // Change the default value for UseDerivedOpacity
-    context->GetAttribute<Text>("Use Derived Opacity")->defaultValue_ = false;
+    DV_CONTEXT.GetAttribute<Text>("Use Derived Opacity")->defaultValue_ = false;
 }
 
 void Text::ApplyAttributes()

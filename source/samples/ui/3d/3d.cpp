@@ -30,8 +30,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(Hello3DUI)
 
-Hello3DUI::Hello3DUI(Context* context) :
-    Sample(context),
+Hello3DUI::Hello3DUI() :
     uiRoot_(GetSubsystem<UI>()->GetRoot()),
     dragBeginPosition_(IntVector2::ZERO),
     animateCube_(true),
@@ -77,16 +76,16 @@ void Hello3DUI::Start()
 void Hello3DUI::InitControls()
 {
     // Create a CheckBox
-    auto* checkBox = new CheckBox(context_);
+    auto* checkBox = new CheckBox();
     checkBox->SetName("CheckBox");
 
     // Create a Button
-    auto* button = new Button(context_);
+    auto* button = new Button();
     button->SetName("Button");
     button->SetMinHeight(24);
 
     // Create a LineEdit
-    auto* lineEdit = new LineEdit(context_);
+    auto* lineEdit = new LineEdit();
     lineEdit->SetName("LineEdit");
     lineEdit->SetMinHeight(24);
 
@@ -100,7 +99,7 @@ void Hello3DUI::InitControls()
     button->SetStyleAuto();
     lineEdit->SetStyleAuto();
 
-    instructions_ = new Text(context_);
+    instructions_ = new Text();
     instructions_->SetStyleAuto();
     instructions_->SetText("[TAB]   - toggle between rendering on screen or cube.\n"
                            "[Space] - toggle cube rotation.");
@@ -110,7 +109,7 @@ void Hello3DUI::InitControls()
 void Hello3DUI::InitWindow()
 {
     // Create the Window and add it to the UI's root node
-    window_ = new Window(context_);
+    window_ = new Window();
     uiRoot_->AddChild(window_);
 
     // Set Window size and layout settings
@@ -120,18 +119,18 @@ void Hello3DUI::InitWindow()
     window_->SetName("Window");
 
     // Create Window 'titlebar' container
-    auto* titleBar = new UIElement(context_);
+    auto* titleBar = new UIElement();
     titleBar->SetMinSize(0, 24);
     titleBar->SetVerticalAlignment(VA_TOP);
     titleBar->SetLayoutMode(LM_HORIZONTAL);
 
     // Create the Window title Text
-    auto* windowTitle = new Text(context_);
+    auto* windowTitle = new Text();
     windowTitle->SetName("WindowTitle");
     windowTitle->SetText("Hello GUI!");
 
     // Create the Window's close button
-    auto* buttonClose = new Button(context_);
+    auto* buttonClose = new Button();
     buttonClose->SetName("CloseButton");
 
     // Add the controls to the title bar
@@ -149,7 +148,7 @@ void Hello3DUI::InitWindow()
 
     for (int i = 0; i < 32; i++)
     {
-        auto* text = new Text(context_);
+        auto* text = new Text();
         text->SetStyleAuto();
         text->SetText(ToString("List item %d", i));
         text->SetName(ToString("Item %d", i));
@@ -173,7 +172,7 @@ void Hello3DUI::InitScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
     auto* zone = scene_->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
@@ -200,7 +199,7 @@ void Hello3DUI::InitScene()
 
     // Set up a viewport so 3D scene can be visible.
     auto* renderer = GetSubsystem<Renderer>();
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
@@ -213,7 +212,7 @@ void Hello3DUI::CreateDraggableFish()
     auto* graphics = GetSubsystem<Graphics>();
 
     // Create a draggable Fish button
-    auto* draggableFish = new Button(context_);
+    auto* draggableFish = new Button();
     draggableFish->SetTexture(cache->GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
@@ -222,13 +221,13 @@ void Hello3DUI::CreateDraggableFish()
     uiRoot_->AddChild(draggableFish);
 
     // Add a tooltip to Fish button
-    auto* toolTip = new ToolTip(context_);
+    auto* toolTip = new ToolTip();
     draggableFish->AddChild(toolTip);
     toolTip->SetPosition(IntVector2(draggableFish->GetWidth() + 5, draggableFish->GetWidth() / 2)); // slightly offset from close button
-    auto* textHolder = new BorderImage(context_);
+    auto* textHolder = new BorderImage();
     toolTip->AddChild(textHolder);
     textHolder->SetStyle("ToolTipBorderImage");
-    auto* toolTipText = new Text(context_);
+    auto* toolTipText = new Text();
     textHolder->AddChild(toolTipText);
     toolTipText->SetStyle("ToolTipText");
     toolTipText->SetText("Please drag me!");

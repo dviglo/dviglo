@@ -33,12 +33,11 @@
 
 DV_DEFINE_APPLICATION_MAIN(CharacterDemo)
 
-CharacterDemo::CharacterDemo(Context* context) :
-    Sample(context),
+CharacterDemo::CharacterDemo() :
     firstPerson_(false)
 {
     // Register factory and attributes for the Character component so it can be created via CreateComponent, and loaded / saved
-    Character::RegisterObject(context);
+    Character::RegisterObject();
 }
 
 CharacterDemo::~CharacterDemo() = default;
@@ -48,7 +47,7 @@ void CharacterDemo::Start()
     // Execute base class startup
     Sample::Start();
     if (touchEnabled_)
-        touch_ = new Touch(context_, TOUCH_SENSITIVITY);
+        touch_ = new Touch(TOUCH_SENSITIVITY);
 
     // Create static scene content
     CreateScene();
@@ -70,7 +69,7 @@ void CharacterDemo::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create scene subsystem components
     scene_->CreateComponent<Octree>();
@@ -78,10 +77,10 @@ void CharacterDemo::CreateScene()
 
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
-    cameraNode_ = new Node(context_);
+    cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
-    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, scene_, camera));
+    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->CreateChild("Zone");
@@ -304,12 +303,12 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             // Check for loading / saving the scene
             if (input->GetKeyPress(KEY_F5))
             {
-                File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_WRITE);
+                File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_WRITE);
                 scene_->SaveXML(saveFile);
             }
             if (input->GetKeyPress(KEY_F7))
             {
-                File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_READ);
+                File loadFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_READ);
                 scene_->LoadXML(loadFile);
                 // After loading we have to reacquire the weak pointer to the Character component, as it has been recreated
                 // Simply find the character's scene node by name as there's only one of them

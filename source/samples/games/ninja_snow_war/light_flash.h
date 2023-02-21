@@ -14,9 +14,9 @@ class LightFlash : public GameObject
     DV_OBJECT(LightFlash, GameObject);
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
-    LightFlash(Context* context);
+    LightFlash();
     void FixedUpdate(float timeStep) override;
 };
 

@@ -10,9 +10,8 @@
 
 using namespace dviglo;
 
-Benchmark03_MoleculeLogic::Benchmark03_MoleculeLogic(Context* context)
-    : LogicComponent(context)
-    , moleculeType_(0)
+Benchmark03_MoleculeLogic::Benchmark03_MoleculeLogic()
+    : moleculeType_(0)
 {
     SetUpdateEventMask(LogicComponentEvents::Update | LogicComponentEvents::PostUpdate);
 }

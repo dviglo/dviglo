@@ -179,10 +179,10 @@ void Graphics::Constructor_D3D11()
     SetTextureUnitMappings_D3D11();
     ResetCachedState_D3D11();
 
-    context_->RequireSDL(SDL_INIT_VIDEO);
+    DV_CONTEXT.RequireSDL(SDL_INIT_VIDEO);
 
     // Register Graphics library object factories
-    RegisterGraphicsLibrary(context_);
+    RegisterGraphicsLibrary();
 }
 
 void Graphics::Destructor_D3D11()
@@ -238,7 +238,7 @@ void Graphics::Destructor_D3D11()
     delete static_cast<GraphicsImpl_D3D11*>(impl_);
     impl_ = nullptr;
 
-    context_->ReleaseSDL();
+    DV_CONTEXT.ReleaseSDL();
 }
 
 bool Graphics::SetScreenMode_D3D11(int width, int height, const ScreenModeParams& params, bool maximize)
@@ -1827,7 +1827,7 @@ ConstantBuffer* Graphics::GetOrCreateConstantBuffer_D3D11(ShaderType type, unsig
         return i->second_.Get();
     else
     {
-        SharedPtr<ConstantBuffer> newConstantBuffer(new ConstantBuffer(context_));
+        SharedPtr<ConstantBuffer> newConstantBuffer(new ConstantBuffer());
         newConstantBuffer->SetSize(size);
         impl->allConstantBuffers_[key] = newConstantBuffer;
         return newConstantBuffer.Get();

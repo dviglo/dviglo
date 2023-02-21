@@ -28,7 +28,7 @@ class HelloGUI : public Sample
 
 public:
     /// Construct.
-    explicit HelloGUI(Context* context);
+    explicit HelloGUI();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

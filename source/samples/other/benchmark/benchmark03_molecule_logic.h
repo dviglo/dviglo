@@ -21,7 +21,7 @@ private:
     dv::Vector2 force_;
 
 public:
-    explicit Benchmark03_MoleculeLogic(dv::Context* context);
+    explicit Benchmark03_MoleculeLogic();
 
     void SetParameters(i32 moleculeType);
 

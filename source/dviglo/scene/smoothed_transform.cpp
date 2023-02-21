@@ -12,8 +12,7 @@
 namespace dviglo
 {
 
-SmoothedTransform::SmoothedTransform(Context* context) :
-    Component(context),
+SmoothedTransform::SmoothedTransform() :
     targetPosition_(Vector3::ZERO),
     targetRotation_(Quaternion::IDENTITY),
     smoothingMask_(SMOOTH_NONE),
@@ -23,9 +22,9 @@ SmoothedTransform::SmoothedTransform(Context* context) :
 
 SmoothedTransform::~SmoothedTransform() = default;
 
-void SmoothedTransform::RegisterObject(Context* context)
+void SmoothedTransform::RegisterObject()
 {
-    context->RegisterFactory<SmoothedTransform>();
+    DV_CONTEXT.RegisterFactory<SmoothedTransform>();
 }
 
 void SmoothedTransform::Update(float constant, float squaredSnapThreshold)

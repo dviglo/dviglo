@@ -32,11 +32,11 @@ class DV_API RigidBody2D : public Component
 
 public:
     /// Construct.
-    explicit RigidBody2D(Context* context);
+    explicit RigidBody2D();
     /// Destruct.
     ~RigidBody2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

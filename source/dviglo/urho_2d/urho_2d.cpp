@@ -23,28 +23,28 @@ namespace dviglo
 
 const char* URHO2D_CATEGORY = "Urho2D";
 
-void RegisterUrho2DLibrary(Context* context)
+void RegisterUrho2DLibrary()
 {
-    Renderer2D::RegisterObject(context);
+    Renderer2D::RegisterObject();
 
-    Sprite2D::RegisterObject(context);
-    SpriteSheet2D::RegisterObject(context);
+    Sprite2D::RegisterObject();
+    SpriteSheet2D::RegisterObject();
 
     // Must register objects from base to derived order
-    Drawable2D::RegisterObject(context);
-    StaticSprite2D::RegisterObject(context);
+    Drawable2D::RegisterObject();
+    StaticSprite2D::RegisterObject();
 
-    StretchableSprite2D::RegisterObject(context);
+    StretchableSprite2D::RegisterObject();
 
-    AnimationSet2D::RegisterObject(context);
-    AnimatedSprite2D::RegisterObject(context);
+    AnimationSet2D::RegisterObject();
+    AnimatedSprite2D::RegisterObject();
 
-    ParticleEffect2D::RegisterObject(context);
-    ParticleEmitter2D::RegisterObject(context);
+    ParticleEffect2D::RegisterObject();
+    ParticleEmitter2D::RegisterObject();
 
-    TmxFile2D::RegisterObject(context);
-    TileMap2D::RegisterObject(context);
-    TileMapLayer2D::RegisterObject(context);
+    TmxFile2D::RegisterObject();
+    TileMap2D::RegisterObject();
+    TileMapLayer2D::RegisterObject();
 }
 
 }

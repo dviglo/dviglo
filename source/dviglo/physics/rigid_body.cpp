@@ -43,8 +43,7 @@ static const char* collisionEventModeNames[] =
 
 extern const char* PHYSICS_CATEGORY;
 
-RigidBody::RigidBody(Context* context) :
-    Component(context),
+RigidBody::RigidBody() :
     gravityOverride_(Vector3::ZERO),
     centerOfMass_(Vector3::ZERO),
     mass_(DEFAULT_MASS),
@@ -73,9 +72,9 @@ RigidBody::~RigidBody()
         physicsWorld_->RemoveRigidBody(this);
 }
 
-void RigidBody::RegisterObject(Context* context)
+void RigidBody::RegisterObject()
 {
-    context->RegisterFactory<RigidBody>(PHYSICS_CATEGORY);
+    DV_CONTEXT.RegisterFactory<RigidBody>(PHYSICS_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Physics Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE | AM_NOEDIT);

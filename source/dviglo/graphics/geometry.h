@@ -23,7 +23,7 @@ class DV_API Geometry : public Object
 
 public:
     /// Construct with one empty vertex buffer.
-    explicit Geometry(Context* context);
+    explicit Geometry();
     /// Destruct.
     ~Geometry() override;
 

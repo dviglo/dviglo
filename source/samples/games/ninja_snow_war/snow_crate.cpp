@@ -11,13 +11,12 @@ namespace dviglo
 static constexpr i32 SNOWCRATE_HEALTH = 5;
 static constexpr i32 SNOWCRATE_POINTS = 250;
 
-void SnowCrate::RegisterObject(Context* context)
+void SnowCrate::RegisterObject()
 {
-    context->RegisterFactory<SnowCrate>();
+    DV_CONTEXT.RegisterFactory<SnowCrate>();
 }
 
-SnowCrate::SnowCrate(Context* context)
-    : GameObject(context)
+SnowCrate::SnowCrate()
 {
     health = maxHealth = SNOWCRATE_HEALTH;
 }

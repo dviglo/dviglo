@@ -23,7 +23,7 @@ class DV_API Network : public Object
 
 public:
     /// Construct.
-    explicit Network(Context* context);
+    explicit Network();
     /// Destruct.
     ~Network() override;
 
@@ -175,6 +175,6 @@ private:
 };
 
 /// Register Network library objects.
-void DV_API RegisterNetworkLibrary(Context* context);
+void DV_API RegisterNetworkLibrary();
 
 }

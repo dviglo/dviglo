@@ -19,8 +19,7 @@
 #include "character2d.h"
 
 // Character2D logic component
-Character2D::Character2D(Context* context) :
-    LogicComponent(context),
+Character2D::Character2D() :
     wounded_(false),
     killed_(false),
     timer_(0.0f),
@@ -34,9 +33,9 @@ Character2D::Character2D(Context* context) :
 {
 }
 
-void Character2D::RegisterObject(Context* context)
+void Character2D::RegisterObject()
 {
-    context->RegisterFactory<Character2D>();
+    DV_CONTEXT.RegisterFactory<Character2D>();
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the 'Default' attribute mode which means it will be used both for saving into file, and network replication.

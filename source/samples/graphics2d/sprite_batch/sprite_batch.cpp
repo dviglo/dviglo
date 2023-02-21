@@ -23,7 +23,7 @@ public:
     float angle_ = 0.0f;
     float scale_ = 0.0f;
 
-    Game(Context* context) : Application(context)
+    Game()
     {
     }
 
@@ -49,19 +49,19 @@ public:
         DebugHud* debugHud = engine_->CreateDebugHud();
         debugHud->SetDefaultStyle(xmlFile);
 
-        screenSpaceSpriteBatch_ = new SpriteBatch(context_);
+        screenSpaceSpriteBatch_ = new SpriteBatch();
         
-        worldSpaceSpriteBatch_ = new SpriteBatch(context_);
+        worldSpaceSpriteBatch_ = new SpriteBatch();
         worldSpaceSpriteBatch_->camera_ = cameraNode_->GetComponent<Camera>();
         worldSpaceSpriteBatch_->compareMode_ = CMP_LESSEQUAL;
 
-        virtualSpriteBatch_ = new SpriteBatch(context_);
+        virtualSpriteBatch_ = new SpriteBatch();
         virtualSpriteBatch_->virtualScreenSize_ = IntVector2(700, 600);
     }
 
     void SetupViewport()
     {
-        SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+        SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
         GetSubsystem<Renderer>()->SetViewport(0, viewport);
     }
 
@@ -69,7 +69,7 @@ public:
     {
         ResourceCache* cache = GetSubsystem<ResourceCache>();
 
-        scene_ = new Scene(context_);
+        scene_ = new Scene();
         scene_->CreateComponent<Octree>();
 
         Node* planeNode = scene_->CreateChild("Plane");

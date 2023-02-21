@@ -25,7 +25,7 @@ class Billboards : public Sample
 
 public:
     /// Construct.
-    explicit Billboards(Context* context);
+    explicit Billboards();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

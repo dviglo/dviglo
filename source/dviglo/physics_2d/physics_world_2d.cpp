@@ -28,8 +28,7 @@ static const Vector2 DEFAULT_GRAVITY(0.0f, -9.81f);
 static const int DEFAULT_VELOCITY_ITERATIONS = 8;
 static const int DEFAULT_POSITION_ITERATIONS = 3;
 
-PhysicsWorld2D::PhysicsWorld2D(Context* context) :
-    Component(context),
+PhysicsWorld2D::PhysicsWorld2D() :
     gravity_(DEFAULT_GRAVITY),
     velocityIterations_(DEFAULT_VELOCITY_ITERATIONS),
     positionIterations_(DEFAULT_POSITION_ITERATIONS)
@@ -54,9 +53,9 @@ PhysicsWorld2D::~PhysicsWorld2D()
     }
 }
 
-void PhysicsWorld2D::RegisterObject(Context* context)
+void PhysicsWorld2D::RegisterObject()
 {
-    context->RegisterFactory<PhysicsWorld2D>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT.RegisterFactory<PhysicsWorld2D>(SUBSYSTEM_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Draw Shape", GetDrawShape, SetDrawShape, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Draw Joint", GetDrawJoint, SetDrawJoint, false, AM_DEFAULT);

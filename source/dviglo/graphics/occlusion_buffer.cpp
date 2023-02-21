@@ -38,9 +38,8 @@ void DrawOcclusionBatchWork(const WorkItem* item, i32 threadIndex)
     buffer->DrawBatch(batch, threadIndex);
 }
 
-OcclusionBuffer::OcclusionBuffer(Context* context)
-    : Object(context)
-    , maxTriangles_(OCCLUSION_DEFAULT_MAX_TRIANGLES)
+OcclusionBuffer::OcclusionBuffer()
+    : maxTriangles_(OCCLUSION_DEFAULT_MAX_TRIANGLES)
 {
 }
 

@@ -445,8 +445,7 @@ btCollisionShape* CreateCollisionGeometryDataShape(ShapeType shapeType, Collisio
     }
 }
 
-CollisionShape::CollisionShape(Context* context) :
-    Component(context),
+CollisionShape::CollisionShape() :
     shapeType_(SHAPE_BOX),
     position_(Vector3::ZERO),
     rotation_(Quaternion::IDENTITY),
@@ -468,9 +467,9 @@ CollisionShape::~CollisionShape()
         physicsWorld_->RemoveCollisionShape(this);
 }
 
-void CollisionShape::RegisterObject(Context* context)
+void CollisionShape::RegisterObject()
 {
-    context->RegisterFactory<CollisionShape>(PHYSICS_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CollisionShape>(PHYSICS_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ATTRIBUTE_EX("Shape Type", shapeType_, MarkShapeDirty, typeNames, SHAPE_BOX, AM_DEFAULT);

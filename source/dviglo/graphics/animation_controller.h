@@ -69,11 +69,11 @@ class DV_API AnimationController : public Component
 
 public:
     /// Construct.
-    explicit AnimationController(Context* context);
+    explicit AnimationController();
     /// Destruct.
     ~AnimationController() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

@@ -7,13 +7,12 @@
 namespace dviglo
 {
 
-void LightFlash::RegisterObject(Context* context)
+void LightFlash::RegisterObject()
 {
-    context->RegisterFactory<LightFlash>();
+    DV_CONTEXT.RegisterFactory<LightFlash>();
 }
 
-LightFlash::LightFlash(Context* context)
-    : GameObject(context)
+LightFlash::LightFlash()
 {
     duration = 2.0f;
 }

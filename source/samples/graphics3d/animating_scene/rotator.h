@@ -16,7 +16,7 @@ class Rotator : public LogicComponent
 
 public:
     /// Construct.
-    explicit Rotator(Context* context);
+    explicit Rotator();
 
     /// Set rotation speed about the Euler axes. Will be scaled with scene update time step.
     void SetRotationSpeed(const Vector3& speed);

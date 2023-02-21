@@ -52,11 +52,11 @@ class DV_API Drawable2D : public Drawable
 
 public:
     /// Construct.
-    explicit Drawable2D(Context* context);
+    explicit Drawable2D();
     /// Destruct.
     ~Drawable2D() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

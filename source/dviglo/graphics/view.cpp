@@ -260,8 +260,7 @@ void SortShadowQueueWork(const WorkItem* item, i32 threadIndex)
 
 StringHash ParseTextureTypeXml(ResourceCache* cache, const String& filename);
 
-View::View(Context* context) :
-    Object(context),
+View::View() :
     graphics_(GetSubsystem<Graphics>()),
     renderer_(GetSubsystem<Renderer>())
 {

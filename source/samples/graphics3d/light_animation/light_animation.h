@@ -23,7 +23,7 @@ class LightAnimation : public Sample
 
 public:
     /// Construct.
-    explicit LightAnimation(Context* context);
+    explicit LightAnimation();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

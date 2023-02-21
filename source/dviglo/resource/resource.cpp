@@ -11,8 +11,7 @@
 namespace dviglo
 {
 
-Resource::Resource(Context* context) :
-    Object(context),
+Resource::Resource() :
     memoryUse_(0),
     asyncLoadState_(ASYNC_DONE)
 {
@@ -71,13 +70,13 @@ bool Resource::Save(Serializer& dest) const
 
 bool Resource::LoadFile(const String& fileName)
 {
-    File file(context_);
+    File file;
     return file.Open(fileName, FILE_READ) && Load(file);
 }
 
 bool Resource::SaveFile(const String& fileName) const
 {
-    File file(context_);
+    File file;
     return file.Open(fileName, FILE_WRITE) && Save(file);
 }
 

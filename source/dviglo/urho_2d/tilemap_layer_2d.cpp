@@ -16,16 +16,15 @@
 namespace dviglo
 {
 
-TileMapLayer2D::TileMapLayer2D(Context* context) :
-    Component(context)
+TileMapLayer2D::TileMapLayer2D()
 {
 }
 
 TileMapLayer2D::~TileMapLayer2D() = default;
 
-void TileMapLayer2D::RegisterObject(Context* context)
+void TileMapLayer2D::RegisterObject()
 {
-    context->RegisterFactory<TileMapLayer2D>();
+    DV_CONTEXT.RegisterFactory<TileMapLayer2D>();
 }
 
 // Transform vector from node-local space to global space

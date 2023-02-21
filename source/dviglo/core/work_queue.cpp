@@ -46,8 +46,7 @@ private:
     i32 index_;
 };
 
-WorkQueue::WorkQueue(Context* context) :
-    Object(context),
+WorkQueue::WorkQueue() :
     shutDown_(false),
     pausing_(false),
     paused_(false),

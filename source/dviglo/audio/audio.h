@@ -26,7 +26,7 @@ class DV_API Audio : public Object
 
 public:
     /// Construct.
-    explicit Audio(Context* context);
+    explicit Audio();
     /// Destruct. Terminate the audio thread and free the audio buffer.
     ~Audio() override;
 
@@ -135,6 +135,6 @@ private:
 };
 
 /// Register Audio library objects.
-void DV_API RegisterAudioLibrary(Context* context);
+void DV_API RegisterAudioLibrary();
 
 }

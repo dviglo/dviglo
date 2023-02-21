@@ -15,17 +15,16 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-CollisionPolygon2D::CollisionPolygon2D(Context* context) :
-    CollisionShape2D(context)
+CollisionPolygon2D::CollisionPolygon2D()
 {
     fixtureDef_.shape = &polygonShape_;
 }
 
 CollisionPolygon2D::~CollisionPolygon2D() = default;
 
-void CollisionPolygon2D::RegisterObject(Context* context)
+void CollisionPolygon2D::RegisterObject()
 {
-    context->RegisterFactory<CollisionPolygon2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CollisionPolygon2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_COPY_BASE_ATTRIBUTES(CollisionShape2D);

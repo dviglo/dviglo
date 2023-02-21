@@ -16,16 +16,15 @@
 
 #include "vehicle.h"
 
-Vehicle::Vehicle(Context* context) :
-    LogicComponent(context)
+Vehicle::Vehicle()
 {
     // Only the physics update event is needed: unsubscribe from the rest for optimization
     SetUpdateEventMask(LogicComponentEvents::FixedUpdate);
 }
 
-void Vehicle::RegisterObject(Context* context)
+void Vehicle::RegisterObject()
 {
-    context->RegisterFactory<Vehicle>();
+    DV_CONTEXT.RegisterFactory<Vehicle>();
 
     DV_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
     DV_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);

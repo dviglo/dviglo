@@ -28,8 +28,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(MultipleViewports)
 
-MultipleViewports::MultipleViewports(Context* context) :
-    Sample(context),
+MultipleViewports::MultipleViewports() :
     drawDebug_(false)
 {
 }
@@ -59,7 +58,7 @@ void MultipleViewports::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
@@ -172,7 +171,7 @@ void MultipleViewports::SetupViewports()
     renderer->SetNumViewports(2);
 
     // Set up the front camera viewport
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 
     // Clone the default render path so that we do not interfere with the other viewport, then add
@@ -191,7 +190,7 @@ void MultipleViewports::SetupViewports()
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
     // The viewport index must be greater in that case, otherwise the view would be left behind
-    SharedPtr<Viewport> rearViewport(new Viewport(context_, scene_, rearCameraNode_->GetComponent<Camera>(),
+    SharedPtr<Viewport> rearViewport(new Viewport(scene_, rearCameraNode_->GetComponent<Camera>(),
         IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
     renderer->SetViewport(1, rearViewport);
 }

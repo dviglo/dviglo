@@ -34,8 +34,7 @@ static const char* typeNames[] =
 
 extern const char* PHYSICS_CATEGORY;
 
-Constraint::Constraint(Context* context) :
-    Component(context),
+Constraint::Constraint() :
     constraintType_(CONSTRAINT_POINT),
     position_(Vector3::ZERO),
     rotation_(Quaternion::IDENTITY),
@@ -61,9 +60,9 @@ Constraint::~Constraint()
         physicsWorld_->RemoveConstraint(this);
 }
 
-void Constraint::RegisterObject(Context* context)
+void Constraint::RegisterObject()
 {
-    context->RegisterFactory<Constraint>(PHYSICS_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Constraint>(PHYSICS_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ATTRIBUTE_EX("Constraint Type", constraintType_, MarkConstraintDirty, typeNames, CONSTRAINT_POINT, AM_DEFAULT);
