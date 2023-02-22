@@ -29,9 +29,9 @@ class DV_API PackageFile : public Object
 
 public:
     /// Construct.
-    explicit PackageFile(Context* context);
+    explicit PackageFile();
     /// Construct and open.
-    PackageFile(Context* context, const String& fileName, unsigned startOffset = 0);
+    PackageFile(const String& fileName, unsigned startOffset = 0);
     /// Destruct.
     ~PackageFile() override;
 

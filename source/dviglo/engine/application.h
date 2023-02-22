@@ -22,7 +22,7 @@ class DV_API Application : public Object
 
 public:
     /// Construct. Parse default engine parameters from the command line, and create the engine in an uninitialized state.
-    explicit Application(Context* context);
+    explicit Application();
 
     /// Setup before engine initialization. This is a chance to eg. modify the engine parameters. Call ErrorExit() to terminate without initializing the engine. Called by Application.
     virtual void Setup() { }
@@ -57,8 +57,7 @@ protected:
 #define DV_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
-    dviglo::SharedPtr<dviglo::Context> context(new dviglo::Context()); \
-    dviglo::SharedPtr<className> application(new className(context)); \
+    dviglo::SharedPtr<className> application(new className()); \
     return application->Run(); \
 } \
 DV_DEFINE_MAIN(RunApplication())
@@ -67,8 +66,7 @@ DV_DEFINE_MAIN(RunApplication())
 #define DV_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
-    dviglo::Context* context = new dviglo::Context(); \
-    className* application = new className(context); \
+    className* application = new className(); \
     return application->Run(); \
 } \
 DV_DEFINE_MAIN(RunApplication());

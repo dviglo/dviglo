@@ -125,8 +125,7 @@ struct PhysicsQueryCallback : public btCollisionWorld::ContactResultCallback
     unsigned collisionMask_;
 };
 
-PhysicsWorld::PhysicsWorld(Context* context) :
-    Component(context),
+PhysicsWorld::PhysicsWorld() :
     fps_(DEFAULT_FPS),
     debugMode_(btIDebugDraw::DBG_DrawWireframe | btIDebugDraw::DBG_DrawConstraints | btIDebugDraw::DBG_DrawConstraintLimits)
 {
@@ -179,9 +178,9 @@ PhysicsWorld::~PhysicsWorld()
     collisionConfiguration_ = nullptr;
 }
 
-void PhysicsWorld::RegisterObject(Context* context)
+void PhysicsWorld::RegisterObject()
 {
-    context->RegisterFactory<PhysicsWorld>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT.RegisterFactory<PhysicsWorld>(SUBSYSTEM_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Gravity", GetGravity, SetGravity, DEFAULT_GRAVITY, AM_DEFAULT);
     DV_ATTRIBUTE("Physics FPS", fps_, DEFAULT_FPS, AM_DEFAULT);
@@ -1062,13 +1061,13 @@ void PhysicsWorld::SendCollisionEvents()
     previousCollisions_ = currentCollisions_;
 }
 
-void RegisterPhysicsLibrary(Context* context)
+void RegisterPhysicsLibrary()
 {
-    CollisionShape::RegisterObject(context);
-    RigidBody::RegisterObject(context);
-    Constraint::RegisterObject(context);
-    PhysicsWorld::RegisterObject(context);
-    RaycastVehicle::RegisterObject(context);
+    CollisionShape::RegisterObject();
+    RigidBody::RegisterObject();
+    Constraint::RegisterObject();
+    PhysicsWorld::RegisterObject();
+    RaycastVehicle::RegisterObject();
 }
 
 }

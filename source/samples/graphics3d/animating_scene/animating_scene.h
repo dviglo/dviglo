@@ -25,7 +25,7 @@ class AnimatingScene : public Sample
 
 public:
     /// Construct.
-    explicit AnimatingScene(Context* context);
+    explicit AnimatingScene();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

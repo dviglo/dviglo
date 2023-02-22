@@ -15,15 +15,13 @@
 namespace dviglo
 {
 
-ShaderPrecache::ShaderPrecache(Context* context, const String& fileName) :
-    Object(context),
-    fileName_(fileName),
-    xmlFile_(context)
+ShaderPrecache::ShaderPrecache(const String& fileName) :
+    fileName_(fileName)
 {
     if (GetSubsystem<FileSystem>()->FileExists(fileName))
     {
         // If file exists, read the already listed combinations
-        File source(context_, fileName);
+        File source(fileName);
         xmlFile_.Load(source);
 
         XMLElement shader = xmlFile_.GetRoot().GetChild("shader");
@@ -51,7 +49,7 @@ ShaderPrecache::~ShaderPrecache()
     if (usedCombinations_.Empty())
         return;
 
-    File dest(context_, fileName_, FILE_WRITE);
+    File dest(fileName_, FILE_WRITE);
     xmlFile_.Save(dest);
 }
 
@@ -88,7 +86,7 @@ void ShaderPrecache::LoadShaders(Graphics* graphics, Deserializer& source)
 {
     DV_LOGDEBUG("Begin precaching shaders");
 
-    XMLFile xmlFile(graphics->GetContext());
+    XMLFile xmlFile;
     xmlFile.Load(source);
 
     XMLElement shader = xmlFile.GetRoot().GetChild("shader");

@@ -74,8 +74,7 @@ void Run(const Vector<String>& arguments)
 
         const int height = dim == 2 ? width : 1;
 
-        Context context;
-        File file(&context);
+        File file;
         file.Open(inputFile);
 
         Vector<float> horizontal;

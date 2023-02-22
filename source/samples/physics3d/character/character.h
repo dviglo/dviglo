@@ -29,10 +29,10 @@ class Character : public LogicComponent
 
 public:
     /// Construct.
-    explicit Character(Context* context);
+    explicit Character();
 
     /// Register object factory and attributes.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle startup. Called by LogicComponent base class.
     void Start() override;

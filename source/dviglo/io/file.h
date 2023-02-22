@@ -47,11 +47,11 @@ class DV_API File : public Object, public AbstractFile
 
 public:
     /// Construct.
-    explicit File(Context* context);
+    explicit File();
     /// Construct and open a filesystem file.
-    File(Context* context, const String& fileName, FileMode mode = FILE_READ);
+    File(const String& fileName, FileMode mode = FILE_READ);
     /// Construct and open from a package file.
-    File(Context* context, PackageFile* package, const String& fileName);
+    File(PackageFile* package, const String& fileName);
     /// Destruct. Close the file if open.
     ~File() override;
 

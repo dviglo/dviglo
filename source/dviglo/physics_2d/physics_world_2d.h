@@ -57,11 +57,11 @@ class DV_API PhysicsWorld2D : public Component, public b2ContactListener, public
 
 public:
     /// Construct.
-    explicit PhysicsWorld2D(Context* context);
+    explicit PhysicsWorld2D();
     /// Destruct.
     ~PhysicsWorld2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

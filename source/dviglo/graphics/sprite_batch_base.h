@@ -160,7 +160,7 @@ public:
     bool VirtualScreenUsed() const { return virtualScreenSize_.x_ > 0 && virtualScreenSize_.y_ > 0; }
 
     // Конструктор
-    SpriteBatchBase(Context* context);
+    SpriteBatchBase();
 
     // Рендерит накопленную геометрию (то есть текущую порцию)
     void Flush();

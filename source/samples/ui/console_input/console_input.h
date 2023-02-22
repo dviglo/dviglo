@@ -17,7 +17,7 @@ class ConsoleInput : public Sample
 
 public:
     /// Construct.
-    explicit ConsoleInput(Context* context);
+    explicit ConsoleInput();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

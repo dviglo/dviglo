@@ -32,7 +32,7 @@ class Touch : public Object
 
 public:
     /// Construct.
-    Touch(Context* context, float touchSensitivity);
+    Touch(float touchSensitivity);
     /// Destruct.
     ~Touch() override;
 

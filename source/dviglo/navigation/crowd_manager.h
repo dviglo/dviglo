@@ -46,11 +46,11 @@ class DV_API CrowdManager : public Component
 
 public:
     /// Construct.
-    explicit CrowdManager(Context* context);
+    explicit CrowdManager();
     /// Destruct.
     ~CrowdManager() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;
 

@@ -16,11 +16,11 @@ class DV_API CollisionEdge2D : public CollisionShape2D
 
 public:
     /// Construct.
-    explicit CollisionEdge2D(Context* context);
+    explicit CollisionEdge2D();
     /// Destruct.
     ~CollisionEdge2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set vertex 1.
     void SetVertex1(const Vector2& vertex);

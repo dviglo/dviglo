@@ -21,12 +21,12 @@ class DV_API MessageBox : public Object
 
 public:
     /// Construct. If layout file is not given, use the default message box layout. If style file is not given, use the default style file from root UI element.
-    explicit MessageBox(Context* context, const String& messageString = String::EMPTY, const String& titleString = String::EMPTY,
+    explicit MessageBox(const String& messageString = String::EMPTY, const String& titleString = String::EMPTY,
         XMLFile* layoutFile = nullptr, XMLFile* styleFile = nullptr);
     /// Destruct.
     ~MessageBox() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set title text. No-ops if there is no title text element.
     void SetTitle(const String& text);

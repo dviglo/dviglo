@@ -16,13 +16,13 @@ class DV_API ConstraintWeld2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintWeld2D(Context* context);
+    explicit ConstraintWeld2D();
 
     /// Destruct.
     ~ConstraintWeld2D() override;
 
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set anchor.
     void SetAnchor(const Vector2& anchor);

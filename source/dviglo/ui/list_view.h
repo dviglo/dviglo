@@ -30,11 +30,11 @@ class DV_API ListView : public ScrollView
 
 public:
     /// Construct.
-    explicit ListView(Context* context);
+    explicit ListView();
     /// Destruct.
     ~ListView() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// React to a key press.
     void OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifiers) override;

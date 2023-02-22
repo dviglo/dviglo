@@ -45,16 +45,22 @@ private:
 };
 
 /// Urho3D execution context. Provides access to subsystems, object factories and attributes, and event receivers.
-class DV_API Context : public RefCounted
+class DV_API Context
 {
     friend class Object;
 
 public:
-    /// Construct.
-    Context();
-    /// Destruct.
-    ~Context() override;
+    static Context& get_instance();
 
+    // Запрещаем копирование
+    Context(const Context&) = delete;
+    Context& operator =(const Context&) = delete;
+
+private:
+    Context();
+    ~Context();
+
+public:
     /// Create an object by type. Return pointer to it or null if no factory found.
     template <class T> inline SharedPtr<T> CreateObject()
     {
@@ -222,11 +228,11 @@ private:
     VariantMap globalVars_;
 };
 
-template <class T> void Context::RegisterFactory() { RegisterFactory(new ObjectFactoryImpl<T>(this)); }
+template <class T> void Context::RegisterFactory() { RegisterFactory(new ObjectFactoryImpl<T>()); }
 
 template <class T> void Context::RegisterFactory(const char* category)
 {
-    RegisterFactory(new ObjectFactoryImpl<T>(this), category);
+    RegisterFactory(new ObjectFactoryImpl<T>(), category);
 }
 
 template <class T> T* Context::RegisterSubsystem()
@@ -256,3 +262,5 @@ template <class T> void Context::UpdateAttributeDefaultValue(const char* name, c
 }
 
 }
+
+#define DV_CONTEXT (dviglo::Context::get_instance())

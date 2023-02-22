@@ -57,7 +57,7 @@ class DV_API WorkQueue : public Object
 
 public:
     /// Construct.
-    explicit WorkQueue(Context* context);
+    explicit WorkQueue();
     /// Destruct.
     ~WorkQueue() override;
 

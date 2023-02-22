@@ -33,11 +33,11 @@ class DV_API Font : public Resource
 
 public:
     /// Construct.
-    explicit Font(Context* context);
+    explicit Font();
     /// Destruct.
     ~Font() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

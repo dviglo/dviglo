@@ -19,8 +19,7 @@
 namespace dviglo
 {
 
-Texture3D::Texture3D(Context* context) :
-    Texture(context)
+Texture3D::Texture3D()
 {
 #ifdef DV_OPENGL
 #ifndef DV_GLES2
@@ -35,9 +34,9 @@ Texture3D::~Texture3D()
     Release();
 }
 
-void Texture3D::RegisterObject(Context* context)
+void Texture3D::RegisterObject()
 {
-    context->RegisterFactory<Texture3D>();
+    DV_CONTEXT.RegisterFactory<Texture3D>();
 }
 
 bool Texture3D::BeginLoad(Deserializer& source)
@@ -61,7 +60,7 @@ bool Texture3D::BeginLoad(Deserializer& source)
 
     cache->ResetDependencies(this);
 
-    loadParameters_ = new XMLFile(context_);
+    loadParameters_ = new XMLFile();
     if (!loadParameters_->Load(source))
     {
         loadParameters_.Reset();
@@ -100,7 +99,7 @@ bool Texture3D::BeginLoad(Deserializer& source)
             name = texPath + name;
 
         SharedPtr<File> file = GetSubsystem<ResourceCache>()->GetFile(name);
-        loadImage_ = new Image(context_);
+        loadImage_ = new Image();
         if (!loadImage_->LoadColorLUT(*(file.Get())))
         {
             loadParameters_.Reset();

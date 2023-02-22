@@ -17,8 +17,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(HttpRequestDemo)
 
-HttpRequestDemo::HttpRequestDemo(Context* context) :
-    Sample(context)
+HttpRequestDemo::HttpRequestDemo()
 {
 }
 
@@ -42,7 +41,7 @@ void HttpRequestDemo::CreateUI()
     auto* cache = GetSubsystem<ResourceCache>();
 
     // Construct new Text object
-    text_ = new Text(context_);
+    text_ = new Text();
 
     // Set font and text color
     text_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
@@ -93,7 +92,7 @@ void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             {
                 text_->SetText("Processing...");
 
-                SharedPtr<JSONFile> json(new JSONFile(context_));
+                SharedPtr<JSONFile> json(new JSONFile());
                 json->FromString(message_);
 
 #ifdef DV_SSL

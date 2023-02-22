@@ -20,11 +20,11 @@ class DV_API Shader : public Resource
 
 public:
     /// Construct.
-    explicit Shader(Context* context);
+    explicit Shader();
     /// Destruct.
     ~Shader() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

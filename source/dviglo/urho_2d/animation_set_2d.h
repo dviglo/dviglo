@@ -33,11 +33,11 @@ class DV_API AnimationSet2D : public Resource
 
 public:
     /// Construct.
-    explicit AnimationSet2D(Context* context);
+    explicit AnimationSet2D();
     /// Destruct.
     ~AnimationSet2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

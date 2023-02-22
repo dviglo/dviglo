@@ -31,8 +31,7 @@ namespace
 static const float MIN_POINT_SIZE = 1;
 static const float MAX_POINT_SIZE = 96;
 
-Font::Font(Context* context) :
-    Resource(context),
+Font::Font() :
     fontDataSize_(0),
     absoluteOffset_(IntVector2::ZERO),
     scaledOffset_(Vector2::ZERO),
@@ -48,9 +47,9 @@ Font::~Font()
     fontData_.Reset();
 }
 
-void Font::RegisterObject(Context* context)
+void Font::RegisterObject()
 {
-    context->RegisterFactory<Font>();
+    DV_CONTEXT.RegisterFactory<Font>();
 }
 
 bool Font::BeginLoad(Deserializer& source)

@@ -41,7 +41,7 @@ class DV_API LogicComponent : public Component
 
 public:
     /// Construct.
-    explicit LogicComponent(Context* context);
+    explicit LogicComponent();
     /// Destruct.
     ~LogicComponent() override;
 

@@ -8,8 +8,7 @@
 
 #include <dviglo/common/debug_new.h>
 
-Rotator::Rotator(Context* context) :
-    LogicComponent(context),
+Rotator::Rotator() :
     rotationSpeed_(Vector3::ZERO)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization

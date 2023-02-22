@@ -97,7 +97,7 @@ class DV_API View : public Object
 
 public:
     /// Construct.
-    explicit View(Context* context);
+    explicit View();
     /// Destruct.
     ~View() override = default;
 

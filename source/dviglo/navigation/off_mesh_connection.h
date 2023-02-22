@@ -16,11 +16,11 @@ class DV_API OffMeshConnection : public Component
 
 public:
     /// Construct.
-    explicit OffMeshConnection(Context* context);
+    explicit OffMeshConnection();
     /// Destruct.
     ~OffMeshConnection() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;

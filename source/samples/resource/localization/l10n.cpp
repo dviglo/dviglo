@@ -23,8 +23,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(L10n)
 
-L10n::L10n(Context* context) :
-    Sample(context)
+L10n::L10n()
 {
 }
 
@@ -73,14 +72,14 @@ void L10n::CreateGUI()
     UIElement* root = GetSubsystem<UI>()->GetRoot();
     root->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
-    auto* window = new Window(context_);
+    auto* window = new Window();
     root->AddChild(window);
     window->SetMinSize(384, 192);
     window->SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6));
     window->SetAlignment(HA_CENTER, VA_CENTER);
     window->SetStyleAuto();
 
-    auto* windowTitle = new Text(context_);
+    auto* windowTitle = new Text();
     windowTitle->SetName("WindowTitle");
     windowTitle->SetStyleAuto();
     window->AddChild(windowTitle);
@@ -96,7 +95,7 @@ void L10n::CreateGUI()
 
     windowTitle->SetText(localizedString + " (" + String(langIndex) + " " + langName + ")");
 
-    auto* b = new Button(context_);
+    auto* b = new Button();
     window->AddChild(b);
     b->SetStyle("Button");
     b->SetMinHeight(24);
@@ -112,7 +111,7 @@ void L10n::CreateGUI()
     t->SetStyle("Text");
     SubscribeToEvent(b, E_RELEASED, DV_HANDLER(L10n, HandleChangeLangButtonPressed));
 
-    b = new Button(context_);
+    b = new Button();
     window->AddChild(b);
     b->SetStyle("Button");
     b->SetMinHeight(24);
@@ -132,7 +131,7 @@ void L10n::CreateScene()
     auto* l10n = GetSubsystem<Localization>();
 
     auto* cache = GetSubsystem<ResourceCache>();
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
     auto* zone = scene_->CreateComponent<Zone>();
@@ -171,7 +170,7 @@ void L10n::CreateScene()
     text3DNode->SetScale(15);
 
     auto* renderer = GetSubsystem<Renderer>();
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 
     SubscribeToEvent(E_UPDATE, DV_HANDLER(L10n, HandleUpdate));

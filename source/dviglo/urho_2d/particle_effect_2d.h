@@ -29,11 +29,11 @@ class DV_API ParticleEffect2D : public Resource
 
 public:
     /// Construct.
-    explicit ParticleEffect2D(Context* context);
+    explicit ParticleEffect2D();
     /// Destruct.
     ~ParticleEffect2D() override;
     /// Register object factory. Drawable2D must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

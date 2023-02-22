@@ -15,17 +15,16 @@ namespace dviglo
 
 extern const char* GEOMETRY_CATEGORY;
 
-Skybox::Skybox(Context* context) :
-    StaticModel(context),
+Skybox::Skybox() :
     lastFrame_(0)
 {
 }
 
 Skybox::~Skybox() = default;
 
-void Skybox::RegisterObject(Context* context)
+void Skybox::RegisterObject()
 {
-    context->RegisterFactory<Skybox>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Skybox>(GEOMETRY_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticModel);
 }

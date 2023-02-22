@@ -18,8 +18,7 @@ static const float DEFAULT_RADIUS = 1.0f;
 static const unsigned DEFAULT_MASK_FLAG = 1;
 static const unsigned DEFAULT_AREA = 1;
 
-OffMeshConnection::OffMeshConnection(Context* context) :
-    Component(context),
+OffMeshConnection::OffMeshConnection() :
     endPointID_(0),
     radius_(DEFAULT_RADIUS),
     bidirectional_(true),
@@ -31,9 +30,9 @@ OffMeshConnection::OffMeshConnection(Context* context) :
 
 OffMeshConnection::~OffMeshConnection() = default;
 
-void OffMeshConnection::RegisterObject(Context* context)
+void OffMeshConnection::RegisterObject()
 {
-    context->RegisterFactory<OffMeshConnection>(NAVIGATION_CATEGORY);
+    DV_CONTEXT.RegisterFactory<OffMeshConnection>(NAVIGATION_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE_EX("Endpoint NodeID", endPointID_, MarkEndPointDirty, 0, AM_DEFAULT | AM_NODEID);

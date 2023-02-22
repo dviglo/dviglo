@@ -16,11 +16,11 @@ class DV_API ConstraintMotor2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintMotor2D(Context* context);
+    explicit ConstraintMotor2D();
     /// Destruct.
     ~ConstraintMotor2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set linear offset.
     void SetLinearOffset(const Vector2& linearOffset);

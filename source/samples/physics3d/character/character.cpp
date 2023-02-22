@@ -13,8 +13,7 @@
 
 #include "character.h"
 
-Character::Character(Context* context) :
-    LogicComponent(context),
+Character::Character() :
     onGround_(false),
     okToJump_(true),
     inAirTimer_(0.0f)
@@ -23,9 +22,9 @@ Character::Character(Context* context) :
     SetUpdateEventMask(LogicComponentEvents::FixedUpdate);
 }
 
-void Character::RegisterObject(Context* context)
+void Character::RegisterObject()
 {
-    context->RegisterFactory<Character>();
+    DV_CONTEXT.RegisterFactory<Character>();
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the Default attribute mode which means it will be used both for saving into file, and network replication

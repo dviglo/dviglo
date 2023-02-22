@@ -11,8 +11,7 @@
 
 #include <dviglo/common/debug_new.h>
 
-CreateRagdoll::CreateRagdoll(Context* context) :
-    Component(context)
+CreateRagdoll::CreateRagdoll()
 {
 }
 

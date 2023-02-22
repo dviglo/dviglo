@@ -99,17 +99,16 @@ bool AnimationTrack::GetKeyFrameIndex(float time, i32& index) const
     return true;
 }
 
-Animation::Animation(Context* context) :
-    ResourceWithMetadata(context),
+Animation::Animation() :
     length_(0.f)
 {
 }
 
 Animation::~Animation() = default;
 
-void Animation::RegisterObject(Context* context)
+void Animation::RegisterObject()
 {
-    context->RegisterFactory<Animation>();
+    DV_CONTEXT.RegisterFactory<Animation>();
 }
 
 bool Animation::BeginLoad(Deserializer& source)
@@ -250,7 +249,7 @@ bool Animation::Save(Serializer& dest) const
         {
             String xmlName = ReplaceExtension(destFile->GetName(), ".xml");
 
-            SharedPtr<XMLFile> xml(new XMLFile(context_));
+            SharedPtr<XMLFile> xml(new XMLFile());
             XMLElement rootElem = xml->CreateRoot("animation");
 
             for (const AnimationTriggerPoint& trigger : triggers_)
@@ -262,7 +261,7 @@ bool Animation::Save(Serializer& dest) const
 
             SaveMetadataToXML(rootElem);
 
-            File xmlFile(context_, xmlName, FILE_WRITE);
+            File xmlFile(xmlName, FILE_WRITE);
             xml->Save(xmlFile);
         }
         else
@@ -364,7 +363,7 @@ void Animation::SetNumTriggers(i32 num)
 
 SharedPtr<Animation> Animation::Clone(const String& cloneName) const
 {
-    SharedPtr<Animation> ret(new Animation(context_));
+    SharedPtr<Animation> ret(new Animation());
 
     ret->SetName(cloneName);
     ret->SetAnimationName(animationName_);

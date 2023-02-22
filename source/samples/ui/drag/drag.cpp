@@ -14,8 +14,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(UIDrag)
 
-UIDrag::UIDrag(Context* context) :
-    Sample(context)
+UIDrag::UIDrag()
 {
 }
 
@@ -51,7 +50,7 @@ void UIDrag::CreateGUI()
 
     for (int i=0; i < 10; i++)
     {
-        auto* b = new Button(context_);
+        auto* b = new Button();
         root->AddChild(b);
         // Reference a style from the style sheet loaded earlier:
         b->SetStyleAuto();
@@ -79,7 +78,7 @@ void UIDrag::CreateGUI()
 
     for (int i = 0; i < 10; i++)
     {
-        auto* t = new Text(context_);
+        auto* t = new Text();
         root->AddChild(t);
         t->SetStyleAuto();
         t->SetName("Touch "+ String(i));

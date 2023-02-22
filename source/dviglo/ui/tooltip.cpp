@@ -11,8 +11,7 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-ToolTip::ToolTip(Context* context) :
-    UIElement(context),
+ToolTip::ToolTip() :
     delay_(0.0f),
     hovered_(false)
 {
@@ -21,9 +20,9 @@ ToolTip::ToolTip(Context* context) :
 
 ToolTip::~ToolTip() = default;
 
-void ToolTip::RegisterObject(Context* context)
+void ToolTip::RegisterObject()
 {
-    context->RegisterFactory<ToolTip>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ToolTip>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UIElement);
     DV_ACCESSOR_ATTRIBUTE("Delay", GetDelay, SetDelay, 0.0f, AM_FILE);

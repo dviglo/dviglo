@@ -25,8 +25,7 @@ namespace dviglo
 bool HiresTimer::supported(false);
 long long HiresTimer::frequency(1000);
 
-Time::Time(Context* context) :
-    Object(context),
+Time::Time() :
     frameNumber_(0),
     timeStep_(0.0f),
     timerPeriod_(0)

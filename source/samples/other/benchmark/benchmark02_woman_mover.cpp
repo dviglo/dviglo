@@ -12,9 +12,8 @@
 
 using namespace dviglo;
 
-Benchmark02_WomanMover::Benchmark02_WomanMover(Context* context)
-    : LogicComponent(context)
-    , moveSpeed_(0.f)
+Benchmark02_WomanMover::Benchmark02_WomanMover()
+    : moveSpeed_(0.f)
     , rotationSpeed_(0.f)
 {
     // Only the scene update event is needed: unsubscribe from the rest for optimization

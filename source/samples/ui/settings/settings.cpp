@@ -30,9 +30,8 @@
 
 DV_DEFINE_APPLICATION_MAIN(WindowSettingsDemo)
 
-WindowSettingsDemo::WindowSettingsDemo(Context* context)
-    : Sample(context)
-    , uiRoot_(GetSubsystem<UI>()->GetRoot())
+WindowSettingsDemo::WindowSettingsDemo()
+    : uiRoot_(GetSubsystem<UI>()->GetRoot())
 {
 }
 
@@ -68,7 +67,7 @@ void WindowSettingsDemo::Start()
 
     // Setup viewport
     auto* renderer = GetSubsystem<Renderer>();
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 
@@ -76,7 +75,7 @@ void WindowSettingsDemo::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
     auto* zone = scene_->CreateComponent<Zone>();
@@ -128,7 +127,7 @@ void WindowSettingsDemo::InitSettings()
     monitorControl_->SetStyleAuto();
     for (int i = 0; i < graphics->GetMonitorCount(); ++i)
     {
-        auto text = MakeShared<Text>(context_);
+        auto text = MakeShared<Text>();
         text->SetText(ToString("Monitor %d", i));
         text->SetMinWidth(CeilToInt(text->GetRowWidth(0) + 10));
         monitorControl_->AddItem(text);
@@ -140,7 +139,7 @@ void WindowSettingsDemo::InitSettings()
     resolutionControl_->SetMinHeight(24);
     resolutionControl_->SetStyleAuto();
 
-    auto resolutionPlaceholder = MakeShared<Text>(context_);
+    auto resolutionPlaceholder = MakeShared<Text>();
     resolutionPlaceholder->SetText("[Cannot fill list of resolutions]");
     resolutionPlaceholder->SetMinWidth(CeilToInt(resolutionPlaceholder->GetRowWidth(0) + 10));
     resolutionControl_->AddItem(resolutionPlaceholder);
@@ -204,7 +203,7 @@ void WindowSettingsDemo::InitSettings()
     multiSampleControl_->SetStyleAuto();
     for (int i = 0; i <= 4; ++i)
     {
-        auto text = MakeShared<Text>(context_);
+        auto text = MakeShared<Text>();
         text->SetText(i == 0 ? "No MSAA" : ToString("MSAA x%d", 1 << i));
         text->SetMinWidth(CeilToInt(text->GetRowWidth(0) + 10));
         multiSampleControl_->AddItem(text);
@@ -269,7 +268,7 @@ void WindowSettingsDemo::SynchronizeSettings()
     const auto& resolutions = graphics->GetResolutions(currentMonitor);
     for (const IntVector3& resolution : resolutions)
     {
-        auto resolutionEntry = MakeShared<Text>(context_);
+        auto resolutionEntry = MakeShared<Text>();
         resolutionEntry->SetText(ToString("%dx%d, %d Hz", resolution.x_, resolution.y_, resolution.z_));
         resolutionEntry->SetMinWidth(CeilToInt(resolutionEntry->GetRowWidth(0) + 10));
         resolutionControl_->AddItem(resolutionEntry);

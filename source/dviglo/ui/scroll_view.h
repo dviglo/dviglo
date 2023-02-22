@@ -19,11 +19,11 @@ class DV_API ScrollView : public UIElement
 
 public:
     /// Construct.
-    explicit ScrollView(Context* context);
+    explicit ScrollView();
     /// Destruct.
     ~ScrollView() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Perform UI element update.
     void Update(float timeStep) override;

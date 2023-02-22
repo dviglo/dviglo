@@ -45,7 +45,7 @@ class DV_API UI : public Object
 
 public:
     /// Construct.
-    explicit UI(Context* context);
+    explicit UI();
     /// Destruct.
     ~UI() override;
 
@@ -424,6 +424,6 @@ private:
 };
 
 /// Register UI library objects.
-void DV_API RegisterUILibrary(Context* context);
+void DV_API RegisterUILibrary();
 
 }

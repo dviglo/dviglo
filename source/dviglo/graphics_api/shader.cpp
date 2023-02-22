@@ -41,8 +41,7 @@ void CommentOutFunction(String& code, const String& signature)
     }
 }
 
-Shader::Shader(Context* context) :
-    Resource(context),
+Shader::Shader() :
     timeStamp_(0),
     numVariations_(0)
 {
@@ -56,9 +55,9 @@ Shader::~Shader()
         cache->ResetDependencies(this);
 }
 
-void Shader::RegisterObject(Context* context)
+void Shader::RegisterObject()
 {
-    context->RegisterFactory<Shader>();
+    DV_CONTEXT.RegisterFactory<Shader>();
 }
 
 bool Shader::BeginLoad(Deserializer& source)

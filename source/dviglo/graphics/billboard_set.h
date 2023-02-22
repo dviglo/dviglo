@@ -46,11 +46,11 @@ class DV_API BillboardSet : public Drawable
 
 public:
     /// Construct.
-    explicit BillboardSet(Context* context);
+    explicit BillboardSet();
     /// Destruct.
     ~BillboardSet() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;

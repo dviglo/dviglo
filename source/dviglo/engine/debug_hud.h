@@ -34,7 +34,7 @@ class DV_API DebugHud : public Object
 
 public:
     /// Construct.
-    explicit DebugHud(Context* context);
+    explicit DebugHud();
     /// Destruct.
     ~DebugHud() override;
 

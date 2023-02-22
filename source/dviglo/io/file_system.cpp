@@ -64,7 +64,7 @@ const char* SDL_IOS_GetDocumentsDir();
 namespace dviglo
 {
 
-int DoSystemCommand(const String& commandLine, bool redirectToLog, Context* context)
+int DoSystemCommand(const String& commandLine, bool redirectToLog)
 {
 #if defined(TVOS) || defined(IOS)
     return -1;
@@ -108,7 +108,7 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog, Context* cont
     // Capture the standard error stream
     if (!stderrFilename.Empty())
     {
-        SharedPtr<File> errFile(new File(context, stderrFilename, FILE_READ));
+        SharedPtr<File> errFile(new File(stderrFilename, FILE_READ));
         while (!errFile->IsEof())
         {
             unsigned numRead = errFile->Read(buffer, sizeof(buffer));
@@ -229,7 +229,7 @@ public:
     {
         DV_PROFILE_THREAD("AsyncSystemCommand Thread");
 
-        exitCode_ = DoSystemCommand(commandLine_, false, nullptr);
+        exitCode_ = DoSystemCommand(commandLine_, false);
         completed_ = true;
     }
 
@@ -267,8 +267,7 @@ private:
     const Vector<String>& arguments_;
 };
 
-FileSystem::FileSystem(Context* context) :
-    Object(context)
+FileSystem::FileSystem()
 {
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(FileSystem, HandleBeginFrame));
 
@@ -358,7 +357,7 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
 int FileSystem::SystemCommand(const String& commandLine, bool redirectStdOutToLog)
 {
     if (allowedPaths_.Empty())
-        return DoSystemCommand(commandLine, redirectStdOutToLog, context_);
+        return DoSystemCommand(commandLine, redirectStdOutToLog);
     else
     {
         DV_LOGERROR("Executing an external command is not allowed");
@@ -467,10 +466,10 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
         return false;
     }
 
-    SharedPtr<File> srcFile(new File(context_, srcFileName, FILE_READ));
+    SharedPtr<File> srcFile(new File(srcFileName, FILE_READ));
     if (!srcFile->IsOpen())
         return false;
-    SharedPtr<File> destFile(new File(context_, destFileName, FILE_WRITE));
+    SharedPtr<File> destFile(new File(destFileName, FILE_WRITE));
     if (!destFile->IsOpen())
         return false;
 

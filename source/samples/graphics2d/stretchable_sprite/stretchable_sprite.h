@@ -24,7 +24,7 @@ class Urho2DStretchableSprite : public Sample
 
 public:
     /// Construct.
-    explicit Urho2DStretchableSprite(Context* context);
+    explicit Urho2DStretchableSprite();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

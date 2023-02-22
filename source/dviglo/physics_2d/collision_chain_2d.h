@@ -15,13 +15,13 @@ class DV_API CollisionChain2D : public CollisionShape2D
 
 public:
     /// Construct.
-    explicit CollisionChain2D(Context* context);
+    explicit CollisionChain2D();
 
     /// Destruct.
     ~CollisionChain2D() override;
 
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set loop.
     void SetLoop(bool loop);

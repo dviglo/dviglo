@@ -20,8 +20,7 @@ static const float STEP_FACTOR = 300.0f;
 
 extern const char* UI_CATEGORY;
 
-ScrollView::ScrollView(Context* context) :
-    UIElement(context),
+ScrollView::ScrollView() :
     viewPosition_(IntVector2::ZERO),
     viewSize_(IntVector2::ZERO),
     viewPositionAttr_(IntVector2::ZERO),
@@ -69,9 +68,9 @@ ScrollView::ScrollView(Context* context) :
 
 ScrollView::~ScrollView() = default;
 
-void ScrollView::RegisterObject(Context* context)
+void ScrollView::RegisterObject()
 {
-    context->RegisterFactory<ScrollView>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ScrollView>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UIElement);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);

@@ -16,16 +16,14 @@
 namespace dviglo
 {
 
-Viewport::Viewport(Context* context) :
-    Object(context),
+Viewport::Viewport() :
     rect_(IntRect::ZERO),
     drawDebug_(true)
 {
     SetRenderPath((RenderPath*)nullptr);
 }
 
-Viewport::Viewport(Context* context, Scene* scene, Camera* camera, RenderPath* renderPath) :
-    Object(context),
+Viewport::Viewport(Scene* scene, Camera* camera, RenderPath* renderPath) :
     scene_(scene),
     camera_(camera),
     rect_(IntRect::ZERO),
@@ -34,8 +32,7 @@ Viewport::Viewport(Context* context, Scene* scene, Camera* camera, RenderPath* r
     SetRenderPath(renderPath);
 }
 
-Viewport::Viewport(Context* context, Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath) :   // NOLINT(modernize-pass-by-value)
-    Object(context),
+Viewport::Viewport(Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath) :   // NOLINT(modernize-pass-by-value)
     scene_(scene),
     camera_(camera),
     rect_(rect),
@@ -193,7 +190,7 @@ Vector3 Viewport::ScreenToWorldPoint(int x, int y, float depth) const
 
 void Viewport::AllocateView()
 {
-    view_ = new View(context_);
+    view_ = new View();
 }
 
 }

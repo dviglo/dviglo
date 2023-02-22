@@ -34,8 +34,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(LANDiscovery)
 
-LANDiscovery::LANDiscovery(Context* context) :
-    Sample(context)
+LANDiscovery::LANDiscovery()
 {
 }
 

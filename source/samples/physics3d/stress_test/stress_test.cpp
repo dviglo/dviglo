@@ -32,8 +32,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(PhysicsStressTest)
 
-PhysicsStressTest::PhysicsStressTest(Context* context) :
-    Sample(context),
+PhysicsStressTest::PhysicsStressTest() :
     drawDebug_(false)
 {
 }
@@ -63,7 +62,7 @@ void PhysicsStressTest::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Create a physics simulation world with default parameters, which will update at 60fps. Like the Octree must
@@ -153,7 +152,7 @@ void PhysicsStressTest::CreateScene()
 
     // Create the camera. Limit far clip distance to match the fog. Note: now we actually create the camera node outside
     // the scene, because we want it to be unaffected by scene load / save
-    cameraNode_ = new Node(context_);
+    cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
 
@@ -189,7 +188,7 @@ void PhysicsStressTest::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 
@@ -242,12 +241,12 @@ void PhysicsStressTest::MoveCamera(float timeStep)
     // Check for loading / saving the scene
     if (input->GetKeyPress(KEY_F5))
     {
-        File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_WRITE);
+        File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_WRITE);
         scene_->SaveXML(saveFile);
     }
     if (input->GetKeyPress(KEY_F7))
     {
-        File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_READ);
+        File loadFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_READ);
         scene_->LoadXML(loadFile);
     }
 

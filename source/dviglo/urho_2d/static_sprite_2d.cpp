@@ -19,8 +19,7 @@ namespace dviglo
 extern const char* URHO2D_CATEGORY;
 extern const char* blendModeNames[];
 
-StaticSprite2D::StaticSprite2D(Context* context) :
-    Drawable2D(context),
+StaticSprite2D::StaticSprite2D() :
     blendMode_(BLEND_ALPHA),
     flipX_(false),
     flipY_(false),
@@ -39,9 +38,9 @@ StaticSprite2D::StaticSprite2D(Context* context) :
 
 StaticSprite2D::~StaticSprite2D() = default;
 
-void StaticSprite2D::RegisterObject(Context* context)
+void StaticSprite2D::RegisterObject()
 {
-    context->RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_COPY_BASE_ATTRIBUTES(Drawable2D);

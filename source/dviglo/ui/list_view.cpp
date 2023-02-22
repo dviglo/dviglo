@@ -57,8 +57,7 @@ class HierarchyContainer : public UIElement
 
 public:
     /// Construct.
-    HierarchyContainer(Context* context, ListView* listView, UIElement* overlayContainer) :
-        UIElement(context),
+    HierarchyContainer(ListView* listView, UIElement* overlayContainer) :
         listView_(listView),
         overlayContainer_(overlayContainer)
     {
@@ -68,7 +67,7 @@ public:
     }
 
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle layout updated by adjusting the position of the overlays.
     void HandleLayoutUpdated(StringHash eventType, VariantMap& eventData)
@@ -139,13 +138,12 @@ private:
     UIElement* overlayContainer_;
 };
 
-void HierarchyContainer::RegisterObject(Context* context)
+void HierarchyContainer::RegisterObject()
 {
     DV_COPY_BASE_ATTRIBUTES(UIElement);
 }
 
-ListView::ListView(Context* context) :
-    ScrollView(context),
+ListView::ListView() :
     highlightMode_(HM_FOCUS),
     multiselect_(false),
     hierarchyMode_(true),    // Init to true here so that the setter below takes effect
@@ -168,11 +166,11 @@ ListView::ListView(Context* context) :
 
 ListView::~ListView() = default;
 
-void ListView::RegisterObject(Context* context)
+void ListView::RegisterObject()
 {
-    context->RegisterFactory<ListView>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ListView>(UI_CATEGORY);
 
-    HierarchyContainer::RegisterObject(context);
+    HierarchyContainer::RegisterObject();
 
     DV_COPY_BASE_ATTRIBUTES(ScrollView);
     DV_ENUM_ACCESSOR_ATTRIBUTE("Highlight Mode", GetHighlightMode, SetHighlightMode, highlightModes, HM_FOCUS, AM_FILE);
@@ -716,14 +714,14 @@ void ListView::SetHierarchyMode(bool enable)
     UIElement* container;
     if (enable)
     {
-        overlayContainer_ = new UIElement(context_);
+        overlayContainer_ = new UIElement();
         overlayContainer_->SetName("LV_OverlayContainer");
         overlayContainer_->SetInternal(true);
         AddChild(overlayContainer_);
         overlayContainer_->SetSortChildren(false);
         overlayContainer_->SetClipChildren(true);
 
-        container = new HierarchyContainer(context_, this, overlayContainer_);
+        container = new HierarchyContainer(this, overlayContainer_);
     }
     else
     {
@@ -733,7 +731,7 @@ void ListView::SetHierarchyMode(bool enable)
             overlayContainer_.Reset();
         }
 
-        container = new UIElement(context_);
+        container = new UIElement();
     }
 
     container->SetName("LV_ItemContainer");

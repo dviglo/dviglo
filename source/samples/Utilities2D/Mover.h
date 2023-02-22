@@ -19,10 +19,10 @@ class Mover : public LogicComponent
 
 public:
     /// Construct.
-    explicit Mover(Context* context);
+    explicit Mover();
 
     /// Register object factory and attributes.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle scene update. Called by LogicComponent base class.
     void Update(float timeStep) override;

@@ -27,20 +27,19 @@ static const unsigned MAX_LINES = 1000000;
 // Cap the amount of triangles to prevent crash.
 static const unsigned MAX_TRIANGLES = 100000;
 
-DebugRenderer::DebugRenderer(Context* context) :
-    Component(context),
+DebugRenderer::DebugRenderer() :
     lineAntiAlias_(false)
 {
-    vertexBuffer_ = new VertexBuffer(context_);
+    vertexBuffer_ = new VertexBuffer();
 
     SubscribeToEvent(E_ENDFRAME, DV_HANDLER(DebugRenderer, HandleEndFrame));
 }
 
 DebugRenderer::~DebugRenderer() = default;
 
-void DebugRenderer::RegisterObject(Context* context)
+void DebugRenderer::RegisterObject()
 {
-    context->RegisterFactory<DebugRenderer>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT.RegisterFactory<DebugRenderer>(SUBSYSTEM_CATEGORY);
     DV_ACCESSOR_ATTRIBUTE("Line Antialias", GetLineAntiAlias, SetLineAntiAlias, false, AM_DEFAULT);
 }
 

@@ -72,8 +72,7 @@ namespace dviglo
 
 extern const char* logLevelPrefixes[];
 
-Engine::Engine(Context* context) :
-    Object(context),
+Engine::Engine() :
     timeStep_(0.0f),
     timeStepSmoothing_(2),
     minFps_(10),
@@ -96,43 +95,43 @@ Engine::Engine(Context* context) :
     audioPaused_(false)
 {
     // Register self as a subsystem
-    context_->RegisterSubsystem(this);
+    DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    context_->RegisterSubsystem(new Time(context_));
-    context_->RegisterSubsystem(new WorkQueue(context_));
+    DV_CONTEXT.RegisterSubsystem(new Time());
+    DV_CONTEXT.RegisterSubsystem(new WorkQueue());
 #ifdef DV_PROFILING
-    context_->RegisterSubsystem(new Profiler(context_));
+    DV_CONTEXT.RegisterSubsystem(new Profiler());
 #endif
-    context_->RegisterSubsystem(new FileSystem(context_));
+    DV_CONTEXT.RegisterSubsystem(new FileSystem());
 #ifdef DV_LOGGING
-    context_->RegisterSubsystem(new Log(context_));
+    DV_CONTEXT.RegisterSubsystem(new Log());
 #endif
-    context_->RegisterSubsystem(new ResourceCache(context_));
-    context_->RegisterSubsystem(new Localization(context_));
+    DV_CONTEXT.RegisterSubsystem(new ResourceCache());
+    DV_CONTEXT.RegisterSubsystem(new Localization());
 #ifdef DV_NETWORK
-    context_->RegisterSubsystem(new Network(context_));
+    DV_CONTEXT.RegisterSubsystem(new Network());
 #endif
 #ifdef DV_DATABASE
-    context_->RegisterSubsystem(new Database(context_));
+    DV_CONTEXT.RegisterSubsystem(new Database());
 #endif
-    context_->RegisterSubsystem(new Input(context_));
-    context_->RegisterSubsystem(new Audio(context_));
-    context_->RegisterSubsystem(new UI(context_));
+    DV_CONTEXT.RegisterSubsystem(new Input());
+    DV_CONTEXT.RegisterSubsystem(new Audio());
+    DV_CONTEXT.RegisterSubsystem(new UI());
 
     // Register object factories for libraries which are not automatically registered along with subsystem creation
-    RegisterSceneLibrary(context_);
+    RegisterSceneLibrary();
 
 #ifdef DV_BULLET
-    RegisterPhysicsLibrary(context_);
+    RegisterPhysicsLibrary();
 #endif
 
 #ifdef DV_BOX2D
-    RegisterPhysics2DLibrary(context_);
+    RegisterPhysics2DLibrary();
 #endif
 
 #ifdef DV_NAVIGATION
-    RegisterNavigationLibrary(context_);
+    RegisterNavigationLibrary();
 #endif
 
     SubscribeToEvent(E_EXITREQUESTED, DV_HANDLER(Engine, HandleExitRequested));
@@ -187,20 +186,20 @@ bool Engine::Initialize(const VariantMap& parameters)
     // Register the rest of the subsystems
     if (!headless_)
     {
-        context_->RegisterSubsystem(new Graphics(context_, gapi));
-        context_->RegisterSubsystem(new Renderer(context_));
+        DV_CONTEXT.RegisterSubsystem(new Graphics(gapi));
+        DV_CONTEXT.RegisterSubsystem(new Renderer());
     }
     else
     {
         Graphics::SetGAPI(gapi); // https://github.com/urho3d/Urho3D/issues/3040
 
         // Register graphics library objects explicitly in headless mode to allow them to work without using actual GPU resources
-        RegisterGraphicsLibrary(context_);
+        RegisterGraphicsLibrary();
     }
 
 #ifdef DV_URHO2D
     // 2D graphics library is dependent on 3D graphics library
-    RegisterUrho2DLibrary(context_);
+    RegisterUrho2DLibrary();
 #endif
 
     // Start logging
@@ -324,7 +323,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 #ifdef DV_PROFILING
     if (GetParameter(parameters, EP_EVENT_PROFILER, true).GetBool())
     {
-        context_->RegisterSubsystem(new EventProfiler(context_));
+        DV_CONTEXT.RegisterSubsystem(new EventProfiler());
         EventProfiler::SetActive(true);
     }
 #endif
@@ -552,8 +551,8 @@ Console* Engine::CreateConsole()
     auto* console = GetSubsystem<Console>();
     if (!console)
     {
-        console = new Console(context_);
-        context_->RegisterSubsystem(console);
+        console = new Console();
+        DV_CONTEXT.RegisterSubsystem(console);
     }
 
     return console;
@@ -568,8 +567,8 @@ DebugHud* Engine::CreateDebugHud()
     auto* debugHud = GetSubsystem<DebugHud>();
     if (!debugHud)
     {
-        debugHud = new DebugHud(context_);
-        context_->RegisterSubsystem(debugHud);
+        debugHud = new DebugHud();
+        DV_CONTEXT.RegisterSubsystem(debugHud);
     }
 
     return debugHud;

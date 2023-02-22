@@ -102,8 +102,7 @@ class DV_API Connection : public Object
     DV_OBJECT(Connection, Object);
 
 public:
-    /// Construct with context, RakNet connection address and Raknet peer pointer.
-    Connection(Context* context, bool isClient, const SLNet::AddressOrGUID& address, SLNet::RakPeerInterface* peer);
+    Connection(bool isClient, const SLNet::AddressOrGUID& address, SLNet::RakPeerInterface* peer);
     /// Destruct.
     ~Connection() override;
 

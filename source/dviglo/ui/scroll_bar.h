@@ -19,11 +19,11 @@ class DV_API ScrollBar : public BorderImage
 
 public:
     /// Construct.
-    explicit ScrollBar(Context* context);
+    explicit ScrollBar();
     /// Destruct.
     ~ScrollBar() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;

@@ -13,8 +13,7 @@
 
 #include "Mover.h"
 
-Mover::Mover(Context* context) :
-    LogicComponent(context),
+Mover::Mover() :
     speed_(0.8f),
     currentPathID_(1),
     emitTime_(0.0f),
@@ -25,9 +24,9 @@ Mover::Mover(Context* context) :
     SetUpdateEventMask(LogicComponentEvents::Update);
 }
 
-void Mover::RegisterObject(Context* context)
+void Mover::RegisterObject()
 {
-    context->RegisterFactory<Mover>();
+    DV_CONTEXT.RegisterFactory<Mover>();
 
     // These macros register the class attribute to the Context for automatic load / save handling.
     // We specify the Default attribute mode which means it will be used both for saving into file, and network replication.

@@ -16,11 +16,11 @@ class DV_API CollisionCircle2D : public CollisionShape2D
 
 public:
     /// Construct.
-    explicit CollisionCircle2D(Context* context);
+    explicit CollisionCircle2D();
     /// Destruct.
     ~CollisionCircle2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set radius.
     void SetRadius(float radius);

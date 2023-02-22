@@ -13,8 +13,7 @@
 namespace dviglo
 {
 
-Localization::Localization(Context* context) :
-    Object(context),
+Localization::Localization() :
     languageIndex_(-1)
 {
 }

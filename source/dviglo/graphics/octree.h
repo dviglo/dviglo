@@ -145,11 +145,11 @@ class DV_API Octree : public Component, public Octant
 
 public:
     /// Construct.
-    explicit Octree(Context* context);
+    explicit Octree();
     /// Destruct.
     ~Octree() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

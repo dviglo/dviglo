@@ -30,8 +30,7 @@ namespace dviglo
 static const unsigned BUFFERSIZE = 4096;
 #endif
 
-FileWatcher::FileWatcher(Context* context) :
-    Object(context),
+FileWatcher::FileWatcher() :
     fileSystem_(GetSubsystem<FileSystem>()),
     delay_(1.0f),
     watchSubDirs_(false)
@@ -180,7 +179,7 @@ void FileWatcher::StopWatching()
         // TODO: Remove this temp write approach as it depends on user write privilege
 #ifdef _WIN32
         String dummyFileName = path_ + "dummy.tmp";
-        File file(context_, dummyFileName, FILE_WRITE);
+        File file(dummyFileName, FILE_WRITE);
         file.Close();
         if (fileSystem_)
             fileSystem_->Delete(dummyFileName);

@@ -47,17 +47,16 @@ public:
     bool success_;
 };
 
-XMLFile::XMLFile(Context* context) :
-    Resource(context),
+XMLFile::XMLFile() :
     document_(new pugi::xml_document())
 {
 }
 
 XMLFile::~XMLFile() = default;
 
-void XMLFile::RegisterObject(Context* context)
+void XMLFile::RegisterObject()
 {
-    context->RegisterFactory<XMLFile>();
+    DV_CONTEXT.RegisterFactory<XMLFile>();
 }
 
 bool XMLFile::BeginLoad(Deserializer& source)

@@ -19,8 +19,7 @@ static const StringVector controlPointsStructureElementNames =
     "   NodeID"
 };
 
-SplinePath::SplinePath(Context* context) :
-    Component(context),
+SplinePath::SplinePath() :
     spline_(BEZIER_CURVE),
     speed_(1.f),
     elapsedTime_(0.f),
@@ -32,9 +31,9 @@ SplinePath::SplinePath(Context* context) :
     UpdateNodeIds();
 }
 
-void SplinePath::RegisterObject(Context* context)
+void SplinePath::RegisterObject()
 {
-    context->RegisterFactory<SplinePath>(LOGIC_CATEGORY);
+    DV_CONTEXT.RegisterFactory<SplinePath>(LOGIC_CATEGORY);
 
     DV_ENUM_ACCESSOR_ATTRIBUTE("Interpolation Mode", GetInterpolationMode, SetInterpolationMode,
         interpolationModeNames, BEZIER_CURVE, AM_FILE);

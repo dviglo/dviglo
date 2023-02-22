@@ -14,8 +14,7 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-ConstraintPulley2D::ConstraintPulley2D(Context* context) :
-    Constraint2D(context),
+ConstraintPulley2D::ConstraintPulley2D() :
     ownerBodyGroundAnchor_(-1.0f, 1.0f),
     otherBodyGroundAnchor_(1.0f, 1.0f),
     ownerBodyAnchor_(-1.0f, 0.0f),
@@ -26,9 +25,9 @@ ConstraintPulley2D::ConstraintPulley2D(Context* context) :
 
 ConstraintPulley2D::~ConstraintPulley2D() = default;
 
-void ConstraintPulley2D::RegisterObject(Context* context)
+void ConstraintPulley2D::RegisterObject()
 {
-    context->RegisterFactory<ConstraintPulley2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ConstraintPulley2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Owner Body Ground Anchor", GetOwnerBodyGroundAnchor, SetOwnerBodyGroundAnchor, Vector2::ZERO,

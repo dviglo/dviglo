@@ -21,11 +21,11 @@ class DV_API Texture2D : public Texture
 
 public:
     /// Construct.
-    explicit Texture2D(Context* context);
+    explicit Texture2D();
     /// Destruct.
     ~Texture2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

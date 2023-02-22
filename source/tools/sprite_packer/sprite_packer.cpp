@@ -88,10 +88,9 @@ void Run(Vector<String>& arguments)
     if (arguments.Size() < 2)
         Help();
 
-    SharedPtr<Context> context(new Context());
-    context->RegisterSubsystem(new FileSystem(context));
-    context->RegisterSubsystem(new Log(context));
-    auto* fileSystem = context->GetSubsystem<FileSystem>();
+    DV_CONTEXT.RegisterSubsystem(new FileSystem());
+    DV_CONTEXT.RegisterSubsystem(new Log());
+    auto* fileSystem = DV_CONTEXT.GetSubsystem<FileSystem>();
 
     Vector<String> inputFiles;
     String outputFile;
@@ -172,8 +171,8 @@ void Run(Vector<String>& arguments)
     for (const String& path : inputFiles)
     {
         String name = ReplaceExtension(GetFileName(path), "");
-        File file(context, path);
-        Image image(context);
+        File file(path);
+        Image image;
 
         if (!image.Load(file))
             ErrorExit("Could not load image " + path + ".");
@@ -296,13 +295,13 @@ void Run(Vector<String>& arguments)
     }
 
     // create image for spritesheet
-    Image spriteSheetImage(context);
+    Image spriteSheetImage;
     spriteSheetImage.SetSize(packedWidth, packedHeight, 4);
 
     // zero out image
     spriteSheetImage.SetData(nullptr);
 
-    XMLFile xml(context);
+    XMLFile xml;
     XMLElement root = xml.CreateRoot("TextureAtlas");
     root.SetAttribute("imagePath", GetFileNameAndExtension(outputFile));
 
@@ -325,8 +324,8 @@ void Run(Vector<String>& arguments)
 
         DV_LOGINFO("Transferring " + packerInfo->path + " to sprite sheet.");
 
-        File file(context, packerInfo->path);
-        Image image(context);
+        File file(packerInfo->path);
+        Image image;
         if (!image.Load(file))
             ErrorExit("Could not load image " + packerInfo->path + ".");
 
@@ -380,7 +379,7 @@ void Run(Vector<String>& arguments)
     spriteSheetImage.SavePNG(outputFile);
 
     DV_LOGINFO("Saving SpriteSheet xml file.");
-    File spriteSheetFile(context);
+    File spriteSheetFile;
     spriteSheetFile.Open(spriteSheetFileName, FILE_WRITE);
     xml.Save(spriteSheetFile);
 }

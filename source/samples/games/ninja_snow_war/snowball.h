@@ -17,9 +17,9 @@ private:
     int hitDamage;
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
-    Snowball(Context* context);
+    Snowball();
 
     void Start() override;
     void FixedUpdate(float timeStep) override;

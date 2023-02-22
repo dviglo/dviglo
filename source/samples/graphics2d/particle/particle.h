@@ -23,7 +23,7 @@ class Urho2DParticle : public Sample
 
 public:
     /// Construct.
-    explicit Urho2DParticle(Context* context);
+    explicit Urho2DParticle();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

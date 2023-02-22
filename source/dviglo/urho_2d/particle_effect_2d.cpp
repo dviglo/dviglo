@@ -45,8 +45,7 @@ static const int destBlendFuncs[] =
 static_assert(sizeof(srcBlendFuncs) / sizeof(srcBlendFuncs[0]) == MAX_BLENDMODES, "");
 static_assert(sizeof(destBlendFuncs) / sizeof(destBlendFuncs[0]) == MAX_BLENDMODES, "");
 
-ParticleEffect2D::ParticleEffect2D(Context* context) :
-    Resource(context),
+ParticleEffect2D::ParticleEffect2D() :
     sourcePositionVariance_(7.0f, 7.0f),
     speed_(260.0f),
     speedVariance_(10.0f),
@@ -86,9 +85,9 @@ ParticleEffect2D::ParticleEffect2D(Context* context) :
 
 ParticleEffect2D::~ParticleEffect2D() = default;
 
-void ParticleEffect2D::RegisterObject(Context* context)
+void ParticleEffect2D::RegisterObject()
 {
-    context->RegisterFactory<ParticleEffect2D>();
+    DV_CONTEXT.RegisterFactory<ParticleEffect2D>();
 }
 
 bool ParticleEffect2D::BeginLoad(Deserializer& source)
@@ -98,7 +97,7 @@ bool ParticleEffect2D::BeginLoad(Deserializer& source)
 
     loadSpriteName_.Clear();
 
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
     if (!xmlFile.Load(source))
         return false;
 
@@ -209,7 +208,7 @@ bool ParticleEffect2D::Save(Serializer& dest) const
     if (!sprite_)
         return false;
 
-    XMLFile xmlFile(context_);
+    XMLFile xmlFile;
     XMLElement rootElem = xmlFile.CreateRoot("particleEmitterConfig");
 
     String fileName = GetFileNameAndExtension(sprite_->GetName());
@@ -453,7 +452,7 @@ void ParticleEffect2D::SetRotationEndVariance(float rotationEndVariance)
 
 SharedPtr<ParticleEffect2D> ParticleEffect2D::Clone(const String& cloneName) const
 {
-    SharedPtr<ParticleEffect2D> ret(new ParticleEffect2D(context_));
+    SharedPtr<ParticleEffect2D> ret(new ParticleEffect2D());
 
     ret->SetName(cloneName);
     ret->sprite_ = sprite_;

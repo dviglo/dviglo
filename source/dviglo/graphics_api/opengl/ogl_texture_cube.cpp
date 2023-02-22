@@ -160,7 +160,7 @@ bool TextureCube::SetData_OGL(CubeMapFace face, unsigned level, int x, int y, in
 
 bool TextureCube::SetData_OGL(CubeMapFace face, Deserializer& source)
 {
-    SharedPtr<Image> image(new Image(context_));
+    SharedPtr<Image> image(new Image());
     if (!image->Load(source))
         return false;
 

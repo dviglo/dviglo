@@ -26,7 +26,7 @@ class SignedDistanceFieldText : public Sample
 
 public:
     /// Construct.
-    explicit SignedDistanceFieldText(Context* context);
+    explicit SignedDistanceFieldText();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

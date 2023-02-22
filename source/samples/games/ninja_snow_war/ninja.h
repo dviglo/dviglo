@@ -18,7 +18,7 @@ class Ninja : public GameObject
     DV_OBJECT(Ninja, GameObject);
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     Controls controls;
     Controls prevControls;
@@ -34,7 +34,7 @@ public:
     float aimX;
     float aimY;
 
-    Ninja(Context* context);
+    Ninja();
     void DelayedStart() override;
     void SetControls(const Controls& newControls);
     Quaternion GetAim();

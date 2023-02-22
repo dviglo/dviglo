@@ -39,7 +39,7 @@ class DV_API Resource : public Object
 
 public:
     /// Construct.
-    explicit Resource(Context* context);
+    explicit Resource();
 
     /// Load resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.
     bool Load(Deserializer& source);
@@ -99,7 +99,7 @@ class DV_API ResourceWithMetadata : public Resource
 
 public:
     /// Construct.
-    explicit ResourceWithMetadata(Context* context) : Resource(context) {}
+    explicit ResourceWithMetadata() { }
 
     /// Add new metadata variable or overwrite old value.
     void AddMetadata(const String& name, const Variant& value);

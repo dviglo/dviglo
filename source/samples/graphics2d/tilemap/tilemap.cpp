@@ -24,8 +24,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DTileMap)
 
-Urho2DTileMap::Urho2DTileMap(Context* context) :
-    Sample(context)
+Urho2DTileMap::Urho2DTileMap()
 {
 }
 
@@ -55,7 +54,7 @@ void Urho2DTileMap::Start()
 
 void Urho2DTileMap::CreateScene()
 {
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
     // Create camera node
@@ -111,7 +110,7 @@ void Urho2DTileMap::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

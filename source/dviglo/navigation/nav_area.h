@@ -16,11 +16,11 @@ class DV_API NavArea : public Component
 
 public:
     /// Construct.
-    explicit NavArea(Context* context);
+    explicit NavArea();
     /// Destruct.
     ~NavArea() override;
     /// Register object factory and attributes.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Render debug geometry for the bounds.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

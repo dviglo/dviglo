@@ -27,14 +27,13 @@ void RunFrame(void* data)
 }
 #endif
 
-Application::Application(Context* context) :
-    Object(context),
+Application::Application() :
     exitCode_(EXIT_SUCCESS)
 {
     engineParameters_ = Engine::ParseParameters(GetArguments());
 
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
-    engine_ = new Engine(context);
+    engine_ = new Engine();
 
     // Subscribe to log messages so that can show errors if ErrorExit() is called with empty message
     SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));

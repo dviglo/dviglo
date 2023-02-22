@@ -19,16 +19,15 @@
 namespace dviglo
 {
 
-SpriteSheet2D::SpriteSheet2D(Context* context) :
-    Resource(context)
+SpriteSheet2D::SpriteSheet2D()
 {
 }
 
 SpriteSheet2D::~SpriteSheet2D() = default;
 
-void SpriteSheet2D::RegisterObject(Context* context)
+void SpriteSheet2D::RegisterObject()
 {
-    context->RegisterFactory<SpriteSheet2D>();
+    DV_CONTEXT.RegisterFactory<SpriteSheet2D>();
 }
 
 bool SpriteSheet2D::BeginLoad(Deserializer& source)
@@ -82,7 +81,7 @@ void SpriteSheet2D::DefineSprite(const String& name, const IntRect& rectangle, c
     if (GetSprite(name))
         return;
 
-    SharedPtr<Sprite2D> sprite(new Sprite2D(context_));
+    SharedPtr<Sprite2D> sprite(new Sprite2D());
     sprite->SetName(name);
     sprite->SetTexture(texture_);
     sprite->SetRectangle(rectangle);
@@ -104,7 +103,7 @@ Sprite2D* SpriteSheet2D::GetSprite(const String& name) const
 
 bool SpriteSheet2D::BeginLoadFromPListFile(Deserializer& source)
 {
-    loadPListFile_ = new PListFile(context_);
+    loadPListFile_ = new PListFile();
     if (!loadPListFile_->Load(source))
     {
         DV_LOGERROR("Could not load sprite sheet");
@@ -176,7 +175,7 @@ bool SpriteSheet2D::EndLoadFromPListFile()
 
 bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
 {
-    loadXMLFile_ = new XMLFile(context_);
+    loadXMLFile_ = new XMLFile();
     if (!loadXMLFile_->Load(source))
     {
         DV_LOGERROR("Could not load sprite sheet");
@@ -250,7 +249,7 @@ bool SpriteSheet2D::EndLoadFromXMLFile()
 
 bool SpriteSheet2D::BeginLoadFromJSONFile(Deserializer& source)
 {
-    loadJSONFile_ = new JSONFile(context_);
+    loadJSONFile_ = new JSONFile();
     if (!loadJSONFile_->Load(source))
     {
         DV_LOGERROR("Could not load sprite sheet");

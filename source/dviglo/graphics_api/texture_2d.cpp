@@ -19,8 +19,7 @@
 namespace dviglo
 {
 
-Texture2D::Texture2D(Context* context) :
-    Texture(context)
+Texture2D::Texture2D()
 {
 #ifdef DV_OPENGL
     if (Graphics::GetGAPI() == GAPI_OPENGL)
@@ -33,9 +32,9 @@ Texture2D::~Texture2D()
     Release();
 }
 
-void Texture2D::RegisterObject(Context* context)
+void Texture2D::RegisterObject()
 {
-    context->RegisterFactory<Texture2D>();
+    DV_CONTEXT.RegisterFactory<Texture2D>();
 }
 
 bool Texture2D::BeginLoad(Deserializer& source)
@@ -53,7 +52,7 @@ bool Texture2D::BeginLoad(Deserializer& source)
     }
 
     // Load the image data for EndLoad()
-    loadImage_ = new Image(context_);
+    loadImage_ = new Image();
     if (!loadImage_->Load(source))
     {
         loadImage_.Reset();
@@ -156,7 +155,7 @@ bool Texture2D::GetImage(Image& image) const
 
 SharedPtr<Image> Texture2D::GetImage() const
 {
-    auto rawImage = MakeShared<Image>(context_);
+    auto rawImage = MakeShared<Image>();
     if (!GetImage(*rawImage))
         return nullptr;
     return rawImage;

@@ -63,8 +63,7 @@ static i64 FTell64(FILE* stream)
 #endif
 }
 
-File::File(Context* context) :
-    Object(context),
+File::File() :
     mode_(FILE_READ),
     handle_(nullptr),
 #ifdef __ANDROID__
@@ -80,8 +79,7 @@ File::File(Context* context) :
 {
 }
 
-File::File(Context* context, const String& fileName, FileMode mode) :
-    Object(context),
+File::File(const String& fileName, FileMode mode) :
     mode_(FILE_READ),
     handle_(nullptr),
 #ifdef __ANDROID__
@@ -98,8 +96,7 @@ File::File(Context* context, const String& fileName, FileMode mode) :
     Open(fileName, mode);
 }
 
-File::File(Context* context, PackageFile* package, const String& fileName) :
-    Object(context),
+File::File(PackageFile* package, const String& fileName) :
     mode_(FILE_READ),
     handle_(nullptr),
 #ifdef __ANDROID__

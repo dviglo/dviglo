@@ -14,8 +14,7 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-ConstraintMotor2D::ConstraintMotor2D(Context* context) :
-    Constraint2D(context),
+ConstraintMotor2D::ConstraintMotor2D() :
     linearOffset_(Vector2::ZERO)
 {
 
@@ -23,9 +22,9 @@ ConstraintMotor2D::ConstraintMotor2D(Context* context) :
 
 ConstraintMotor2D::~ConstraintMotor2D() = default;
 
-void ConstraintMotor2D::RegisterObject(Context* context)
+void ConstraintMotor2D::RegisterObject()
 {
-    context->RegisterFactory<ConstraintMotor2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ConstraintMotor2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Linear Offset", GetLinearOffset, SetLinearOffset, Vector2::ZERO, AM_DEFAULT);

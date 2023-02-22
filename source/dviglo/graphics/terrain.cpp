@@ -57,9 +57,8 @@ inline void GrowUpdateRegion(IntRect& updateRegion, int x, int y)
     }
 }
 
-Terrain::Terrain(Context* context) :
-    Component(context),
-    indexBuffer_(new IndexBuffer(context)),
+Terrain::Terrain() :
+    indexBuffer_(new IndexBuffer()),
     spacing_(DEFAULT_SPACING),
     lastSpacing_(Vector3::ZERO),
     patchWorldOrigin_(Vector2::ZERO),
@@ -97,9 +96,9 @@ Terrain::Terrain(Context* context) :
 
 Terrain::~Terrain() = default;
 
-void Terrain::RegisterObject(Context* context)
+void Terrain::RegisterObject()
 {
-    context->RegisterFactory<Terrain>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Terrain>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Height Map", GetHeightMapAttr, SetHeightMapAttr, ResourceRef(Image::GetTypeStatic()),

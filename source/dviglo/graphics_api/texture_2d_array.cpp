@@ -23,8 +23,7 @@
 namespace dviglo
 {
 
-Texture2DArray::Texture2DArray(Context* context) :
-    Texture(context)
+Texture2DArray::Texture2DArray()
 {
 #ifdef DV_OPENGL
 #ifndef DV_GLES2
@@ -39,9 +38,9 @@ Texture2DArray::~Texture2DArray()
     Release();
 }
 
-void Texture2DArray::RegisterObject(Context* context)
+void Texture2DArray::RegisterObject()
 {
-    context->RegisterFactory<Texture2DArray>();
+    DV_CONTEXT.RegisterFactory<Texture2DArray>();
 }
 
 bool Texture2DArray::BeginLoad(Deserializer& source)
@@ -65,7 +64,7 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
     String texPath, texName, texExt;
     SplitPath(GetName(), texPath, texName, texExt);
 
-    loadParameters_ = (new XMLFile(context_));
+    loadParameters_ = (new XMLFile());
     if (!loadParameters_->Load(source))
     {
         loadParameters_.Reset();

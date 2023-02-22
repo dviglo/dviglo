@@ -41,8 +41,7 @@
 #include "Sample2D.h"
 
 
-Sample2D::Sample2D(Context* context) :
-    Object(context)
+Sample2D::Sample2D()
 {
 }
 
@@ -493,7 +492,7 @@ void Sample2D::SaveScene(bool initial)
     String filename = demoFilename_;
     if (!initial)
         filename += "InGame";
-    File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/" + filename + ".xml", FILE_WRITE);
+    File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/" + filename + ".xml", FILE_WRITE);
     scene_->SaveXML(saveFile);
 }
 
@@ -512,7 +511,7 @@ void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, co
     // Create rotation animation
     if (animate)
     {
-        SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> animation(new ValueAnimation());
         animation->SetKeyFrame(0, Variant(Quaternion(0.0f, 0.0f, 0.0f)));
         animation->SetKeyFrame(1, Variant(Quaternion(0.0f, 0.0f, 180.0f)));
         animation->SetKeyFrame(2, Variant(Quaternion(0.0f, 0.0f, 0.0f)));

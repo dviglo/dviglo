@@ -22,8 +22,7 @@ namespace dviglo
 extern const char* URHO2D_CATEGORY;
 extern const char* blendModeNames[];
 
-ParticleEmitter2D::ParticleEmitter2D(Context* context) :
-    Drawable2D(context),
+ParticleEmitter2D::ParticleEmitter2D() :
     blendMode_(BLEND_ADDALPHA),
     numParticles_(0),
     emissionTime_(0.0f),
@@ -38,9 +37,9 @@ ParticleEmitter2D::ParticleEmitter2D(Context* context) :
 
 ParticleEmitter2D::~ParticleEmitter2D() = default;
 
-void ParticleEmitter2D::RegisterObject(Context* context)
+void ParticleEmitter2D::RegisterObject()
 {
-    context->RegisterFactory<ParticleEmitter2D>(URHO2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ParticleEmitter2D>(URHO2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_COPY_BASE_ATTRIBUTES(Drawable2D);

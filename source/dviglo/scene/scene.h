@@ -77,11 +77,11 @@ public:
     using Node::SaveJSON;
 
     /// Construct.
-    explicit Scene(Context* context);
+    explicit Scene();
     /// Destruct.
     ~Scene() override;
     /// Register object factory. Node must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load from binary data. Removes all existing child nodes and components first. Return true if successful.
     bool Load(Deserializer& source) override;
@@ -322,6 +322,6 @@ private:
 };
 
 /// Register Scene library objects.
-void DV_API RegisterSceneLibrary(Context* context);
+void DV_API RegisterSceneLibrary();
 
 }

@@ -23,7 +23,7 @@ class RibbonTrailDemo : public Sample
 
 public:
     /// Construct.
-    explicit RibbonTrailDemo(Context* context);
+    explicit RibbonTrailDemo();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

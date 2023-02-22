@@ -21,8 +21,8 @@ SourceBatch2D::SourceBatch2D() :
 {
 }
 
-Drawable2D::Drawable2D(Context* context) :
-    Drawable(context, DrawableTypes::Geometry2D),
+Drawable2D::Drawable2D() :
+    Drawable(DrawableTypes::Geometry2D),
     layer_(0),
     orderInLayer_(0),
     sourceBatchesDirty_(true)
@@ -35,7 +35,7 @@ Drawable2D::~Drawable2D()
         renderer_->RemoveDrawable(this);
 }
 
-void Drawable2D::RegisterObject(Context* context)
+void Drawable2D::RegisterObject()
 {
     DV_ACCESSOR_ATTRIBUTE("Layer", GetLayer, SetLayer, 0, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Order in Layer", GetOrderInLayer, SetOrderInLayer, 0, AM_DEFAULT);

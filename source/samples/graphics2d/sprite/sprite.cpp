@@ -29,8 +29,7 @@ static const StringHash VAR_ROTATESPEED("RotateSpeed");
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DSprite)
 
-Urho2DSprite::Urho2DSprite(Context* context) :
-    Sample(context)
+Urho2DSprite::Urho2DSprite()
 {
 }
 
@@ -57,7 +56,7 @@ void Urho2DSprite::Start()
 
 void Urho2DSprite::CreateScene()
 {
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
     // Create camera node
@@ -137,7 +136,7 @@ void Urho2DSprite::SetupViewport()
     Renderer* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

@@ -36,11 +36,10 @@ const float CAMERA_DISTANCE = 10.0f;
 
 DV_DEFINE_APPLICATION_MAIN(RaycastVehicleDemo)
 
-RaycastVehicleDemo::RaycastVehicleDemo(Context* context)
-    : Sample(context)
+RaycastVehicleDemo::RaycastVehicleDemo()
 {
     // Register factory and attributes for the Vehicle component so it can be created via CreateComponent, and loaded / saved
-    Vehicle::RegisterObject(context);
+    Vehicle::RegisterObject();
 }
 
 void RaycastVehicleDemo::Start()
@@ -62,16 +61,16 @@ void RaycastVehicleDemo::Start()
 void RaycastVehicleDemo::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
     // Create scene subsystem components
     scene_->CreateComponent<Octree>();
     scene_->CreateComponent<PhysicsWorld>();
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
-    cameraNode_ = new Node(context_);
+    cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(500.0f);
-    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, scene_, camera));
+    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(scene_, camera));
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->CreateChild("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
@@ -214,13 +213,13 @@ void RaycastVehicleDemo::HandleUpdate(StringHash eventType,
             // Check for loading / saving the scene
             if (input->GetKeyPress(KEY_F5))
             {
-                File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
+                File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_WRITE);
                 scene_->SaveXML(saveFile);
             }
             if (input->GetKeyPress(KEY_F7))
             {
-                File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
+                File loadFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_READ);
                 scene_->LoadXML(loadFile);
                 // After loading we have to reacquire the weak pointer to the Vehicle component, as it has been recreated

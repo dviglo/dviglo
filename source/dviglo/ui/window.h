@@ -33,11 +33,11 @@ class DV_API Window : public BorderImage
 
 public:
     /// Construct.
-    explicit Window(Context* context);
+    explicit Window();
     /// Destruct.
     ~Window() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Return UI rendering batches.
     void GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor) override;

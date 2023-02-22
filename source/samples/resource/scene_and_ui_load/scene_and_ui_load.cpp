@@ -19,8 +19,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(SceneAndUILoad)
 
-SceneAndUILoad::SceneAndUILoad(Context* context) :
-    Sample(context)
+SceneAndUILoad::SceneAndUILoad()
 {
 }
 
@@ -49,7 +48,7 @@ void SceneAndUILoad::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Load scene content prepared in the editor (XML format). GetFile() returns an open file from the resource system
     // which scene.LoadXML() will read
@@ -75,7 +74,7 @@ void SceneAndUILoad::CreateUI()
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will interact with the UI
-    SharedPtr<Cursor> cursor(new Cursor(context_));
+    SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto();
     ui->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
@@ -100,7 +99,7 @@ void SceneAndUILoad::SetupViewport()
     auto* renderer = GetSubsystem<Renderer>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

@@ -27,7 +27,7 @@ class DV_API Console : public Object
 
 public:
     /// Construct.
-    explicit Console(Context* context);
+    explicit Console();
     /// Destruct.
     ~Console() override;
 

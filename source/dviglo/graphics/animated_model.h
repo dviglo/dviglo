@@ -23,11 +23,11 @@ class DV_API AnimatedModel : public StaticModel
 
 public:
     /// Construct.
-    explicit AnimatedModel(Context* context);
+    explicit AnimatedModel();
     /// Destruct.
     ~AnimatedModel() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;

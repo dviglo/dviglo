@@ -177,11 +177,11 @@ class DV_API Technique : public Resource
 
 public:
     /// Construct.
-    explicit Technique(Context* context);
+    explicit Technique();
     /// Destruct.
     ~Technique() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

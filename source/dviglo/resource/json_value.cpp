@@ -367,7 +367,7 @@ void JSONValue::SetType(JSONValueType valueType, JSONNumberType numberType)
     }
 }
 
-void JSONValue::SetVariant(const Variant& variant, Context* context)
+void JSONValue::SetVariant(const Variant& variant)
 {
     if (!IsNull())
     {
@@ -375,7 +375,7 @@ void JSONValue::SetVariant(const Variant& variant, Context* context)
     }
 
     (*this)["type"] = variant.GetTypeName();
-    (*this)["value"].SetVariantValue(variant, context);
+    (*this)["value"].SetVariantValue(variant);
 }
 
 Variant JSONValue::GetVariant() const
@@ -384,7 +384,7 @@ Variant JSONValue::GetVariant() const
     return (*this)["value"].GetVariantValue(type);
 }
 
-void JSONValue::SetVariantValue(const Variant& variant, Context* context)
+void JSONValue::SetVariantValue(const Variant& variant)
 {
     if (!IsNull())
     {
@@ -414,36 +414,24 @@ void JSONValue::SetVariantValue(const Variant& variant, Context* context)
         return;
 
     case VAR_VARIANTVECTOR:
-        SetVariantVector(variant.GetVariantVector(), context);
+        SetVariantVector(variant.GetVariantVector());
         return;
 
     case VAR_VARIANTMAP:
-        SetVariantMap(variant.GetVariantMap(), context);
+        SetVariantMap(variant.GetVariantMap());
         return;
 
     case VAR_RESOURCEREF:
         {
-            if (!context)
-            {
-                DV_LOGERROR("Context must not be null for ResourceRef");
-                return;
-            }
-
             const ResourceRef& ref = variant.GetResourceRef();
-            *this = String(context->GetTypeName(ref.type_)) + ";" + ref.name_;
+            *this = String(DV_CONTEXT.GetTypeName(ref.type_)) + ";" + ref.name_;
         }
         return;
 
     case VAR_RESOURCEREFLIST:
         {
-            if (!context)
-            {
-                DV_LOGERROR("Context must not be null for ResourceRefList");
-                return;
-            }
-
             const ResourceRefList& refList = variant.GetResourceRefList();
-            String str(context->GetTypeName(refList.type_));
+            String str(DV_CONTEXT.GetTypeName(refList.type_));
             for (const String& name : refList.names_)
             {
                 str += ";";
@@ -544,7 +532,7 @@ Variant JSONValue::GetVariantValue(VariantType type) const
     return variant;
 }
 
-void JSONValue::SetVariantMap(const VariantMap& variantMap, Context* context)
+void JSONValue::SetVariantMap(const VariantMap& variantMap)
 {
     SetType(JSON_OBJECT);
     for (VariantMap::ConstIterator i = variantMap.Begin(); i != variantMap.End(); ++i)
@@ -571,14 +559,14 @@ VariantMap JSONValue::GetVariantMap() const
     return variantMap;
 }
 
-void JSONValue::SetVariantVector(const VariantVector& variantVector, Context* context)
+void JSONValue::SetVariantVector(const VariantVector& variantVector)
 {
     SetType(JSON_ARRAY);
     arrayValue_->Reserve(variantVector.Size());
     for (const Variant& var : variantVector)
     {
         JSONValue val;
-        val.SetVariant(var, context);
+        val.SetVariant(var);
         arrayValue_->Push(val);
     }
 }

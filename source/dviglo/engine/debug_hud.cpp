@@ -39,8 +39,7 @@ static const char* shadowQualityTexts[] =
     "Blurred VSM"
 };
 
-DebugHud::DebugHud(Context* context) :
-    Object(context),
+DebugHud::DebugHud() :
     profilerMaxDepth_(M_MAX_UNSIGNED),
     profilerInterval_(1000),
     useRendererStats_(false),
@@ -49,31 +48,31 @@ DebugHud::DebugHud(Context* context) :
     auto* ui = GetSubsystem<UI>();
     UIElement* uiRoot = ui->GetRoot();
 
-    statsText_ = new Text(context_);
+    statsText_ = new Text();
     statsText_->SetAlignment(HA_LEFT, VA_TOP);
     statsText_->SetPriority(100);
     statsText_->SetVisible(false);
     uiRoot->AddChild(statsText_);
 
-    modeText_ = new Text(context_);
+    modeText_ = new Text();
     modeText_->SetAlignment(HA_LEFT, VA_BOTTOM);
     modeText_->SetPriority(100);
     modeText_->SetVisible(false);
     uiRoot->AddChild(modeText_);
 
-    profilerText_ = new Text(context_);
+    profilerText_ = new Text();
     profilerText_->SetAlignment(HA_RIGHT, VA_TOP);
     profilerText_->SetPriority(100);
     profilerText_->SetVisible(false);
     uiRoot->AddChild(profilerText_);
 
-    memoryText_ = new Text(context_);
+    memoryText_ = new Text();
     memoryText_->SetAlignment(HA_LEFT, VA_BOTTOM);
     memoryText_->SetPriority(100);
     memoryText_->SetVisible(false);
     uiRoot->AddChild(memoryText_);
 
-    eventProfilerText_ = new Text(context_);
+    eventProfilerText_ = new Text();
     eventProfilerText_->SetAlignment(HA_RIGHT, VA_TOP);
     eventProfilerText_->SetPriority(100);
     eventProfilerText_->SetVisible(false);

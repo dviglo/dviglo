@@ -10,9 +10,9 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-void UISelectable::RegisterObject(Context* context)
+void UISelectable::RegisterObject()
 {
-    context->RegisterFactory<UISelectable>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<UISelectable>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UIElement);
     DV_ATTRIBUTE("Selection Color", selectionColor_, Color::TRANSPARENT_BLACK, AM_FILE);

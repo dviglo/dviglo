@@ -16,8 +16,7 @@
 // Expands to this example's entry-point
 DV_DEFINE_APPLICATION_MAIN(Clicker)
 
-Clicker::Clicker(Context* context)
-    : Sample(context)
+Clicker::Clicker()
 {
 }
 

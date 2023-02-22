@@ -18,11 +18,11 @@ class DV_API DropDownList : public Menu
 
 public:
     /// Construct.
-    explicit DropDownList(Context* context);
+    explicit DropDownList();
     /// Destruct.
     ~DropDownList() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;

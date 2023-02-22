@@ -35,11 +35,10 @@ const float CAMERA_DISTANCE = 10.0f;
 
 DV_DEFINE_APPLICATION_MAIN(VehicleDemo)
 
-VehicleDemo::VehicleDemo(Context* context) :
-    Sample(context)
+VehicleDemo::VehicleDemo()
 {
     // Register factory and attributes for the Vehicle component so it can be created via CreateComponent, and loaded / saved
-    Vehicle::RegisterObject(context);
+    Vehicle::RegisterObject();
 }
 
 void VehicleDemo::Start()
@@ -67,7 +66,7 @@ void VehicleDemo::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create scene subsystem components
     scene_->CreateComponent<Octree>();
@@ -75,10 +74,10 @@ void VehicleDemo::CreateScene()
 
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
-    cameraNode_ = new Node(context_);
+    cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(500.0f);
-    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(context_, scene_, camera));
+    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->CreateChild("Zone");
@@ -231,13 +230,13 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             // Check for loading / saving the scene
             if (input->GetKeyPress(KEY_F5))
             {
-                File saveFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/VehicleDemo.xml",
+                File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/VehicleDemo.xml",
                     FILE_WRITE);
                 scene_->SaveXML(saveFile);
             }
             if (input->GetKeyPress(KEY_F7))
             {
-                File loadFile(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/VehicleDemo.xml", FILE_READ);
+                File loadFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/VehicleDemo.xml", FILE_READ);
                 scene_->LoadXML(loadFile);
                 // After loading we have to reacquire the weak pointer to the Vehicle component, as it has been recreated
                 // Simply find the vehicle's scene node by name as there's only one of them

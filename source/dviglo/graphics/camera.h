@@ -35,11 +35,11 @@ class DV_API Camera : public Component
 
 public:
     /// Construct.
-    explicit Camera(Context* context);
+    explicit Camera();
     /// Destruct.
     ~Camera() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Visualize the component as debug geometry.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

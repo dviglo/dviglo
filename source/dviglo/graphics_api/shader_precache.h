@@ -21,7 +21,7 @@ class DV_API ShaderPrecache : public Object
 
 public:
     /// Construct and begin collecting shader combinations. Load existing combinations from XML if the file exists.
-    ShaderPrecache(Context* context, const String& fileName);
+    ShaderPrecache(const String& fileName);
     /// Destruct. Write the collected shaders to XML.
     ~ShaderPrecache() override;
 

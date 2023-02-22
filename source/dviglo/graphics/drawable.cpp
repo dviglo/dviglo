@@ -31,8 +31,7 @@ SourceBatch::~SourceBatch() = default;
 SourceBatch& SourceBatch::operator =(const SourceBatch& rhs)= default;
 
 
-Drawable::Drawable(Context* context, DrawableTypes drawableType) :
-    Component(context),
+Drawable::Drawable(DrawableTypes drawableType) :
     boundingBox_(0.0f, 0.0f),
     drawableType_(drawableType),
     worldBoundingBoxDirty_(true),
@@ -71,7 +70,7 @@ Drawable::~Drawable()
     RemoveFromOctree();
 }
 
-void Drawable::RegisterObject(Context* context)
+void Drawable::RegisterObject()
 {
     DV_ATTRIBUTE("Max Lights", maxLights_, 0, AM_DEFAULT);
     DV_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);

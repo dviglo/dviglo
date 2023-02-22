@@ -18,11 +18,11 @@ class DV_API StaticSprite2D : public Drawable2D
 
 public:
     /// Construct.
-    explicit StaticSprite2D(Context* context);
+    explicit StaticSprite2D();
     /// Destruct.
     ~StaticSprite2D() override;
     /// Register object factory. Drawable2D must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set sprite.
     void SetSprite(Sprite2D* sprite);

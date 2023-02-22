@@ -30,9 +30,7 @@ FontFaceBitmap::~FontFaceBitmap() = default;
 
 bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
 {
-    Context* context = font_->GetContext();
-
-    SharedPtr<XMLFile> xmlReader(new XMLFile(context));
+    SharedPtr<XMLFile> xmlReader(new XMLFile());
     MemoryBuffer memoryBuffer(fontData, fontDataSize);
     if (!xmlReader->Load(memoryBuffer))
     {
@@ -81,7 +79,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
 
         // Load texture manually to allow controlling the alpha channel mode
         SharedPtr<File> fontFile = resourceCache->GetFile(textureFile);
-        SharedPtr<Image> fontImage(new Image(context));
+        SharedPtr<Image> fontImage(new Image());
         if (!fontFile || !fontImage->Load(*fontFile))
         {
             DV_LOGERROR("Failed to load font image file");
@@ -204,7 +202,7 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     Vector<SharedPtr<Image>> newImages(numPages);
     for (unsigned i = 0; i < numPages; ++i)
     {
-        SharedPtr<Image> image(new Image(font_->GetContext()));
+        SharedPtr<Image> image(new Image());
 
         int width = maxTextureSize;
         int height = maxTextureSize;
@@ -245,9 +243,7 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
 
 bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indentation)
 {
-    Context* context = font_->GetContext();
-
-    SharedPtr<XMLFile> xml(new XMLFile(context));
+    SharedPtr<XMLFile> xml(new XMLFile());
     XMLElement rootElem = xml->CreateRoot("font");
 
     // Information
@@ -336,7 +332,7 @@ unsigned FontFaceBitmap::ConvertFormatToNumComponents(unsigned format)
 
 SharedPtr<Image> FontFaceBitmap::SaveFaceTexture(Texture2D* texture)
 {
-    SharedPtr<Image> image(new Image(font_->GetContext()));
+    SharedPtr<Image> image(new Image());
     image->SetSize(texture->GetWidth(), texture->GetHeight(), ConvertFormatToNumComponents(texture->GetFormat()));
     if (!texture->GetData(0, image->GetData()))
     {

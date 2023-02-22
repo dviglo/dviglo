@@ -55,8 +55,8 @@ inline bool CompareBillboards(Billboard* lhs, Billboard* rhs)
     return lhs->sortDistance_ > rhs->sortDistance_;
 }
 
-BillboardSet::BillboardSet(Context* context) :
-    Drawable(context, DrawableTypes::Geometry),
+BillboardSet::BillboardSet() :
+    Drawable(DrawableTypes::Geometry),
     animationLodBias_(1.0f),
     animationLodTimer_(0.0f),
     relative_(true),
@@ -65,9 +65,9 @@ BillboardSet::BillboardSet(Context* context) :
     fixedScreenSize_(false),
     faceCameraMode_(FC_ROTATE_XYZ),
     minAngle_(0.0f),
-    geometry_(new Geometry(context)),
-    vertexBuffer_(new VertexBuffer(context_)),
-    indexBuffer_(new IndexBuffer(context_)),
+    geometry_(new Geometry()),
+    vertexBuffer_(new VertexBuffer()),
+    indexBuffer_(new IndexBuffer()),
     bufferSizeDirty_(true),
     bufferDirty_(true),
     forceUpdate_(false),
@@ -88,9 +88,9 @@ BillboardSet::BillboardSet(Context* context) :
 
 BillboardSet::~BillboardSet() = default;
 
-void BillboardSet::RegisterObject(Context* context)
+void BillboardSet::RegisterObject()
 {
-    context->RegisterFactory<BillboardSet>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<BillboardSet>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),

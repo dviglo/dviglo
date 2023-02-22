@@ -24,7 +24,7 @@ void AppState_Benchmark04::OnEnter()
     GetSubsystem<Input>()->SetMouseVisible(false);
     SubscribeToEvent(E_ENDALLVIEWSRENDER, DV_HANDLER(AppState_Benchmark04, HandleEndAllViewsRender));
     fpsCounter_.Clear();
-    spriteBatch_ = new SpriteBatch(context_);
+    spriteBatch_ = new SpriteBatch();
 }
 
 void AppState_Benchmark04::OnLeave()

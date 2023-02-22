@@ -17,7 +17,7 @@ class L10n : public Sample
 
 public:
     /// Construct.
-    explicit L10n(Context* context);
+    explicit L10n();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -20,8 +20,7 @@
 // Expands to this example's entry-point
 DV_DEFINE_APPLICATION_MAIN(SoundSynthesis)
 
-SoundSynthesis::SoundSynthesis(Context* context) :
-    Sample(context),
+SoundSynthesis::SoundSynthesis() :
     filter_(0.5f),
     accumulator_(0.0f),
     osc1_(0.0f),
@@ -57,7 +56,7 @@ void SoundSynthesis::Start()
 void SoundSynthesis::CreateSound()
 {
     // Sound source needs a node so that it is considered enabled
-    node_ = new Node(context_);
+    node_ = new Node();
     auto* source = node_->CreateComponent<SoundSource>();
 
     soundStream_ = new BufferedSoundStream();

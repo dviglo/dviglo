@@ -15,13 +15,12 @@ static constexpr float SNOWBALL_GROUND_HIT_DURATION = 1.f;
 static constexpr float SNOWBALL_OBJECT_HIT_DURATION = 0.f;
 static constexpr i32 SNOWBALL_DAMAGE = 1;
 
-void Snowball::RegisterObject(Context* context)
+void Snowball::RegisterObject()
 {
-    context->RegisterFactory<Snowball>();
+    DV_CONTEXT.RegisterFactory<Snowball>();
 }
 
-Snowball::Snowball(Context* context)
-    : GameObject(context)
+Snowball::Snowball()
 {
     duration = SNOWBALL_DURATION;
     hitDamage = SNOWBALL_DAMAGE;

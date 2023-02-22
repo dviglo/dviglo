@@ -19,18 +19,17 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-DropDownList::DropDownList(Context* context) :
-    Menu(context),
+DropDownList::DropDownList() :
     resizePopup_(false),
     selectionAttr_(0)
 {
     focusMode_ = FM_FOCUSABLE_DEFOCUSABLE;
 
-    auto* window = new Window(context_);
+    auto* window = new Window();
     window->SetInternal(true);
     SetPopup(window);
 
-    listView_ = new ListView(context_);
+    listView_ = new ListView();
     listView_->SetInternal(true);
     listView_->SetScrollBarsVisible(false, false);
     popup_->SetLayout(LM_VERTICAL);
@@ -48,9 +47,9 @@ DropDownList::DropDownList(Context* context) :
 
 DropDownList::~DropDownList() = default;
 
-void DropDownList::RegisterObject(Context* context)
+void DropDownList::RegisterObject()
 {
-    context->RegisterFactory<DropDownList>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<DropDownList>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Menu);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);

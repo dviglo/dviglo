@@ -15,15 +15,14 @@
 
 using namespace dviglo;
 
-AppStateManager::AppStateManager(Context* context)
-    : Object(context)
+AppStateManager::AppStateManager()
 {
-    appStates_.Insert({APPSTATEID_MAINSCREEN, MakeShared<AppState_MainScreen>(context_)});
-    appStates_.Insert({APPSTATEID_RESULTSCREEN, MakeShared<AppState_ResultScreen>(context_)});
-    appStates_.Insert({APPSTATEID_BENCHMARK01, MakeShared<AppState_Benchmark01>(context_)});
-    appStates_.Insert({APPSTATEID_BENCHMARK02, MakeShared<AppState_Benchmark02>(context_)});
-    appStates_.Insert({APPSTATEID_BENCHMARK03, MakeShared<AppState_Benchmark03>(context_)});
-    appStates_.Insert({APPSTATEID_BENCHMARK04, MakeShared<AppState_Benchmark04>(context_)});
+    appStates_.Insert({APPSTATEID_MAINSCREEN, MakeShared<AppState_MainScreen>()});
+    appStates_.Insert({APPSTATEID_RESULTSCREEN, MakeShared<AppState_ResultScreen>()});
+    appStates_.Insert({APPSTATEID_BENCHMARK01, MakeShared<AppState_Benchmark01>()});
+    appStates_.Insert({APPSTATEID_BENCHMARK02, MakeShared<AppState_Benchmark02>()});
+    appStates_.Insert({APPSTATEID_BENCHMARK03, MakeShared<AppState_Benchmark03>()});
+    appStates_.Insert({APPSTATEID_BENCHMARK04, MakeShared<AppState_Benchmark04>()});
 }
 
 void AppStateManager::Apply()

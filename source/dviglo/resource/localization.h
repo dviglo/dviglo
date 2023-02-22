@@ -17,7 +17,7 @@ class DV_API Localization : public Object
 
 public:
     /// Construct.
-    explicit Localization(Context* context);
+    explicit Localization();
     /// Destruct. Free all resources.
     ~Localization() override;
 

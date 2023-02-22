@@ -25,9 +25,9 @@ namespace dviglo
 
 extern const char* GEOMETRY_CATEGORY;
 
-CustomGeometry::CustomGeometry(Context* context)
-    : Drawable(context, DrawableTypes::Geometry)
-    , vertexBuffer_(new VertexBuffer(context))
+CustomGeometry::CustomGeometry()
+    : Drawable(DrawableTypes::Geometry)
+    , vertexBuffer_(new VertexBuffer())
     , elementMask_(VertexElements::Position)
     , geometryIndex_(0)
     , materialsAttr_(Material::GetTypeStatic())
@@ -39,9 +39,9 @@ CustomGeometry::CustomGeometry(Context* context)
 
 CustomGeometry::~CustomGeometry() = default;
 
-void CustomGeometry::RegisterObject(Context* context)
+void CustomGeometry::RegisterObject()
 {
-    context->RegisterFactory<CustomGeometry>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CustomGeometry>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE("Dynamic Vertex Buffer", dynamic_, false, AM_DEFAULT);
@@ -207,7 +207,7 @@ void CustomGeometry::SetNumGeometries(unsigned num)
     for (unsigned i = 0; i < geometries_.Size(); ++i)
     {
         if (!geometries_[i])
-            geometries_[i] = new Geometry(context_);
+            geometries_[i] = new Geometry();
 
         batches_[i].geometry_ = geometries_[i];
     }

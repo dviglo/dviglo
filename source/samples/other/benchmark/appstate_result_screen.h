@@ -12,8 +12,7 @@ public:
     DV_OBJECT(AppState_ResultScreen, AppState_Base);
 
 public:
-    AppState_ResultScreen(dv::Context* context)
-        : AppState_Base(context)
+    AppState_ResultScreen()
     {
         name_ = "Result Screen";
     }

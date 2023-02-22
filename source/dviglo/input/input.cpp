@@ -295,15 +295,12 @@ int Win32_ResizingEventWatcher(void* data, SDL_Event* event)
         SDL_Window* win = SDL_GetWindowFromID(event->window.windowID);
         if (win == (SDL_Window*)data)
         {
-            if (auto* ctx = (Context*)SDL_GetWindowData(win, "DV_CONTEXT"))
+            if (auto* graphics = DV_CONTEXT.GetSubsystem<Graphics>())
             {
-                if (auto* graphics = ctx->GetSubsystem<Graphics>())
+                if (graphics->IsInitialized())
                 {
-                    if (graphics->IsInitialized())
-                    {
-                        graphics->OnWindowResized();
-                        ctx->GetSubsystem<Engine>()->RunFrame();
-                    }
+                    graphics->OnWindowResized();
+                    DV_CONTEXT.GetSubsystem<Engine>()->RunFrame();
                 }
             }
         }
@@ -337,8 +334,7 @@ void JoystickState::Reset()
         hats_[i] = HAT_CENTER;
 }
 
-Input::Input(Context* context) :
-    Object(context),
+Input::Input() :
     mouseButtonDown_(0),
     mouseButtonPress_(0),
     lastVisibleMousePosition_(MOUSE_POSITION_OFFSCREEN),
@@ -367,7 +363,7 @@ Input::Input(Context* context) :
     mouseMoveScaled_(false),
     initialized_(false)
 {
-    context_->RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
+    DV_CONTEXT.RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
 
     for (int i = 0; i < TOUCHID_MAX; i++)
         availableTouchIDs_.Push(i);
@@ -388,7 +384,7 @@ Input::Input(Context* context) :
 
 Input::~Input()
 {
-    context_->ReleaseSDL();
+    DV_CONTEXT.ReleaseSDL();
 }
 
 void Input::Update()
@@ -1541,10 +1537,7 @@ void Input::Initialize()
 #ifdef _WIN32
     // Register callback for resizing in order to repaint.
     if (SDL_Window* window = graphics_->GetWindow())
-    {
-        SDL_SetWindowData(window, "DV_CONTEXT", GetContext());
         SDL_AddEventWatch(Win32_ResizingEventWatcher, window);
-    }
 #endif
 
     DV_LOGINFO("Initialized input");

@@ -118,8 +118,7 @@ struct RaycastVehicleData
     bool added_;
 };
 
-RaycastVehicle::RaycastVehicle(Context* context) :
-    LogicComponent(context)
+RaycastVehicle::RaycastVehicle()
 {
     // fixed update() for inputs and post update() to sync wheels for rendering
     SetUpdateEventMask(LogicComponentEvents::FixedUpdate | LogicComponentEvents::FixedPostUpdate | LogicComponentEvents::PostUpdate);
@@ -164,9 +163,9 @@ static const StringVector wheelElementNames =
     "   Brake"
 };
 
-void RaycastVehicle::RegisterObject(Context* context)
+void RaycastVehicle::RegisterObject()
 {
-    context->RegisterFactory<RaycastVehicle>();
+    DV_CONTEXT.RegisterFactory<RaycastVehicle>();
     DV_ACCESSOR_ATTRIBUTE("Wheel data", GetWheelDataAttr, SetWheelDataAttr, Variant::emptyVariantVector, AM_DEFAULT)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, wheelElementNames);
     DV_ATTRIBUTE("Maximum side slip threshold", maxSideSlipSpeed_, 4.0f, AM_DEFAULT);

@@ -35,8 +35,7 @@ const char* SUBSYSTEM_CATEGORY = "Subsystem";
 static const float DEFAULT_SMOOTHING_CONSTANT = 50.0f;
 static const float DEFAULT_SNAP_THRESHOLD = 5.0f;
 
-Scene::Scene(Context* context) :
-    Node(context),
+Scene::Scene() :
     replicatedNodeID_(FIRST_REPLICATED_ID),
     replicatedComponentID_(FIRST_REPLICATED_ID),
     localNodeID_(FIRST_LOCAL_ID),
@@ -73,9 +72,9 @@ Scene::~Scene()
         i->second_->ResetScene();
 }
 
-void Scene::RegisterObject(Context* context)
+void Scene::RegisterObject()
 {
-    context->RegisterFactory<Scene>();
+    DV_CONTEXT.RegisterFactory<Scene>();
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Time Scale", GetTimeScale, SetTimeScale, 1.0f, AM_DEFAULT);
@@ -200,7 +199,7 @@ bool Scene::LoadXML(Deserializer& source)
 
     StopAsyncLoading();
 
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     if (!xml->Load(source))
         return false;
 
@@ -223,7 +222,7 @@ bool Scene::LoadJSON(Deserializer& source)
 
     StopAsyncLoading();
 
-    SharedPtr<JSONFile> json(new JSONFile(context_));
+    SharedPtr<JSONFile> json(new JSONFile());
     if (!json->Load(source))
         return false;
 
@@ -244,7 +243,7 @@ bool Scene::SaveXML(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneXML);
 
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     XMLElement rootElem = xml->CreateRoot("scene");
     if (!SaveXML(rootElem))
         return false;
@@ -266,7 +265,7 @@ bool Scene::SaveJSON(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneJSON);
 
-    SharedPtr<JSONFile> json(new JSONFile(context_));
+    SharedPtr<JSONFile> json(new JSONFile());
     JSONValue rootVal;
     if (!SaveJSON(rootVal))
         return false;
@@ -369,7 +368,7 @@ bool Scene::LoadAsyncXML(File* file, LoadMode mode)
 
     StopAsyncLoading();
 
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     if (!xml->Load(*file))
         return false;
 
@@ -438,7 +437,7 @@ bool Scene::LoadAsyncJSON(File* file, LoadMode mode)
 
     StopAsyncLoading();
 
-    SharedPtr<JSONFile> json(new JSONFile(context_));
+    SharedPtr<JSONFile> json(new JSONFile());
     if (!json->Load(*file))
         return false;
 
@@ -576,7 +575,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, c
 
 Node* Scene::InstantiateXML(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     if (!xml->Load(source))
         return nullptr;
 
@@ -585,7 +584,7 @@ Node* Scene::InstantiateXML(Deserializer& source, const Vector3& position, const
 
 Node* Scene::InstantiateJSON(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
 {
-    SharedPtr<JSONFile> json(new JSONFile(context_));
+    SharedPtr<JSONFile> json(new JSONFile());
     if (!json->Load(source))
         return nullptr;
 
@@ -1278,7 +1277,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
     /*NodeId nodeID = */file->ReadU32();
 
     // Read Node or Scene attributes; these do not include any resources
-    const Vector<AttributeInfo>* attributes = context_->GetAttributes(isSceneFile ? Scene::GetTypeStatic() : Node::GetTypeStatic());
+    const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(isSceneFile ? Scene::GetTypeStatic() : Node::GetTypeStatic());
     assert(attributes);
 
     for (unsigned i = 0; i < attributes->Size(); ++i)
@@ -1298,7 +1297,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
         // Read component ID (not needed)
         /*ComponentId compID = */compBuffer.ReadU32();
 
-        attributes = context_->GetAttributes(compType);
+        attributes = DV_CONTEXT.GetAttributes(compType);
         if (attributes)
         {
             for (unsigned j = 0; j < attributes->Size(); ++j)
@@ -1355,7 +1354,7 @@ void Scene::PreloadResourcesXML(const XMLElement& element)
     while (compElem)
     {
         String typeName = compElem.GetAttribute("type");
-        const Vector<AttributeInfo>* attributes = context_->GetAttributes(StringHash(typeName));
+        const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(StringHash(typeName));
         if (attributes)
         {
             XMLElement attrElem = compElem.GetChild("attribute");
@@ -1438,7 +1437,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
         const JSONValue& compValue = componentArray.At(i);
         String typeName = compValue.Get("type").GetString();
 
-        const Vector<AttributeInfo>* attributes = context_->GetAttributes(StringHash(typeName));
+        const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(StringHash(typeName));
         if (attributes)
         {
             JSONArray attributesArray = compValue.Get("attributes").GetArray();
@@ -1507,15 +1506,15 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
 #endif
 }
 
-void RegisterSceneLibrary(Context* context)
+void RegisterSceneLibrary()
 {
-    ValueAnimation::RegisterObject(context);
-    ObjectAnimation::RegisterObject(context);
-    Node::RegisterObject(context);
-    Scene::RegisterObject(context);
-    SmoothedTransform::RegisterObject(context);
-    UnknownComponent::RegisterObject(context);
-    SplinePath::RegisterObject(context);
+    ValueAnimation::RegisterObject();
+    ObjectAnimation::RegisterObject();
+    Node::RegisterObject();
+    Scene::RegisterObject();
+    SmoothedTransform::RegisterObject();
+    UnknownComponent::RegisterObject();
+    SplinePath::RegisterObject();
 }
 
 }

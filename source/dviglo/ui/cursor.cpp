@@ -53,8 +53,7 @@ static const int osCursorLookup[CS_MAX_SHAPES] =
 
 extern const char* UI_CATEGORY;
 
-Cursor::Cursor(Context* context) :
-    BorderImage(context),
+Cursor::Cursor() :
     shape_(shapeNames[CS_NORMAL]),
     useSystemShapes_(false),
     osShapeDirty_(false)
@@ -79,9 +78,9 @@ Cursor::~Cursor()
     }
 }
 
-void Cursor::RegisterObject(Context* context)
+void Cursor::RegisterObject()
 {
-    context->RegisterFactory<Cursor>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Cursor>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Priority", M_MAX_INT);
@@ -130,7 +129,7 @@ void Cursor::DefineShape(const String& shape, Image* image, const IntRect& image
     info.texture_ = cache->GetResource<Texture2D>(image->GetName(), false);
     if (!info.texture_)
     {
-        auto* texture = new Texture2D(context_);
+        auto* texture = new Texture2D();
         texture->SetData(SharedPtr<Image>(image));
         info.texture_ = texture;
     }

@@ -14,16 +14,15 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-ConstraintGear2D::ConstraintGear2D(Context* context) :
-    Constraint2D(context)
+ConstraintGear2D::ConstraintGear2D()
 {
 }
 
 ConstraintGear2D::~ConstraintGear2D() = default;
 
-void ConstraintGear2D::RegisterObject(Context* context)
+void ConstraintGear2D::RegisterObject()
 {
-    context->RegisterFactory<ConstraintGear2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ConstraintGear2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Ratio", GetRatio, SetRatio, 0.0f, AM_DEFAULT);

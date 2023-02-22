@@ -30,7 +30,7 @@ private:
     AppStateId requiredAppStateId_ = APPSTATEID_NULL;
 
 public:
-    AppStateManager(dv::Context* context);
+    AppStateManager();
 
     AppStateId GetCurrentAppStateId() const { return currentAppStateId_; }
     AppStateId GetPreviousAppStateId() const { return previousAppStateId_; }

@@ -24,8 +24,7 @@
 
 DV_DEFINE_APPLICATION_MAIN(StaticScene)
 
-StaticScene::StaticScene(Context* context) :
-    Sample(context)
+StaticScene::StaticScene()
 {
 }
 
@@ -54,7 +53,7 @@ void StaticScene::CreateScene()
 {
     auto* cache = GetSubsystem<ResourceCache>();
 
-    scene_ = new Scene(context_);
+    scene_ = new Scene();
 
     // Create the Octree component to the scene. This is required before adding any drawable components, or else nothing will
     // show up. The default octree volume will be from (-1000, -1000, -1000) to (1000, 1000, 1000) in world coordinates; it
@@ -129,7 +128,7 @@ void StaticScene::SetupViewport()
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen. We need to define the scene and the camera
     // at minimum. Additionally we could configure the viewport screen size and the rendering path (eg. forward / deferred) to
     // use, but now we just use full screen and default render path configured in the engine command line options
-    SharedPtr<Viewport> viewport(new Viewport(context_, scene_, cameraNode_->GetComponent<Camera>()));
+    SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     renderer->SetViewport(0, viewport);
 }
 

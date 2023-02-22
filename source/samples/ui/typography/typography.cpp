@@ -27,8 +27,7 @@ namespace
     const char* TEXT_TAG = "Typography_text_tag";
 }
 
-Typography::Typography(Context* context) :
-    Sample(context)
+Typography::Typography()
 {
 }
 
@@ -51,7 +50,7 @@ void Typography::Start()
 
     // Create a UIElement to hold all our content
     // (Don't modify the root directly, as the base Sample class uses it)
-    uielement_ = new UIElement(context_);
+    uielement_ = new UIElement();
     uielement_->SetAlignment(HA_CENTER, VA_CENTER);
     uielement_->SetLayout(LM_VERTICAL, 10, IntRect(20, 40, 20, 40));
     root->AddChild(uielement_);
@@ -120,7 +119,7 @@ void Typography::Start()
 
 void Typography::CreateText()
 {
-    SharedPtr<UIElement> container(new UIElement(context_));
+    SharedPtr<UIElement> container(new UIElement());
     container->SetAlignment(HA_LEFT, VA_TOP);
     container->SetLayout(LM_VERTICAL);
     uielement_->AddChild(container);
@@ -131,7 +130,7 @@ void Typography::CreateText()
     for (auto size2x = 2; size2x <= 36; ++size2x)
     {
         auto size = size2x / 2.f;
-        SharedPtr<Text> text(new Text(context_));
+        SharedPtr<Text> text(new Text());
         text->SetText(String("The quick brown fox jumps over the lazy dog (") + String(size) + String("pt)"));
         text->SetFont(font, size);
         text->AddTag(TEXT_TAG);
@@ -141,16 +140,16 @@ void Typography::CreateText()
 
 SharedPtr<CheckBox> Typography::CreateCheckbox(const String& label, EventHandler* handler)
 {
-    SharedPtr<UIElement> container(new UIElement(context_));
+    SharedPtr<UIElement> container(new UIElement());
     container->SetAlignment(HA_LEFT, VA_TOP);
     container->SetLayout(LM_HORIZONTAL, 8);
     uielement_->AddChild(container);
 
-    SharedPtr<CheckBox> box(new CheckBox(context_));
+    SharedPtr<CheckBox> box(new CheckBox());
     container->AddChild(box);
     box->SetStyleAuto();
 
-    SharedPtr<Text> text(new Text(context_));
+    SharedPtr<Text> text(new Text());
     container->AddChild(text);
     text->SetText(label);
     text->SetStyleAuto();
@@ -162,24 +161,24 @@ SharedPtr<CheckBox> Typography::CreateCheckbox(const String& label, EventHandler
 
 SharedPtr<DropDownList> Typography::CreateMenu(const String& label, const char** items, EventHandler* handler)
 {
-    SharedPtr<UIElement> container(new UIElement(context_));
+    SharedPtr<UIElement> container(new UIElement());
     container->SetAlignment(HA_LEFT, VA_TOP);
     container->SetLayout(LM_HORIZONTAL, 8);
     uielement_->AddChild(container);
 
-    SharedPtr<Text> text(new Text(context_));
+    SharedPtr<Text> text(new Text());
     container->AddChild(text);
     text->SetText(label);
     text->SetStyleAuto();
     text->AddTag(TEXT_TAG);
 
-    SharedPtr<DropDownList> list(new DropDownList(context_));
+    SharedPtr<DropDownList> list(new DropDownList());
     container->AddChild(list);
     list->SetStyleAuto();
 
     for (int i = 0; items[i]; ++i)
     {
-        SharedPtr<Text> item(new Text(context_));
+        SharedPtr<Text> item(new Text());
         list->AddItem(item);
         item->SetText(items[i]);
         item->SetStyleAuto();

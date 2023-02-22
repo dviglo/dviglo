@@ -14,8 +14,7 @@
 namespace dviglo
 {
 
-Geometry::Geometry(Context* context) :
-    Object(context),
+Geometry::Geometry() :
     primitiveType_(TRIANGLE_LIST),
     indexStart_(0),
     indexCount_(0),

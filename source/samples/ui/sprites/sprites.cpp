@@ -21,8 +21,7 @@ static constexpr StringHash VAR_VELOCITY = "Velocity"_hash;
 
 DV_DEFINE_APPLICATION_MAIN(Sprites)
 
-Sprites::Sprites(Context* context) :
-    Sample(context)
+Sprites::Sprites()
 {
 }
 
@@ -57,7 +56,7 @@ void Sprites::CreateSprites()
     for (unsigned i = 0; i < NUM_SPRITES; ++i)
     {
         // Create a new sprite, set it to use the texture
-        SharedPtr<Sprite> sprite(new Sprite(context_));
+        SharedPtr<Sprite> sprite(new Sprite());
         sprite->SetTexture(decalTex);
 
         // The UI root element is as big as the rendering window, set random position within it

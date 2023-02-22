@@ -20,11 +20,11 @@ class DV_API CollisionShape2D : public Component
 
 public:
     /// Construct.
-    explicit CollisionShape2D(Context* context);
+    explicit CollisionShape2D();
     /// Destruct.
     ~CollisionShape2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

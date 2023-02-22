@@ -41,7 +41,6 @@ enum JSONNumberType
     JSONNT_FLOAT_DOUBLE
 };
 
-class Context;
 class JSONValue;
 
 /// JSON array type.
@@ -247,20 +246,20 @@ public:
     /// Set value type and number type, internal function.
     void SetType(JSONValueType valueType, JSONNumberType numberType = JSONNT_NAN);
 
-    /// Set variant, context must provide for resource ref.
-    void SetVariant(const Variant& variant, Context* context = nullptr);
+    /// Set variant
+    void SetVariant(const Variant& variant);
     /// Return a variant.
     Variant GetVariant() const;
-    /// Set variant value, context must provide for resource ref.
-    void SetVariantValue(const Variant& variant, Context* context = nullptr);
+    /// Set variant value
+    void SetVariantValue(const Variant& variant);
     /// Return a variant with type.
     Variant GetVariantValue(VariantType type) const;
-    /// Set variant map, context must provide for resource ref.
-    void SetVariantMap(const VariantMap& variantMap, Context* context = nullptr);
+    /// Set variant map
+    void SetVariantMap(const VariantMap& variantMap);
     /// Return a variant map.
     VariantMap GetVariantMap() const;
-    /// Set variant vector, context must provide for resource ref.
-    void SetVariantVector(const VariantVector& variantVector, Context* context = nullptr);
+    /// Set variant vector
+    void SetVariantVector(const VariantVector& variantVector);
     /// Return a variant vector.
     VariantVector GetVariantVector() const;
 

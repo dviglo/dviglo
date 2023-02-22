@@ -27,8 +27,7 @@ const char* autoRemoveModeNames[] = {
     nullptr
 };
 
-Component::Component(Context* context) :
-    Animatable(context),
+Component::Component() :
     node_(nullptr),
     id_(0),
     networkUpdate_(false),

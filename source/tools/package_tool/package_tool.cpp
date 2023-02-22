@@ -28,8 +28,7 @@ struct FileEntry
     hash32 checksum_{};
 };
 
-SharedPtr<Context> context_(new Context());
-SharedPtr<FileSystem> fileSystem_(new FileSystem(context_));
+SharedPtr<FileSystem> fileSystem_(new FileSystem());
 String basePath_;
 Vector<FileEntry> entries_;
 hash32 checksum_ = 0;
@@ -154,7 +153,7 @@ void Unpack(const Vector<String>& arguments)
     const String& packageName = arguments[1];
     const String& dirName = arguments[2];
 
-    SharedPtr<PackageFile> packageFile(new PackageFile(context_, packageName));
+    SharedPtr<PackageFile> packageFile(new PackageFile(packageName));
 
     char buffer[1024];
 
@@ -169,11 +168,11 @@ void Unpack(const Vector<String>& arguments)
 
         fileSystem_->CreateDir(outFilePath.Substring(0, pos));
 
-        File packedFile(context_, packageFile, current->first_);
+        File packedFile(packageFile, current->first_);
         if (!packedFile.IsOpen())
             ErrorExit("packedFile open failed " + current->first_);
 
-        File outFile(context_, outFilePath, FILE_WRITE);
+        File outFile(outFilePath, FILE_WRITE);
         if (!outFile.IsOpen())
             ErrorExit("outFile open failed " + current->first_);
 
@@ -208,7 +207,7 @@ void PrintInfo(const Vector<String>& arguments)
         ErrorExit(USAGE_STR);
 
     const String& packageName = arguments[1];
-    SharedPtr<PackageFile> packageFile(new PackageFile(context_, packageName));
+    SharedPtr<PackageFile> packageFile(new PackageFile(packageName));
     bool outputCompressionRatio = false;
 
     switch (arguments[0][1])
@@ -271,7 +270,7 @@ void Run(const Vector<String>& arguments)
 void ProcessFile(const String& fileName, const String& rootDir)
 {
     String fullPath = rootDir + "/" + fileName;
-    File file(context_);
+    File file;
     if (!file.Open(fullPath))
         ErrorExit("Could not open file " + fileName);
     if (!file.GetSize())
@@ -290,7 +289,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
     if (!quiet_)
         PrintLine("Writing package");
 
-    File dest(context_);
+    File dest;
     if (!dest.Open(fileName, FILE_WRITE))
         ErrorExit("Could not open output file " + fileName);
 
@@ -315,7 +314,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
         lastOffset = entries_[i].offset_ = dest.GetSize();
         String fileFullPath = rootDir + "/" + entries_[i].name_;
 
-        File srcFile(context_, fileFullPath);
+        File srcFile(fileFullPath);
         if (!srcFile.IsOpen())
             ErrorExit("Could not open file " + fileFullPath);
 

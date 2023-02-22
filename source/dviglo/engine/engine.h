@@ -20,7 +20,7 @@ class DV_API Engine : public Object
 
 public:
     /// Construct.
-    explicit Engine(Context* context);
+    explicit Engine();
     /// Destruct. Free all subsystems.
     ~Engine() override;
 

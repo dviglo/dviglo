@@ -97,6 +97,14 @@ void RemoveNamedAttribute(HashMap<StringHash, Vector<AttributeInfo>>& attributes
         attributes.Erase(i);
 }
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW
+// (подозреваю, что создаёт свой экземпляр контекста, когда функция в h-файле)
+Context& Context::get_instance()
+{
+    static Context instance;
+    return instance;
+}
+
 Context::Context() :
     eventHandler_(nullptr)
 {

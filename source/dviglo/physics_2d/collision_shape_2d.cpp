@@ -15,8 +15,7 @@
 namespace dviglo
 {
 
-CollisionShape2D::CollisionShape2D(Context* context) :
-    Component(context),
+CollisionShape2D::CollisionShape2D() :
     fixture_(nullptr),
     cachedWorldScale_(Vector3::ONE)
 {
@@ -31,7 +30,7 @@ CollisionShape2D::~CollisionShape2D()
     ReleaseFixture();
 }
 
-void CollisionShape2D::RegisterObject(Context* context)
+void CollisionShape2D::RegisterObject()
 {
     DV_ACCESSOR_ATTRIBUTE("Trigger", IsTrigger, SetTrigger, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Category Bits", GetCategoryBits, SetCategoryBits, 0, AM_DEFAULT);

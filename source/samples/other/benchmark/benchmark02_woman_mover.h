@@ -26,7 +26,7 @@ private:
     dv::BoundingBox bounds_;
 
 public:
-    explicit Benchmark02_WomanMover(dv::Context* context);
+    explicit Benchmark02_WomanMover();
 
     // Set motion parameters: forward movement speed, rotation speed, and movement boundaries
     void SetParameters(float moveSpeed, float rotationSpeed, const dv::BoundingBox& bounds);

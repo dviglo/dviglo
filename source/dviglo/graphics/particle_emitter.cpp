@@ -23,8 +23,7 @@ static const i32 MAX_PARTICLES_IN_FRAME = 100;
 
 extern const char* autoRemoveModeNames[];
 
-ParticleEmitter::ParticleEmitter(Context* context) :
-    BillboardSet(context),
+ParticleEmitter::ParticleEmitter() :
     periodTimer_(0.0f),
     emissionTimer_(0.0f),
     lastTimeStep_(0.0f),
@@ -40,9 +39,9 @@ ParticleEmitter::ParticleEmitter(Context* context) :
 
 ParticleEmitter::~ParticleEmitter() = default;
 
-void ParticleEmitter::RegisterObject(Context* context)
+void ParticleEmitter::RegisterObject()
 {
-    context->RegisterFactory<ParticleEmitter>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ParticleEmitter>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Effect", GetEffectAttr, SetEffectAttr, ResourceRef(ParticleEffect::GetTypeStatic()),

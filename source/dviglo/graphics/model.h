@@ -93,11 +93,11 @@ class DV_API Model : public ResourceWithMetadata
 
 public:
     /// Construct.
-    explicit Model(Context* context);
+    explicit Model();
     /// Destruct.
     ~Model() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

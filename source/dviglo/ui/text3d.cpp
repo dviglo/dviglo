@@ -28,10 +28,9 @@ extern const char* GEOMETRY_CATEGORY;
 static const float TEXT_SCALING = 1.0f / 128.0f;
 static const float DEFAULT_EFFECT_DEPTH_BIAS = 0.1f;
 
-Text3D::Text3D(Context* context) :
-    Drawable(context, DrawableTypes::Geometry),
-    text_(context),
-    vertexBuffer_(new VertexBuffer(context_)),
+Text3D::Text3D() :
+    Drawable(DrawableTypes::Geometry),
+    vertexBuffer_(new VertexBuffer()),
     customWorldTransform_(Matrix3x4::IDENTITY),
     faceCameraMode_(FC_NONE),
     minAngle_(0.0f),
@@ -46,9 +45,9 @@ Text3D::Text3D(Context* context) :
 
 Text3D::~Text3D() = default;
 
-void Text3D::RegisterObject(Context* context)
+void Text3D::RegisterObject()
 {
-    context->RegisterFactory<Text3D>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Text3D>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Font", GetFontAttr, SetFontAttr, ResourceRef(Font::GetTypeStatic()), AM_DEFAULT);
@@ -626,7 +625,7 @@ void Text3D::UpdateTextMaterials(bool forceUpdate)
     {
         if (!geometries_[i])
         {
-            auto* geometry = new Geometry(context_);
+            auto* geometry = new Geometry();
             geometry->SetVertexBuffer(0, vertexBuffer_);
             batches_[i].geometry_ = geometries_[i] = geometry;
         }
@@ -636,8 +635,8 @@ void Text3D::UpdateTextMaterials(bool forceUpdate)
             // If material not defined, create a reasonable default from scratch
             if (!material_)
             {
-                auto* material = new Material(context_);
-                auto* tech = new Technique(context_);
+                auto* material = new Material();
+                auto* tech = new Technique();
                 Pass* pass = tech->CreatePass("alpha");
                 pass->SetVertexShader("Text");
                 pass->SetPixelShader("Text");

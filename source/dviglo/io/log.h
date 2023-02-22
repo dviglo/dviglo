@@ -59,7 +59,7 @@ class DV_API Log : public Object
 
 public:
     /// Construct.
-    explicit Log(Context* context);
+    explicit Log();
     /// Destruct. Close the log file if open.
     ~Log() override;
 

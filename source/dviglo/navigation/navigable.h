@@ -16,11 +16,11 @@ class DV_API Navigable : public Component
 
 public:
     /// Construct.
-    explicit Navigable(Context* context);
+    explicit Navigable();
     /// Destruct.
     ~Navigable() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set whether geometry is automatically collected from child nodes. Default true.
     void SetRecursive(bool enable);

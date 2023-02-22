@@ -23,8 +23,7 @@ using namespace std;
 namespace dviglo
 {
 
-Node::Node(Context* context) :
-    Animatable(context),
+Node::Node() :
     worldTransform_(Matrix3x4::IDENTITY),
     dirty_(false),
     enabled_(true),
@@ -52,9 +51,9 @@ Node::~Node()
         scene_->NodeRemoved(this);
 }
 
-void Node::RegisterObject(Context* context)
+void Node::RegisterObject()
 {
-    context->RegisterFactory<Node>();
+    DV_CONTEXT.RegisterFactory<Node>();
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
@@ -272,7 +271,7 @@ void Node::AddReplicationState(NodeReplicationState* state)
 
 bool Node::SaveXML(Serializer& dest, const String& indentation) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     XMLElement rootElem = xml->CreateRoot("node");
     if (!SaveXML(rootElem))
         return false;
@@ -282,7 +281,7 @@ bool Node::SaveXML(Serializer& dest, const String& indentation) const
 
 bool Node::SaveJSON(Serializer& dest, const String& indentation) const
 {
-    SharedPtr<JSONFile> json(new JSONFile(context_));
+    SharedPtr<JSONFile> json(new JSONFile());
     JSONValue& rootElem = json->GetRoot();
 
     if (!SaveJSON(rootElem))
@@ -893,7 +892,7 @@ Component* Node::CreateComponent(StringHash type, CreateMode mode, ComponentId i
         mode = LOCAL;
 
     // Check that creation succeeds and that the object in fact is a component
-    SharedPtr<Component> newComponent = DynamicCast<Component>(context_->CreateObject(type));
+    SharedPtr<Component> newComponent = DynamicCast<Component>(DV_CONTEXT.CreateObject(type));
     if (!newComponent)
     {
         DV_LOGERROR("Could not create unknown component type " + type.ToString());
@@ -1788,7 +1787,7 @@ void Node::MarkReplicationDirty()
 
 Node* Node::CreateChild(NodeId id, CreateMode mode, bool temporary)
 {
-    SharedPtr<Node> newNode(new Node(context_));
+    SharedPtr<Node> newNode(new Node());
     newNode->SetTemporary(temporary);
 
     // If zero ID specified, or the ID is already taken, let the scene assign
@@ -2051,13 +2050,13 @@ Component* Node::SafeCreateComponent(const String& typeName, StringHash type, Cr
         mode = LOCAL;
 
     // First check if factory for type exists
-    if (!context_->GetTypeName(type).Empty())
+    if (!DV_CONTEXT.GetTypeName(type).Empty())
         return CreateComponent(type, mode, id);
     else
     {
         DV_LOGWARNING("Component type " + type.ToString() + " not known, creating UnknownComponent as placeholder");
         // Else create as UnknownComponent
-        SharedPtr<UnknownComponent> newComponent(new UnknownComponent(context_));
+        SharedPtr<UnknownComponent> newComponent(new UnknownComponent());
         if (typeName.Empty() || typeName.StartsWith("Unknown", false))
             newComponent->SetType(type);
         else

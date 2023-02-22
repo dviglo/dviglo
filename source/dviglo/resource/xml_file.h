@@ -28,11 +28,11 @@ class DV_API XMLFile : public Resource
 
 public:
     /// Construct.
-    explicit XMLFile(Context* context);
+    explicit XMLFile();
     /// Destruct.
     ~XMLFile() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

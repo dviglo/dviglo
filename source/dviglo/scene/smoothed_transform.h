@@ -29,11 +29,11 @@ class DV_API SmoothedTransform : public Component
 
 public:
     /// Construct.
-    explicit SmoothedTransform(Context* context);
+    explicit SmoothedTransform();
     /// Destruct.
     ~SmoothedTransform() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Update smoothing.
     void Update(float constant, float squaredSnapThreshold);

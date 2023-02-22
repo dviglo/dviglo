@@ -48,11 +48,11 @@ class DV_API Animatable : public Serializable
 
 public:
     /// Construct.
-    explicit Animatable(Context* context);
+    explicit Animatable();
     /// Destruct.
     ~Animatable() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load from XML data. Return true if successful.
     bool LoadXML(const XMLElement& source) override;

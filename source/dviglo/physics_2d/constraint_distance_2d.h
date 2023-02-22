@@ -16,13 +16,13 @@ class DV_API ConstraintDistance2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintDistance2D(Context* context);
+    explicit ConstraintDistance2D();
 
     /// Destruct.
     ~ConstraintDistance2D() override;
 
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set owner body anchor.
     void SetOwnerBodyAnchor(const Vector2& anchor);

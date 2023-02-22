@@ -16,11 +16,11 @@ class DV_API Button : public BorderImage
 
 public:
     /// Construct.
-    explicit Button(Context* context);
+    explicit Button();
     /// Destruct.
     ~Button() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Perform UI element update.
     void Update(float timeStep) override;

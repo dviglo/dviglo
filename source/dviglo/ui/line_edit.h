@@ -19,11 +19,11 @@ class DV_API LineEdit : public BorderImage
 
 public:
     /// Construct.
-    explicit LineEdit(Context* context);
+    explicit LineEdit();
     /// Destruct.
     ~LineEdit() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;

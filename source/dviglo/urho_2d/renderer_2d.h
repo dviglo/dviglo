@@ -56,11 +56,11 @@ class DV_API Renderer2D : public Drawable
 
 public:
     /// Construct.
-    explicit Renderer2D(Context* context);
+    explicit Renderer2D();
     /// Destruct.
     ~Renderer2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;

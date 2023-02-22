@@ -50,8 +50,7 @@ PackageUpload::PackageUpload() :
 {
 }
 
-Connection::Connection(Context* context, bool isClient, const SLNet::AddressOrGUID& address, SLNet::RakPeerInterface* peer) :
-    Object(context),
+Connection::Connection(bool isClient, const SLNet::AddressOrGUID& address, SLNet::RakPeerInterface* peer) :
     timeStamp_(0),
     peer_(peer),
     sendMode_(OPSM_NONE),
@@ -813,7 +812,7 @@ void Connection::ProcessPackageDownload(int msgID, MemoryBuffer& msg)
                     }
 
                     // Try to open the file now
-                    SharedPtr<File> file(new File(context_, packageFullName));
+                    SharedPtr<File> file(new File(packageFullName));
                     if (!file->IsOpen())
                     {
                         DV_LOGERROR("Failed to transmit package file " + name);
@@ -865,8 +864,7 @@ void Connection::ProcessPackageDownload(int msgID, MemoryBuffer& msg)
             // If file has not yet been opened, try to open now. Prepend the checksum to the filename to allow multiple versions
             if (!download.file_)
             {
-                download.file_ = new File(context_,
-                    GetSubsystem<Network>()->GetPackageCacheDir() + ToStringHex(download.checksum_) + "_" + download.name_,
+                download.file_ = new File(GetSubsystem<Network>()->GetPackageCacheDir() + ToStringHex(download.checksum_) + "_" + download.name_,
                     FILE_WRITE);
                 if (!download.file_->IsOpen())
                 {
@@ -1505,7 +1503,7 @@ bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
             if (!fileName.Find(checksumString) && !fileName.Substring(9).Compare(name, false))
             {
                 // Name matches. Check file size and actual checksum to be sure
-                SharedPtr<PackageFile> newPackage(new PackageFile(context_, packageCacheDir + fileName));
+                SharedPtr<PackageFile> newPackage(new PackageFile(packageCacheDir + fileName));
                 if (newPackage->GetTotalSize() == fileSize && newPackage->GetChecksum() == checksum)
                 {
                     // Add the package to the resource system now, as we will need it to load the scene

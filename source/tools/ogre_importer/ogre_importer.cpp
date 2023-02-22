@@ -18,9 +18,8 @@
 
 static const int VERTEX_CACHE_SIZE = 32;
 
-SharedPtr<Context> context_(new Context());
-SharedPtr<XMLFile> meshFile_(new XMLFile(context_));
-SharedPtr<XMLFile> skelFile_(new XMLFile(context_));
+SharedPtr<XMLFile> meshFile_(new XMLFile());
+SharedPtr<XMLFile> skelFile_(new XMLFile());
 Vector<ModelIndexBuffer> indexBuffers_;
 Vector<ModelVertexBuffer> vertexBuffers_;
 Vector<Vector<ModelSubGeometryLodLevel>> subGeometries_;
@@ -130,7 +129,7 @@ void LoadSkeleton(const String& skeletonFileName)
 {
     // Process skeleton first (if found)
     XMLElement skeletonRoot;
-    File skeletonFileSource(context_);
+    File skeletonFileSource;
     skeletonFileSource.Open(skeletonFileName);
     if (!skelFile_->Load(skeletonFileSource))
         PrintLine("Failed to load skeleton " + skeletonFileName);
@@ -227,7 +226,7 @@ void LoadSkeleton(const String& skeletonFileName)
 
 void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubMeshes, bool exportMorphs)
 {
-    File meshFileSource(context_);
+    File meshFileSource;
     meshFileSource.Open(inputFileName);
     if (!meshFile_->Load(meshFileSource))
         ErrorExit("Could not load input file " + inputFileName);
@@ -829,7 +828,7 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
 
     // Begin serialization
     {
-        File dest(context_);
+        File dest;
         if (!dest.Open(outputFileName, FILE_WRITE))
             ErrorExit("Could not open output file " + outputFileName);
 
@@ -905,7 +904,7 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
     if (saveMaterialList)
     {
         String materialListName = ReplaceExtension(outputFileName, ".txt");
-        File listFile(context_);
+        File listFile;
         if (listFile.Open(materialListName, FILE_WRITE))
         {
             for (unsigned i = 0; i < materialNames_.Size(); ++i)
@@ -1004,7 +1003,7 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
                 String animationFileName = outputFileName.Replaced(".mdl", "");
                 animationFileName += "_" + newAnimation.name_ + ".ani";
 
-                File dest(context_);
+                File dest;
                 if (!dest.Open(animationFileName, FILE_WRITE))
                     ErrorExit("Could not open output file " + animationFileName);
 

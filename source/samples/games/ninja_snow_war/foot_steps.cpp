@@ -8,13 +8,12 @@
 namespace dviglo
 {
 
-void FootSteps::RegisterObject(Context* context)
+void FootSteps::RegisterObject()
 {
-    context->RegisterFactory<FootSteps>();
+    DV_CONTEXT.RegisterFactory<FootSteps>();
 }
 
-FootSteps::FootSteps(Context* context)
-    : LogicComponent(context)
+FootSteps::FootSteps()
 {
 }
 

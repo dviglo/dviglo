@@ -57,8 +57,7 @@ static const char* crowdAgentPushinessNames[] = {
     nullptr
 };
 
-CrowdAgent::CrowdAgent(Context* context) :
-    Component(context),
+CrowdAgent::CrowdAgent() :
     agentCrowdId_(-1),
     requestedTargetType_(DEFAULT_AGENT_REQUEST_TARGET_TYPE),
     updateNodePosition_(true),
@@ -82,9 +81,9 @@ CrowdAgent::~CrowdAgent()
     RemoveAgentFromCrowd();
 }
 
-void CrowdAgent::RegisterObject(Context* context)
+void CrowdAgent::RegisterObject()
 {
-    context->RegisterFactory<CrowdAgent>(NAVIGATION_CATEGORY);
+    DV_CONTEXT.RegisterFactory<CrowdAgent>(NAVIGATION_CATEGORY);
 
     DV_ATTRIBUTE("Target Position", targetPosition_, Vector3::ZERO, AM_DEFAULT);
     DV_ATTRIBUTE("Target Velocity", targetVelocity_, Vector3::ZERO, AM_DEFAULT);

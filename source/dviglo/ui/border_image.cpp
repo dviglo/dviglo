@@ -15,8 +15,7 @@ namespace dviglo
 extern const char* blendModeNames[];
 extern const char* UI_CATEGORY;
 
-BorderImage::BorderImage(Context* context) :
-    UIElement(context),
+BorderImage::BorderImage() :
     imageRect_(IntRect::ZERO),
     border_(IntRect::ZERO),
     imageBorder_(IntRect::ZERO),
@@ -29,9 +28,9 @@ BorderImage::BorderImage(Context* context) :
 
 BorderImage::~BorderImage() = default;
 
-void BorderImage::RegisterObject(Context* context)
+void BorderImage::RegisterObject()
 {
-    context->RegisterFactory<BorderImage>(UI_CATEGORY);
+    DV_CONTEXT.RegisterFactory<BorderImage>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UIElement);
     DV_ACCESSOR_ATTRIBUTE("Texture", GetTextureAttr, SetTextureAttr, ResourceRef(Texture2D::GetTypeStatic()),

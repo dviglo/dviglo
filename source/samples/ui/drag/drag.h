@@ -24,7 +24,7 @@ class UIDrag : public Sample
 
 public:
     /// Construct.
-    explicit UIDrag(Context* context);
+    explicit UIDrag();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -20,11 +20,11 @@ class DV_API TerrainPatch : public Drawable
 
 public:
     /// Construct.
-    explicit TerrainPatch(Context* context);
+    explicit TerrainPatch();
     /// Destruct.
     ~TerrainPatch() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;

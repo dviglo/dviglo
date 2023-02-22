@@ -47,8 +47,7 @@ static bool CompareAnimationOrder(const SharedPtr<AnimationState>& lhs, const Sh
 
 static const unsigned MAX_ANIMATION_STATES = 256;
 
-AnimatedModel::AnimatedModel(Context* context) :
-    StaticModel(context),
+AnimatedModel::AnimatedModel() :
     animationLodFrameNumber_(0),
     morphElementMask_(VertexElements::None),
     animationLodBias_(1.0f),
@@ -79,9 +78,9 @@ AnimatedModel::~AnimatedModel()
     }
 }
 
-void AnimatedModel::RegisterObject(Context* context)
+void AnimatedModel::RegisterObject()
 {
-    context->RegisterFactory<AnimatedModel>(GEOMETRY_CATEGORY);
+    DV_CONTEXT.RegisterFactory<AnimatedModel>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);
@@ -1101,7 +1100,7 @@ void AnimatedModel::CloneGeometries()
         VertexBuffer* original = originalVertexBuffers[i];
         if (model_->GetMorphRangeCount(i))
         {
-            SharedPtr<VertexBuffer> clone(new VertexBuffer(context_));
+            SharedPtr<VertexBuffer> clone(new VertexBuffer());
             clone->SetShadowed(true);
             clone->SetSize(original->GetVertexCount(), morphElementMask_ & original->GetElementMask(), true);
             void* dest = clone->Lock(0, original->GetVertexCount());
@@ -1123,7 +1122,7 @@ void AnimatedModel::CloneGeometries()
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
             SharedPtr<Geometry> original = geometries_[i][j];
-            SharedPtr<Geometry> clone(new Geometry(context_));
+            SharedPtr<Geometry> clone(new Geometry());
 
             // Add an additional vertex stream into the clone, which supplies only the morphable vertex data, while the static
             // data comes from the original vertex buffer(s)

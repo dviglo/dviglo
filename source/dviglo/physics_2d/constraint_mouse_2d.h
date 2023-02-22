@@ -16,13 +16,13 @@ class DV_API ConstraintMouse2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintMouse2D(Context* context);
+    explicit ConstraintMouse2D();
 
     /// Destruct.
     ~ConstraintMouse2D() override;
 
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set target.
     void SetTarget(const Vector2& target);

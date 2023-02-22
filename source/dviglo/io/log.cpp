@@ -39,8 +39,7 @@ const char* logLevelPrefixes[] =
 static Log* logInstance = nullptr;
 static bool threadErrorDisplayed = false;
 
-Log::Log(Context* context) :
-    Object(context),
+Log::Log() :
 #ifdef _DEBUG
     level_(LOG_DEBUG),
 #else
@@ -73,7 +72,7 @@ void Log::Open(const String& fileName)
             Close();
     }
 
-    logFile_ = new File(context_);
+    logFile_ = new File();
     if (logFile_->Open(fileName, FILE_WRITE))
         Write(LOG_INFO, "Opened log file " + fileName);
     else

@@ -52,8 +52,7 @@ class DV_API ResourceRouter : public Object
 {
 public:
     /// Construct.
-    explicit ResourceRouter(Context* context) :
-        Object(context)
+    explicit ResourceRouter()
     {
     }
 
@@ -68,7 +67,7 @@ class DV_API ResourceCache : public Object
 
 public:
     /// Construct.
-    explicit ResourceCache(Context* context);
+    explicit ResourceCache();
     /// Destruct. Free all resources.
     ~ResourceCache() override;
 
@@ -283,6 +282,6 @@ template <class T> void ResourceCache::GetResources(Vector<T*>& result) const
 }
 
 /// Register Resource library subsystems and objects.
-void DV_API RegisterResourceLibrary(Context* context);
+void DV_API RegisterResourceLibrary();
 
 }

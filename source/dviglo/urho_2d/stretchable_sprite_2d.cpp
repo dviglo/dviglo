@@ -99,14 +99,13 @@ void pushVertices(Vector<Vertex2D>& target, const Vertex2D source[4][4])
 
 extern const char* URHO2D_CATEGORY;
 
-StretchableSprite2D::StretchableSprite2D(Context* context) :
-    StaticSprite2D{context}
+StretchableSprite2D::StretchableSprite2D()
 {
 }
 
-void StretchableSprite2D::RegisterObject(Context* context)
+void StretchableSprite2D::RegisterObject()
 {
-    context->RegisterFactory<StretchableSprite2D>(URHO2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<StretchableSprite2D>(URHO2D_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticSprite2D);
     DV_ACCESSOR_ATTRIBUTE("Border", GetBorder, SetBorder, IntRect::ZERO, AM_DEFAULT);

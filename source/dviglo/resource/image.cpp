@@ -230,16 +230,15 @@ bool CompressedLevel::Decompress(unsigned char* dest) const
     }
 }
 
-Image::Image(Context* context) :
-    Resource(context)
+Image::Image()
 {
 }
 
 Image::~Image() = default;
 
-void Image::RegisterObject(Context* context)
+void Image::RegisterObject()
 {
-    context->RegisterFactory<Image>();
+    DV_CONTEXT.RegisterFactory<Image>();
 }
 
 bool Image::BeginLoad(Deserializer& source)
@@ -415,7 +414,7 @@ bool Image::BeginLoad(Deserializer& source)
             if (faceIndex < imageChainCount - 1)
             {
                 // Build the image chain
-                SharedPtr<Image> nextImage(new Image(context_));
+                SharedPtr<Image> nextImage(new Image());
                 currentImage->nextSibling_ = nextImage;
                 currentImage = nextImage;
             }
@@ -1267,7 +1266,7 @@ bool Image::SavePNG(const String& fileName) const
 {
     DV_PROFILE(SaveImagePNG);
 
-    File outFile(context_, fileName, FILE_WRITE);
+    File outFile(fileName, FILE_WRITE);
     if (outFile.IsOpen())
         return Image::Save(outFile); // Save uses PNG format
     else
@@ -1324,7 +1323,7 @@ bool Image::SaveDDS(const String& fileName) const
 {
     DV_PROFILE(SaveImageDDS);
 
-    File outFile(context_, fileName, FILE_WRITE);
+    File outFile(fileName, FILE_WRITE);
     if (!outFile.IsOpen())
     {
         DV_LOGERROR("Access denied to " + fileName);
@@ -1379,7 +1378,7 @@ bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) con
     DV_PROFILE(SaveImageWEBP);
 
     auto* fileSystem(GetSubsystem<FileSystem>());
-    File outFile(context_, fileName, FILE_WRITE);
+    File outFile(fileName, FILE_WRITE);
 
     if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
     {
@@ -1612,7 +1611,7 @@ SharedPtr<Image> Image::GetNextLevel() const
     if (depthOut < 1)
         depthOut = 1;
 
-    SharedPtr<Image> mipImage(new Image(context_));
+    SharedPtr<Image> mipImage(new Image());
 
     if (depth_ > 1)
         mipImage->SetSize(widthOut, heightOut, depthOut, components_);
@@ -1910,7 +1909,7 @@ SharedPtr<Image> Image::ConvertToRGBA() const
     if (components_ == 4)
         return SharedPtr<Image>(const_cast<Image*>(this));
 
-    SharedPtr<Image> ret(new Image(context_));
+    SharedPtr<Image> ret(new Image());
     ret->SetSize(width_, height_, depth_, 4);
 
     const unsigned char* src = data_;
@@ -2100,7 +2099,7 @@ SharedPtr<Image> Image::GetDecompressedImage() const
 
     const CompressedLevel compressedLevel = GetCompressedLevel(0);
 
-    auto decompressedImage = MakeShared<Image>(context_);
+    auto decompressedImage = MakeShared<Image>();
     decompressedImage->SetSize(compressedLevel.width_, compressedLevel.height_, 4);
     compressedLevel.Decompress(decompressedImage->GetData());
 
@@ -2131,7 +2130,7 @@ Image* Image::GetSubimage(const IntRect& rect) const
         int width = rect.Width();
         int height = rect.Height();
 
-        auto* image = new Image(context_);
+        auto* image = new Image();
         image->SetSize(width, height, components_);
 
         unsigned char* dest = image->GetData();
@@ -2200,7 +2199,7 @@ Image* Image::GetSubimage(const IntRect& rect) const
             return nullptr;
         }
 
-        auto* image = new Image(context_);
+        auto* image = new Image();
         image->width_ = paddedRect.Width();
         image->height_ = paddedRect.Height();
         image->depth_ = 1;

@@ -26,7 +26,7 @@ class GameObject : public LogicComponent
     DV_OBJECT(GameObject, LogicComponent);
 
 public:
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     bool onGround;
     bool isSliding;
@@ -38,7 +38,7 @@ public:
     i32 lastDamageCreatorID;
     i32 creatorID;
 
-    GameObject(Context* context);
+    GameObject();
 
     void FixedUpdate(float timeStep) override;
     bool Damage(GameObject& origin, i32 amount);

@@ -40,15 +40,14 @@ void AttributeAnimationInfo::ApplyValue(const Variant& newValue)
     }
 }
 
-Animatable::Animatable(Context* context) :
-    Serializable(context),
+Animatable::Animatable() :
     animationEnabled_(true)
 {
 }
 
 Animatable::~Animatable() = default;
 
-void Animatable::RegisterObject(Context* context)
+void Animatable::RegisterObject()
 {
     DV_ACCESSOR_ATTRIBUTE("Object Animation", GetObjectAnimationAttr, SetObjectAnimationAttr,
         ResourceRef(ObjectAnimation::GetTypeStatic()), AM_DEFAULT);
@@ -65,7 +64,7 @@ bool Animatable::LoadXML(const XMLElement& source)
     XMLElement elem = source.GetChild("objectanimation");
     if (elem)
     {
-        SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation(context_));
+        SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation());
         if (!objectAnimation->LoadXML(elem))
             return false;
 
@@ -76,7 +75,7 @@ bool Animatable::LoadXML(const XMLElement& source)
     while (elem)
     {
         String name = elem.GetAttribute("name");
-        SharedPtr<ValueAnimation> attributeAnimation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> attributeAnimation(new ValueAnimation());
         if (!attributeAnimation->LoadXML(elem))
             return false;
 
@@ -111,7 +110,7 @@ bool Animatable::LoadJSON(const JSONValue& source)
     JSONValue value = source.Get("objectanimation");
     if (!value.IsNull())
     {
-        SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation(context_));
+        SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation());
         if (!objectAnimation->LoadJSON(value))
             return false;
 
@@ -134,7 +133,7 @@ bool Animatable::LoadJSON(const JSONValue& source)
     {
         String name = it->first_;
         JSONValue value = it->second_;
-        SharedPtr<ValueAnimation> attributeAnimation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> attributeAnimation(new ValueAnimation());
         if (!attributeAnimation->LoadJSON(it->second_))
             return false;
 

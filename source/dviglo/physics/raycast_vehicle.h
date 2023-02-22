@@ -18,12 +18,12 @@ class DV_API RaycastVehicle : public LogicComponent
 
 public:
     /// Construct.
-    explicit RaycastVehicle(dviglo::Context* context);
+    explicit RaycastVehicle();
     /// Destruct.
     ~RaycastVehicle() override;
 
     /// Register object factory and attributes.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

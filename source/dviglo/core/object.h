@@ -66,7 +66,7 @@ class DV_API Object : public RefCounted
 
 public:
     /// Construct.
-    explicit Object(Context* context);
+    explicit Object();
     /// Destruct. Clean up self from event sender & receiver structures.
     ~Object() override;
 
@@ -122,8 +122,6 @@ public:
         SendEvent(eventType, GetEventDataMap().Populate(args...));
     }
 
-    /// Return execution context.
-    Context* GetContext() const { return context_; }
     /// Return global variable based on key.
     const Variant& GetGlobalVar(StringHash key) const;
     /// Return all global variables.
@@ -154,10 +152,6 @@ public:
     /// Return sending and receiving events blocking status.
     bool GetBlockEvents() const { return blockEvents_; }
 
-protected:
-    /// Execution context.
-    Context* context_;
-
 private:
     /// Find the first event handler with no specific sender.
     EventHandler* FindEventHandler(StringHash eventType, EventHandler** previous = nullptr) const;
@@ -182,17 +176,12 @@ class DV_API ObjectFactory : public RefCounted
 {
 public:
     /// Construct.
-    explicit ObjectFactory(Context* context) :
-        context_(context)
+    explicit ObjectFactory()
     {
-        assert(context_);
     }
 
     /// Create an object. Implemented in templated subclasses.
     virtual SharedPtr<Object> CreateObject() = 0;
-
-    /// Return execution context.
-    Context* GetContext() const { return context_; }
 
     /// Return type info of objects created by this factory.
     const TypeInfo* GetTypeInfo() const { return typeInfo_; }
@@ -204,8 +193,6 @@ public:
     const String& GetTypeName() const { return typeInfo_->GetTypeName(); }
 
 protected:
-    /// Execution context.
-    Context* context_;
     /// Type info.
     const TypeInfo* typeInfo_{};
 };
@@ -215,14 +202,13 @@ template <class T> class ObjectFactoryImpl : public ObjectFactory
 {
 public:
     /// Construct.
-    explicit ObjectFactoryImpl(Context* context) :
-        ObjectFactory(context)
+    explicit ObjectFactoryImpl()
     {
         typeInfo_ = T::GetTypeInfoStatic();
     }
 
     /// Create an object of the specific type.
-    SharedPtr<Object> CreateObject() override { return SharedPtr<Object>(new T(context_)); }
+    SharedPtr<Object> CreateObject() override { return SharedPtr<Object>(new T()); }
 };
 
 /// Internal helper class for invoking event handler functions.

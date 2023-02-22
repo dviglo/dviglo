@@ -33,8 +33,7 @@ public:
     const dv::String& GetName() const { return name_; }
     const FpsCounter& GetResult() const { return fpsCounter_; }
 
-    AppState_Base(dv::Context* context)
-        : Object(context)
+    AppState_Base()
     {
     }
 

@@ -138,7 +138,7 @@ class DV_API Input : public Object
 
 public:
     /// Construct.
-    explicit Input(Context* context);
+    explicit Input();
     /// Destruct.
     ~Input() override;
 

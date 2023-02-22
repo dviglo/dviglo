@@ -29,11 +29,11 @@ class DV_API TileMapLayer2D : public Component
 
 public:
     /// Construct.
-    explicit TileMapLayer2D(Context* context);
+    explicit TileMapLayer2D();
     /// Destruct.
     ~TileMapLayer2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Add debug geometry to the debug renderer.
     void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;

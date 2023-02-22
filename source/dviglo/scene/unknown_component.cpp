@@ -61,15 +61,14 @@ static String GenerateNameFromType(StringHash typeHash)
     return test;
 }
 
-UnknownComponent::UnknownComponent(Context* context) :
-    Component(context),
+UnknownComponent::UnknownComponent() :
     useXML_(false)
 {
 }
 
-void UnknownComponent::RegisterObject(Context* context)
+void UnknownComponent::RegisterObject()
 {
-    context->RegisterFactory<UnknownComponent>();
+    DV_CONTEXT.RegisterFactory<UnknownComponent>();
 }
 
 bool UnknownComponent::Load(Deserializer& source)

@@ -142,11 +142,11 @@ class DV_API TmxFile2D : public Resource
 
 public:
     /// Construct.
-    explicit TmxFile2D(Context* context);
+    explicit TmxFile2D();
     /// Destruct.
     ~TmxFile2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

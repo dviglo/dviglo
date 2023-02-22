@@ -27,7 +27,7 @@ class DV_API FileSystem : public Object
 
 public:
     /// Construct.
-    explicit FileSystem(Context* context);
+    explicit FileSystem();
     /// Destruct.
     ~FileSystem() override;
 

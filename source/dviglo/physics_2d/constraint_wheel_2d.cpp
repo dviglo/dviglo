@@ -14,8 +14,7 @@ namespace dviglo
 
 extern const char* PHYSICS2D_CATEGORY;
 
-ConstraintWheel2D::ConstraintWheel2D(Context* context) :
-    Constraint2D(context),
+ConstraintWheel2D::ConstraintWheel2D() :
     anchor_(Vector2::ZERO),
     axis_(Vector2::RIGHT)
 {
@@ -23,9 +22,9 @@ ConstraintWheel2D::ConstraintWheel2D(Context* context) :
 
 ConstraintWheel2D::~ConstraintWheel2D() = default;
 
-void ConstraintWheel2D::RegisterObject(Context* context)
+void ConstraintWheel2D::RegisterObject()
 {
-    context->RegisterFactory<ConstraintWheel2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT.RegisterFactory<ConstraintWheel2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);

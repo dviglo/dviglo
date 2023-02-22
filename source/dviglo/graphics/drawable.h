@@ -104,11 +104,11 @@ class DV_API Drawable : public Component
 
 public:
     /// Construct.
-    Drawable(Context* context, DrawableTypes drawableType);
+    Drawable(DrawableTypes drawableType);
     /// Destruct.
     ~Drawable() override;
     /// Register object attributes. Drawable must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

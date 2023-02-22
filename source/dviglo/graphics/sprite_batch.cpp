@@ -9,7 +9,7 @@
 namespace dviglo
 {
 
-SpriteBatch::SpriteBatch(Context* context) : SpriteBatchBase(context)
+SpriteBatch::SpriteBatch()
 {
     spriteVS_ = graphics_->GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
     spritePS_ = graphics_->GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");

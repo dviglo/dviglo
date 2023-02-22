@@ -11,8 +11,7 @@ namespace dviglo
 
 bool EventProfiler::active = false;
 
-EventProfiler::EventProfiler(Context* context) :
-    Profiler(context)
+EventProfiler::EventProfiler()
 {
     // FIXME: Is there a cleaner way?
     delete root_;

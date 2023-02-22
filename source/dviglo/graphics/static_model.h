@@ -27,11 +27,11 @@ class DV_API StaticModel : public Drawable
 
 public:
     /// Construct.
-    explicit StaticModel(Context* context);
+    explicit StaticModel();
     /// Destruct.
     ~StaticModel() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;

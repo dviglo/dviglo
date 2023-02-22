@@ -128,7 +128,7 @@ StringHash ParseTextureTypeXml(ResourceCache* cache, const String& filename)
     SharedPtr<File> texXmlFile = cache->GetFile(filename, false);
     if (texXmlFile.NotNull())
     {
-        SharedPtr<XMLFile> texXml(new XMLFile(cache->GetContext()));
+        SharedPtr<XMLFile> texXml(new XMLFile());
         if (texXml->Load(*texXmlFile))
             type = ParseTextureTypeName(texXml->GetRoot().GetName());
     }
@@ -175,17 +175,16 @@ void ShaderParameterAnimationInfo::ApplyValue(const Variant& newValue)
     static_cast<Material*>(target_.Get())->SetShaderParameter(name_, newValue);
 }
 
-Material::Material(Context* context) :
-    Resource(context)
+Material::Material()
 {
     ResetToDefaults();
 }
 
 Material::~Material() = default;
 
-void Material::RegisterObject(Context* context)
+void Material::RegisterObject()
 {
-    context->RegisterFactory<Material>();
+    DV_CONTEXT.RegisterFactory<Material>();
 }
 
 bool Material::BeginLoad(Deserializer& source)
@@ -252,7 +251,7 @@ bool Material::EndLoad()
 bool Material::BeginLoadXML(Deserializer& source)
 {
     ResetToDefaults();
-    loadXMLFile_ = new XMLFile(context_);
+    loadXMLFile_ = new XMLFile();
     if (loadXMLFile_->Load(source))
     {
         // If async loading, scan the XML content beforehand for technique & texture resources
@@ -311,7 +310,7 @@ bool Material::BeginLoadJSON(Deserializer& source)
     loadXMLFile_.Reset();
 
     // Attempt to load from JSON file instead
-    loadJSONFile_ = new JSONFile(context_);
+    loadJSONFile_ = new JSONFile();
     if (loadJSONFile_->Load(source))
     {
         // If async loading, scan the XML content beforehand for technique & texture resources
@@ -365,7 +364,7 @@ bool Material::BeginLoadJSON(Deserializer& source)
 
 bool Material::Save(Serializer& dest) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile(context_));
+    SharedPtr<XMLFile> xml(new XMLFile());
     XMLElement materialElem = xml->CreateRoot("material");
 
     Save(materialElem);
@@ -462,7 +461,7 @@ bool Material::Load(const XMLElement& source)
     while (parameterAnimationElem)
     {
         String name = parameterAnimationElem.GetAttribute("name");
-        SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> animation(new ValueAnimation());
         if (!animation->LoadXML(parameterAnimationElem))
         {
             DV_LOGERROR("Could not load parameter animation");
@@ -624,7 +623,7 @@ bool Material::Load(const JSONValue& source)
         String name = it->first_;
         JSONValue paramAnimVal = it->second_;
 
-        SharedPtr<ValueAnimation> animation(new ValueAnimation(context_));
+        SharedPtr<ValueAnimation> animation(new ValueAnimation());
         if (!animation->LoadJSON(paramAnimVal))
         {
             DV_LOGERROR("Could not load parameter animation");
@@ -1124,7 +1123,7 @@ void Material::ReleaseShaders()
 
 SharedPtr<Material> Material::Clone(const String& cloneName) const
 {
-    SharedPtr<Material> ret(new Material(context_));
+    SharedPtr<Material> ret(new Material());
 
     ret->SetName(cloneName);
     ret->techniques_ = techniques_;

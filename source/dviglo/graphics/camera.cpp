@@ -31,8 +31,7 @@ static const Matrix4 flipMatrix(
     0.0f, 0.0f, 0.0f, 1.0f
 );
 
-Camera::Camera(Context* context) :
-    Component(context),
+Camera::Camera() :
     viewDirty_(true),
     projectionDirty_(true),
     frustumDirty_(true),
@@ -61,9 +60,9 @@ Camera::Camera(Context* context) :
 
 Camera::~Camera() = default;
 
-void Camera::RegisterObject(Context* context)
+void Camera::RegisterObject()
 {
-    context->RegisterFactory<Camera>(SCENE_CATEGORY);
+    DV_CONTEXT.RegisterFactory<Camera>(SCENE_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Near Clip", GetNearClip, SetNearClip, DEFAULT_NEARCLIP, AM_DEFAULT);

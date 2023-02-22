@@ -162,7 +162,7 @@ class DV_API Profiler : public Object
 
 public:
     /// Construct.
-    explicit Profiler(Context* context);
+    explicit Profiler();
     /// Destruct.
     ~Profiler() override;
 

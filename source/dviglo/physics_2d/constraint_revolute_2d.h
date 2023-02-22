@@ -16,11 +16,11 @@ class DV_API ConstraintRevolute2D : public Constraint2D
 
 public:
     /// Construct.
-    explicit ConstraintRevolute2D(Context* context);
+    explicit ConstraintRevolute2D();
     /// Destruct.
     ~ConstraintRevolute2D() override;
     /// Register object factory.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Set anchor.
     void SetAnchor(const Vector2& anchor);

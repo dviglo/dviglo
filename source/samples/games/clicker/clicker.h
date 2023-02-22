@@ -14,7 +14,7 @@ class Clicker : public Sample
 
 public:
     /// Construct.
-    explicit Clicker(Context* context);
+    explicit Clicker();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -22,16 +22,15 @@ using namespace rapidjson;
 namespace dviglo
 {
 
-JSONFile::JSONFile(Context* context) :
-    Resource(context)
+JSONFile::JSONFile()
 {
 }
 
 JSONFile::~JSONFile() = default;
 
-void JSONFile::RegisterObject(Context* context)
+void JSONFile::RegisterObject()
 {
-    context->RegisterFactory<JSONFile>();
+    DV_CONTEXT.RegisterFactory<JSONFile>();
 }
 
 // Convert rapidjson value to JSON value.

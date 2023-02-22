@@ -12,8 +12,7 @@
 
 const float GYROSCOPE_THRESHOLD = 0.1f;
 
-Touch::Touch(Context* context, float touchSensitivity) :
-    Object(context),
+Touch::Touch(float touchSensitivity) :
     touchSensitivity_(touchSensitivity),
     cameraDistance_(CAMERA_INITIAL_DIST),
     zoom_(false),

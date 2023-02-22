@@ -106,7 +106,7 @@ bool BackgroundLoader::QueueResource(StringHash type, const String& name, bool s
     item.sendEventOnFailure_ = sendEventOnFailure;
 
     // Make sure the pointer is non-null and is a Resource subclass
-    item.resource_ = DynamicCast<Resource>(owner_->GetContext()->CreateObject(type));
+    item.resource_ = DynamicCast<Resource>(DV_CONTEXT.CreateObject(type));
     if (!item.resource_)
     {
         DV_LOGERROR("Could not load unknown resource type " + String(type));

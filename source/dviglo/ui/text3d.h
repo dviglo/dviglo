@@ -21,11 +21,11 @@ class DV_API Text3D : public Drawable
 
 public:
     /// Construct.
-    explicit Text3D(Context* context);
+    explicit Text3D();
     /// Destruct.
     ~Text3D() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject(Context* context);
+    static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;
