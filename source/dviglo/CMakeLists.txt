@@ -195,7 +195,8 @@ foreach(opt
             DV_FILEWATCHER
             DV_PROFILING
             DV_THREADING
-            DV_URHO2D)
+            DV_URHO2D
+            DV_WIN32_CONSOLE)
     if(${opt})
         target_compile_definitions(${target_name} PUBLIC ${opt}=1)
     endif()
