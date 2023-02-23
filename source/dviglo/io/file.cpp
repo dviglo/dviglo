@@ -3,6 +3,7 @@
 // License: MIT
 
 #include "../core/profiler.h"
+#include "dv_ffunc.h"
 #include "file.h"
 #include "file_system.h"
 #include "log.h"
@@ -21,47 +22,19 @@
 namespace dviglo
 {
 
-#ifdef _WIN32
-static const wchar_t* openMode[] =
-{
-    L"rb",
-    L"wb",
-    L"r+b",
-    L"w+b"
-};
-#else
-static const char* openMode[] =
+static const String OPEN_MODE[] =
 {
     "rb",
     "wb",
     "r+b",
     "w+b"
 };
-#endif
 
 #ifdef __ANDROID__
 const char* APK = "/apk/";
 static constexpr i32 READ_BUFFER_SIZE = 32768;
 #endif
 static constexpr i32 SKIP_BUFFER_SIZE = 1024;
-
-static i32 FSeek64(FILE* stream, i64 offset, i32 origin)
-{
-#ifdef _MSC_VER
-    return _fseeki64(stream, offset, origin);
-#else
-    return fseeko64(stream, offset, origin);
-#endif
-}
-
-static i64 FTell64(FILE* stream)
-{
-#ifdef _MSC_VER
-    return _ftelli64(stream);
-#else
-    return ftello64(stream);
-#endif
-}
 
 File::File() :
     mode_(FILE_READ),
@@ -333,14 +306,14 @@ i32 File::Write(const void* data, i32 size)
     // Need to reassign the position due to internal buffering when transitioning from reading to writing
     if (writeSyncNeeded_)
     {
-        FSeek64((FILE*)handle_, position_ + offset_, SEEK_SET);
+        dv_fseek(handle_, position_ + offset_, SEEK_SET);
         writeSyncNeeded_ = false;
     }
 
-    if (fwrite(data, size, 1, (FILE*)handle_) != 1)
+    if (dv_fwrite(data, size, 1, handle_) != 1)
     {
         // Return to the position where the write began
-        FSeek64((FILE*)handle_, position_ + offset_, SEEK_SET);
+        dv_fseek(handle_, position_ + offset_, SEEK_SET);
         DV_LOGERROR("Error while writing to file " + GetName());
         return 0;
     }
@@ -397,7 +370,7 @@ void File::Close()
 
     if (handle_)
     {
-        fclose((FILE*)handle_);
+        dv_fclose(handle_);
         handle_ = nullptr;
         position_ = 0;
         size_ = 0;
@@ -409,7 +382,7 @@ void File::Close()
 void File::Flush()
 {
     if (handle_)
-        fflush((FILE*)handle_);
+        dv_fflush(handle_);
 }
 
 bool File::IsOpen() const
@@ -473,21 +446,11 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
     }
 #endif
 
-#ifdef _WIN32
-    handle_ = _wfopen(GetWideNativePath(fileName).CString(), openMode[mode]);
-#else
-    handle_ = fopen64(GetNativePath(fileName).CString(), openMode[mode]);
-#endif
+    handle_ = dv_fopen(fileName, OPEN_MODE[mode]);
 
     // If file did not exist in readwrite mode, retry with write-update mode
     if (mode == FILE_READWRITE && !handle_)
-    {
-#ifdef _WIN32
-        handle_ = _wfopen(GetWideNativePath(fileName).CString(), openMode[mode + 1]);
-#else
-        handle_ = fopen64(GetNativePath(fileName).CString(), openMode[mode + 1]);
-#endif
-    }
+        handle_ = dv_fopen(fileName, OPEN_MODE[mode + 1]);
 
     if (!handle_)
     {
@@ -497,9 +460,9 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
 
     if (!fromPackage)
     {
-        FSeek64((FILE*)handle_, 0, SEEK_END);
-        i64 size = FTell64((FILE*)handle_);
-        FSeek64((FILE*)handle_, 0, SEEK_SET);
+        dv_fseek(handle_, 0, SEEK_END);
+        i64 size = dv_ftell(handle_);
+        dv_fseek(handle_, 0, SEEK_SET);
         if (size > M_MAX_UNSIGNED)
         {
             DV_LOGERRORF("Could not open file %s which is larger than 4GB", fileName.CString());
@@ -530,7 +493,7 @@ bool File::ReadInternal(void* dest, i32 size)
     }
     else
 #endif
-        return fread(dest, size, 1, (FILE*)handle_) == 1;
+        return dv_fread(dest, size, 1, handle_) == 1;
 }
 
 void File::SeekInternal(i64 newPosition)
@@ -548,7 +511,7 @@ void File::SeekInternal(i64 newPosition)
     else
 #endif
     {
-        FSeek64((FILE*)handle_, newPosition, SEEK_SET);
+        dv_fseek(handle_, newPosition, SEEK_SET);
     }
 }
 

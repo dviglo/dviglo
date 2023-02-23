@@ -97,7 +97,7 @@ private:
     /// Open mode.
     FileMode mode_;
     /// File handle.
-    void* handle_;
+    FILE* handle_;
 #ifdef __ANDROID__
     /// SDL RWops context for Android asset loading.
     SDL_RWops* assetHandle_;
