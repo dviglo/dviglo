@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../core/profiler.h"
-#include "dv_ffunc.h"
+#include "base.h"
 #include "file.h"
 #include "file_system.h"
 #include "log.h"
@@ -306,14 +306,14 @@ i32 File::Write(const void* data, i32 size)
     // Need to reassign the position due to internal buffering when transitioning from reading to writing
     if (writeSyncNeeded_)
     {
-        dv_fseek(handle_, position_ + offset_, SEEK_SET);
+        file_seek(handle_, position_ + offset_, SEEK_SET);
         writeSyncNeeded_ = false;
     }
 
-    if (dv_fwrite(data, size, 1, handle_) != 1)
+    if (file_write(data, size, 1, handle_) != 1)
     {
         // Return to the position where the write began
-        dv_fseek(handle_, position_ + offset_, SEEK_SET);
+        file_seek(handle_, position_ + offset_, SEEK_SET);
         DV_LOGERROR("Error while writing to file " + GetName());
         return 0;
     }
@@ -370,7 +370,7 @@ void File::Close()
 
     if (handle_)
     {
-        dv_fclose(handle_);
+        file_close(handle_);
         handle_ = nullptr;
         position_ = 0;
         size_ = 0;
@@ -382,7 +382,7 @@ void File::Close()
 void File::Flush()
 {
     if (handle_)
-        dv_fflush(handle_);
+        file_flush(handle_);
 }
 
 bool File::IsOpen() const
@@ -446,11 +446,11 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
     }
 #endif
 
-    handle_ = dv_fopen(fileName, OPEN_MODE[mode]);
+    handle_ = file_open(fileName, OPEN_MODE[mode]);
 
     // If file did not exist in readwrite mode, retry with write-update mode
     if (mode == FILE_READWRITE && !handle_)
-        handle_ = dv_fopen(fileName, OPEN_MODE[mode + 1]);
+        handle_ = file_open(fileName, OPEN_MODE[mode + 1]);
 
     if (!handle_)
     {
@@ -460,9 +460,9 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
 
     if (!fromPackage)
     {
-        dv_fseek(handle_, 0, SEEK_END);
-        i64 size = dv_ftell(handle_);
-        dv_fseek(handle_, 0, SEEK_SET);
+        file_seek(handle_, 0, SEEK_END);
+        i64 size = file_tell(handle_);
+        file_seek(handle_, 0, SEEK_SET);
         if (size > M_MAX_UNSIGNED)
         {
             DV_LOGERRORF("Could not open file %s which is larger than 4GB", fileName.CString());
@@ -493,7 +493,7 @@ bool File::ReadInternal(void* dest, i32 size)
     }
     else
 #endif
-        return dv_fread(dest, size, 1, handle_) == 1;
+        return file_read(dest, size, 1, handle_) == 1;
 }
 
 void File::SeekInternal(i64 newPosition)
@@ -511,8 +511,8 @@ void File::SeekInternal(i64 newPosition)
     else
 #endif
     {
-        dv_fseek(handle_, newPosition, SEEK_SET);
+        file_seek(handle_, newPosition, SEEK_SET);
     }
 }
 
-}
+} // namespace dviglo

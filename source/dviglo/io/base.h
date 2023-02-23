@@ -1,7 +1,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-// Обёртки над 64-битными файловыми функциями
+// Функции, которые можно использовать до инициализации любых подсистем
 
 #pragma once
 
@@ -9,14 +9,17 @@
 
 #include <cstdio>
 
-// Так как используются префиксы, то не помещаем функции в namespace dviglo
+namespace dviglo
+{
+
+// ============= Обёртки над 64-битными файловыми функциями =============
 
 // https://en.cppreference.com/w/c/io/fopen
-inline FILE* dv_fopen(const dviglo::String& filename, const dviglo::String& mode)
+inline FILE* file_open(const String& filename, const String& mode)
 {
 #ifdef _WIN32
-    dviglo::WString w_filename{filename.Replaced('/', '\\')};
-    dviglo::WString w_mode{mode};
+    WString w_filename{filename.Replaced('/', '\\')};
+    WString w_mode{mode};
     return _wfopen(w_filename.CString(), w_mode.CString());
 #else
     return fopen64(filename.CString(), mode.CString());
@@ -24,7 +27,7 @@ inline FILE* dv_fopen(const dviglo::String& filename, const dviglo::String& mode
 }
 
 // https://en.cppreference.com/w/c/io/fseek
-inline dvt::i32 dv_fseek(FILE* stream, dvt::i64 offset, dvt::i32 origin)
+inline i32 file_seek(FILE* stream, i64 offset, i32 origin)
 {
 #ifdef _MSC_VER
     return _fseeki64(stream, offset, origin);
@@ -34,7 +37,7 @@ inline dvt::i32 dv_fseek(FILE* stream, dvt::i64 offset, dvt::i32 origin)
 }
 
 // https://en.cppreference.com/w/c/io/ftell
-inline dvt::i64 dv_ftell(FILE* stream)
+inline i64 file_tell(FILE* stream)
 {
 #ifdef _MSC_VER
     return _ftelli64(stream);
@@ -44,25 +47,27 @@ inline dvt::i64 dv_ftell(FILE* stream)
 }
 
 // https://en.cppreference.com/w/c/io/fwrite
-inline dvt::i32 dv_fwrite(const void* buffer, dvt::i32 size, dvt::i32 count, FILE* stream)
+inline i32 file_write(const void* buffer, i32 size, i32 count, FILE* stream)
 {
     return fwrite(buffer, size, count, stream);
 }
 
 // https://en.cppreference.com/w/c/io/fread
-inline dvt::i32 dv_fread(void* buffer, dvt::i32 size, dvt::i32 count, FILE* stream)
+inline i32 file_read(void* buffer, i32 size, i32 count, FILE* stream)
 {
     return fread(buffer, size, count, stream);
 }
 
 // https://en.cppreference.com/w/c/io/fflush
-inline dvt::i32 dv_fflush(FILE* stream)
+inline i32 file_flush(FILE* stream)
 {
     return fflush(stream);
 }
 
 // https://en.cppreference.com/w/c/io/fclose
-inline dvt::i32 dv_fclose(FILE* stream)
+inline i32 file_close(FILE* stream)
 {
     return fclose(stream);
 }
+
+} // namespace dviglo
