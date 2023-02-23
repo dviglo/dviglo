@@ -17,9 +17,7 @@
 #include <SDL3/SDL_rwops.h>
 #endif
 
-#ifndef MINI_URHO
 #include <SDL3/SDL_filesystem.h>
-#endif
 
 #include <sys/stat.h>
 #include <cstdio>
@@ -66,15 +64,9 @@ namespace dviglo
 
 int DoSystemCommand(const String& commandLine, bool redirectToLog)
 {
-#if defined(TVOS) || defined(IOS)
-    return -1;
-#else
-#if !defined(__EMSCRIPTEN__) && !defined(MINI_URHO)
     if (!redirectToLog)
-#endif
         return system(commandLine.CString());
 
-#if !defined(__EMSCRIPTEN__) && !defined(MINI_URHO)
     // Get a platform-agnostic temporary file name for stderr redirection
     String stderrFilename;
     String adjustedCommandLine(commandLine);
@@ -118,8 +110,6 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
     }
 
     return exitCode;
-#endif
-#endif
 }
 
 int DoSystemRun(const String& fileName, const Vector<String>& arguments)
@@ -726,7 +716,6 @@ String FileSystem::GetUserDocumentsDir() const
 String FileSystem::GetAppPreferencesDir(const String& org, const String& app) const
 {
     String dir;
-#ifndef MINI_URHO
     char* prefPath = SDL_GetPrefPath(org.CString(), app.CString());
     if (prefPath)
     {
@@ -734,7 +723,6 @@ String FileSystem::GetAppPreferencesDir(const String& org, const String& app) co
         SDL_free(prefPath);
     }
     else
-#endif
         DV_LOGWARNING("Could not get application preferences directory");
 
     return dir;
@@ -1051,14 +1039,10 @@ bool IsAbsolutePath(const String& pathName)
 String FileSystem::GetTemporaryDir() const
 {
 #if defined(_WIN32)
-#if defined(MINI_URHO)
-    return getenv("TMP");
-#else
     wchar_t pathName[MAX_PATH];
     pathName[0] = 0;
     GetTempPathW(SDL_arraysize(pathName), pathName);
     return AddTrailingSlash(String(pathName));
-#endif
 #else
     if (char* pathName = getenv("TMPDIR"))
         return AddTrailingSlash(pathName);

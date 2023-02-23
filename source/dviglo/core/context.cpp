@@ -6,30 +6,16 @@
 #include "event_profiler.h"
 #include "../io/log.h"
 
-#ifndef MINI_URHO
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_gesture.h>
-#endif
 
 #include "../common/debug_new.h"
 
 namespace dviglo
 {
 
-#ifndef MINI_URHO
 // Keeps track of how many times SDL was initialised so we know when to call SDL_Quit().
 static int sdlInitCounter = 0;
-
-// Keeps track of how many times IK was initialised
-static int ikInitCounter = 0;
-
-// Reroute all messages from the ik library to the Urho3D log
-static void HandleIKLog(const char* msg)
-{
-    DV_LOGINFOF("[IK] %s", msg);
-}
-#endif
-
 
 void EventReceiverGroup::BeginSendEvent()
 {
@@ -234,7 +220,6 @@ VariantMap& Context::GetEventDataMap()
     return ret;
 }
 
-#ifndef MINI_URHO
 bool Context::RequireSDL(unsigned int sdlFlags)
 {
     // Always increment, the caller must match with ReleaseSDL(), regardless of
@@ -287,8 +272,6 @@ void Context::ReleaseSDL()
     if (sdlInitCounter < 0)
         DV_LOGERROR("Too many calls to Context::ReleaseSDL()!");
 }
-
-#endif // ifndef MINI_URHO
 
 void Context::CopyBaseAttributes(StringHash baseType, StringHash derivedType)
 {
