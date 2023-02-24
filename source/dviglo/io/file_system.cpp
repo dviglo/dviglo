@@ -255,11 +255,6 @@ FileSystem::~FileSystem()
 
 bool FileSystem::SetCurrentDir(const String& pathName)
 {
-    if (!CheckAccess(pathName))
-    {
-        DV_LOGERROR("Access denied to " + pathName);
-        return false;
-    }
 #ifdef _WIN32
     if (SetCurrentDirectoryW(GetWideNativePath(pathName).CString()) == FALSE)
     {
@@ -279,12 +274,6 @@ bool FileSystem::SetCurrentDir(const String& pathName)
 
 bool FileSystem::CreateDir(const String& pathName)
 {
-    if (!CheckAccess(pathName))
-    {
-        DV_LOGERROR("Access denied to " + pathName);
-        return false;
-    }
-
     // Create each of the parents if necessary
     String parentPath = GetParentPath(pathName);
     if (parentPath.Length() > 1 && !DirExists(parentPath))
@@ -322,41 +311,21 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
 
 int FileSystem::SystemCommand(const String& commandLine, bool redirectStdOutToLog)
 {
-    if (allowedPaths_.Empty())
-        return DoSystemCommand(commandLine, redirectStdOutToLog);
-    else
-    {
-        DV_LOGERROR("Executing an external command is not allowed");
-        return -1;
-    }
+    return DoSystemCommand(commandLine, redirectStdOutToLog);
 }
 
 int FileSystem::SystemRun(const String& fileName, const Vector<String>& arguments)
 {
-    if (allowedPaths_.Empty())
-        return DoSystemRun(fileName, arguments);
-    else
-    {
-        DV_LOGERROR("Executing an external command is not allowed");
-        return -1;
-    }
+    return DoSystemRun(fileName, arguments);
 }
 
 unsigned FileSystem::SystemCommandAsync(const String& commandLine)
 {
 #ifdef DV_THREADING
-    if (allowedPaths_.Empty())
-    {
-        unsigned requestID = nextAsyncExecID_;
-        auto* cmd = new AsyncSystemCommand(nextAsyncExecID_, commandLine);
-        asyncExecQueue_.Push(cmd);
-        return requestID;
-    }
-    else
-    {
-        DV_LOGERROR("Executing an external command is not allowed");
-        return M_MAX_UNSIGNED;
-    }
+    unsigned requestID = nextAsyncExecID_;
+    auto* cmd = new AsyncSystemCommand(nextAsyncExecID_, commandLine);
+    asyncExecQueue_.Push(cmd);
+    return requestID;
 #else
     DV_LOGERROR("Can not execute an asynchronous command as threading is disabled");
     return M_MAX_UNSIGNED;
@@ -366,18 +335,10 @@ unsigned FileSystem::SystemCommandAsync(const String& commandLine)
 unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>& arguments)
 {
 #ifdef DV_THREADING
-    if (allowedPaths_.Empty())
-    {
-        unsigned requestID = nextAsyncExecID_;
-        auto* cmd = new AsyncSystemRun(nextAsyncExecID_, fileName, arguments);
-        asyncExecQueue_.Push(cmd);
-        return requestID;
-    }
-    else
-    {
-        DV_LOGERROR("Executing an external command is not allowed");
-        return M_MAX_UNSIGNED;
-    }
+    unsigned requestID = nextAsyncExecID_;
+    auto* cmd = new AsyncSystemRun(nextAsyncExecID_, fileName, arguments);
+    asyncExecQueue_.Push(cmd);
+    return requestID;
 #else
     DV_LOGERROR("Can not run asynchronously as threading is disabled");
     return M_MAX_UNSIGNED;
@@ -386,47 +347,28 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
 
 bool FileSystem::SystemOpen(const String& fileName, const String& mode)
 {
-    if (allowedPaths_.Empty())
+    if (!FileExists(fileName) && !DirExists(fileName))
     {
-        if (!FileExists(fileName) && !DirExists(fileName))
-        {
-            DV_LOGERROR("File or directory " + fileName + " not found");
-            return false;
-        }
-
-#ifdef _WIN32
-        bool success = (size_t)ShellExecuteW(nullptr, !mode.Empty() ? WString(mode).CString() : nullptr,
-            GetWideNativePath(fileName).CString(), nullptr, nullptr, SW_SHOW) > 32;
-#else
-        Vector<String> arguments;
-        arguments.Push(fileName);
-        bool success = SystemRun("/usr/bin/xdg-open", arguments) == 0;
-#endif
-        if (!success)
-            DV_LOGERROR("Failed to open " + fileName + " externally");
-
-        return success;
-    }
-    else
-    {
-        DV_LOGERROR("Opening a file externally is not allowed");
+        DV_LOGERROR("File or directory " + fileName + " not found");
         return false;
     }
+
+#ifdef _WIN32
+    bool success = (size_t)ShellExecuteW(nullptr, !mode.Empty() ? WString(mode).CString() : nullptr,
+        GetWideNativePath(fileName).CString(), nullptr, nullptr, SW_SHOW) > 32;
+#else
+    Vector<String> arguments;
+    arguments.Push(fileName);
+    bool success = SystemRun("/usr/bin/xdg-open", arguments) == 0;
+#endif
+    if (!success)
+        DV_LOGERROR("Failed to open " + fileName + " externally");
+
+    return success;
 }
 
 bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 {
-    if (!CheckAccess(GetPath(srcFileName)))
-    {
-        DV_LOGERROR("Access denied to " + srcFileName);
-        return false;
-    }
-    if (!CheckAccess(GetPath(destFileName)))
-    {
-        DV_LOGERROR("Access denied to " + destFileName);
-        return false;
-    }
-
     SharedPtr<File> srcFile(new File(srcFileName, FILE_READ));
     if (!srcFile->IsOpen())
         return false;
@@ -444,17 +386,6 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 
 bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 {
-    if (!CheckAccess(GetPath(srcFileName)))
-    {
-        DV_LOGERROR("Access denied to " + srcFileName);
-        return false;
-    }
-    if (!CheckAccess(GetPath(destFileName)))
-    {
-        DV_LOGERROR("Access denied to " + destFileName);
-        return false;
-    }
-
 #ifdef _WIN32
     return MoveFileW(GetWideNativePath(srcFileName).CString(), GetWideNativePath(destFileName).CString()) != 0;
 #else
@@ -464,12 +395,6 @@ bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 
 bool FileSystem::Delete(const String& fileName)
 {
-    if (!CheckAccess(GetPath(fileName)))
-    {
-        DV_LOGERROR("Access denied to " + fileName);
-        return false;
-    }
-
 #ifdef _WIN32
     return DeleteFileW(GetWideNativePath(fileName).CString()) != 0;
 #else
@@ -492,32 +417,9 @@ String FileSystem::GetCurrentDir() const
 #endif
 }
 
-bool FileSystem::CheckAccess(const String& pathName) const
-{
-    String fixedPath = AddTrailingSlash(pathName);
-
-    // If no allowed directories defined, succeed always
-    if (allowedPaths_.Empty())
-        return true;
-
-    // If there is any attempt to go to a parent directory, disallow
-    if (fixedPath.Contains(".."))
-        return false;
-
-    // Check if the path is a partial match of any of the allowed directories
-    for (HashSet<String>::ConstIterator i = allowedPaths_.Begin(); i != allowedPaths_.End(); ++i)
-    {
-        if (fixedPath.Find(*i) == 0)
-            return true;
-    }
-
-    // Not found, so disallow
-    return false;
-}
-
 unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 {
-    if (fileName.Empty() || !CheckAccess(fileName))
+    if (fileName.Empty())
         return 0;
 
 #ifdef _WIN32
@@ -537,9 +439,6 @@ unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 
 bool FileSystem::FileExists(const String& fileName) const
 {
-    if (!CheckAccess(GetPath(fileName)))
-        return false;
-
     String fixedName = GetNativePath(RemoveTrailingSlash(fileName));
 
 #ifdef _WIN32
@@ -557,9 +456,6 @@ bool FileSystem::FileExists(const String& fileName) const
 
 bool FileSystem::DirExists(const String& pathName) const
 {
-    if (!CheckAccess(pathName))
-        return false;
-
 #ifndef _WIN32
     // Always return true for the root directory
     if (pathName == "/")
@@ -585,11 +481,8 @@ void FileSystem::ScanDir(Vector<String>& result, const String& pathName, const S
 {
     result.Clear();
 
-    if (CheckAccess(pathName))
-    {
-        String initialPath = AddTrailingSlash(pathName);
-        ScanDirInternal(result, initialPath, initialPath, filter, flags, recursive);
-    }
+    String initialPath = AddTrailingSlash(pathName);
+    ScanDirInternal(result, initialPath, initialPath, filter, flags, recursive);
 }
 
 String FileSystem::GetProgramDir() const
@@ -641,17 +534,9 @@ String FileSystem::GetAppPreferencesDir(const String& org, const String& app) co
     return dir;
 }
 
-void FileSystem::RegisterPath(const String& pathName)
-{
-    if (pathName.Empty())
-        return;
-
-    allowedPaths_.Insert(AddTrailingSlash(pathName));
-}
-
 bool FileSystem::SetLastModifiedTime(const String& fileName, unsigned newTime)
 {
-    if (fileName.Empty() || !CheckAccess(fileName))
+    if (fileName.Empty())
         return false;
 
 #ifdef _WIN32

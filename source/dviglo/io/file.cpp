@@ -402,13 +402,6 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
     readSyncNeeded_ = false;
     writeSyncNeeded_ = false;
 
-    auto* fileSystem = GetSubsystem<FileSystem>();
-    if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
-    {
-        DV_LOGERRORF("Access denied to %s", fileName.CString());
-        return false;
-    }
-
     if (fileName.Empty())
     {
         DV_LOGERROR("Could not open file with empty name");

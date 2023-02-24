@@ -1243,13 +1243,6 @@ bool Image::SaveBMP(const String& fileName) const
 {
     DV_PROFILE(SaveImageBMP);
 
-    auto* fileSystem = GetSubsystem<FileSystem>();
-    if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
-    {
-        DV_LOGERROR("Access denied to " + fileName);
-        return false;
-    }
-
     if (IsCompressed())
     {
         DV_LOGERROR("Can not save compressed image to BMP");
@@ -1277,13 +1270,6 @@ bool Image::SaveTGA(const String& fileName) const
 {
     DV_PROFILE(SaveImageTGA);
 
-    auto* fileSystem = GetSubsystem<FileSystem>();
-    if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
-    {
-        DV_LOGERROR("Access denied to " + fileName);
-        return false;
-    }
-
     if (IsCompressed())
     {
         DV_LOGERROR("Can not save compressed image to TGA");
@@ -1299,13 +1285,6 @@ bool Image::SaveTGA(const String& fileName) const
 bool Image::SaveJPG(const String& fileName, int quality) const
 {
     DV_PROFILE(SaveImageJPG);
-
-    auto* fileSystem = GetSubsystem<FileSystem>();
-    if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
-    {
-        DV_LOGERROR("Access denied to " + fileName);
-        return false;
-    }
 
     if (IsCompressed())
     {
@@ -1377,14 +1356,7 @@ bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) con
 #ifdef DV_WEBP
     DV_PROFILE(SaveImageWEBP);
 
-    auto* fileSystem(GetSubsystem<FileSystem>());
     File outFile(fileName, FILE_WRITE);
-
-    if (fileSystem && !fileSystem->CheckAccess(GetPath(fileName)))
-    {
-        DV_LOGERROR("Access denied to " + fileName);
-        return false;
-    }
 
     if (IsCompressed())
     {
