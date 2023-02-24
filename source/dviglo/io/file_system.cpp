@@ -13,10 +13,6 @@
 #include "io_events.h"
 #include "log.h"
 
-#ifdef __ANDROID__
-#include <SDL3/SDL_rwops.h>
-#endif
-
 #include <SDL3/SDL_filesystem.h>
 
 #include <sys/stat.h>
@@ -40,22 +36,6 @@
 #include <sys/wait.h>
 #define MAX_PATH 256
 #endif
-
-#if defined(__APPLE__)
-#include <mach-o/dyld.h>
-#endif
-
-extern "C"
-{
-#ifdef __ANDROID__
-const char* SDL_Android_GetFilesDir();
-char** SDL_Android_GetFileList(const char* path, int* count);
-void SDL_Android_FreeFileList(char*** array, int* count);
-#elif defined(IOS) || defined(TVOS)
-const char* SDL_IOS_GetResourceDir();
-const char* SDL_IOS_GetDocumentsDir();
-#endif
-}
 
 #include "../common/debug_new.h"
 
@@ -114,9 +94,6 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
 
 int DoSystemRun(const String& fileName, const Vector<String>& arguments)
 {
-#ifdef TVOS
-    return -1;
-#else
     String fixedFileName = GetNativePath(fileName);
 
 #ifdef _WIN32
@@ -166,7 +143,6 @@ int DoSystemRun(const String& fileName, const Vector<String>& arguments)
     }
     else
         return -1;
-#endif
 #endif
 }
 
@@ -424,16 +400,11 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
 #else
         Vector<String> arguments;
         arguments.Push(fileName);
-        bool success = SystemRun(
-#if defined(__APPLE__)
-            "/usr/bin/open",
-#else
-            "/usr/bin/xdg-open",
-#endif
-            arguments) == 0;
+        bool success = SystemRun("/usr/bin/xdg-open", arguments) == 0;
 #endif
         if (!success)
             DV_LOGERROR("Failed to open " + fileName + " externally");
+
         return success;
     }
     else
@@ -569,20 +540,6 @@ bool FileSystem::FileExists(const String& fileName) const
     if (!CheckAccess(GetPath(fileName)))
         return false;
 
-#ifdef __ANDROID__
-    if (DV_IS_ASSET(fileName))
-    {
-        SDL_RWops* rwOps = SDL_RWFromFile(DV_ASSET(fileName), "rb");
-        if (rwOps)
-        {
-            SDL_RWclose(rwOps);
-            return true;
-        }
-        else
-            return false;
-    }
-#endif
-
     String fixedName = GetNativePath(RemoveTrailingSlash(fileName));
 
 #ifdef _WIN32
@@ -611,34 +568,6 @@ bool FileSystem::DirExists(const String& pathName) const
 
     String fixedName = GetNativePath(RemoveTrailingSlash(pathName));
 
-#ifdef __ANDROID__
-    if (DV_IS_ASSET(fixedName))
-    {
-        // Split the pathname into two components: the longest parent directory path and the last name component
-        String assetPath(DV_ASSET((fixedName + "/")));
-        String parentPath;
-        i32 pos = assetPath.FindLast('/', assetPath.Length() - 2);
-        if (pos != String::NPOS)
-        {
-            parentPath = assetPath.Substring(0, pos);
-            assetPath = assetPath.Substring(pos + 1);
-        }
-        assetPath.Resize(assetPath.Length() - 1);
-
-        bool exist = false;
-        int count;
-        char** list = SDL_Android_GetFileList(parentPath.CString(), &count);
-        for (int i = 0; i < count; ++i)
-        {
-            exist = assetPath == list[i];
-            if (exist)
-                break;
-        }
-        SDL_Android_FreeFileList(&list, &count);
-        return exist;
-    }
-#endif
-
 #ifdef _WIN32
     DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
     if (attributes == INVALID_FILE_ATTRIBUTES || !(attributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -665,22 +594,10 @@ void FileSystem::ScanDir(Vector<String>& result, const String& pathName, const S
 
 String FileSystem::GetProgramDir() const
 {
-#if defined(__ANDROID__)
-    // This is an internal directory specifier pointing to the assets in the .apk
-    // Files from this directory will be opened using special handling
-    return APK;
-#elif defined(IOS) || defined(TVOS)
-    return AddTrailingSlash(SDL_IOS_GetResourceDir());
-#elif defined(_WIN32)
+#if defined(_WIN32)
     wchar_t exeName[MAX_PATH];
     exeName[0] = 0;
     GetModuleFileNameW(nullptr, exeName, MAX_PATH);
-    return GetPath(String(exeName));
-#elif defined(__APPLE__)
-    char exeName[MAX_PATH];
-    memset(exeName, 0, MAX_PATH);
-    unsigned size = MAX_PATH;
-    _NSGetExecutablePath(exeName, &size);
     return GetPath(String(exeName));
 #elif defined(__linux__)
     char exeName[MAX_PATH];
@@ -696,11 +613,7 @@ String FileSystem::GetProgramDir() const
 
 String FileSystem::GetUserDocumentsDir() const
 {
-#if defined(__ANDROID__)
-    return AddTrailingSlash(SDL_Android_GetFilesDir());
-#elif defined(IOS) || defined(TVOS)
-    return AddTrailingSlash(SDL_IOS_GetDocumentsDir());
-#elif defined(_WIN32)
+#if defined(_WIN32)
     wchar_t pathName[MAX_PATH];
     pathName[0] = 0;
     SHGetSpecialFolderPathW(nullptr, pathName, CSIDL_PERSONAL, 0);
@@ -772,41 +685,6 @@ void FileSystem::ScanDirInternal(Vector<String>& result, String path, const Stri
     if (filterExtension.Contains('*'))
         filterExtension.Clear();
 
-#ifdef __ANDROID__
-    if (DV_IS_ASSET(path))
-    {
-        String assetPath(DV_ASSET(path));
-        assetPath.Resize(assetPath.Length() - 1);       // AssetManager.list() does not like trailing slash
-        int count;
-        char** list = SDL_Android_GetFileList(assetPath.CString(), &count);
-        for (int i = 0; i < count; ++i)
-        {
-            String fileName(list[i]);
-            if (!(flags & SCAN_HIDDEN) && fileName.StartsWith("."))
-                continue;
-
-#ifdef ASSET_DIR_INDICATOR
-            // Patch the directory name back after retrieving the directory flag
-            bool isDirectory = fileName.EndsWith(ASSET_DIR_INDICATOR);
-            if (isDirectory)
-            {
-                fileName.Resize(fileName.Length() - sizeof(ASSET_DIR_INDICATOR) / sizeof(char) + 1);
-                if (flags & SCAN_DIRS)
-                    result.Push(deltaPath + fileName);
-                if (recursive)
-                    ScanDirInternal(result, path + fileName, startPath, filter, flags, recursive);
-            }
-            else if (flags & SCAN_FILES)
-#endif
-            {
-                if (filterExtension.Empty() || fileName.EndsWith(filterExtension))
-                    result.Push(deltaPath + fileName);
-            }
-        }
-        SDL_Android_FreeFileList(&list, &count);
-        return;
-    }
-#endif
 #ifdef _WIN32
     WIN32_FIND_DATAW info;
     HANDLE handle = FindFirstFileW(WString(path + "*").CString(), &info);
