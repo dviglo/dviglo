@@ -526,7 +526,7 @@ String FileSystem::GetAppPreferencesDir(const String& org, const String& app) co
     char* prefPath = SDL_GetPrefPath(org.CString(), app.CString());
     if (prefPath)
     {
-        dir = GetInternalPath(String(prefPath));
+        dir = to_internal(String(prefPath));
         SDL_free(prefPath);
     }
     else
@@ -669,7 +669,7 @@ void FileSystem::HandleConsoleCommand(StringHash eventType, VariantMap& eventDat
 
 void SplitPath(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension)
 {
-    String fullPathCopy = GetInternalPath(fullPath);
+    String fullPathCopy = to_internal(fullPath);
 
     i32 extPos = fullPathCopy.FindLast('.');
     i32 pathPos = fullPathCopy.FindLast('/');
@@ -759,11 +759,6 @@ String GetParentPath(const String& path)
         return String();
 }
 
-String GetInternalPath(const String& pathName)
-{
-    return pathName.Replaced('\\', '/');
-}
-
 WString GetWideNativePath(const String& pathName)
 {
 #ifdef _WIN32
@@ -778,7 +773,7 @@ bool IsAbsolutePath(const String& pathName)
     if (pathName.Empty())
         return false;
 
-    String path = GetInternalPath(pathName);
+    String path = to_internal(pathName);
 
     if (path[0] == '/')
         return true;

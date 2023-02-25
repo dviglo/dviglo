@@ -10,6 +10,12 @@
 namespace dviglo
 {
 
+/// Заменяет '\\' на '/'
+inline String to_internal(const String& path)
+{
+    return path.Replaced('\\', '/');
+}
+
 /// В Windows заменяет '/' на '\\'
 inline String to_native(const String& path)
 {

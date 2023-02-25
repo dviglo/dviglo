@@ -8,6 +8,7 @@
 #include "../core/work_queue.h"
 #include "../io/file_system.h"
 #include "../io/file_watcher.h"
+#include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/package_file.h"
 #include "background_loader.h"
@@ -835,7 +836,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
 String ResourceCache::SanitateResourceName(const String& name) const
 {
     // Sanitate unsupported constructs from the resource name
-    String sanitatedName = GetInternalPath(name);
+    String sanitatedName = to_internal(name);
     sanitatedName.Replace("../", "");
     sanitatedName.Replace("./", "");
 

@@ -4,16 +4,16 @@
 
 #include "../core/context.h"
 #include "../core/profiler.h"
-#include "animated_model.h"
-#include "animation.h"
-#include "animation_controller.h"
-#include "animation_state.h"
-#include "../io/file_system.h"
+#include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
 #include "../resource/resource_cache.h"
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
+#include "animated_model.h"
+#include "animation.h"
+#include "animation_controller.h"
+#include "animation_state.h"
 
 #include "../common/debug_new.h"
 
@@ -865,7 +865,7 @@ void AnimationController::RemoveAnimationState(AnimationState* state)
 
 void AnimationController::FindAnimation(const String& name, i32& index, AnimationState*& state) const
 {
-    StringHash nameHash(GetInternalPath(name));
+    StringHash nameHash(to_internal(name));
 
     // Find the AnimationState
     state = GetAnimationState(nameHash);

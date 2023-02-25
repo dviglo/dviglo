@@ -9,13 +9,13 @@
 #include "../core/string_utils.h"
 #include "../graphics/graphics.h"
 #include "../graphics/graphics_events.h"
-#include "input.h"
-#include "../io/file_system.h"
+#include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/rw_ops_wrapper.h"
 #include "../resource/resource_cache.h"
 #include "../ui/text.h"
 #include "../ui/ui.h"
+#include "input.h"
 
 #ifdef _WIN32
 #include "../engine/engine.h"
@@ -2370,7 +2370,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
             using namespace DropFile;
 
             VariantMap& eventData = GetEventDataMap();
-            eventData[P_FILENAME] = GetInternalPath(String(evt.drop.file));
+            eventData[P_FILENAME] = to_internal(String(evt.drop.file));
             SDL_free(evt.drop.file);
 
             SendEvent(E_DROPFILE, eventData);

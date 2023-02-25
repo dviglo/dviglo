@@ -250,7 +250,7 @@ void FileWatcher::ThreadFunction()
                     while (src < end)
                         fileName.AppendUTF8(String::DecodeUTF16(src));
 
-                    fileName = GetInternalPath(fileName);
+                    fileName = to_internal(fileName);
                     AddChange(fileName);
                 }
 
