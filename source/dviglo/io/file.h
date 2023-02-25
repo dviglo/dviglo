@@ -10,25 +10,8 @@
 #include "../core/object.h"
 #include "abstract_file.h"
 
-#ifdef __ANDROID__
-struct SDL_RWops;
-#endif
-
 namespace dviglo
 {
-
-#ifdef __ANDROID__
-extern const char* APK;
-
-// Macro for checking if a given pathname is inside APK's assets directory
-#define DV_IS_ASSET(p) p.StartsWith(APK)
-// Macro for truncating the APK prefix string from the asset pathname and at the same time patching the directory name components (see custom_rules.xml)
-#ifdef ASSET_DIR_INDICATOR
-#define DV_ASSET(p) p.Substring(5).Replaced("/", ASSET_DIR_INDICATOR "/").CString()
-#else
-#define DV_ASSET(p) p.Substring(5).CString()
-#endif
-#endif
 
 /// File open mode.
 enum FileMode
@@ -87,22 +70,18 @@ public:
     bool IsPackaged() const { return offset_ != 0; }
 
 private:
-    /// Open file internally using either C standard IO functions or SDL RWops for Android asset files. Return true if successful.
+    /// Open file internally using either C standard IO functions. Return true if successful
     bool OpenInternal(const String& fileName, FileMode mode, bool fromPackage = false);
-    /// Perform the file read internally using either C standard IO functions or SDL RWops for Android asset files. Return true if successful. This does not handle compressed package file reading.
+    /// Perform the file read internally using either C standard IO functions. Return true if successful. This does not handle compressed package file reading
     bool ReadInternal(void* dest, i32 size);
-    /// Seek in file internally using either C standard IO functions or SDL RWops for Android asset files.
+    /// Seek in file internally using either C standard IO functions
     void SeekInternal(i64 newPosition);
 
     /// Open mode.
     FileMode mode_;
     /// File handle.
     FILE* handle_;
-#ifdef __ANDROID__
-    /// SDL RWops context for Android asset loading.
-    SDL_RWops* assetHandle_;
-#endif
-    /// Read buffer for Android asset or compressed file loading.
+    /// Read buffer for compressed file loading.
     SharedArrayPtr<u8> readBuffer_;
     /// Decompression input buffer for compressed file loading.
     SharedArrayPtr<u8> inputBuffer_;

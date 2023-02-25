@@ -10,10 +10,6 @@
 #include "memory_buffer.h"
 #include "package_file.h"
 
-#ifdef __ANDROID__
-#include <SDL3/SDL_rwops.h>
-#endif
-
 #include <cstdio>
 #include <lz4/lz4.h>
 
@@ -30,18 +26,11 @@ static const String OPEN_MODE[] =
     "w+b"
 };
 
-#ifdef __ANDROID__
-const char* APK = "/apk/";
-static constexpr i32 READ_BUFFER_SIZE = 32768;
-#endif
 static constexpr i32 SKIP_BUFFER_SIZE = 1024;
 
 File::File() :
     mode_(FILE_READ),
     handle_(nullptr),
-#ifdef __ANDROID__
-    assetHandle_(0),
-#endif
     readBufferOffset_(0),
     readBufferSize_(0),
     offset_(0),
@@ -55,9 +44,6 @@ File::File() :
 File::File(const String& fileName, FileMode mode) :
     mode_(FILE_READ),
     handle_(nullptr),
-#ifdef __ANDROID__
-    assetHandle_(0),
-#endif
     readBufferOffset_(0),
     readBufferSize_(0),
     offset_(0),
@@ -72,9 +58,6 @@ File::File(const String& fileName, FileMode mode) :
 File::File(PackageFile* package, const String& fileName) :
     mode_(FILE_READ),
     handle_(nullptr),
-#ifdef __ANDROID__
-    assetHandle_(0),
-#endif
     readBufferOffset_(0),
     readBufferSize_(0),
     offset_(0),
@@ -143,41 +126,6 @@ i32 File::Read(void* dest, i32 size)
         size = size_ - position_;
     if (!size)
         return 0;
-
-#ifdef __ANDROID__
-    if (assetHandle_ && !compressed_)
-    {
-        // If not using a compressed package file, buffer file reads on Android for better performance
-        if (!readBuffer_)
-        {
-            readBuffer_ = new u8[READ_BUFFER_SIZE];
-            readBufferOffset_ = 0;
-            readBufferSize_ = 0;
-        }
-
-        i32 sizeLeft = size;
-        u8* destPtr = (u8*)dest;
-
-        while (sizeLeft)
-        {
-            if (readBufferOffset_ >= readBufferSize_)
-            {
-                readBufferSize_ = Min(size_ - position_, READ_BUFFER_SIZE);
-                readBufferOffset_ = 0;
-                ReadInternal(readBuffer_.Get(), readBufferSize_);
-            }
-
-            i32 copySize = Min((readBufferSize_ - readBufferOffset_), sizeLeft);
-            memcpy(destPtr, readBuffer_.Get() + readBufferOffset_, copySize);
-            destPtr += copySize;
-            sizeLeft -= copySize;
-            readBufferOffset_ += copySize;
-            position_ += copySize;
-        }
-
-        return size;
-    }
-#endif
 
     if (compressed_)
     {
@@ -330,11 +278,8 @@ hash32 File::GetChecksum()
 {
     if (offset_ || checksum_)
         return checksum_;
-#ifdef __ANDROID__
-    if ((!handle_ && !assetHandle_) || mode_ == FILE_WRITE)
-#else
+
     if (!handle_ || mode_ == FILE_WRITE)
-#endif
         return 0;
 
     DV_PROFILE(CalculateFileChecksum);
@@ -357,14 +302,6 @@ hash32 File::GetChecksum()
 
 void File::Close()
 {
-#ifdef __ANDROID__
-    if (assetHandle_)
-    {
-        SDL_RWclose(assetHandle_);
-        assetHandle_ = 0;
-    }
-#endif
-
     readBuffer_.Reset();
     inputBuffer_.Reset();
 
@@ -387,11 +324,7 @@ void File::Flush()
 
 bool File::IsOpen() const
 {
-#ifdef __ANDROID__
-    return handle_ != 0 || assetHandle_ != 0;
-#else
     return handle_ != nullptr;
-#endif
 }
 
 bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
@@ -407,37 +340,6 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
         DV_LOGERROR("Could not open file with empty name");
         return false;
     }
-
-#ifdef __ANDROID__
-    if (DV_IS_ASSET(fileName))
-    {
-        if (mode != FILE_READ)
-        {
-            DV_LOGERROR("Only read mode is supported for Android asset files");
-            return false;
-        }
-
-        assetHandle_ = SDL_RWFromFile(DV_ASSET(fileName), "rb");
-        if (!assetHandle_)
-        {
-            DV_LOGERRORF("Could not open Android asset file %s", fileName.CString());
-            return false;
-        }
-        else
-        {
-            name_ = fileName;
-            mode_ = mode;
-            position_ = 0;
-            if (!fromPackage)
-            {
-                size_ = SDL_RWsize(assetHandle_);
-                offset_ = 0;
-            }
-            checksum_ = 0;
-            return true;
-        }
-    }
-#endif
 
     handle_ = file_open(fileName, OPEN_MODE[mode]);
 
@@ -478,34 +380,13 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
 bool File::ReadInternal(void* dest, i32 size)
 {
     assert(size >= 0);
-
-#ifdef __ANDROID__
-    if (assetHandle_)
-    {
-        return SDL_RWread(assetHandle_, dest, size, 1) == 1;
-    }
-    else
-#endif
-        return file_read(dest, size, 1, handle_) == 1;
+    return file_read(dest, size, 1, handle_) == 1;
 }
 
 void File::SeekInternal(i64 newPosition)
 {
     assert(newPosition >= 0);
-
-#ifdef __ANDROID__
-    if (assetHandle_)
-    {
-        SDL_RWseek(assetHandle_, newPosition, SEEK_SET);
-        // Reset buffering after seek
-        readBufferOffset_ = 0;
-        readBufferSize_ = 0;
-    }
-    else
-#endif
-    {
-        file_seek(handle_, newPosition, SEEK_SET);
-    }
+    file_seek(handle_, newPosition, SEEK_SET);
 }
 
 } // namespace dviglo
