@@ -4,9 +4,9 @@
 
 #include "../core/context.h"
 #include "../core/profiler.h"
-#include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
+#include "../io/path.h"
 #include "../resource/resource_cache.h"
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"

@@ -3,7 +3,7 @@
 // License: MIT
 
 #include "../core/profiler.h"
-#include "../io/fs_base.h"
+#include "../io/path.h"
 #include "file.h"
 #include "file_system.h"
 #include "file_watcher.h"

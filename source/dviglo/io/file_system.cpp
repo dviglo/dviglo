@@ -10,9 +10,9 @@
 #include "../engine/engine_events.h"
 #include "file.h"
 #include "file_system.h"
-#include "fs_base.h"
 #include "io_events.h"
 #include "log.h"
+#include "path.h"
 
 #include <SDL3/SDL_filesystem.h>
 

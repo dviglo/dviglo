@@ -6,8 +6,8 @@
 #include "../core/profiler.h"
 #include "../io/file.h"
 #include "../io/file_system.h"
-#include "../io/fs_base.h"
 #include "../io/log.h"
+#include "../io/path.h"
 #include "decompress.h"
 
 #include <SDL3/SDL_surface.h>
