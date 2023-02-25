@@ -68,7 +68,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
 
 #if defined(DV_FILEWATCHER) && defined(DV_THREADING)
 #ifdef _WIN32
-    String nativePath = to_native(RemoveTrailingSlash(pathName));
+    String nativePath = to_native(trim_end_slash(pathName));
 
     dirHandle_ = (void*)CreateFileW(
         WString(nativePath).CString(),

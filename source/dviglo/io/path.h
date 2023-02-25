@@ -27,4 +27,15 @@ inline String to_native(const String& path)
 #endif
 }
 
+/// Удаляет один '/' в конце строки, если он есть
+inline String trim_end_slash(const String& path)
+{
+    String ret = path;
+
+    if (!ret.Empty() && ret.Back() == '/')
+        ret.Resize(ret.Length() - 1);
+
+    return ret;
+}
+
 } // namespace dviglo

@@ -111,8 +111,6 @@ DV_API String GetFileNameAndExtension(const String& fileName, bool lowercaseExte
 DV_API String ReplaceExtension(const String& fullPath, const String& newExtension);
 /// Add a slash at the end of the path if missing and convert to internal format (use slashes).
 DV_API String AddTrailingSlash(const String& pathName);
-/// Remove the slash from the end of a path if exists and convert to internal format (use slashes).
-DV_API String RemoveTrailingSlash(const String& pathName);
 /// Return the parent path, or the path itself if not available.
 DV_API String GetParentPath(const String& path);
 /// Convert a path to the format required by the operating system in wide characters.

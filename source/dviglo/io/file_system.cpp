@@ -284,10 +284,10 @@ bool FileSystem::CreateDir(const String& pathName)
     }
 
 #ifdef _WIN32
-    bool success = (CreateDirectoryW(GetWideNativePath(RemoveTrailingSlash(pathName)).CString(), nullptr) == TRUE) ||
+    bool success = (CreateDirectoryW(GetWideNativePath(trim_end_slash(pathName)).CString(), nullptr) == TRUE) ||
         (GetLastError() == ERROR_ALREADY_EXISTS);
 #else
-    bool success = mkdir(RemoveTrailingSlash(pathName).CString(), S_IRWXU) == 0 || errno == EEXIST;
+    bool success = mkdir(trim_end_slash(pathName).CString(), S_IRWXU) == 0 || errno == EEXIST;
 #endif
 
     if (success)
@@ -440,7 +440,7 @@ unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 
 bool FileSystem::FileExists(const String& fileName) const
 {
-    String fixedName = to_native(RemoveTrailingSlash(fileName));
+    String fixedName = to_native(trim_end_slash(fileName));
 
 #ifdef _WIN32
     DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
@@ -463,7 +463,7 @@ bool FileSystem::DirExists(const String& pathName) const
         return true;
 #endif
 
-    String fixedName = to_native(RemoveTrailingSlash(pathName));
+    String fixedName = to_native(trim_end_slash(pathName));
 
 #ifdef _WIN32
     DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
@@ -741,18 +741,9 @@ String AddTrailingSlash(const String& pathName)
     return ret;
 }
 
-String RemoveTrailingSlash(const String& pathName)
-{
-    String ret = pathName.Trimmed();
-    ret.Replace('\\', '/');
-    if (!ret.Empty() && ret.Back() == '/')
-        ret.Resize(ret.Length() - 1);
-    return ret;
-}
-
 String GetParentPath(const String& path)
 {
-    i32 pos = RemoveTrailingSlash(path).FindLast('/');
+    i32 pos = trim_end_slash(path).FindLast('/');
     if (pos != String::NPOS)
         return path.Substring(0, pos + 1);
     else
