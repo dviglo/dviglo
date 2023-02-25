@@ -2,11 +2,12 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "../core/profiler.h"
+#include "../io/fs_base.h"
 #include "file.h"
 #include "file_system.h"
 #include "file_watcher.h"
 #include "log.h"
-#include "../core/profiler.h"
 
 #ifdef _WIN32
 #include "../common/win_wrapped.h"
@@ -67,7 +68,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
 
 #if defined(DV_FILEWATCHER) && defined(DV_THREADING)
 #ifdef _WIN32
-    String nativePath = GetNativePath(RemoveTrailingSlash(pathName));
+    String nativePath = to_native(RemoveTrailingSlash(pathName));
 
     dirHandle_ = (void*)CreateFileW(
         WString(nativePath).CString(),

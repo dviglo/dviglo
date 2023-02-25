@@ -117,8 +117,6 @@ DV_API String RemoveTrailingSlash(const String& pathName);
 DV_API String GetParentPath(const String& path);
 /// Convert a path to internal format (use slashes).
 DV_API String GetInternalPath(const String& pathName);
-/// Convert a path to the format required by the operating system.
-DV_API String GetNativePath(const String& pathName);
 /// Convert a path to the format required by the operating system in wide characters.
 DV_API WString GetWideNativePath(const String& pathName);
 /// Return whether a path is absolute.

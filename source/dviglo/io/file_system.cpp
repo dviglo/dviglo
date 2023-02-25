@@ -5,11 +5,12 @@
 #include "../containers/array_ptr.h"
 #include "../core/context.h"
 #include "../core/core_events.h"
-#include "../core/thread.h"
 #include "../core/profiler.h"
+#include "../core/thread.h"
 #include "../engine/engine_events.h"
 #include "file.h"
 #include "file_system.h"
+#include "fs_base.h"
 #include "io_events.h"
 #include "log.h"
 
@@ -94,7 +95,7 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
 
 int DoSystemRun(const String& fileName, const Vector<String>& arguments)
 {
-    String fixedFileName = GetNativePath(fileName);
+    String fixedFileName = to_native(fileName);
 
 #ifdef _WIN32
     // Add .exe extension if no extension defined
@@ -262,7 +263,7 @@ bool FileSystem::SetCurrentDir(const String& pathName)
         return false;
     }
 #else
-    if (chdir(GetNativePath(pathName).CString()) != 0)
+    if (chdir(pathName.CString()) != 0)
     {
         DV_LOGERROR("Failed to change directory to " + pathName);
         return false;
@@ -286,7 +287,7 @@ bool FileSystem::CreateDir(const String& pathName)
     bool success = (CreateDirectoryW(GetWideNativePath(RemoveTrailingSlash(pathName)).CString(), nullptr) == TRUE) ||
         (GetLastError() == ERROR_ALREADY_EXISTS);
 #else
-    bool success = mkdir(GetNativePath(RemoveTrailingSlash(pathName)).CString(), S_IRWXU) == 0 || errno == EEXIST;
+    bool success = mkdir(RemoveTrailingSlash(pathName).CString(), S_IRWXU) == 0 || errno == EEXIST;
 #endif
 
     if (success)
@@ -389,7 +390,7 @@ bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 #ifdef _WIN32
     return MoveFileW(GetWideNativePath(srcFileName).CString(), GetWideNativePath(destFileName).CString()) != 0;
 #else
-    return rename(GetNativePath(srcFileName).CString(), GetNativePath(destFileName).CString()) == 0;
+    return rename(srcFileName.CString(), destFileName.CString()) == 0;
 #endif
 }
 
@@ -398,7 +399,7 @@ bool FileSystem::Delete(const String& fileName)
 #ifdef _WIN32
     return DeleteFileW(GetWideNativePath(fileName).CString()) != 0;
 #else
-    return remove(GetNativePath(fileName).CString()) == 0;
+    return remove(fileName.CString()) == 0;
 #endif
 }
 
@@ -439,7 +440,7 @@ unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 
 bool FileSystem::FileExists(const String& fileName) const
 {
-    String fixedName = GetNativePath(RemoveTrailingSlash(fileName));
+    String fixedName = to_native(RemoveTrailingSlash(fileName));
 
 #ifdef _WIN32
     DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
@@ -462,7 +463,7 @@ bool FileSystem::DirExists(const String& pathName) const
         return true;
 #endif
 
-    String fixedName = GetNativePath(RemoveTrailingSlash(pathName));
+    String fixedName = to_native(RemoveTrailingSlash(pathName));
 
 #ifdef _WIN32
     DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
@@ -604,7 +605,7 @@ void FileSystem::ScanDirInternal(Vector<String>& result, String path, const Stri
     DIR* dir;
     struct dirent* de;
     struct stat st{};
-    dir = opendir(GetNativePath(path).CString());
+    dir = opendir(path.CString());
     if (dir)
     {
         while ((de = readdir(dir)))
@@ -761,15 +762,6 @@ String GetParentPath(const String& path)
 String GetInternalPath(const String& pathName)
 {
     return pathName.Replaced('\\', '/');
-}
-
-String GetNativePath(const String& pathName)
-{
-#ifdef _WIN32
-    return pathName.Replaced('/', '\\');
-#else
-    return pathName;
-#endif
 }
 
 WString GetWideNativePath(const String& pathName)
