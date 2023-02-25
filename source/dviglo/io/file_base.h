@@ -14,7 +14,7 @@ namespace dviglo
 
 // ============= Обёртки над 64-битными файловыми функциями =============
 
-// https://en.cppreference.com/w/c/io/fopen
+/// https://en.cppreference.com/w/c/io/fopen
 inline FILE* file_open(const String& filename, const String& mode)
 {
 #ifdef _WIN32
@@ -26,7 +26,7 @@ inline FILE* file_open(const String& filename, const String& mode)
 #endif
 }
 
-// https://en.cppreference.com/w/c/io/fseek
+/// https://en.cppreference.com/w/c/io/fseek
 inline i32 file_seek(FILE* stream, i64 offset, i32 origin)
 {
 #ifdef _MSC_VER
@@ -36,7 +36,7 @@ inline i32 file_seek(FILE* stream, i64 offset, i32 origin)
 #endif
 }
 
-// https://en.cppreference.com/w/c/io/ftell
+/// https://en.cppreference.com/w/c/io/ftell
 inline i64 file_tell(FILE* stream)
 {
 #ifdef _MSC_VER
@@ -46,25 +46,25 @@ inline i64 file_tell(FILE* stream)
 #endif
 }
 
-// https://en.cppreference.com/w/c/io/fwrite
+/// https://en.cppreference.com/w/c/io/fwrite
 inline i32 file_write(const void* buffer, i32 size, i32 count, FILE* stream)
 {
     return fwrite(buffer, size, count, stream);
 }
 
-// https://en.cppreference.com/w/c/io/fread
+/// https://en.cppreference.com/w/c/io/fread
 inline i32 file_read(void* buffer, i32 size, i32 count, FILE* stream)
 {
     return fread(buffer, size, count, stream);
 }
 
-// https://en.cppreference.com/w/c/io/fflush
+/// https://en.cppreference.com/w/c/io/fflush
 inline i32 file_flush(FILE* stream)
 {
     return fflush(stream);
 }
 
-// https://en.cppreference.com/w/c/io/fclose
+/// https://en.cppreference.com/w/c/io/fclose
 inline i32 file_close(FILE* stream)
 {
     return fclose(stream);
