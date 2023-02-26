@@ -257,7 +257,7 @@ FileSystem::~FileSystem()
 bool FileSystem::SetCurrentDir(const String& pathName)
 {
 #ifdef _WIN32
-    if (SetCurrentDirectoryW(GetWideNativePath(pathName).CString()) == FALSE)
+    if (SetCurrentDirectoryW(to_win_native(pathName).CString()) == FALSE)
     {
         DV_LOGERROR("Failed to change directory to " + pathName);
         return false;
@@ -284,7 +284,7 @@ bool FileSystem::CreateDir(const String& pathName)
     }
 
 #ifdef _WIN32
-    bool success = (CreateDirectoryW(GetWideNativePath(trim_end_slash(pathName)).CString(), nullptr) == TRUE) ||
+    bool success = (CreateDirectoryW(to_win_native(trim_end_slash(pathName)).CString(), nullptr) == TRUE) ||
         (GetLastError() == ERROR_ALREADY_EXISTS);
 #else
     bool success = mkdir(trim_end_slash(pathName).CString(), S_IRWXU) == 0 || errno == EEXIST;
@@ -356,7 +356,7 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
 
 #ifdef _WIN32
     bool success = (size_t)ShellExecuteW(nullptr, !mode.Empty() ? WString(mode).CString() : nullptr,
-        GetWideNativePath(fileName).CString(), nullptr, nullptr, SW_SHOW) > 32;
+        to_win_native(fileName).CString(), nullptr, nullptr, SW_SHOW) > 32;
 #else
     Vector<String> arguments;
     arguments.Push(fileName);
@@ -388,7 +388,7 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 {
 #ifdef _WIN32
-    return MoveFileW(GetWideNativePath(srcFileName).CString(), GetWideNativePath(destFileName).CString()) != 0;
+    return MoveFileW(to_win_native(srcFileName).CString(), to_win_native(destFileName).CString()) != 0;
 #else
     return rename(srcFileName.CString(), destFileName.CString()) == 0;
 #endif
@@ -397,7 +397,7 @@ bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 bool FileSystem::Delete(const String& fileName)
 {
 #ifdef _WIN32
-    return DeleteFileW(GetWideNativePath(fileName).CString()) != 0;
+    return DeleteFileW(to_win_native(fileName).CString()) != 0;
 #else
     return remove(fileName.CString()) == 0;
 #endif
@@ -748,15 +748,6 @@ String GetParentPath(const String& path)
         return path.Substring(0, pos + 1);
     else
         return String();
-}
-
-WString GetWideNativePath(const String& pathName)
-{
-#ifdef _WIN32
-    return WString(pathName.Replaced('/', '\\'));
-#else
-    return WString(pathName);
-#endif
 }
 
 bool IsAbsolutePath(const String& pathName)

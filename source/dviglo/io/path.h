@@ -27,6 +27,15 @@ inline String to_native(const String& path)
 #endif
 }
 
+#ifdef _WIN32
+/// В Windows заменяет '/' на '\\' и преобразует в кодировку UTF-16.
+/// В Linux используется кодировка UTF-8, поэтому преобразование не требуется
+inline WString to_win_native(const String& path)
+{
+    return WString(path.Replaced('/', '\\'));
+}
+#endif
+
 /// Удаляет один '/' в конце строки, если он есть
 inline String trim_end_slash(const String& path)
 {
