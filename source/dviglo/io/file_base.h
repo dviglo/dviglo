@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "../containers/str.h"
+#include "path.h"
 
 #include <cstdio>
 
@@ -18,9 +18,7 @@ namespace dviglo
 inline FILE* file_open(const String& filename, const String& mode)
 {
 #ifdef _WIN32
-    WString w_filename{filename.Replaced('/', '\\')};
-    WString w_mode{mode};
-    return _wfopen(w_filename.c_str(), w_mode.c_str());
+    return _wfopen(to_win_native(filename).c_str(), WString(mode).c_str());
 #else
     return fopen64(filename.c_str(), mode.c_str());
 #endif
