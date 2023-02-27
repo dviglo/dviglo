@@ -82,10 +82,7 @@ Urho3D uses the following third-party libraries:
 - SDL 2.0.10+ (https://www.libsdl.org)
 - SQLite 3.36.0 (https://www.sqlite.org)
 - StanHull (https://codesuppository.blogspot.com/2006/03/john-ratcliffs-code-suppository-blog.html)
-- stb_image 2.18 (https://nothings.org)
-- stb_image_write 1.08 (https://nothings.org)
-- stb_rect_pack 0.11 (https://nothings.org)
-- stb_vorbis 1.13b (https://nothings.org)
+- stb (https://nothings.org)
 - ETCPACK (https://github.com/Ericsson/ETCPACK)
 - Tracy 0.7.6 (https://github.com/wolfpld/tracy)
 

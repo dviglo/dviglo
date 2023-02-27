@@ -14,7 +14,7 @@
 #ifdef DV_SHARED
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #endif
-#include <stb/stb_image_write.h>
+#include <stb_image_write.h>
 
 #include <dviglo/common/debug_new.h>
 

@@ -10,10 +10,9 @@
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#ifndef STB_VORBIS_HEADER_ONLY
+
 #define STB_VORBIS_HEADER_ONLY
-#endif
-#include <stb/stb_vorbis.h>
+#include <stb_vorbis.c>
 
 #include "../common/debug_new.h"
 

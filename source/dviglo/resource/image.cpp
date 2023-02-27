@@ -11,10 +11,14 @@
 #include "decompress.h"
 
 #include <SDL3/SDL_surface.h>
+
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
+#include <stb_image.h>
+
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include <stb/stb_image_write.h>
+#define STBIW_WINDOWS_UTF8
+#include <stb_image_write.h>
+
 #ifdef DV_WEBP
 #include <webp/decode.h>
 #include <webp/encode.h>
@@ -1251,7 +1255,7 @@ bool Image::SaveBMP(const String& fileName) const
     }
 
     if (data_)
-        return stbi_write_bmp(fileName.c_str(), width_, height_, components_, data_.Get()) != 0;
+        return stbi_write_bmp(to_native(fileName).c_str(), width_, height_, components_, data_.Get()) != 0;
     else
         return false;
 }

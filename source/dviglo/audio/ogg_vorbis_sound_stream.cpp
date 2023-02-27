@@ -5,7 +5,7 @@
 #include "ogg_vorbis_sound_stream.h"
 #include "sound.h"
 
-#include <stb/stb_vorbis.h>
+#include <stb_vorbis.c>
 
 #include "../common/debug_new.h"
 
