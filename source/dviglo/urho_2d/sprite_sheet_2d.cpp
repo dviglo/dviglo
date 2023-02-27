@@ -7,6 +7,7 @@
 #include "../io/deserializer.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
+#include "../io/path.h"
 #include "../resource/json_file.h"
 #include "../resource/plist_file.h"
 #include "../resource/resource_cache.h"
@@ -118,7 +119,7 @@ bool SpriteSheet2D::BeginLoadFromPListFile(Deserializer& source)
     const String& textureFileName = metadata["realTextureFileName"]->GetString();
 
     // If we're async loading, request the texture now. Finish during EndLoad().
-    loadTextureName_ = GetParentPath(GetName()) + textureFileName;
+    loadTextureName_ = get_parent(GetName()) + textureFileName;
     if (GetAsyncLoadState() == ASYNC_LOADING)
         GetSubsystem<ResourceCache>()->BackgroundLoadResource<Texture2D>(loadTextureName_, true, this);
 
@@ -194,7 +195,7 @@ bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
     }
 
     // If we're async loading, request the texture now. Finish during EndLoad().
-    loadTextureName_ = GetParentPath(GetName()) + rootElem.GetAttribute("imagePath");
+    loadTextureName_ = get_parent(GetName()) + rootElem.GetAttribute("imagePath");
     if (GetAsyncLoadState() == ASYNC_LOADING)
         GetSubsystem<ResourceCache>()->BackgroundLoadResource<Texture2D>(loadTextureName_, true, this);
 
@@ -268,7 +269,7 @@ bool SpriteSheet2D::BeginLoadFromJSONFile(Deserializer& source)
     }
 
     // If we're async loading, request the texture now. Finish during EndLoad().
-    loadTextureName_ = GetParentPath(GetName()) + rootElem.Get("imagePath").GetString();
+    loadTextureName_ = get_parent(GetName()) + rootElem.Get("imagePath").GetString();
     if (GetAsyncLoadState() == ASYNC_LOADING)
         GetSubsystem<ResourceCache>()->BackgroundLoadResource<Texture2D>(loadTextureName_, true, this);
 

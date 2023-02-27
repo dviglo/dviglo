@@ -47,4 +47,15 @@ inline String trim_end_slash(const String& path)
     return ret;
 }
 
+/// Возвращает родительский путь (с / в конце) или пустую строку
+inline String get_parent(const String& path)
+{
+    i32 pos = trim_end_slash(path).FindLast('/');
+
+    if (pos != String::NPOS)
+        return path.Substring(0, pos + 1);
+    else
+        return String();
+}
+
 } // namespace dviglo

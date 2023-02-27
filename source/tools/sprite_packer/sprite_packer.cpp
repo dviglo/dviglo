@@ -8,6 +8,7 @@
 #include <dviglo/io/file.h>
 #include <dviglo/io/file_system.h>
 #include <dviglo/io/log.h>
+#include <dviglo/io/path.h>
 #include <dviglo/resource/image.h>
 #include <dviglo/resource/xml_element.h>
 #include <dviglo/resource/xml_file.h>
@@ -151,7 +152,7 @@ void Run(Vector<String>& arguments)
     if (spriteSheetFileName.Empty())
         spriteSheetFileName = ReplaceExtension(outputFile, ".xml");
 
-    if (GetParentPath(spriteSheetFileName) != GetParentPath(outputFile))
+    if (get_parent(spriteSheetFileName) != get_parent(outputFile))
         ErrorExit("Both output xml and png must be in the same folder");
 
     // check all input files exist

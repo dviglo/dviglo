@@ -7,6 +7,7 @@
 #include "../graphics_api/texture_2d.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
+#include "../io/path.h"
 #include "../math/area_allocator.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
@@ -325,7 +326,7 @@ bool TmxImageLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
 
     position_ = Vector2(0.0f, info.GetMapHeight());
     source_ = imageElem.GetAttribute("source");
-    String textureFilePath = GetParentPath(tmxFile_->GetName()) + source_;
+    String textureFilePath = get_parent(tmxFile_->GetName()) + source_;
     auto* cache = tmxFile_->GetSubsystem<ResourceCache>();
     SharedPtr<Texture2D> texture(cache->GetResource<Texture2D>(textureFilePath));
     if (!texture)
@@ -404,12 +405,12 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
                 tsxXMLFiles_[source] = tsxXMLFile;
 
                 String textureFilePath =
-                    GetParentPath(GetName()) + tsxXMLFile->GetRoot("tileset").GetChild("image").GetAttribute("source");
+                    get_parent(GetName()) + tsxXMLFile->GetRoot("tileset").GetChild("image").GetAttribute("source");
                 GetSubsystem<ResourceCache>()->BackgroundLoadResource<Texture2D>(textureFilePath, true, this);
             }
             else
             {
-                String textureFilePath = GetParentPath(GetName()) + tileSetElem.GetChild("image").GetAttribute("source");
+                String textureFilePath = get_parent(GetName()) + tileSetElem.GetChild("image").GetAttribute("source");
                 GetSubsystem<ResourceCache>()->BackgroundLoadResource<Texture2D>(textureFilePath, true, this);
             }
         }
@@ -417,7 +418,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
         for (XMLElement imageLayerElem = rootElem.GetChild("imagelayer"); imageLayerElem;
              imageLayerElem = imageLayerElem.GetNext("imagelayer"))
         {
-            String textureFilePath = GetParentPath(GetName()) + imageLayerElem.GetChild("image").GetAttribute("source");
+            String textureFilePath = get_parent(GetName()) + imageLayerElem.GetChild("image").GetAttribute("source");
             GetSubsystem<ResourceCache>()->BackgroundLoadResource<Texture2D>(textureFilePath, true, this);
         }
     }
@@ -573,7 +574,7 @@ void TmxFile2D::SetSpriteTextureEdgeOffset(float offset)
 
 SharedPtr<XMLFile> TmxFile2D::LoadTSXFile(const String& source)
 {
-    String tsxFilePath = GetParentPath(GetName()) + source;
+    String tsxFilePath = get_parent(GetName()) + source;
     SharedPtr<File> tsxFile = GetSubsystem<ResourceCache>()->GetFile(tsxFilePath);
     SharedPtr<XMLFile> tsxXMLFile(new XMLFile());
     if (!tsxFile || !tsxXMLFile->Load(*tsxFile))
@@ -634,7 +635,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
         // Tileset based on single tileset image
         if (imageElem.NotNull()) {
             isSingleTileSet = true;
-            String textureFilePath = GetParentPath(GetName()) + imageElem.GetAttribute("source");
+            String textureFilePath = get_parent(GetName()) + imageElem.GetAttribute("source");
             SharedPtr<Texture2D> texture(cache->GetResource<Texture2D>(textureFilePath));
             if (!texture)
             {
@@ -679,7 +680,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
         {
             XMLElement imageElem = tileElem.GetChild("image");
             if (imageElem.NotNull()) {
-                String textureFilePath = GetParentPath(GetName()) + imageElem.GetAttribute("source");
+                String textureFilePath = get_parent(GetName()) + imageElem.GetAttribute("source");
                 SharedPtr<Image> image(cache->GetResource<Image>(textureFilePath));
                 if (!image)
                 {

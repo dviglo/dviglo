@@ -8,13 +8,14 @@
 #include "../graphics_api/texture_2d.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
+#include "../io/path.h"
 #include "../math/area_allocator.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
 #include "animation_set_2d.h"
 #include "sprite_2d.h"
-#include "spriter_data_2d.h"
 #include "sprite_sheet_2d.h"
+#include "spriter_data_2d.h"
 
 #include "../common/debug_new.h"
 
@@ -282,7 +283,7 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
     }
 
     // Check has sprite sheet
-    String parentPath = GetParentPath(GetName());
+    String parentPath = get_parent(GetName());
     auto* cache = GetSubsystem<ResourceCache>();
 
     spriteSheetFilePath_ = parentPath + GetFileName(GetName()) + ".xml";
@@ -378,7 +379,7 @@ bool AnimationSet2D::EndLoadSpriter()
     else
     {
         Vector<SpriteInfo> spriteInfos;
-        String parentPath = GetParentPath(GetName());
+        String parentPath = get_parent(GetName());
 
         for (unsigned i = 0; i < spriterData_->folders_.Size(); ++i)
         {

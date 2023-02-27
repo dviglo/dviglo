@@ -276,7 +276,7 @@ bool FileSystem::SetCurrentDir(const String& pathName)
 bool FileSystem::CreateDir(const String& pathName)
 {
     // Create each of the parents if necessary
-    String parentPath = GetParentPath(pathName);
+    String parentPath = get_parent(pathName);
     if (parentPath.Length() > 1 && !DirExists(parentPath))
     {
         if (!CreateDir(parentPath))
@@ -739,15 +739,6 @@ String AddTrailingSlash(const String& pathName)
     if (!ret.Empty() && ret.Back() != '/')
         ret += '/';
     return ret;
-}
-
-String GetParentPath(const String& path)
-{
-    i32 pos = trim_end_slash(path).FindLast('/');
-    if (pos != String::NPOS)
-        return path.Substring(0, pos + 1);
-    else
-        return String();
 }
 
 bool IsAbsolutePath(const String& pathName)

@@ -5,6 +5,7 @@
 #include "../core/context.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
+#include "../io/path.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
 #include "particle_effect_2d.h"
@@ -106,7 +107,7 @@ bool ParticleEffect2D::BeginLoad(Deserializer& source)
         return false;
 
     String texture = rootElem.GetChild("texture").GetAttribute("name");
-    loadSpriteName_ = GetParentPath(GetName()) + texture;
+    loadSpriteName_ = get_parent(GetName()) + texture;
     // If async loading, request the sprite beforehand
     if (GetAsyncLoadState() == ASYNC_LOADING)
         GetSubsystem<ResourceCache>()->BackgroundLoadResource<Sprite2D>(loadSpriteName_, true, this);

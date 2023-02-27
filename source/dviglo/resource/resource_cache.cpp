@@ -816,7 +816,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
     }
     if (!pathHasKnownDirs)
     {
-        String parentPath = GetParentPath(fixedPath);
+        String parentPath = get_parent(fixedPath);
         for (unsigned i = 0; checkDirs[i] != nullptr; ++i)
         {
             if (fileSystem->DirExists(parentPath + checkDirs[i]))

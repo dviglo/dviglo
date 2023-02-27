@@ -3,9 +3,10 @@
 // License: MIT
 
 #include "../core/context.h"
+#include "../input/input_events.h"
 #include "../io/file.h"
 #include "../io/file_system.h"
-#include "../input/input_events.h"
+#include "../io/path.h"
 #include "dropdown_list.h"
 #include "file_selector.h"
 #include "line_edit.h"
@@ -337,7 +338,7 @@ bool FileSelector::EnterFile()
             SetPath(path_ + newPath);
         else if (newPath == "..")
         {
-            String parentPath = GetParentPath(path_);
+            String parentPath = get_parent(path_);
             SetPath(parentPath);
         }
 
