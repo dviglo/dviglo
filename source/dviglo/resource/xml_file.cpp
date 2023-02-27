@@ -90,7 +90,7 @@ bool XMLFile::BeginLoad(Deserializer& source)
             cache->GetTempResource<XMLFile>(inherit);
         if (!inheritedXMLFile)
         {
-            DV_LOGERRORF("Could not find inherited XML file: %s", inherit.CString());
+            DV_LOGERRORF("Could not find inherited XML file: %s", inherit.c_str());
             return false;
         }
 
@@ -120,14 +120,14 @@ bool XMLFile::Save(Serializer& dest) const
 bool XMLFile::Save(Serializer& dest, const String& indentation) const
 {
     XMLWriter writer(dest);
-    document_->save(writer, indentation.CString());
+    document_->save(writer, indentation.c_str());
     return writer.success_;
 }
 
 XMLElement XMLFile::CreateRoot(const String& name)
 {
     document_->reset();
-    pugi::xml_node root = document_->append_child(name.CString());
+    pugi::xml_node root = document_->append_child(name.c_str());
     return XMLElement(this, root.internal_object());
 }
 
@@ -147,7 +147,7 @@ bool XMLFile::FromString(const String& source)
     if (source.Empty())
         return false;
 
-    MemoryBuffer buffer(source.CString(), source.Length());
+    MemoryBuffer buffer(source.c_str(), source.Length());
     return Load(buffer);
 }
 
@@ -167,7 +167,7 @@ String XMLFile::ToString(const String& indentation) const
 {
     VectorBuffer dest;
     XMLWriter writer(dest);
-    document_->save(writer, indentation.CString());
+    document_->save(writer, indentation.c_str());
     return String((const char*)dest.GetData(), dest.GetSize());
 }
 
@@ -340,7 +340,7 @@ void XMLFile::AddAttribute(const pugi::xml_node& patch, const pugi::xpath_node& 
     String name(attribute.value());
     name = name.Substring(1);
 
-    pugi::xml_attribute newAttribute = original.node().append_attribute(name.CString());
+    pugi::xml_attribute newAttribute = original.node().append_attribute(name.c_str());
     newAttribute.set_value(patch.child_value());
 }
 
@@ -353,9 +353,9 @@ bool XMLFile::CombineText(const pugi::xml_node& patch, const pugi::xml_node& ori
         (patch.type() == pugi::node_cdata && original.type() == pugi::node_cdata))
     {
         if (prepend)
-            const_cast<pugi::xml_node&>(original).set_value(dviglo::ToString("%s%s", patch.value(), original.value()).CString());
+            const_cast<pugi::xml_node&>(original).set_value(dviglo::ToString("%s%s", patch.value(), original.value()).c_str());
         else
-            const_cast<pugi::xml_node&>(original).set_value(dviglo::ToString("%s%s", original.value(), patch.value()).CString());
+            const_cast<pugi::xml_node&>(original).set_value(dviglo::ToString("%s%s", original.value(), patch.value()).c_str());
 
         return true;
     }

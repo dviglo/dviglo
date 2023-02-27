@@ -124,7 +124,7 @@ bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
     // Do not add packages that failed to load
     if (!package || !package->GetNumFiles())
     {
-        DV_LOGERRORF("Could not add package file %s due to load failure", package->GetName().CString());
+        DV_LOGERRORF("Could not add package file %s due to load failure", package->GetName().c_str());
         return false;
     }
 
@@ -946,7 +946,7 @@ String ResourceCache::PrintMemoryUsage() const
 
         memset(outputLine, ' ', 256);
         outputLine[255] = 0;
-        sprintf(outputLine, "%-28s %4s %9s %9s %9s %9s\n", resTypeName.CString(), countString.CString(), memUseString.CString(), memMaxString.CString(), memBudgetString.CString(), memTotalString.CString());
+        sprintf(outputLine, "%-28s %4s %9s %9s %9s %9s\n", resTypeName.c_str(), countString.c_str(), memUseString.c_str(), memMaxString.c_str(), memBudgetString.c_str(), memTotalString.c_str());
 
         output += ((const char*)outputLine);
     }
@@ -961,7 +961,7 @@ String ResourceCache::PrintMemoryUsage() const
 
     memset(outputLine, ' ', 256);
     outputLine[255] = 0;
-    sprintf(outputLine, "%-28s %4s %9s %9s %9s %9s\n", "All", countString.CString(), memUseString.CString(), memMaxString.CString(), "-", memTotalString.CString());
+    sprintf(outputLine, "%-28s %4s %9s %9s %9s %9s\n", "All", countString.c_str(), memUseString.c_str(), memMaxString.c_str(), "-", memTotalString.c_str());
     output += ((const char*)outputLine);
 
     return output;

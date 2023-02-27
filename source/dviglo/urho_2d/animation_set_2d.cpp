@@ -219,7 +219,7 @@ bool AnimationSet2D::EndLoadSpine()
     currentAnimationSet = this;
 
     String atlasFileName = ReplaceExtension(GetName(), ".atlas");
-    atlas_ = spAtlas_createFromFile(atlasFileName.CString(), 0);
+    atlas_ = spAtlas_createFromFile(atlasFileName.c_str(), 0);
     if (!atlas_)
     {
         DV_LOGERROR("Create spine atlas failed");

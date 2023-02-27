@@ -88,7 +88,7 @@ void Run(const Vector<String>& arguments)
         // Apply a blur, simpler than interpolating through the 2 dimensions of coarse samples
         Blur(data, width, height, sigma3Kernel9x9, 9);
 
-        stbi_write_png(arguments[1].CString(), width, height, 1, data.Get(), 0);
+        stbi_write_png(arguments[1].c_str(), width, height, 1, data.Get(), 0);
     }
     else // Generate a regular power based ramp
     {
@@ -120,7 +120,7 @@ void Run(const Vector<String>& arguments)
             data[0] = 255;
             data[width - 1] = 0;
 
-            stbi_write_png(arguments[0].CString(), width, 1, 1, data.Get(), 0);
+            stbi_write_png(arguments[0].c_str(), width, 1, 1, data.Get(), 0);
         }
 
         if (dimensions == 2)
@@ -153,7 +153,7 @@ void Run(const Vector<String>& arguments)
                 data[x * width + (width - 1)] = 0;
             }
 
-            stbi_write_png(arguments[0].CString(), width, width, 1, data.Get(), 0);
+            stbi_write_png(arguments[0].c_str(), width, width, 1, data.Get(), 0);
         }
     }
 }

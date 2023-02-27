@@ -611,7 +611,7 @@ void UI::SetClipboardText(const String& text)
 {
     clipBoard_ = text;
     if (useSystemClipboard_)
-        SDL_SetClipboardText(text.CString());
+        SDL_SetClipboardText(text.c_str());
 }
 
 void UI::SetDoubleClickInterval(float interval)

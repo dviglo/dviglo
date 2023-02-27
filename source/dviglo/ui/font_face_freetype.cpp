@@ -119,7 +119,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     face_ = face;
 
     unsigned numGlyphs = (unsigned)face->num_glyphs;
-    DV_LOGDEBUGF("Font face %s (%fpt) has %d glyphs", GetFileName(font_->GetName()).CString(), pointSize, numGlyphs);
+    DV_LOGDEBUGF("Font face %s (%fpt) has %d glyphs", GetFileName(font_->GetName()).c_str(), pointSize, numGlyphs);
 
     // Load each of the glyphs to see the sizes & store other information
     loadMode_ = FT_LOAD_DEFAULT;

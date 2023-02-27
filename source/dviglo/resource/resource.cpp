@@ -25,13 +25,13 @@ bool Resource::Load(Deserializer& source)
     DV_PROFILE_COLOR(Load, DV_PROFILE_RESOURCE_COLOR);
 
     String profileBlockName("Load" + GetTypeName());
-    DV_PROFILE_STR(profileBlockName.CString(), profileBlockName.Length());
+    DV_PROFILE_STR(profileBlockName.c_str(), profileBlockName.Length());
 #elif defined(DV_PROFILING)
     String profileBlockName("Load" + GetTypeName());
 
     auto* profiler = GetSubsystem<Profiler>();
     if (profiler)
-        profiler->BeginBlock(profileBlockName.CString());
+        profiler->BeginBlock(profileBlockName.c_str());
 #endif
 
     // If we are loading synchronously in a non-main thread, behave as if async loading (for example use

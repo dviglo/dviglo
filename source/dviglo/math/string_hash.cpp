@@ -40,10 +40,10 @@ StringHash::StringHash(const char* str) noexcept :
 #endif
 
 StringHash::StringHash(const String& str) noexcept :
-    value_(Calculate(str.CString()))
+    value_(Calculate(str.c_str()))
 {
 #ifdef DV_HASH_DEBUG
-    dviglo::GetGlobalStringHashRegister().RegisterString(*this, str.CString());
+    dviglo::GetGlobalStringHashRegister().RegisterString(*this, str.c_str());
 #endif
 }
 

@@ -108,7 +108,7 @@ void AnimatedSprite2D::SetAnimationSet(AnimationSet2D* animationSet)
             // If entity is empty use first skin in spine
             if (entity_.Empty())
                 entity_ = skeleton_->data->skins[0]->name;
-            spSkeleton_setSkinByName(skeleton_, entity_.CString());
+            spSkeleton_setSkinByName(skeleton_, entity_.c_str());
         }
 
         spSkeleton_updateWorldTransform(skeleton_);
@@ -141,10 +141,10 @@ void AnimatedSprite2D::SetEntity(const String& entity)
 
 #ifdef DV_SPINE
     if (skeleton_)
-        spSkeleton_setSkinByName(skeleton_, entity_.CString());
+        spSkeleton_setSkinByName(skeleton_, entity_.c_str());
 #endif
     if (spriterInstance_)
-        spriterInstance_->SetEntity(entity_.CString());
+        spriterInstance_->SetEntity(entity_.c_str());
 }
 
 void AnimatedSprite2D::SetAnimation(const String& name, LoopMode2D loopMode)
@@ -265,7 +265,7 @@ void AnimatedSprite2D::SetSpineAnimation()
 
     // Reset slots to setup pose, fix issue #932
     spSkeleton_setSlotsToSetupPose(skeleton_);
-    spAnimationState_setAnimationByName(animationState_, 0, animationName_.CString(), loopMode_ != LM_FORCE_CLAMPED ? true : false);
+    spAnimationState_setAnimationByName(animationState_, 0, animationName_.c_str(), loopMode_ != LM_FORCE_CLAMPED ? true : false);
 
     UpdateAnimation(0.0f);
     MarkNetworkUpdate();
@@ -376,13 +376,13 @@ void AnimatedSprite2D::SetSpriterAnimation()
     if (entity_.Empty())
         entity_ = animationSet_->GetSpriterData()->entities_[0]->name_;
 
-    if (!spriterInstance_->SetEntity(entity_.CString()))
+    if (!spriterInstance_->SetEntity(entity_.c_str()))
     {
         DV_LOGERROR("Set entity failed");
         return;
     }
 
-    if (!spriterInstance_->SetAnimation(animationName_.CString(), (Spriter::LoopMode)loopMode_))
+    if (!spriterInstance_->SetAnimation(animationName_.c_str(), (Spriter::LoopMode)loopMode_))
     {
         DV_LOGERROR("Set animation failed");
         return;

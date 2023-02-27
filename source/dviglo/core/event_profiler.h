@@ -15,7 +15,7 @@ class DV_API EventProfilerBlock : public ProfilerBlock
 public:
     /// Construct with the specified parent block and event ID.
     EventProfilerBlock(EventProfilerBlock* parent, StringHash eventID) :
-        ProfilerBlock(parent, GetEventNameRegister().GetString(eventID).CString()),
+        ProfilerBlock(parent, GetEventNameRegister().GetString(eventID).c_str()),
         eventID_(eventID)
     {
     }

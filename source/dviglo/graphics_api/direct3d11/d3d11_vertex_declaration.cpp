@@ -85,7 +85,7 @@ VertexDeclaration_D3D11::VertexDeclaration_D3D11(Graphics* graphics, ShaderVaria
     {
         DV_SAFE_RELEASE(inputLayout_);
         DV_LOGERRORF("Failed to create input layout for shader %s due to missing vertex element(s) (HRESULT %x)",
-            vertexShader->GetFullName().CString(), (unsigned)hr);
+            vertexShader->GetFullName().c_str(), (unsigned)hr);
     }
 }
 

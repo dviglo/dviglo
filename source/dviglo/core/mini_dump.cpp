@@ -45,8 +45,8 @@ int WriteMiniDump(const char* applicationName, void* exceptionPointers)
     String miniDumpDir = GetMiniDumpDir();
     String miniDumpName = miniDumpDir + String(applicationName) + "_" + dateTimeStr + ".dmp";
 
-    CreateDirectoryW(WString(miniDumpDir).CString(), nullptr);
-    HANDLE file = CreateFileW(WString(miniDumpName).CString(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ,
+    CreateDirectoryW(WString(miniDumpDir).c_str(), nullptr);
+    HANDLE file = CreateFileW(WString(miniDumpName).c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_WRITE | FILE_SHARE_READ,
         nullptr, CREATE_ALWAYS, 0, nullptr);
 
     BOOL success = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), file, MiniDumpWithDataSegs, &info, nullptr, nullptr);

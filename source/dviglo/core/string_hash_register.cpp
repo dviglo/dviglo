@@ -39,7 +39,7 @@ StringHash StringHashRegister::RegisterString(const StringHash& hash, const char
     else if (iter->second_.Compare(string, false) != 0)
     {
         DV_LOGWARNINGF("StringHash collision detected! Both \"%s\" and \"%s\" have hash #%s",
-            string, iter->second_.CString(), hash.ToString().CString());
+            string, iter->second_.c_str(), hash.ToString().c_str());
     }
 
     if (mutex_)

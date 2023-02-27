@@ -105,21 +105,21 @@ void HttpRequest::ThreadFunction()
 
     if (postData_.Empty())
     {
-        connection = mg_download(host.CString(), port, protocol.Compare("https", false) >= 0 ? 1 : 0, errorBuffer, sizeof(errorBuffer),
+        connection = mg_download(host.c_str(), port, protocol.Compare("https", false) >= 0 ? 1 : 0, errorBuffer, sizeof(errorBuffer),
             "%s %s HTTP/1.0\r\n"
             "Host: %s\r\n"
             "%s"
-            "\r\n", verb_.CString(), path.CString(), host.CString(), headersStr.CString());
+            "\r\n", verb_.c_str(), path.c_str(), host.c_str(), headersStr.c_str());
     }
     else
     {
-        connection = mg_download(host.CString(), port, protocol.Compare("https", false) >= 0 ? 1 : 0, errorBuffer, sizeof(errorBuffer),
+        connection = mg_download(host.c_str(), port, protocol.Compare("https", false) >= 0 ? 1 : 0, errorBuffer, sizeof(errorBuffer),
             "%s %s HTTP/1.0\r\n"
             "Host: %s\r\n"
             "%s"
             "Content-Length: %d\r\n"
             "\r\n"
-            "%s", verb_.CString(), path.CString(), host.CString(), headersStr.CString(), postData_.Length(), postData_.CString());
+            "%s", verb_.c_str(), path.c_str(), host.c_str(), headersStr.c_str(), postData_.Length(), postData_.c_str());
     }
 
     {

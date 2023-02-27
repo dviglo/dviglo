@@ -388,7 +388,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             {
                 DV_LOGERRORF(
                     "Failed to add resource path '%s', check the documentation on how to set the 'resource prefix path'",
-                    resourcePaths[i].CString());
+                    resourcePaths[i].c_str());
                 return false;
             }
         }
@@ -420,7 +420,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         {
             DV_LOGERRORF(
                 "Failed to add resource package '%s', check the documentation on how to set the 'resource prefix path'",
-                resourcePackages[i].CString());
+                resourcePackages[i].c_str());
             return false;
         }
     }
@@ -478,7 +478,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "Autoload"))
             DV_LOGDEBUGF(
                 "Skipped autoload path '%s' as it does not exist, check the documentation on how to set the 'resource prefix path'",
-                autoLoadPaths[i].CString());
+                autoLoadPaths[i].c_str());
     }
 
     return true;
@@ -881,7 +881,7 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
                 ret[EP_LOG_QUIET] = true;
             else if (argument == "log" && !value.Empty())
             {
-                i32 logLevel = GetStringListIndex(value.CString(), logLevelPrefixes, NINDEX);
+                i32 logLevel = GetStringListIndex(value.c_str(), logLevelPrefixes, NINDEX);
                 if (logLevel != NINDEX)
                 {
                     ret[EP_LOG_LEVEL] = logLevel;

@@ -343,7 +343,7 @@ void Network::DiscoverHosts(unsigned port)
 
 void Network::SetPassword(const String& password)
 {
-    rakPeer_->SetIncomingPassword(password.CString(), password.Length());
+    rakPeer_->SetIncomingPassword(password.c_str(), password.Length());
     password_ = password;
 }
 
@@ -360,7 +360,7 @@ bool Network::Connect(const String& address, unsigned short port, Scene* scene, 
     }
 
     //isServer_ = false;
-    SLNet::ConnectionAttemptResult connectResult = rakPeerClient_->Connect(address.CString(), port, password_.CString(), password_.Length());
+    SLNet::ConnectionAttemptResult connectResult = rakPeerClient_->Connect(address.c_str(), port, password_.c_str(), password_.Length());
     if (connectResult == SLNet::CONNECTION_ATTEMPT_STARTED)
     {
         serverConnection_ = new Connection(false, rakPeerClient_->GetMyBoundAddress(), rakPeerClient_);
@@ -450,7 +450,7 @@ void Network::SetNATServerInfo(const String& address, unsigned short port)
     if (!natPunchServerAddress_)
         natPunchServerAddress_ = new SLNet::SystemAddress;
 
-    natPunchServerAddress_->FromStringExplicitPort(address.CString(), port);
+    natPunchServerAddress_->FromStringExplicitPort(address.c_str(), port);
 }
 
 void Network::StartNATClient()
@@ -477,7 +477,7 @@ void Network::AttemptNATPunchtrough(const String& guid, Scene* scene, const Vari
     if (!remoteGUID_)
         remoteGUID_ = new SLNet::RakNetGUID;
 
-    remoteGUID_->FromString(guid.CString());
+    remoteGUID_->FromString(guid.c_str());
     rakPeerClient_->AttachPlugin(natPunchthroughClient_);
     if (rakPeerClient_->IsActive()) {
         natPunchthroughClient_->OpenNAT(*remoteGUID_, *natPunchServerAddress_);
@@ -629,7 +629,7 @@ SharedPtr<HttpRequest> Network::MakeHttpRequest(const String& url, const String&
 
 void Network::BanAddress(const String& address)
 {
-    rakPeer_->AddToBanList(address.CString(), 0);
+    rakPeer_->AddToBanList(address.c_str(), 0);
 }
 
 Connection* Network::GetConnection(const SLNet::AddressOrGUID& connection) const

@@ -434,7 +434,7 @@ bool TmxFile2D::EndLoad()
     String version = rootElem.GetAttribute("version");
     if (!version.StartsWith("1."))
     {
-        DV_LOGERRORF("Invalid TMX version: %s", version.CString());
+        DV_LOGERRORF("Invalid TMX version: %s", version.c_str());
         return false;
     }
 

@@ -81,7 +81,7 @@ void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
         {
             text_->SetText("An error has occurred: " + httpRequest_->GetError());
             UnsubscribeFromEvent("Update");
-            DV_LOGERRORF("HttpRequest error: %s", httpRequest_->GetError().CString());
+            DV_LOGERRORF("HttpRequest error: %s", httpRequest_->GetError().c_str());
         }
         // Get message data
         else

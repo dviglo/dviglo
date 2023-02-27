@@ -102,7 +102,7 @@ bool Shader::EndLoad()
 
 ShaderVariation* Shader::GetVariation(ShaderType type, const String& defines)
 {
-    return GetVariation(type, defines.CString());
+    return GetVariation(type, defines.c_str());
 }
 
 ShaderVariation* Shader::GetVariation(ShaderType type, const char* defines)

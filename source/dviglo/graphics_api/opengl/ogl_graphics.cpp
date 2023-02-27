@@ -312,7 +312,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 #endif
 
-        SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.CString());
+        SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.c_str());
 
         // Try 24-bit depth first, fallback to 16-bit
         for (const int depthSize : { 24, 16 })
@@ -334,7 +334,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
                 }
 
                 if (!externalWindow_)
-                    window_ = SDL_CreateWindow(windowTitle_.CString(), x, y, width, height, flags);
+                    window_ = SDL_CreateWindow(windowTitle_.c_str(), x, y, width, height, flags);
                 else
                 {
     #ifndef __EMSCRIPTEN__
@@ -2079,7 +2079,7 @@ bool Graphics::GetGL3Support_OGL()
 
 ShaderVariation* Graphics::GetShader_OGL(ShaderType type, const String& name, const String& defines) const
 {
-    return GetShader_OGL(type, name.CString(), defines.CString());
+    return GetShader_OGL(type, name.c_str(), defines.c_str());
 }
 
 ShaderVariation* Graphics::GetShader_OGL(ShaderType type, const char* name, const char* defines) const

@@ -258,7 +258,7 @@ bool Graphics::SetScreenMode_D3D11(int width, int height, const ScreenModeParams
     if (width == width_ && height == height_ && newParams == screenParams_)
         return true;
 
-    SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.CString());
+    SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.c_str());
 
     if (!window_)
     {
@@ -1651,7 +1651,7 @@ unsigned Graphics::GetFormat_D3D11(CompressedFormat format) const
 
 ShaderVariation* Graphics::GetShader_D3D11(ShaderType type, const String& name, const String& defines) const
 {
-    return GetShader_D3D11(type, name.CString(), defines.CString());
+    return GetShader_D3D11(type, name.c_str(), defines.c_str());
 }
 
 ShaderVariation* Graphics::GetShader_D3D11(ShaderType type, const char* name, const char* defines) const
@@ -1976,7 +1976,7 @@ bool Graphics::OpenWindow_D3D11(int width, int height, bool resizable, bool bord
         if (borderless)
             flags |= SDL_WINDOW_BORDERLESS;
 
-        window_ = SDL_CreateWindow(windowTitle_.CString(), position_.x_, position_.y_, width, height, flags);
+        window_ = SDL_CreateWindow(windowTitle_.c_str(), position_.x_, position_.y_, width, height, flags);
     }
     else
         window_ = SDL_CreateWindowFrom(externalWindow_);

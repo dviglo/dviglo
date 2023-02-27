@@ -76,7 +76,7 @@ XMLElement& XMLElement::operator =(const XMLElement& rhs)
 
 XMLElement XMLElement::CreateChild(const String& name)
 {
-    return CreateChild(name.CString());
+    return CreateChild(name.c_str());
 }
 
 XMLElement XMLElement::CreateChild(const char* name)
@@ -139,7 +139,7 @@ bool XMLElement::RemoveChild(const XMLElement& element)
 
 bool XMLElement::RemoveChild(const String& name)
 {
-    return RemoveChild(name.CString());
+    return RemoveChild(name.c_str());
 }
 
 bool XMLElement::RemoveChild(const char* name)
@@ -153,7 +153,7 @@ bool XMLElement::RemoveChild(const char* name)
 
 bool XMLElement::RemoveChildren(const String& name)
 {
-    return RemoveChildren(name.CString());
+    return RemoveChildren(name.c_str());
 }
 
 bool XMLElement::RemoveChildren(const char* name)
@@ -188,7 +188,7 @@ bool XMLElement::RemoveChildren(const char* name)
 
 bool XMLElement::RemoveAttribute(const String& name)
 {
-    return RemoveAttribute(name.CString());
+    return RemoveAttribute(name.c_str());
 }
 
 bool XMLElement::RemoveAttribute(const char* name)
@@ -211,7 +211,7 @@ XMLElement XMLElement::SelectSingle(const String& query, pugi::xpath_variable_se
         return XMLElement();
 
     const pugi::xml_node& node = xpathNode_ ? xpathNode_->node() : pugi::xml_node(node_);
-    pugi::xpath_node result = node.select_node(query.CString(), variables);
+    pugi::xpath_node result = node.select_node(query.c_str(), variables);
     return XMLElement(file_, nullptr, &result, 0);
 }
 
@@ -231,7 +231,7 @@ XPathResultSet XMLElement::Select(const String& query, pugi::xpath_variable_set*
         return XPathResultSet();
 
     const pugi::xml_node& node = xpathNode_ ? xpathNode_->node() : pugi::xml_node(node_);
-    pugi::xpath_node_set result = node.select_nodes(query.CString(), variables);
+    pugi::xpath_node_set result = node.select_nodes(query.c_str(), variables);
     return XPathResultSet(file_, &result);
 }
 
@@ -247,7 +247,7 @@ XPathResultSet XMLElement::SelectPrepared(const XPathQuery& query) const
 
 bool XMLElement::SetValue(const String& value)
 {
-    return SetValue(value.CString());
+    return SetValue(value.c_str());
 }
 
 bool XMLElement::SetValue(const char* value)
@@ -270,7 +270,7 @@ bool XMLElement::SetValue(const char* value)
 
 bool XMLElement::SetAttribute(const String& name, const String& value)
 {
-    return SetAttribute(name.CString(), value.CString());
+    return SetAttribute(name.c_str(), value.c_str());
 }
 
 bool XMLElement::SetAttribute(const char* name, const char* value)
@@ -291,7 +291,7 @@ bool XMLElement::SetAttribute(const char* name, const char* value)
 
 bool XMLElement::SetAttribute(const String& value)
 {
-    return SetAttribute(value.CString());
+    return SetAttribute(value.c_str());
 }
 
 bool XMLElement::SetAttribute(const char* value)
@@ -421,7 +421,7 @@ bool XMLElement::SetVariantValue(const Variant& value)
         return SetVariantMap(value.GetVariantMap());
 
     default:
-        return SetAttribute("value", value.ToString().CString());
+        return SetAttribute("value", value.ToString().c_str());
     }
 }
 
@@ -445,7 +445,7 @@ bool XMLElement::SetResourceRefList(const ResourceRefList& value)
         str += name;
     }
 
-    return SetAttribute("value", str.CString());
+    return SetAttribute("value", str.c_str());
 }
 
 bool XMLElement::SetVariantVector(const VariantVector& value)
@@ -568,7 +568,7 @@ String XMLElement::GetName() const
 
 bool XMLElement::HasChild(const String& name) const
 {
-    return HasChild(name.CString());
+    return HasChild(name.c_str());
 }
 
 bool XMLElement::HasChild(const char* name) const
@@ -582,7 +582,7 @@ bool XMLElement::HasChild(const char* name) const
 
 XMLElement XMLElement::GetChild(const String& name) const
 {
-    return GetChild(name.CString());
+    return GetChild(name.c_str());
 }
 
 XMLElement XMLElement::GetChild(const char* name) const
@@ -599,7 +599,7 @@ XMLElement XMLElement::GetChild(const char* name) const
 
 XMLElement XMLElement::GetNext(const String& name) const
 {
-    return GetNext(name.CString());
+    return GetNext(name.c_str());
 }
 
 XMLElement XMLElement::GetNext(const char* name) const
@@ -643,7 +643,7 @@ i32 XMLElement::GetNumAttributes() const
 
 bool XMLElement::HasAttribute(const String& name) const
 {
-    return HasAttribute(name.CString());
+    return HasAttribute(name.c_str());
 }
 
 bool XMLElement::HasAttribute(const char* name) const
@@ -670,7 +670,7 @@ String XMLElement::GetValue() const
 
 String XMLElement::GetAttribute(const String& name) const
 {
-    return String(GetAttributeCString(name.CString()));
+    return String(GetAttributeCString(name.c_str()));
 }
 
 String XMLElement::GetAttribute(const char* name) const
@@ -1050,7 +1050,7 @@ XPathQuery::~XPathQuery() = default;
 void XPathQuery::Bind()
 {
     // Delete previous query object and create a new one binding it with variable set
-    query_ = make_unique<pugi::xpath_query>(queryString_.CString(), variables_.get());
+    query_ = make_unique<pugi::xpath_query>(queryString_.c_str(), variables_.get());
 }
 
 bool XPathQuery::SetVariable(const String& name, bool value)
@@ -1058,7 +1058,7 @@ bool XPathQuery::SetVariable(const String& name, bool value)
     if (!variables_)
         variables_ = make_unique<pugi::xpath_variable_set>();
 
-    return variables_->set(name.CString(), value);
+    return variables_->set(name.c_str(), value);
 }
 
 bool XPathQuery::SetVariable(const String& name, float value)
@@ -1066,12 +1066,12 @@ bool XPathQuery::SetVariable(const String& name, float value)
     if (!variables_)
         variables_ = make_unique<pugi::xpath_variable_set>();
 
-    return variables_->set(name.CString(), value);
+    return variables_->set(name.c_str(), value);
 }
 
 bool XPathQuery::SetVariable(const String& name, const String& value)
 {
-    return SetVariable(name.CString(), value.CString());
+    return SetVariable(name.c_str(), value.c_str());
 }
 
 bool XPathQuery::SetVariable(const char* name, const char* value)
@@ -1091,7 +1091,7 @@ bool XPathQuery::SetVariable(const String& name, const XPathResultSet& value)
     if (!nodeSet)
         return false;
 
-    return variables_->set(name.CString(), *nodeSet);
+    return variables_->set(name.c_str(), *nodeSet);
 }
 
 bool XPathQuery::SetQuery(const String& queryString, const String& variableString, bool bind)
@@ -1121,7 +1121,7 @@ bool XPathQuery::SetQuery(const String& queryString, const String& variableStrin
             else
                 return false;
 
-            if (!variables_->add(tokens[0].CString(), type))
+            if (!variables_->add(tokens[0].c_str(), type))
                 return false;
         }
     }
@@ -1170,7 +1170,7 @@ String XPathQuery::EvaluateToString(const XMLElement& element) const
     // First call get the size
     result.Reserve((i32)query_->evaluate_string(nullptr, 0, node));
     // Second call get the actual string
-    query_->evaluate_string(const_cast<pugi::char_t*>(result.CString()), result.Capacity(), node);
+    query_->evaluate_string(const_cast<pugi::char_t*>(result.c_str()), result.Capacity(), node);
     return result;
 }
 

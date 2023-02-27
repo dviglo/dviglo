@@ -289,7 +289,7 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
     DV_PROFILE_COLOR(SendEvent, DV_PROFILE_EVENT_COLOR);
 
     const String& eventName = GetEventNameRegister().GetString(eventType);
-    DV_PROFILE_STR(eventName.CString(), eventName.Length());
+    DV_PROFILE_STR(eventName.c_str(), eventName.Length());
 #endif
 
     // Make a weak pointer to self to check for destruction during event handling

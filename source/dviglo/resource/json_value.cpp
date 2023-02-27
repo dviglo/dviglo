@@ -601,7 +601,7 @@ String JSONValue::GetNumberTypeName(JSONNumberType type)
 
 JSONValueType JSONValue::GetValueTypeFromName(const String& typeName)
 {
-    return GetValueTypeFromName(typeName.CString());
+    return GetValueTypeFromName(typeName.c_str());
 }
 
 JSONValueType JSONValue::GetValueTypeFromName(const char* typeName)
@@ -611,7 +611,7 @@ JSONValueType JSONValue::GetValueTypeFromName(const char* typeName)
 
 JSONNumberType JSONValue::GetNumberTypeFromName(const String& typeName)
 {
-    return GetNumberTypeFromName(typeName.CString());
+    return GetNumberTypeFromName(typeName.c_str());
 }
 
 JSONNumberType JSONValue::GetNumberTypeFromName(const char* typeName)

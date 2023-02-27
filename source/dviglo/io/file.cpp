@@ -349,7 +349,7 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
 
     if (!handle_)
     {
-        DV_LOGERRORF("Could not open file %s", fileName.CString());
+        DV_LOGERRORF("Could not open file %s", fileName.c_str());
         return false;
     }
 
@@ -360,7 +360,7 @@ bool File::OpenInternal(const String& fileName, FileMode mode, bool fromPackage)
         file_seek(handle_, 0, SEEK_SET);
         if (size > M_MAX_UNSIGNED)
         {
-            DV_LOGERRORF("Could not open file %s which is larger than 4GB", fileName.CString());
+            DV_LOGERRORF("Could not open file %s which is larger than 4GB", fileName.c_str());
             Close();
             size_ = 0;
             return false;

@@ -170,7 +170,7 @@ void Texture::SetParameters(const XMLElement& element)
             {
                 auto coordIndex = (TextureCoordinate)(coord[0] - 'u');
                 String mode = paramElem.GetAttributeLower("mode");
-                SetAddressMode(coordIndex, (TextureAddressMode)GetStringListIndex(mode.CString(), addressModeNames, ADDRESS_WRAP));
+                SetAddressMode(coordIndex, (TextureAddressMode)GetStringListIndex(mode.c_str(), addressModeNames, ADDRESS_WRAP));
             }
         }
 
@@ -180,7 +180,7 @@ void Texture::SetParameters(const XMLElement& element)
         if (name == "filter")
         {
             String mode = paramElem.GetAttributeLower("mode");
-            SetFilterMode((TextureFilterMode)GetStringListIndex(mode.CString(), filterModeNames, FILTER_DEFAULT));
+            SetFilterMode((TextureFilterMode)GetStringListIndex(mode.c_str(), filterModeNames, FILTER_DEFAULT));
             if (paramElem.HasAttribute("anisotropy"))
                 SetAnisotropy(paramElem.GetU32("anisotropy"));
         }

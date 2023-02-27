@@ -1034,7 +1034,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                         keyBinding = i->second_;
                     else
                     {
-                        DV_LOGERRORF("Unsupported key binding: %s", key.CString());
+                        DV_LOGERRORF("Unsupported key binding: %s", key.c_str());
                         keyBinding = M_MAX_INT;
                     }
                 }
@@ -1055,7 +1055,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                 if (i != mouseButtonBindingMap.End())
                     element->SetVar(VAR_BUTTON_MOUSE_BUTTON_BINDING, i->second_);
                 else
-                    DV_LOGERRORF("Unsupported mouse button binding: %s", mouseButton.CString());
+                    DV_LOGERRORF("Unsupported mouse button binding: %s", mouseButton.c_str());
             }
         }
         else if (name.StartsWith("Axis"))
@@ -1098,13 +1098,13 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
                             if (i != keyBindingMap.End())
                                 mappedKeyBinding[j] = i->second_;
                             else
-                                DV_LOGERRORF("%s - %s cannot be mapped, fallback to '%c'", name.CString(), keyBindings[j].CString(),
+                                DV_LOGERRORF("%s - %s cannot be mapped, fallback to '%c'", name.c_str(), keyBindings[j].c_str(),
                                     mappedKeyBinding[j]);
                         }
                     }
                 }
                 else
-                    DV_LOGERRORF("%s has invalid key binding %s, fallback to WSAD", name.CString(), keyBinding.CString());
+                    DV_LOGERRORF("%s has invalid key binding %s, fallback to WSAD", name.c_str(), keyBinding.c_str());
                 element->SetVar(VAR_BUTTON_KEY_BINDING, IntRect(mappedKeyBinding));
             }
         }
@@ -1289,7 +1289,7 @@ SDL_JoystickID Input::OpenJoystick(SDL_JoystickID id)
 
 Key Input::GetKeyFromName(const String& name) const
 {
-    return (Key)SDL_GetKeyFromName(name.CString());
+    return (Key)SDL_GetKeyFromName(name.c_str());
 }
 
 Key Input::GetKeyFromScancode(Scancode scancode) const
@@ -1309,7 +1309,7 @@ Scancode Input::GetScancodeFromKey(Key key) const
 
 Scancode Input::GetScancodeFromName(const String& name) const
 {
-    return (Scancode)SDL_GetScancodeFromName(name.CString());
+    return (Scancode)SDL_GetScancodeFromName(name.c_str());
 }
 
 String Input::GetScancodeName(Scancode scancode) const

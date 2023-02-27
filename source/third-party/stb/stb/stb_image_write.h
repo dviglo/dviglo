@@ -280,10 +280,10 @@ static int stbi__start_write_file(stbi__write_context *s, const char *filename)
 #else
    dviglo::WString wstr(filename);
 #ifdef STBI_MSC_SECURE_CRT
-   if (_wfopen_s(&f, wstr.CString(), L"wb")
+   if (_wfopen_s(&f, wstr.c_str(), L"wb")
       f = NULL;
 #else
-   f = _wfopen(wstr.CString(), L"wb");
+   f = _wfopen(wstr.c_str(), L"wb");
 #endif
 #endif
    stbi__start_write_callbacks(s, stbi__stdio_write, (void *) f);
@@ -1118,10 +1118,10 @@ STBIWDEF int stbi_write_png(char const *filename, int x, int y, int comp, const 
 #else
    dviglo::WString wstr(filename);
 #ifdef STBI_MSC_SECURE_CRT
-   if (_wfopen_s(&f, wstr.CString(), L"wb")
+   if (_wfopen_s(&f, wstr.c_str(), L"wb")
       f = NULL;
 #else
-   f = _wfopen(wstr.CString(), L"wb");
+   f = _wfopen(wstr.c_str(), L"wb");
 #endif
 #endif
    if (!f) { STBIW_FREE(png); return 0; }

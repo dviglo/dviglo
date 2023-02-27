@@ -247,28 +247,28 @@ public:
     }
 
     /// Test for equality with another string.
-    bool operator ==(const String& rhs) const { return strcmp(CString(), rhs.CString()) == 0; }
+    bool operator ==(const String& rhs) const { return strcmp(c_str(), rhs.c_str()) == 0; }
 
     /// Test for inequality with another string.
-    bool operator !=(const String& rhs) const { return strcmp(CString(), rhs.CString()) != 0; }
+    bool operator !=(const String& rhs) const { return strcmp(c_str(), rhs.c_str()) != 0; }
 
     /// Test if string is less than another string.
-    bool operator <(const String& rhs) const { return strcmp(CString(), rhs.CString()) < 0; }
+    bool operator <(const String& rhs) const { return strcmp(c_str(), rhs.c_str()) < 0; }
 
     /// Test if string is greater than another string.
-    bool operator >(const String& rhs) const { return strcmp(CString(), rhs.CString()) > 0; }
+    bool operator >(const String& rhs) const { return strcmp(c_str(), rhs.c_str()) > 0; }
 
     /// Test for equality with a C string.
-    bool operator ==(const char* rhs) const { return strcmp(CString(), rhs) == 0; }
+    bool operator ==(const char* rhs) const { return strcmp(c_str(), rhs) == 0; }
 
     /// Test for inequality with a C string.
-    bool operator !=(const char* rhs) const { return strcmp(CString(), rhs) != 0; }
+    bool operator !=(const char* rhs) const { return strcmp(c_str(), rhs) != 0; }
 
     /// Test if string is less than a C string.
-    bool operator <(const char* rhs) const { return strcmp(CString(), rhs) < 0; }
+    bool operator <(const char* rhs) const { return strcmp(c_str(), rhs) < 0; }
 
     /// Test if string is greater than a C string.
-    bool operator >(const char* rhs) const { return strcmp(CString(), rhs) > 0; }
+    bool operator >(const char* rhs) const { return strcmp(c_str(), rhs) > 0; }
 
     /// Return char at index.
     char& operator [](i32 index)
@@ -406,7 +406,7 @@ public:
     const char* GetBuffer() const { return IsShort() ? data_.shortString_.buffer_ : data_.longString_.buffer_; }
 
     /// Return the C string.
-    const char* CString() const { return GetBuffer(); }
+    const char* c_str() const { return GetBuffer(); }
 
     /// Return length.
     i32 Length() const { return IsShort() ? GetShortStringLength() : data_.longString_.length_; }
@@ -646,7 +646,7 @@ public:
     i32 Length() const { return length_; }
 
     /// Return character data.
-    const wchar_t* CString() const { return buffer_; }
+    const wchar_t* c_str() const { return buffer_; }
 
 private:
     /// String length.

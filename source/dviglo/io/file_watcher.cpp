@@ -71,7 +71,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
     String nativePath = to_native(trim_end_slash(pathName));
 
     dirHandle_ = (void*)CreateFileW(
-        WString(nativePath).CString(),
+        WString(nativePath).c_str(),
         FILE_LIST_DIRECTORY,
         FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
         nullptr,
@@ -95,7 +95,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
     }
 #elif defined(__linux__)
     int flags = IN_CREATE | IN_DELETE | IN_MODIFY | IN_MOVED_FROM | IN_MOVED_TO;
-    int handle = inotify_add_watch(watchHandle_, pathName.CString(), (unsigned)flags);
+    int handle = inotify_add_watch(watchHandle_, pathName.c_str(), (unsigned)flags);
 
     if (handle < 0)
     {
@@ -121,7 +121,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
                 // Don't watch ./ or ../ sub-directories
                 if (!subDirFullPath.EndsWith("./"))
                 {
-                    handle = inotify_add_watch(watchHandle_, subDirFullPath.CString(), (unsigned)flags);
+                    handle = inotify_add_watch(watchHandle_, subDirFullPath.c_str(), (unsigned)flags);
                     if (handle < 0)
                         DV_LOGERROR("Failed to start watching subdirectory path " + subDirFullPath);
                     else
@@ -144,7 +144,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
         return false;
     }
 
-    watcher_ = CreateFileWatcher(pathName.CString(), watchSubDirs);
+    watcher_ = CreateFileWatcher(pathName.c_str(), watchSubDirs);
     if (watcher_)
     {
         path_ = AddTrailingSlash(pathName);

@@ -52,7 +52,7 @@ void Graphics::SetWindowTitle(const String& windowTitle)
 {
     windowTitle_ = windowTitle;
     if (window_)
-        SDL_SetWindowTitle(window_, windowTitle_.CString());
+        SDL_SetWindowTitle(window_, windowTitle_.c_str());
 }
 
 void Graphics::SetWindowIcon(Image* windowIcon)
@@ -78,7 +78,7 @@ void Graphics::SetWindowPosition(int x, int y)
 void Graphics::SetOrientations(const String& orientations)
 {
     orientations_ = orientations.Trimmed();
-    SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.CString());
+    SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.c_str());
 }
 
 bool Graphics::SetScreenMode(int width, int height)

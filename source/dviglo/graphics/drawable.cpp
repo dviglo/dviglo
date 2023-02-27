@@ -432,7 +432,7 @@ bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, b
                 continue;
             if (geo->GetPrimitiveType() != TRIANGLE_LIST)
             {
-                DV_LOGERRORF("%s (%u) %s (%u) Geometry %u contains an unsupported geometry type %u", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex, (unsigned)geo->GetPrimitiveType());
+                DV_LOGERRORF("%s (%u) %s (%u) Geometry %u contains an unsupported geometry type %u", node->GetName().Length() > 0 ? node->GetName().c_str() : "Node", node->GetID(), drawable->GetTypeName().c_str(), drawable->GetID(), geoIndex, (unsigned)geo->GetPrimitiveType());
                 continue;
             }
 
@@ -450,7 +450,7 @@ bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, b
             bool hasPosition = VertexBuffer::HasElement(*elements, TYPE_VECTOR3, SEM_POSITION);
             if (!hasPosition)
             {
-                DV_LOGERRORF("%s (%u) %s (%u) Geometry %u contains does not have Vector3 type positions in vertex data", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex);
+                DV_LOGERRORF("%s (%u) %s (%u) Geometry %u contains does not have Vector3 type positions in vertex data", node->GetName().Length() > 0 ? node->GetName().c_str() : "Node", node->GetID(), drawable->GetTypeName().c_str(), drawable->GetID(), geoIndex);
                 continue;
             }
 
@@ -467,7 +467,7 @@ bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, b
 
                 // Name NodeID DrawableType DrawableID GeometryIndex ("Geo" is included for clarity as StaticModel_32_2 could easily be misinterpreted or even quickly misread as 322)
                 // Generated object name example: Node_5_StaticModel_32_Geo_0 ... or ... Bob_5_StaticModel_32_Geo_0
-                outputFile->WriteLine(String("o ").AppendWithFormat("%s_%u_%s_%u_Geo_%u", node->GetName().Length() > 0 ? node->GetName().CString() : "Node", node->GetID(), drawable->GetTypeName().CString(), drawable->GetID(), geoIndex));
+                outputFile->WriteLine(String("o ").AppendWithFormat("%s_%u_%s_%u_Geo_%u", node->GetName().Length() > 0 ? node->GetName().c_str() : "Node", node->GetID(), drawable->GetTypeName().c_str(), drawable->GetID(), geoIndex));
 
                 // Write vertex position
                 unsigned positionOffset = VertexBuffer::GetElementOffset(*elements, TYPE_VECTOR3, SEM_POSITION);
@@ -579,13 +579,13 @@ bool WriteDrawablesToOBJ(const Vector<Drawable*>& drawables, File* outputFile, b
                         unsigned secondTraitIndex = hasNormals ? currentNormalIndex : currentUVIndex;
                         output.AppendWithFormat("%u%s%u %u%s%u %u%s%u",
                             currentPositionIndex + longIndices[0],
-                            slashCharacter.CString(),
+                            slashCharacter.c_str(),
                             secondTraitIndex + longIndices[0],
                             currentPositionIndex + longIndices[1],
-                            slashCharacter.CString(),
+                            slashCharacter.c_str(),
                             secondTraitIndex + longIndices[1],
                             currentPositionIndex + longIndices[2],
-                            slashCharacter.CString(),
+                            slashCharacter.c_str(),
                             secondTraitIndex + longIndices[2]);
                     }
                     else

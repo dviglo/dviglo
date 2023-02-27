@@ -234,7 +234,7 @@ bool Variant::operator ==(const VectorBuffer& rhs) const
 
 void Variant::FromString(const String& type, const String& value)
 {
-    return FromString(GetTypeFromName(type), value.CString());
+    return FromString(GetTypeFromName(type), value.c_str());
 }
 
 void Variant::FromString(const char* type, const char* value)
@@ -244,7 +244,7 @@ void Variant::FromString(const char* type, const char* value)
 
 void Variant::FromString(VariantType type, const String& value)
 {
-    return FromString(type, value.CString());
+    return FromString(type, value.c_str());
 }
 
 void Variant::FromString(VariantType type, const char* value)
@@ -953,7 +953,7 @@ String Variant::GetTypeName(VariantType type)
 
 VariantType Variant::GetTypeFromName(const String& typeName)
 {
-    return GetTypeFromName(typeName.CString());
+    return GetTypeFromName(typeName.c_str());
 }
 
 VariantType Variant::GetTypeFromName(const char* typeName)

@@ -134,7 +134,7 @@ void DebugHud::Update()
         {
             stats.Append("\n");
             for (HashMap<String, String>::ConstIterator i = appStats_.Begin(); i != appStats_.End(); ++i)
-                stats.AppendWithFormat("\n%s %s", i->first_.CString(), i->second_.CString());
+                stats.AppendWithFormat("\n%s %s", i->first_.c_str(), i->second_.c_str());
         }
 
         statsText_->SetText(stats);
@@ -152,10 +152,10 @@ void DebugHud::Update()
             shadowQualityTexts[renderer->GetShadowQuality()],
             renderer->GetMaxOccluderTriangles() > 0 ? "On" : "Off",
             renderer->GetDynamicInstancing() ? "On" : "Off",
-            graphics->GetApiName().CString());
+            graphics->GetApiName().c_str());
     #ifdef DV_OPENGL
-        mode.AppendWithFormat(" Renderer:%s Version:%s", graphics->GetRendererName().CString(),
-            graphics->GetVersionString().CString());
+        mode.AppendWithFormat(" Renderer:%s Version:%s", graphics->GetRendererName().c_str(),
+            graphics->GetVersionString().c_str());
     #endif
 
 

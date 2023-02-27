@@ -250,13 +250,13 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
         DV_PROFILE_COLOR(FinishBackgroundLoading, DV_PROFILE_RESOURCE_COLOR);
 
         String profileBlockName("Finish" + resource->GetTypeName());
-        DV_PROFILE_STR(profileBlockName.CString(), profileBlockName.Length());
+        DV_PROFILE_STR(profileBlockName.c_str(), profileBlockName.Length());
 #elif defined(DV_PROFILING)
         String profileBlockName("Finish" + resource->GetTypeName());
 
         auto* profiler = owner_->GetSubsystem<Profiler>();
         if (profiler)
-            profiler->BeginBlock(profileBlockName.CString());
+            profiler->BeginBlock(profileBlockName.c_str());
 #endif
 
         DV_LOGDEBUG("Finishing background loaded resource " + resource->GetName());

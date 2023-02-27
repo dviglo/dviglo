@@ -1251,7 +1251,7 @@ bool Image::SaveBMP(const String& fileName) const
     }
 
     if (data_)
-        return stbi_write_bmp(fileName.CString(), width_, height_, components_, data_.Get()) != 0;
+        return stbi_write_bmp(fileName.c_str(), width_, height_, components_, data_.Get()) != 0;
     else
         return false;
 }
@@ -1278,7 +1278,7 @@ bool Image::SaveTGA(const String& fileName) const
     }
 
     if (data_)
-        return stbi_write_tga(to_native(fileName).CString(), width_, height_, components_, data_.Get()) != 0;
+        return stbi_write_tga(to_native(fileName).c_str(), width_, height_, components_, data_.Get()) != 0;
     else
         return false;
 }
@@ -1294,7 +1294,7 @@ bool Image::SaveJPG(const String& fileName, int quality) const
     }
 
     if (data_)
-        return stbi_write_jpg(to_native(fileName).CString(), width_, height_, components_, data_.Get(), quality) != 0;
+        return stbi_write_jpg(to_native(fileName).c_str(), width_, height_, components_, data_.Get(), quality) != 0;
     else
         return false;
 }

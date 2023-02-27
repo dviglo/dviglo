@@ -29,7 +29,7 @@ static unsigned NumberPostfix(const String& str)
     for (unsigned i = 0; i < str.Length(); ++i)
     {
         if (IsDigit(str[i]))
-            return ToU32(str.CString() + i);
+            return ToU32(str.c_str() + i);
     }
 
     return M_MAX_UNSIGNED;
@@ -165,7 +165,7 @@ bool ShaderProgram_OGL::Link()
             continue;
         }
 
-        int location = glGetAttribLocation(object_.name_, name.CString());
+        int location = glGetAttribLocation(object_.name_, name.c_str());
         vertexAttributes_[{(i8)semantic, semanticIndex}] = location;
         usedVertexAttributes_ |= (1u << location);
     }
@@ -185,7 +185,7 @@ bool ShaderProgram_OGL::Link()
 
             String name(nameBuffer, (unsigned)nameLength);
 
-            unsigned blockIndex = glGetUniformBlockIndex(object_.name_, name.CString());
+            unsigned blockIndex = glGetUniformBlockIndex(object_.name_, name.c_str());
             unsigned group = M_MAX_UNSIGNED;
 
             // Try to recognize the use of the buffer from its name

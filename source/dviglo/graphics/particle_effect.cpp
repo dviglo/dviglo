@@ -190,7 +190,7 @@ bool ParticleEffect::Load(const XMLElement& source)
             emitterSize_ = Vector3::ZERO;
         }
         else
-            emitterType_ = (EmitterType)GetStringListIndex(type.CString(), emitterTypeNames, EMITTER_SPHERE);
+            emitterType_ = (EmitterType)GetStringListIndex(type.c_str(), emitterTypeNames, EMITTER_SPHERE);
     }
 
     if (source.HasChild("emittersize"))
@@ -248,7 +248,7 @@ bool ParticleEffect::Load(const XMLElement& source)
     if (source.HasChild("faceCameraMode"))
     {
         String type = source.GetChild("faceCameraMode").GetAttributeLower("value");
-        faceCameraMode_ = (FaceCameraMode)GetStringListIndex(type.CString(), faceCameraModeNames, FC_ROTATE_XYZ);
+        faceCameraMode_ = (FaceCameraMode)GetStringListIndex(type.c_str(), faceCameraModeNames, FC_ROTATE_XYZ);
     }
 
     if (source.HasChild("sizedelta"))

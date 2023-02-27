@@ -69,7 +69,7 @@ bool NamedPipe::Open(const String& name, bool isServer)
 
     if (isServer)
     {
-        handle_ = CreateNamedPipeW(WString(pipePath + name).CString(),
+        handle_ = CreateNamedPipeW(WString(pipePath + name).c_str(),
             PIPE_ACCESS_DUPLEX,
             PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_NOWAIT,
             1,
@@ -95,7 +95,7 @@ bool NamedPipe::Open(const String& name, bool isServer)
     else
     {
         handle_ = CreateFileW(
-            WString(pipePath + name).CString(),
+            WString(pipePath + name).c_str(),
             GENERIC_READ | GENERIC_WRITE,
             0,
             nullptr,
@@ -209,19 +209,19 @@ bool NamedPipe::Open(const String& name, bool isServer)
 
     if (isServer)
     {
-        mkfifo(serverReadName.CString(), 0660);
-        mkfifo(clientReadName.CString(), 0660);
+        mkfifo(serverReadName.c_str(), 0660);
+        mkfifo(clientReadName.c_str(), 0660);
 
-        readHandle_ = open(serverReadName.CString(), O_RDONLY | O_NDELAY);
-        writeHandle_ = open(clientReadName.CString(), O_WRONLY | O_NDELAY);
+        readHandle_ = open(serverReadName.c_str(), O_RDONLY | O_NDELAY);
+        writeHandle_ = open(clientReadName.c_str(), O_WRONLY | O_NDELAY);
 
         if (readHandle_ == -1 && writeHandle_ == -1)
         {
             DV_LOGERROR("Failed to create named pipe " + name);
             SAFE_CLOSE(readHandle_);
             SAFE_CLOSE(writeHandle_);
-            unlink(serverReadName.CString());
-            unlink(clientReadName.CString());
+            unlink(serverReadName.c_str());
+            unlink(clientReadName.c_str());
             return false;
         }
         else
@@ -234,8 +234,8 @@ bool NamedPipe::Open(const String& name, bool isServer)
     }
     else
     {
-        readHandle_ = open(clientReadName.CString(), O_RDONLY | O_NDELAY);
-        writeHandle_ = open(serverReadName.CString(), O_WRONLY | O_NDELAY);
+        readHandle_ = open(clientReadName.c_str(), O_RDONLY | O_NDELAY);
+        writeHandle_ = open(serverReadName.c_str(), O_WRONLY | O_NDELAY);
         if (readHandle_ == -1 && writeHandle_ == -1)
         {
             DV_LOGERROR("Failed to connect to named pipe " + name);
@@ -261,9 +261,9 @@ i32 NamedPipe::Read(void* dest, i32 size)
     if (readHandle_ == -1 && writeHandle_ != -1)
     {
         if (isServer_)
-            readHandle_ = open((pipePath + name_ + "SR").CString(), O_RDONLY | O_NDELAY);
+            readHandle_ = open((pipePath + name_ + "SR").c_str(), O_RDONLY | O_NDELAY);
         else
-            readHandle_ = open((pipePath + name_ + "CR").CString(), O_RDONLY | O_NDELAY);
+            readHandle_ = open((pipePath + name_ + "CR").c_str(), O_RDONLY | O_NDELAY);
     }
 
     if (readHandle_ != -1)
@@ -283,9 +283,9 @@ i32 NamedPipe::Write(const void* data, i32 size)
     if (writeHandle_ == -1 && readHandle_ != -1)
     {
         if (isServer_)
-            writeHandle_ = open((pipePath + name_ + "CR").CString(), O_WRONLY | O_NDELAY);
+            writeHandle_ = open((pipePath + name_ + "CR").c_str(), O_WRONLY | O_NDELAY);
         else
-            writeHandle_ = open((pipePath + name_ + "SR").CString(), O_WRONLY | O_NDELAY);
+            writeHandle_ = open((pipePath + name_ + "SR").c_str(), O_WRONLY | O_NDELAY);
     }
 
     // Loop until all bytes written in case of partial write
@@ -318,8 +318,8 @@ void NamedPipe::Close()
         {
             String serverReadName = pipePath + name_ + "SR";
             String clientReadName = pipePath + name_ + "CR";
-            unlink(serverReadName.CString());
-            unlink(clientReadName.CString());
+            unlink(serverReadName.c_str());
+            unlink(clientReadName.c_str());
             isServer_ = false;
         }
 
@@ -341,9 +341,9 @@ bool NamedPipe::IsEof() const
     if (readHandle_ == -1 && writeHandle_ != -1)
     {
         if (isServer_)
-            readHandle_ = open((pipePath + name_ + "SR").CString(), O_RDONLY | O_NDELAY);
+            readHandle_ = open((pipePath + name_ + "SR").c_str(), O_RDONLY | O_NDELAY);
         else
-            readHandle_ = open((pipePath + name_ + "CR").CString(), O_RDONLY | O_NDELAY);
+            readHandle_ = open((pipePath + name_ + "CR").c_str(), O_RDONLY | O_NDELAY);
     }
 
     if (readHandle_ != -1)

@@ -121,7 +121,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
         {
 
             CubeMapLayout layout =
-                (CubeMapLayout)GetStringListIndex(imageElem.GetAttribute("layout").CString(), cubeMapLayoutNames, CML_HORIZONTAL);
+                (CubeMapLayout)GetStringListIndex(imageElem.GetAttribute("layout").c_str(), cubeMapLayoutNames, CML_HORIZONTAL);
 
             switch (layout)
             {

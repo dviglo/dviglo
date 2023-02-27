@@ -46,7 +46,7 @@ namespace dviglo
 int DoSystemCommand(const String& commandLine, bool redirectToLog)
 {
     if (!redirectToLog)
-        return system(commandLine.CString());
+        return system(commandLine.c_str());
 
     // Get a platform-agnostic temporary file name for stderr redirection
     String stderrFilename;
@@ -65,7 +65,7 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
 #endif
 
     // Use popen/pclose to capture the stdout and stderr of the command
-    FILE* file = popen(adjustedCommandLine.CString(), "r");
+    FILE* file = popen(adjustedCommandLine.c_str(), "r");
     if (!file)
         return -1;
 
@@ -112,7 +112,7 @@ int DoSystemRun(const String& fileName, const Vector<String>& arguments)
     memset(&processInfo, 0, sizeof processInfo);
 
     WString commandLineW(commandLine);
-    if (!CreateProcessW(nullptr, (wchar_t*)commandLineW.CString(), nullptr, nullptr, 0, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInfo))
+    if (!CreateProcessW(nullptr, (wchar_t*)commandLineW.c_str(), nullptr, nullptr, 0, CREATE_NO_WINDOW, nullptr, nullptr, &startupInfo, &processInfo))
         return -1;
 
     WaitForSingleObject(processInfo.hProcess, INFINITE);
@@ -128,9 +128,9 @@ int DoSystemRun(const String& fileName, const Vector<String>& arguments)
     if (!pid)
     {
         Vector<const char*> argPtrs;
-        argPtrs.Push(fixedFileName.CString());
+        argPtrs.Push(fixedFileName.c_str());
         for (unsigned i = 0; i < arguments.Size(); ++i)
-            argPtrs.Push(arguments[i].CString());
+            argPtrs.Push(arguments[i].c_str());
         argPtrs.Push(nullptr);
 
         execvp(argPtrs[0], (char**)&argPtrs[0]);
@@ -257,13 +257,13 @@ FileSystem::~FileSystem()
 bool FileSystem::SetCurrentDir(const String& pathName)
 {
 #ifdef _WIN32
-    if (SetCurrentDirectoryW(to_win_native(pathName).CString()) == FALSE)
+    if (SetCurrentDirectoryW(to_win_native(pathName).c_str()) == FALSE)
     {
         DV_LOGERROR("Failed to change directory to " + pathName);
         return false;
     }
 #else
-    if (chdir(pathName.CString()) != 0)
+    if (chdir(pathName.c_str()) != 0)
     {
         DV_LOGERROR("Failed to change directory to " + pathName);
         return false;
@@ -284,10 +284,10 @@ bool FileSystem::CreateDir(const String& pathName)
     }
 
 #ifdef _WIN32
-    bool success = (CreateDirectoryW(to_win_native(trim_end_slash(pathName)).CString(), nullptr) == TRUE) ||
+    bool success = (CreateDirectoryW(to_win_native(trim_end_slash(pathName)).c_str(), nullptr) == TRUE) ||
         (GetLastError() == ERROR_ALREADY_EXISTS);
 #else
-    bool success = mkdir(trim_end_slash(pathName).CString(), S_IRWXU) == 0 || errno == EEXIST;
+    bool success = mkdir(trim_end_slash(pathName).c_str(), S_IRWXU) == 0 || errno == EEXIST;
 #endif
 
     if (success)
@@ -355,8 +355,8 @@ bool FileSystem::SystemOpen(const String& fileName, const String& mode)
     }
 
 #ifdef _WIN32
-    bool success = (size_t)ShellExecuteW(nullptr, !mode.Empty() ? WString(mode).CString() : nullptr,
-        to_win_native(fileName).CString(), nullptr, nullptr, SW_SHOW) > 32;
+    bool success = (size_t)ShellExecuteW(nullptr, !mode.Empty() ? WString(mode).c_str() : nullptr,
+        to_win_native(fileName).c_str(), nullptr, nullptr, SW_SHOW) > 32;
 #else
     Vector<String> arguments;
     arguments.Push(fileName);
@@ -388,18 +388,18 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 bool FileSystem::Rename(const String& srcFileName, const String& destFileName)
 {
 #ifdef _WIN32
-    return MoveFileW(to_win_native(srcFileName).CString(), to_win_native(destFileName).CString()) != 0;
+    return MoveFileW(to_win_native(srcFileName).c_str(), to_win_native(destFileName).c_str()) != 0;
 #else
-    return rename(srcFileName.CString(), destFileName.CString()) == 0;
+    return rename(srcFileName.c_str(), destFileName.c_str()) == 0;
 #endif
 }
 
 bool FileSystem::Delete(const String& fileName)
 {
 #ifdef _WIN32
-    return DeleteFileW(to_win_native(fileName).CString()) != 0;
+    return DeleteFileW(to_win_native(fileName).c_str()) != 0;
 #else
-    return remove(fileName.CString()) == 0;
+    return remove(fileName.c_str()) == 0;
 #endif
 }
 
@@ -425,13 +425,13 @@ unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 
 #ifdef _WIN32
     struct _stat st;
-    if (!_stat(fileName.CString(), &st))
+    if (!_stat(fileName.c_str(), &st))
         return (unsigned)st.st_mtime;
     else
         return 0;
 #else
     struct stat st{};
-    if (!stat(fileName.CString(), &st))
+    if (!stat(fileName.c_str(), &st))
         return (unsigned)st.st_mtime;
     else
         return 0;
@@ -443,12 +443,12 @@ bool FileSystem::FileExists(const String& fileName) const
     String fixedName = to_native(trim_end_slash(fileName));
 
 #ifdef _WIN32
-    DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
+    DWORD attributes = GetFileAttributesW(WString(fixedName).c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES || attributes & FILE_ATTRIBUTE_DIRECTORY)
         return false;
 #else
     struct stat st{};
-    if (stat(fixedName.CString(), &st) || st.st_mode & S_IFDIR)
+    if (stat(fixedName.c_str(), &st) || st.st_mode & S_IFDIR)
         return false;
 #endif
 
@@ -466,12 +466,12 @@ bool FileSystem::DirExists(const String& pathName) const
     String fixedName = to_native(trim_end_slash(pathName));
 
 #ifdef _WIN32
-    DWORD attributes = GetFileAttributesW(WString(fixedName).CString());
+    DWORD attributes = GetFileAttributesW(WString(fixedName).c_str());
     if (attributes == INVALID_FILE_ATTRIBUTES || !(attributes & FILE_ATTRIBUTE_DIRECTORY))
         return false;
 #else
     struct stat st{};
-    if (stat(fixedName.CString(), &st) || !(st.st_mode & S_IFDIR))
+    if (stat(fixedName.c_str(), &st) || !(st.st_mode & S_IFDIR))
         return false;
 #endif
 
@@ -498,7 +498,7 @@ String FileSystem::GetProgramDir() const
     memset(exeName, 0, MAX_PATH);
     pid_t pid = getpid();
     String link = "/proc/" + String(pid) + "/exe";
-    readlink(link.CString(), exeName, MAX_PATH);
+    readlink(link.c_str(), exeName, MAX_PATH);
     return GetPath(String(exeName));
 #else
     return GetCurrentDir();
@@ -523,7 +523,7 @@ String FileSystem::GetUserDocumentsDir() const
 String FileSystem::GetAppPreferencesDir(const String& org, const String& app) const
 {
     String dir;
-    char* prefPath = SDL_GetPrefPath(org.CString(), app.CString());
+    char* prefPath = SDL_GetPrefPath(org.c_str(), app.c_str());
     if (prefPath)
     {
         dir = to_internal(String(prefPath));
@@ -543,19 +543,19 @@ bool FileSystem::SetLastModifiedTime(const String& fileName, unsigned newTime)
 #ifdef _WIN32
     struct _stat oldTime;
     struct _utimbuf newTimes;
-    if (_stat(fileName.CString(), &oldTime) != 0)
+    if (_stat(fileName.c_str(), &oldTime) != 0)
         return false;
     newTimes.actime = oldTime.st_atime;
     newTimes.modtime = newTime;
-    return _utime(fileName.CString(), &newTimes) == 0;
+    return _utime(fileName.c_str(), &newTimes) == 0;
 #else
     struct stat oldTime{};
     struct utimbuf newTimes{};
-    if (stat(fileName.CString(), &oldTime) != 0)
+    if (stat(fileName.c_str(), &oldTime) != 0)
         return false;
     newTimes.actime = oldTime.st_atime;
     newTimes.modtime = newTime;
-    return utime(fileName.CString(), &newTimes) == 0;
+    return utime(fileName.c_str(), &newTimes) == 0;
 #endif
 }
 
@@ -573,7 +573,7 @@ void FileSystem::ScanDirInternal(Vector<String>& result, String path, const Stri
 
 #ifdef _WIN32
     WIN32_FIND_DATAW info;
-    HANDLE handle = FindFirstFileW(WString(path + "*").CString(), &info);
+    HANDLE handle = FindFirstFileW(WString(path + "*").c_str(), &info);
     if (handle != INVALID_HANDLE_VALUE)
     {
         do
@@ -605,7 +605,7 @@ void FileSystem::ScanDirInternal(Vector<String>& result, String path, const Stri
     DIR* dir;
     struct dirent* de;
     struct stat st{};
-    dir = opendir(path.CString());
+    dir = opendir(path.c_str());
     if (dir)
     {
         while ((de = readdir(dir)))
@@ -616,7 +616,7 @@ void FileSystem::ScanDirInternal(Vector<String>& result, String path, const Stri
             if (normalEntry && !(flags & SCAN_HIDDEN) && fileName.StartsWith("."))
                 continue;
             String pathAndName = path + fileName;
-            if (!stat(pathAndName.CString(), &st))
+            if (!stat(pathAndName.c_str(), &st))
             {
                 if (st.st_mode & S_IFDIR)
                 {

@@ -156,11 +156,11 @@ bool ShaderVariation::Create_OGL()
 
     // When version define found, do not insert it a second time
     if (verEnd > 0)
-        shaderCode += (originalShaderCode.CString() + verEnd);
+        shaderCode += (originalShaderCode.c_str() + verEnd);
     else
         shaderCode += originalShaderCode;
 
-    const char* shaderCStr = shaderCode.CString();
+    const char* shaderCStr = shaderCode.c_str();
     glShaderSource(object_.name_, 1, &shaderCStr, nullptr);
     glCompileShader(object_.name_);
 

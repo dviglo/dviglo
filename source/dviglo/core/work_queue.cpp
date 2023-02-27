@@ -29,7 +29,7 @@ public:
 #ifdef DV_TRACY_PROFILING
         String name;
         name.AppendWithFormat("WorkerThread #%d", index_);
-        DV_PROFILE_THREAD(name.CString());
+        DV_PROFILE_THREAD(name.c_str());
 #endif
         // Init FPU state first
         InitFPU();

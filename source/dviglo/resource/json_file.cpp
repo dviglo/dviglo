@@ -176,7 +176,7 @@ static void ToRapidjsonValue(rapidjson::Value& rapidjsonValue, const JSONValue& 
             rapidjsonValue.SetObject();
             for (JSONObject::ConstIterator i = jsonObject.Begin(); i != jsonObject.End(); ++i)
             {
-                const char* name = i->first_.CString();
+                const char* name = i->first_.c_str();
                 rapidjson::Value value;
                 ToRapidjsonValue(value, i->second_, allocator);
                 rapidjsonValue.AddMember(StringRef(name), value, allocator);
@@ -213,7 +213,7 @@ bool JSONFile::FromString(const String & source)
     if (source.Empty())
         return false;
 
-    MemoryBuffer buffer(source.CString(), source.Length());
+    MemoryBuffer buffer(source.c_str(), source.Length());
     return Load(buffer);
 }
 

@@ -164,7 +164,7 @@ void InitFPU()
 
 void ErrorDialog(const String& title, const String& message)
 {
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title.CString(), message.CString(), nullptr);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, title.c_str(), message.c_str(), nullptr);
 }
 
 void ErrorExit(const String& message, int exitCode)
@@ -198,7 +198,7 @@ void PrintUnicode(const String& str, bool error)
     // though it means that proper Unicode output will not work
     FILE* out = error ? stderr : stdout;
     if (!_isatty(_fileno(out)))
-        fprintf(out, "%s", str.CString());
+        fprintf(out, "%s", str.c_str());
     else
     {
         HANDLE stream = GetStdHandle(error ? STD_ERROR_HANDLE : STD_OUTPUT_HANDLE);
@@ -206,10 +206,10 @@ void PrintUnicode(const String& str, bool error)
             return;
         WString strW(str);
         DWORD charsWritten;
-        WriteConsoleW(stream, strW.CString(), strW.Length(), &charsWritten, nullptr);
+        WriteConsoleW(stream, strW.c_str(), strW.Length(), &charsWritten, nullptr);
     }
 #else
-    fprintf(error ? stderr : stdout, "%s", str.CString());
+    fprintf(error ? stderr : stdout, "%s", str.c_str());
 #endif
 #endif
 }
@@ -221,7 +221,7 @@ void PrintUnicodeLine(const String& str, bool error)
 
 void PrintLine(const String& str, bool error)
 {
-    PrintLine(str.CString(), error);
+    PrintLine(str.c_str(), error);
 }
 
 void PrintLine(const char* str, bool error)

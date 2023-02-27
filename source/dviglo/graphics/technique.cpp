@@ -298,20 +298,20 @@ bool Technique::BeginLoad(Deserializer& source)
             if (passElem.HasAttribute("lighting"))
             {
                 String lighting = passElem.GetAttributeLower("lighting");
-                newPass->SetLightingMode((PassLightingMode)GetStringListIndex(lighting.CString(), lightingModeNames,
+                newPass->SetLightingMode((PassLightingMode)GetStringListIndex(lighting.c_str(), lightingModeNames,
                     LIGHTING_UNLIT));
             }
 
             if (passElem.HasAttribute("blend"))
             {
                 String blend = passElem.GetAttributeLower("blend");
-                newPass->SetBlendMode((BlendMode)GetStringListIndex(blend.CString(), blendModeNames, BLEND_REPLACE));
+                newPass->SetBlendMode((BlendMode)GetStringListIndex(blend.c_str(), blendModeNames, BLEND_REPLACE));
             }
 
             if (passElem.HasAttribute("cull"))
             {
                 String cull = passElem.GetAttributeLower("cull");
-                newPass->SetCullMode((CullMode)GetStringListIndex(cull.CString(), cullModeNames, MAX_CULLMODES));
+                newPass->SetCullMode((CullMode)GetStringListIndex(cull.c_str(), cullModeNames, MAX_CULLMODES));
             }
 
             if (passElem.HasAttribute("depthtest"))
@@ -320,7 +320,7 @@ bool Technique::BeginLoad(Deserializer& source)
                 if (depthTest == "false")
                     newPass->SetDepthTestMode(CMP_ALWAYS);
                 else
-                    newPass->SetDepthTestMode((CompareMode)GetStringListIndex(depthTest.CString(), compareModeNames, CMP_LESS));
+                    newPass->SetDepthTestMode((CompareMode)GetStringListIndex(depthTest.c_str(), compareModeNames, CMP_LESS));
             }
 
             if (passElem.HasAttribute("depthwrite"))

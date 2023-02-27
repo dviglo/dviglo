@@ -91,7 +91,7 @@ void RenderTargetInfo::Load(const XMLElement& element)
 
 void RenderPathCommand::Load(const XMLElement& element)
 {
-    type_ = (RenderCommandType)GetStringListIndex(element.GetAttributeLower("type").CString(), commandTypeNames, CMD_NONE);
+    type_ = (RenderCommandType)GetStringListIndex(element.GetAttributeLower("type").c_str(), commandTypeNames, CMD_NONE);
     tag_ = element.GetAttribute("tag");
     if (element.HasAttribute("enabled"))
         enabled_ = element.GetBool("enabled");
@@ -124,7 +124,7 @@ void RenderPathCommand::Load(const XMLElement& element)
     case CMD_SCENEPASS:
         pass_ = element.GetAttribute("pass");
         sortMode_ =
-            (RenderCommandSortMode)GetStringListIndex(element.GetAttributeLower("sort").CString(), sortModeNames, SORT_FRONTTOBACK);
+            (RenderCommandSortMode)GetStringListIndex(element.GetAttributeLower("sort").c_str(), sortModeNames, SORT_FRONTTOBACK);
         if (element.HasAttribute("marktostencil"))
             markToStencil_ = element.GetBool("marktostencil");
         if (element.HasAttribute("vertexlights"))
@@ -145,7 +145,7 @@ void RenderPathCommand::Load(const XMLElement& element)
         if (type_ == CMD_QUAD && element.HasAttribute("blend"))
         {
             String blend = element.GetAttributeLower("blend");
-            blendMode_ = ((BlendMode)GetStringListIndex(blend.CString(), blendModeNames, BLEND_REPLACE));
+            blendMode_ = ((BlendMode)GetStringListIndex(blend.c_str(), blendModeNames, BLEND_REPLACE));
         }
         break;
 

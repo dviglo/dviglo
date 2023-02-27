@@ -166,7 +166,7 @@ bool Serializer::WriteBoundingBox(const BoundingBox& value)
 
 bool Serializer::WriteString(const String& value)
 {
-    const char* chars = value.CString();
+    const char* chars = value.c_str();
     // Count length to the first zero, because ReadString() does the same
     i32 length = String::CStringLength(chars);
     return Write(chars, length + 1) == length + 1;
@@ -177,7 +177,7 @@ bool Serializer::WriteFileID(const String& value)
     bool success = true;
     i32 length = Min(value.Length(), 4);
 
-    success &= Write(value.CString(), length) == length;
+    success &= Write(value.c_str(), length) == length;
     for (i32 i = value.Length(); i < 4; ++i)
         success &= WriteU8(' ');
     return success;
@@ -384,7 +384,7 @@ bool Serializer::WriteNetID(id32 value)
 bool Serializer::WriteLine(const String& value)
 {
     bool success = true;
-    success &= Write(value.CString(), value.Length()) == value.Length();
+    success &= Write(value.c_str(), value.Length()) == value.Length();
     success &= WriteU8(13);
     success &= WriteU8(10);
     return success;

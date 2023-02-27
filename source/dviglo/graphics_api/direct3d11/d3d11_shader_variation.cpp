@@ -263,8 +263,8 @@ bool ShaderVariation::Compile_D3D11()
     for (unsigned i = 0; i < defines.Size(); ++i)
     {
         D3D_SHADER_MACRO macro;
-        macro.Name = defines[i].CString();
-        macro.Definition = defineValues[i].CString();
+        macro.Name = defines[i].c_str();
+        macro.Definition = defineValues[i].c_str();
         macros.Push(macro);
 
         // In debug mode, check that all defines are referenced by the shader code
@@ -283,7 +283,7 @@ bool ShaderVariation::Compile_D3D11()
     ID3DBlob* shaderCode = nullptr;
     ID3DBlob* errorMsgs = nullptr;
 
-    HRESULT hr = D3DCompile(sourceCode.CString(), sourceCode.Length(), owner_->GetName().CString(), &macros.Front(), nullptr,
+    HRESULT hr = D3DCompile(sourceCode.c_str(), sourceCode.Length(), owner_->GetName().c_str(), &macros.Front(), nullptr,
         entryPoint, profile, flags, 0, &shaderCode, &errorMsgs);
     if (FAILED(hr))
     {

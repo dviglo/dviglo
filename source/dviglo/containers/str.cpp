@@ -16,7 +16,7 @@ const String String::EMPTY;
 String::String(const WString& str)
     : String()
 {
-    SetUTF8FromWChar(str.CString());
+    SetUTF8FromWChar(str.c_str());
 }
 
 String::String(int value)
@@ -613,7 +613,7 @@ String String::ToUpper() const
 
 Vector<String> String::Split(char separator, bool keepEmptyStrings) const
 {
-    return Split(CString(), separator, keepEmptyStrings);
+    return Split(c_str(), separator, keepEmptyStrings);
 }
 
 void String::Join(const Vector<String>& subStrings, const String& glue)
@@ -798,12 +798,12 @@ bool String::EndsWith(const String& str, bool caseSensitive) const
 
 int String::Compare(const String& str, bool caseSensitive) const
 {
-    return Compare(CString(), str.CString(), caseSensitive);
+    return Compare(c_str(), str.c_str(), caseSensitive);
 }
 
 int String::Compare(const char* str, bool caseSensitive) const
 {
-    return Compare(CString(), str, caseSensitive);
+    return Compare(c_str(), str, caseSensitive);
 }
 
 void String::SetUTF8FromLatin1(const char* str)

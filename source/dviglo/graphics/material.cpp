@@ -78,7 +78,7 @@ TextureUnit ParseTextureUnitName(String name)
 {
     name = name.ToLower().Trimmed();
 
-    TextureUnit unit = (TextureUnit)GetStringListIndex(name.CString(), textureUnitNames, MAX_TEXTURE_UNITS);
+    TextureUnit unit = (TextureUnit)GetStringListIndex(name.c_str(), textureUnitNames, MAX_TEXTURE_UNITS);
     if (unit == MAX_TEXTURE_UNITS)
     {
         // Check also for shorthand names
@@ -487,15 +487,15 @@ bool Material::Load(const XMLElement& source)
 
     XMLElement cullElem = source.GetChild("cull");
     if (cullElem)
-        SetCullMode((CullMode)GetStringListIndex(cullElem.GetAttribute("value").CString(), cullModeNames, CULL_CCW));
+        SetCullMode((CullMode)GetStringListIndex(cullElem.GetAttribute("value").c_str(), cullModeNames, CULL_CCW));
 
     XMLElement shadowCullElem = source.GetChild("shadowcull");
     if (shadowCullElem)
-        SetShadowCullMode((CullMode)GetStringListIndex(shadowCullElem.GetAttribute("value").CString(), cullModeNames, CULL_CCW));
+        SetShadowCullMode((CullMode)GetStringListIndex(shadowCullElem.GetAttribute("value").c_str(), cullModeNames, CULL_CCW));
 
     XMLElement fillElem = source.GetChild("fill");
     if (fillElem)
-        SetFillMode((FillMode)GetStringListIndex(fillElem.GetAttribute("value").CString(), fillModeNames, FILL_SOLID));
+        SetFillMode((FillMode)GetStringListIndex(fillElem.GetAttribute("value").c_str(), fillModeNames, FILL_SOLID));
 
     XMLElement depthBiasElem = source.GetChild("depthbias");
     if (depthBiasElem)
@@ -647,15 +647,15 @@ bool Material::Load(const JSONValue& source)
 
     JSONValue cullVal = source.Get("cull");
     if (!cullVal.IsNull())
-        SetCullMode((CullMode)GetStringListIndex(cullVal.GetString().CString(), cullModeNames, CULL_CCW));
+        SetCullMode((CullMode)GetStringListIndex(cullVal.GetString().c_str(), cullModeNames, CULL_CCW));
 
     JSONValue shadowCullVal = source.Get("shadowcull");
     if (!shadowCullVal.IsNull())
-        SetShadowCullMode((CullMode)GetStringListIndex(shadowCullVal.GetString().CString(), cullModeNames, CULL_CCW));
+        SetShadowCullMode((CullMode)GetStringListIndex(shadowCullVal.GetString().c_str(), cullModeNames, CULL_CCW));
 
     JSONValue fillVal = source.Get("fill");
     if (!fillVal.IsNull())
-        SetFillMode((FillMode)GetStringListIndex(fillVal.GetString().CString(), fillModeNames, FILL_SOLID));
+        SetFillMode((FillMode)GetStringListIndex(fillVal.GetString().c_str(), fillModeNames, FILL_SOLID));
 
     JSONValue depthBiasVal = source.Get("depthbias");
     if (!depthBiasVal.IsNull())
