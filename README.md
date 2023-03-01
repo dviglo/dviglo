@@ -4,6 +4,8 @@
 
 Игровой движок Dviglo - это форк движка Urho3D, ориентированный на русскоязычное сообщество. Отличия от оригинала перечислены [тут](docs/features.md).
 
+![](https://raw.githubusercontent.com/urho3d-learn/flappy-urho/main/screen.png)
+
 ## Лицензия
 
 Dviglo распространяется под лицензией MIT.
