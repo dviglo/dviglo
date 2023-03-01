@@ -15,6 +15,7 @@
 #include <dviglo/input/input.h>
 #include <dviglo/input/input_events.h>
 #include <dviglo/io/file_system.h>
+#include <dviglo/io/fs_base.h>
 #include <dviglo/io/log.h>
 #include <dviglo/resource/resource_cache.h>
 #include <dviglo/resource/xml_file.h>
@@ -39,7 +40,7 @@ void Sample::Setup()
 {
     // Modify engine startup parameters
     engineParameters_[EP_WINDOW_TITLE] = GetTypeName();
-    engineParameters_[EP_LOG_NAME]     = GetSubsystem<FileSystem>()->GetAppPreferencesDir("dviglo", "logs") + GetTypeName() + ".log";
+    engineParameters_[EP_LOG_NAME]     = get_pref_path("dviglo", "logs") + GetTypeName() + ".log";
     engineParameters_[EP_FULL_SCREEN]  = false;
     engineParameters_[EP_HEADLESS]     = false;
     engineParameters_[EP_SOUND]        = false;

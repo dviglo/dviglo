@@ -16,6 +16,7 @@
 #include "../graphics/renderer.h"
 #include "../input/input.h"
 #include "../io/file_system.h"
+#include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/package_file.h"
 #ifdef DV_NAVIGATION
@@ -276,7 +277,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         ))
             return false;
 
-        graphics->SetShaderCacheDir(GetParameter(parameters, EP_SHADER_CACHE_DIR, fileSystem->GetAppPreferencesDir("urho3d", "shadercache")).GetString());
+        graphics->SetShaderCacheDir(GetParameter(parameters, EP_SHADER_CACHE_DIR, get_pref_path("urho3d", "shadercache")).GetString());
 
         if (HasParameter(parameters, EP_DUMP_SHADERS))
             graphics->BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
@@ -376,7 +377,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         return false;   // The root cause of the error should have already been logged
                 }
                 String pathName = resourcePrefixPaths[j] + resourcePaths[i];
-                if (fileSystem->DirExists(pathName))
+                if (dir_exists(pathName))
                 {
                     if (cache->AddResourceDir(pathName))
                         break;
@@ -395,7 +396,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         else
         {
             String pathName = resourcePaths[i];
-            if (fileSystem->DirExists(pathName))
+            if (dir_exists(pathName))
                 if (!cache->AddResourceDir(pathName))
                     return false;
         }
@@ -436,7 +437,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             if (!IsAbsolutePath(autoLoadPath))
                 autoLoadPath = resourcePrefixPaths[j] + autoLoadPath;
 
-            if (fileSystem->DirExists(autoLoadPath))
+            if (dir_exists(autoLoadPath))
             {
                 autoLoadPathExist = true;
 

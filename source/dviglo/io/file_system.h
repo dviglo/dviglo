@@ -33,8 +33,10 @@ public:
 
     /// Set the current working directory.
     bool SetCurrentDir(const String& pathName);
-    /// Create a directory.
-    bool CreateDir(const String& pathName);
+
+    /// Версия функции, которая пишет с лог
+    bool create_dir(const String& path);
+
     /// Set whether to execute engine console commands as OS-specific system command.
     void SetExecuteConsoleCommands(bool enable);
     /// Run a program using the command interpreter, block until it exits and return the exit code
@@ -66,16 +68,12 @@ public:
     unsigned GetLastModifiedTime(const String& fileName) const;
     /// Check if a file exists.
     bool FileExists(const String& fileName) const;
-    /// Check if a directory exists.
-    bool DirExists(const String& pathName) const;
     /// Scan a directory for specified files.
     void ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const;
     /// Return the program's directory.
     String GetProgramDir() const;
     /// Return the user documents directory.
     String GetUserDocumentsDir() const;
-    /// Return the application preferences directory.
-    String GetAppPreferencesDir(const String& org, const String& app) const;
     /// Return path of temporary directory. Path always ends with a forward slash.
     String GetTemporaryDir() const;
 

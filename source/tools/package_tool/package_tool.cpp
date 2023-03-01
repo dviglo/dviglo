@@ -166,7 +166,7 @@ void Unpack(const Vector<String>& arguments)
         if (pos == String::NPOS)
             ErrorExit("pos == String::NPOS");
 
-        fileSystem_->CreateDir(outFilePath.Substring(0, pos));
+        fileSystem_->create_dir(outFilePath.Substring(0, pos));
 
         File packedFile(packageFile, current->first_);
         if (!packedFile.IsOpen())

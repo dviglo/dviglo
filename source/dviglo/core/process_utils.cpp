@@ -2,9 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "../io/file_system.h"
+#include "../io/fs_base.h"
 #include "process_utils.h"
 #include "string_utils.h"
-#include "../io/file_system.h"
 
 #include <cstdio>
 #include <fcntl.h>
@@ -479,15 +480,7 @@ void SetMiniDumpDir(const String& pathName)
 String GetMiniDumpDir()
 {
     if (miniDumpDir.Empty())
-    {
-        char* pathName = SDL_GetPrefPath("urho3d", "crashdumps");
-        if (pathName)
-        {
-            String ret(pathName);
-            SDL_free(pathName);
-            return ret;
-        }
-    }
+        return get_pref_path("urho3d", "crashdumps");
 
     return miniDumpDir;
 }

@@ -3,13 +3,14 @@
 // License: MIT
 
 #include "../../graphics/graphics.h"
-#include "d3d11_graphics_impl.h"
-#include "../shader.h"
-#include "../vertex_buffer.h"
 #include "../../io/file.h"
 #include "../../io/file_system.h"
+#include "../../io/fs_base.h"
 #include "../../io/log.h"
 #include "../../resource/resource_cache.h"
+#include "../shader.h"
+#include "../vertex_buffer.h"
+#include "d3d11_graphics_impl.h"
 
 #include <d3dcompiler.h>
 
@@ -404,8 +405,8 @@ void ShaderVariation::SaveByteCode_D3D11(const String& binaryShaderName)
         fullName = shaderFileName.Substring(0, shaderFileName.Find(owner_->GetName())) + binaryShaderName;
     }
     String path = GetPath(fullName);
-    if (!fileSystem->DirExists(path))
-        fileSystem->CreateDir(path);
+    if (!dir_exists(path))
+        fileSystem->create_dir(path);
 
     SharedPtr<File> file(new File(fullName, FILE_WRITE));
     if (!file->IsOpen())

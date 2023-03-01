@@ -98,7 +98,7 @@ public:
     {
         // Modify engine startup parameters
         engineParameters_[EP_WINDOW_TITLE] = "Ninja Snow Wars Native";
-        engineParameters_[EP_LOG_NAME] = GetSubsystem<FileSystem>()->GetAppPreferencesDir("dviglo", "logs") + "80_ninja_snow_wars_native.log";
+        engineParameters_[EP_LOG_NAME] = get_pref_path("dviglo", "logs") + "80_ninja_snow_wars_native.log";
         //engineParameters_[EP_FULL_SCREEN] = false;
     }
 

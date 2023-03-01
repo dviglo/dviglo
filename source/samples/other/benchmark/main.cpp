@@ -9,6 +9,7 @@
 #include <dviglo/engine/engine_defs.h>
 #include <dviglo/input/input.h>
 #include <dviglo/io/file_system.h>
+#include <dviglo/io/fs_base.h>
 #include <dviglo/resource/resource_cache.h>
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
@@ -31,7 +32,7 @@ public:
     void Setup() override
     {
         engineParameters_[EP_WINDOW_TITLE] = "Urho3D Benchmark";
-        engineParameters_[EP_LOG_NAME] = GetSubsystem<FileSystem>()->GetAppPreferencesDir("urho3d", "logs") + "99_Benchmark.log";
+        engineParameters_[EP_LOG_NAME] = get_pref_path("urho3d", "logs") + "99_Benchmark.log";
         engineParameters_[EP_FULL_SCREEN] = false;
         engineParameters_[EP_WINDOW_WIDTH] = 960;
         engineParameters_[EP_WINDOW_HEIGHT] = 720;

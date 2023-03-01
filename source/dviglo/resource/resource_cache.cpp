@@ -8,6 +8,7 @@
 #include "../core/work_queue.h"
 #include "../io/file_system.h"
 #include "../io/file_watcher.h"
+#include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/package_file.h"
 #include "../io/path.h"
@@ -82,7 +83,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
     std::scoped_lock lock(resourceMutex_);
 
     auto* fileSystem = GetSubsystem<FileSystem>();
-    if (!fileSystem || !fileSystem->DirExists(pathName))
+    if (!fileSystem || !dir_exists(pathName))
     {
         DV_LOGERROR("Could not open directory " + pathName);
         return false;
@@ -808,7 +809,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
 
     for (unsigned i = 0; checkDirs[i] != nullptr; ++i)
     {
-        if (fileSystem->DirExists(fixedPath + checkDirs[i]))
+        if (dir_exists(fixedPath + checkDirs[i]))
         {
             pathHasKnownDirs = true;
             break;
@@ -819,7 +820,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
         String parentPath = get_parent(fixedPath);
         for (unsigned i = 0; checkDirs[i] != nullptr; ++i)
         {
-            if (fileSystem->DirExists(parentPath + checkDirs[i]))
+            if (dir_exists(parentPath + checkDirs[i]))
             {
                 parentHasKnownDirs = true;
                 break;

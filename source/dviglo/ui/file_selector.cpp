@@ -6,6 +6,7 @@
 #include "../input/input_events.h"
 #include "../io/file.h"
 #include "../io/file_system.h"
+#include "../io/fs_base.h"
 #include "../io/path.h"
 #include "dropdown_list.h"
 #include "file_selector.h"
@@ -173,7 +174,7 @@ void FileSelector::SetButtonTexts(const String& okText, const String& cancelText
 void FileSelector::SetPath(const String& path)
 {
     auto* fileSystem = GetSubsystem<FileSystem>();
-    if (fileSystem->DirExists(path))
+    if (dir_exists(path))
     {
         path_ = AddTrailingSlash(path);
         SetLineEditText(pathEdit_, path_);

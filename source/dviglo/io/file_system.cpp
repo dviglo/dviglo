@@ -10,6 +10,7 @@
 #include "../engine/engine_events.h"
 #include "file.h"
 #include "file_system.h"
+#include "fs_base.h"
 #include "io_events.h"
 #include "log.h"
 #include "path.h"
@@ -51,12 +52,12 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
     // Get a platform-agnostic temporary file name for stderr redirection
     String stderrFilename;
     String adjustedCommandLine(commandLine);
-    char* prefPath = SDL_GetPrefPath("urho3d", "temp");
-    if (prefPath)
+    String pref_path = get_pref_path("urho3d", "temp");
+
+    if (!pref_path.Empty())
     {
-        stderrFilename = String(prefPath) + "command-stderr";
+        stderrFilename = pref_path + "command-stderr";
         adjustedCommandLine += " 2>" + stderrFilename;
-        SDL_free(prefPath);
     }
 
 #ifdef _MSC_VER
@@ -273,29 +274,16 @@ bool FileSystem::SetCurrentDir(const String& pathName)
     return true;
 }
 
-bool FileSystem::CreateDir(const String& pathName)
+bool FileSystem::create_dir(const String& path)
 {
-    // Create each of the parents if necessary
-    String parentPath = get_parent(pathName);
-    if (parentPath.Length() > 1 && !DirExists(parentPath))
-    {
-        if (!CreateDir(parentPath))
-            return false;
-    }
+    bool ret = create_dir_silent(path);
 
-#ifdef _WIN32
-    bool success = (CreateDirectoryW(to_win_native(trim_end_slash(pathName)).c_str(), nullptr) == TRUE) ||
-        (GetLastError() == ERROR_ALREADY_EXISTS);
-#else
-    bool success = mkdir(trim_end_slash(pathName).c_str(), S_IRWXU) == 0 || errno == EEXIST;
-#endif
-
-    if (success)
-        DV_LOGDEBUG("Created directory " + pathName);
+    if (ret)
+        DV_LOGDEBUG("Created directory " + path);
     else
-        DV_LOGERROR("Failed to create directory " + pathName);
+        DV_LOGERROR("Failed to create directory " + path);
 
-    return success;
+    return ret;
 }
 
 void FileSystem::SetExecuteConsoleCommands(bool enable)
@@ -348,7 +336,7 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
 
 bool FileSystem::SystemOpen(const String& fileName, const String& mode)
 {
-    if (!FileExists(fileName) && !DirExists(fileName))
+    if (!FileExists(fileName) && !dir_exists(fileName))
     {
         DV_LOGERROR("File or directory " + fileName + " not found");
         return false;
@@ -455,29 +443,6 @@ bool FileSystem::FileExists(const String& fileName) const
     return true;
 }
 
-bool FileSystem::DirExists(const String& pathName) const
-{
-#ifndef _WIN32
-    // Always return true for the root directory
-    if (pathName == "/")
-        return true;
-#endif
-
-    String fixedName = to_native(trim_end_slash(pathName));
-
-#ifdef _WIN32
-    DWORD attributes = GetFileAttributesW(WString(fixedName).c_str());
-    if (attributes == INVALID_FILE_ATTRIBUTES || !(attributes & FILE_ATTRIBUTE_DIRECTORY))
-        return false;
-#else
-    struct stat st{};
-    if (stat(fixedName.c_str(), &st) || !(st.st_mode & S_IFDIR))
-        return false;
-#endif
-
-    return true;
-}
-
 void FileSystem::ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const
 {
     result.Clear();
@@ -518,21 +483,6 @@ String FileSystem::GetUserDocumentsDir() const
     strcpy(pathName, getenv("HOME"));
     return AddTrailingSlash(String(pathName));
 #endif
-}
-
-String FileSystem::GetAppPreferencesDir(const String& org, const String& app) const
-{
-    String dir;
-    char* prefPath = SDL_GetPrefPath(org.c_str(), app.c_str());
-    if (prefPath)
-    {
-        dir = to_internal(String(prefPath));
-        SDL_free(prefPath);
-    }
-    else
-        DV_LOGWARNING("Could not get application preferences directory");
-
-    return dir;
 }
 
 bool FileSystem::SetLastModifiedTime(const String& fileName, unsigned newTime)
