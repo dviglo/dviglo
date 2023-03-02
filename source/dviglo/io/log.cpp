@@ -8,7 +8,7 @@
 #include "../core/process_utils.h"
 #include "../core/thread.h"
 #include "../core/timer.h"
-#include "file.h"
+#include "file_base.h"
 #include "io_events.h"
 #include "log.h"
 
@@ -52,34 +52,39 @@ Log::~Log()
     logInstance = nullptr;
 }
 
-void Log::Open(const String& fileName)
+void Log::Open(const String& filename)
 {
-    if (fileName.Empty())
+    if (filename.Empty())
         return;
-    if (logFile_ && logFile_->IsOpen())
+
+    if (log_file_)
     {
-        if (logFile_->GetName() == fileName)
+        if (log_file_name_ == filename)
             return;
         else
             Close();
     }
 
-    logFile_ = new File();
-    if (logFile_->Open(fileName, FILE_WRITE))
-        Write(LOG_INFO, "Opened log file " + fileName);
+    log_file_ = file_open(filename, "wb");
+
+    if (log_file_)
+    {
+        log_file_name_ = filename;
+        Write(LOG_INFO, "Opened log file " + filename);
+    }
     else
     {
-        logFile_.Reset();
-        Write(LOG_ERROR, "Failed to create log file " + fileName);
+        Write(LOG_ERROR, "Failed to create log file " + filename);
     }
 }
 
 void Log::Close()
 {
-    if (logFile_ && logFile_->IsOpen())
+    if (log_file_)
     {
-        logFile_->Close();
-        logFile_.Reset();
+        file_close(log_file_);
+        log_file_ = nullptr;
+        log_file_name_.Clear();
     }
 }
 
@@ -171,10 +176,11 @@ void Log::Write(int level, const String& message)
     else
         PrintUnicodeLine(formattedMessage, level == LOG_ERROR);
 
-    if (logInstance->logFile_)
+    if (logInstance->log_file_)
     {
-        logInstance->logFile_->WriteLine(formattedMessage);
-        logInstance->logFile_->Flush();
+        file_write(formattedMessage.c_str(), sizeof(char), formattedMessage.Length(), logInstance->log_file_);
+        file_write("\n", sizeof(char), 1, logInstance->log_file_);
+        file_flush(logInstance->log_file_);
     }
 
     logInstance->inWrite_ = true;
@@ -218,10 +224,10 @@ void Log::WriteRaw(const String& message, bool error)
     else
         PrintUnicode(message, error);
 
-    if (logInstance->logFile_)
+    if (logInstance->log_file_)
     {
-        logInstance->logFile_->Write(message.c_str(), message.Length());
-        logInstance->logFile_->Flush();
+        file_write(message.c_str(), sizeof(char), message.Length(), logInstance->log_file_);
+        file_flush(logInstance->log_file_);
     }
 
     logInstance->inWrite_ = true;

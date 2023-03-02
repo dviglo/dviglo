@@ -63,8 +63,8 @@ public:
     /// Destruct. Close the log file if open.
     ~Log() override;
 
-    /// Open the log file.
-    void Open(const String& fileName);
+    void Open(const String& filename);
+
     /// Close the log file.
     void Close();
     /// Set logging level.
@@ -101,8 +101,10 @@ private:
     std::mutex logMutex_;
     /// Log messages from other threads.
     List<StoredLogMessage> threadMessages_;
-    /// Log file.
-    SharedPtr<File> logFile_;
+
+    FILE* log_file_ = nullptr;
+    String log_file_name_;
+
     /// Last log message.
     String lastMessage_;
     /// Logging level.
