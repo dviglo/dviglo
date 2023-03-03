@@ -21,7 +21,6 @@
 #include "../engine/engine.h"
 #endif
 
-
 #include <SDL3/SDL.h>
 
 #define SDL_GESTURE_IMPLEMENTATION
