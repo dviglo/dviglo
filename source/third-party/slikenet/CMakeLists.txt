@@ -16,7 +16,7 @@
 
 
 # Название таргета
-set(target_name slikenet)
+set(TARGET_NAME slikenet)
 
 add_definitions (-DRAKNET_ENABLE_STATIC -D_RAKNET_SUPPORT_NatTypeDetectionServer=0 -D_RAKNET_SUPPORT_UDPForwarder=0 -D_RAKNET_SUPPORT_TwoWayAuthentication=0)
 add_definitions (-D_RAKNET_SUPPORT_CloudClient=0 -D_RAKNET_SUPPORT_CloudServer=0 -D_RAKNET_SUPPORT_ConnectionGraph2=0 -D_RAKNET_SUPPORT_NatPunchthroughServer=0)
@@ -62,22 +62,22 @@ endif ()
 file(GLOB_RECURSE source_files Source/*.cpp Source/*.h)
 
 # Создаём статическую библиотеку
-add_library(${target_name} STATIC ${source_files})
+add_library(${TARGET_NAME} STATIC ${source_files})
 
 # Делаем заголовочные файлы доступными библиотеке и таргетам, которые используют текущую библиотеку
-target_include_directories(${target_name} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Source)
+target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Source)
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 if (MINGW)
     # Требуется для компиляции движка в MinGW
-    target_link_libraries(${target_name} PRIVATE iphlpapi)
+    target_link_libraries(${TARGET_NAME} PRIVATE iphlpapi)
 endif ()
 
 if (MINGW AND NOT DV_SHARED)
     # Требуется для компиляции статической версии движка в MinGW
-    target_link_libraries(${target_name} PRIVATE ws2_32)
+    target_link_libraries(${TARGET_NAME} PRIVATE ws2_32)
 endif ()
 
 # Заставляем VS отображать дерево каталогов

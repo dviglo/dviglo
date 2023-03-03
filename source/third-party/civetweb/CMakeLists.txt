@@ -3,13 +3,13 @@
 # License: MIT
 
 # Название таргета
-set(target_name civetweb)
+set(TARGET_NAME civetweb)
 
 # Создаём список файлов
 file(GLOB_RECURSE source_files civetweb/*.c civetweb/*.h)
 
 # Создаём статическую библиотеку
-add_library(${target_name} STATIC ${source_files})
+add_library(${TARGET_NAME} STATIC ${source_files})
 
 # Define preprocessor macros
 # Always disable Common Gateway Interface
@@ -68,7 +68,7 @@ if (DV_SSL)
             endif ()
         endif ()
         if (LIBDL_FOUND)
-            target_link_libraries(${target_name} -ldl)
+            target_link_libraries(${TARGET_NAME} -ldl)
         endif ()
     else ()
         if (APPLE)
@@ -82,14 +82,14 @@ if (DV_SSL)
 endif ()
 
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
-target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET ${target_name} PROPERTY POSITION_INDEPENDENT_CODE ON)
+set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 if (MINGW)
     # Требуется для компиляции движка в MinGW
-    target_link_libraries(${target_name} PRIVATE ws2_32)
+    target_link_libraries(${TARGET_NAME} PRIVATE ws2_32)
 endif ()
 
 # Заставляем VS отображать дерево каталогов

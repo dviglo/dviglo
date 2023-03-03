@@ -2,7 +2,7 @@
 # License: MIT
 
 # Название таргета
-set(target_name dviglo)
+set(TARGET_NAME dviglo)
 
 # Отладочная версия библиотеки будут иметь суффикс _d.
 # Не работает для экзешников
@@ -130,62 +130,62 @@ set(generated_src_files "${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h")
 
 if(DV_SHARED)
     # Создаём динамическую библиотеку
-    add_library(${target_name} SHARED ${source_files} ${generated_src_files})
-    target_compile_definitions(${target_name} PUBLIC DV_SHARED=1)
+    add_library(${TARGET_NAME} SHARED ${source_files} ${generated_src_files})
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_SHARED=1)
 else()
     # Создаём статическую библиотеку
-    add_library(${target_name} STATIC ${source_files} ${generated_src_files})
+    add_library(${TARGET_NAME} STATIC ${source_files} ${generated_src_files})
 endif()
 
 # При компиляции библиотеки и при использовании библиотеки h-файлы отличаются
-target_compile_definitions(${target_name} PRIVATE DV_IS_BUILDING=1)
+target_compile_definitions(${TARGET_NAME} PRIVATE DV_IS_BUILDING=1)
 
 # Подключаем библиотеки из папки third-party
-target_link_libraries(${target_name} PUBLIC SDL3-static stb rapidjson lz4 pugixml freetype etcpack)
+target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static stb rapidjson lz4 pugixml freetype etcpack)
 
 # Не линкуем libcpuid при сборке для Linux
 if(NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
-    target_link_libraries(${target_name} PUBLIC libcpuid)
+    target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
 endif()
 
 if(DV_D3D11)
-    target_compile_definitions(${target_name} PUBLIC DV_D3D11=1)
-    target_link_libraries(${target_name} PUBLIC ${DIRECT3D_LIBRARIES})
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_D3D11=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC ${DIRECT3D_LIBRARIES})
 endif()
 
 if(DV_OPENGL)
-    target_compile_definitions(${target_name} PUBLIC DV_OPENGL=1)
-    target_link_libraries(${target_name} PUBLIC glew)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_OPENGL=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC glew)
 endif()
 
 if(DV_MINIDUMPS)
-    target_compile_definitions(${target_name} PUBLIC DV_MINIDUMPS=1)
-    target_link_libraries(${target_name} PUBLIC dbghelp)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_MINIDUMPS=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC dbghelp)
 endif()
 
 if(DV_NAVIGATION)
-    target_compile_definitions(${target_name} PUBLIC DV_NAVIGATION=1)
-    target_link_libraries(${target_name} PUBLIC detour detour_crowd detour_tile_cache recast)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_NAVIGATION=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC detour detour_crowd detour_tile_cache recast)
 endif()
 
 if(DV_NETWORK)
-    target_compile_definitions(${target_name} PUBLIC DV_NETWORK=1)
-    target_link_libraries(${target_name} PUBLIC civetweb slikenet)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_NETWORK=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC civetweb slikenet)
 endif()
 
 if(DV_BULLET)
-    target_compile_definitions(${target_name} PUBLIC DV_BULLET=1)
-    target_link_libraries(${target_name} PUBLIC bullet stanhull)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_BULLET=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC bullet stanhull)
 endif()
 
 if(DV_BOX2D)
-    target_compile_definitions(${target_name} PUBLIC DV_BOX2D=1)
-    target_link_libraries(${target_name} PUBLIC box2d)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_BOX2D=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC box2d)
 endif()
 
 if(DV_TRACY_PROFILING)
-    target_compile_definitions(${target_name} PUBLIC DV_TRACY_PROFILING=1)
-    target_link_libraries(${target_name} PUBLIC tracy)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_TRACY_PROFILING=1)
+    target_link_libraries(${TARGET_NAME} PUBLIC tracy)
 endif()
 
 # Опции, которые не требуют ничего, кроме создания дефайнов
@@ -198,12 +198,12 @@ foreach(opt
             DV_URHO2D
             DV_WIN32_CONSOLE)
     if(${opt})
-        target_compile_definitions(${target_name} PUBLIC ${opt}=1)
+        target_compile_definitions(${TARGET_NAME} PUBLIC ${opt}=1)
     endif()
 endforeach()
 
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
-target_include_directories(${target_name} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
+target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
 
 # Генерируем файл dviglo_all.h
 list(JOIN dviglo_all_content "\n" dviglo_all_content)

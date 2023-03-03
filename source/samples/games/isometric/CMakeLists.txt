@@ -7,7 +7,7 @@ if(NOT DV_URHO2D OR NOT DV_BOX2D)
 endif()
 
 # Название таргета
-set(target_name game_isometric)
+set(TARGET_NAME game_isometric)
 
 # Создаём список файлов
 file(GLOB source_files *.cpp *.h)
@@ -15,25 +15,25 @@ set(common_source_files ../../Utilities2D/Sample2D.h ../../Utilities2D/Sample2D.
                         ../../Utilities2D/Mover.h ../../Utilities2D/Mover.cpp)
 
 # Создаём приложение
-add_executable(${target_name} ${source_files} ${common_source_files})
+add_executable(${TARGET_NAME} ${source_files} ${common_source_files})
 
 if(NOT DV_WIN32_CONSOLE)
     # Используем точку входа WinMain()
-    set_property(TARGET ${target_name} PROPERTY WIN32_EXECUTABLE TRUE)
+    set_property(TARGET ${TARGET_NAME} PROPERTY WIN32_EXECUTABLE TRUE)
 endif()
 
 # Отладочная версия приложения будет иметь суффикс _d
-set_property(TARGET ${target_name} PROPERTY DEBUG_POSTFIX _d)
+set_property(TARGET ${TARGET_NAME} PROPERTY DEBUG_POSTFIX _d)
 
 # Подключаем библиотеку
-target_link_libraries(${target_name} PRIVATE dviglo)
+target_link_libraries(${TARGET_NAME} PRIVATE dviglo)
 
 # Копируем динамические библиотеки в папку с приложением
-dv_copy_shared_libs_to_bin_dir(${target_name} "${CMAKE_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)
+dv_copy_shared_libs_to_bin_dir(${TARGET_NAME} "${CMAKE_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)
 
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/../.. FILES ${common_source_files})
 
 # Добавляем приложение в список тестируемых
-add_test(NAME ${target_name} COMMAND ${target_name} -timeout 5)
+add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME} -timeout 5)
