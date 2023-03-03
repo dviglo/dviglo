@@ -18,7 +18,12 @@ file(GLOB source_files *.cpp *.h)
 set(common_source_files ../../Sample.h ../../Sample.inl)
 
 # Создаём приложение
-add_executable(${target_name} WIN32 ${source_files} ${common_source_files})
+add_executable(${target_name} ${source_files} ${common_source_files})
+
+if(NOT DV_WIN32_CONSOLE)
+    # Используем точку входа WinMain()
+    set_property(TARGET ${target_name} PROPERTY WIN32_EXECUTABLE TRUE)
+endif()
 
 # Отладочная версия приложения будет иметь суффикс _d
 set_property(TARGET ${target_name} PROPERTY DEBUG_POSTFIX _d)
