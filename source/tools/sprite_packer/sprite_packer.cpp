@@ -90,7 +90,6 @@ void Run(Vector<String>& arguments)
         Help();
 
     DV_CONTEXT.RegisterSubsystem(new FileSystem());
-    DV_CONTEXT.RegisterSubsystem(new Log());
     auto* fileSystem = DV_CONTEXT.GetSubsystem<FileSystem>();
 
     Vector<String> inputFiles;

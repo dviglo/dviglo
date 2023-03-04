@@ -105,9 +105,6 @@ Engine::Engine() :
     DV_CONTEXT.RegisterSubsystem(new Profiler());
 #endif
     DV_CONTEXT.RegisterSubsystem(new FileSystem());
-#ifdef DV_LOGGING
-    DV_CONTEXT.RegisterSubsystem(new Log());
-#endif
     DV_CONTEXT.RegisterSubsystem(new ResourceCache());
     DV_CONTEXT.RegisterSubsystem(new Localization());
 #ifdef DV_NETWORK
@@ -203,15 +200,11 @@ bool Engine::Initialize(const VariantMap& parameters)
     RegisterUrho2DLibrary();
 #endif
 
-    // Start logging
-    auto* log = GetSubsystem<Log>();
-    if (log)
-    {
-        if (HasParameter(parameters, EP_LOG_LEVEL))
-            log->SetLevel(GetParameter(parameters, EP_LOG_LEVEL).GetI32());
-        log->SetQuiet(GetParameter(parameters, EP_LOG_QUIET, false).GetBool());
-        log->Open(GetParameter(parameters, EP_LOG_NAME, "Urho3D.log").GetString());
-    }
+    // Начинаем запись лога в файл
+    if (HasParameter(parameters, EP_LOG_LEVEL))
+        Log::get_instance().SetLevel(GetParameter(parameters, EP_LOG_LEVEL).GetI32());
+    Log::get_instance().SetQuiet(GetParameter(parameters, EP_LOG_QUIET, false).GetBool());
+    Log::get_instance().Open(GetParameter(parameters, EP_LOG_NAME, "dviglo.log").GetString());
 
     // Set maximally accurate low res timer
     GetSubsystem<Time>()->SetTimerPeriod(1);

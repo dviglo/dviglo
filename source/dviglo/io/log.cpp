@@ -29,7 +29,6 @@ const char* logLevelPrefixes[] =
     nullptr
 };
 
-static Log* logInstance = nullptr;
 static bool threadErrorDisplayed = false;
 
 Log::Log() :
@@ -42,14 +41,16 @@ Log::Log() :
     inWrite_(false),
     quiet_(false)
 {
-    logInstance = this;
-
     SubscribeToEvent(E_ENDFRAME, DV_HANDLER(Log, HandleEndFrame));
 }
 
 Log::~Log()
 {
-    logInstance = nullptr;
+    if (log_file_)
+    {
+        Write(LOG_INFO, "Log closed in destructor");
+        Close();
+    }
 }
 
 void Log::Open(const String& filename)
@@ -111,13 +112,12 @@ void Log::SetQuiet(bool quiet)
 
 void Log::WriteFormat(int level, const char* format, ...)
 {
-    if (!logInstance)
-        return;
+    Log& instance = get_instance();
 
     if (level != LOG_RAW)
     {
         // No-op if illegal level
-        if (level < LOG_TRACE || level >= LOG_NONE || logInstance->level_ > level)
+        if (level < LOG_TRACE || level >= LOG_NONE || instance.level_ > level)
             return;
     }
 
@@ -144,30 +144,29 @@ void Log::Write(int level, const String& message)
     if (level < LOG_TRACE || level >= LOG_NONE)
         return;
 
+    Log& instance = get_instance();
+
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())
     {
-        if (logInstance)
-        {
-            std::scoped_lock lock(logInstance->logMutex_);
-            logInstance->threadMessages_.Push(StoredLogMessage(message, level, false));
-        }
+        std::scoped_lock lock(instance.logMutex_);
+        instance.threadMessages_.Push(StoredLogMessage(message, level, false));
 
         return;
     }
 
     // Do not log if message level excluded or if currently sending a log event
-    if (!logInstance || logInstance->level_ > level || logInstance->inWrite_)
+    if (instance.level_ > level || instance.inWrite_)
         return;
 
     String formattedMessage = logLevelPrefixes[level];
     formattedMessage += ": " + message;
-    logInstance->lastMessage_ = message;
+    instance.lastMessage_ = message;
 
-    if (logInstance->timeStamp_)
+    if (instance.timeStamp_)
         formattedMessage = "[" + time_to_str() + "] " + formattedMessage;
 
-    if (logInstance->quiet_)
+    if (instance.quiet_)
     {
         // If in quiet mode, still print the error message to the standard error stream
         if (level == LOG_ERROR)
@@ -176,46 +175,45 @@ void Log::Write(int level, const String& message)
     else
         PrintUnicodeLine(formattedMessage, level == LOG_ERROR);
 
-    if (logInstance->log_file_)
+    if (instance.log_file_)
     {
-        file_write(formattedMessage.c_str(), sizeof(char), formattedMessage.Length(), logInstance->log_file_);
-        file_write("\n", sizeof(char), 1, logInstance->log_file_);
-        file_flush(logInstance->log_file_);
+        file_write(formattedMessage.c_str(), sizeof(char), formattedMessage.Length(), instance.log_file_);
+        file_write("\n", sizeof(char), 1, instance.log_file_);
+        file_flush(instance.log_file_);
     }
 
-    logInstance->inWrite_ = true;
+    instance.inWrite_ = true;
 
     using namespace LogMessage;
 
-    VariantMap& eventData = logInstance->GetEventDataMap();
+    VariantMap& eventData = instance.GetEventDataMap();
     eventData[P_MESSAGE] = formattedMessage;
     eventData[P_LEVEL] = level;
-    logInstance->SendEvent(E_LOGMESSAGE, eventData);
+    instance.SendEvent(E_LOGMESSAGE, eventData);
 
-    logInstance->inWrite_ = false;
+    instance.inWrite_ = false;
 }
 
 void Log::WriteRaw(const String& message, bool error)
 {
+    Log& instance = get_instance();
+
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())
     {
-        if (logInstance)
-        {
-            std::scoped_lock lock(logInstance->logMutex_);
-            logInstance->threadMessages_.Push(StoredLogMessage(message, LOG_RAW, error));
-        }
+        std::scoped_lock lock(instance.logMutex_);
+        instance.threadMessages_.Push(StoredLogMessage(message, LOG_RAW, error));
 
         return;
     }
 
     // Prevent recursion during log event
-    if (!logInstance || logInstance->inWrite_)
+    if (instance.inWrite_)
         return;
 
-    logInstance->lastMessage_ = message;
+    instance.lastMessage_ = message;
 
-    if (logInstance->quiet_)
+    if (instance.quiet_)
     {
         // If in quiet mode, still print the error message to the standard error stream
         if (error)
@@ -224,22 +222,22 @@ void Log::WriteRaw(const String& message, bool error)
     else
         PrintUnicode(message, error);
 
-    if (logInstance->log_file_)
+    if (instance.log_file_)
     {
-        file_write(message.c_str(), sizeof(char), message.Length(), logInstance->log_file_);
-        file_flush(logInstance->log_file_);
+        file_write(message.c_str(), sizeof(char), message.Length(), instance.log_file_);
+        file_flush(instance.log_file_);
     }
 
-    logInstance->inWrite_ = true;
+    instance.inWrite_ = true;
 
     using namespace LogMessage;
 
-    VariantMap& eventData = logInstance->GetEventDataMap();
+    VariantMap& eventData = instance.GetEventDataMap();
     eventData[P_MESSAGE] = message;
     eventData[P_LEVEL] = error ? LOG_ERROR : LOG_INFO;
-    logInstance->SendEvent(E_LOGMESSAGE, eventData);
+    instance.SendEvent(E_LOGMESSAGE, eventData);
 
-    logInstance->inWrite_ = false;
+    instance.inWrite_ = false;
 }
 
 void Log::HandleEndFrame(StringHash eventType, VariantMap& eventData)

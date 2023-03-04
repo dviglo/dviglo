@@ -14,7 +14,11 @@ String time_to_str()
 {
     time_t current_time = time(nullptr);
     char tmp_buffer[sizeof "yyyy-mm-dd hh:mm:ss"];
-    strftime(tmp_buffer, sizeof tmp_buffer, "%F %T", localtime(&current_time));
+
+    // %F и %T не работают в MinGW
+    //strftime(tmp_buffer, sizeof tmp_buffer, "%F %T", localtime(&current_time));
+
+    strftime(tmp_buffer, sizeof tmp_buffer, "%Y-%m-%d %H:%M:%S", localtime(&current_time));
     return String(tmp_buffer);
 }
 

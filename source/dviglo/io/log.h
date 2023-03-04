@@ -58,11 +58,21 @@ class DV_API Log : public Object
     DV_OBJECT(Log, Object);
 
 public:
-    /// Construct.
-    explicit Log();
-    /// Destruct. Close the log file if open.
+    static Log& get_instance()
+    {
+        static Log instance;
+        return instance;
+    }
+
+    // Запрещаем копирование
+    Log(const Log&) = delete;
+    Log& operator =(const Log&) = delete;
+
+private:
+    Log();
     ~Log() override;
 
+public:
     void Open(const String& filename);
 
     /// Close the log file.
@@ -118,6 +128,7 @@ private:
 };
 
 #ifdef DV_LOGGING
+
 #define DV_LOG(level, message) dviglo::Log::Write(level, message)
 #define DV_LOGTRACE(message) dviglo::Log::Write(dviglo::LOG_TRACE, message)
 #define DV_LOGDEBUG(message) dviglo::Log::Write(dviglo::LOG_DEBUG, message)
@@ -135,6 +146,7 @@ private:
 #define DV_LOGRAWF(format, ...) dviglo::Log::WriteFormat(dviglo::LOG_RAW, format, ##__VA_ARGS__)
 
 #else
+
 #define DV_LOG(message) ((void)0)
 #define DV_LOGTRACE(message) ((void)0)
 #define DV_LOGDEBUG(message) ((void)0)
@@ -150,6 +162,7 @@ private:
 #define DV_LOGWARNINGF(...) ((void)0)
 #define DV_LOGERRORF(...) ((void)0)
 #define DV_LOGRAWF(...) ((void)0)
+
 #endif
 
 }
