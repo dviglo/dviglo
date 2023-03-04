@@ -7,7 +7,7 @@
 #include "../core/core_events.h"
 #include "../core/process_utils.h"
 #include "../core/thread.h"
-#include "../core/timer.h"
+#include "../core/time_base.h"
 #include "file_base.h"
 #include "io_events.h"
 #include "log.h"
@@ -165,7 +165,7 @@ void Log::Write(int level, const String& message)
     logInstance->lastMessage_ = message;
 
     if (logInstance->timeStamp_)
-        formattedMessage = "[" + Time::GetTimeStamp() + "] " + formattedMessage;
+        formattedMessage = "[" + time_to_str() + "] " + formattedMessage;
 
     if (logInstance->quiet_)
     {

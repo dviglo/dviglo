@@ -592,7 +592,7 @@ public:
             graphics->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(fileSystem->GetProgramDir() + "Data/Screenshot_" +
-                time->GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
+                time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
         }
         // Allow pause only in singleplayer
         if (key == KEY_P && singlePlayer && !console->IsVisible() && gameOn)

@@ -2,7 +2,7 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include <dviglo/core/timer.h>
+#include <dviglo/core/time_base.h>
 #include <dviglo/engine/application.h>
 #include <dviglo/engine/console.h>
 #include <dviglo/engine/debug_hud.h>
@@ -327,7 +327,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             graphics->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +
-                Time::GetTimeStamp().Replaced(':', '_').Replaced('.', '_').Replaced(' ', '_') + ".png");
+                time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
         }
     }
 }

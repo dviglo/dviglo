@@ -152,14 +152,6 @@ unsigned Time::GetTimeSinceEpoch()
     return (unsigned)time(nullptr);
 }
 
-String Time::GetTimeStamp()
-{
-    time_t sysTime;
-    time(&sysTime);
-    const char* dateTime = ctime(&sysTime);
-    return String(dateTime).Replaced("\n", "");
-}
-
 void Time::Sleep(unsigned mSec)
 {
 #ifdef _WIN32
