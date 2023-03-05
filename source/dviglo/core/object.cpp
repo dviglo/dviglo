@@ -57,6 +57,8 @@ bool TypeInfo::IsTypeOf(const TypeInfo* typeInfo) const
 Object::Object() :
     blockEvents_(false)
 {
+    // Гарантируем, что контекст будет создан перед созданием первого объекта
+    Context::get_instance();
 }
 
 Object::~Object()
