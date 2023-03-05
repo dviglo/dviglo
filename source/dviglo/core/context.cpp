@@ -263,7 +263,9 @@ void Context::ReleaseSDL()
 
     if (sdlInitCounter == 0)
     {
-        DV_LOGDEBUG("Quitting SDL");
+        // TODO: Вывод в лог роняет при выходе
+        //DV_LOGDEBUG("Quitting SDL");
+
         SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
         Gesture_Quit();
         SDL_Quit();
