@@ -205,7 +205,8 @@ endforeach()
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
 
-# VS определяет дефайн _DEBUG в отладочной версии. Определяем этот дефайн также в GCC и MinGW
+# VS определяет дефайн _DEBUG в отладочной версии. Определяем этот дефайн также в GCC и MinGW.
+# _DEBUG не определён в конфигурации RelWithDebInfo
 if(NOT MSVC)
     target_compile_definitions(${TARGET_NAME} PUBLIC $<$<CONFIG:Debug>:_DEBUG>)
 endif()
