@@ -2,15 +2,18 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "../../graphics/graphics.h"
+
 #include "../../core/context.h"
 #include "../../core/process_utils.h"
 #include "../../core/profiler.h"
-#include "../../graphics/graphics.h"
+#include "../../core/sdl_helper.h"
 #include "../../graphics/graphics_events.h"
+#include "../../io/file.h"
+#include "../../io/log.h"
+#include "../../resource/resource_cache.h"
 #include "../constant_buffer.h"
 #include "../index_buffer.h"
-#include "ogl_graphics_impl.h"
-#include "ogl_shader_program.h"
 #include "../render_surface.h"
 #include "../shader.h"
 #include "../shader_precache.h"
@@ -18,9 +21,8 @@
 #include "../texture_2d.h"
 #include "../texture_cube.h"
 #include "../vertex_buffer.h"
-#include "../../io/file.h"
-#include "../../io/log.h"
-#include "../../resource/resource_cache.h"
+#include "ogl_graphics_impl.h"
+#include "ogl_shader_program.h"
 
 #include <SDL3/SDL.h>
 
@@ -204,7 +206,7 @@ void Graphics::Constructor_OGL()
     SetTextureUnitMappings_OGL();
     ResetCachedState_OGL();
 
-    DV_CONTEXT.RequireSDL(SDL_INIT_VIDEO);
+    DV_SDL_HELPER.require(SDL_INIT_VIDEO);
 
     // Register Graphics library object factories
     RegisterGraphicsLibrary();
@@ -216,8 +218,6 @@ void Graphics::Destructor_OGL()
 
     delete static_cast<GraphicsImpl_OGL*>(impl_);
     impl_ = nullptr;
-
-    DV_CONTEXT.ReleaseSDL();
 }
 
 bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& params, bool maximize)

@@ -2,10 +2,13 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "input.h"
+
 #include "../core/context.h"
 #include "../core/core_events.h"
 #include "../core/process_utils.h"
 #include "../core/profiler.h"
+#include "../core/sdl_helper.h"
 #include "../core/string_utils.h"
 #include "../graphics/graphics.h"
 #include "../graphics/graphics_events.h"
@@ -15,7 +18,6 @@
 #include "../resource/resource_cache.h"
 #include "../ui/text.h"
 #include "../ui/ui.h"
-#include "input.h"
 
 #ifdef _WIN32
 #include "../engine/engine.h"
@@ -362,7 +364,7 @@ Input::Input() :
     mouseMoveScaled_(false),
     initialized_(false)
 {
-    DV_CONTEXT.RequireSDL(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
+    DV_SDL_HELPER.require(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
 
     for (int i = 0; i < TOUCHID_MAX; i++)
         availableTouchIDs_.Push(i);
@@ -383,7 +385,6 @@ Input::Input() :
 
 Input::~Input()
 {
-    DV_CONTEXT.ReleaseSDL();
 }
 
 void Input::Update()

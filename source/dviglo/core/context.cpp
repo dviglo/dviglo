@@ -3,19 +3,14 @@
 // License: MIT
 
 #include "context.h"
+
 #include "event_profiler.h"
 #include "../io/log.h"
-
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_gesture.h>
 
 #include "../common/debug_new.h"
 
 namespace dviglo
 {
-
-// Keeps track of how many times SDL was initialised so we know when to call SDL_Quit().
-static int sdlInitCounter = 0;
 
 void EventReceiverGroup::BeginSendEvent()
 {
@@ -218,61 +213,6 @@ VariantMap& Context::GetEventDataMap()
     VariantMap& ret = *eventDataMaps_[nestingLevel];
     ret.Clear();
     return ret;
-}
-
-bool Context::RequireSDL(unsigned int sdlFlags)
-{
-    // Always increment, the caller must match with ReleaseSDL(), regardless of
-    // what happens.
-    ++sdlInitCounter;
-
-    // Need to call SDL_Init() at least once before SDL_InitSubsystem()
-    if (sdlInitCounter == 1)
-    {
-        DV_LOGDEBUG("Initialising SDL");
-
-        if (SDL_Init(0) != 0)
-        {
-            DV_LOGERRORF("Failed to initialise SDL: %s", SDL_GetError());
-            return false;
-        }
-
-        if (Gesture_Init() != 0) // Начиная с SDL 3 Gesture больше не часть библиотеки
-        {
-            DV_LOGERRORF("Failed to initialise Gesture: %s", SDL_GetError());
-            return false;
-        }
-    }
-
-    Uint32 remainingFlags = sdlFlags & ~SDL_WasInit(0);
-    if (remainingFlags != 0)
-    {
-        if (SDL_InitSubSystem(remainingFlags) != 0)
-        {
-            DV_LOGERRORF("Failed to initialise SDL subsystem: %s", SDL_GetError());
-            return false;
-        }
-    }
-
-    return true;
-}
-
-void Context::ReleaseSDL()
-{
-    --sdlInitCounter;
-
-    if (sdlInitCounter == 0)
-    {
-        // TODO: Вывод в лог роняет при выходе
-        //DV_LOGDEBUG("Quitting SDL");
-
-        SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
-        Gesture_Quit();
-        SDL_Quit();
-    }
-
-    if (sdlInitCounter < 0)
-        DV_LOGERROR("Too many calls to Context::ReleaseSDL()!");
 }
 
 void Context::CopyBaseAttributes(StringHash baseType, StringHash derivedType)

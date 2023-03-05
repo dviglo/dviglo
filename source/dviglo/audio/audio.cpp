@@ -3,14 +3,16 @@
 // License: MIT
 
 #include "audio.h"
-#include "sound.h"
-#include "sound_listener.h"
-#include "sound_source_3d.h"
+
 #include "../core/context.h"
 #include "../core/core_events.h"
 #include "../core/process_utils.h"
 #include "../core/profiler.h"
+#include "../core/sdl_helper.h"
 #include "../io/log.h"
+#include "sound.h"
+#include "sound_listener.h"
+#include "sound_source_3d.h"
 
 #include <SDL3/SDL.h>
 
@@ -30,7 +32,7 @@ static void SDLAudioCallback(void* userdata, Uint8* stream, i32 len);
 
 Audio::Audio()
 {
-    DV_CONTEXT.RequireSDL(SDL_INIT_AUDIO);
+    DV_SDL_HELPER.require(SDL_INIT_AUDIO);
 
     // Set the master to the default value
     masterGain_[SOUND_MASTER_HASH] = 1.0f;
@@ -44,7 +46,6 @@ Audio::Audio()
 Audio::~Audio()
 {
     Release();
-    DV_CONTEXT.ReleaseSDL();
 }
 
 bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpolation)

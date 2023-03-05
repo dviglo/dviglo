@@ -2,25 +2,27 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "../../graphics/graphics.h"
+
 #include "../../core/context.h"
 #include "../../core/process_utils.h"
 #include "../../core/profiler.h"
+#include "../../core/sdl_helper.h"
 #include "../../graphics/geometry.h"
-#include "../../graphics/graphics.h"
 #include "../../graphics/graphics_events.h"
 #include "../../graphics/renderer.h"
+#include "../../io/file.h"
+#include "../../io/log.h"
+#include "../../resource/resource_cache.h"
 #include "../constant_buffer.h"
-#include "d3d11_graphics_impl.h"
-#include "d3d11_shader_program.h"
 #include "../index_buffer.h"
 #include "../shader.h"
 #include "../shader_precache.h"
 #include "../texture_2d.h"
 #include "../texture_cube.h"
 #include "../vertex_buffer.h"
-#include "../../io/file.h"
-#include "../../io/log.h"
-#include "../../resource/resource_cache.h"
+#include "d3d11_graphics_impl.h"
+#include "d3d11_shader_program.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_syswm.h>
@@ -179,7 +181,7 @@ void Graphics::Constructor_D3D11()
     SetTextureUnitMappings_D3D11();
     ResetCachedState_D3D11();
 
-    DV_CONTEXT.RequireSDL(SDL_INIT_VIDEO);
+    DV_SDL_HELPER.require(SDL_INIT_VIDEO);
 
     // Register Graphics library object factories
     RegisterGraphicsLibrary();
@@ -237,8 +239,6 @@ void Graphics::Destructor_D3D11()
 
     delete static_cast<GraphicsImpl_D3D11*>(impl_);
     impl_ = nullptr;
-
-    DV_CONTEXT.ReleaseSDL();
 }
 
 bool Graphics::SetScreenMode_D3D11(int width, int height, const ScreenModeParams& params, bool maximize)
