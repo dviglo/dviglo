@@ -17,4 +17,6 @@
 
 #undef byte
 
+#undef max
+
 #endif // def _WIN32
