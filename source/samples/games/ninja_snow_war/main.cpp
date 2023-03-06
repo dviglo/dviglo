@@ -555,7 +555,6 @@ public:
         Engine* engine = GetSubsystem<Engine>();
         Graphics* graphics = GetSubsystem<Graphics>();
         FileSystem* fileSystem = GetSubsystem<FileSystem>();
-        Time* time = GetSubsystem<Time>();
         Audio* audio = GetSubsystem<Audio>();
         Input* input = GetSubsystem<Input>();
         ResourceCache* cache = GetSubsystem<ResourceCache>();
@@ -1129,12 +1128,11 @@ public:
     void UpdateFreelookCamera()
     {
         Console* console = GetSubsystem<Console>();
-        Time* time = GetSubsystem<Time>();
         Input* input = GetSubsystem<Input>();
 
         if (!console || !console->IsVisible())
         {
-            float timeStep = time->GetTimeStep();
+            float timeStep = DV_TIME.GetTimeStep();
             float speedMultiplier = 1.0f;
             if (input->GetKeyDown(KEY_LSHIFT))
                 speedMultiplier = 5.0f;

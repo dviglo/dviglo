@@ -62,11 +62,23 @@ class DV_API Time : public Object
     DV_OBJECT(Time, Object);
 
 public:
+    static Time& get_instance()
+    {
+        static Time instance;
+        return instance;
+    }
+
+    // Запрещаем копирование
+    Time(const Time&) = delete;
+    Time& operator =(const Time&) = delete;
+
+private:
     /// Construct.
     explicit Time();
     /// Destruct. Reset the low-resolution timer period if set.
     ~Time() override;
 
+public:
     /// Begin new frame, with (last) frame duration in seconds and send frame start event.
     void BeginFrame(float timeStep);
     /// End frame. Increment total time and send frame end event.
@@ -107,5 +119,7 @@ private:
     /// Low-resolution timer period.
     unsigned timerPeriod_;
 };
+
+#define DV_TIME (dviglo::Time::get_instance())
 
 }

@@ -95,11 +95,13 @@ Engine::Engine() :
     headless_(false),
     audioPaused_(false)
 {
+    // Создаём синглтоны, которые не зависят от параметров движка
+    Time::get_instance();
+
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new Time());
     DV_CONTEXT.RegisterSubsystem(new WorkQueue());
 #ifdef DV_PROFILING
     DV_CONTEXT.RegisterSubsystem(new Profiler());
@@ -207,7 +209,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     Log::get_instance().Open(GetParameter(parameters, EP_LOG_NAME, "dviglo.log").GetString());
 
     // Set maximally accurate low res timer
-    GetSubsystem<Time>()->SetTimerPeriod(1);
+    DV_TIME.SetTimerPeriod(1);
 
     // Configure max FPS
     if (GetParameter(parameters, EP_FRAME_LIMITER, true) == false)
@@ -491,7 +493,7 @@ void Engine::RunFrame()
 
     // Note: there is a minimal performance cost to looking up subsystems (uses a hashmap); if they would be looked up several
     // times per frame it would be better to cache the pointers
-    auto* time = GetSubsystem<Time>();
+    Time& time = DV_TIME;
     auto* input = GetSubsystem<Input>();
     auto* audio = GetSubsystem<Audio>();
 
@@ -504,7 +506,7 @@ void Engine::RunFrame()
     }
 #endif
 
-    time->BeginFrame(timeStep_);
+    time.BeginFrame(timeStep_);
 
     // If pause when minimized -mode is in use, stop updates and audio as necessary
     if (pauseMinimized_ && input->IsMinimized())
@@ -530,7 +532,7 @@ void Engine::RunFrame()
     Render();
     ApplyFrameLimit();
 
-    time->EndFrame();
+    time.EndFrame();
 
     // Mark a frame for profiling
     DV_PROFILE_FRAME();

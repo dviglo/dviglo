@@ -1080,7 +1080,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
         if (graphics_->NeedParameterUpdate(SP_MATERIAL, this))
             graphics_->SetShaderParameter(PSP_MATDIFFCOLOR, Color(1.0f, 1.0f, 1.0f, 1.0f));
 
-        float elapsedTime = GetSubsystem<Time>()->GetElapsedTime();
+        float elapsedTime = DV_TIME.GetElapsedTime();
         graphics_->SetShaderParameter(VSP_ELAPSEDTIME, elapsedTime);
         graphics_->SetShaderParameter(PSP_ELAPSEDTIME, elapsedTime);
 
