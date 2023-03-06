@@ -56,10 +56,22 @@ class DV_API WorkQueue : public Object
     friend class WorkerThread;
 
 public:
+    static WorkQueue& get_instance()
+    {
+        static WorkQueue instance;
+        return instance;
+    }
+
+private:
     /// Construct.
     explicit WorkQueue();
     /// Destruct.
     ~WorkQueue() override;
+
+public:
+    // Запрещаем копирование
+    WorkQueue(const WorkQueue&) = delete;
+    WorkQueue& operator =(const WorkQueue&) = delete;
 
     /// Create worker threads. Can only be called once.
     void CreateThreads(i32 numThreads);
@@ -135,5 +147,7 @@ private:
     /// Maximum milliseconds per frame to spend on low-priority work, when there are no worker threads.
     int maxNonThreadedWorkMs_;
 };
+
+#define DV_WORK_QUEUE (dviglo::WorkQueue::get_instance())
 
 }

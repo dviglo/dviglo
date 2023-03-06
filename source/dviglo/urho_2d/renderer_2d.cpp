@@ -317,14 +317,14 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
     {
         DV_PROFILE(CheckDrawableVisibility);
 
-        auto* queue = GetSubsystem<WorkQueue>();
-        int numWorkItems = queue->GetNumThreads() + 1; // Worker threads + main thread
+        WorkQueue& queue = DV_WORK_QUEUE;
+        int numWorkItems = queue.GetNumThreads() + 1; // Worker threads + main thread
         int drawablesPerItem = drawables_.Size() / numWorkItems;
 
         Vector<Drawable2D*>::Iterator start = drawables_.Begin();
         for (int i = 0; i < numWorkItems; ++i)
         {
-            SharedPtr<WorkItem> item = queue->GetFreeItem();
+            SharedPtr<WorkItem> item = queue.GetFreeItem();
             item->priority_ = WI_MAX_PRIORITY;
             item->workFunction_ = CheckDrawableVisibilityWork;
             item->aux_ = this;
@@ -335,12 +335,12 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
 
             item->start_ = &(*start);
             item->end_ = &(*end);
-            queue->AddWorkItem(item);
+            queue.AddWorkItem(item);
 
             start = end;
         }
 
-        queue->Complete(WI_MAX_PRIORITY);
+        queue.Complete(WI_MAX_PRIORITY);
     }
 
     ViewBatchInfo2D& viewBatchInfo = viewBatchInfos_[camera];

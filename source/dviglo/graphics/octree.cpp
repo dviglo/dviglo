@@ -362,17 +362,17 @@ void Octree::Update(const FrameInfo& frame)
         // Perform updates in worker threads. Notify the scene that a threaded update is going on and components
         // (for example physics objects) should not perform non-threadsafe work when marked dirty
         Scene* scene = GetScene();
-        auto* queue = GetSubsystem<WorkQueue>();
+        WorkQueue& queue = DV_WORK_QUEUE;
         scene->BeginThreadedUpdate();
 
-        int numWorkItems = queue->GetNumThreads() + 1; // Worker threads + main thread
+        int numWorkItems = queue.GetNumThreads() + 1; // Worker threads + main thread
         int drawablesPerItem = Max((int)(drawableUpdates_.Size() / numWorkItems), 1);
 
         Vector<Drawable*>::Iterator start = drawableUpdates_.Begin();
         // Create a work item for each thread
         for (int i = 0; i < numWorkItems; ++i)
         {
-            SharedPtr<WorkItem> item = queue->GetFreeItem();
+            SharedPtr<WorkItem> item = queue.GetFreeItem();
             item->priority_ = WI_MAX_PRIORITY;
             item->workFunction_ = UpdateDrawablesWork;
             item->aux_ = const_cast<FrameInfo*>(&frame);
@@ -383,12 +383,12 @@ void Octree::Update(const FrameInfo& frame)
 
             item->start_ = &(*start);
             item->end_ = &(*end);
-            queue->AddWorkItem(item);
+            queue.AddWorkItem(item);
 
             start = end;
         }
 
-        queue->Complete(WI_MAX_PRIORITY);
+        queue.Complete(WI_MAX_PRIORITY);
         scene->EndThreadedUpdate();
     }
 

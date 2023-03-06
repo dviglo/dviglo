@@ -95,14 +95,14 @@ Engine::Engine() :
     headless_(false),
     audioPaused_(false)
 {
-    // Создаём синглтоны, которые не зависят от параметров движка
+    // Создаём синглтоны, которые не зависят от инициализации движка и параметров движка
     Time::get_instance();
+    WorkQueue::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new WorkQueue());
 #ifdef DV_PROFILING
     DV_CONTEXT.RegisterSubsystem(new Profiler());
 #endif
@@ -221,7 +221,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     unsigned numThreads = GetParameter(parameters, EP_WORKER_THREADS, true).GetBool() ? GetNumPhysicalCPUs() - 1 : 0;
     if (numThreads)
     {
-        GetSubsystem<WorkQueue>()->CreateThreads(numThreads);
+        DV_WORK_QUEUE.CreateThreads(numThreads);
 
         DV_LOGINFOF("Created %u worker thread%s", numThreads, numThreads > 1 ? "s" : "");
     }
