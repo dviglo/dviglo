@@ -1,40 +1,26 @@
-# Copyright (c) 2008-2023 the Urho3D project
 # Copyright (c) 2022-2023 the Dviglo project
 # License: MIT
 
 # Название таргета
 set(TARGET_NAME tracy)
 
-# Создаём список h-файлов
-file(GLOB_RECURSE source_files tracy/*.h)
+# Создаём список заголовочных файлов
+file(GLOB_RECURSE source_files public/*.h public/*.hpp)
 
-# Нужен единственный cpp-файл
-list(APPEND source_files tracy/TracyClient.cpp)
-
-# Definition
-add_definitions (-DTRACY_ENABLE=1)
-
-if (MINGW)
-    add_definitions (-D_WIN32_WINNT=0x601)
-endif ()
-
-if (DV_SHARED)
-    add_definitions (-DTRACY_EXPORTS)
-endif ()
-
-# On Android, we define TRACY_TIMER_FALLBACK to make timer work on both physical and virtual devices
-if (ANDROID)
-    add_definitions (-DTRACY_TIMER_FALLBACK=1)
-endif ()
+# Нужен единственный cpp-файл, который инклудит остальные cpp-файлы
+list(APPEND source_files public/TracyClient.cpp)
 
 # Создаём статическую библиотеку
 add_library(${TARGET_NAME} STATIC ${source_files})
 
+# Добавляем дефайны
+target_compile_definitions(${TARGET_NAME} PRIVATE TRACY_ENABLE=1)
+
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
-target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/public)
 
 # Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
 set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Заставляем VS отображать дерево каталогов
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/tracy FILES ${source_files})
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}/public FILES ${source_files})
