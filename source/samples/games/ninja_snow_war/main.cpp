@@ -581,9 +581,6 @@ public:
         else if (key == KEY_F4)
             drawOctreeDebug = !drawOctreeDebug;
 
-        else if (key == KEY_F5)
-            debugHud->Toggle(DebugHudElements::EventProfiler);
-
         // Take screenshot
         else if (key == KEY_F6)
         {

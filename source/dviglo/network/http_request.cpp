@@ -2,9 +2,11 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/profiler.h"
-#include "../io/log.h"
 #include "http_request.h"
+
+#include "../core/profiler.h"
+#include "../core/timer.h"
+#include "../io/log.h"
 
 #include <civetweb/civetweb.h>
 

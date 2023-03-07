@@ -4,8 +4,8 @@
 
 #include "context.h"
 
-#include "event_profiler.h"
 #include "../io/log.h"
+#include "thread.h"
 
 #include "../common/debug_new.h"
 
@@ -339,30 +339,12 @@ void Context::RemoveEventReceiver(Object* receiver, Object* sender, StringHash e
 
 void Context::BeginSendEvent(Object* sender, StringHash eventType)
 {
-#ifdef DV_PROFILING
-    if (EventProfiler::IsActive())
-    {
-        auto* eventProfiler = GetSubsystem<EventProfiler>();
-        if (eventProfiler)
-            eventProfiler->BeginBlock(eventType);
-    }
-#endif
-
     eventSenders_.Push(sender);
 }
 
 void Context::EndSendEvent()
 {
     eventSenders_.Pop();
-
-#ifdef DV_PROFILING
-    if (EventProfiler::IsActive())
-    {
-        auto* eventProfiler = GetSubsystem<EventProfiler>();
-        if (eventProfiler)
-            eventProfiler->EndBlock();
-    }
-#endif
 }
 
 }

@@ -2,16 +2,15 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "engine.h"
+
 #include "../audio/audio.h"
 #include "../core/context.h"
 #include "../core/core_events.h"
-#include "../core/event_profiler.h"
 #include "../core/process_utils.h"
+#include "../core/profiler.h"
+#include "../core/thread.h"
 #include "../core/work_queue.h"
-#include "console.h"
-#include "debug_hud.h"
-#include "engine.h"
-#include "engine_defs.h"
 #include "../graphics/graphics.h"
 #include "../graphics/renderer.h"
 #include "../input/input.h"
@@ -19,6 +18,9 @@
 #include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/package_file.h"
+#include "console.h"
+#include "debug_hud.h"
+#include "engine_defs.h"
 #ifdef DV_NAVIGATION
 #include "../navigation/navigation_mesh.h"
 #endif
@@ -103,9 +105,6 @@ Engine::Engine() :
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-#ifdef DV_PROFILING
-    DV_CONTEXT.RegisterSubsystem(new Profiler());
-#endif
     DV_CONTEXT.RegisterSubsystem(new FileSystem());
     DV_CONTEXT.RegisterSubsystem(new ResourceCache());
     DV_CONTEXT.RegisterSubsystem(new Localization());
@@ -316,13 +315,6 @@ bool Engine::Initialize(const VariantMap& parameters)
         timeOut_ = GetParameter(parameters, EP_TIME_OUT, 0).GetI32() * 1000000LL;
 #endif
 
-#ifdef DV_PROFILING
-    if (GetParameter(parameters, EP_EVENT_PROFILER, true).GetBool())
-    {
-        DV_CONTEXT.RegisterSubsystem(new EventProfiler());
-        EventProfiler::SetActive(true);
-    }
-#endif
     frameTimer_.Reset();
 
     DV_LOGINFO("Initialized engine");
@@ -497,15 +489,6 @@ void Engine::RunFrame()
     auto* input = GetSubsystem<Input>();
     auto* audio = GetSubsystem<Audio>();
 
-#ifdef DV_PROFILING
-    if (EventProfiler::IsActive())
-    {
-        auto* eventProfiler = GetSubsystem<EventProfiler>();
-        if (eventProfiler)
-            eventProfiler->BeginFrame();
-    }
-#endif
-
     time.BeginFrame(timeStep_);
 
     // If pause when minimized -mode is in use, stop updates and audio as necessary
@@ -615,18 +598,6 @@ void Engine::Exit()
     // On iOS/tvOS it's not legal for the application to exit on its own, instead it will be minimized with the home key
 #else
     DoExit();
-#endif
-}
-
-void Engine::DumpProfiler()
-{
-#ifdef DV_LOGGING
-    if (!Thread::IsMainThread())
-        return;
-
-    auto* profiler = GetSubsystem<Profiler>();
-    if (profiler)
-        DV_LOGRAW(profiler->PrintData(true, true) + "\n");
 #endif
 }
 

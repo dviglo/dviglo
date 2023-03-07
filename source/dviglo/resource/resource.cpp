@@ -2,10 +2,12 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "resource.h"
+
 #include "../core/profiler.h"
+#include "../core/thread.h"
 #include "../io/file.h"
 #include "../io/log.h"
-#include "resource.h"
 #include "xml_element.h"
 
 namespace dviglo
@@ -26,12 +28,6 @@ bool Resource::Load(Deserializer& source)
 
     String profileBlockName("Load" + GetTypeName());
     DV_PROFILE_STR(profileBlockName.c_str(), profileBlockName.Length());
-#elif defined(DV_PROFILING)
-    String profileBlockName("Load" + GetTypeName());
-
-    auto* profiler = GetSubsystem<Profiler>();
-    if (profiler)
-        profiler->BeginBlock(profileBlockName.c_str());
 #endif
 
     // If we are loading synchronously in a non-main thread, behave as if async loading (for example use
@@ -41,11 +37,6 @@ bool Resource::Load(Deserializer& source)
     if (success)
         success &= EndLoad();
     SetAsyncLoadState(ASYNC_DONE);
-
-#ifdef DV_PROFILING
-    if (profiler)
-        profiler->EndBlock();
-#endif
 
     return success;
 }

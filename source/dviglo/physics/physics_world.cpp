@@ -796,10 +796,6 @@ void PhysicsWorld::PreStep(float timeStep)
     // Start profiling block for the actual simulation step
 #ifdef DV_TRACY_PROFILING
     FrameMarkStart(STR_STEP_SIMULATION);
-#elif defined(DV_PROFILING)
-    auto* profiler = GetSubsystem<Profiler>();
-    if (profiler)
-        profiler->BeginBlock("StepSimulation");
 #endif
 }
 
@@ -807,10 +803,6 @@ void PhysicsWorld::PostStep(float timeStep)
 {
 #ifdef DV_TRACY_PROFILING
     FrameMarkEnd(STR_STEP_SIMULATION);
-#elif defined(DV_PROFILING)
-    auto* profiler = GetSubsystem<Profiler>();
-    if (profiler)
-        profiler->EndBlock();
 #endif
 
     SendCollisionEvents();

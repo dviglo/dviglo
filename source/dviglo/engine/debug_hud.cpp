@@ -2,11 +2,10 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../core/core_events.h"
-#include "../core/profiler.h"
-#include "../core/event_profiler.h"
-#include "../core/context.h"
 #include "debug_hud.h"
+
+#include "../core/core_events.h"
+#include "../core/context.h"
 #include "engine.h"
 #include "../graphics/graphics.h"
 #include "../graphics/renderer.h"
@@ -60,23 +59,11 @@ DebugHud::DebugHud() :
     modeText_->SetVisible(false);
     uiRoot->AddChild(modeText_);
 
-    profilerText_ = new Text();
-    profilerText_->SetAlignment(HA_RIGHT, VA_TOP);
-    profilerText_->SetPriority(100);
-    profilerText_->SetVisible(false);
-    uiRoot->AddChild(profilerText_);
-
     memoryText_ = new Text();
     memoryText_->SetAlignment(HA_LEFT, VA_BOTTOM);
     memoryText_->SetPriority(100);
     memoryText_->SetVisible(false);
     uiRoot->AddChild(memoryText_);
-
-    eventProfilerText_ = new Text();
-    eventProfilerText_->SetAlignment(HA_RIGHT, VA_TOP);
-    eventProfilerText_->SetPriority(100);
-    eventProfilerText_->SetVisible(false);
-    uiRoot->AddChild(eventProfilerText_);
 
     SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(DebugHud, HandlePostUpdate));
 }
@@ -85,9 +72,7 @@ DebugHud::~DebugHud()
 {
     statsText_->Remove();
     modeText_->Remove();
-    profilerText_->Remove();
     memoryText_->Remove();
-    eventProfilerText_->Remove();
 }
 
 void DebugHud::Update()
@@ -104,7 +89,6 @@ void DebugHud::Update()
         UIElement* uiRoot = ui->GetRoot();
         uiRoot->AddChild(statsText_);
         uiRoot->AddChild(modeText_);
-        uiRoot->AddChild(profilerText_);
     }
 
     if (statsText_->IsVisible())
@@ -162,29 +146,6 @@ void DebugHud::Update()
         modeText_->SetText(mode);
     }
 
-    auto* profiler = GetSubsystem<Profiler>();
-    auto* eventProfiler = GetSubsystem<EventProfiler>();
-    if (profiler)
-    {
-        if (profilerTimer_.GetMSec(false) >= profilerInterval_)
-        {
-            profilerTimer_.Reset();
-
-            if (profilerText_->IsVisible())
-                profilerText_->SetText(profiler->PrintData(false, false, profilerMaxDepth_));
-
-            profiler->BeginInterval();
-
-            if (eventProfiler)
-            {
-                if (eventProfilerText_->IsVisible())
-                    eventProfilerText_->SetText(eventProfiler->PrintData(false, false, profilerMaxDepth_));
-
-                eventProfiler->BeginInterval();
-            }
-        }
-    }
-
     if (memoryText_->IsVisible())
         memoryText_->SetText(GetSubsystem<ResourceCache>()->PrintMemoryUsage());
 }
@@ -198,30 +159,17 @@ void DebugHud::SetDefaultStyle(XMLFile* style)
     statsText_->SetStyle("DebugHudText");
     modeText_->SetDefaultStyle(style);
     modeText_->SetStyle("DebugHudText");
-    profilerText_->SetDefaultStyle(style);
-    profilerText_->SetStyle("DebugHudText");
     memoryText_->SetDefaultStyle(style);
     memoryText_->SetStyle("DebugHudText");
-    eventProfilerText_->SetDefaultStyle(style);
-    eventProfilerText_->SetStyle("DebugHudText");
 }
 
 void DebugHud::SetMode(DebugHudElements mode)
 {
     statsText_->SetVisible(!!(mode & DebugHudElements::Stats));
     modeText_->SetVisible(!!(mode & DebugHudElements::Mode));
-    profilerText_->SetVisible(!!(mode & DebugHudElements::Profiler));
     memoryText_->SetVisible(!!(mode & DebugHudElements::Memory));
-    eventProfilerText_->SetVisible(!!(mode & DebugHudElements::EventProfiler));
 
     memoryText_->SetPosition(0, modeText_->IsVisible() ? modeText_->GetHeight() * -2 : 0);
-
-#ifdef DV_PROFILING
-    // Event profiler is created on engine initialization if "EventProfiler" parameter is set
-    auto* eventProfiler = GetSubsystem<EventProfiler>();
-    if (eventProfiler)
-        EventProfiler::SetActive(!!(mode & DebugHudElements::EventProfiler));
-#endif
 
     mode_ = mode;
 }

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "../containers/flag_set.h"
 #include "../core/object.h"
 #include "../core/timer.h"
 
@@ -20,10 +21,8 @@ enum class DebugHudElements
     None          = 0,
     Stats         = 1 << 0,
     Mode          = 1 << 1,
-    Profiler      = 1 << 2,
-    Memory        = 1 << 3,
-    EventProfiler = 1 << 4,
-    All           = Stats | Mode | Profiler | Memory
+    Memory        = 1 << 2,
+    All           = Stats | Mode | Memory
 };
 DV_FLAGS(DebugHudElements);
 
@@ -68,9 +67,6 @@ public:
     /// Return rendering mode text.
     Text* GetModeText() const { return modeText_; }
 
-    /// Return profiler text.
-    Text* GetProfilerText() const { return profilerText_; }
-
     /// Return memory text.
     Text* GetMemoryText() const { return memoryText_; }
 
@@ -103,10 +99,6 @@ private:
     SharedPtr<Text> statsText_;
     /// Rendering mode text.
     SharedPtr<Text> modeText_;
-    /// Profiling information text.
-    SharedPtr<Text> profilerText_;
-    /// Event profiling information text.
-    SharedPtr<Text> eventProfilerText_;
     /// Memory stats text.
     SharedPtr<Text> memoryText_;
     /// Hashmap containing application specific stats.

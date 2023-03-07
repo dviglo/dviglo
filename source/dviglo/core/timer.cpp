@@ -2,6 +2,8 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "timer.h"
+
 #include "core_events.h"
 #include "profiler.h"
 
@@ -89,12 +91,6 @@ void Time::BeginFrame(float timeStep)
 
     timeStep_ = timeStep;
 
-#ifdef DV_PROFILING
-    auto* profiler = GetSubsystem<Profiler>();
-    if (profiler)
-        profiler->BeginFrame();
-#endif
-
     {
         DV_PROFILE(BeginFrame);
 
@@ -116,12 +112,6 @@ void Time::EndFrame()
         // Frame end event
         SendEvent(E_ENDFRAME);
     }
-
-#ifdef DV_PROFILING
-    auto* profiler = GetSubsystem<Profiler>();
-    if (profiler)
-        profiler->EndFrame();
-#endif
 }
 
 void Time::SetTimerPeriod(unsigned mSec)

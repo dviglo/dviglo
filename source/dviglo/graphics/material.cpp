@@ -2,13 +2,12 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "material.h"
+
 #include "../core/context.h"
 #include "../core/core_events.h"
 #include "../core/profiler.h"
-#include "graphics.h"
-#include "material.h"
-#include "renderer.h"
-#include "technique.h"
+#include "../core/thread.h"
 #include "../graphics_api/texture_2d.h"
 #include "../graphics_api/texture_2d_array.h"
 #include "../graphics_api/texture_3d.h"
@@ -16,12 +15,15 @@
 #include "../io/file_system.h"
 #include "../io/log.h"
 #include "../io/vector_buffer.h"
+#include "../resource/json_file.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
-#include "../resource/json_file.h"
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
 #include "../scene/value_animation.h"
+#include "graphics.h"
+#include "renderer.h"
+#include "technique.h"
 
 #include "../common/debug_new.h"
 

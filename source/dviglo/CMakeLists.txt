@@ -193,7 +193,6 @@ foreach(opt
             DV_LOGGING
             DV_TESTING # enable_testing() вызывается в common.cmake
             DV_FILEWATCHER
-            DV_PROFILING
             DV_THREADING
             DV_URHO2D
             DV_WIN32_CONSOLE)

@@ -251,21 +251,10 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
 
         String profileBlockName("Finish" + resource->GetTypeName());
         DV_PROFILE_STR(profileBlockName.c_str(), profileBlockName.Length());
-#elif defined(DV_PROFILING)
-        String profileBlockName("Finish" + resource->GetTypeName());
-
-        auto* profiler = owner_->GetSubsystem<Profiler>();
-        if (profiler)
-            profiler->BeginBlock(profileBlockName.c_str());
 #endif
 
         DV_LOGDEBUG("Finishing background loaded resource " + resource->GetName());
         success = resource->EndLoad();
-
-#ifdef DV_PROFILING
-        if (profiler)
-            profiler->EndBlock();
-#endif
     }
     resource->SetAsyncLoadState(ASYNC_DONE);
 
