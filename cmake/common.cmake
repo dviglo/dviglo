@@ -54,7 +54,7 @@ option(DV_SAMPLES "Примеры" TRUE)
 option(DV_TOOLS "Инструменты" TRUE)
 option(DV_NAVIGATION "Навигация" TRUE)
 option(DV_PROFILING "Профилирование" TRUE)
-option(DV_TRACY_PROFILING "Профайлер Tracy (отменяет опцию DV_PROFILING)" FALSE) 
+option(DV_TRACY_PROFILING "Профайлер Tracy (отменяет опцию DV_PROFILING)" FALSE)
 cmake_dependent_option(DV_OPENGL "OpenGL" TRUE "WIN32" TRUE) # Не на Windows всегда TRUE
 cmake_dependent_option(DV_D3D11 "Direct3D 11" TRUE "WIN32" FALSE) # Не на Windows всегда FALSE
 cmake_dependent_option(DV_STATIC_RUNTIME "Статическая линковка MSVC runtime" FALSE "MSVC" FALSE)
