@@ -156,11 +156,10 @@ bool ShaderVariation::LoadByteCode_D3D11(const String& binaryShaderName)
     if (!cache->Exists(binaryShaderName))
         return false;
 
-    FileSystem* fileSystem = owner_->GetSubsystem<FileSystem>();
     unsigned sourceTimeStamp = owner_->GetTimeStamp();
     // If source code is loaded from a package, its timestamp will be zero. Else check that binary is not older
     // than source
-    if (sourceTimeStamp && fileSystem->GetLastModifiedTime(cache->GetResourceFileName(binaryShaderName)) < sourceTimeStamp)
+    if (sourceTimeStamp && DV_FILE_SYSTEM.GetLastModifiedTime(cache->GetResourceFileName(binaryShaderName)) < sourceTimeStamp)
         return false;
 
     SharedPtr<File> file = cache->GetFile(binaryShaderName);
@@ -392,7 +391,6 @@ void ShaderVariation::ParseParameters_D3D11(unsigned char* bufData, unsigned buf
 void ShaderVariation::SaveByteCode_D3D11(const String& binaryShaderName)
 {
     ResourceCache* cache = owner_->GetSubsystem<ResourceCache>();
-    FileSystem* fileSystem = owner_->GetSubsystem<FileSystem>();
 
     // Filename may or may not be inside the resource system
     String fullName = binaryShaderName;
@@ -406,7 +404,7 @@ void ShaderVariation::SaveByteCode_D3D11(const String& binaryShaderName)
     }
     String path = GetPath(fullName);
     if (!dir_exists(path))
-        fileSystem->create_dir(path);
+        DV_FILE_SYSTEM.create_dir(path);
 
     SharedPtr<File> file(new File(fullName, FILE_WRITE));
     if (!file->IsOpen())

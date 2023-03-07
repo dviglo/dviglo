@@ -90,8 +90,7 @@ FileSelector::FileSelector() :
     Vector<String> defaultFilters;
     defaultFilters.Push("*.*");
     SetFilters(defaultFilters, 0);
-    auto* fileSystem = GetSubsystem<FileSystem>();
-    SetPath(fileSystem->GetCurrentDir());
+    SetPath(DV_FILE_SYSTEM.GetCurrentDir());
 
     // Focus the fileselector's filelist initially when created, and bring to front
     auto* ui = GetSubsystem<UI>();
@@ -173,7 +172,6 @@ void FileSelector::SetButtonTexts(const String& okText, const String& cancelText
 
 void FileSelector::SetPath(const String& path)
 {
-    auto* fileSystem = GetSubsystem<FileSystem>();
     if (dir_exists(path))
     {
         path_ = AddTrailingSlash(path);
@@ -267,8 +265,6 @@ void FileSelector::SetLineEditText(LineEdit* edit, const String& text)
 
 void FileSelector::RefreshFiles()
 {
-    auto* fileSystem = GetSubsystem<FileSystem>();
-
     ignoreEvents_ = true;
 
     fileList_->RemoveAllItems();
@@ -276,8 +272,8 @@ void FileSelector::RefreshFiles()
 
     Vector<String> directories;
     Vector<String> files;
-    fileSystem->ScanDir(directories, path_, "*", SCAN_DIRS, false);
-    fileSystem->ScanDir(files, path_, GetFilter(), SCAN_FILES, false);
+    DV_FILE_SYSTEM.ScanDir(directories, path_, "*", SCAN_DIRS, false);
+    DV_FILE_SYSTEM.ScanDir(files, path_, GetFilter(), SCAN_FILES, false);
 
     fileEntries_.Reserve(directories.Size() + files.Size());
 

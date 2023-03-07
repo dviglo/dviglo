@@ -28,7 +28,6 @@ struct FileEntry
     hash32 checksum_{};
 };
 
-SharedPtr<FileSystem> fileSystem_(new FileSystem());
 String basePath_;
 Vector<FileEntry> entries_;
 hash32 checksum_ = 0;
@@ -111,7 +110,7 @@ void Pack(const Vector<String>& arguments)
 
     // Get the file list recursively
     Vector<String> fileNames;
-    fileSystem_->ScanDir(fileNames, dirName, "*.*", SCAN_FILES, true);
+    DV_FILE_SYSTEM.ScanDir(fileNames, dirName, "*.*", SCAN_FILES, true);
     if (!fileNames.Size())
         ErrorExit("No files found");
 
@@ -157,6 +156,8 @@ void Unpack(const Vector<String>& arguments)
 
     char buffer[1024];
 
+    FileSystem& file_system = DV_FILE_SYSTEM;
+
     const HashMap<String, PackageEntry>& entries = packageFile->GetEntries();
     for (HashMap<String, PackageEntry>::ConstIterator i = entries.Begin(); i != entries.End();)
     {
@@ -166,7 +167,7 @@ void Unpack(const Vector<String>& arguments)
         if (pos == String::NPOS)
             ErrorExit("pos == String::NPOS");
 
-        fileSystem_->create_dir(outFilePath.Substring(0, pos));
+        file_system.create_dir(outFilePath.Substring(0, pos));
 
         File packedFile(packageFile, current->first_);
         if (!packedFile.IsOpen())

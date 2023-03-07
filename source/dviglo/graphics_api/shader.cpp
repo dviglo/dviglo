@@ -145,9 +145,8 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
     auto* file = dynamic_cast<File*>(&source);
     if (file && !file->IsPackaged())
     {
-        auto* fileSystem = GetSubsystem<FileSystem>();
         String fullName = cache->GetResourceFileName(file->GetName());
-        unsigned fileTimeStamp = fileSystem->GetLastModifiedTime(fullName);
+        unsigned fileTimeStamp = DV_FILE_SYSTEM.GetLastModifiedTime(fullName);
         if (fileTimeStamp > timeStamp_)
             timeStamp_ = fileTimeStamp;
     }

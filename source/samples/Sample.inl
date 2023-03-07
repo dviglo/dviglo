@@ -326,7 +326,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             Image screenshot;
             graphics->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
-            screenshot.SavePNG(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Screenshot_" +
+            screenshot.SavePNG(DV_FILE_SYSTEM.GetProgramDir() + "Data/Screenshot_" +
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
         }
     }

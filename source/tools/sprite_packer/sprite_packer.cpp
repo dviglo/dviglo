@@ -89,9 +89,6 @@ void Run(Vector<String>& arguments)
     if (arguments.Size() < 2)
         Help();
 
-    DV_CONTEXT.RegisterSubsystem(new FileSystem());
-    auto* fileSystem = DV_CONTEXT.GetSubsystem<FileSystem>();
-
     Vector<String> inputFiles;
     String outputFile;
     String spriteSheetFileName;
@@ -158,7 +155,7 @@ void Run(Vector<String>& arguments)
     for (const String& inputFile : inputFiles)
     {
         DV_LOGINFO("Checking " + inputFile + " to see if file exists.");
-        if (!fileSystem->FileExists(inputFile))
+        if (!DV_FILE_SYSTEM.FileExists(inputFile))
             ErrorExit("File " + inputFile + " does not exist.");
     }
 

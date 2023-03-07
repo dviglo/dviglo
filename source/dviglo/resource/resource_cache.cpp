@@ -82,8 +82,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
 
     std::scoped_lock lock(resourceMutex_);
 
-    auto* fileSystem = GetSubsystem<FileSystem>();
-    if (!fileSystem || !dir_exists(pathName))
+    if (!dir_exists(pathName))
     {
         DV_LOGERROR("Could not open directory " + pathName);
         return false;
@@ -745,16 +744,16 @@ bool ResourceCache::Exists(const String& name) const
             return true;
     }
 
-    FileSystem* fileSystem = GetSubsystem<FileSystem>();
+    FileSystem& fileSystem = DV_FILE_SYSTEM;
 
     for (const String& resourceDir : resourceDirs_)
     {
-        if (fileSystem->FileExists(resourceDir + sanitatedName))
+        if (fileSystem.FileExists(resourceDir + sanitatedName))
             return true;
     }
 
     // Fallback using absolute path
-    return fileSystem->FileExists(sanitatedName);
+    return fileSystem.FileExists(sanitatedName);
 }
 
 unsigned long long ResourceCache::GetMemoryBudget(StringHash type) const
@@ -779,15 +778,15 @@ unsigned long long ResourceCache::GetTotalMemoryUse() const
 
 String ResourceCache::GetResourceFileName(const String& name) const
 {
-    FileSystem* fileSystem = GetSubsystem<FileSystem>();
+    FileSystem& fileSystem = DV_FILE_SYSTEM;
 
     for (const String& resourceDir : resourceDirs_)
     {
-        if (fileSystem->FileExists(resourceDir + name))
+        if (fileSystem.FileExists(resourceDir + name))
             return resourceDir + name;
     }
 
-    if (IsAbsolutePath(name) && fileSystem->FileExists(name))
+    if (IsAbsolutePath(name) && fileSystem.FileExists(name))
         return name;
     else
         return String();
@@ -804,8 +803,6 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
 
     bool pathHasKnownDirs = false;
     bool parentHasKnownDirs = false;
-
-    auto* fileSystem = GetSubsystem<FileSystem>();
 
     for (unsigned i = 0; checkDirs[i] != nullptr; ++i)
     {
@@ -842,11 +839,10 @@ String ResourceCache::SanitateResourceName(const String& name) const
     sanitatedName.Replace("./", "");
 
     // If the path refers to one of the resource directories, normalize the resource name
-    auto* fileSystem = GetSubsystem<FileSystem>();
     if (resourceDirs_.Size())
     {
         String namePath = GetPath(sanitatedName);
-        String exePath = fileSystem->GetProgramDir().Replaced("/./", "/");
+        String exePath = DV_FILE_SYSTEM.GetProgramDir().Replaced("/./", "/");
         for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
         {
             String relativeResourcePath = resourceDirs_[i];
@@ -869,7 +865,7 @@ String ResourceCache::SanitateResourceDirName(const String& name) const
 {
     String fixedPath = AddTrailingSlash(name);
     if (!IsAbsolutePath(fixedPath))
-        fixedPath = GetSubsystem<FileSystem>()->GetCurrentDir() + fixedPath;
+        fixedPath = DV_FILE_SYSTEM.GetCurrentDir() + fixedPath;
 
     // Sanitate away /./ construct
     fixedPath.Replace("/./", "/");
@@ -1096,11 +1092,11 @@ void ResourceCache::HandleBeginFrame(StringHash eventType, VariantMap& eventData
 
 File* ResourceCache::SearchResourceDirs(const String& name)
 {
-    FileSystem* fileSystem = GetSubsystem<FileSystem>();
+    FileSystem& fileSystem = DV_FILE_SYSTEM;
 
     for (const String& resourceDir : resourceDirs_)
     {
-        if (fileSystem->FileExists(resourceDir + name))
+        if (fileSystem.FileExists(resourceDir + name))
         {
             // Construct the file first with full path, then rename it to not contain the resource path,
             // so that the file's sanitatedName can be used in further GetFile() calls (for example over the network)
@@ -1111,7 +1107,7 @@ File* ResourceCache::SearchResourceDirs(const String& name)
     }
 
     // Fallback using absolute path
-    if (fileSystem->FileExists(name))
+    if (fileSystem.FileExists(name))
         return new File(name);
 
     return nullptr;

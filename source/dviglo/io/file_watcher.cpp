@@ -32,7 +32,6 @@ static const unsigned BUFFERSIZE = 4096;
 #endif
 
 FileWatcher::FileWatcher() :
-    fileSystem_(GetSubsystem<FileSystem>()),
     delay_(1.0f),
     watchSubDirs_(false)
 {
@@ -57,12 +56,6 @@ FileWatcher::~FileWatcher()
 
 bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
 {
-    if (!fileSystem_)
-    {
-        DV_LOGERROR("No FileSystem, can not start watching");
-        return false;
-    }
-
     // Stop any previous watching
     StopWatching();
 
@@ -112,7 +105,7 @@ bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
         if (watchSubDirs_)
         {
             Vector<String> subDirs;
-            fileSystem_->ScanDir(subDirs, pathName, "*", SCAN_DIRS, true);
+            DV_FILE_SYSTEM.ScanDir(subDirs, pathName, "*", SCAN_DIRS, true);
 
             for (unsigned i = 0; i < subDirs.Size(); ++i)
             {
@@ -182,8 +175,7 @@ void FileWatcher::StopWatching()
         String dummyFileName = path_ + "dummy.tmp";
         File file(dummyFileName, FILE_WRITE);
         file.Close();
-        if (fileSystem_)
-            fileSystem_->Delete(dummyFileName);
+        DV_FILE_SYSTEM.Delete(dummyFileName);
 #endif
 
 #if defined(__APPLE__) && !defined(IOS) && !defined(TVOS)

@@ -213,13 +213,13 @@ void RaycastVehicleDemo::HandleUpdate(StringHash eventType,
             // Check for loading / saving the scene
             if (input->GetKeyPress(KEY_F5))
             {
-                File saveFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
+                File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_WRITE);
                 scene_->SaveXML(saveFile);
             }
             if (input->GetKeyPress(KEY_F7))
             {
-                File loadFile(GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
+                File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_READ);
                 scene_->LoadXML(loadFile);
                 // After loading we have to reacquire the weak pointer to the Vehicle component, as it has been recreated

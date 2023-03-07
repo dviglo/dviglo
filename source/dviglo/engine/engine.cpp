@@ -100,19 +100,16 @@ Engine::Engine() :
     // Создаём синглтоны, которые не зависят от инициализации движка и параметров движка
     Time::get_instance();
     WorkQueue::get_instance();
+    FileSystem::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new FileSystem());
     DV_CONTEXT.RegisterSubsystem(new ResourceCache());
     DV_CONTEXT.RegisterSubsystem(new Localization());
 #ifdef DV_NETWORK
     DV_CONTEXT.RegisterSubsystem(new Network());
-#endif
-#ifdef DV_DATABASE
-    DV_CONTEXT.RegisterSubsystem(new Database());
 #endif
     DV_CONTEXT.RegisterSubsystem(new Input());
     DV_CONTEXT.RegisterSubsystem(new Audio());
@@ -231,7 +228,6 @@ bool Engine::Initialize(const VariantMap& parameters)
         return false;
 
     auto* cache = GetSubsystem<ResourceCache>();
-    auto* fileSystem = GetSubsystem<FileSystem>();
 
     // Initialize graphics & audio output
     if (!headless_)
@@ -325,7 +321,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOld /*= true*/)
 {
     auto* cache = GetSubsystem<ResourceCache>();
-    auto* fileSystem = GetSubsystem<FileSystem>();
+    FileSystem& fileSystem = DV_FILE_SYSTEM;
 
     // Remove all resource paths and packages
     if (removeOld)
@@ -342,7 +338,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     Vector<String> resourcePrefixPaths = GetParameter(parameters, EP_RESOURCE_PREFIX_PATHS, String::EMPTY).GetString().Split(';', true);
     for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = AddTrailingSlash(
-            IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem->GetProgramDir() + resourcePrefixPaths[i]);
+            IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem.GetProgramDir() + resourcePrefixPaths[i]);
     Vector<String> resourcePaths = GetParameter(parameters, EP_RESOURCE_PATHS, "Data;CoreData").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, EP_RESOURCE_PACKAGES).GetString().Split(';');
     Vector<String> autoLoadPaths = GetParameter(parameters, EP_AUTOLOAD_PATHS, "Autoload").GetString().Split(';');
@@ -356,7 +352,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             for (; j < resourcePrefixPaths.Size(); ++j)
             {
                 String packageName = resourcePrefixPaths[j] + resourcePaths[i] + ".pak";
-                if (fileSystem->FileExists(packageName))
+                if (fileSystem.FileExists(packageName))
                 {
                     if (cache->AddPackageFile(packageName))
                         break;
@@ -396,7 +392,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         for (; j < resourcePrefixPaths.Size(); ++j)
         {
             String packageName = resourcePrefixPaths[j] + resourcePackages[i];
-            if (fileSystem->FileExists(packageName))
+            if (fileSystem.FileExists(packageName))
             {
                 if (cache->AddPackageFile(packageName))
                     break;
@@ -430,7 +426,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
 
                 // Add all the subdirs (non-recursive) as resource directory
                 Vector<String> subdirs;
-                fileSystem->ScanDir(subdirs, autoLoadPath, "*", SCAN_DIRS, false);
+                fileSystem.ScanDir(subdirs, autoLoadPath, "*", SCAN_DIRS, false);
                 for (unsigned y = 0; y < subdirs.Size(); ++y)
                 {
                     String dir = subdirs[y];
@@ -444,7 +440,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
 
                 // Add all the found package files (non-recursive)
                 Vector<String> paks;
-                fileSystem->ScanDir(paks, autoLoadPath, "*.pak", SCAN_FILES, false);
+                fileSystem.ScanDir(paks, autoLoadPath, "*.pak", SCAN_FILES, false);
                 for (unsigned y = 0; y < paks.Size(); ++y)
                 {
                     String pak = paks[y];

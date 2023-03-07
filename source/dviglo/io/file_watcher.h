@@ -13,8 +13,6 @@
 namespace dviglo
 {
 
-class FileSystem;
-
 /// Watches a directory and its subdirectories for files being modified.
 class DV_API FileWatcher : public Object, public Thread
 {
@@ -47,8 +45,6 @@ public:
     float GetDelay() const { return delay_; }
 
 private:
-    /// Filesystem.
-    SharedPtr<FileSystem> fileSystem_;
     /// The path being watched.
     String path_;
     /// Pending changes. These will be returned and removed from the list when their timer has exceeded the delay.

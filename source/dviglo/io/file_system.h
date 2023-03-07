@@ -26,10 +26,22 @@ class DV_API FileSystem : public Object
     DV_OBJECT(FileSystem, Object);
 
 public:
+    static FileSystem& get_instance()
+    {
+        static FileSystem instance;
+        return instance;
+    }
+
+private:
     /// Construct.
     explicit FileSystem();
     /// Destruct.
     ~FileSystem() override;
+
+public:
+    // Запрещаем копирование
+    FileSystem(const FileSystem&) = delete;
+    FileSystem& operator =(const FileSystem&) = delete;
 
     /// Set the current working directory.
     bool SetCurrentDir(const String& pathName);
@@ -93,6 +105,8 @@ private:
     /// Flag for executing engine console commands as OS-specific system command. Default to true.
     bool executeConsoleCommands_{};
 };
+
+#define DV_FILE_SYSTEM (dviglo::FileSystem::get_instance())
 
 /// Split a full path to path, filename and extension. The extension will be converted to lowercase by default.
 DV_API void
