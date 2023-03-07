@@ -152,17 +152,17 @@ void ShaderVariation::SetDefines_D3D11(const String& defines)
 
 bool ShaderVariation::LoadByteCode_D3D11(const String& binaryShaderName)
 {
-    ResourceCache* cache = owner_->GetSubsystem<ResourceCache>();
-    if (!cache->Exists(binaryShaderName))
+    ResourceCache& cache = DV_RES_CACHE;
+    if (!cache.Exists(binaryShaderName))
         return false;
 
     unsigned sourceTimeStamp = owner_->GetTimeStamp();
     // If source code is loaded from a package, its timestamp will be zero. Else check that binary is not older
     // than source
-    if (sourceTimeStamp && DV_FILE_SYSTEM.GetLastModifiedTime(cache->GetResourceFileName(binaryShaderName)) < sourceTimeStamp)
+    if (sourceTimeStamp && DV_FILE_SYSTEM.GetLastModifiedTime(cache.GetResourceFileName(binaryShaderName)) < sourceTimeStamp)
         return false;
 
-    SharedPtr<File> file = cache->GetFile(binaryShaderName);
+    SharedPtr<File> file = cache.GetFile(binaryShaderName);
     if (!file || file->ReadFileID() != "USHD")
     {
         DV_LOGERROR(binaryShaderName + " is not a valid shader bytecode file");
@@ -390,14 +390,12 @@ void ShaderVariation::ParseParameters_D3D11(unsigned char* bufData, unsigned buf
 
 void ShaderVariation::SaveByteCode_D3D11(const String& binaryShaderName)
 {
-    ResourceCache* cache = owner_->GetSubsystem<ResourceCache>();
-
     // Filename may or may not be inside the resource system
     String fullName = binaryShaderName;
     if (!IsAbsolutePath(fullName))
     {
         // If not absolute, use the resource dir of the shader
-        String shaderFileName = cache->GetResourceFileName(owner_->GetName());
+        String shaderFileName = DV_RES_CACHE.GetResourceFileName(owner_->GetName());
         if (shaderFileName.Empty())
             return;
         fullName = shaderFileName.Substring(0, shaderFileName.Find(owner_->GetName())) + binaryShaderName;

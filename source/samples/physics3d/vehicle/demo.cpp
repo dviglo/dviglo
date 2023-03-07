@@ -64,7 +64,7 @@ void VehicleDemo::Start()
 
 void VehicleDemo::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -105,8 +105,8 @@ void VehicleDemo::CreateScene()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache->GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(cache->GetResource<Material>("Materials/Terrain.xml"));
+    terrain->SetHeightMap(cache.GetResource<Image>("Textures/HeightMap.png"));
+    terrain->SetMaterial(cache.GetResource<Material>("Materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -128,8 +128,8 @@ void VehicleDemo::CreateScene()
         objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));
         objectNode->SetScale(3.0f);
         auto* object = objectNode->CreateComponent<StaticModel>();
-        object->SetModel(cache->GetResource<Model>("Models/Mushroom.mdl"));
-        object->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
+        object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+        object->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->CreateComponent<RigidBody>();
@@ -152,7 +152,6 @@ void VehicleDemo::CreateVehicle()
 
 void VehicleDemo::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
@@ -161,7 +160,7 @@ void VehicleDemo::CreateInstructions()
         "Use WASD keys to drive, mouse/touch to rotate camera\n"
         "F5 to save scene, F7 to load"
     );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

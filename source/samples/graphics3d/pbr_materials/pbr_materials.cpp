@@ -57,14 +57,13 @@ void PBRMaterials::Start()
 
 void PBRMaterials::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = ui->GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use sliders to change Roughness and Metallic\n"
         "Hold RMB and use WASD keys and mouse to move");
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
 
     // Position the text relative to the screen center
@@ -75,13 +74,11 @@ void PBRMaterials::CreateInstructions()
 
 void PBRMaterials::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     scene_ = new Scene();
 
     // Load scene content prepared in the editor (XML format). GetFile() returns an open file from the resource system
     // which scene.LoadXML() will read
-    SharedPtr<File> file = cache->GetFile("Scenes/PBRExample.xml");
+    SharedPtr<File> file = DV_RES_CACHE.GetFile("Scenes/PBRExample.xml");
     scene_->LoadXML(*file);
 
     Node* sphereWithDynamicMatNode = scene_->GetChild("SphereWithDynamicMat");
@@ -103,11 +100,10 @@ void PBRMaterials::CreateScene()
 
 void PBRMaterials::CreateUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Set up global UI style into the root UI element
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     ui->GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
@@ -120,17 +116,17 @@ void PBRMaterials::CreateUI()
     cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
 
     roughnessLabel_ = ui->GetRoot()->CreateChild<Text>();
-    roughnessLabel_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     roughnessLabel_->SetPosition(370, 50);
     roughnessLabel_->SetTextEffect(TE_SHADOW);
 
     metallicLabel_ = ui->GetRoot()->CreateChild<Text>();
-    metallicLabel_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    metallicLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     metallicLabel_->SetPosition(370, 100);
     metallicLabel_->SetTextEffect(TE_SHADOW);
 
     ambientLabel_ = ui->GetRoot()->CreateChild<Text>();
-    ambientLabel_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    ambientLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     ambientLabel_->SetPosition(370, 150);
     ambientLabel_->SetTextEffect(TE_SHADOW);
 
@@ -183,7 +179,6 @@ void PBRMaterials::HandleAmbientSliderChanged(StringHash eventType, VariantMap& 
 
 void PBRMaterials::SetupViewport()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* renderer = GetSubsystem<Renderer>();
 
     renderer->SetHDRRendering(true);
@@ -194,10 +189,10 @@ void PBRMaterials::SetupViewport()
 
     // Add post-processing effects appropriate with the example scene
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
-    effectRenderPath->Append(cache->GetResource<XMLFile>("PostProcess/FXAA2.xml"));
-    effectRenderPath->Append(cache->GetResource<XMLFile>("PostProcess/GammaCorrection.xml"));
-    effectRenderPath->Append(cache->GetResource<XMLFile>("PostProcess/Tonemap.xml"));
-    effectRenderPath->Append(cache->GetResource<XMLFile>("PostProcess/AutoExposure.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/FXAA2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/GammaCorrection.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/Tonemap.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/AutoExposure.xml"));
 
     viewport->SetRenderPath(effectRenderPath);
 }

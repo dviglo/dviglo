@@ -46,13 +46,11 @@ void SceneAndUILoad::Start()
 
 void SceneAndUILoad::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     scene_ = new Scene();
 
     // Load scene content prepared in the editor (XML format). GetFile() returns an open file from the resource system
     // which scene.LoadXML() will read
-    SharedPtr<File> file = cache->GetFile("Scenes/SceneLoadExample.xml");
+    SharedPtr<File> file = DV_RES_CACHE.GetFile("Scenes/SceneLoadExample.xml");
     scene_->LoadXML(*file);
 
     // Create the camera (not included in the scene file)
@@ -65,11 +63,10 @@ void SceneAndUILoad::CreateScene()
 
 void SceneAndUILoad::CreateUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Set up global UI style into the root UI element
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     ui->GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
@@ -82,7 +79,7 @@ void SceneAndUILoad::CreateUI()
     cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
 
     // Load UI content prepared in the editor and add to the UI hierarchy
-    SharedPtr<UIElement> layoutRoot = ui->LoadLayout(cache->GetResource<XMLFile>("UI/UILoadExample.xml"));
+    SharedPtr<UIElement> layoutRoot = ui->LoadLayout(DV_RES_CACHE.GetResource<XMLFile>("UI/UILoadExample.xml"));
     ui->GetRoot()->AddChild(layoutRoot);
 
     // Subscribe to button actions (toggle scene lights when pressed then released)

@@ -36,8 +36,6 @@ void AppState_Benchmark02::OnEnter()
     Vector3 castlePos = scene_->GetChild("Castle")->GetPosition();
     BoundingBox castleTop(castlePos - Vector3(7.f, 0.f, 7.f), castlePos + Vector3(7.f, 0.f, 7.f));
 
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-
     Vector<Node*> womans;
     scene_->GetChildrenWithTag(womans, "woman");
     for (Node* woman : womans)
@@ -46,7 +44,7 @@ void AppState_Benchmark02::OnEnter()
         mover->SetParameters(2.f, 100.f, castleTop);
 
         AnimatedModel* modelObject = woman->GetComponent<AnimatedModel>();
-        Animation* walkAnimation = cache->GetResource<Animation>("Models/Kachujin/Kachujin_Walk.ani");
+        Animation* walkAnimation = DV_RES_CACHE.GetResource<Animation>("Models/Kachujin/Kachujin_Walk.ani");
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         if (state)
         {

@@ -78,8 +78,7 @@ void SoundEffects::Start()
 void SoundEffects::CreateUI()
 {
     UIElement* root = GetSubsystem<UI>()->GetRoot();
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* uiStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
@@ -114,8 +113,7 @@ void SoundEffects::CreateUI()
 Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const String& text)
 {
     UIElement* root = GetSubsystem<UI>()->GetRoot();
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* font = cache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     // Create the button and center the text onto it
     auto* button = root->CreateChild<Button>();
@@ -134,8 +132,7 @@ Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const Str
 Slider* SoundEffects::CreateSlider(int x, int y, int xSize, int ySize, const String& text)
 {
     UIElement* root = GetSubsystem<UI>()->GetRoot();
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* font = cache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     // Create text and slider below it
     auto* sliderText = root->CreateChild<Text>();
@@ -159,8 +156,7 @@ void SoundEffects::HandlePlaySound(StringHash eventType, VariantMap& eventData)
     const String& soundResourceName = button->GetVar(VAR_SOUNDRESOURCE).GetString();
 
     // Get the sound resource
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* sound = cache->GetResource<Sound>(soundResourceName);
+    auto* sound = DV_RES_CACHE.GetResource<Sound>(soundResourceName);
 
     if (sound)
     {
@@ -178,8 +174,7 @@ void SoundEffects::HandlePlaySound(StringHash eventType, VariantMap& eventData)
 
 void SoundEffects::HandlePlayMusic(StringHash eventType, VariantMap& eventData)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* music = cache->GetResource<Sound>("Music/Ninja Gods.ogg");
+    auto* music = DV_RES_CACHE.GetResource<Sound>("Music/Ninja Gods.ogg");
     // Set the song to loop
     music->SetLooped(true);
 

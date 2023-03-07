@@ -44,8 +44,7 @@ void WindowSettingsDemo::Start()
     GetSubsystem<Input>()->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
@@ -73,8 +72,6 @@ void WindowSettingsDemo::Start()
 
 void WindowSettingsDemo::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
@@ -85,8 +82,8 @@ void WindowSettingsDemo::CreateScene()
     Node* objectNode = scene_->CreateChild("Object");
     objectNode->SetRotation(Quaternion(45.0f, 45.0f, 45.0f));
     auto* objectModel = objectNode->CreateComponent<StaticModel>();
-    objectModel->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    objectModel->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    objectModel->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
+    objectModel->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
 
     // Create camera
     cameraNode_ = scene_->CreateChild("Camera");

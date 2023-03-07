@@ -288,9 +288,8 @@ bool Model::BeginLoad(Deserializer& source)
     memoryUse += sizeof(Vector3) * geometries_.Size();
 
     // Read metadata
-    auto* cache = GetSubsystem<ResourceCache>();
     String xmlName = ReplaceExtension(GetName(), ".xml");
-    SharedPtr<XMLFile> file(cache->GetTempResource<XMLFile>(xmlName, false));
+    SharedPtr<XMLFile> file(DV_RES_CACHE.GetTempResource<XMLFile>(xmlName, false));
     if (file)
         LoadMetadataFromXML(file->GetRoot());
 

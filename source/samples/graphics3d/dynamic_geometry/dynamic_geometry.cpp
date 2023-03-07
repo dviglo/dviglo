@@ -59,8 +59,6 @@ void DynamicGeometry::Start()
 
 void DynamicGeometry::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     scene_ = new Scene();
 
     // Create the Octree component to the scene so that drawable objects can be rendered. Use default volume
@@ -84,7 +82,7 @@ void DynamicGeometry::CreateScene()
     light->SetSpecularIntensity(1.5f);
 
     // Get the original model and its unmodified vertices, which are used as source data for the animation
-    auto* originalModel = cache->GetResource<Model>("Models/Box.mdl");
+    auto* originalModel = DV_RES_CACHE.GetResource<Model>("Models/Box.mdl");
     if (!originalModel)
     {
         DV_LOGERROR("Model not found, cannot initialize example scene");
@@ -252,7 +250,6 @@ void DynamicGeometry::CreateScene()
 
 void DynamicGeometry::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
@@ -261,7 +258,7 @@ void DynamicGeometry::CreateInstructions()
         "Use WASD keys and mouse/touch to move\n"
         "Space to toggle animation"
     );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

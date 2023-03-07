@@ -546,7 +546,7 @@ Technique* Renderer::GetDefaultTechnique() const
 {
     // Assign default when first asked if not assigned yet
     if (!defaultTechnique_)
-        const_cast<SharedPtr<Technique>& >(defaultTechnique_) = GetSubsystem<ResourceCache>()->GetResource<Technique>("Techniques/NoTexture.xml");
+        const_cast<SharedPtr<Technique>& >(defaultTechnique_) = DV_RES_CACHE.GetResource<Technique>("Techniques/NoTexture.xml");
 
     return defaultTechnique_;
 }
@@ -1572,9 +1572,9 @@ void Renderer::ResetScreenBufferAllocations()
 void Renderer::Initialize()
 {
     auto* graphics = GetSubsystem<Graphics>();
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
-    if (!graphics || !graphics->IsInitialized() || !cache)
+    if (!graphics || !graphics->IsInitialized())
         return;
 
     DV_PROFILE(InitRenderer);
@@ -1586,12 +1586,12 @@ void Renderer::Initialize()
     // Validate the shadow quality level
     SetShadowQuality(shadowQuality_);
 
-    defaultLightRamp_ = cache->GetResource<Texture2D>("Textures/Ramp.png");
-    defaultLightSpot_ = cache->GetResource<Texture2D>("Textures/Spot.png");
+    defaultLightRamp_ = cache.GetResource<Texture2D>("Textures/Ramp.png");
+    defaultLightSpot_ = cache.GetResource<Texture2D>("Textures/Spot.png");
     defaultMaterial_ = new Material();
 
     defaultRenderPath_ = new RenderPath();
-    defaultRenderPath_->Load(cache->GetResource<XMLFile>("RenderPaths/Forward.xml"));
+    defaultRenderPath_->Load(cache.GetResource<XMLFile>("RenderPaths/Forward.xml"));
 
     CreateGeometries();
     CreateInstancingBuffer();
@@ -1734,10 +1734,9 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
 
 void Renderer::ReleaseMaterialShaders()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     Vector<Material*> materials;
 
-    cache->GetResources<Material>(materials);
+    DV_RES_CACHE.GetResources<Material>(materials);
 
     for (Material* material : materials)
         material->ReleaseShaders();
@@ -1745,18 +1744,18 @@ void Renderer::ReleaseMaterialShaders()
 
 void Renderer::ReloadTextures()
 {
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
     Vector<Resource*> textures;
 
-    cache->GetResources(textures, Texture2D::GetTypeStatic());
+    cache.GetResources(textures, Texture2D::GetTypeStatic());
 
     for (Resource* texture : textures)
-        cache->ReloadResource(texture);
+        cache.ReloadResource(texture);
 
-    cache->GetResources(textures, TextureCube::GetTypeStatic());
+    cache.GetResources(textures, TextureCube::GetTypeStatic());
 
     for (Resource* texture : textures)
-        cache->ReloadResource(texture);
+        cache.ReloadResource(texture);
 }
 
 void Renderer::CreateGeometries()

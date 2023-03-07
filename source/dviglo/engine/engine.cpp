@@ -101,12 +101,12 @@ Engine::Engine() :
     Time::get_instance();
     WorkQueue::get_instance();
     FileSystem::get_instance();
+    ResourceCache::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new ResourceCache());
     DV_CONTEXT.RegisterSubsystem(new Localization());
 #ifdef DV_NETWORK
     DV_CONTEXT.RegisterSubsystem(new Network());
@@ -227,8 +227,6 @@ bool Engine::Initialize(const VariantMap& parameters)
     if (!InitializeResourceCache(parameters, false))
         return false;
 
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Initialize graphics & audio output
     if (!headless_)
     {
@@ -238,7 +236,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         if (HasParameter(parameters, EP_EXTERNAL_WINDOW))
             graphics->SetExternalWindow(GetParameter(parameters, EP_EXTERNAL_WINDOW).GetVoidPtr());
         graphics->SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Urho3D").GetString());
-        graphics->SetWindowIcon(cache->GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
+        graphics->SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
         graphics->SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());
         graphics->SetOrientations(GetParameter(parameters, EP_ORIENTATIONS, "LandscapeLeft LandscapeRight").GetString());
 
@@ -272,7 +270,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         if (HasParameter(parameters, EP_DUMP_SHADERS))
             graphics->BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))
-            renderer->SetDefaultRenderPath(cache->GetResource<XMLFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
+            renderer->SetDefaultRenderPath(DV_RES_CACHE.GetResource<XMLFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
 
         renderer->SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
         if (renderer->GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())
@@ -320,18 +318,18 @@ bool Engine::Initialize(const VariantMap& parameters)
 
 bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOld /*= true*/)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
     FileSystem& fileSystem = DV_FILE_SYSTEM;
 
     // Remove all resource paths and packages
     if (removeOld)
     {
-        Vector<String> resourceDirs = cache->GetResourceDirs();
-        Vector<SharedPtr<PackageFile>> packageFiles = cache->GetPackageFiles();
+        Vector<String> resourceDirs = cache.GetResourceDirs();
+        Vector<SharedPtr<PackageFile>> packageFiles = cache.GetPackageFiles();
         for (unsigned i = 0; i < resourceDirs.Size(); ++i)
-            cache->RemoveResourceDir(resourceDirs[i]);
+            cache.RemoveResourceDir(resourceDirs[i]);
         for (unsigned i = 0; i < packageFiles.Size(); ++i)
-            cache->RemovePackageFile(packageFiles[i]);
+            cache.RemovePackageFile(packageFiles[i]);
     }
 
     // Add resource paths
@@ -354,7 +352,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                 String packageName = resourcePrefixPaths[j] + resourcePaths[i] + ".pak";
                 if (fileSystem.FileExists(packageName))
                 {
-                    if (cache->AddPackageFile(packageName))
+                    if (cache.AddPackageFile(packageName))
                         break;
                     else
                         return false;   // The root cause of the error should have already been logged
@@ -362,7 +360,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                 String pathName = resourcePrefixPaths[j] + resourcePaths[i];
                 if (dir_exists(pathName))
                 {
-                    if (cache->AddResourceDir(pathName))
+                    if (cache.AddResourceDir(pathName))
                         break;
                     else
                         return false;
@@ -380,7 +378,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         {
             String pathName = resourcePaths[i];
             if (dir_exists(pathName))
-                if (!cache->AddResourceDir(pathName))
+                if (!cache.AddResourceDir(pathName))
                     return false;
         }
     }
@@ -394,7 +392,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             String packageName = resourcePrefixPaths[j] + resourcePackages[i];
             if (fileSystem.FileExists(packageName))
             {
-                if (cache->AddPackageFile(packageName))
+                if (cache.AddPackageFile(packageName))
                     break;
                 else
                     return false;
@@ -434,7 +432,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         continue;
 
                     String autoResourceDir = autoLoadPath + "/" + dir;
-                    if (!cache->AddResourceDir(autoResourceDir, 0))
+                    if (!cache.AddResourceDir(autoResourceDir, 0))
                         return false;
                 }
 
@@ -448,7 +446,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         continue;
 
                     String autoPackageName = autoLoadPath + "/" + pak;
-                    if (!cache->AddPackageFile(autoPackageName, 0))
+                    if (!cache.AddPackageFile(autoPackageName, 0))
                         return false;
                 }
             }
@@ -603,8 +601,7 @@ void Engine::DumpResources(bool dumpFileName)
     if (!Thread::IsMainThread())
         return;
 
-    auto* cache = GetSubsystem<ResourceCache>();
-    const HashMap<StringHash, ResourceGroup>& resourceGroups = cache->GetAllResources();
+    const HashMap<StringHash, ResourceGroup>& resourceGroups = DV_RES_CACHE.GetAllResources();
     if (dumpFileName)
     {
         DV_LOGRAW("Used resources:\n");
@@ -619,7 +616,9 @@ void Engine::DumpResources(bool dumpFileName)
         }
     }
     else
-        DV_LOGRAW(cache->PrintMemoryUsage() + "\n");
+    {
+        DV_LOGRAW(DV_RES_CACHE.PrintMemoryUsage() + "\n");
+    }
 #endif
 }
 

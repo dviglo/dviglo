@@ -318,10 +318,9 @@ unsigned Sound::GetSampleSize() const
 
 void Sound::LoadParameters()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     String xmlName = ReplaceExtension(GetName(), ".xml");
 
-    SharedPtr<XMLFile> file(cache->GetTempResource<XMLFile>(xmlName, false));
+    SharedPtr<XMLFile> file(DV_RES_CACHE.GetTempResource<XMLFile>(xmlName, false));
     if (!file)
         return;
 

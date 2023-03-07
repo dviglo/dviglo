@@ -258,7 +258,7 @@ void SortShadowQueueWork(const WorkItem* item, i32 threadIndex)
         shadowSplit.shadowBatches_.SortFrontToBack();
 }
 
-StringHash ParseTextureTypeXml(ResourceCache* cache, const String& filename);
+StringHash ParseTextureTypeXml(const String& filename);
 
 View::View() :
     graphics_(GetSubsystem<Graphics>()),
@@ -3167,17 +3167,17 @@ Texture* View::FindNamedTexture(const String& name, bool isRenderTarget, bool is
         return renderTargets_[nameHash];
 
     // Then the resource system
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // Check existing resources first. This does not load resources, so we can afford to guess the resource type wrong
     // without having to rely on the file extension
-    Texture* texture = cache->GetExistingResource<Texture2D>(name);
+    Texture* texture = cache.GetExistingResource<Texture2D>(name);
     if (!texture)
-        texture = cache->GetExistingResource<TextureCube>(name);
+        texture = cache.GetExistingResource<TextureCube>(name);
     if (!texture)
-        texture = cache->GetExistingResource<Texture3D>(name);
+        texture = cache.GetExistingResource<Texture3D>(name);
     if (!texture)
-        texture = cache->GetExistingResource<Texture2DArray>(name);
+        texture = cache.GetExistingResource<Texture2DArray>(name);
     if (texture)
         return texture;
 
@@ -3189,20 +3189,22 @@ Texture* View::FindNamedTexture(const String& name, bool isRenderTarget, bool is
         {
             // Assume 3D textures are only bound to the volume map unit, otherwise it's a cube texture
 #ifdef DESKTOP_GRAPHICS_OR_GLES3
-            StringHash type = ParseTextureTypeXml(cache, name);
+            StringHash type = ParseTextureTypeXml(name);
             if (!type && isVolumeMap)
                 type = Texture3D::GetTypeStatic();
 
             if (type == Texture3D::GetTypeStatic())
-                return cache->GetResource<Texture3D>(name);
+                return cache.GetResource<Texture3D>(name);
             else if (type == Texture2DArray::GetTypeStatic())
-                return cache->GetResource<Texture2DArray>(name);
+                return cache.GetResource<Texture2DArray>(name);
             else
 #endif
-                return cache->GetResource<TextureCube>(name);
+                return cache.GetResource<TextureCube>(name);
         }
         else
-            return cache->GetResource<Texture2D>(name);
+        {
+            return cache.GetResource<Texture2D>(name);
+        }
     }
 
     return nullptr;

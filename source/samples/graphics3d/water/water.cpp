@@ -58,7 +58,7 @@ void Water::Start()
 
 void Water::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -92,8 +92,8 @@ void Water::CreateScene()
     Node* skyNode = scene_->CreateChild("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->CreateComponent<Skybox>();
-    skybox->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    skybox->SetMaterial(cache->GetResource<Material>("Materials/Skybox.xml"));
+    skybox->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    skybox->SetMaterial(cache.GetResource<Material>("Materials/Skybox.xml"));
 
     // Create heightmap terrain
     Node* terrainNode = scene_->CreateChild("Terrain");
@@ -102,8 +102,8 @@ void Water::CreateScene()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.5f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache->GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(cache->GetResource<Material>("Materials/Terrain.xml"));
+    terrain->SetHeightMap(cache.GetResource<Image>("Textures/HeightMap.png"));
+    terrain->SetMaterial(cache.GetResource<Material>("Materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -120,8 +120,8 @@ void Water::CreateScene()
         objectNode->SetRotation(Quaternion(Vector3(0.0f, 1.0f, 0.0f), terrain->GetNormal(position)));
         objectNode->SetScale(5.0f);
         auto* object = objectNode->CreateComponent<StaticModel>();
-        object->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-        object->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+        object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        object->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         object->SetCastShadows(true);
     }
 
@@ -130,8 +130,8 @@ void Water::CreateScene()
     waterNode_->SetScale(Vector3(2048.0f, 1.0f, 2048.0f));
     waterNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
     auto* water = waterNode_->CreateComponent<StaticModel>();
-    water->SetModel(cache->GetResource<Model>("Models/Plane.mdl"));
-    water->SetMaterial(cache->GetResource<Material>("Materials/Water.xml"));
+    water->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    water->SetMaterial(cache.GetResource<Material>("Materials/Water.xml"));
     // Set a different viewmask on the water plane to be able to hide it from the reflection camera
     water->SetViewMask(0x80000000);
 
@@ -147,13 +147,12 @@ void Water::CreateScene()
 
 void Water::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = ui->GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use WASD keys and mouse/touch to move");
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
 
     // Position the text relative to the screen center
@@ -166,7 +165,6 @@ void Water::SetupViewport()
 {
     auto* graphics = GetSubsystem<Graphics>();
     auto* renderer = GetSubsystem<Renderer>();
-    auto* cache = GetSubsystem<ResourceCache>();
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
@@ -204,7 +202,7 @@ void Water::SetupViewport()
     RenderSurface* surface = renderTexture->GetRenderSurface();
     SharedPtr<Viewport> rttViewport(new Viewport(scene_, reflectionCamera));
     surface->SetViewport(0, rttViewport);
-    auto* waterMat = cache->GetResource<Material>("Materials/Water.xml");
+    auto* waterMat = DV_RES_CACHE.GetResource<Material>("Materials/Water.xml");
     waterMat->SetTexture(TU_DIFFUSE, renderTexture);
 }
 

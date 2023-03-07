@@ -39,9 +39,8 @@ void Texture2DArray::OnDeviceReset_OGL()
     if (!object_.name_ || dataPending_)
     {
         // If has a resource file, reload through the resource cache. Otherwise just recreate.
-        auto* cache = GetSubsystem<ResourceCache>();
-        if (cache->Exists(GetName()))
-            dataLost_ = !cache->ReloadResource(this);
+        if (DV_RES_CACHE.Exists(GetName()))
+            dataLost_ = !DV_RES_CACHE.ReloadResource(this);
 
         if (!object_.name_)
         {

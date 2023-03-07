@@ -1271,7 +1271,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // Read node ID (not needed)
     /*NodeId nodeID = */file->ReadU32();
@@ -1310,8 +1310,8 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
                 {
                     const ResourceRef& ref = varValue.GetResourceRef();
                     // Sanitate resource name beforehand so that when we get the background load event, the name matches exactly
-                    String name = cache->SanitateResourceName(ref.name_);
-                    bool success = cache->BackgroundLoadResource(ref.type_, name);
+                    String name = cache.SanitateResourceName(ref.name_);
+                    bool success = cache.BackgroundLoadResource(ref.type_, name);
                     if (success)
                     {
                         ++asyncProgress_.totalResources_;
@@ -1323,8 +1323,8 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
                     const ResourceRefList& refList = varValue.GetResourceRefList();
                     for (unsigned k = 0; k < refList.names_.Size(); ++k)
                     {
-                        String name = cache->SanitateResourceName(refList.names_[k]);
-                        bool success = cache->BackgroundLoadResource(refList.type_, name);
+                        String name = cache.SanitateResourceName(refList.names_[k]);
+                        bool success = cache.BackgroundLoadResource(refList.type_, name);
                         if (success)
                         {
                             ++asyncProgress_.totalResources_;
@@ -1347,7 +1347,7 @@ void Scene::PreloadResourcesXML(const XMLElement& element)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
     XMLElement compElem = element.GetChild("component");
@@ -1374,8 +1374,8 @@ void Scene::PreloadResourcesXML(const XMLElement& element)
                         if (attr.type_ == VAR_RESOURCEREF)
                         {
                             ResourceRef ref = attrElem.GetVariantValue(attr.type_).GetResourceRef();
-                            String name = cache->SanitateResourceName(ref.name_);
-                            bool success = cache->BackgroundLoadResource(ref.type_, name);
+                            String name = cache.SanitateResourceName(ref.name_);
+                            bool success = cache.BackgroundLoadResource(ref.type_, name);
                             if (success)
                             {
                                 ++asyncProgress_.totalResources_;
@@ -1387,8 +1387,8 @@ void Scene::PreloadResourcesXML(const XMLElement& element)
                             ResourceRefList refList = attrElem.GetVariantValue(attr.type_).GetResourceRefList();
                             for (unsigned k = 0; k < refList.names_.Size(); ++k)
                             {
-                                String name = cache->SanitateResourceName(refList.names_[k]);
-                                bool success = cache->BackgroundLoadResource(refList.type_, name);
+                                String name = cache.SanitateResourceName(refList.names_[k]);
+                                bool success = cache.BackgroundLoadResource(refList.type_, name);
                                 if (success)
                                 {
                                     ++asyncProgress_.totalResources_;
@@ -1427,7 +1427,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
     JSONArray componentArray = value.Get("components").GetArray();
@@ -1459,8 +1459,8 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                         if (attr.type_ == VAR_RESOURCEREF)
                         {
                             ResourceRef ref = attrVal.Get("value").GetVariantValue(attr.type_).GetResourceRef();
-                            String name = cache->SanitateResourceName(ref.name_);
-                            bool success = cache->BackgroundLoadResource(ref.type_, name);
+                            String name = cache.SanitateResourceName(ref.name_);
+                            bool success = cache.BackgroundLoadResource(ref.type_, name);
                             if (success)
                             {
                                 ++asyncProgress_.totalResources_;
@@ -1472,8 +1472,8 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                             ResourceRefList refList = attrVal.Get("value").GetVariantValue(attr.type_).GetResourceRefList();
                             for (unsigned k = 0; k < refList.names_.Size(); ++k)
                             {
-                                String name = cache->SanitateResourceName(refList.names_[k]);
-                                bool success = cache->BackgroundLoadResource(refList.type_, name);
+                                String name = cache.SanitateResourceName(refList.names_[k]);
+                                bool success = cache.BackgroundLoadResource(refList.type_, name);
                                 if (success)
                                 {
                                     ++asyncProgress_.totalResources_;
@@ -1491,10 +1491,8 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                         --attempts;
                     }
                 }
-
             }
         }
-
     }
 
     JSONArray childrenArray = value.Get("children").GetArray();

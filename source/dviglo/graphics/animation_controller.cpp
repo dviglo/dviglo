@@ -139,7 +139,7 @@ bool AnimationController::Play(const String& name, unsigned char layer, bool loo
 {
     // Get the animation resource first to be able to get the canonical resource name
     // (avoids potential adding of duplicate animations)
-    auto* newAnimation = GetSubsystem<ResourceCache>()->GetResource<Animation>(name);
+    auto* newAnimation = DV_RES_CACHE.GetResource<Animation>(name);
     if (!newAnimation)
         return false;
 
@@ -608,7 +608,7 @@ void AnimationController::SetNetAnimationsAttr(const Vector<byte>& value)
         AnimationState* state = GetAnimationState(animHash);
         if (!state)
         {
-            auto* newAnimation = GetSubsystem<ResourceCache>()->GetResource<Animation>(animName);
+            auto* newAnimation = DV_RES_CACHE.GetResource<Animation>(animName);
             state = AddAnimationState(newAnimation);
             if (!state)
             {
@@ -690,7 +690,7 @@ void AnimationController::SetNetAnimationsAttr(const Vector<byte>& value)
 
 void AnimationController::SetNodeAnimationStatesAttr(const VariantVector& value)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
     nodeAnimationStates_.Clear();
     i32 index = 0;
     i32 numStates = index < value.Size() ? value[index++].GetI32() : 0;
@@ -707,7 +707,7 @@ void AnimationController::SetNodeAnimationStatesAttr(const VariantVector& value)
         {
             // Note: null animation is allowed here for editing
             const ResourceRef& animRef = value[index++].GetResourceRef();
-            SharedPtr<AnimationState> newState(new AnimationState(GetNode(), cache->GetResource<Animation>(animRef.name_)));
+            SharedPtr<AnimationState> newState(new AnimationState(GetNode(), cache.GetResource<Animation>(animRef.name_)));
             nodeAnimationStates_.Push(newState);
 
             newState->SetLooped(value[index++].GetBool());

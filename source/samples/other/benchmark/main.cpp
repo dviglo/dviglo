@@ -43,7 +43,7 @@ public:
     void CreateCurrentFpsUiElement()
     {
         UIElement* root = GetSubsystem<UI>()->GetRoot();
-        root->SetDefaultStyle(GetSubsystem<ResourceCache>()->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+        root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
         Text* fpsElement = root->CreateChild<Text>(CURRENT_FPS_STR);
         fpsElement->SetStyleAuto();

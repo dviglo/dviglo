@@ -133,8 +133,7 @@ void Localization::Reset()
 
 void Localization::LoadJSONFile(const String& name, const String& language)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* jsonFile = cache->GetResource<JSONFile>(name);
+    auto* jsonFile = DV_RES_CACHE.GetResource<JSONFile>(name);
     if (jsonFile)
     {
         if (language.Empty())

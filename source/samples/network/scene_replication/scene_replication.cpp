@@ -80,7 +80,7 @@ void SceneReplication::CreateScene()
 {
     scene_ = new Scene();
 
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // Create octree and physics world with default settings. Create them as local so that they are not needlessly replicated
     // when a client connects
@@ -113,8 +113,8 @@ void SceneReplication::CreateScene()
             floorNode->SetPosition(Vector3(x * 20.2f, -0.5f, y * 20.2f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.0f));
             auto* floorObject = floorNode->CreateComponent<StaticModel>();
-            floorObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-            floorObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+            floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+            floorObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
 
             auto* body = floorNode->CreateComponent<RigidBody>();
             body->SetFriction(1.0f);
@@ -138,10 +138,9 @@ void SceneReplication::CreateScene()
 
 void SceneReplication::CreateUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
     UIElement* root = ui->GetRoot();
-    auto* uiStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
@@ -159,7 +158,7 @@ void SceneReplication::CreateUI()
     instructionsText_->SetText(
         "Use WASD keys to move and RMB to rotate view"
     );
-    instructionsText_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionsText_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // Position the text relative to the screen center
     instructionsText_->SetHorizontalAlignment(HA_CENTER);
     instructionsText_->SetVerticalAlignment(VA_CENTER);
@@ -169,14 +168,14 @@ void SceneReplication::CreateUI()
 
     packetsIn_ = ui->GetRoot()->CreateChild<Text>();
     packetsIn_->SetText("Packets in : 0");
-    packetsIn_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    packetsIn_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(10, -10);
 
     packetsOut_ = ui->GetRoot()->CreateChild<Text>();
     packetsOut_->SetText("Packets out: 0");
-    packetsOut_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    packetsOut_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     packetsOut_->SetHorizontalAlignment(HA_LEFT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(10, 10);
@@ -234,8 +233,7 @@ void SceneReplication::SubscribeToEvents()
 
 Button* SceneReplication::CreateButton(const String& text, int width)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* font = cache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     auto* button = buttonContainer_->CreateChild<Button>();
     button->SetStyleAuto();
@@ -264,15 +262,13 @@ void SceneReplication::UpdateButtons()
 
 Node* SceneReplication::CreateControllableObject()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Create the scene node & visual representation. This will be a replicated object
     Node* ballNode = scene_->CreateChild("Ball");
     ballNode->SetPosition(Vector3(Random(40.0f) - 20.0f, 5.0f, -Random(40.0f) + 20.0f));
     ballNode->SetScale(0.5f);
     auto* ballObject = ballNode->CreateComponent<StaticModel>();
-    ballObject->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
-    ballObject->SetMaterial(cache->GetResource<Material>("Materials/StoneSmall.xml"));
+    ballObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
+    ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneSmall.xml"));
 
     // Create the physics components
     auto* body = ballNode->CreateComponent<RigidBody>();

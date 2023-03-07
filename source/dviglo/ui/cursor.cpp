@@ -118,15 +118,13 @@ void Cursor::DefineShape(const String& shape, Image* image, const IntRect& image
     if (!image)
         return;
 
-    auto* cache = GetSubsystem<ResourceCache>();
-
     if (!shapeInfos_.Contains(shape))
         shapeInfos_[shape] = CursorShapeInfo();
 
     CursorShapeInfo& info = shapeInfos_[shape];
 
     // Prefer to get the texture with same name from cache to prevent creating several copies of the texture
-    info.texture_ = cache->GetResource<Texture2D>(image->GetName(), false);
+    info.texture_ = DV_RES_CACHE.GetResource<Texture2D>(image->GetName(), false);
     if (!info.texture_)
     {
         auto* texture = new Texture2D();
@@ -206,7 +204,7 @@ void Cursor::SetShapesAttr(const VariantVector& value)
             IntRect imageRect = shapeVector[2].GetIntRect();
             IntVector2 hotSpot = shapeVector[3].GetIntVector2();
 
-            DefineShape(shape, GetSubsystem<ResourceCache>()->GetResource<Image>(ref.name_), imageRect, hotSpot);
+            DefineShape(shape, DV_RES_CACHE.GetResource<Image>(ref.name_), imageRect, hotSpot);
         }
     }
 }

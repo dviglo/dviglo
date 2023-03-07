@@ -84,10 +84,9 @@ bool XMLFile::BeginLoad(Deserializer& source)
     if (!inherit.Empty())
     {
         // The existence of this attribute indicates this is an RFC 5261 patch file
-        auto* cache = GetSubsystem<ResourceCache>();
         // If being async loaded, GetResource() is not safe, so use GetTempResource() instead
-        XMLFile* inheritedXMLFile = GetAsyncLoadState() == ASYNC_DONE ? cache->GetResource<XMLFile>(inherit) :
-            cache->GetTempResource<XMLFile>(inherit);
+        XMLFile* inheritedXMLFile = GetAsyncLoadState() == ASYNC_DONE ? DV_RES_CACHE.GetResource<XMLFile>(inherit) :
+            DV_RES_CACHE.GetTempResource<XMLFile>(inherit);
         if (!inheritedXMLFile)
         {
             DV_LOGERRORF("Could not find inherited XML file: %s", inherit.c_str());
@@ -101,7 +100,7 @@ bool XMLFile::BeginLoad(Deserializer& source)
         Patch(rootElem);
 
         // Store resource dependencies so we know when to reload/repatch when the inherited resource changes
-        cache->StoreResourceDependency(this, inherit);
+        DV_RES_CACHE.StoreResourceDependency(this, inherit);
 
         // Approximate patched data size
         dataSize += inheritedXMLFile->GetMemoryUse();

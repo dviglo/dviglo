@@ -62,8 +62,7 @@ void LANDiscovery::CreateUI()
 
     auto* graphics = GetSubsystem<Graphics>();
     UIElement* root = GetSubsystem<UI>()->GetRoot();
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* uiStyle = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
@@ -97,8 +96,7 @@ void LANDiscovery::SubscribeToEvents()
 
 Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 position)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* font = cache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     auto* button = GetSubsystem<UI>()->GetRoot()->CreateChild<Button>();
     button->SetStyleAuto();
@@ -116,9 +114,8 @@ Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 pos
 
 Text* LANDiscovery::CreateLabel(const String& text, IntVector2 pos)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     // Create log element to view latest logs from the system
-    auto* font = cache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
     auto* label = GetSubsystem<UI>()->GetRoot()->CreateChild<Text>();
     label->SetFont(font, 12);
     label->SetColor(Color(0.0f, 1.0f, 0.0f));

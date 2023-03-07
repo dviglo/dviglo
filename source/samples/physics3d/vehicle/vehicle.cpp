@@ -102,15 +102,13 @@ void Vehicle::FixedUpdate(float timeStep)
 void Vehicle::Init()
 {
     // This function is called only from the main program when initially creating the vehicle, not on scene load
-    auto* cache = GetSubsystem<ResourceCache>();
-
     auto* hullObject = node_->CreateComponent<StaticModel>();
     hullBody_ = node_->CreateComponent<RigidBody>();
     auto* hullShape = node_->CreateComponent<CollisionShape>();
 
     node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
-    hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
+    hullObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
     hullBody_->SetMass(4.0f);
@@ -128,8 +126,6 @@ void Vehicle::Init()
 
 void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>& wheelNode, unsigned& wheelNodeID)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Note: do not parent the wheel to the hull scene node. Instead create it on the root level and let the physics
     // constraint keep it together
     wheelNode = GetScene()->CreateChild(name);
@@ -145,8 +141,8 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     auto* wheelShape = wheelNode->CreateComponent<CollisionShape>();
     auto* wheelConstraint = wheelNode->CreateComponent<Constraint>();
 
-    wheelObject->SetModel(cache->GetResource<Model>("Models/Cylinder.mdl"));
-    wheelObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
+    wheelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
     wheelShape->SetSphere(1.0f);
     wheelBody->SetFriction(1.0f);

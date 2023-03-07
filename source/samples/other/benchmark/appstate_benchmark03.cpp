@@ -27,37 +27,35 @@ AppState_Benchmark03::AppState_Benchmark03()
     // This constructor is called once when the application runs, so we can register here
     DV_CONTEXT.RegisterFactory<Benchmark03_MoleculeLogic>();
 
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-
     SharedPtr<Material> material0 = MakeShared<Material>();
     material0->SetName("Molecule0");
     material0->SetShaderParameter("MatDiffColor", Vector4(0, 1, 1, 1));
     material0->SetShaderParameter("MatSpecColor", Vector4(1, 1, 1, 100));
-    cache->AddManualResource(material0);
+    DV_RES_CACHE.AddManualResource(material0);
 
     SharedPtr<Material> material1 = material0->Clone("Molecule1");
     material1->SetShaderParameter("MatDiffColor", Vector4(0, 1, 0, 1));
-    cache->AddManualResource(material1);
+    DV_RES_CACHE.AddManualResource(material1);
 
     SharedPtr<Material> material2 = material0->Clone("Molecule2");
     material2->SetShaderParameter("MatDiffColor", Vector4(0, 0, 1, 1));
-    cache->AddManualResource(material2);
+    DV_RES_CACHE.AddManualResource(material2);
 
     SharedPtr<Material> material3 = material0->Clone("Molecule3");
     material3->SetShaderParameter("MatDiffColor", Vector4(1, 0.5f, 0, 1));
-    cache->AddManualResource(material3);
+    DV_RES_CACHE.AddManualResource(material3);
 
     SharedPtr<Material> material4 = material0->Clone("Molecule4");
     material4->SetShaderParameter("MatDiffColor", Vector4(1, 0, 0, 1));
-    cache->AddManualResource(material4);
+    DV_RES_CACHE.AddManualResource(material4);
 
     SharedPtr<Material> material5 = material0->Clone("Molecule5");
     material5->SetShaderParameter("MatDiffColor", Vector4(1, 0, 1, 1));
-    cache->AddManualResource(material5);
+    DV_RES_CACHE.AddManualResource(material5);
 
     SharedPtr<Material> material6 = material0->Clone("Molecule6");
     material6->SetShaderParameter("MatDiffColor", Vector4(1, 1, 0, 1));
-    cache->AddManualResource(material6);
+    DV_RES_CACHE.AddManualResource(material6);
 }
 
 void AppState_Benchmark03::OnEnter()
@@ -106,14 +104,12 @@ void AppState_Benchmark03::CreateMolecule(const Vector2& pos, i32 type)
 {
     assert(type >= 0 && type <= 6);
 
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    
     Node* node = scene_->CreateChild();
     node->SetPosition2D(pos);
     
     StaticModel* obj = node->CreateComponent<StaticModel>();
-    obj->SetModel(cache->GetResource<Model>("Models/Sphere.mdl"));
-    obj->SetMaterial(cache->GetResource<Material>("Molecule" + String(type)));
+    obj->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
+    obj->SetMaterial(DV_RES_CACHE.GetResource<Material>("Molecule" + String(type)));
 
     Benchmark03_MoleculeLogic* logic = node->CreateComponent<Benchmark03_MoleculeLogic>();
     logic->SetParameters(type);

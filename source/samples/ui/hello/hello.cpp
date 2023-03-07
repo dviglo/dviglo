@@ -38,8 +38,7 @@ void HelloGUI::Start()
     GetSubsystem<Input>()->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
@@ -132,12 +131,11 @@ void HelloGUI::InitWindow()
 
 void HelloGUI::CreateDraggableFish()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* graphics = GetSubsystem<Graphics>();
 
     // Create a draggable Fish button
     auto* draggableFish = new Button();
-    draggableFish->SetTexture(cache->GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
+    draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
     draggableFish->SetPosition((graphics->GetWidth() - draggableFish->GetWidth()) / 2, 200);

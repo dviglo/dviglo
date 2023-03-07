@@ -121,13 +121,11 @@ StringHash ParseTextureTypeName(const String& name)
     return nullptr;
 }
 
-StringHash ParseTextureTypeXml(ResourceCache* cache, const String& filename)
+StringHash ParseTextureTypeXml(const String& filename)
 {
     StringHash type = nullptr;
-    if (!cache)
-        return type;
 
-    SharedPtr<File> texXmlFile = cache->GetFile(filename, false);
+    SharedPtr<File> texXmlFile = DV_RES_CACHE.GetFile(filename, false);
     if (texXmlFile.NotNull())
     {
         SharedPtr<XMLFile> texXml(new XMLFile());
@@ -260,12 +258,12 @@ bool Material::BeginLoadXML(Deserializer& source)
         // and request them to also be loaded. Can not do anything else at this point
         if (GetAsyncLoadState() == ASYNC_LOADING)
         {
-            auto* cache = GetSubsystem<ResourceCache>();
+            ResourceCache& cache = DV_RES_CACHE;
             XMLElement rootElem = loadXMLFile_->GetRoot();
             XMLElement techniqueElem = rootElem.GetChild("technique");
             while (techniqueElem)
             {
-                cache->BackgroundLoadResource<Technique>(techniqueElem.GetAttribute("name"), true, this);
+                cache.BackgroundLoadResource<Technique>(techniqueElem.GetAttribute("name"), true, this);
                 techniqueElem = techniqueElem.GetNext("technique");
             }
 
@@ -277,7 +275,7 @@ bool Material::BeginLoadXML(Deserializer& source)
                 if (GetExtension(name) == ".xml")
                 {
 #ifdef DESKTOP_GRAPHICS_OR_GLES3
-                    StringHash type = ParseTextureTypeXml(cache, name);
+                    StringHash type = ParseTextureTypeXml(name);
                     if (!type && textureElem.HasAttribute("unit"))
                     {
                         TextureUnit unit = ParseTextureUnitName(textureElem.GetAttribute("unit"));
@@ -286,15 +284,15 @@ bool Material::BeginLoadXML(Deserializer& source)
                     }
 
                     if (type == Texture3D::GetTypeStatic())
-                        cache->BackgroundLoadResource<Texture3D>(name, true, this);
+                        cache.BackgroundLoadResource<Texture3D>(name, true, this);
                     else if (type == Texture2DArray::GetTypeStatic())
-                        cache->BackgroundLoadResource<Texture2DArray>(name, true, this);
+                        cache.BackgroundLoadResource<Texture2DArray>(name, true, this);
                     else
 #endif
-                        cache->BackgroundLoadResource<TextureCube>(name, true, this);
+                        cache.BackgroundLoadResource<TextureCube>(name, true, this);
                 }
                 else
-                    cache->BackgroundLoadResource<Texture2D>(name, true, this);
+                    cache.BackgroundLoadResource<Texture2D>(name, true, this);
                 textureElem = textureElem.GetNext("texture");
             }
         }
@@ -319,13 +317,13 @@ bool Material::BeginLoadJSON(Deserializer& source)
         // and request them to also be loaded. Can not do anything else at this point
         if (GetAsyncLoadState() == ASYNC_LOADING)
         {
-            auto* cache = GetSubsystem<ResourceCache>();
+            ResourceCache& cache = DV_RES_CACHE;
             const JSONValue& rootVal = loadJSONFile_->GetRoot();
 
             JSONArray techniqueArray = rootVal.Get("techniques").GetArray();
 
             for (const JSONValue& techVal : techniqueArray)
-                cache->BackgroundLoadResource<Technique>(techVal.Get("name").GetString(), true, this);
+                cache.BackgroundLoadResource<Technique>(techVal.Get("name").GetString(), true, this);
 
             JSONObject textureObject = rootVal.Get("textures").GetObject();
             for (JSONObject::ConstIterator it = textureObject.Begin(); it != textureObject.End(); it++)
@@ -336,7 +334,7 @@ bool Material::BeginLoadJSON(Deserializer& source)
                 if (GetExtension(name) == ".xml")
                 {
 #ifdef DESKTOP_GRAPHICS_OR_GLES3
-                    StringHash type = ParseTextureTypeXml(cache, name);
+                    StringHash type = ParseTextureTypeXml(name);
                     if (!type && !unitString.Empty())
                     {
                         TextureUnit unit = ParseTextureUnitName(unitString);
@@ -345,15 +343,15 @@ bool Material::BeginLoadJSON(Deserializer& source)
                     }
 
                     if (type == Texture3D::GetTypeStatic())
-                        cache->BackgroundLoadResource<Texture3D>(name, true, this);
+                        cache.BackgroundLoadResource<Texture3D>(name, true, this);
                     else if (type == Texture2DArray::GetTypeStatic())
-                        cache->BackgroundLoadResource<Texture2DArray>(name, true, this);
+                        cache.BackgroundLoadResource<Texture2DArray>(name, true, this);
                     else
 #endif
-                        cache->BackgroundLoadResource<TextureCube>(name, true, this);
+                        cache.BackgroundLoadResource<TextureCube>(name, true, this);
                 }
                 else
-                    cache->BackgroundLoadResource<Texture2D>(name, true, this);
+                    cache.BackgroundLoadResource<Texture2D>(name, true, this);
             }
         }
 
@@ -383,7 +381,7 @@ bool Material::Load(const XMLElement& source)
         return false;
     }
 
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     XMLElement shaderElem = source.GetChild("shader");
     if (shaderElem)
@@ -397,7 +395,7 @@ bool Material::Load(const XMLElement& source)
 
     while (techniqueElem)
     {
-        auto* tech = cache->GetResource<Technique>(techniqueElem.GetAttribute("name"));
+        auto* tech = cache.GetResource<Technique>(techniqueElem.GetAttribute("name"));
         if (tech)
         {
             TechniqueEntry newTechnique;
@@ -428,20 +426,20 @@ bool Material::Load(const XMLElement& source)
             if (GetExtension(name) == ".xml")
             {
 #ifdef DESKTOP_GRAPHICS_OR_GLES3
-                StringHash type = ParseTextureTypeXml(cache, name);
+                StringHash type = ParseTextureTypeXml(name);
                 if (!type && unit == TU_VOLUMEMAP)
                     type = Texture3D::GetTypeStatic();
 
                 if (type == Texture3D::GetTypeStatic())
-                    SetTexture(unit, cache->GetResource<Texture3D>(name));
+                    SetTexture(unit, cache.GetResource<Texture3D>(name));
                 else if (type == Texture2DArray::GetTypeStatic())
-                    SetTexture(unit, cache->GetResource<Texture2DArray>(name));
+                    SetTexture(unit, cache.GetResource<Texture2DArray>(name));
                 else
 #endif
-                    SetTexture(unit, cache->GetResource<TextureCube>(name));
+                    SetTexture(unit, cache.GetResource<TextureCube>(name));
             }
             else
-                SetTexture(unit, cache->GetResource<Texture2D>(name));
+                SetTexture(unit, cache.GetResource<Texture2D>(name));
         }
         textureElem = textureElem.GetNext("texture");
     }
@@ -534,7 +532,7 @@ bool Material::Load(const JSONValue& source)
         return false;
     }
 
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     const JSONValue& shaderVal = source.Get("shader");
     if (!shaderVal.IsNull())
@@ -550,7 +548,7 @@ bool Material::Load(const JSONValue& source)
 
     for (const JSONValue& techVal : techniquesArray)
     {
-        Technique* tech = cache->GetResource<Technique>(techVal.Get("name").GetString());
+        Technique* tech = cache.GetResource<Technique>(techVal.Get("name").GetString());
         if (tech)
         {
             TechniqueEntry newTechnique;
@@ -584,20 +582,20 @@ bool Material::Load(const JSONValue& source)
             if (GetExtension(textureName) == ".xml")
             {
 #ifdef DESKTOP_GRAPHICS_OR_GLES3
-                StringHash type = ParseTextureTypeXml(cache, textureName);
+                StringHash type = ParseTextureTypeXml(textureName);
                 if (!type && unit == TU_VOLUMEMAP)
                     type = Texture3D::GetTypeStatic();
 
                 if (type == Texture3D::GetTypeStatic())
-                    SetTexture(unit, cache->GetResource<Texture3D>(textureName));
+                    SetTexture(unit, cache.GetResource<Texture3D>(textureName));
                 else if (type == Texture2DArray::GetTypeStatic())
-                    SetTexture(unit, cache->GetResource<Texture2DArray>(textureName));
+                    SetTexture(unit, cache.GetResource<Texture2DArray>(textureName));
                 else
 #endif
-                    SetTexture(unit, cache->GetResource<TextureCube>(textureName));
+                    SetTexture(unit, cache.GetResource<TextureCube>(textureName));
             }
             else
-                SetTexture(unit, cache->GetResource<Texture2D>(textureName));
+                SetTexture(unit, cache.GetResource<Texture2D>(textureName));
         }
     }
 
@@ -1239,7 +1237,7 @@ void Material::ResetToDefaults()
     SetNumTechniques(1);
     auto* renderer = GetSubsystem<Renderer>();
     SetTechnique(0, renderer ? renderer->GetDefaultTechnique() :
-        GetSubsystem<ResourceCache>()->GetResource<Technique>("Techniques/NoTexture.xml"));
+        DV_RES_CACHE.GetResource<Technique>("Techniques/NoTexture.xml"));
 
     textures_.Clear();
 

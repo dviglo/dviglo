@@ -45,7 +45,7 @@ public:
         SetupViewport();
         SubscribeToEvents();
 
-        XMLFile* xmlFile = GetSubsystem<ResourceCache>()->GetResource<XMLFile>("UI/DefaultStyle.xml");
+        XMLFile* xmlFile = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
         DebugHud* debugHud = engine_->CreateDebugHud();
         debugHud->SetDefaultStyle(xmlFile);
 
@@ -67,7 +67,7 @@ public:
 
     void CreateScene()
     {
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
+        ResourceCache& cache = DV_RES_CACHE;
 
         scene_ = new Scene();
         scene_->CreateComponent<Octree>();
@@ -75,8 +75,8 @@ public:
         Node* planeNode = scene_->CreateChild("Plane");
         planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
         StaticModel* planeObject = planeNode->CreateComponent<StaticModel>();
-        planeObject->SetModel(cache->GetResource<Model>("Models/Plane.mdl"));
-        planeObject->SetMaterial(cache->GetResource<Material>("Materials/StoneTiled.xml"));
+        planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+        planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
         Node* lightNode = scene_->CreateChild("DirectionalLight");
         lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
@@ -104,8 +104,8 @@ public:
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(0.5f + Random(2.0f));
             StaticModel* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
-            mushroomObject->SetModel(cache->GetResource<Model>("Models/Mushroom.mdl"));
-            mushroomObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
+            mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+            mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
 
@@ -189,7 +189,7 @@ public:
     void HandleEndViewRender(StringHash eventType, VariantMap& eventData)
     {
         Input* input = GetSubsystem<Input>();
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
+        ResourceCache& cache = DV_RES_CACHE;
         Graphics* graphics = GetSubsystem<Graphics>();
 
         // Размер текстуры должен быть степенью двойки (64, 128, 256, ...),
@@ -204,8 +204,8 @@ public:
         // как это сделано в Sprite2D.cpp.
         // В других случаях ("Urho2D/imp/imp_head.png" - 238x149) и это не помогает
 
-        Texture2D* head = cache->GetResource<Texture2D>("Textures/FishBoneLogo.png");
-        Font* font = cache->GetResource<Font>("Fonts/Anonymous Pro.ttf");
+        Texture2D* head = cache.GetResource<Texture2D>("Textures/FishBoneLogo.png");
+        Font* font = cache.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
         // Очистка экрана. Если сцена пустая, то можно просто задать цвет зоны
         //GetSubsystem<Graphics>()->Clear(CLEAR_COLOR, Color::GREEN);

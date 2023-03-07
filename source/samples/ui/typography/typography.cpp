@@ -40,8 +40,7 @@ void Typography::Start()
     GetSubsystem<Input>()->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
     auto* ui = GetSubsystem<UI>();
@@ -124,8 +123,7 @@ void Typography::CreateText()
     container->SetLayout(LM_VERTICAL);
     uielement_->AddChild(container);
 
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* font = cache->GetResource<Font>("Fonts/BlueHighway.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/BlueHighway.ttf");
 
     for (auto size2x = 2; size2x <= 36; ++size2x)
     {

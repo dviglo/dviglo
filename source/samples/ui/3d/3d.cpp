@@ -48,8 +48,7 @@ void Hello3DUI::Start()
     GetSubsystem<Input>()->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* cache = GetSubsystem<ResourceCache>();
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
@@ -170,8 +169,6 @@ void Hello3DUI::InitWindow()
 
 void Hello3DUI::InitScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     scene_ = new Scene();
     scene_->CreateComponent<Octree>();
     auto* zone = scene_->CreateComponent<Zone>();
@@ -187,7 +184,7 @@ void Hello3DUI::InitScene()
 
     // Create a box model and hide it initially.
     auto* boxModel = boxNode->CreateComponent<StaticModel>();
-    boxModel->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+    boxModel->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
     boxNode->SetEnabled(false);
 
     // Create a camera.
@@ -208,12 +205,11 @@ void Hello3DUI::InitScene()
 
 void Hello3DUI::CreateDraggableFish()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* graphics = GetSubsystem<Graphics>();
 
     // Create a draggable Fish button
     auto* draggableFish = new Button();
-    draggableFish->SetTexture(cache->GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
+    draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
     draggableFish->SetPosition((graphics->GetWidth() - draggableFish->GetWidth()) / 2, 200);
@@ -283,14 +279,12 @@ void Hello3DUI::HandleControlClicked(StringHash eventType, VariantMap& eventData
 
 void Hello3DUI::Init3DUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Node that will get UI rendered on it.
     Node* boxNode = scene_->GetChild("Box");
     // Create a component that sets up UI rendering. It sets material to StaticModel of the node.
     auto* component = boxNode->CreateComponent<UIComponent>();
     // Optionally modify material. Technique is changed so object is visible without any lights.
-    component->GetMaterial()->SetTechnique(0, cache->GetResource<Technique>("Techniques/DiffUnlit.xml"));
+    component->GetMaterial()->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("Techniques/DiffUnlit.xml"));
     // Save root element of texture UI for later use.
     textureRoot_ = component->GetRoot();
     // Set size of root element. This is size of texture as well.

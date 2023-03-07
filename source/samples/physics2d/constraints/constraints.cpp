@@ -123,13 +123,11 @@ void Urho2DConstraints::CreateScene()
         edgeShape->SetFriction(0.5f); // Set friction
     }
 
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Create a box (will be cloned later)
     Node* box  = scene_->CreateChild("Box");
     box->SetPosition(Vector3(0.8f, -2.0f, 0.0f));
     auto* boxSprite = box->CreateComponent<StaticSprite2D>();
-    boxSprite->SetSprite(cache->GetResource<Sprite2D>("Urho2D/Box.png"));
+    boxSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Box.png"));
     auto* boxBody = box->CreateComponent<RigidBody2D>();
     boxBody->SetBodyType(BT_DYNAMIC);
     boxBody->SetLinearDamping(0.0f);
@@ -144,7 +142,7 @@ void Urho2DConstraints::CreateScene()
     Node* ball  = scene_->CreateChild("Ball");
     ball->SetPosition(Vector3(1.8f, -2.0f, 0.0f));
     auto* ballSprite = ball->CreateComponent<StaticSprite2D>();
-    ballSprite->SetSprite(cache->GetResource<Sprite2D>("Urho2D/Ball.png"));
+    ballSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Ball.png"));
     auto* ballBody = ball->CreateComponent<RigidBody2D>();
     ballBody->SetBodyType(BT_DYNAMIC);
     ballBody->SetLinearDamping(0.0f);
@@ -160,7 +158,7 @@ void Urho2DConstraints::CreateScene()
     polygon->SetPosition(Vector3(1.6f, -2.0f, 0.0f));
     polygon->SetScale(0.7f);
     auto* polygonSprite = polygon->CreateComponent<StaticSprite2D>();
-    polygonSprite->SetSprite(cache->GetResource<Sprite2D>("Urho2D/Aster.png"));
+    polygonSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Aster.png"));
     auto* polygonBody = polygon->CreateComponent<RigidBody2D>();
     polygonBody->SetBodyType(BT_DYNAMIC);
     auto* polygonShape = polygon->CreateComponent<CollisionPolygon2D>();
@@ -372,19 +370,17 @@ void Urho2DConstraints::CreateFlag(const String& text, float x, float y) // Used
     flagNode->SetPosition(Vector3(x, y, 0.0f));
     auto* flag3D = flagNode->CreateComponent<Text3D>(); // We use Text3D in order to make the text affected by zoom (so that it sticks to 2D)
     flag3D->SetText(text);
-    auto* cache = GetSubsystem<ResourceCache>();
-    flag3D->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    flag3D->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 }
 
 void Urho2DConstraints::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = ui->GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use WASD keys and mouse to move, Use PageUp PageDown to zoom.\n Space to toggle debug geometry and joints - F5 to save the scene.");
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
 
     // Position the text relative to the screen center

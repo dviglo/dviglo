@@ -1313,7 +1313,7 @@ void UI::ReleaseFontFaces()
     DV_LOGDEBUG("Reloading font faces");
 
     Vector<Font*> fonts;
-    GetSubsystem<ResourceCache>()->GetResources<Font>(fonts);
+    DV_RES_CACHE.GetResources<Font>(fonts);
 
     for (Font* font : fonts)
         font->ReleaseFaces();

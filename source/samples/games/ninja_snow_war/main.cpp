@@ -151,7 +151,7 @@ public:
 
         if (!nobgm)
         {
-            Sound* musicFile = GetSubsystem<ResourceCache>()->GetResource<Sound>("Music/Ninja Gods.ogg");
+            Sound* musicFile = DV_RES_CACHE.GetResource<Sound>("Music/Ninja Gods.ogg");
             musicFile->SetLooped(true);
 
             // Note: the non-positional sound source component need to be attached to a node to become effective
@@ -170,7 +170,7 @@ public:
         if (engine->IsHeadless())
             return;
 
-        XMLFile* uiStyle = GetSubsystem<ResourceCache>()->GetResource<XMLFile>("UI/DefaultStyle.xml");
+        XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
         GetSubsystem<UI>()->GetRoot()->SetDefaultStyle(uiStyle);
 
         Console* console = engine->CreateConsole();
@@ -190,12 +190,11 @@ public:
         if (runClient)
             return;
 
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
         Renderer* renderer = GetSubsystem<Renderer>();
         Engine* engine = GetSubsystem<Engine>();
         Graphics* graphics = GetSubsystem<Graphics>();
 
-        gameScene->LoadXML(*cache->GetFile("Scenes/NinjaSnowWar.xml"));
+        gameScene->LoadXML(*DV_RES_CACHE.GetFile("Scenes/NinjaSnowWar.xml"));
 
         // On mobile devices render the shadowmap first for better performance, adjust the cascaded shadows
         String platform = GetPlatform();
@@ -213,8 +212,8 @@ public:
         }
 
         // Precache shaders if possible
-        if (!engine->IsHeadless() && cache->Exists("NinjaSnowWarShaders.xml"))
-            graphics->PrecacheShaders(*cache->GetFile("NinjaSnowWarShaders.xml"));
+        if (!engine->IsHeadless() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
+            graphics->PrecacheShaders(*DV_RES_CACHE.GetFile("NinjaSnowWarShaders.xml"));
     }
 
     void InitNetworking()
@@ -257,10 +256,9 @@ public:
     void InitTouchInput()
     {
         Input* input = GetSubsystem<Input>();
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
 
         touchEnabled = true;
-        screenJoystickID = input->AddScreenJoystick(cache->GetResource<XMLFile>("UI/ScreenJoystick_NinjaSnowWar.xml"));
+        screenJoystickID = input->AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_NinjaSnowWar.xml"));
     }
 
     void CreateCamera()
@@ -294,17 +292,17 @@ public:
         if (height > 64)
             height = 64;
 
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
+        ResourceCache& cache = DV_RES_CACHE;
         UI* ui = GetSubsystem<UI>();
         Input* input = GetSubsystem<Input>();
 
         sight = new BorderImage();
-        sight->SetTexture(cache->GetResource<Texture2D>("Textures/NinjaSnowWar/Sight.png"));
+        sight->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/Sight.png"));
         sight->SetAlignment(HA_CENTER, VA_CENTER);
         sight->SetSize(height, height);
         ui->GetRoot()->AddChild(sight);
 
-        Font* font = cache->GetResource<Font>("Fonts/BlueHighway.ttf");
+        Font* font = cache.GetResource<Font>("Fonts/BlueHighway.ttf");
 
         scoreText = new Text();
         scoreText->SetFont(font, 13.f);
@@ -330,14 +328,14 @@ public:
         ui->GetRoot()->AddChild(messageText);
 
         SharedPtr<BorderImage> healthBorder(new BorderImage());
-        healthBorder->SetTexture(cache->GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarBorder.png"));
+        healthBorder->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarBorder.png"));
         healthBorder->SetAlignment(HA_CENTER, VA_TOP);
         healthBorder->SetPosition(0, 8);
         healthBorder->SetSize(120, 20);
         ui->GetRoot()->AddChild(healthBorder);
 
         healthBar = new BorderImage();
-        healthBar->SetTexture(cache->GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarInside.png"));
+        healthBar->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarInside.png"));
         healthBar->SetPosition(2, 2);
         healthBar->SetSize(116, 16);
         healthBorder->AddChild(healthBar);
@@ -471,7 +469,7 @@ public:
             Node* textNode = playerNode->CreateChild("NameTag");
             textNode->SetPosition(Vector3(0.f, 1.2f, 0.f));
             Text3D* text3D = textNode->CreateComponent<Text3D>();
-            Font* font = GetSubsystem<ResourceCache>()->GetResource<Font>("Fonts/BlueHighway.ttf");
+            Font* font = DV_RES_CACHE.GetResource<Font>("Fonts/BlueHighway.ttf");
             text3D->SetFont(font, 19.f);
             text3D->SetColor(Color(1.f, 1.f, 0.f));
             text3D->SetText(players[playerIndex].name);
@@ -556,7 +554,6 @@ public:
         Graphics* graphics = GetSubsystem<Graphics>();
         Audio* audio = GetSubsystem<Audio>();
         Input* input = GetSubsystem<Input>();
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
 
         i32 key = eventData["Key"].GetI32();
 
@@ -603,7 +600,7 @@ public:
                 {
                     // Lazy initialization
                     if (screenJoystickSettingsID < 0)
-                        screenJoystickSettingsID = input->AddScreenJoystick(cache->GetResource<XMLFile>("UI/ScreenJoystickSettings_NinjaSnowWar.xml"));
+                        screenJoystickSettingsID = input->AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_NinjaSnowWar.xml"));
                     else
                         input->SetScreenJoystickVisible(screenJoystickSettingsID, true);
                 }

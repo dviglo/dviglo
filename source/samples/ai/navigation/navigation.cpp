@@ -58,7 +58,7 @@ void Navigation::Start()
 
 void Navigation::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -71,8 +71,8 @@ void Navigation::CreateScene()
     Node* planeNode = scene_->CreateChild("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
-    planeObject->SetModel(cache->GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache->GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->CreateChild("Zone");
@@ -107,8 +107,8 @@ void Navigation::CreateScene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->CreateComponent<StaticModel>();
-        boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+        boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -118,8 +118,8 @@ void Navigation::CreateScene()
     jackNode_ = scene_->CreateChild("Jack");
     jackNode_->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
     auto* modelObject = jackNode_->CreateComponent<AnimatedModel>();
-    modelObject->SetModel(cache->GetResource<Model>("Models/Jack.mdl"));
-    modelObject->SetMaterial(cache->GetResource<Material>("Materials/Jack.xml"));
+    modelObject->SetModel(cache.GetResource<Model>("Models/Jack.mdl"));
+    modelObject->SetMaterial(cache.GetResource<Material>("Materials/Jack.xml"));
     modelObject->SetCastShadows(true);
 
     // Create a NavigationMesh component to the scene root
@@ -150,12 +150,11 @@ void Navigation::CreateScene()
 
 void Navigation::CreateUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target
-    auto* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
     ui->SetCursor(cursor);
@@ -173,7 +172,7 @@ void Navigation::CreateUI()
         "Tab to toggle navigation mesh streaming\n"
         "Space to toggle debug geometry"
     );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -313,15 +312,13 @@ void Navigation::AddOrRemoveObject()
 
 Node* Navigation::CreateMushroom(const Vector3& pos)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     Node* mushroomNode = scene_->CreateChild("Mushroom");
     mushroomNode->SetPosition(pos);
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
-    mushroomObject->SetModel(cache->GetResource<Model>("Models/Mushroom.mdl"));
-    mushroomObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
+    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mushroom.mdl"));
+    mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
     return mushroomNode;

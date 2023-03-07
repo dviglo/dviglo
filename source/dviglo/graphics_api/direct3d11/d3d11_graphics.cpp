@@ -1658,14 +1658,12 @@ ShaderVariation* Graphics::GetShader_D3D11(ShaderType type, const char* name, co
 {
     if (lastShaderName_ != name || !lastShader_)
     {
-        ResourceCache* cache = GetSubsystem<ResourceCache>();
-
         String fullShaderName = shaderPath_ + name + shaderExtension_;
         // Try to reduce repeated error log prints because of missing shaders
-        if (lastShaderName_ == name && !cache->Exists(fullShaderName))
+        if (lastShaderName_ == name && !DV_RES_CACHE.Exists(fullShaderName))
             return nullptr;
 
-        lastShader_ = cache->GetResource<Shader>(fullShaderName);
+        lastShader_ = DV_RES_CACHE.GetResource<Shader>(fullShaderName);
         lastShaderName_ = name;
     }
 

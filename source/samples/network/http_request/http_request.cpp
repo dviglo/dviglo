@@ -38,13 +38,11 @@ void HttpRequestDemo::Start()
 
 void HttpRequestDemo::CreateUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Construct new Text object
     text_ = new Text();
 
     // Set font and text color
-    text_->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    text_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     text_->SetColor(Color(1.0f, 1.0f, 0.0f));
 
     // Align Text center-screen

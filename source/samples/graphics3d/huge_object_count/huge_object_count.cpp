@@ -55,7 +55,7 @@ void HugeObjectCount::Start()
 
 void HugeObjectCount::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     if (!scene_)
         scene_ = new Scene();
@@ -96,7 +96,7 @@ void HugeObjectCount::CreateScene()
                 boxNode->SetPosition(Vector3(x * 0.3f, 0.0f, y * 0.3f));
                 boxNode->SetScale(0.25f);
                 auto* boxObject = boxNode->CreateComponent<StaticModel>();
-                boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+                boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
                 boxNodes_.Push(SharedPtr<Node>(boxNode));
             }
         }
@@ -120,7 +120,7 @@ void HugeObjectCount::CreateScene()
                 {
                     Node* boxGroupNode = scene_->CreateChild("BoxGroup");
                     lastGroup = boxGroupNode->CreateComponent<StaticModelGroup>();
-                    lastGroup->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
+                    lastGroup->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
                 }
 
                 Node* boxNode = scene_->CreateChild("Box");
@@ -144,7 +144,6 @@ void HugeObjectCount::CreateScene()
 
 void HugeObjectCount::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
@@ -154,7 +153,7 @@ void HugeObjectCount::CreateInstructions()
         "Space to toggle animation\n"
         "G to toggle object group optimization"
     );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

@@ -49,6 +49,13 @@ static const char* checkDirs[] =
 
 static const SharedPtr<Resource> noResource;
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW
+ResourceCache& ResourceCache::get_instance()
+{
+    static ResourceCache instance;
+    return instance;
+}
+
 ResourceCache::ResourceCache() :
     autoReloadResources_(false),
     returnFailedResources_(false),

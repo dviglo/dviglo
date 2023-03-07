@@ -42,7 +42,6 @@ void Sprites::Start()
 
 void Sprites::CreateSprites()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* graphics = GetSubsystem<Graphics>();
     auto* ui = GetSubsystem<UI>();
 
@@ -51,7 +50,7 @@ void Sprites::CreateSprites()
     auto height = (float)graphics->GetHeight();
 
     // Get the Urho3D fish texture
-    auto* decalTex = cache->GetResource<Texture2D>("Textures/UrhoDecal.dds");
+    auto* decalTex = DV_RES_CACHE.GetResource<Texture2D>("Textures/UrhoDecal.dds");
 
     for (unsigned i = 0; i < NUM_SPRITES; ++i)
     {

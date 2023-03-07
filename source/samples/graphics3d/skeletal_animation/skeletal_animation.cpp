@@ -60,7 +60,7 @@ void SkeletalAnimation::Start()
 
 void SkeletalAnimation::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -73,8 +73,8 @@ void SkeletalAnimation::CreateScene()
     Node* planeNode = scene_->CreateChild("Plane");
     planeNode->SetScale(Vector3(50.0f, 1.0f, 50.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
-    planeObject->SetModel(cache->GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache->GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->CreateChild("Zone");
@@ -109,14 +109,14 @@ void SkeletalAnimation::CreateScene()
         modelNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
 
         auto* modelObject = modelNode->CreateComponent<AnimatedModel>();
-        modelObject->SetModel(cache->GetResource<Model>("Models/Kachujin/Kachujin.mdl"));
-        modelObject->SetMaterial(cache->GetResource<Material>("Models/Kachujin/Materials/Kachujin.xml"));
+        modelObject->SetModel(cache.GetResource<Model>("Models/Kachujin/Kachujin.mdl"));
+        modelObject->SetMaterial(cache.GetResource<Material>("Models/Kachujin/Materials/Kachujin.xml"));
         modelObject->SetCastShadows(true);
 
         // Create an AnimationState for a walk animation. Its time position will need to be manually updated to advance the
         // animation, The alternative would be to use an AnimationController component which updates the animation automatically,
         // but we need to update the model's position manually in any case
-        auto* walkAnimation = cache->GetResource<Animation>("Models/Kachujin/Kachujin_Walk.ani");
+        auto* walkAnimation = cache.GetResource<Animation>("Models/Kachujin/Kachujin_Walk.ani");
 
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         // The state would fail to create (return null) if the animation was not found
@@ -173,7 +173,6 @@ void SkeletalAnimation::CreateLights() {
 
 void SkeletalAnimation::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
@@ -182,7 +181,7 @@ void SkeletalAnimation::CreateInstructions()
         "Use WASD keys and mouse/touch to move\n"
         "Space to toggle debug geometry"
     );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -200,8 +199,7 @@ void SkeletalAnimation::SetupViewport()
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
 #ifdef DV_GLES3
         SharedPtr<RenderPath> rp(new RenderPath);
-        auto* cache = GetSubsystem<ResourceCache>();
-        rp->Load(cache->GetResource<XMLFile>("RenderPaths/Deferred.xml"));
+        rp->Load(DV_RES_CACHE.GetResource<XMLFile>("RenderPaths/Deferred.xml"));
         viewport->SetRenderPath(rp);
 #endif
     renderer->SetViewport(0, viewport);

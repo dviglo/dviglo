@@ -87,9 +87,8 @@ void Sample::InitTouchInput()
 {
     touchEnabled_ = true;
 
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
     Input* input = GetSubsystem<Input>();
-    XMLFile* layout = cache->GetResource<XMLFile>("UI/ScreenJoystick_Samples.xml");
+    XMLFile* layout = DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_Samples.xml");
     const String& patchString = GetScreenJoystickPatchString();
     if (!patchString.Empty())
     {
@@ -98,7 +97,7 @@ void Sample::InitTouchInput()
         if (patchFile->FromString(patchString))
             layout->Patch(patchFile);
     }
-    screenJoystickIndex_ = (unsigned)input->AddScreenJoystick(layout, cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    screenJoystickIndex_ = (unsigned)input->AddScreenJoystick(layout, DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
     input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
 }
 
@@ -138,8 +137,7 @@ void Sample::SetLogoVisible(bool enable)
 void Sample::CreateLogo()
 {
     // Get logo texture
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    Texture2D* logoTexture = cache->GetResource<Texture2D>("Textures/FishBoneLogo.png");
+    Texture2D* logoTexture = DV_RES_CACHE.GetResource<Texture2D>("Textures/FishBoneLogo.png");
     if (!logoTexture)
         return;
 
@@ -174,9 +172,8 @@ void Sample::CreateLogo()
 
 void Sample::SetWindowTitleAndIcon()
 {
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
     Graphics* graphics = GetSubsystem<Graphics>();
-    Image* icon = cache->GetResource<Image>("Textures/UrhoIcon.png");
+    Image* icon = DV_RES_CACHE.GetResource<Image>("Textures/UrhoIcon.png");
     graphics->SetWindowIcon(icon);
     graphics->SetWindowTitle("Urho3D Sample");
 }
@@ -184,8 +181,7 @@ void Sample::SetWindowTitleAndIcon()
 void Sample::CreateConsoleAndDebugHud()
 {
     // Get default style
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    XMLFile* xmlFile = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    XMLFile* xmlFile = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Create console
     Console* console = engine_->CreateConsole();
@@ -252,11 +248,12 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
             if (screenJoystickSettingsIndex_ == M_MAX_UNSIGNED)
             {
                 // Lazy initialization
-                ResourceCache* cache = GetSubsystem<ResourceCache>();
-                screenJoystickSettingsIndex_ = (unsigned)input->AddScreenJoystick(cache->GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+                screenJoystickSettingsIndex_ = (unsigned)input->AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
             }
             else
+            {
                 input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
+            }
         }
 
         // Texture quality

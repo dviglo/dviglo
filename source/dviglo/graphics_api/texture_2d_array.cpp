@@ -45,7 +45,7 @@ void Texture2DArray::RegisterObject()
 
 bool Texture2DArray::BeginLoad(Deserializer& source)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // In headless mode, do not actually load the texture, just return success
     if (!graphics_)
@@ -59,7 +59,7 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
         return true;
     }
 
-    cache->ResetDependencies(this);
+    cache.ResetDependencies(this);
 
     String texPath, texName, texExt;
     SplitPath(GetName(), texPath, texName, texExt);
@@ -83,8 +83,8 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
         if (GetPath(name).Empty())
             name = texPath + name;
 
-        loadImages_.Push(cache->GetTempResource<Image>(name));
-        cache->StoreResourceDependency(this, name);
+        loadImages_.Push(cache.GetTempResource<Image>(name));
+        cache.StoreResourceDependency(this, name);
 
         layerElem = layerElem.GetNext("layer");
     }

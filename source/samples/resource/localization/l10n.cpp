@@ -68,9 +68,8 @@ void L10n::CreateGUI()
     // Get localization subsystem
     auto* l10n = GetSubsystem<Localization>();
 
-    auto* cache = GetSubsystem<ResourceCache>();
     UIElement* root = GetSubsystem<UI>()->GetRoot();
-    root->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
     auto* window = new Window();
     root->AddChild(window);
@@ -130,7 +129,6 @@ void L10n::CreateScene()
     // Get localization subsystem
     auto* l10n = GetSubsystem<Localization>();
 
-    auto* cache = GetSubsystem<ResourceCache>();
     scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
@@ -144,8 +142,8 @@ void L10n::CreateScene()
     Node* planeNode = scene_->CreateChild("Plane");
     planeNode->SetScale(Vector3(300.0f, 1.0f, 300.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
-    planeObject->SetModel(cache->GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache->GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneTiled.xml"));
 
     Node* lightNode = scene_->CreateChild("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
@@ -164,7 +162,7 @@ void L10n::CreateScene()
     // Manually set text in the current language.
     text3D->SetText(l10n->Get("lang"));
 
-    text3D->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
+    text3D->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
     text3D->SetColor(Color::BLACK);
     text3D->SetAlignment(HA_CENTER, VA_BOTTOM);
     text3DNode->SetScale(15);

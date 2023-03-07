@@ -63,7 +63,7 @@ void TextureCube::RegisterObject()
 
 bool TextureCube::BeginLoad(Deserializer& source)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     // In headless mode, do not actually load the texture, just return success
     if (!graphics_)
@@ -77,7 +77,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
         return true;
     }
 
-    cache->ResetDependencies(this);
+    cache.ResetDependencies(this);
 
     String texPath, texName, texExt;
     SplitPath(GetName(), texPath, texName, texExt);
@@ -101,7 +101,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
         if (GetPath(name).Empty())
             name = texPath + name;
 
-        SharedPtr<Image> image = cache->GetTempResource<Image>(name);
+        SharedPtr<Image> image = cache.GetTempResource<Image>(name);
         if (!image)
             return false;
 
@@ -195,8 +195,8 @@ bool TextureCube::BeginLoad(Deserializer& source)
             if (GetPath(name).Empty())
                 name = texPath + name;
 
-            loadImages_.Push(cache->GetTempResource<Image>(name));
-            cache->StoreResourceDependency(this, name);
+            loadImages_.Push(cache.GetTempResource<Image>(name));
+            cache.StoreResourceDependency(this, name);
 
             faceElem = faceElem.GetNext("face");
         }

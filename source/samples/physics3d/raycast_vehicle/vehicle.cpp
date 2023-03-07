@@ -64,15 +64,15 @@ void Vehicle::Init()
     hullBody->SetAngularDamping(0.5f);
     hullBody->SetCollisionLayer(1);
     // This function is called only from the main program when initially creating the vehicle, not on scene load
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
     auto* hullObject = node_->CreateComponent<StaticModel>();
     // Setting-up collision shape
     auto* hullColShape = node_->CreateComponent<CollisionShape>();
     Vector3 v3BoxExtents = Vector3::ONE;
     hullColShape->SetBox(v3BoxExtents);
     node_->SetScale(Vector3(2.3f, 1.0f, 4.0f));
-    hullObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    hullObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+    hullObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    hullObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     float connectionHeight = -0.4f;
     bool isFrontWheel = true;
@@ -109,8 +109,8 @@ void Vehicle::Init()
         vehicle->SetWheelRollInfluence(id, rollInfluence_);
         wheelNode->SetScale(Vector3(1.0f, 0.65f, 1.0f));
         auto* pWheel = wheelNode->CreateComponent<StaticModel>();
-        pWheel->SetModel(cache->GetResource<Model>("Models/Cylinder.mdl"));
-        pWheel->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+        pWheel->SetModel(cache.GetResource<Model>("Models/Cylinder.mdl"));
+        pWheel->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         pWheel->SetCastShadows(true);
         CreateEmitter(connectionPoints_[id]);
     }
@@ -120,11 +120,10 @@ void Vehicle::Init()
 
 void Vehicle::CreateEmitter(Vector3 place)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     Node* emitter = GetScene()->CreateChild();
     emitter->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * place + Vector3(0, -wheelRadius_, 0));
     auto* particleEmitter = emitter->CreateComponent<ParticleEmitter>();
-    particleEmitter->SetEffect(cache->GetResource<ParticleEffect>("Particle/Dust.xml"));
+    particleEmitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect>("Particle/Dust.xml"));
     particleEmitter->SetEmitting(false);
     particleEmitterNodeList_.Push(emitter);
     emitter->SetTemporary(true);

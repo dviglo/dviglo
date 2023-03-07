@@ -55,7 +55,7 @@ void AnimatingScene::Start()
 
 void AnimatingScene::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -84,8 +84,8 @@ void AnimatingScene::CreateScene()
         // Orient using random pitch, yaw and roll Euler angles
         boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         auto* boxObject = boxNode->CreateComponent<StaticModel>();
-        boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache->GetResource<Material>("Materials/Stone.xml"));
+        boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
 
         // Add our custom Rotator component which will rotate the scene node each frame, when the scene sends its update event.
         // The Rotator component derives from the base class LogicComponent, which has convenience functionality to subscribe
@@ -110,13 +110,12 @@ void AnimatingScene::CreateScene()
 
 void AnimatingScene::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = ui->GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use WASD keys and mouse/touch to move");
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

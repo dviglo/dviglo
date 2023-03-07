@@ -198,8 +198,7 @@ void BorderImage::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData
 
 void BorderImage::SetTextureAttr(const ResourceRef& value)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-    SetTexture(cache->GetResource<Texture2D>(value.name_));
+    SetTexture(DV_RES_CACHE.GetResource<Texture2D>(value.name_));
 }
 
 ResourceRef BorderImage::GetTextureAttr() const
@@ -209,8 +208,7 @@ ResourceRef BorderImage::GetTextureAttr() const
 
 void BorderImage::SetMaterialAttr(const ResourceRef& value)
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-    SetMaterial(cache->GetResource<Material>(value.name_));
+    SetMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
 }
 
 ResourceRef BorderImage::GetMaterialAttr() const

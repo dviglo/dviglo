@@ -30,22 +30,21 @@ void Clicker::Start()
 
 void Clicker::CreateUI()
 {
-    ResourceCache* cache = GetSubsystem<ResourceCache>();
-    XMLFile* style = cache->GetResource<XMLFile>("UI/DefaultStyle.xml");
+    XMLFile* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     UIElement* uiRoot = GetSubsystem<UI>()->GetRoot();
     uiRoot->SetDefaultStyle(style);
 
     // Text in the center of the screen will initially contain hint, and then score
     Text* scoreText = uiRoot->CreateChild<Text>("Score");
     scoreText->SetText("Hold LMB to play.\nClick RMB to upgrade power.");
-    scoreText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
+    scoreText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
     scoreText->SetColor(Color::GREEN);
     scoreText->SetHorizontalAlignment(HA_CENTER);
     scoreText->SetVerticalAlignment(VA_CENTER);
 
     Text* powerText = uiRoot->CreateChild<Text>("Power");
     powerText->SetText("Power: " + power_.ToString());
-    powerText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
+    powerText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
     powerText->SetColor(Color::WHITE);
     powerText->SetPosition({10, 10});
 }

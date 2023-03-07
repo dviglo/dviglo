@@ -431,10 +431,7 @@ float Animatable::GetAttributeAnimationTime(const String& name) const
 void Animatable::SetObjectAnimationAttr(const ResourceRef& value)
 {
     if (!value.name_.Empty())
-    {
-        auto* cache = GetSubsystem<ResourceCache>();
-        SetObjectAnimation(cache->GetResource<ObjectAnimation>(value.name_));
-    }
+        SetObjectAnimation(DV_RES_CACHE.GetResource<ObjectAnimation>(value.name_));
 }
 
 ResourceRef Animatable::GetObjectAnimationAttr() const

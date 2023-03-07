@@ -60,7 +60,7 @@ void PhysicsStressTest::Start()
 
 void PhysicsStressTest::CreateScene()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
+    ResourceCache& cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -97,8 +97,8 @@ void PhysicsStressTest::CreateScene()
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->CreateComponent<StaticModel>();
-        floorObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-        floorObject->SetMaterial(cache->GetResource<Material>("Materials/StoneTiled.xml"));
+        floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        floorObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components
         /*RigidBody* body = */floorNode->CreateComponent<RigidBody>();
@@ -116,8 +116,8 @@ void PhysicsStressTest::CreateScene()
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(5.0f + Random(5.0f));
             auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
-            mushroomObject->SetModel(cache->GetResource<Model>("Models/Mushroom.mdl"));
-            mushroomObject->SetMaterial(cache->GetResource<Material>("Materials/Mushroom.xml"));
+            mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+            mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
 
             /*RigidBody* body = */mushroomNode->CreateComponent<RigidBody>();
@@ -135,8 +135,8 @@ void PhysicsStressTest::CreateScene()
             Node* boxNode = scene_->CreateChild("Box");
             boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
             auto* boxObject = boxNode->CreateComponent<StaticModel>();
-            boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-            boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneSmall.xml"));
+            boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+            boxObject->SetMaterial(cache.GetResource<Material>("Materials/StoneSmall.xml"));
             boxObject->SetCastShadows(true);
 
             // Give the RigidBody mass to make it movable and also adjust friction
@@ -162,7 +162,6 @@ void PhysicsStressTest::CreateScene()
 
 void PhysicsStressTest::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
@@ -173,7 +172,7 @@ void PhysicsStressTest::CreateInstructions()
         "F5 to save scene, F7 to load\n"
         "Space to toggle physics debug geometry"
     );
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -257,16 +256,14 @@ void PhysicsStressTest::MoveCamera(float timeStep)
 
 void PhysicsStressTest::SpawnObject()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
-
     // Create a smaller box at camera position
     Node* boxNode = scene_->CreateChild("SmallBox");
     boxNode->SetPosition(cameraNode_->GetPosition());
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->CreateComponent<StaticModel>();
-    boxObject->SetModel(cache->GetResource<Model>("Models/Box.mdl"));
-    boxObject->SetMaterial(cache->GetResource<Material>("Materials/StoneSmall.xml"));
+    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
+    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneSmall.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also

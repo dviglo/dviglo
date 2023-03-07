@@ -41,12 +41,11 @@ void UIDrag::Start()
 
 void UIDrag::CreateGUI()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     UIElement* root = ui->GetRoot();
     // Load the style sheet from xml
-    root->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
     for (int i=0; i < 10; i++)
     {
@@ -89,7 +88,6 @@ void UIDrag::CreateGUI()
 
 void UIDrag::CreateInstructions()
 {
-    auto* cache = GetSubsystem<ResourceCache>();
     auto* ui = GetSubsystem<UI>();
 
     // Construct new Text object, set string to display and font to use
@@ -97,7 +95,7 @@ void UIDrag::CreateInstructions()
     instructionText->SetText("Drag on the buttons to move them around.\n"
                              "Touch input allows also multi-drag.\n"
                              "Press SPACE to show/hide tagged UI elements.");
-    instructionText->SetFont(cache->GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
 
     // Position the text relative to the screen center

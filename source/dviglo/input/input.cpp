@@ -979,8 +979,7 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
     // If layout file is not given, use the default screen joystick layout
     if (!layoutFile)
     {
-        auto* cache = GetSubsystem<ResourceCache>();
-        layoutFile = cache->GetResource<XMLFile>("UI/ScreenJoystick.xml");
+        layoutFile = DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick.xml");
         if (!layoutFile)    // Error is already logged
             return -1;
     }

@@ -66,10 +66,18 @@ class DV_API ResourceCache : public Object
     DV_OBJECT(ResourceCache, Object);
 
 public:
+    static ResourceCache& get_instance();
+
+private:
     /// Construct.
     explicit ResourceCache();
     /// Destruct. Free all resources.
     ~ResourceCache() override;
+
+public:
+    // Запрещаем копирование
+    ResourceCache(const ResourceCache&) = delete;
+    ResourceCache& operator =(const ResourceCache&) = delete;
 
     /// Add a resource load directory. Optional priority parameter which will control search order.
     bool AddResourceDir(const String& pathName, i32 priority = PRIORITY_LAST);
@@ -236,6 +244,8 @@ private:
     /// How many milliseconds maximum per frame to spend on finishing background loaded resources.
     int finishBackgroundResourcesMs_;
 };
+
+#define DV_RES_CACHE (dviglo::ResourceCache::get_instance())
 
 template <class T> T* ResourceCache::GetExistingResource(const String& name)
 {
