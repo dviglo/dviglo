@@ -52,13 +52,13 @@ void L10n::Start()
 
 void L10n::InitLocalizationSystem()
 {
-    auto* l10n = GetSubsystem<Localization>();
+    Localization& l10n = DV_LOCALIZATION;
     // JSON files must be in UTF8 encoding without BOM
     // The first found language will be set as current
-    l10n->LoadJSONFile("StringsEnRu.json");
+    l10n.LoadJSONFile("StringsEnRu.json");
     // You can load multiple files
-    l10n->LoadJSONFile("StringsDe.json");
-    l10n->LoadJSONFile("StringsLv.json", "lv");
+    l10n.LoadJSONFile("StringsDe.json");
+    l10n.LoadJSONFile("StringsLv.json", "lv");
     // Hook up to the change language
     SubscribeToEvent(E_CHANGELANGUAGE, DV_HANDLER(L10n, HandleChangeLanguage));
 }
@@ -66,7 +66,7 @@ void L10n::InitLocalizationSystem()
 void L10n::CreateGUI()
 {
     // Get localization subsystem
-    auto* l10n = GetSubsystem<Localization>();
+    Localization& l10n = DV_LOCALIZATION;
 
     UIElement* root = GetSubsystem<UI>()->GetRoot();
     root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
@@ -84,11 +84,11 @@ void L10n::CreateGUI()
     window->AddChild(windowTitle);
 
     // In this place the current language is "en" because it was found first when loading the JSON files
-    String langName = l10n->GetLanguage();
+    String langName = l10n.GetLanguage();
     // Languages are numbered in the loading order
-    int langIndex = l10n->GetLanguageIndex(); // == 0 at the beginning
+    int langIndex = l10n.GetLanguageIndex(); // == 0 at the beginning
     // Get string with identifier "title" in the current language
-    String localizedString = l10n->Get("title");
+    String localizedString = l10n.Get("title");
     // Localization::Get returns String::EMPTY if the id is empty.
     // Localization::Get returns the id if translation is not found and will be added a warning into the log.
 
@@ -119,16 +119,13 @@ void L10n::CreateGUI()
     t->SetStyle("Text");
 
     // Manually set text in the current language
-    t->SetText(l10n->Get("quit"));
+    t->SetText(l10n.Get("quit"));
 
     SubscribeToEvent(b, E_RELEASED, DV_HANDLER(L10n, HandleQuitButtonPressed));
 }
 
 void L10n::CreateScene()
 {
-    // Get localization subsystem
-    auto* l10n = GetSubsystem<Localization>();
-
     scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
@@ -160,7 +157,7 @@ void L10n::CreateScene()
     auto* text3D = text3DNode->CreateComponent<Text3D>();
 
     // Manually set text in the current language.
-    text3D->SetText(l10n->Get("lang"));
+    text3D->SetText(DV_LOCALIZATION.Get("lang"));
 
     text3D->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
     text3D->SetColor(Color::BLACK);
@@ -189,13 +186,13 @@ void L10n::HandleUpdate(StringHash eventType, VariantMap& eventData)
 
 void L10n::HandleChangeLangButtonPressed(StringHash eventType, VariantMap& eventData)
 {
-    auto* l10n = GetSubsystem<Localization>();
+    Localization& l10n = DV_LOCALIZATION;
     // Languages are numbered in the loading order
-    int lang = l10n->GetLanguageIndex();
+    int lang = l10n.GetLanguageIndex();
     lang++;
-    if (lang >= l10n->GetNumLanguages())
+    if (lang >= l10n.GetNumLanguages())
         lang = 0;
-    l10n->SetLanguage(lang);
+    l10n.SetLanguage(lang);
 }
 
 void L10n::HandleQuitButtonPressed(StringHash eventType, VariantMap& eventData)
@@ -207,17 +204,17 @@ void L10n::HandleQuitButtonPressed(StringHash eventType, VariantMap& eventData)
 // You can manually change texts, sprites and other aspects of the game when language is changed
 void L10n::HandleChangeLanguage(StringHash eventType, VariantMap& eventData)
 {
-    auto* l10n = GetSubsystem<Localization>();
+    Localization& l10n = DV_LOCALIZATION;
     UIElement* uiRoot = GetSubsystem<UI>()->GetRoot();
 
     auto* windowTitle = uiRoot->GetChildStaticCast<Text>("WindowTitle", true);
-    windowTitle->SetText(l10n->Get("title") + " (" + String(l10n->GetLanguageIndex()) + " " + l10n->GetLanguage() + ")");
+    windowTitle->SetText(l10n.Get("title") + " (" + String(l10n.GetLanguageIndex()) + " " + l10n.GetLanguage() + ")");
 
     auto* buttonText = uiRoot->GetChildStaticCast<Text>("ButtonTextQuit", true);
-    buttonText->SetText(l10n->Get("quit"));
+    buttonText->SetText(l10n.Get("quit"));
 
     auto* text3D = scene_->GetChild("Text3D")->GetComponent<Text3D>();
-    text3D->SetText(l10n->Get("lang"));
+    text3D->SetText(l10n.Get("lang"));
 
     // A text on the button "Press this button" changes automatically
 }

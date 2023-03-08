@@ -16,10 +16,18 @@ class DV_API Localization : public Object
     DV_OBJECT(Localization, Object);
 
 public:
+    static Localization& get_instance();
+
+private:
     /// Construct.
     explicit Localization();
     /// Destruct. Free all resources.
     ~Localization() override;
+
+public:
+    // Запрещаем копирование
+    Localization(const Localization&) = delete;
+    Localization& operator =(const Localization&) = delete;
 
     /// Return the number of languages.
     int GetNumLanguages() const { return (int)languages_.Size(); }
@@ -56,5 +64,7 @@ private:
     /// Storage strings: <Language <StringId, Value>>.
     HashMap<StringHash, HashMap<StringHash, String>> strings_;
 };
+
+#define DV_LOCALIZATION (dviglo::Localization::get_instance())
 
 }

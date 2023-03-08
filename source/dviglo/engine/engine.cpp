@@ -102,12 +102,12 @@ Engine::Engine() :
     WorkQueue::get_instance();
     FileSystem::get_instance();
     ResourceCache::get_instance();
+    Localization::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new Localization());
 #ifdef DV_NETWORK
     DV_CONTEXT.RegisterSubsystem(new Network());
 #endif
