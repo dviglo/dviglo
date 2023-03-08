@@ -67,6 +67,7 @@ class DV_API ResourceCache : public Object
 
 public:
     static ResourceCache& get_instance();
+    static bool is_destructed();
 
 private:
     /// Construct.

@@ -50,7 +50,9 @@ Shader::Shader() :
 
 Shader::~Shader()
 {
-    DV_RES_CACHE.ResetDependencies(this);
+    // Не обращаемся к ResourceCache при завершении приложения
+    if (!ResourceCache::is_destructed())
+        DV_RES_CACHE.ResetDependencies(this);
 }
 
 void Shader::RegisterObject()

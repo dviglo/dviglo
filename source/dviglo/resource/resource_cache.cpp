@@ -49,10 +49,13 @@ static const char* checkDirs[] =
 
 static const SharedPtr<Resource> noResource;
 
-#ifdef _DEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool resource_cache_destructed = false;
-#endif
+
+bool ResourceCache::is_destructed()
+{
+    return resource_cache_destructed;
+}
 
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
@@ -91,8 +94,7 @@ ResourceCache::~ResourceCache()
 #endif
 
 #ifdef _DEBUG
-    // TODO: Временно отключено
-    //resource_cache_destructed = true;
+    resource_cache_destructed = true;
 #endif
 }
 
