@@ -31,11 +31,17 @@ const char* logLevelPrefixes[] =
 
 static bool threadErrorDisplayed = false;
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool log_destructed = false;
+#endif
+
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
 // https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
 Log& Log::get_instance()
 {
+    assert(!log_destructed);
     static Log instance;
     return instance;
 }
@@ -60,6 +66,10 @@ Log::~Log()
         Write(LOG_INFO, "Log closed in destructor");
         Close();
     }
+
+#ifdef _DEBUG
+    log_destructed = true;
+#endif
 }
 
 void Log::Open(const String& filename)

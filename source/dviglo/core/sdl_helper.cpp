@@ -13,11 +13,17 @@
 namespace dviglo
 {
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool sdl_helper_destructed = false;
+#endif
+
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
 // https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
 SdlHelper& SdlHelper::get_instance()
 {
+    assert(!sdl_helper_destructed);
     static SdlHelper instance;
     return instance;
 }
@@ -33,6 +39,10 @@ SdlHelper::~SdlHelper()
     DV_LOGDEBUG("Quitting SDL");
     Gesture_Quit();
     SDL_Quit();
+
+#ifdef _DEBUG
+    sdl_helper_destructed = true;
+#endif
 }
 
 bool SdlHelper::require(u32 sdl_subsystem)

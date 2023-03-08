@@ -49,11 +49,17 @@ static const char* checkDirs[] =
 
 static const SharedPtr<Resource> noResource;
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool resource_cache_destructed = false;
+#endif
+
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
 // https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
 ResourceCache& ResourceCache::get_instance()
 {
+    assert(!resource_cache_destructed);
     static ResourceCache instance;
     return instance;
 }
@@ -82,6 +88,11 @@ ResourceCache::~ResourceCache()
 #ifdef DV_THREADING
     // Shut down the background loader first
     backgroundLoader_.Reset();
+#endif
+
+#ifdef _DEBUG
+    // TODO: Временно отключено
+    //resource_cache_destructed = true;
 #endif
 }
 

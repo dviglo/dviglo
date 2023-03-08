@@ -49,11 +49,17 @@ private:
     i32 index_;
 };
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool work_queue_destructed = false;
+#endif
+
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
 // https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
 WorkQueue& WorkQueue::get_instance()
 {
+    assert(!work_queue_destructed);
     static WorkQueue instance;
     return instance;
 }
@@ -78,6 +84,10 @@ WorkQueue::~WorkQueue()
 
     for (const SharedPtr<WorkerThread>& thread : threads_)
         thread->Stop();
+
+#ifdef _DEBUG
+    work_queue_destructed = true;
+#endif
 }
 
 void WorkQueue::CreateThreads(i32 numThreads)

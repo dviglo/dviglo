@@ -27,11 +27,17 @@ namespace dviglo
 bool HiresTimer::supported(false);
 long long HiresTimer::frequency(1000);
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool timer_destructed = false;
+#endif
+
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
 // https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
 Time& Time::get_instance()
 {
+    assert(!timer_destructed);
     static Time instance;
     return instance;
 }
@@ -57,6 +63,10 @@ Time::Time() :
 Time::~Time()
 {
     SetTimerPeriod(0);
+
+#ifdef _DEBUG
+    timer_destructed = true;
+#endif
 }
 
 static unsigned Tick()

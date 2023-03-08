@@ -78,11 +78,17 @@ void RemoveNamedAttribute(HashMap<StringHash, Vector<AttributeInfo>>& attributes
         attributes.Erase(i);
 }
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool context_destructed = false;
+#endif
+
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
 // https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
 Context& Context::get_instance()
 {
+    assert(!context_destructed);
     static Context instance;
     return instance;
 }
@@ -115,6 +121,10 @@ Context::~Context()
     for (Vector<VariantMap*>::Iterator i = eventDataMaps_.Begin(); i != eventDataMaps_.End(); ++i)
         delete *i;
     eventDataMaps_.Clear();
+
+#ifdef _DEBUG
+    context_destructed = true;
+#endif
 }
 
 SharedPtr<Object> Context::CreateObject(StringHash objectType)
