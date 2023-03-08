@@ -93,9 +93,7 @@ ResourceCache::~ResourceCache()
     backgroundLoader_.Reset();
 #endif
 
-#ifdef _DEBUG
     resource_cache_destructed = true;
-#endif
 }
 
 bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
