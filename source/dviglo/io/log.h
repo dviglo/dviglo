@@ -58,11 +58,7 @@ class DV_API Log : public Object
     DV_OBJECT(Log, Object);
 
 public:
-    static Log& get_instance()
-    {
-        static Log instance;
-        return instance;
-    }
+    static Log& get_instance();
 
     // Запрещаем копирование
     Log(const Log&) = delete;

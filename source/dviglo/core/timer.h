@@ -62,11 +62,7 @@ class DV_API Time : public Object
     DV_OBJECT(Time, Object);
 
 public:
-    static Time& get_instance()
-    {
-        static Time instance;
-        return instance;
-    }
+    static Time& get_instance();
 
     // Запрещаем копирование
     Time(const Time&) = delete;

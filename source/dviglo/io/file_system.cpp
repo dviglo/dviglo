@@ -235,6 +235,15 @@ private:
     const Vector<String>& arguments_;
 };
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+FileSystem& FileSystem::get_instance()
+{
+    static FileSystem instance;
+    return instance;
+}
+
 FileSystem::FileSystem()
 {
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(FileSystem, HandleBeginFrame));

@@ -56,11 +56,7 @@ class DV_API WorkQueue : public Object
     friend class WorkerThread;
 
 public:
-    static WorkQueue& get_instance()
-    {
-        static WorkQueue instance;
-        return instance;
-    }
+    static WorkQueue& get_instance();
 
 private:
     /// Construct.

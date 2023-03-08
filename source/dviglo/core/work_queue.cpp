@@ -49,6 +49,15 @@ private:
     i32 index_;
 };
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+WorkQueue& WorkQueue::get_instance()
+{
+    static WorkQueue instance;
+    return instance;
+}
+
 WorkQueue::WorkQueue() :
     shutDown_(false),
     pausing_(false),

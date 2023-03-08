@@ -26,11 +26,7 @@ class DV_API FileSystem : public Object
     DV_OBJECT(FileSystem, Object);
 
 public:
-    static FileSystem& get_instance()
-    {
-        static FileSystem instance;
-        return instance;
-    }
+    static FileSystem& get_instance();
 
 private:
     /// Construct.

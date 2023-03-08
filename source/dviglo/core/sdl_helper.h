@@ -12,11 +12,7 @@ namespace dviglo
 class DV_API SdlHelper
 {
 public:
-    static SdlHelper& get_instance()
-    {
-        static SdlHelper instance;
-        return instance;
-    }
+    static SdlHelper& get_instance();
 
     // Запрещаем копирование
     SdlHelper(const SdlHelper&) = delete;

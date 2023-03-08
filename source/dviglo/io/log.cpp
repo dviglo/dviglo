@@ -31,6 +31,15 @@ const char* logLevelPrefixes[] =
 
 static bool threadErrorDisplayed = false;
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+Log& Log::get_instance()
+{
+    static Log instance;
+    return instance;
+}
+
 Log::Log() :
 #ifdef _DEBUG
     level_(LOG_DEBUG),
