@@ -22,10 +22,18 @@ class DV_API Network : public Object
     DV_OBJECT(Network, Object);
 
 public:
+    static Network& get_instance();
+
+private:
     /// Construct.
     explicit Network();
     /// Destruct.
     ~Network() override;
+
+public:
+    // Запрещаем копирование
+    Network(const Network&) = delete;
+    Network& operator =(const Network&) = delete;
 
     /// Handle an inbound message.
     void HandleMessage(const SLNet::AddressOrGUID& source, int packetID, int msgID, const char* data, size_t numBytes);
@@ -173,6 +181,8 @@ private:
     /// Local server GUID.
     String guid_;
 };
+
+#define DV_NET (dviglo::Network::get_instance())
 
 /// Register Network library objects.
 void DV_API RegisterNetworkLibrary();

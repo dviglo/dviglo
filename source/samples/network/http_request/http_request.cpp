@@ -61,13 +61,11 @@ void HttpRequestDemo::SubscribeToEvents()
 
 void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
-    auto* network = GetSubsystem<Network>();
-
     if (httpRequest_.Null())
 #ifdef DV_SSL
-        httpRequest_ = network->MakeHttpRequest("https://api.ipify.org/?format=json");
+        httpRequest_ = DV_NET.MakeHttpRequest("https://api.ipify.org/?format=json");
 #else
-        httpRequest_ = network->MakeHttpRequest("http://httpbin.org/ip");
+        httpRequest_ = DV_NET.MakeHttpRequest("http://httpbin.org/ip");
 #endif
     else
     {

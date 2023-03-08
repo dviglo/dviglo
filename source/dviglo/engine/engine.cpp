@@ -103,14 +103,13 @@ Engine::Engine() :
     FileSystem::get_instance();
     ResourceCache::get_instance();
     Localization::get_instance();
-
+#ifdef DV_NETWORK
+    Network::get_instance();
+#endif
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-#ifdef DV_NETWORK
-    DV_CONTEXT.RegisterSubsystem(new Network());
-#endif
     DV_CONTEXT.RegisterSubsystem(new Input());
     DV_CONTEXT.RegisterSubsystem(new Audio());
     DV_CONTEXT.RegisterSubsystem(new UI());
@@ -301,7 +300,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     // Initialize network
 #ifdef DV_NETWORK
     if (HasParameter(parameters, EP_PACKAGE_CACHE_DIR))
-        GetSubsystem<Network>()->SetPackageCacheDir(GetParameter(parameters, EP_PACKAGE_CACHE_DIR).GetString());
+        DV_NET.SetPackageCacheDir(GetParameter(parameters, EP_PACKAGE_CACHE_DIR).GetString());
 #endif
 
 #ifdef DV_TESTING

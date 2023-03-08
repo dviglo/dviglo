@@ -531,7 +531,7 @@ void Connection::ProcessLoadScene(int msgID, MemoryBuffer& msg)
     // In case we have joined other scenes in this session, remove first all downloaded package files from the resource system
     // to prevent resource conflicts
     ResourceCache& cache = DV_RES_CACHE;
-    const String& packageCacheDir = GetSubsystem<Network>()->GetPackageCacheDir();
+    const String& packageCacheDir = DV_NET.GetPackageCacheDir();
 
     Vector<SharedPtr<PackageFile>> packages = cache.GetPackageFiles();
     for (unsigned i = 0; i < packages.Size(); ++i)
@@ -864,7 +864,7 @@ void Connection::ProcessPackageDownload(int msgID, MemoryBuffer& msg)
             // If file has not yet been opened, try to open now. Prepend the checksum to the filename to allow multiple versions
             if (!download.file_)
             {
-                download.file_ = new File(GetSubsystem<Network>()->GetPackageCacheDir() + ToStringHex(download.checksum_) + "_" + download.name_,
+                download.file_ = new File(DV_NET.GetPackageCacheDir() + ToStringHex(download.checksum_) + "_" + download.name_,
                     FILE_WRITE);
                 if (!download.file_->IsOpen())
                 {
@@ -1002,7 +1002,7 @@ void Connection::ProcessRemoteEvent(int msgID, MemoryBuffer& msg)
     if (msgID == MSG_REMOTEEVENT)
     {
         StringHash eventType = msg.ReadStringHash();
-        if (!GetSubsystem<Network>()->CheckRemoteEvent(eventType))
+        if (!DV_NET.CheckRemoteEvent(eventType))
         {
             DV_LOGWARNING("Discarding not allowed remote event " + eventType.ToString());
             return;
@@ -1022,7 +1022,7 @@ void Connection::ProcessRemoteEvent(int msgID, MemoryBuffer& msg)
 
         unsigned nodeID = msg.ReadNetID();
         StringHash eventType = msg.ReadStringHash();
-        if (!GetSubsystem<Network>()->CheckRemoteEvent(eventType))
+        if (!DV_NET.CheckRemoteEvent(eventType))
         {
             DV_LOGWARNING("Discarding not allowed remote event " + eventType.ToString());
             return;
@@ -1454,7 +1454,7 @@ void Connection::ProcessExistingNode(Node* node, NodeReplicationState& nodeState
 bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
 {
     ResourceCache& cache = DV_RES_CACHE;
-    const String& packageCacheDir = GetSubsystem<Network>()->GetPackageCacheDir();
+    const String& packageCacheDir = DV_NET.GetPackageCacheDir();
 
     Vector<SharedPtr<PackageFile>> packages = cache.GetPackageFiles();
     Vector<String> downloadedPackages;

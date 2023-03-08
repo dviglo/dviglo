@@ -228,7 +228,7 @@ void SceneReplication::SubscribeToEvents()
     // This is a custom event, sent from the server to the client. It tells the node ID of the object the client should control
     SubscribeToEvent(E_CLIENTOBJECTID, DV_HANDLER(SceneReplication, HandleClientObjectID));
     // Events sent between client & server (remote events) must be explicitly registered or else they are not allowed to be received
-    GetSubsystem<Network>()->RegisterRemoteEvent(E_CLIENTOBJECTID);
+    DV_NET.RegisterRemoteEvent(E_CLIENTOBJECTID);
 }
 
 Button* SceneReplication::CreateButton(const String& text, int width)
@@ -249,9 +249,8 @@ Button* SceneReplication::CreateButton(const String& text, int width)
 
 void SceneReplication::UpdateButtons()
 {
-    auto* network = GetSubsystem<Network>();
-    Connection* serverConnection = network->GetServerConnection();
-    bool serverRunning = network->IsServerRunning();
+    Connection* serverConnection = DV_NET.GetServerConnection();
+    bool serverRunning = DV_NET.IsServerRunning();
 
     // Show and hide buttons so that eg. Connect and Disconnect are never shown at the same time
     connectButton_->SetVisible(!serverConnection && !serverRunning);
@@ -335,18 +334,20 @@ void SceneReplication::HandlePostUpdate(StringHash eventType, VariantMap& eventD
     // We only rotate the camera according to mouse movement since last frame, so do not need the time step
     MoveCamera();
 
-    if (packetCounterTimer_.GetMSec(false) > 1000 && GetSubsystem<Network>()->GetServerConnection())
+    if (packetCounterTimer_.GetMSec(false) > 1000 && DV_NET.GetServerConnection())
     {
-        packetsIn_->SetText("Packets  in: " + String(GetSubsystem<Network>()->GetServerConnection()->GetPacketsInPerSec()));
-        packetsOut_->SetText("Packets out: " + String(GetSubsystem<Network>()->GetServerConnection()->GetPacketsOutPerSec()));
+        packetsIn_->SetText("Packets  in: " + String(DV_NET.GetServerConnection()->GetPacketsInPerSec()));
+        packetsOut_->SetText("Packets out: " + String(DV_NET.GetServerConnection()->GetPacketsOutPerSec()));
         packetCounterTimer_.Reset();
     }
-    if (packetCounterTimer_.GetMSec(false) > 1000 && GetSubsystem<Network>()->GetClientConnections().Size())
+
+    if (packetCounterTimer_.GetMSec(false) > 1000 && DV_NET.GetClientConnections().Size())
     {
         int packetsIn = 0;
         int packetsOut = 0;
-        auto connections = GetSubsystem<Network>()->GetClientConnections();
-        for (auto it = connections.Begin(); it != connections.End(); ++it ) {
+        auto connections = DV_NET.GetClientConnections();
+        for (auto it = connections.Begin(); it != connections.End(); ++it)
+        {
             packetsIn += (*it)->GetPacketsInPerSec();
             packetsOut += (*it)->GetPacketsOutPerSec();
         }
@@ -361,8 +362,7 @@ void SceneReplication::HandlePhysicsPreStep(StringHash eventType, VariantMap& ev
     // This function is different on the client and server. The client collects controls (WASD controls + yaw angle)
     // and sets them to its server connection object, so that they will be sent to the server automatically at a
     // fixed rate, by default 30 FPS. The server will actually apply the controls (authoritative simulation.)
-    auto* network = GetSubsystem<Network>();
-    Connection* serverConnection = network->GetServerConnection();
+    Connection* serverConnection = DV_NET.GetServerConnection();
 
     // Client: collect controls
     if (serverConnection)
@@ -389,9 +389,9 @@ void SceneReplication::HandlePhysicsPreStep(StringHash eventType, VariantMap& ev
         serverConnection->SetPosition(cameraNode_->GetPosition());
     }
     // Server: apply controls to client objects
-    else if (network->IsServerRunning())
+    else if (DV_NET.IsServerRunning())
     {
-        const Vector<SharedPtr<Connection>>& connections = network->GetClientConnections();
+        const Vector<SharedPtr<Connection>>& connections = DV_NET.GetClientConnections();
 
         for (Connection* connection : connections)
         {
@@ -426,22 +426,20 @@ void SceneReplication::HandlePhysicsPreStep(StringHash eventType, VariantMap& ev
 
 void SceneReplication::HandleConnect(StringHash eventType, VariantMap& eventData)
 {
-    auto* network = GetSubsystem<Network>();
     String address = textEdit_->GetText().Trimmed();
     if (address.Empty())
         address = "localhost"; // Use localhost to connect if nothing else specified
 
     // Connect to server, specify scene to use as a client for replication
     clientObjectID_ = 0; // Reset own object ID from possible previous connection
-    network->Connect(address, SERVER_PORT, scene_);
+    DV_NET.Connect(address, SERVER_PORT, scene_);
 
     UpdateButtons();
 }
 
 void SceneReplication::HandleDisconnect(StringHash eventType, VariantMap& eventData)
 {
-    auto* network = GetSubsystem<Network>();
-    Connection* serverConnection = network->GetServerConnection();
+    Connection* serverConnection = DV_NET.GetServerConnection();
     // If we were connected to server, disconnect. Or if we were running a server, stop it. In both cases clear the
     // scene of all replicated content, but let the local nodes & components (the static world + camera) stay
     if (serverConnection)
@@ -451,9 +449,9 @@ void SceneReplication::HandleDisconnect(StringHash eventType, VariantMap& eventD
         clientObjectID_ = 0;
     }
     // Or if we were running a server, stop it
-    else if (network->IsServerRunning())
+    else if (DV_NET.IsServerRunning())
     {
-        network->StopServer();
+        DV_NET.StopServer();
         scene_->Clear(true, false);
     }
 
@@ -462,8 +460,7 @@ void SceneReplication::HandleDisconnect(StringHash eventType, VariantMap& eventD
 
 void SceneReplication::HandleStartServer(StringHash eventType, VariantMap& eventData)
 {
-    auto* network = GetSubsystem<Network>();
-    network->StartServer(SERVER_PORT);
+    DV_NET.StartServer(SERVER_PORT);
 
     UpdateButtons();
 }

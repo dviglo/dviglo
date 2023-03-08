@@ -175,6 +175,15 @@ static const char* RAKNET_MESSAGEID_STRINGS[] = {
 static const int DEFAULT_UPDATE_FPS = 30;
 static const int SERVER_TIMEOUT_TIME = 10000;
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+Network& Network::get_instance()
+{
+    static Network instance;
+    return instance;
+}
+
 Network::Network() :
     updateFps_(DEFAULT_UPDATE_FPS),
     simulatedLatency_(0),

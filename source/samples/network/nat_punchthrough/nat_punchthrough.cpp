@@ -168,7 +168,7 @@ void NATPunchtrough::ShowLogMessage(const String& row)
 void NATPunchtrough::HandleSaveNatSettings(StringHash eventType, VariantMap& eventData)
 {
     // Save NAT server configuration
-    GetSubsystem<Network>()->SetNATServerInfo(natServerAddress_->GetText(), ToI32(natServerPort_->GetText()));
+    DV_NET.SetNATServerInfo(natServerAddress_->GetText(), ToI32(natServerPort_->GetText()));
     ShowLogMessage("Saving NAT settings: " + natServerAddress_->GetText() + ":" + natServerPort_->GetText());
 }
 
@@ -194,16 +194,16 @@ void NATPunchtrough::HandleNatDisconnected(StringHash eventType, VariantMap& eve
 
 void NATPunchtrough::HandleStartServer(StringHash eventType, VariantMap& eventData)
 {
-    GetSubsystem<Network>()->StartServer(SERVER_PORT);
+    DV_NET.StartServer(SERVER_PORT);
     ShowLogMessage("Server: Server started on port: " + String(SERVER_PORT));
 
     // Connect to the NAT server
-    GetSubsystem<Network>()->StartNATClient();
+    DV_NET.StartNATClient();
     ShowLogMessage("Server: Starting NAT client for server...");
 
     // Output our assigned GUID which others will use to connect to our server
-    guid_->SetText(GetSubsystem<Network>()->GetGUID());
-    serverGuid_->SetText(GetSubsystem<Network>()->GetGUID());
+    guid_->SetText(DV_NET.GetGUID());
+    serverGuid_->SetText(DV_NET.GetGUID());
 }
 
 void NATPunchtrough::HandleConnect(StringHash eventType, VariantMap& eventData)
@@ -212,7 +212,7 @@ void NATPunchtrough::HandleConnect(StringHash eventType, VariantMap& eventData)
     userData["Name"] = "Urho3D";
 
     // Attempt connecting to server using custom GUID, Scene = null as a second parameter and user identity is passed as third parameter
-    GetSubsystem<Network>()->AttemptNATPunchtrough(serverGuid_->GetText(), nullptr, userData);
+    DV_NET.AttemptNATPunchtrough(serverGuid_->GetText(), nullptr, userData);
     ShowLogMessage("Client: Attempting NAT punchtrough to guid: " + serverGuid_->GetText());
 }
 
