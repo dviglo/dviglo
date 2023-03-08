@@ -58,7 +58,7 @@ public:
         AppStateManager* appStateManager = DV_CONTEXT.GetSubsystem<AppStateManager>();
         appStateManager->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 
-        GetSubsystem<Input>()->SetToggleFullscreen(false); // Block Alt+Enter
+        DV_INPUT.SetToggleFullscreen(false); // Block Alt+Enter
 
         CreateCurrentFpsUiElement();
     }

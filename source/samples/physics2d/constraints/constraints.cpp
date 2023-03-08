@@ -61,7 +61,7 @@ void Urho2DConstraints::Start()
     CreateScene();
 
     // Enable OS cursor
-    GetSubsystem<Input>()->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 
     // Create the UI content
     CreateInstructions();
@@ -395,25 +395,25 @@ void Urho2DConstraints::MoveCamera(float timeStep)
     if (GetSubsystem<UI>()->GetFocusElement())
         return;
 
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 4.0f;
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input->GetKeyDown(KEY_W))
+    if (input.GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::UP * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_S))
+    if (input.GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::DOWN * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_A))
+    if (input.GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_D))
+    if (input.GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
-    if (input->GetKeyDown(KEY_PAGEUP))
+    if (input.GetKeyDown(KEY_PAGEUP))
         camera_->SetZoom(camera_->GetZoom() * 1.01f);
 
-    if (input->GetKeyDown(KEY_PAGEDOWN))
+    if (input.GetKeyDown(KEY_PAGEDOWN))
         camera_->SetZoom(camera_->GetZoom() * 0.99f);
 }
 
@@ -445,14 +445,12 @@ void Urho2DConstraints::HandleUpdate(StringHash eventType, VariantMap& eventData
     // Move the camera, scale movement with time step
     MoveCamera(timeStep);
 
-    auto* input = GetSubsystem<Input>();
-
     // Toggle physics debug geometry with space
-    if (input->GetKeyPress(KEY_SPACE))
+    if (DV_INPUT.GetKeyPress(KEY_SPACE))
         drawDebug_ = !drawDebug_;
 
     // Save scene
-    if (input->GetKeyPress(KEY_F5))
+    if (DV_INPUT.GetKeyPress(KEY_F5))
     {
         File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/Constraints.xml", FILE_WRITE);
         scene_->SaveXML(saveFile);
@@ -467,9 +465,8 @@ void Urho2DConstraints::HandlePostRenderUpdate(StringHash eventType, VariantMap&
 
 void Urho2DConstraints::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)
 {
-    auto* input = GetSubsystem<Input>();
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-    RigidBody2D* rigidBody = physicsWorld->GetRigidBody(input->GetMousePosition().x_, input->GetMousePosition().y_); // Raycast for RigidBody2Ds to pick
+    RigidBody2D* rigidBody = physicsWorld->GetRigidBody(DV_INPUT.GetMousePosition().x_, DV_INPUT.GetMousePosition().y_); // Raycast for RigidBody2Ds to pick
     if (rigidBody)
     {
         pickedNode = rigidBody->GetNode();
@@ -505,9 +502,8 @@ void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& ev
 
 Vector2 Urho2DConstraints::GetMousePositionXY()
 {
-    auto* input = GetSubsystem<Input>();
     auto* graphics = GetSubsystem<Graphics>();
-    Vector3 screenPoint = Vector3((float)input->GetMousePosition().x_ / graphics->GetWidth(), (float)input->GetMousePosition().y_ / graphics->GetHeight(), 0.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / graphics->GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / graphics->GetHeight(), 0.0f);
     Vector3 worldPoint = camera_->ScreenToWorldPoint(screenPoint);
     return Vector2(worldPoint.x_, worldPoint.y_);
 }

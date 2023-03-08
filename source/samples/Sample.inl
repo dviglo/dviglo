@@ -57,7 +57,7 @@ void Sample::Start()
     if (GetPlatform() == "Android" || GetPlatform() == "iOS")
         // On mobile platform, enable touch by adding a screen joystick
         InitTouchInput();
-    else if (GetSubsystem<Input>()->GetNumJoysticks() == 0)
+    else if (DV_INPUT.GetNumJoysticks() == 0)
         // On desktop platform, do not detect touch when we already got a joystick
         SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(Sample, HandleTouchBegin));
 
@@ -87,7 +87,6 @@ void Sample::InitTouchInput()
 {
     touchEnabled_ = true;
 
-    Input* input = GetSubsystem<Input>();
     XMLFile* layout = DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_Samples.xml");
     const String& patchString = GetScreenJoystickPatchString();
     if (!patchString.Empty())
@@ -97,32 +96,32 @@ void Sample::InitTouchInput()
         if (patchFile->FromString(patchString))
             layout->Patch(patchFile);
     }
-    screenJoystickIndex_ = (unsigned)input->AddScreenJoystick(layout, DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
-    input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
+    screenJoystickIndex_ = (unsigned)DV_INPUT.AddScreenJoystick(layout, DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
 }
 
 void Sample::InitMouseMode(MouseMode mode)
 {
     useMouseMode_ = mode;
 
-    Input* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     if (GetPlatform() != "Web")
     {
         if (useMouseMode_ == MM_FREE)
-            input->SetMouseVisible(true);
+            input.SetMouseVisible(true);
 
         Console* console = GetSubsystem<Console>();
         if (useMouseMode_ != MM_ABSOLUTE)
         {
-            input->SetMouseMode(useMouseMode_);
+            input.SetMouseMode(useMouseMode_);
             if (console && console->IsVisible())
-                input->SetMouseMode(MM_ABSOLUTE, true);
+                input.SetMouseMode(MM_ABSOLUTE, true);
         }
     }
     else
     {
-        input->SetMouseVisible(true);
+        input.SetMouseVisible(true);
         SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Sample, HandleMouseModeRequest));
         SubscribeToEvent(E_MOUSEMODECHANGED, DV_HANDLER(Sample, HandleMouseModeChange));
     }
@@ -210,9 +209,9 @@ void Sample::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
         {
             if (GetPlatform() == "Web")
             {
-                GetSubsystem<Input>()->SetMouseVisible(true);
+                DV_INPUT.SetMouseVisible(true);
                 if (useMouseMode_ != MM_ABSOLUTE)
-                    GetSubsystem<Input>()->SetMouseMode(MM_FREE);
+                    DV_INPUT.SetMouseMode(MM_FREE);
             }
             else
                 engine_->Exit();
@@ -244,15 +243,14 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         {
             paused_ = !paused_;
 
-            Input* input = GetSubsystem<Input>();
             if (screenJoystickSettingsIndex_ == M_MAX_UNSIGNED)
             {
                 // Lazy initialization
-                screenJoystickSettingsIndex_ = (unsigned)input->AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
+                screenJoystickSettingsIndex_ = (unsigned)DV_INPUT.AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
             }
             else
             {
-                input->SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
+                DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
             }
         }
 
@@ -334,10 +332,10 @@ void Sample::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
     // Move the camera by touch, if the camera node is initialized by descendant sample class
     if (touchEnabled_ && cameraNode_)
     {
-        Input* input = GetSubsystem<Input>();
-        for (i32 i = 0; i < input->GetNumTouches(); ++i)
+        Input& input = DV_INPUT;
+        for (i32 i = 0; i < input.GetNumTouches(); ++i)
         {
-            TouchState* state = input->GetTouch(i);
+            TouchState* state = input.GetTouch(i);
             if (!state->touchedElement_)    // Touch on empty space
             {
                 if (state->delta_.x_ ||state->delta_.y_)
@@ -378,17 +376,15 @@ void Sample::HandleMouseModeRequest(StringHash /*eventType*/, VariantMap& eventD
     Console* console = GetSubsystem<Console>();
     if (console && console->IsVisible())
         return;
-    Input* input = GetSubsystem<Input>();
     if (useMouseMode_ == MM_ABSOLUTE)
-        input->SetMouseVisible(false);
+        DV_INPUT.SetMouseVisible(false);
     else if (useMouseMode_ == MM_FREE)
-        input->SetMouseVisible(true);
-    input->SetMouseMode(useMouseMode_);
+        DV_INPUT.SetMouseVisible(true);
+    DV_INPUT.SetMouseMode(useMouseMode_);
 }
 
 void Sample::HandleMouseModeChange(StringHash /*eventType*/, VariantMap& eventData)
 {
-    Input* input = GetSubsystem<Input>();
     bool mouseLocked = eventData[MouseModeChanged::P_MOUSELOCKED].GetBool();
-    input->SetMouseVisible(!mouseLocked);
+    DV_INPUT.SetMouseVisible(!mouseLocked);
 }

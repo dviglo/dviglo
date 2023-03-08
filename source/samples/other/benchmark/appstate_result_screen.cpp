@@ -24,7 +24,7 @@ void AppState_ResultScreen::OnEnter()
     assert(!scene_);
     LoadSceneXml("99_Benchmark/Scenes/ResultScreen.xml");
 
-    GetSubsystem<Input>()->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
     SetupViewport();
     SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_ResultScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
@@ -45,9 +45,7 @@ void AppState_ResultScreen::HandleSceneUpdate(StringHash eventType, VariantMap& 
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();
 
-    Input* input = GetSubsystem<Input>();
-
-    if (input->GetKeyDown(KEY_ESCAPE) || input->GetKeyDown(KEY_RETURN) || input->GetKeyDown(KEY_KP_ENTER))
+    if (DV_INPUT.GetKeyDown(KEY_ESCAPE) || DV_INPUT.GetKeyDown(KEY_RETURN) || DV_INPUT.GetKeyDown(KEY_KP_ENTER))
         GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 }
 

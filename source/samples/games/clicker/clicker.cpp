@@ -118,9 +118,7 @@ void Clicker::HandleUpdate(StringHash eventType, VariantMap& eventData)
     if (clickDelay_ > 0.f)
         clickDelay_ -= timeStep;
 
-    Input* input = GetSubsystem<Input>();
-
-    if (input->GetMouseButtonDown(MOUSEB_LEFT) && clickDelay_ <= 0.f)
+    if (DV_INPUT.GetMouseButtonDown(MOUSEB_LEFT) && clickDelay_ <= 0.f)
     {
         score_ += power_;
 

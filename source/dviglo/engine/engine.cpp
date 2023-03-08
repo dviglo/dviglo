@@ -106,11 +106,12 @@ Engine::Engine() :
 #ifdef DV_NETWORK
     Network::get_instance();
 #endif
+    Input::get_instance();
+
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new Input());
     DV_CONTEXT.RegisterSubsystem(new Audio());
     DV_CONTEXT.RegisterSubsystem(new UI());
 
@@ -295,7 +296,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Initialize input
     if (HasParameter(parameters, EP_TOUCH_EMULATION))
-        GetSubsystem<Input>()->SetTouchEmulation(GetParameter(parameters, EP_TOUCH_EMULATION).GetBool());
+        DV_INPUT.SetTouchEmulation(GetParameter(parameters, EP_TOUCH_EMULATION).GetBool());
 
     // Initialize network
 #ifdef DV_NETWORK
@@ -479,13 +480,12 @@ void Engine::RunFrame()
     // Note: there is a minimal performance cost to looking up subsystems (uses a hashmap); if they would be looked up several
     // times per frame it would be better to cache the pointers
     Time& time = DV_TIME;
-    auto* input = GetSubsystem<Input>();
     auto* audio = GetSubsystem<Audio>();
 
     time.BeginFrame(timeStep_);
 
     // If pause when minimized -mode is in use, stop updates and audio as necessary
-    if (pauseMinimized_ && input->IsMinimized())
+    if (pauseMinimized_ && DV_INPUT.IsMinimized())
     {
         if (audio->IsPlaying())
         {
@@ -705,8 +705,7 @@ void Engine::ApplyFrameLimit()
         return;
 
     unsigned maxFps = maxFps_;
-    auto* input = GetSubsystem<Input>();
-    if (input && !input->HasFocus())
+    if (DV_INPUT.HasFocus())
         maxFps = Min(maxInactiveFps_, maxFps);
 
     long long elapsed = 0;

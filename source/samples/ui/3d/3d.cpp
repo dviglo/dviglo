@@ -45,7 +45,7 @@ void Hello3DUI::Start()
     Sample::Start();
 
     // Enable OS cursor
-    GetSubsystem<Input>()->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
@@ -295,16 +295,16 @@ void Hello3DUI::HandleUpdate(StringHash, VariantMap& eventData)
 {
     using namespace Update;
     float timeStep = eventData[P_TIMESTEP].GetFloat();
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
     Node* node = scene_->GetChild("Box");
 
     if (current_.NotNull() && drawDebug_)
         GetSubsystem<UI>()->DebugDraw(current_);
 
-    if (input->GetMouseButtonPress(MOUSEB_LEFT))
-        current_ = GetSubsystem<UI>()->GetElementAt(input->GetMousePosition());
+    if (input.GetMouseButtonPress(MOUSEB_LEFT))
+        current_ = GetSubsystem<UI>()->GetElementAt(input.GetMousePosition());
 
-    if (input->GetKeyPress(KEY_TAB))
+    if (input.GetKeyPress(KEY_TAB))
     {
         renderOnCube_ = !renderOnCube_;
         // Toggle between rendering on screen or to texture.
@@ -320,10 +320,10 @@ void Hello3DUI::HandleUpdate(StringHash, VariantMap& eventData)
         }
     }
 
-    if (input->GetKeyPress(KEY_SPACE))
+    if (input.GetKeyPress(KEY_SPACE))
         animateCube_ = !animateCube_;
 
-    if (input->GetKeyPress(KEY_F2))
+    if (input.GetKeyPress(KEY_F2))
         drawDebug_ = !drawDebug_;
 
     if (animateCube_)

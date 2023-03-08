@@ -171,28 +171,28 @@ void Urho2DPhysics::MoveCamera(float timeStep)
     if (GetSubsystem<UI>()->GetFocusElement())
         return;
 
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 4.0f;
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input->GetKeyDown(KEY_W))
+    if (input.GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::UP * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_S))
+    if (input.GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::DOWN * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_A))
+    if (input.GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_D))
+    if (input.GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
-    if (input->GetKeyDown(KEY_PAGEUP))
+    if (input.GetKeyDown(KEY_PAGEUP))
     {
         auto* camera = cameraNode_->GetComponent<Camera>();
         camera->SetZoom(camera->GetZoom() * 1.01f);
     }
 
-    if (input->GetKeyDown(KEY_PAGEDOWN))
+    if (input.GetKeyDown(KEY_PAGEDOWN))
     {
         auto* camera = cameraNode_->GetComponent<Camera>();
         camera->SetZoom(camera->GetZoom() * 0.99f);

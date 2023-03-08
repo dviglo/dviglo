@@ -335,6 +335,15 @@ void JoystickState::Reset()
         hats_[i] = HAT_CENTER;
 }
 
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+Input& Input::get_instance()
+{
+    static Input instance;
+    return instance;
+}
+
 Input::Input() :
     mouseButtonDown_(0),
     mouseButtonPress_(0),

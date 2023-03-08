@@ -21,7 +21,7 @@ void AppState_Benchmark04::OnEnter()
 
     // Сцена и вьюпорт не нужны
 
-    GetSubsystem<Input>()->SetMouseVisible(false);
+    DV_INPUT.SetMouseVisible(false);
     SubscribeToEvent(E_ENDALLVIEWSRENDER, DV_HANDLER(AppState_Benchmark04, HandleEndAllViewsRender));
     fpsCounter_.Clear();
     spriteBatch_ = new SpriteBatch();
@@ -40,7 +40,7 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();
 
-    if (GetSubsystem<Input>()->GetKeyDown(KEY_ESCAPE))
+    if (DV_INPUT.GetKeyDown(KEY_ESCAPE))
     {
         GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
         return;

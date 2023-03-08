@@ -37,7 +37,7 @@ void Typography::Start()
     Sample::Start();
 
     // Enable OS cursor
-    GetSubsystem<Input>()->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");

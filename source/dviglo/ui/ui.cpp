@@ -303,8 +303,8 @@ void UI::Update(float timeStep)
     for (HashMap<WeakPtr<UIElement>, bool>::Iterator i = hoveredElements_.Begin(); i != hoveredElements_.End(); ++i)
         i->second_ = false;
 
-    auto* input = GetSubsystem<Input>();
-    bool mouseGrabbed = input->IsMouseGrabbed();
+    Input& input = DV_INPUT;
+    bool mouseGrabbed = input.IsMouseGrabbed();
 
     IntVector2 cursorPos;
     bool cursorVisible;
@@ -349,17 +349,17 @@ void UI::Update(float timeStep)
     }
 
     // Mouse hover
-    if (!mouseGrabbed && !input->GetTouchEmulation())
+    if (!mouseGrabbed && !input.GetTouchEmulation())
     {
         if (!usingTouchInput_ && cursorVisible)
             ProcessHover(cursorPos, mouseButtons_, qualifiers_, cursor_);
     }
 
     // Touch hover
-    unsigned numTouches = input->GetNumTouches();
+    unsigned numTouches = input.GetNumTouches();
     for (unsigned i = 0; i < numTouches; ++i)
     {
-        TouchState* touch = input->GetTouch(i);
+        TouchState* touch = input.GetTouch(i);
         IntVector2 touchPos = touch->position_;
         touchPos = ConvertSystemToUI(touchPos);
         ProcessHover(touchPos, MakeTouchIDMask(touch->touchID_), QUAL_NONE, nullptr);
@@ -398,7 +398,7 @@ void UI::RenderUpdate()
     uiRendered_ = false;
 
     // If the OS cursor is visible, do not render the UI's own cursor
-    bool osCursorVisible = GetSubsystem<Input>()->IsMouseVisible();
+    bool osCursorVisible = DV_INPUT.IsMouseVisible();
 
     // Get rendering batches from the non-modal UI elements
     batches_.Clear();
@@ -465,7 +465,7 @@ void UI::Render(bool renderUICommand)
     // If the OS cursor is visible, apply its shape now if changed
     if (!renderUICommand)
     {
-        bool osCursorVisible = GetSubsystem<Input>()->IsMouseVisible();
+        bool osCursorVisible = DV_INPUT.IsMouseVisible();
         if (cursor_ && osCursorVisible)
             cursor_->ApplyOSCursorShape();
     }
@@ -749,7 +749,7 @@ IntVector2 UI::GetCursorPosition() const
     if (cursor_)
         return cursor_->GetPosition();
 
-    return ConvertSystemToUI(GetSubsystem<Input>()->GetMousePosition());
+    return ConvertSystemToUI(DV_INPUT.GetMousePosition());
 }
 
 UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVector2* elementScreenPosition)
@@ -1283,12 +1283,13 @@ void UI::GetCursorPositionAndVisible(IntVector2& pos, bool& visible)
         pos = cursor_->GetPosition();
         visible = true;
     }
-    else if (GetSubsystem<Input>()->GetMouseMode() == MM_RELATIVE)
+    else if (DV_INPUT.GetMouseMode() == MM_RELATIVE)
+    {
         visible = true;
+    }
     else
     {
-        auto* input = GetSubsystem<Input>();
-        visible = input->IsMouseVisible();
+        visible = DV_INPUT.IsMouseVisible();
 
         if (!visible && cursor_)
         {
@@ -1296,7 +1297,7 @@ void UI::GetCursorPositionAndVisible(IntVector2& pos, bool& visible)
         }
         else
         {
-            pos = input->GetMousePosition();
+            pos = DV_INPUT.GetMousePosition();
             pos = ConvertSystemToUI(pos);
         }
     }
@@ -1564,8 +1565,7 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
         IntVector2 cursorPos;
         GetElementAt(windowCursorPos, true, &cursorPos);
 
-        auto* input = GetSubsystem<Input>();
-        bool mouseGrabbed = input->IsMouseGrabbed();
+        bool mouseGrabbed = DV_INPUT.IsMouseGrabbed();
         for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
         {
             WeakPtr<UIElement> dragElement = i->first_;
@@ -1747,9 +1747,7 @@ void UI::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)
     // Handle drag cancelling
     ProcessDragCancel();
 
-    auto* input = GetSubsystem<Input>();
-
-    if (!input->IsMouseGrabbed())
+    if (!DV_INPUT.IsMouseGrabbed())
         ProcessClickBegin(cursorPos, MouseButton(eventData[P_BUTTON].GetU32()), mouseButtons_, qualifiers_, cursor_, cursorVisible);
 }
 
@@ -1775,7 +1773,6 @@ void UI::HandleMouseMove(StringHash eventType, VariantMap& eventData)
     qualifiers_ = QualifierFlags(eventData[P_QUALIFIERS].GetU32());
     usingTouchInput_ = false;
 
-    auto* input = GetSubsystem<Input>();
     const IntVector2& rootSize = rootElement_->GetSize();
     const IntVector2& rootPos = rootElement_->GetPosition();
 
@@ -1784,9 +1781,9 @@ void UI::HandleMouseMove(StringHash eventType, VariantMap& eventData)
 
     if (cursor_)
     {
-        if (!input->IsMouseVisible())
+        if (!DV_INPUT.IsMouseVisible())
         {
-            if (!input->IsMouseLocked())
+            if (!DV_INPUT.IsMouseLocked())
                 cursor_->SetPosition(ConvertSystemToUI(mousePos));
             else if (cursor_->IsVisible())
             {
@@ -1814,8 +1811,7 @@ void UI::HandleMouseMove(StringHash eventType, VariantMap& eventData)
 
 void UI::HandleMouseWheel(StringHash eventType, VariantMap& eventData)
 {
-    auto* input = GetSubsystem<Input>();
-    if (input->IsMouseGrabbed())
+    if (DV_INPUT.IsMouseGrabbed())
         return;
 
     using namespace MouseWheel;
@@ -1858,8 +1854,7 @@ void UI::HandleMouseWheel(StringHash eventType, VariantMap& eventData)
 
 void UI::HandleTouchBegin(StringHash eventType, VariantMap& eventData)
 {
-    auto* input = GetSubsystem<Input>();
-    if (input->IsMouseGrabbed())
+    if (DV_INPUT.IsMouseGrabbed())
         return;
 
     using namespace TouchBegin;
@@ -2030,12 +2025,10 @@ void UI::HandleRenderUpdate(StringHash eventType, VariantMap& eventData)
 
 void UI::HandleDropFile(StringHash eventType, VariantMap& eventData)
 {
-    auto* input = GetSubsystem<Input>();
-
     // Sending the UI variant of the event only makes sense if the OS cursor is visible (not locked to window center)
-    if (input->IsMouseVisible())
+    if (DV_INPUT.IsMouseVisible())
     {
-        IntVector2 screenPos = input->GetMousePosition();
+        IntVector2 screenPos = DV_INPUT.GetMousePosition();
         screenPos = ConvertSystemToUI(screenPos);
 
         UIElement* element = GetElementAt(screenPos);
@@ -2112,13 +2105,12 @@ IntVector2 UI::SumTouchPositions(UI::DragData* dragData, const IntVector2& oldSe
     {
         MouseButtonFlags buttons = dragData->dragButtons;
         dragData->sumPos = IntVector2::ZERO;
-        auto* input = GetSubsystem<Input>();
         for (unsigned i = 0; (1u << i) <= (unsigned)buttons; i++)
         {
             auto mouseButton = static_cast<MouseButton>(1u << i); // NOLINT(misc-misplaced-widening-cast)
             if (buttons & mouseButton)
             {
-                TouchState* ts = input->GetTouch((unsigned)i);
+                TouchState* ts = DV_INPUT.GetTouch((unsigned)i);
                 if (!ts)
                     break;
                 IntVector2 pos = ts->position_;

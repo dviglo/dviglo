@@ -636,7 +636,7 @@ void LineEdit::HandleFocused(StringHash /*eventType*/, VariantMap& eventData)
     UpdateCursor();
 
     if (GetSubsystem<UI>()->GetUseScreenKeyboard())
-        GetSubsystem<Input>()->SetScreenKeyboardVisible(true);
+        DV_INPUT.SetScreenKeyboardVisible(true);
 }
 
 void LineEdit::HandleDefocused(StringHash /*eventType*/, VariantMap& /*eventData*/)
@@ -644,7 +644,7 @@ void LineEdit::HandleDefocused(StringHash /*eventType*/, VariantMap& /*eventData
     text_->ClearSelection();
 
     if (GetSubsystem<UI>()->GetUseScreenKeyboard())
-        GetSubsystem<Input>()->SetScreenKeyboardVisible(false);
+        DV_INPUT.SetScreenKeyboardVisible(false);
 }
 
 void LineEdit::HandleLayoutUpdated(StringHash /*eventType*/, VariantMap& /*eventData*/)

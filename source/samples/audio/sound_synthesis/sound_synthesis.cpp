@@ -127,10 +127,9 @@ void SoundSynthesis::HandleUpdate(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Use keys to control the filter constant
-    auto* input = GetSubsystem<Input>();
-    if (input->GetKeyDown(KEY_UP))
+    if (DV_INPUT.GetKeyDown(KEY_UP))
         filter_ += timeStep * 0.5f;
-    if (input->GetKeyDown(KEY_DOWN))
+    if (DV_INPUT.GetKeyDown(KEY_DOWN))
         filter_ -= timeStep * 0.5f;
     filter_ = Clamp(filter_, 0.01f, 1.0f);
 

@@ -137,10 +137,18 @@ class DV_API Input : public Object
 #endif
 
 public:
+    static Input& get_instance();
+
+private:
     /// Construct.
     explicit Input();
     /// Destruct.
     ~Input() override;
+
+public:
+    // Запрещаем копирование
+    Input(const Input&) = delete;
+    Input& operator =(const Input&) = delete;
 
     /// Poll for window messages. Called by HandleBeginFrame().
     void Update();
@@ -441,5 +449,7 @@ private:
     bool emscriptenPointerLock_;
 #endif
 };
+
+#define DV_INPUT (dviglo::Input::get_instance())
 
 }

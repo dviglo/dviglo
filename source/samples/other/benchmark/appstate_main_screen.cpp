@@ -88,7 +88,7 @@ void AppState_MainScreen::OnEnter()
 
     CreateGui();
     SetupViewport();
-    GetSubsystem<Input>()->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
     SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
 }

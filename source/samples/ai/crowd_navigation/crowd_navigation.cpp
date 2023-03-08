@@ -384,8 +384,8 @@ void CrowdNavigation::MoveCamera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     auto* ui = GetSubsystem<UI>();
-    auto* input = GetSubsystem<Input>();
-    ui->GetCursor()->SetVisible(!input->GetMouseButtonDown(MOUSEB_RIGHT));
+    Input& input = DV_INPUT;
+    ui->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element (the console)
     if (ui->GetFocusElement())
@@ -400,7 +400,7 @@ void CrowdNavigation::MoveCamera(float timeStep)
     // Only move the camera when the cursor is hidden
     if (!ui->GetCursor()->IsVisible())
     {
-        IntVector2 mouseMove = input->GetMouseMove();
+        IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
@@ -410,40 +410,40 @@ void CrowdNavigation::MoveCamera(float timeStep)
     }
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input->GetKeyDown(KEY_W))
+    if (input.GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_S))
+    if (input.GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_A))
+    if (input.GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_D))
+    if (input.GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // Set destination or spawn a new jack with left mouse button
-    if (input->GetMouseButtonPress(MOUSEB_LEFT))
-        SetPathPoint(input->GetQualifierDown(QUAL_SHIFT));
+    if (input.GetMouseButtonPress(MOUSEB_LEFT))
+        SetPathPoint(input.GetQualifierDown(QUAL_SHIFT));
     // Add new obstacle or remove existing obstacle/agent with middle mouse button
-    else if (input->GetMouseButtonPress(MOUSEB_MIDDLE) || input->GetKeyPress(KEY_O))
+    else if (input.GetMouseButtonPress(MOUSEB_MIDDLE) || input.GetKeyPress(KEY_O))
         AddOrRemoveObject();
 
     // Check for loading/saving the scene from/to the file Data/Scenes/CrowdNavigation.xml relative to the executable directory
-    if (input->GetKeyPress(KEY_F5))
+    if (input.GetKeyPress(KEY_F5))
     {
         File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CrowdNavigation.xml", FILE_WRITE);
         scene_->SaveXML(saveFile);
     }
-    else if (input->GetKeyPress(KEY_F7))
+    else if (input.GetKeyPress(KEY_F7))
     {
         File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CrowdNavigation.xml", FILE_READ);
         scene_->LoadXML(loadFile);
     }
 
     // Toggle debug geometry with space
-    else if (input->GetKeyPress(KEY_SPACE))
+    else if (input.GetKeyPress(KEY_SPACE))
         drawDebug_ = !drawDebug_;
 
     // Toggle instruction text with F12
-    else if (input->GetKeyPress(KEY_F12))
+    else if (input.GetKeyPress(KEY_F12))
     {
         if (instructionText_)
             instructionText_->SetVisible(!instructionText_->IsVisible());
@@ -534,12 +534,12 @@ void CrowdNavigation::HandleUpdate(StringHash eventType, VariantMap& eventData)
     MoveCamera(timeStep);
 
     // Update streaming
-    auto* input = GetSubsystem<Input>();
-    if (input->GetKeyPress(KEY_TAB))
+    if (DV_INPUT.GetKeyPress(KEY_TAB))
     {
         useStreaming_ = !useStreaming_;
         ToggleStreaming(useStreaming_);
     }
+
     if (useStreaming_)
         UpdateStreaming();
 

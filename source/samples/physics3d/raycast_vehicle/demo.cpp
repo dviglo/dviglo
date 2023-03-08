@@ -171,24 +171,24 @@ void RaycastVehicleDemo::HandleUpdate(StringHash eventType,
                                  VariantMap& eventData)
 {
     using namespace Update;
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
     if (vehicle_)
     {
         auto* ui = GetSubsystem<UI>();
         // Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
         if (!ui->GetFocusElement())
         {
-            vehicle_->controls_.Set(CTRL_FORWARD, input->GetKeyDown(KEY_W));
-            vehicle_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
-            vehicle_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
-            vehicle_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
-            vehicle_->controls_.Set(CTRL_BRAKE, input->GetKeyDown(KEY_F));
+            vehicle_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
+            vehicle_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));
+            vehicle_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
+            vehicle_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
+            vehicle_->controls_.Set(CTRL_BRAKE, input.GetKeyDown(KEY_F));
             // Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
             if (touchEnabled_)
             {
-                for (i32 i = 0; i < input->GetNumTouches(); ++i)
+                for (i32 i = 0; i < input.GetNumTouches(); ++i)
                 {
-                    TouchState* state = input->GetTouch(i);
+                    TouchState* state = input.GetTouch(i);
                     if (!state->touchedElement_) // Touch on empty space
                     {
                         auto* camera = cameraNode_->GetComponent<Camera>();
@@ -204,19 +204,19 @@ void RaycastVehicleDemo::HandleUpdate(StringHash eventType,
             }
             else
             {
-                vehicle_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
-                vehicle_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
+                vehicle_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
+                vehicle_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
             }
             // Limit pitch
             vehicle_->controls_.pitch_ = Clamp(vehicle_->controls_.pitch_, 0.0f, 80.0f);
             // Check for loading / saving the scene
-            if (input->GetKeyPress(KEY_F5))
+            if (input.GetKeyPress(KEY_F5))
             {
                 File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_WRITE);
                 scene_->SaveXML(saveFile);
             }
-            if (input->GetKeyPress(KEY_F7))
+            if (input.GetKeyPress(KEY_F7))
             {
                 File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_READ);

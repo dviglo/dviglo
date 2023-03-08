@@ -158,11 +158,10 @@ void Urho2DStretchableSprite::OnKeyUp(StringHash /*eventType*/, VariantMap& even
 void Urho2DStretchableSprite::TranslateSprites(float timeStep)
 {
     static constexpr auto speed = 1.0f;
-    const auto input = GetSubsystem<Input>();
-    const auto left = input->GetKeyDown(KEY_A),
-        right = input->GetKeyDown(KEY_D),
-        up = input->GetKeyDown(KEY_W),
-        down = input->GetKeyDown(KEY_S);
+    const auto left = DV_INPUT.GetKeyDown(KEY_A),
+        right = DV_INPUT.GetKeyDown(KEY_D),
+        up = DV_INPUT.GetKeyDown(KEY_W),
+        down = DV_INPUT.GetKeyDown(KEY_S);
 
     if (left || right || up || down)
     {
@@ -179,12 +178,11 @@ void Urho2DStretchableSprite::RotateSprites(float timeStep)
 {
     static constexpr auto speed = 45.0f;
 
-    const auto input = GetSubsystem<Input>();
-    const auto left = input->GetKeyDown(KEY_A),
-        right = input->GetKeyDown(KEY_D),
-        up = input->GetKeyDown(KEY_W),
-        down = input->GetKeyDown(KEY_S),
-        ctrl = input->GetKeyDown(KEY_CTRL);
+    const auto left = DV_INPUT.GetKeyDown(KEY_A),
+        right = DV_INPUT.GetKeyDown(KEY_D),
+        up = DV_INPUT.GetKeyDown(KEY_W),
+        down = DV_INPUT.GetKeyDown(KEY_S),
+        ctrl = DV_INPUT.GetKeyDown(KEY_CTRL);
 
     if (left || right || up || down)
     {
@@ -203,11 +201,10 @@ void Urho2DStretchableSprite::ScaleSprites(float timeStep)
 {
     static constexpr auto speed = 0.5f;
 
-    const auto input = GetSubsystem<Input>();
-    const auto left = input->GetKeyDown(KEY_A),
-        right = input->GetKeyDown(KEY_D),
-        up = input->GetKeyDown(KEY_W),
-        down = input->GetKeyDown(KEY_S);
+    const auto left = DV_INPUT.GetKeyDown(KEY_A),
+        right = DV_INPUT.GetKeyDown(KEY_D),
+        up = DV_INPUT.GetKeyDown(KEY_W),
+        down = DV_INPUT.GetKeyDown(KEY_S);
     if (left || right || up || down)
     {
         const auto quantum = timeStep * speed;

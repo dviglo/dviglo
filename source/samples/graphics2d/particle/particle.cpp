@@ -33,8 +33,7 @@ void Urho2DParticle::Start()
     Sample::Start();
 
     // Set mouse visible
-    auto* input = GetSubsystem<Input>();
-    input->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 
     // Create the scene content
     CreateScene();

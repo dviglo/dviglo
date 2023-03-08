@@ -119,21 +119,21 @@ public:
         constexpr float MOVE_SPEED = 20.0f;
         constexpr float MOUSE_SENSITIVITY = 0.1f;
 
-        Input* input = GetSubsystem<Input>();
+        Input& input = DV_INPUT;
 
-        IntVector2 mouseMove = input->GetMouseMove();
+        IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
         cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 
-        if (input->GetKeyDown(KEY_W))
+        if (input.GetKeyDown(KEY_W))
             cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-        if (input->GetKeyDown(KEY_S))
+        if (input.GetKeyDown(KEY_S))
             cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-        if (input->GetKeyDown(KEY_A))
+        if (input.GetKeyDown(KEY_A))
             cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-        if (input->GetKeyDown(KEY_D))
+        if (input.GetKeyDown(KEY_D))
             cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     }
@@ -149,23 +149,23 @@ public:
         using namespace Update;
         float timeStep = eventData[P_TIMESTEP].GetFloat();
 
-        Input* input = GetSubsystem<Input>();
+        Input& input = DV_INPUT;
 
-        if (input->GetKeyDown(KEY_1))
+        if (input.GetKeyDown(KEY_1))
             currentTest_ = 1;
-        else if (input->GetKeyDown(KEY_2))
+        else if (input.GetKeyDown(KEY_2))
             currentTest_ = 2;
-        else if (input->GetKeyDown(KEY_3))
+        else if (input.GetKeyDown(KEY_3))
             currentTest_ = 3;
 
-        if (input->GetMouseButtonDown(MOUSEB_RIGHT))
+        if (input.GetMouseButtonDown(MOUSEB_RIGHT))
         {
-            input->SetMouseVisible(false);
+            input.SetMouseVisible(false);
             MoveCamera(timeStep);
         }
         else
         {
-            input->SetMouseVisible(true);
+            input.SetMouseVisible(true);
         }
 
         fpsTimeCounter_ += timeStep;
@@ -188,7 +188,6 @@ public:
 
     void HandleEndViewRender(StringHash eventType, VariantMap& eventData)
     {
-        Input* input = GetSubsystem<Input>();
         ResourceCache& cache = DV_RES_CACHE;
         Graphics* graphics = GetSubsystem<Graphics>();
 
@@ -239,7 +238,7 @@ public:
             virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtualScreenSize_);
             virtualSpriteBatch_->DrawSprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
-            Vector2 virtualMousePos = virtualSpriteBatch_->GetVirtualPos(Vector2(GetSubsystem<Input>()->GetMousePosition()));
+            Vector2 virtualMousePos = virtualSpriteBatch_->GetVirtualPos(Vector2(DV_INPUT.GetMousePosition()));
             virtualSpriteBatch_->SetShapeColor(0xFFFFFFFF);
             virtualSpriteBatch_->DrawArrow({100.0f, 100.f}, virtualMousePos, 10);
             virtualSpriteBatch_->Flush();

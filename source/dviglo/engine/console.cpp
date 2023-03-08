@@ -120,7 +120,7 @@ void Console::SetDefaultStyle(XMLFile* style)
 
 void Console::SetVisible(bool enable)
 {
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
     auto* ui = GetSubsystem<UI>();
     Cursor* cursor = ui->GetCursor();
 
@@ -141,11 +141,11 @@ void Console::SetVisible(bool enable)
         if (!cursor)
         {
             // Show OS mouse
-            input->SetMouseMode(MM_FREE, true);
-            input->SetMouseVisible(true, true);
+            input.SetMouseMode(MM_FREE, true);
+            input.SetMouseVisible(true, true);
         }
 
-        input->SetMouseGrabbed(false, true);
+        input.SetMouseGrabbed(false, true);
     }
     else
     {
@@ -156,11 +156,11 @@ void Console::SetVisible(bool enable)
         if (!cursor)
         {
             // Restore OS mouse visibility
-            input->ResetMouseMode();
-            input->ResetMouseVisible();
+            input.ResetMouseMode();
+            input.ResetMouseVisible();
         }
 
-        input->ResetMouseGrabbed();
+        input.ResetMouseGrabbed();
     }
 }
 

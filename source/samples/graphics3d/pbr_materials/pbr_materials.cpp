@@ -207,8 +207,8 @@ void PBRMaterials::MoveCamera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     auto* ui = GetSubsystem<UI>();
-    auto* input = GetSubsystem<Input>();
-    ui->GetCursor()->SetVisible(!input->GetMouseButtonDown(MOUSEB_RIGHT));
+    Input& input = DV_INPUT;
+    ui->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element
     if (ui->GetFocusElement())
@@ -223,7 +223,7 @@ void PBRMaterials::MoveCamera(float timeStep)
     // Only move the camera when the cursor is hidden
     if (!ui->GetCursor()->IsVisible())
     {
-        IntVector2 mouseMove = input->GetMouseMove();
+        IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
@@ -233,13 +233,13 @@ void PBRMaterials::MoveCamera(float timeStep)
     }
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input->GetKeyDown(KEY_W))
+    if (input.GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_S))
+    if (input.GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_A))
+    if (input.GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_D))
+    if (input.GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 

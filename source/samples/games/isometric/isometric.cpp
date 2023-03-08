@@ -230,17 +230,15 @@ void Urho2DIsometricDemo::HandleUpdate(StringHash eventType, VariantMap& eventDa
     if (cameraNode_)
         sample2D_->Zoom(cameraNode_->GetComponent<Camera>());
 
-    auto* input = GetSubsystem<Input>();
-
     // Toggle debug geometry with 'Z' key
-    if (input->GetKeyPress(KEY_Z))
+    if (DV_INPUT.GetKeyPress(KEY_Z))
         drawDebug_ = !drawDebug_;
 
     // Check for loading / saving the scene
-    if (input->GetKeyPress(KEY_F5))
+    if (DV_INPUT.GetKeyPress(KEY_F5))
         sample2D_->SaveScene(false);
 
-    if (input->GetKeyPress(KEY_F7))
+    if (DV_INPUT.GetKeyPress(KEY_F7))
         ReloadScene(false);
 }
 
@@ -321,8 +319,7 @@ void Urho2DIsometricDemo::HandlePlayButton(StringHash eventType, VariantMap& eve
     playButton->SetVisible(false);
 
     // Hide mouse cursor
-    auto* input = GetSubsystem<Input>();
-    input->SetMouseVisible(false);
+    DV_INPUT.SetMouseVisible(false);
 }
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DIsometricDemo)

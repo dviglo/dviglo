@@ -105,7 +105,6 @@ Context::~Context()
     /// \todo Context should not need to know about subsystems
     RemoveSubsystem("Audio");
     RemoveSubsystem("UI");
-    RemoveSubsystem("Input");
     RemoveSubsystem("Renderer");
     RemoveSubsystem("Graphics");
 

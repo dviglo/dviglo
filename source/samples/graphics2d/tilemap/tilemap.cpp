@@ -34,7 +34,7 @@ void Urho2DTileMap::Start()
     Sample::Start();
 
     // Enable OS cursor
-    GetSubsystem<Input>()->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 
     // Create the scene content
     CreateScene();
@@ -118,28 +118,28 @@ void Urho2DTileMap::MoveCamera(float timeStep)
     if (GetSubsystem<UI>()->GetFocusElement())
         return;
 
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 4.0f;
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input->GetKeyDown(KEY_W))
+    if (input.GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::UP * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_S))
+    if (input.GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::DOWN * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_A))
+    if (input.GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input->GetKeyDown(KEY_D))
+    if (input.GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
-    if (input->GetKeyDown(KEY_PAGEUP))
+    if (input.GetKeyDown(KEY_PAGEUP))
     {
         auto* camera = cameraNode_->GetComponent<Camera>();
         camera->SetZoom(camera->GetZoom() * 1.01f);
     }
 
-    if (input->GetKeyDown(KEY_PAGEDOWN))
+    if (input.GetKeyDown(KEY_PAGEDOWN))
     {
         auto* camera = cameraNode_->GetComponent<Camera>();
         camera->SetZoom(camera->GetZoom() * 0.99f);
@@ -171,8 +171,6 @@ void Urho2DTileMap::HandleUpdate(StringHash eventType, VariantMap& eventData)
 
 void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)
 {
-    auto* input = GetSubsystem<Input>();
-
     Node* tileMapNode = scene_->GetChild("TileMap", true);
     auto* map = tileMapNode->GetComponent<TileMap2D>();
     TileMapLayer2D* layer = map->GetLayer(0);
@@ -187,7 +185,7 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
             return;
         auto* sprite = n->GetComponent<StaticSprite2D>();
 
-        if (input->GetMouseButtonDown(MOUSEB_RIGHT))
+        if (DV_INPUT.GetMouseButtonDown(MOUSEB_RIGHT))
         {
             // Swap grass and water
             if (layer->GetTile(x, y)->GetGid() < 9) // First 8 sprites in the "isometric_grass_and_water.png" tileset are mostly grass and from 9 to 24 they are mostly water
@@ -204,10 +202,9 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
 
 Vector2 Urho2DTileMap::GetMousePositionXY()
 {
-    auto* input = GetSubsystem<Input>();
     auto* graphics = GetSubsystem<Graphics>();
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Vector3 screenPoint = Vector3((float)input->GetMousePosition().x_ / graphics->GetWidth(), (float)input->GetMousePosition().y_ / graphics->GetHeight(), 10.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / graphics->GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / graphics->GetHeight(), 10.0f);
     Vector3 worldPoint = camera->ScreenToWorldPoint(screenPoint);
     return Vector2(worldPoint.x_, worldPoint.y_);
 }

@@ -255,10 +255,8 @@ public:
 
     void InitTouchInput()
     {
-        Input* input = GetSubsystem<Input>();
-
         touchEnabled = true;
-        screenJoystickID = input->AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_NinjaSnowWar.xml"));
+        screenJoystickID = DV_INPUT.AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_NinjaSnowWar.xml"));
     }
 
     void CreateCamera()
@@ -294,7 +292,6 @@ public:
 
         ResourceCache& cache = DV_RES_CACHE;
         UI* ui = GetSubsystem<UI>();
-        Input* input = GetSubsystem<Input>();
 
         sight = new BorderImage();
         sight->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/Sight.png"));
@@ -343,7 +340,7 @@ public:
         if (GetPlatform() == "Android" || GetPlatform() == "iOS")
             // On mobile platform, enable touch by adding a screen joystick
             InitTouchInput();
-        else if (input->GetNumJoysticks() == 0)
+        else if (DV_INPUT.GetNumJoysticks() == 0)
             // On desktop platform, do not detect touch when we already got a joystick
             SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(App, HandleTouchBegin));
     }
@@ -553,7 +550,6 @@ public:
         Engine* engine = GetSubsystem<Engine>();
         Graphics* graphics = GetSubsystem<Graphics>();
         Audio* audio = GetSubsystem<Audio>();
-        Input* input = GetSubsystem<Input>();
 
         i32 key = eventData["Key"].GetI32();
 
@@ -600,9 +596,9 @@ public:
                 {
                     // Lazy initialization
                     if (screenJoystickSettingsID < 0)
-                        screenJoystickSettingsID = input->AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_NinjaSnowWar.xml"));
+                        screenJoystickSettingsID = DV_INPUT.AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_NinjaSnowWar.xml"));
                     else
-                        input->SetScreenJoystickVisible(screenJoystickSettingsID, true);
+                        DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsID, true);
                 }
             }
             else
@@ -612,7 +608,7 @@ public:
 
                 // Hide the settings joystick
                 if (screenJoystickSettingsID >= 0)
-                    input->SetScreenJoystickVisible(screenJoystickSettingsID, false);
+                    DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsID, false);
             }
         }
     }
@@ -925,7 +921,7 @@ public:
 
     void UpdateControls()
     {
-        Input* input = GetSubsystem<Input>();
+        Input& input = DV_INPUT;
         Graphics* graphics = GetSubsystem<Graphics>();
         Console* console = GetSubsystem<Console>();
 
@@ -936,9 +932,9 @@ public:
 
             if (touchEnabled)
             {
-                for (i32 i = 0; i < input->GetNumTouches(); ++i)
+                for (i32 i = 0; i < input.GetNumTouches(); ++i)
                 {
-                    TouchState* touch = input->GetTouch(i);
+                    TouchState* touch = input.GetTouch(i);
                     if (!touch->touchedElement_)
                     {
                         // Touch on empty space
@@ -948,9 +944,9 @@ public:
                 }
             }
 
-            if (input->GetNumJoysticks() > 0)
+            if (input.GetNumJoysticks() > 0)
             {
-                JoystickState* joystick = touchEnabled ? input->GetJoystick(screenJoystickID) : input->GetJoystickByIndex(0);
+                JoystickState* joystick = touchEnabled ? input.GetJoystick(screenJoystickID) : input.GetJoystickByIndex(0);
                 if (joystick->GetNumButtons() > 0)
                 {
                     if (joystick->GetButtonDown(0))
@@ -1007,26 +1003,26 @@ public:
             // and the key was already released
             if (!console || !console->IsVisible())
             {
-                if (input->GetKeyDown(KEY_W))
+                if (input.GetKeyDown(KEY_W))
                     playerControls.Set(CTRL_UP, true);
-                if (input->GetKeyDown(KEY_S))
+                if (input.GetKeyDown(KEY_S))
                     playerControls.Set(CTRL_DOWN, true);
-                if (input->GetKeyDown(KEY_A))
+                if (input.GetKeyDown(KEY_A))
                     playerControls.Set(CTRL_LEFT, true);
-                if (input->GetKeyDown(KEY_D))
+                if (input.GetKeyDown(KEY_D))
                     playerControls.Set(CTRL_RIGHT, true);
-                if (input->GetKeyDown(KEY_LCTRL) || input->GetKeyPress(KEY_LCTRL))
+                if (input.GetKeyDown(KEY_LCTRL) || input.GetKeyPress(KEY_LCTRL))
                     playerControls.Set(CTRL_FIRE, true);
-                if (input->GetKeyDown(KEY_SPACE) || input->GetKeyPress(KEY_SPACE))
+                if (input.GetKeyDown(KEY_SPACE) || input.GetKeyPress(KEY_SPACE))
                     playerControls.Set(CTRL_JUMP, true);
 
-                if (input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT))
+                if (input.GetMouseButtonDown(MOUSEB_LEFT) || input.GetMouseButtonPress(MOUSEB_LEFT))
                     playerControls.Set(CTRL_FIRE, true);
-                if (input->GetMouseButtonDown(MOUSEB_RIGHT) || input->GetMouseButtonPress(MOUSEB_RIGHT))
+                if (input.GetMouseButtonDown(MOUSEB_RIGHT) || input.GetMouseButtonPress(MOUSEB_RIGHT))
                     playerControls.Set(CTRL_JUMP, true);
 
-                playerControls.yaw_ += MOUSE_SENSITIVITY * input->GetMouseMoveX();
-                playerControls.pitch_ += MOUSE_SENSITIVITY * input->GetMouseMoveY();
+                playerControls.yaw_ += MOUSE_SENSITIVITY * input.GetMouseMoveX();
+                playerControls.pitch_ += MOUSE_SENSITIVITY * input.GetMouseMoveY();
                 playerControls.pitch_ = Clamp(playerControls.pitch_, -60.0f, 60.0f);
             }
 
@@ -1119,28 +1115,28 @@ public:
     void UpdateFreelookCamera()
     {
         Console* console = GetSubsystem<Console>();
-        Input* input = GetSubsystem<Input>();
+        Input& input = DV_INPUT;
 
         if (!console || !console->IsVisible())
         {
             float timeStep = DV_TIME.GetTimeStep();
             float speedMultiplier = 1.0f;
-            if (input->GetKeyDown(KEY_LSHIFT))
+            if (input.GetKeyDown(KEY_LSHIFT))
                 speedMultiplier = 5.0f;
-            if (input->GetKeyDown(KEY_LCTRL))
+            if (input.GetKeyDown(KEY_LCTRL))
                 speedMultiplier = 0.1f;
 
-            if (input->GetKeyDown(KEY_W))
+            if (input.GetKeyDown(KEY_W))
                 gameCameraNode->Translate(Vector3(0.f, 0.f, 10.f) * timeStep * speedMultiplier);
-            if (input->GetKeyDown(KEY_S))
+            if (input.GetKeyDown(KEY_S))
                 gameCameraNode->Translate(Vector3(0.f, 0.f, -10.f) * timeStep * speedMultiplier);
-            if (input->GetKeyDown(KEY_A))
+            if (input.GetKeyDown(KEY_A))
                 gameCameraNode->Translate(Vector3(-10.f, 0.f, 0.f) * timeStep * speedMultiplier);
-            if (input->GetKeyDown(KEY_D))
+            if (input.GetKeyDown(KEY_D))
                 gameCameraNode->Translate(Vector3(10.f, 0.f, 0.f) * timeStep * speedMultiplier);
 
-            playerControls.yaw_ += MOUSE_SENSITIVITY * input->GetMouseMoveX();
-            playerControls.pitch_ += MOUSE_SENSITIVITY * input->GetMouseMoveY();
+            playerControls.yaw_ += MOUSE_SENSITIVITY * input.GetMouseMoveX();
+            playerControls.pitch_ += MOUSE_SENSITIVITY * input.GetMouseMoveY();
             playerControls.pitch_ = Clamp(playerControls.pitch_, -90.0f, 90.0f);
             gameCameraNode->SetRotation(Quaternion(playerControls.pitch_, playerControls.yaw_, 0.f));
         }

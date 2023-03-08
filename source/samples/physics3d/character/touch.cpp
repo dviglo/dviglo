@@ -26,13 +26,13 @@ void Touch::UpdateTouches(Controls& controls) // Called from HandleUpdate
 {
     zoom_ = false; // reset bool
 
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     // Zoom in/out
-    if (input->GetNumTouches() == 2)
+    if (input.GetNumTouches() == 2)
     {
-        TouchState* touch1 = input->GetTouch(0);
-        TouchState* touch2 = input->GetTouch(1);
+        TouchState* touch1 = input.GetTouch(0);
+        TouchState* touch2 = input.GetTouch(1);
 
         // Check for zoom pattern (touches moving in opposite directions and on empty space)
         if (!touch1->touchedElement_ && !touch2->touchedElement_ && ((touch1->delta_.y_ > 0 && touch2->delta_.y_ < 0) || (touch1->delta_.y_ < 0 && touch2->delta_.y_ > 0)))
@@ -54,9 +54,9 @@ void Touch::UpdateTouches(Controls& controls) // Called from HandleUpdate
     }
 
     // Gyroscope (emulated by SDL through a virtual joystick)
-    if (useGyroscope_ && input->GetNumJoysticks() > 0)  // numJoysticks = 1 on iOS & Android
+    if (useGyroscope_ && input.GetNumJoysticks() > 0)  // numJoysticks = 1 on iOS & Android
     {
-        JoystickState* joystick = input->GetJoystickByIndex(0);
+        JoystickState* joystick = input.GetJoystickByIndex(0);
         if (joystick->GetNumAxes() >= 2)
         {
             if (joystick->GetAxisPosition(0) < -GYROSCOPE_THRESHOLD)

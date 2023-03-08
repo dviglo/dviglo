@@ -26,7 +26,7 @@ void UIDrag::Start()
     // Set mouse visible
     String platform = GetPlatform();
     if (platform != "Android" && platform != "iOS")
-        GetSubsystem<Input>()->SetMouseVisible(true);
+        DV_INPUT.SetMouseVisible(true);
 
     // Create the UI content
     CreateGUI();
@@ -168,13 +168,11 @@ void UIDrag::HandleUpdate(StringHash eventType, VariantMap& eventData)
     auto* ui = GetSubsystem<UI>();
     UIElement* root = ui->GetRoot();
 
-    auto* input = GetSubsystem<Input>();
-
-    unsigned n = input->GetNumTouches();
+    unsigned n = DV_INPUT.GetNumTouches();
     for (unsigned i = 0; i < n; i++)
     {
         Text* t = (Text*)root->GetChild("Touch " + String(i));
-        TouchState* ts = input->GetTouch(i);
+        TouchState* ts = DV_INPUT.GetTouch(i);
         t->SetText("Touch " + String(ts->touchID_));
 
         IntVector2 pos = ts->position_;
@@ -190,7 +188,7 @@ void UIDrag::HandleUpdate(StringHash eventType, VariantMap& eventData)
         t->SetVisible(false);
     }
 
-    if (input->GetKeyPress(KEY_SPACE))
+    if (DV_INPUT.GetKeyPress(KEY_SPACE))
     {
         Vector<UIElement*> elements;
         root->GetChildrenWithTag(elements, "SomeTag");

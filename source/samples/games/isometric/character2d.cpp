@@ -55,19 +55,19 @@ void Character2D::Update(float timeStep)
     }
 
     auto* animatedSprite = GetComponent<AnimatedSprite2D>();
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     // Set direction
     Vector3 moveDir = Vector3::ZERO; // Reset
     float speedX = Clamp(MOVE_SPEED_X / zoom_, 0.4f, 1.0f);
     float speedY = speedX;
 
-    if (input->GetKeyDown(KEY_A) || input->GetKeyDown(KEY_LEFT))
+    if (input.GetKeyDown(KEY_A) || input.GetKeyDown(KEY_LEFT))
     {
         moveDir = moveDir + Vector3::LEFT * speedX;
         animatedSprite->SetFlipX(false); // Flip sprite (reset to default play on the X axis)
     }
-    if (input->GetKeyDown(KEY_D) || input->GetKeyDown(KEY_RIGHT))
+    if (input.GetKeyDown(KEY_D) || input.GetKeyDown(KEY_RIGHT))
     {
         moveDir = moveDir + Vector3::RIGHT * speedX;
         animatedSprite->SetFlipX(true); // Flip sprite (flip animation on the X axis)
@@ -76,9 +76,9 @@ void Character2D::Update(float timeStep)
     if (!moveDir.Equals(Vector3::ZERO))
         speedY = speedX * moveSpeedScale_;
 
-    if (input->GetKeyDown(KEY_W) || input->GetKeyDown(KEY_UP))
+    if (input.GetKeyDown(KEY_W) || input.GetKeyDown(KEY_UP))
         moveDir = moveDir + Vector3::UP * speedY;
-    if (input->GetKeyDown(KEY_S) || input->GetKeyDown(KEY_DOWN))
+    if (input.GetKeyDown(KEY_S) || input.GetKeyDown(KEY_DOWN))
         moveDir = moveDir + Vector3::DOWN * speedY;
 
     // Move
@@ -86,7 +86,7 @@ void Character2D::Update(float timeStep)
         node_->Translate(moveDir * timeStep);
 
     // Animate
-    if (input->GetKeyDown(KEY_SPACE))
+    if (input.GetKeyDown(KEY_SPACE))
     {
         if (animatedSprite->GetAnimation() != "attack")
             animatedSprite->SetAnimation("attack", LM_FORCE_LOOPED);
@@ -167,8 +167,7 @@ void Character2D::HandleDeath()
     static_cast<Text*>(ui->GetRoot()->GetChild("PlayButton", true))->SetVisible(true);
 
     // Show mouse cursor so that we can click
-    auto* input = GetSubsystem<Input>();
-    input->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 
     // Put character outside of the scene and magnify him
     node_->SetPosition(Vector3(-20.0f, 0.0f, 0.0f));

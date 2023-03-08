@@ -237,7 +237,7 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 
-    auto* input = GetSubsystem<Input>();
+    Input& input = DV_INPUT;
 
     if (character_)
     {
@@ -254,19 +254,19 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
         {
             if (!touch_ || !touch_->useGyroscope_)
             {
-                character_->controls_.Set(CTRL_FORWARD, input->GetKeyDown(KEY_W));
-                character_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
-                character_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
-                character_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
+                character_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
+                character_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));
+                character_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
+                character_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
             }
-            character_->controls_.Set(CTRL_JUMP, input->GetKeyDown(KEY_SPACE));
+            character_->controls_.Set(CTRL_JUMP, input.GetKeyDown(KEY_SPACE));
 
             // Add character yaw & pitch from the mouse motion or touch input
             if (touchEnabled_)
             {
-                for (unsigned i = 0; i < input->GetNumTouches(); ++i)
+                for (unsigned i = 0; i < input.GetNumTouches(); ++i)
                 {
-                    TouchState* state = input->GetTouch(i);
+                    TouchState* state = input.GetTouch(i);
                     if (!state->touchedElement_)    // Touch on empty space
                     {
                         auto* camera = cameraNode_->GetComponent<Camera>();
@@ -281,8 +281,8 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             }
             else
             {
-                character_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
-                character_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
+                character_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
+                character_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
             }
             // Limit pitch
             character_->controls_.pitch_ = Clamp(character_->controls_.pitch_, -80.0f, 80.0f);
@@ -290,20 +290,20 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             character_->GetNode()->SetRotation(Quaternion(character_->controls_.yaw_, Vector3::UP));
 
             // Switch between 1st and 3rd person
-            if (input->GetKeyPress(KEY_F))
+            if (input.GetKeyPress(KEY_F))
                 firstPerson_ = !firstPerson_;
 
             // Turn on/off gyroscope on mobile platform
-            if (touch_ && input->GetKeyPress(KEY_G))
+            if (touch_ && input.GetKeyPress(KEY_G))
                 touch_->useGyroscope_ = !touch_->useGyroscope_;
 
             // Check for loading / saving the scene
-            if (input->GetKeyPress(KEY_F5))
+            if (input.GetKeyPress(KEY_F5))
             {
                 File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_WRITE);
                 scene_->SaveXML(saveFile);
             }
-            if (input->GetKeyPress(KEY_F7))
+            if (input.GetKeyPress(KEY_F7))
             {
                 File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_READ);
                 scene_->LoadXML(loadFile);

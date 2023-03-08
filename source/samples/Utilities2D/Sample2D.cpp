@@ -345,22 +345,21 @@ void Sample2D::PopulateTriggers(TileMapLayer2D* triggersLayer)
 
 float Sample2D::Zoom(Camera* camera)
 {
-    auto* input = GetSubsystem<Input>();
     float zoom_ = camera->GetZoom();
 
-    if (input->GetMouseMoveWheel() != 0)
+    if (DV_INPUT.GetMouseMoveWheel() != 0)
     {
-        zoom_ = Clamp(zoom_ + input->GetMouseMoveWheel() * 0.1f, CAMERA_MIN_DIST, CAMERA_MAX_DIST);
+        zoom_ = Clamp(zoom_ + DV_INPUT.GetMouseMoveWheel() * 0.1f, CAMERA_MIN_DIST, CAMERA_MAX_DIST);
         camera->SetZoom(zoom_);
     }
 
-    if (input->GetKeyDown(KEY_PAGEUP))
+    if (DV_INPUT.GetKeyDown(KEY_PAGEUP))
     {
         zoom_ = Clamp(zoom_ * 1.01f, CAMERA_MIN_DIST, CAMERA_MAX_DIST);
         camera->SetZoom(zoom_);
     }
 
-    if (input->GetKeyDown(KEY_PAGEDOWN))
+    if (DV_INPUT.GetKeyDown(KEY_PAGEDOWN))
     {
         zoom_ = Clamp(zoom_ * 0.99f, CAMERA_MIN_DIST, CAMERA_MAX_DIST);
         camera->SetZoom(zoom_);
@@ -472,8 +471,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
 
     // Show mouse cursor
-    auto* input = GetSubsystem<Input>();
-    input->SetMouseVisible(true);
+    DV_INPUT.SetMouseVisible(true);
 }
 
 void Sample2D::HandleExitButton(StringHash eventType, VariantMap& eventData)

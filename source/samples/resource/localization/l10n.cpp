@@ -33,9 +33,8 @@ void L10n::Start()
     Sample::Start();
 
     // Enable and center OS cursor
-    auto* input = GetSubsystem<Input>();
-    input->SetMouseVisible(true);
-    input->CenterMousePosition();
+    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT.CenterMousePosition();
 
     // Load strings from JSON files and subscribe to the change language event
     InitLocalizationSystem();
@@ -175,9 +174,8 @@ void L10n::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
     float timeStep = eventData[P_TIMESTEP].GetFloat();
-    auto* input = GetSubsystem<Input>();
     const float MOUSE_SENSITIVITY = 0.1f;
-    IntVector2 mouseMove = input->GetMouseMove();
+    IntVector2 mouseMove = DV_INPUT.GetMouseMove();
     yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
     pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
     pitch_ = Clamp(pitch_, -90.0f, 90.0f);
