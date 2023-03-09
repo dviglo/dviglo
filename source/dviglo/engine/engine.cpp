@@ -94,7 +94,6 @@ Engine::Engine() :
     autoExit_(true),
     initialized_(false),
     exiting_(false),
-    headless_(false),
     audioPaused_(false)
 {
     // Создаём синглтоны, которые не зависят от инициализации движка и параметров движка
@@ -140,8 +139,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     DV_PROFILE(InitEngine);
 
-    // Set headless mode
-    headless_ = GetParameter(parameters, EP_HEADLESS, false).GetBool();
+    Headless::value = GetParameter(parameters, EP_HEADLESS, false).GetBool();
 
     // Detect GAPI even in headless mode
     // https://github.com/urho3d/Urho3D/issues/3040
@@ -178,7 +176,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     }
 
     // Register the rest of the subsystems
-    if (!headless_)
+    if (!Headless::get())
     {
         DV_CONTEXT.RegisterSubsystem(new Graphics(gapi));
         DV_CONTEXT.RegisterSubsystem(new Renderer());
@@ -226,7 +224,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         return false;
 
     // Initialize graphics & audio output
-    if (!headless_)
+    if (!Headless::get())
     {
         auto* graphics = GetSubsystem<Graphics>();
         auto* renderer = GetSubsystem<Renderer>();
@@ -469,7 +467,7 @@ void Engine::RunFrame()
     assert(initialized_);
 
     // If not headless, and the graphics subsystem no longer has a window open, assume we should exit
-    if (!headless_ && !GetSubsystem<Graphics>()->IsInitialized())
+    if (!Headless::get() && !GetSubsystem<Graphics>()->IsInitialized())
         exiting_ = true;
 
     if (exiting_)
@@ -513,7 +511,7 @@ void Engine::RunFrame()
 
 Console* Engine::CreateConsole()
 {
-    if (headless_ || !initialized_)
+    if (Headless::get() || !initialized_)
         return nullptr;
 
     // Return existing console if possible
@@ -529,7 +527,7 @@ Console* Engine::CreateConsole()
 
 DebugHud* Engine::CreateDebugHud()
 {
-    if (headless_ || !initialized_)
+    if (Headless::get() || !initialized_)
         return nullptr;
 
     // Return existing debug HUD if possible
@@ -681,7 +679,7 @@ void Engine::Update()
 
 void Engine::Render()
 {
-    if (headless_)
+    if (Headless::get())
         return;
 
     DV_PROFILE(Render);

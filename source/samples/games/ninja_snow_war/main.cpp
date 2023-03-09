@@ -104,7 +104,7 @@ public:
 
     void Start() override
     {
-        if (GetSubsystem<Engine>()->IsHeadless())
+        if (Headless::get())
             OpenConsoleWindow();
 
         ParseNetworkArguments();
@@ -140,7 +140,7 @@ public:
 
     void InitAudio()
     {
-        if (GetSubsystem<Engine>()->IsHeadless())
+        if (Headless::get())
             return;
 
         // Lower mastervolumes slightly.
@@ -165,7 +165,7 @@ public:
     {
         Engine* engine = GetSubsystem<Engine>();
 
-        if (engine->IsHeadless())
+        if (Headless::get())
             return;
 
         XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
@@ -189,7 +189,6 @@ public:
             return;
 
         Renderer* renderer = GetSubsystem<Renderer>();
-        Engine* engine = GetSubsystem<Engine>();
         Graphics* graphics = GetSubsystem<Graphics>();
 
         gameScene->LoadXML(*DV_RES_CACHE.GetFile("Scenes/NinjaSnowWar.xml"));
@@ -210,7 +209,7 @@ public:
         }
 
         // Precache shaders if possible
-        if (!engine->IsHeadless() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
+        if (!Headless::get() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
             graphics->PrecacheShaders(*DV_RES_CACHE.GetFile("NinjaSnowWarShaders.xml"));
     }
 
@@ -267,10 +266,9 @@ public:
         gameCamera->SetNearClip(0.5f);
         gameCamera->SetFarClip(160.f);
 
-        Engine* engine = GetSubsystem<Engine>();
         Renderer* renderer = GetSubsystem<Renderer>();
 
-        if (!engine->IsHeadless())
+        if (!Headless::get())
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
             renderer->SetViewport(0, viewport);
@@ -280,7 +278,7 @@ public:
 
     void CreateOverlays()
     {
-        if (GetSubsystem<Engine>()->IsHeadless() || runServer)
+        if (Headless::get() || runServer)
             return;
 
         i32 height = GetSubsystem<Graphics>()->GetHeight() / 22;
@@ -480,7 +478,7 @@ public:
         UpdateControls();
         CheckEndAndRestart();
 
-        if (GetSubsystem<Engine>()->IsHeadless())
+        if (Headless::get())
         {
             //String command = GetConsoleInput();
             //if (command.Length() > 0)
@@ -523,7 +521,7 @@ public:
 
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
     {
-        if (GetSubsystem<Engine>()->IsHeadless())
+        if (Headless::get())
             return;
 
         if (drawDebug)
@@ -1068,7 +1066,7 @@ public:
 
     void UpdateCamera()
     {
-        if (GetSubsystem<Engine>()->IsHeadless())
+        if (Headless::get())
             return;
 
         // On the server, use a simple freelook camera
@@ -1140,9 +1138,7 @@ public:
 
     void UpdateStatus()
     {
-        Engine* engine = GetSubsystem<Engine>();
-
-        if (engine->IsHeadless() || runServer)
+        if (Headless::get() || runServer)
             return;
 
         if (singlePlayer)

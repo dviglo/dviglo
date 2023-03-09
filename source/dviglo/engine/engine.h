@@ -82,9 +82,6 @@ public:
     /// Return whether exit has been requested.
     bool IsExiting() const { return exiting_; }
 
-    /// Return whether the engine has been created in headless mode.
-    bool IsHeadless() const { return headless_; }
-
     /// Send frame update events.
     void Update();
     /// Render after frame update.
@@ -132,8 +129,6 @@ private:
     bool initialized_;
     /// Exiting flag.
     bool exiting_;
-    /// Headless mode flag.
-    bool headless_;
     /// Audio paused flag.
     bool audioPaused_;
 };

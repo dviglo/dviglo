@@ -58,6 +58,21 @@ class ShaderProgram_OGL;
 class ShaderProgram_D3D11;
 #endif
 
+/// Структура, которая хранит флаг headless
+struct DV_API Headless
+{
+    friend class Engine;
+
+private:
+    /// Инициализируется в Engine
+    inline static bool value = false;
+
+public:
+    Headless() = delete;
+
+    /// Если true, то доступ к Graphics и Renderer запрещён
+    static bool get() { return value; }
+};
 
 /// CPU-side scratch buffer for vertex data updates.
 struct ScratchBuffer
