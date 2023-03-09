@@ -13,8 +13,8 @@
 namespace dviglo
 {
 
-IndexBuffer::IndexBuffer(bool forceHeadless) :
-    GPUObject(forceHeadless ? nullptr : GetSubsystem<Graphics>()),
+IndexBuffer::IndexBuffer() :
+    GPUObject(GetSubsystem<Graphics>()),
     indexCount_(0),
     indexSize_(0),
     lockState_(LOCK_NONE),

@@ -18,8 +18,7 @@ class DV_API IndexBuffer : public Object, public GPUObject
     DV_OBJECT(IndexBuffer, Object);
 
 public:
-    /// Construct. Optionally force headless (no GPU-side buffer) operation.
-    explicit IndexBuffer(bool forceHeadless = false);
+    explicit IndexBuffer();
     /// Destruct.
     ~IndexBuffer() override;
 

@@ -18,8 +18,7 @@ class DV_API VertexBuffer : public Object, public GPUObject
     DV_OBJECT(VertexBuffer, Object);
 
 public:
-    /// Construct. Optionally force headless (no GPU-side buffer) operation.
-    explicit VertexBuffer(bool forceHeadless = false);
+    explicit VertexBuffer();
     /// Destruct.
     ~VertexBuffer() override;
 
