@@ -127,13 +127,10 @@ void SoundSource3D::SetRolloffFactor(float factor)
 
 void SoundSource3D::CalculateAttenuation()
 {
-    if (!audio_)
-        return;
-
     float interval = farDistance_ - nearDistance_;
     if (node_)
     {
-        SoundListener* listener = audio_->GetListener();
+        SoundListener* listener = DV_AUDIO.GetListener();
 
         // Listener must either be sceneless or in the same scene, else attenuate sound to silence
         if (listener && listener->IsEnabledEffective() && (!listener->GetScene() || listener->GetScene() == GetScene()))

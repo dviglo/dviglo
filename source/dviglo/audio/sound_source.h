@@ -108,8 +108,6 @@ public:
     int GetPositionAttr() const;
 
 protected:
-    /// Audio subsystem.
-    WeakPtr<Audio> audio_;
     /// SoundSource type, determines the master gain group.
     String soundType_;
     /// SoundSource type hash.

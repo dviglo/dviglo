@@ -98,15 +98,13 @@ void SoundEffects::CreateUI()
     button = CreateButton(160, 80, 120, 40, "Stop Music");
     SubscribeToEvent(button, E_RELEASED, DV_HANDLER(SoundEffects, HandleStopMusic));
 
-    auto* audio = GetSubsystem<Audio>();
-
     // Create sliders for controlling sound and music master volume
     Slider* slider = CreateSlider(20, 140, 200, 20, "Sound Volume");
-    slider->SetValue(audio->GetMasterGain(SOUND_EFFECT));
+    slider->SetValue(DV_AUDIO.GetMasterGain(SOUND_EFFECT));
     SubscribeToEvent(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleSoundVolume));
 
     slider = CreateSlider(20, 200, 200, 20, "Music Volume");
-    slider->SetValue(audio->GetMasterGain(SOUND_MUSIC));
+    slider->SetValue(DV_AUDIO.GetMasterGain(SOUND_MUSIC));
     SubscribeToEvent(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleMusicVolume));
 }
 

@@ -143,11 +143,9 @@ public:
         if (GetSubsystem<Engine>()->IsHeadless())
             return;
 
-        Audio* audio = GetSubsystem<Audio>();
-
         // Lower mastervolumes slightly.
-        audio->SetMasterGain(SOUND_MASTER, 0.75f);
-        audio->SetMasterGain(SOUND_MUSIC, 0.9f);
+        DV_AUDIO.SetMasterGain(SOUND_MASTER, 0.75f);
+        DV_AUDIO.SetMasterGain(SOUND_MUSIC, 0.9f);
 
         if (!nobgm)
         {
@@ -271,13 +269,12 @@ public:
 
         Engine* engine = GetSubsystem<Engine>();
         Renderer* renderer = GetSubsystem<Renderer>();
-        Audio* audio = GetSubsystem<Audio>();
 
         if (!engine->IsHeadless())
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
             renderer->SetViewport(0, viewport);
-            audio->SetListener(gameCameraNode->CreateComponent<SoundListener>());
+            DV_AUDIO.SetListener(gameCameraNode->CreateComponent<SoundListener>());
         }
     }
 
@@ -549,7 +546,6 @@ public:
         DebugHud* debugHud = GetSubsystem<DebugHud>();
         Engine* engine = GetSubsystem<Engine>();
         Graphics* graphics = GetSubsystem<Graphics>();
-        Audio* audio = GetSubsystem<Audio>();
 
         i32 key = eventData["Key"].GetI32();
 
@@ -589,7 +585,7 @@ public:
             if (!gameScene->IsUpdateEnabled())
             {
                 SetMessage("PAUSED");
-                audio->PauseSoundType(SOUND_EFFECT);
+                DV_AUDIO.PauseSoundType(SOUND_EFFECT);
 
                 // Open the settings joystick only if the controls screen joystick was already open
                 if (screenJoystickID >= 0)
@@ -604,7 +600,7 @@ public:
             else
             {
                 SetMessage("");
-                audio->ResumeSoundType(SOUND_EFFECT);
+                DV_AUDIO.ResumeSoundType(SOUND_EFFECT);
 
                 // Hide the settings joystick
                 if (screenJoystickSettingsID >= 0)

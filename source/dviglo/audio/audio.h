@@ -25,10 +25,18 @@ class DV_API Audio : public Object
     DV_OBJECT(Audio, Object);
 
 public:
+    static Audio& get_instance();
+
+private:
     /// Construct.
     explicit Audio();
     /// Destruct. Terminate the audio thread and free the audio buffer.
     ~Audio() override;
+
+public:
+    // Запрещаем копирование
+    Audio(const Audio&) = delete;
+    Audio& operator =(const Audio&) = delete;
 
     /// Initialize sound output with specified buffer length and output mode.
     bool SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpolation = true);
@@ -133,6 +141,8 @@ private:
     /// Sound listener.
     WeakPtr<SoundListener> listener_;
 };
+
+#define DV_AUDIO (dviglo::Audio::get_instance())
 
 /// Register Audio library objects.
 void DV_API RegisterAudioLibrary();

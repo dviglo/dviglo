@@ -107,12 +107,12 @@ Engine::Engine() :
     Network::get_instance();
 #endif
     Input::get_instance();
+    Audio::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
 
     // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new Audio());
     DV_CONTEXT.RegisterSubsystem(new UI());
 
     // Register object factories for libraries which are not automatically registered along with subsystem creation
@@ -282,7 +282,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
         if (GetParameter(parameters, EP_SOUND, true).GetBool())
         {
-            GetSubsystem<Audio>()->SetMode(
+            DV_AUDIO.SetMode(
                 GetParameter(parameters, EP_SOUND_BUFFER, 100).GetI32(),
                 GetParameter(parameters, EP_SOUND_MIX_RATE, 44100).GetI32(),
                 GetParameter(parameters, EP_SOUND_STEREO, true).GetBool(),
@@ -480,16 +480,15 @@ void Engine::RunFrame()
     // Note: there is a minimal performance cost to looking up subsystems (uses a hashmap); if they would be looked up several
     // times per frame it would be better to cache the pointers
     Time& time = DV_TIME;
-    auto* audio = GetSubsystem<Audio>();
 
     time.BeginFrame(timeStep_);
 
     // If pause when minimized -mode is in use, stop updates and audio as necessary
     if (pauseMinimized_ && DV_INPUT.IsMinimized())
     {
-        if (audio->IsPlaying())
+        if (DV_AUDIO.IsPlaying())
         {
-            audio->Stop();
+            DV_AUDIO.Stop();
             audioPaused_ = true;
         }
     }
@@ -498,7 +497,7 @@ void Engine::RunFrame()
         // Only unpause when it was paused by the engine
         if (audioPaused_)
         {
-            audio->Play();
+            DV_AUDIO.Play();
             audioPaused_ = false;
         }
 

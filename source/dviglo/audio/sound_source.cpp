@@ -93,18 +93,13 @@ SoundSource::SoundSource() :
     timePosition_(0.0f),
     unusedStreamSize_(0)
 {
-    audio_ = GetSubsystem<Audio>();
-
-    if (audio_)
-        audio_->AddSoundSource(this);
-
+    DV_AUDIO.AddSoundSource(this);
     UpdateMasterGain();
 }
 
 SoundSource::~SoundSource()
 {
-    if (audio_)
-        audio_->RemoveSoundSource(this);
+    DV_AUDIO.RemoveSoundSource(this);
 }
 
 void SoundSource::RegisterObject()
@@ -126,7 +121,7 @@ void SoundSource::RegisterObject()
 void SoundSource::Seek(float seekTime)
 {
     // Ignore buffered sound stream
-    if (!audio_ || !sound_ || (soundStream_ && !sound_->IsCompressed()))
+    if (!sound_ || (soundStream_ && !sound_->IsCompressed()))
         return;
 
     // Set to valid range
@@ -149,9 +144,6 @@ void SoundSource::Seek(float seekTime)
 
 void SoundSource::Play(Sound* sound)
 {
-    if (!audio_)
-        return;
-
     // If no frequency set yet, set from the sound's default
     if (frequency_ == 0.0f && sound)
         SetFrequency(sound->GetFrequency());
@@ -159,7 +151,7 @@ void SoundSource::Play(Sound* sound)
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        std::scoped_lock lock(audio_->GetMutex());
+        std::scoped_lock lock(DV_AUDIO.GetMutex());
         PlayLockless(sound);
     }
     else
@@ -205,9 +197,6 @@ void SoundSource::Play(Sound* sound, float frequency, float gain, float panning)
 
 void SoundSource::Play(SoundStream* stream)
 {
-    if (!audio_)
-        return;
-
     // If no frequency set yet, set from the stream's default
     if (frequency_ == 0.0f && stream)
         SetFrequency(stream->GetFrequency());
@@ -218,7 +207,7 @@ void SoundSource::Play(SoundStream* stream)
     // requested, clear the existing sound if any
     if (position_)
     {
-        std::scoped_lock lock(audio_->GetMutex());
+        std::scoped_lock lock(DV_AUDIO.GetMutex());
         sound_.Reset();
         PlayLockless(streamPtr);
     }
@@ -233,13 +222,10 @@ void SoundSource::Play(SoundStream* stream)
 
 void SoundSource::Stop()
 {
-    if (!audio_)
-        return;
-
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        std::scoped_lock lock(audio_->GetMutex());
+        std::scoped_lock lock(DV_AUDIO.GetMutex());
         StopLockless();
     }
     else
@@ -298,20 +284,20 @@ bool SoundSource::IsPlaying() const
 void SoundSource::SetPlayPosition(signed char* pos)
 {
     // Setting play position on a stream is not supported
-    if (!audio_ || !sound_ || soundStream_)
+    if (!sound_ || soundStream_)
         return;
 
-    std::scoped_lock lock(audio_->GetMutex());
+    std::scoped_lock lock(DV_AUDIO.GetMutex());
     SetPlayPositionLockless(pos);
 }
 
 void SoundSource::Update(float timeStep)
 {
-    if (!audio_ || !IsEnabledEffective())
+    if (!IsEnabledEffective())
         return;
 
     // If there is no actual audio output, perform fake mixing into a nonexistent buffer to check stopping/looping
-    if (!audio_->IsInitialized())
+    if (!DV_AUDIO.IsInitialized())
         MixNull(timeStep);
 
     // Free the stream if playback has stopped
@@ -438,8 +424,7 @@ void SoundSource::Mix(int* dest, unsigned samples, int mixRate, bool stereo, boo
 
 void SoundSource::UpdateMasterGain()
 {
-    if (audio_)
-        masterGain_ = audio_->GetSoundSourceMasterGain(soundType_);
+    masterGain_ = DV_AUDIO.GetSoundSourceMasterGain(soundType_);
 }
 
 void SoundSource::SetSoundAttr(const ResourceRef& value)
