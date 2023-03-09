@@ -111,7 +111,7 @@ void DropDownList::OnShowPopup()
     SetPopupOffset(0, showAbove ? -popup_->GetHeight() : GetHeight());
 
     // Focus the ListView to allow making the selection with keys
-    GetSubsystem<UI>()->SetFocusElement(listView_);
+    DV_UI.SetFocusElement(listView_);
 }
 
 void DropDownList::OnHidePopup()
@@ -307,7 +307,7 @@ void DropDownList::HandleItemClicked(StringHash eventType, VariantMap& eventData
 
     // Close and defocus the popup. This will actually send the selection forward
     if (listView_->HasFocus())
-        GetSubsystem<UI>()->SetFocusElement(focusMode_ < FM_FOCUSABLE ? nullptr : this);
+        DV_UI.SetFocusElement(focusMode_ < FM_FOCUSABLE ? nullptr : this);
     ShowPopup(false);
 }
 

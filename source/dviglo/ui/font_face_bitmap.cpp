@@ -165,7 +165,7 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     rowHeight_ = fontFace->rowHeight_;
 
     unsigned numPages = 1;
-    int maxTextureSize = font_->GetSubsystem<UI>()->GetMaxFontTextureSize();
+    int maxTextureSize = DV_UI.GetMaxFontTextureSize();
     AreaAllocator allocator(FONT_TEXTURE_MIN_SIZE, FONT_TEXTURE_MIN_SIZE, maxTextureSize, maxTextureSize);
 
     for (HashMap<c32, FontGlyph>::ConstIterator i = fontFace->glyphMapping_.Begin(); i != fontFace->glyphMapping_.End(); ++i)

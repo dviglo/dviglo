@@ -411,9 +411,8 @@ void Menu::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         eventData[P_REPEAT].GetBool() == false)
     {
         // Ignore if UI has modal element or focused LineEdit
-        auto* ui = GetSubsystem<UI>();
-        UIElement* focusElement = ui->GetFocusElement();
-        if (ui->HasModalElement() || (focusElement && focusElement->GetType() == LineEdit::GetTypeStatic()))
+        UIElement* focusElement = DV_UI.GetFocusElement();
+        if (DV_UI.HasModalElement() || (focusElement && focusElement->GetType() == LineEdit::GetTypeStatic()))
             return;
 
         HandlePressedReleased(eventType, eventData);

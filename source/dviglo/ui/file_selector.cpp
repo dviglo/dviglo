@@ -93,9 +93,8 @@ FileSelector::FileSelector() :
     SetPath(DV_FILE_SYSTEM.GetCurrentDir());
 
     // Focus the fileselector's filelist initially when created, and bring to front
-    auto* ui = GetSubsystem<UI>();
-    ui->GetRoot()->AddChild(window_);
-    ui->SetFocusElement(fileList_);
+    DV_UI.GetRoot()->AddChild(window_);
+    DV_UI.SetFocusElement(fileList_);
     window_->SetModal(true);
 
     SubscribeToEvent(filterList_, E_ITEMSELECTED, DV_HANDLER(FileSelector, HandleFilterChanged));

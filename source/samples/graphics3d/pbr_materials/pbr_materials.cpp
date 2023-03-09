@@ -57,10 +57,8 @@ void PBRMaterials::Start()
 
 void PBRMaterials::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use sliders to change Roughness and Metallic\n"
         "Hold RMB and use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
@@ -69,7 +67,7 @@ void PBRMaterials::CreateInstructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void PBRMaterials::CreateScene()
@@ -100,37 +98,37 @@ void PBRMaterials::CreateScene()
 
 void PBRMaterials::CreateUI()
 {
-    auto* ui = GetSubsystem<UI>();
+    UI& ui = DV_UI;
 
     // Set up global UI style into the root UI element
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
-    ui->GetRoot()->SetDefaultStyle(style);
+    ui.GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will interact with the UI
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto();
-    ui->SetCursor(cursor);
+    ui.SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
     auto* graphics = GetSubsystem<Graphics>();
     cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
 
-    roughnessLabel_ = ui->GetRoot()->CreateChild<Text>();
+    roughnessLabel_ = ui.GetRoot()->CreateChild<Text>();
     roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     roughnessLabel_->SetPosition(370, 50);
     roughnessLabel_->SetTextEffect(TE_SHADOW);
 
-    metallicLabel_ = ui->GetRoot()->CreateChild<Text>();
+    metallicLabel_ = ui.GetRoot()->CreateChild<Text>();
     metallicLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     metallicLabel_->SetPosition(370, 100);
     metallicLabel_->SetTextEffect(TE_SHADOW);
 
-    ambientLabel_ = ui->GetRoot()->CreateChild<Text>();
+    ambientLabel_ = ui.GetRoot()->CreateChild<Text>();
     ambientLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     ambientLabel_->SetPosition(370, 150);
     ambientLabel_->SetTextEffect(TE_SHADOW);
 
-    auto* roughnessSlider = ui->GetRoot()->CreateChild<Slider>();
+    auto* roughnessSlider = ui.GetRoot()->CreateChild<Slider>();
     roughnessSlider->SetStyleAuto();
     roughnessSlider->SetPosition(50, 50);
     roughnessSlider->SetSize(300, 20);
@@ -138,7 +136,7 @@ void PBRMaterials::CreateUI()
     SubscribeToEvent(roughnessSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleRoughnessSliderChanged));
     roughnessSlider->SetValue(0.5f);
 
-    auto* metallicSlider = ui->GetRoot()->CreateChild<Slider>();
+    auto* metallicSlider = ui.GetRoot()->CreateChild<Slider>();
     metallicSlider->SetStyleAuto();
     metallicSlider->SetPosition(50, 100);
     metallicSlider->SetSize(300, 20);
@@ -146,7 +144,7 @@ void PBRMaterials::CreateUI()
     SubscribeToEvent(metallicSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleMetallicSliderChanged));
     metallicSlider->SetValue(0.5f);
 
-    auto* ambientSlider = ui->GetRoot()->CreateChild<Slider>();
+    auto* ambientSlider = ui.GetRoot()->CreateChild<Slider>();
     ambientSlider->SetStyleAuto();
     ambientSlider->SetPosition(50, 150);
     ambientSlider->SetSize(300, 20);
@@ -206,12 +204,11 @@ void PBRMaterials::SubscribeToEvents()
 void PBRMaterials::MoveCamera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    auto* ui = GetSubsystem<UI>();
     Input& input = DV_INPUT;
-    ui->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    DV_UI.GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element
-    if (ui->GetFocusElement())
+    if (DV_UI.GetFocusElement())
         return;
 
     // Movement speed as world units per second
@@ -221,7 +218,7 @@ void PBRMaterials::MoveCamera(float timeStep)
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
     // Only move the camera when the cursor is hidden
-    if (!ui->GetCursor()->IsVisible())
+    if (!DV_UI.GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;

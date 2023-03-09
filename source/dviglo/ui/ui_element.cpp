@@ -911,20 +911,15 @@ void UIElement::SetFocus(bool enable)
     if (focusMode_ < FM_FOCUSABLE || !IsVisibleEffective())
         enable = false;
 
-    UI* ui = GetSubsystem<UI>();
-    // Can be null at exit time; no-op in that case
-    if (!ui)
-        return;
-
     if (enable)
     {
-        if (ui->GetFocusElement() != this)
-            ui->SetFocusElement(this);
+        if (DV_UI.GetFocusElement() != this)
+            DV_UI.SetFocusElement(this);
     }
     else
     {
-        if (ui->GetFocusElement() == this)
-            ui->SetFocusElement(nullptr);
+        if (DV_UI.GetFocusElement() == this)
+            DV_UI.SetFocusElement(nullptr);
     }
 }
 
@@ -935,11 +930,6 @@ void UIElement::SetSelected(bool enable)
 
 void UIElement::SetVisible(bool enable)
 {
-    UI* ui = GetSubsystem<UI>();
-    // Can be null at exit time; no-op in that case
-    if (!ui)
-        return;
-
     if (enable != visible_)
     {
         visible_ = enable;
@@ -958,7 +948,7 @@ void UIElement::SetVisible(bool enable)
         // If the focus element becomes effectively hidden, clear focus
         if (!enable)
         {
-            UIElement* focusElement = ui->GetFocusElement();
+            UIElement* focusElement = DV_UI.GetFocusElement();
             if (focusElement && !focusElement->IsVisibleEffective())
                 focusElement->SetFocus(false);
         }
@@ -1537,8 +1527,7 @@ float UIElement::GetDerivedOpacity() const
 
 bool UIElement::HasFocus() const
 {
-    UI* ui = GetSubsystem<UI>();
-    return ui ? ui->GetFocusElement() == this : false;
+    return DV_UI.GetFocusElement() == this;
 }
 
 bool UIElement::IsChildOf(UIElement* element) const
@@ -2244,8 +2233,7 @@ void UIElement::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
 
 void UIElement::SetRenderTexture(Texture2D* texture)
 {
-    if (UI* ui = GetSubsystem<UI>())
-        ui->SetElementRenderTexture(this, texture);
+    DV_UI.SetElementRenderTexture(this, texture);
 }
 
 }

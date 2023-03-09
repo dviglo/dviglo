@@ -202,10 +202,8 @@ void CharacterDemo::CreateCharacter()
 
 void CharacterDemo::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse/touch to move\n"
         "Space to jump, F to toggle 1st/3rd person\n"
@@ -218,7 +216,7 @@ void CharacterDemo::CreateInstructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void CharacterDemo::SubscribeToEvents()
@@ -249,8 +247,7 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             touch_->UpdateTouches(character_->controls_);
 
         // Update controls using keys
-        auto* ui = GetSubsystem<UI>();
-        if (!ui->GetFocusElement())
+        if (!DV_UI.GetFocusElement())
         {
             if (!touch_ || !touch_->useGyroscope_)
             {

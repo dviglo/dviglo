@@ -48,11 +48,10 @@ Console::Console() :
     historyOrAutoCompleteChange_(false),
     printing_(false)
 {
-    auto* ui = GetSubsystem<UI>();
-    UIElement* uiRoot = ui->GetRoot();
+    UIElement* uiRoot = DV_UI.GetRoot();
 
     // By default prevent the automatic showing of the screen keyboard
-    focusOnShow_ = !ui->GetUseScreenKeyboard();
+    focusOnShow_ = !DV_UI.GetUseScreenKeyboard();
 
     background_ = uiRoot->CreateChild<BorderImage>();
     background_->SetBringToBack(false);
@@ -121,8 +120,7 @@ void Console::SetDefaultStyle(XMLFile* style)
 void Console::SetVisible(bool enable)
 {
     Input& input = DV_INPUT;
-    auto* ui = GetSubsystem<UI>();
-    Cursor* cursor = ui->GetCursor();
+    Cursor* cursor = DV_UI.GetCursor();
 
     background_->SetVisible(enable);
     closeButton_->SetVisible(enable);
@@ -133,7 +131,7 @@ void Console::SetVisible(bool enable)
         bool hasInterpreter = PopulateInterpreter();
         commandLine_->SetVisible(hasInterpreter);
         if (hasInterpreter && focusOnShow_)
-            ui->SetFocusElement(lineEdit_);
+            DV_UI.SetFocusElement(lineEdit_);
 
         // Ensure the background has no empty space when shown without the lineedit
         background_->SetHeight(background_->GetMinHeight());
@@ -257,7 +255,7 @@ void Console::RemoveAutoComplete(const String& option)
 
 void Console::UpdateElements()
 {
-    int width = GetSubsystem<UI>()->GetRoot()->GetWidth();
+    int width = DV_UI.GetRoot()->GetWidth();
     const IntRect& border = background_->GetLayoutBorder();
     const IntRect& panelBorder = rowContainer_->GetScrollPanel()->GetClipBorder();
     rowContainer_->SetFixedWidth(width - border.left_ - border.right_);
@@ -537,8 +535,7 @@ void Console::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     // Ensure UI-elements are not detached
     if (!background_->GetParent())
     {
-        auto* ui = GetSubsystem<UI>();
-        UIElement* uiRoot = ui->GetRoot();
+        UIElement* uiRoot = DV_UI.GetRoot();
         uiRoot->AddChild(background_);
         uiRoot->AddChild(closeButton_);
     }

@@ -103,7 +103,7 @@ void LightAnimation::CreateScene()
     textAnimation->SetKeyFrame(2.0f, "YELLOW");
     textAnimation->SetKeyFrame(3.0f, "GREEN");
     textAnimation->SetKeyFrame(4.0f, "WHITE");
-    GetSubsystem<UI>()->GetRoot()->GetChild(String("animatingText"))->SetAttributeAnimation("Text", textAnimation);
+    DV_UI.GetRoot()->GetChild(String("animatingText"))->SetAttributeAnimation("Text", textAnimation);
 
     // Create UI element animation
     // (note: a spritesheet and "Image Rect" attribute should be used in real use cases for better performance)
@@ -114,7 +114,7 @@ void LightAnimation::CreateScene()
     spriteAnimation->SetKeyFrame(0.3f, ResourceRef("Texture2D", "Urho2D/GoldIcon/4.png"));
     spriteAnimation->SetKeyFrame(0.4f, ResourceRef("Texture2D", "Urho2D/GoldIcon/5.png"));
     spriteAnimation->SetKeyFrame(0.5f, ResourceRef("Texture2D", "Urho2D/GoldIcon/1.png"));
-    GetSubsystem<UI>()->GetRoot()->GetChild(String("animatingSprite"))->SetAttributeAnimation("Texture", spriteAnimation);
+    DV_UI.GetRoot()->GetChild(String("animatingSprite"))->SetAttributeAnimation("Texture", spriteAnimation);
 
     // Create light color animation
     SharedPtr<ValueAnimation> colorAnimation(new ValueAnimation());
@@ -158,10 +158,8 @@ void LightAnimation::CreateScene()
 
 void LightAnimation::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use WASD keys and mouse/touch to move");
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
     instructionText->SetFont(font, 15);
@@ -169,17 +167,17 @@ void LightAnimation::CreateInstructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 
     // Animating text
-    auto* text = ui->GetRoot()->CreateChild<Text>("animatingText");
+    auto* text = DV_UI.GetRoot()->CreateChild<Text>("animatingText");
     text->SetFont(font, 15);
     text->SetHorizontalAlignment(HA_CENTER);
     text->SetVerticalAlignment(VA_CENTER);
-    text->SetPosition(0, ui->GetRoot()->GetHeight() / 4 + 20);
+    text->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4 + 20);
 
     // Animating sprite in the top left corner
-    auto* sprite = ui->GetRoot()->CreateChild<Sprite>("animatingSprite");
+    auto* sprite = DV_UI.GetRoot()->CreateChild<Sprite>("animatingSprite");
     sprite->SetPosition(8, 8);
     sprite->SetSize(64, 64);
 }
@@ -198,7 +196,7 @@ void LightAnimation::SetupViewport()
 void LightAnimation::MoveCamera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
-    if (GetSubsystem<UI>()->GetFocusElement())
+    if (DV_UI.GetFocusElement())
         return;
 
     Input& input = DV_INPUT;

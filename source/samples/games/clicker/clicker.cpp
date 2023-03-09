@@ -31,7 +31,7 @@ void Clicker::Start()
 void Clicker::CreateUI()
 {
     XMLFile* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
-    UIElement* uiRoot = GetSubsystem<UI>()->GetRoot();
+    UIElement* uiRoot = DV_UI.GetRoot();
     uiRoot->SetDefaultStyle(style);
 
     // Text in the center of the screen will initially contain hint, and then score
@@ -122,7 +122,7 @@ void Clicker::HandleUpdate(StringHash eventType, VariantMap& eventData)
     {
         score_ += power_;
 
-        UIElement* uiRoot = GetSubsystem<UI>()->GetRoot();
+        UIElement* uiRoot = DV_UI.GetRoot();
         Text* scoreText = static_cast<Text*>(uiRoot->GetChild("Score", false));
         scoreText->SetText(ShortNumberRepresentation(score_));
 
@@ -140,7 +140,7 @@ void Clicker::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)
     {
         power_ *= 2;
 
-        UIElement* uiRoot = GetSubsystem<UI>()->GetRoot();
+        UIElement* uiRoot = DV_UI.GetRoot();
         Text* powerText = static_cast<Text*>(uiRoot->GetChild("Power", false));
         powerText->SetText("Power: " + ShortNumberRepresentation(power_));
     }

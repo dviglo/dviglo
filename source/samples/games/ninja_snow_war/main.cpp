@@ -169,7 +169,7 @@ public:
             return;
 
         XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
-        GetSubsystem<UI>()->GetRoot()->SetDefaultStyle(uiStyle);
+        DV_UI.GetRoot()->SetDefaultStyle(uiStyle);
 
         Console* console = engine->CreateConsole();
         console->SetDefaultStyle(uiStyle);
@@ -288,13 +288,13 @@ public:
             height = 64;
 
         ResourceCache& cache = DV_RES_CACHE;
-        UI* ui = GetSubsystem<UI>();
+        UI& ui = DV_UI;
 
         sight = new BorderImage();
         sight->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/Sight.png"));
         sight->SetAlignment(HA_CENTER, VA_CENTER);
         sight->SetSize(height, height);
-        ui->GetRoot()->AddChild(sight);
+        ui.GetRoot()->AddChild(sight);
 
         Font* font = cache.GetResource<Font>("Fonts/BlueHighway.ttf");
 
@@ -304,7 +304,7 @@ public:
         scoreText->SetPosition(5, 5);
         scoreText->SetColor(C_BOTTOMLEFT, Color(1.f, 1.f, 0.25f));
         scoreText->SetColor(C_BOTTOMRIGHT, Color(1.f, 1.f, 0.25f));
-        ui->GetRoot()->AddChild(scoreText);
+        ui.GetRoot()->AddChild(scoreText);
 
         hiscoreText = new Text();
         hiscoreText->SetFont(font, 13.f);
@@ -312,21 +312,21 @@ public:
         hiscoreText->SetPosition(-5, 5);
         hiscoreText->SetColor(C_BOTTOMLEFT, Color(1.f, 1.f, 0.25f));
         hiscoreText->SetColor(C_BOTTOMRIGHT, Color(1.f, 1.f, 0.25f));
-        ui->GetRoot()->AddChild(hiscoreText);
+        ui.GetRoot()->AddChild(hiscoreText);
 
         messageText = new Text();
         messageText->SetFont(font, 13.f);
         messageText->SetAlignment(HA_CENTER, VA_CENTER);
         messageText->SetPosition(0, -height * 2);
         messageText->SetColor(Color(1.f, 0.f, 0.f));
-        ui->GetRoot()->AddChild(messageText);
+        ui.GetRoot()->AddChild(messageText);
 
         SharedPtr<BorderImage> healthBorder(new BorderImage());
         healthBorder->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarBorder.png"));
         healthBorder->SetAlignment(HA_CENTER, VA_TOP);
         healthBorder->SetPosition(0, 8);
         healthBorder->SetSize(120, 20);
-        ui->GetRoot()->AddChild(healthBorder);
+        ui.GetRoot()->AddChild(healthBorder);
 
         healthBar = new BorderImage();
         healthBar->SetTexture(cache.GetResource<Texture2D>("Textures/NinjaSnowWar/HealthBarInside.png"));

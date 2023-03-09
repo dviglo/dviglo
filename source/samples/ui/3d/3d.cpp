@@ -31,7 +31,7 @@
 DV_DEFINE_APPLICATION_MAIN(Hello3DUI)
 
 Hello3DUI::Hello3DUI() :
-    uiRoot_(GetSubsystem<UI>()->GetRoot()),
+    uiRoot_(DV_UI.GetRoot()),
     dragBeginPosition_(IntVector2::ZERO),
     animateCube_(true),
     renderOnCube_(false),
@@ -299,10 +299,10 @@ void Hello3DUI::HandleUpdate(StringHash, VariantMap& eventData)
     Node* node = scene_->GetChild("Box");
 
     if (current_.NotNull() && drawDebug_)
-        GetSubsystem<UI>()->DebugDraw(current_);
+        DV_UI.DebugDraw(current_);
 
     if (input.GetMouseButtonPress(MOUSEB_LEFT))
-        current_ = GetSubsystem<UI>()->GetElementAt(input.GetMousePosition());
+        current_ = DV_UI.GetElementAt(input.GetMousePosition());
 
     if (input.GetKeyPress(KEY_TAB))
     {

@@ -24,7 +24,7 @@
 DV_DEFINE_APPLICATION_MAIN(HelloGUI)
 
 HelloGUI::HelloGUI() :
-    uiRoot_(GetSubsystem<UI>()->GetRoot()),
+    uiRoot_(DV_UI.GetRoot()),
     dragBeginPosition_(IntVector2::ZERO)
 {
 }

@@ -42,7 +42,7 @@ public:
     // This elements can be used anywhere in the program
     void CreateCurrentFpsUiElement()
     {
-        UIElement* root = GetSubsystem<UI>()->GetRoot();
+        UIElement* root = DV_UI.GetRoot();
         root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
         Text* fpsElement = root->CreateChild<Text>(CURRENT_FPS_STR);

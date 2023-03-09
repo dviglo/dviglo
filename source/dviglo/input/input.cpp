@@ -614,8 +614,7 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
                     SetMouseModeAbsolute(SDL_FALSE);
 
                 // Update cursor position
-                auto* ui = GetSubsystem<UI>();
-                Cursor* cursor = ui->GetCursor();
+                Cursor* cursor = DV_UI.GetCursor();
                 // If the UI Cursor was visible, use that position instead of last visible OS cursor position
                 if (cursor && cursor->IsVisible())
                 {
@@ -725,8 +724,7 @@ void Input::SetMouseModeEmscriptenFinal(MouseMode mode, bool suppressEvent)
             SetMouseVisibleEmscripten(true, suppressEvent);
         }
 
-        UI* const ui = GetSubsystem<UI>();
-        Cursor* const cursor = ui->GetCursor();
+        Cursor* const cursor = DV_UI.GetCursor();
         SetMouseGrabbed(!(mouseVisible_ || (cursor && cursor->IsVisible())), suppressEvent);
     }
     else if (mode == MM_RELATIVE && emscriptenPointerLock_)
@@ -758,8 +756,7 @@ void Input::SetMouseModeEmscripten(MouseMode mode, bool suppressEvent)
     const MouseMode previousMode = mouseMode_;
     mouseMode_ = mode;
 
-    UI* const ui = GetSubsystem<UI>();
-    Cursor* const cursor = ui->GetCursor();
+    Cursor* const cursor = DV_UI.GetCursor();
 
     // Handle changing from previous mode
     if (previousMode == MM_RELATIVE)
@@ -863,8 +860,7 @@ void Input::SetMouseMode(MouseMode mode, bool suppressEvent)
             mouseMode_ = mode;
             SDL_Window* const window = graphics_->GetWindow();
 
-            auto* const ui = GetSubsystem<UI>();
-            Cursor* const cursor = ui->GetCursor();
+            Cursor* const cursor = DV_UI.GetCursor();
 
             // Handle changing from previous mode
             if (previousMode == MM_ABSOLUTE)
@@ -1002,13 +998,12 @@ SDL_JoystickID Input::AddScreenJoystick(XMLFile* layoutFile, XMLFile* styleFile)
             return -1;
     }
 
-    auto* ui = GetSubsystem<UI>();
-    SharedPtr<UIElement> screenJoystick = ui->LoadLayout(layoutFile, styleFile);
+    SharedPtr<UIElement> screenJoystick = DV_UI.LoadLayout(layoutFile, styleFile);
     if (!screenJoystick)     // Error is already logged
         return -1;
 
-    screenJoystick->SetSize(ui->GetRoot()->GetSize());
-    ui->GetRoot()->AddChild(screenJoystick);
+    screenJoystick->SetSize(DV_UI.GetRoot()->GetSize());
+    DV_UI.GetRoot()->AddChild(screenJoystick);
 
     // Get an unused ID for the screen joystick
     /// \todo After a real joystick has been plugged in 1073741824 times, the ranges will overlap
@@ -2464,8 +2459,8 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
 
     // Only interested in events from screen joystick(s)
     TouchState& state = touches_[eventData[P_TOUCHID].GetI32()];
-    IntVector2 position(int(state.position_.x_ / GetSubsystem<UI>()->GetScale()), int(state.position_.y_ / GetSubsystem<UI>()->GetScale()));
-    UIElement* element = eventType == E_TOUCHBEGIN ? GetSubsystem<UI>()->GetElementAt(position) : state.touchedElement_;
+    IntVector2 position(int(state.position_.x_ / DV_UI.GetScale()), int(state.position_.y_ / DV_UI.GetScale()));
+    UIElement* element = eventType == E_TOUCHBEGIN ? DV_UI.GetElementAt(position) : state.touchedElement_;
     if (!element)
         return;
     Variant variant = element->GetVar(VAR_SCREEN_JOYSTICK_ID);

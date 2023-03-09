@@ -1681,7 +1681,7 @@ void View::ExecuteRenderPathCommands()
             case CMD_RENDERUI:
                 {
                     SetRenderTargets(command);
-                    GetSubsystem<UI>()->Render(true);
+                    DV_UI.Render(true);
                 }
                 break;
 

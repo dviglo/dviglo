@@ -31,7 +31,7 @@
 DV_DEFINE_APPLICATION_MAIN(WindowSettingsDemo)
 
 WindowSettingsDemo::WindowSettingsDemo()
-    : uiRoot_(GetSubsystem<UI>()->GetRoot())
+    : uiRoot_(DV_UI.GetRoot())
 {
 }
 

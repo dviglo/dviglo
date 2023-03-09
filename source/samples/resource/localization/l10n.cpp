@@ -67,7 +67,7 @@ void L10n::CreateGUI()
     // Get localization subsystem
     Localization& l10n = DV_LOCALIZATION;
 
-    UIElement* root = GetSubsystem<UI>()->GetRoot();
+    UIElement* root = DV_UI.GetRoot();
     root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
     auto* window = new Window();
@@ -203,7 +203,7 @@ void L10n::HandleQuitButtonPressed(StringHash eventType, VariantMap& eventData)
 void L10n::HandleChangeLanguage(StringHash eventType, VariantMap& eventData)
 {
     Localization& l10n = DV_LOCALIZATION;
-    UIElement* uiRoot = GetSubsystem<UI>()->GetRoot();
+    UIElement* uiRoot = DV_UI.GetRoot();
 
     auto* windowTitle = uiRoot->GetChildStaticCast<Text>("WindowTitle", true);
     windowTitle->SetText(l10n.Get("title") + " (" + String(l10n.GetLanguageIndex()) + " " + l10n.GetLanguage() + ")");

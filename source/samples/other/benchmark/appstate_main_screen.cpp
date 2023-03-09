@@ -54,7 +54,7 @@ void AppState_MainScreen::CreateButton(const String& name, const String& text, W
 
 void AppState_MainScreen::CreateGui()
 {
-    UIElement* root = GetSubsystem<UI>()->GetRoot();
+    UIElement* root = DV_UI.GetRoot();
 
     Window* window = root->CreateChild<Window>(MAIN_SCREEN_WINDOW_STR);
     window->SetStyleAuto();
@@ -76,7 +76,7 @@ void AppState_MainScreen::CreateGui()
 
 void AppState_MainScreen::DestroyGui()
 {
-    UIElement* root = GetSubsystem<UI>()->GetRoot();
+    UIElement* root = DV_UI.GetRoot();
     Window* window = root->GetChildStaticCast<Window>(MAIN_SCREEN_WINDOW_STR);
     window->Remove();
 }

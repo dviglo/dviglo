@@ -130,17 +130,15 @@ void SignedDistanceFieldText::CreateScene()
 
 void SignedDistanceFieldText::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText("Use WASD keys and mouse/touch to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void SignedDistanceFieldText::SetupViewport()
@@ -157,7 +155,7 @@ void SignedDistanceFieldText::SetupViewport()
 void SignedDistanceFieldText::MoveCamera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
-    if (GetSubsystem<UI>()->GetFocusElement())
+    if (DV_UI.GetFocusElement())
         return;
 
     Input& input = DV_INPUT;

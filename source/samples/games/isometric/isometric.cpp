@@ -69,8 +69,7 @@ void Urho2DIsometricDemo::Start()
 
     // Create the UI content
     sample2D_->CreateUIContent("ISOMETRIC 2.5D DEMO", character2D_->remainingLifes_, character2D_->remainingCoins_);
-    auto* ui = GetSubsystem<UI>();
-    Button* playButton = static_cast<Button*>(ui->GetRoot()->GetChild("PlayButton", true));
+    Button* playButton = static_cast<Button*>(DV_UI.GetRoot()->GetChild("PlayButton", true));
     SubscribeToEvent(playButton, E_RELEASED, DV_HANDLER(Urho2DIsometricDemo, HandlePlayButton));
 
     // Hook up to the frame update events
@@ -149,13 +148,12 @@ void Urho2DIsometricDemo::HandleCollisionBegin(StringHash eventType, VariantMap&
     {
         hitNode->Remove();
         character2D_->remainingCoins_ -= 1;
-        auto* ui = GetSubsystem<UI>();
         if (character2D_->remainingCoins_ == 0)
         {
-            Text* instructions = static_cast<Text*>(ui->GetRoot()->GetChild("Instructions", true));
+            Text* instructions = static_cast<Text*>(DV_UI.GetRoot()->GetChild("Instructions", true));
             instructions->SetText("!!! You have all the coins !!!");
         }
-        Text* coinsText = static_cast<Text*>(ui->GetRoot()->GetChild("CoinsText", true));
+        Text* coinsText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("CoinsText", true));
         coinsText->SetText(String(character2D_->remainingCoins_)); // Update coins UI counter
         sample2D_->PlaySoundEffect("Powerup.wav");
     }
@@ -288,22 +286,20 @@ void Urho2DIsometricDemo::ReloadScene(bool reInit)
     }
 
     // Update lifes UI
-    auto* ui = GetSubsystem<UI>();
-    Text* lifeText = static_cast<Text*>(ui->GetRoot()->GetChild("LifeText", true));
+    Text* lifeText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("LifeText", true));
     lifeText->SetText(String(lifes));
 
     // Update coins UI
-    Text* coinsText = static_cast<Text*>(ui->GetRoot()->GetChild("CoinsText", true));
+    Text* coinsText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("CoinsText", true));
     coinsText->SetText(String(coins));
 }
 
 void Urho2DIsometricDemo::HandlePlayButton(StringHash eventType, VariantMap& eventData)
 {
     // Remove fullscreen UI and unfreeze the scene
-    auto* ui = GetSubsystem<UI>();
-    if (static_cast<Text*>(ui->GetRoot()->GetChild("FullUI", true)))
+    if (static_cast<Text*>(DV_UI.GetRoot()->GetChild("FullUI", true)))
     {
-        ui->GetRoot()->GetChild("FullUI", true)->Remove();
+        DV_UI.GetRoot()->GetChild("FullUI", true)->Remove();
         scene_->SetUpdateEnabled(true);
     }
     else
@@ -311,11 +307,11 @@ void Urho2DIsometricDemo::HandlePlayButton(StringHash eventType, VariantMap& eve
         ReloadScene(true);
 
     // Hide Instructions and Play/Exit buttons
-    Text* instructionText = static_cast<Text*>(ui->GetRoot()->GetChild("Instructions", true));
+    Text* instructionText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("Instructions", true));
     instructionText->SetText("");
-    Button* exitButton = static_cast<Button*>(ui->GetRoot()->GetChild("ExitButton", true));
+    Button* exitButton = static_cast<Button*>(DV_UI.GetRoot()->GetChild("ExitButton", true));
     exitButton->SetVisible(false);
-    Button* playButton = static_cast<Button*>(ui->GetRoot()->GetChild("PlayButton", true));
+    Button* playButton = static_cast<Button*>(DV_UI.GetRoot()->GetChild("PlayButton", true));
     playButton->SetVisible(false);
 
     // Hide mouse cursor

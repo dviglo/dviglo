@@ -234,7 +234,7 @@ void Cursor::ApplyOSCursorShape()
 {
     // Mobile platforms do not support applying OS cursor shapes: comment out to avoid log error messages
 #if !defined(__ANDROID__) && !defined(IOS) && !defined(TVOS)
-    if (!osShapeDirty_ || !DV_INPUT.IsMouseVisible() || GetSubsystem<UI>()->GetCursor() != this)
+    if (!osShapeDirty_ || !DV_INPUT.IsMouseVisible() || DV_UI.GetCursor() != this)
         return;
 
     CursorShapeInfo& info = shapeInfos_[shape_];

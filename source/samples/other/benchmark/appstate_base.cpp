@@ -32,7 +32,7 @@ void AppState_Base::LoadSceneXml(const String& path)
 void AppState_Base::UpdateCurrentFpsElement()
 {
     String fpsStr = fpsCounter_.GetCurrentFps() == -1 ? "?" : String(fpsCounter_.GetCurrentFps());
-    Text* fpsElement = GetSubsystem<UI>()->GetRoot()->GetChildStaticCast<Text>(CURRENT_FPS_STR);
+    Text* fpsElement = DV_UI.GetRoot()->GetChildStaticCast<Text>(CURRENT_FPS_STR);
     fpsElement->SetText("FPS: " + fpsStr);
 }
 

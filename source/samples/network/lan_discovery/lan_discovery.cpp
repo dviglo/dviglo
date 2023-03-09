@@ -61,7 +61,7 @@ void LANDiscovery::CreateUI()
     SetLogoVisible(true); // We need the full rendering window
 
     auto* graphics = GetSubsystem<Graphics>();
-    UIElement* root = GetSubsystem<UI>()->GetRoot();
+    UIElement* root = DV_UI.GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
@@ -98,7 +98,7 @@ Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 pos
 {
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
-    auto* button = GetSubsystem<UI>()->GetRoot()->CreateChild<Button>();
+    auto* button = DV_UI.GetRoot()->CreateChild<Button>();
     button->SetStyleAuto();
     button->SetFixedWidth(width);
     button->SetFixedHeight(30);
@@ -116,7 +116,7 @@ Text* LANDiscovery::CreateLabel(const String& text, IntVector2 pos)
 {
     // Create log element to view latest logs from the system
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
-    auto* label = GetSubsystem<UI>()->GetRoot()->CreateChild<Text>();
+    auto* label = DV_UI.GetRoot()->CreateChild<Text>();
     label->SetFont(font, 12);
     label->SetColor(Color(0.0f, 1.0f, 0.0f));
     label->SetPosition(pos);

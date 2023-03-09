@@ -108,12 +108,10 @@ Engine::Engine() :
 #endif
     Input::get_instance();
     Audio::get_instance();
+    UI::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
-
-    // Create subsystems which do not depend on engine initialization or startup parameters
-    DV_CONTEXT.RegisterSubsystem(new UI());
 
     // Register object factories for libraries which are not automatically registered along with subsystem creation
     RegisterSceneLibrary();
@@ -694,7 +692,7 @@ void Engine::Render()
         return;
 
     GetSubsystem<Renderer>()->Render();
-    GetSubsystem<UI>()->Render();
+    DV_UI.Render();
     graphics->EndFrame();
 }
 

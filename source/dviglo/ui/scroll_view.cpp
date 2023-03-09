@@ -102,9 +102,9 @@ void ScrollView::Update(float timeStep)
         return;
     }
 
-    if (GetSubsystem<UI>()->IsDragging())
+    if (DV_UI.IsDragging())
     {
-        Vector<UIElement*> dragElements = GetSubsystem<UI>()->GetDragElements();
+        Vector<UIElement*> dragElements = DV_UI.GetDragElements();
 
         for (const UIElement* dragElement : dragElements)
         {

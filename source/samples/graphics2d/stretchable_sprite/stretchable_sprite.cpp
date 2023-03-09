@@ -83,10 +83,8 @@ void Urho2DStretchableSprite::CreateScene()
 
 void Urho2DStretchableSprite::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
         "Use WASD keys to transform, Tab key to cycle through\n"
         "Scale, Rotate, and Translate transform modes. In Rotate\n"
@@ -97,7 +95,7 @@ void Urho2DStretchableSprite::CreateInstructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void Urho2DStretchableSprite::SetupViewport()

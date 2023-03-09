@@ -152,20 +152,18 @@ void Decals::CreateScene()
 
 void Decals::CreateUI()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
-    ui->SetCursor(cursor);
+    DV_UI.SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
     auto* graphics = GetSubsystem<Graphics>();
     cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
         "Use WASD keys to move\n"
         "LMB to paint decals, RMB to rotate view\n"
@@ -179,7 +177,7 @@ void Decals::CreateUI()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void Decals::SetupViewport()
@@ -204,12 +202,11 @@ void Decals::SubscribeToEvents()
 void Decals::MoveCamera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    auto* ui = GetSubsystem<UI>();
     Input& input = DV_INPUT;
-    ui->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    DV_UI.GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element (the console)
-    if (ui->GetFocusElement())
+    if (DV_UI.GetFocusElement())
         return;
 
     // Movement speed as world units per second
@@ -219,7 +216,7 @@ void Decals::MoveCamera(float timeStep)
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
     // Only move the camera when the cursor is hidden
-    if (!ui->GetCursor()->IsVisible())
+    if (!DV_UI.GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
@@ -245,7 +242,7 @@ void Decals::MoveCamera(float timeStep)
         drawDebug_ = !drawDebug_;
 
     // Paint decal with the left mousebutton; cursor must be visible
-    if (ui->GetCursor()->IsVisible() && input.GetMouseButtonPress(MOUSEB_LEFT))
+    if (DV_UI.GetCursor()->IsVisible() && input.GetMouseButtonPress(MOUSEB_LEFT))
         PaintDecal();
 }
 
@@ -277,10 +274,9 @@ bool Decals::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable)
 {
     hitDrawable = nullptr;
 
-    auto* ui = GetSubsystem<UI>();
-    IntVector2 pos = ui->GetCursorPosition();
+    IntVector2 pos = DV_UI.GetCursorPosition();
     // Check the cursor is visible and there is no UI element in front of the cursor
-    if (!ui->GetCursor()->IsVisible() || ui->GetElementAt(pos, true))
+    if (!DV_UI.GetCursor()->IsVisible() || DV_UI.GetElementAt(pos, true))
         return false;
 
     auto* graphics = GetSubsystem<Graphics>();

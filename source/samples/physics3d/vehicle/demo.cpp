@@ -152,10 +152,8 @@ void VehicleDemo::CreateVehicle()
 
 void VehicleDemo::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
         "Use WASD keys to drive, mouse/touch to rotate camera\n"
         "F5 to save scene, F7 to load"
@@ -167,7 +165,7 @@ void VehicleDemo::CreateInstructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void VehicleDemo::SubscribeToEvents()
@@ -190,10 +188,8 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
 
     if (vehicle_)
     {
-        auto* ui = GetSubsystem<UI>();
-
         // Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
-        if (!ui->GetFocusElement())
+        if (!DV_UI.GetFocusElement())
         {
             vehicle_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
             vehicle_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));

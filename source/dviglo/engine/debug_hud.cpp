@@ -44,8 +44,7 @@ DebugHud::DebugHud() :
     useRendererStats_(false),
     mode_(DebugHudElements::None)
 {
-    auto* ui = GetSubsystem<UI>();
-    UIElement* uiRoot = ui->GetRoot();
+    UIElement* uiRoot = DV_UI.GetRoot();
 
     statsText_ = new Text();
     statsText_->SetAlignment(HA_LEFT, VA_TOP);
@@ -85,8 +84,7 @@ void DebugHud::Update()
     // Ensure UI-elements are not detached
     if (!statsText_->GetParent())
     {
-        auto* ui = GetSubsystem<UI>();
-        UIElement* uiRoot = ui->GetRoot();
+        UIElement* uiRoot = DV_UI.GetRoot();
         uiRoot->AddChild(statsText_);
         uiRoot->AddChild(modeText_);
     }

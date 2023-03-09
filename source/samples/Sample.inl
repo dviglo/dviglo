@@ -141,8 +141,7 @@ void Sample::CreateLogo()
         return;
 
     // Create logo sprite and add to the UI layout
-    UI* ui = GetSubsystem<UI>();
-    logoSprite_ = ui->GetRoot()->CreateChild<Sprite>();
+    logoSprite_ = DV_UI.GetRoot()->CreateChild<Sprite>();
 
     // Set logo sprite texture
     logoSprite_->SetTexture(logoTexture);
@@ -234,7 +233,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         GetSubsystem<DebugHud>()->ToggleAll();
 
     // Common rendering quality controls, only when UI has no focused element
-    else if (!GetSubsystem<UI>()->GetFocusElement())
+    else if (!DV_UI.GetFocusElement())
     {
         Renderer* renderer = GetSubsystem<Renderer>();
 
@@ -354,7 +353,7 @@ void Sample::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
                 else
                 {
                     // Move the cursor to the touch position
-                    Cursor* cursor = GetSubsystem<UI>()->GetCursor();
+                    Cursor* cursor = DV_UI.GetCursor();
                     if (cursor && cursor->IsVisible())
                         cursor->SetPosition(state->position_);
                 }

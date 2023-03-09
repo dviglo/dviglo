@@ -921,7 +921,7 @@ void ListView::CopySelectedItemsToClipboard() const
             selectedText.Append(text->GetText()).Append("\n");
     }
 
-    GetSubsystem<UI>()->SetClipboardText(selectedText);
+    DV_UI.SetClipboardText(selectedText);
 }
 
 bool ListView::IsSelected(i32 index) const
@@ -1022,7 +1022,7 @@ void ListView::EnsureItemVisibility(UIElement* item)
 void ListView::HandleUIMouseClick(StringHash eventType, VariantMap& eventData)
 {
     // Disregard the click end if a drag is going on
-    if (selectOnClickEnd_ && GetSubsystem<UI>()->IsDragging())
+    if (selectOnClickEnd_ && DV_UI.IsDragging())
         return;
 
     int button = eventData[UIMouseClick::P_BUTTON].GetI32();

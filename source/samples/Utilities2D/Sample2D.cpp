@@ -379,16 +379,16 @@ Vector<Vector2> Sample2D::CreatePathFromPoints(TileMapObject2D* object, const Ve
 void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int remainingCoins)
 {
     ResourceCache& cache = DV_RES_CACHE;
-    auto* ui = GetSubsystem<UI>();
+    UI& ui = DV_UI;
 
     // Set the default UI style and font
-    ui->GetRoot()->SetDefaultStyle(cache.GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    ui.GetRoot()->SetDefaultStyle(cache.GetResource<XMLFile>("UI/DefaultStyle.xml"));
     auto* font = cache.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     // We create in-game UIs (coins and lifes) first so that they are hidden by the fullscreen UI (we could also temporary hide them using SetVisible)
 
     // Create the UI for displaying the remaining coins
-    auto* coinsUI = ui->GetRoot()->CreateChild<BorderImage>("Coins");
+    auto* coinsUI = ui.GetRoot()->CreateChild<BorderImage>("Coins");
     coinsUI->SetTexture(cache.GetResource<Texture2D>("Urho2D/GoldIcon.png"));
     coinsUI->SetSize(50, 50);
     coinsUI->SetImageRect(IntRect(0, 64, 60, 128));
@@ -401,7 +401,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     coinsText->SetText(String(remainingCoins));
 
     // Create the UI for displaying the remaining lifes
-    auto* lifeUI = ui->GetRoot()->CreateChild<BorderImage>("Life");
+    auto* lifeUI = ui.GetRoot()->CreateChild<BorderImage>("Life");
     lifeUI->SetTexture(cache.GetResource<Texture2D>("Urho2D/imp/imp_all.png"));
     lifeUI->SetSize(70, 80);
     lifeUI->SetAlignment(HA_RIGHT, VA_TOP);
@@ -413,9 +413,9 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     lifeText->SetText(String(remainingLifes));
 
     // Create the fullscreen UI for start/end
-    auto* fullUI = ui->GetRoot()->CreateChild<Window>("FullUI");
+    auto* fullUI = ui.GetRoot()->CreateChild<Window>("FullUI");
     fullUI->SetStyleAuto();
-    fullUI->SetSize(ui->GetRoot()->GetWidth(), ui->GetRoot()->GetHeight());
+    fullUI->SetSize(ui.GetRoot()->GetWidth(), ui.GetRoot()->GetHeight());
     fullUI->SetEnabled(false); // Do not react to input, only the 'Exit' and 'Play' buttons will
 
     // Create the title
@@ -434,10 +434,10 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     spriteUI->SetTexture(cache.GetResource<Texture2D>("Urho2D/imp/imp_all.png"));
     spriteUI->SetSize(238, 271);
     spriteUI->SetAlignment(HA_CENTER, VA_CENTER);
-    spriteUI->SetPosition(0, - ui->GetRoot()->GetHeight() / 4);
+    spriteUI->SetPosition(0, - ui.GetRoot()->GetHeight() / 4);
 
     // Create the 'EXIT' button
-    auto* exitButton = ui->GetRoot()->CreateChild<Button>("ExitButton");
+    auto* exitButton = ui.GetRoot()->CreateChild<Button>("ExitButton");
     exitButton->SetStyleAuto();
     exitButton->SetFocusMode(FM_RESETFOCUS);
     exitButton->SetSize(100, 50);
@@ -450,7 +450,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     SubscribeToEvent(exitButton, E_RELEASED, DV_HANDLER(Sample2D, HandleExitButton));
 
     // Create the 'PLAY' button
-    auto* playButton = ui->GetRoot()->CreateChild<Button>("PlayButton");
+    auto* playButton = ui.GetRoot()->CreateChild<Button>("PlayButton");
     playButton->SetStyleAuto();
     playButton->SetFocusMode(FM_RESETFOCUS);
     playButton->SetSize(100, 50);
@@ -463,12 +463,12 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
 //  SubscribeToEvent(playButton, E_RELEASED, HANDLER(Urho2DPlatformer, HandlePlayButton));
 
     // Create the instructions
-    auto* instructionText = ui->GetRoot()->CreateChild<Text>("Instructions");
+    auto* instructionText = ui.GetRoot()->CreateChild<Text>("Instructions");
     instructionText->SetText("Use WASD keys or Arrows to move\nPageUp/PageDown/MouseWheel to zoom\nF5/F7 to save/reload scene\n'Z' to toggle debug geometry\nSpace to fight");
     instructionText->SetFont(cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
     instructionText->SetAlignment(HA_CENTER, VA_CENTER);
-    instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, ui.GetRoot()->GetHeight() / 4);
 
     // Show mouse cursor
     DV_INPUT.SetMouseVisible(true);

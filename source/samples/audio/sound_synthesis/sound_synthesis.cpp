@@ -99,10 +99,8 @@ void SoundSynthesis::UpdateSound()
 
 void SoundSynthesis::CreateInstructions()
 {
-    auto* ui = GetSubsystem<UI>();
-
     // Construct new Text object, set string to display and font to use
-    instructionText_ = ui->GetRoot()->CreateChild<Text>();
+    instructionText_ = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText_->SetText("Use cursor up and down to control sound filtering");
     instructionText_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 
@@ -110,7 +108,7 @@ void SoundSynthesis::CreateInstructions()
     instructionText_->SetTextAlignment(HA_CENTER);
     instructionText_->SetHorizontalAlignment(HA_CENTER);
     instructionText_->SetVerticalAlignment(VA_CENTER);
-    instructionText_->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
+    instructionText_->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
 void SoundSynthesis::SubscribeToEvents()

@@ -258,12 +258,7 @@ void Window::SetResizeBorder(const IntRect& rect)
 
 void Window::SetModal(bool modal)
 {
-    auto* ui = GetSubsystem<UI>();
-    // Can be null at exit time; no-op in that case
-    if (!ui)
-        return;
-
-    if (ui->SetModalElement(this, modal))
+    if (DV_UI.SetModalElement(this, modal))
     {
         modal_ = modal;
 

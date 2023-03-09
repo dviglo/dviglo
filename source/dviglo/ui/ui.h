@@ -44,10 +44,18 @@ class DV_API UI : public Object
     DV_OBJECT(UI, Object);
 
 public:
+    static UI& get_instance();
+
+private:
     /// Construct.
     explicit UI();
     /// Destruct.
     ~UI() override;
+
+public:
+    // Запрещаем копирование
+    UI(const UI&) = delete;
+    UI& operator =(const UI&) = delete;
 
     /// Set cursor UI element.
     void SetCursor(Cursor* cursor);
@@ -422,6 +430,8 @@ private:
     /// Elements that should be rendered to textures.
     HashMap<UIElement*, RenderToTextureData> renderToTexture_;
 };
+
+#define DV_UI (dviglo::UI::get_instance())
 
 /// Register UI library objects.
 void DV_API RegisterUILibrary();

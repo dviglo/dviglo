@@ -198,7 +198,7 @@ void LineEdit::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
             i32 length = text_->GetSelectionLength();
 
             if (text_->GetSelectionLength())
-                GetSubsystem<UI>()->SetClipboardText(line_.SubstringUTF8(start, length));
+                DV_UI.SetClipboardText(line_.SubstringUTF8(start, length));
 
             if (key == KEY_X && editable_)
             {
@@ -216,7 +216,7 @@ void LineEdit::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
     case KEY_V:
         if (editable_ && textCopyable_ && qualifiers & QUAL_CTRL)
         {
-            const String& clipBoard = GetSubsystem<UI>()->GetClipboardText();
+            const String& clipBoard = DV_UI.GetClipboardText();
             if (!clipBoard.Empty())
             {
                 // Remove selected text first
@@ -384,7 +384,7 @@ void LineEdit::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
     case KEY_KP_ENTER:
         {
             // If using the on-screen keyboard, defocus this element to hide it now
-            if (GetSubsystem<UI>()->GetUseScreenKeyboard() && HasFocus())
+            if (DV_UI.GetUseScreenKeyboard() && HasFocus())
                 SetFocus(false);
 
             using namespace TextFinished;
@@ -635,7 +635,7 @@ void LineEdit::HandleFocused(StringHash /*eventType*/, VariantMap& eventData)
     }
     UpdateCursor();
 
-    if (GetSubsystem<UI>()->GetUseScreenKeyboard())
+    if (DV_UI.GetUseScreenKeyboard())
         DV_INPUT.SetScreenKeyboardVisible(true);
 }
 
@@ -643,7 +643,7 @@ void LineEdit::HandleDefocused(StringHash /*eventType*/, VariantMap& /*eventData
 {
     text_->ClearSelection();
 
-    if (GetSubsystem<UI>()->GetUseScreenKeyboard())
+    if (DV_UI.GetUseScreenKeyboard())
         DV_INPUT.SetScreenKeyboardVisible(false);
 }
 
