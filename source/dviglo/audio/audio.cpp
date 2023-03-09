@@ -56,12 +56,14 @@ Audio::Audio()
     RegisterAudioLibrary();
 
     SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
+
+    DV_LOGDEBUG("Singleton Audio constructed");
 }
 
 Audio::~Audio()
 {
     Release();
-
+    DV_LOGDEBUG("Singleton Audio destructed");
 #ifdef _DEBUG
     audio_destructed = true;
 #endif

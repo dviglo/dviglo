@@ -141,10 +141,13 @@ UI::UI() :
 
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
+
+    DV_LOGDEBUG("Singleton UI constructed");
 }
 
 UI::~UI()
 {
+    DV_LOGDEBUG("Singleton UI destructed");
 #ifdef _DEBUG
     ui_destructed = true;
 #endif

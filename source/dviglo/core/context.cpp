@@ -103,6 +103,8 @@ Context::Context() :
 
     // Set the main thread ID (assuming the Context is created in it)
     Thread::SetMainThread();
+
+    // Контекст создаётся перед логом, поэтому в лог вывести ничего не можем
 }
 
 Context::~Context()
@@ -119,6 +121,8 @@ Context::~Context()
     for (Vector<VariantMap*>::Iterator i = eventDataMaps_.Begin(); i != eventDataMaps_.End(); ++i)
         delete *i;
     eventDataMaps_.Clear();
+
+    // Контекст разрушается после лога, поэтому в лог вывести ничего не можем
 
 #ifdef _DEBUG
     context_destructed = true;

@@ -84,6 +84,8 @@ ResourceCache::ResourceCache() :
 
     // Subscribe BeginFrame for handling directory watchers and background loaded resource finalization
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(ResourceCache, HandleBeginFrame));
+
+    DV_LOGDEBUG("Singleton ResourceCache constructed");
 }
 
 ResourceCache::~ResourceCache()
@@ -92,7 +94,7 @@ ResourceCache::~ResourceCache()
     // Shut down the background loader first
     backgroundLoader_.Reset();
 #endif
-
+    DV_LOGDEBUG("Singleton ResourceCache destructed");
     resource_cache_destructed = true;
 }
 

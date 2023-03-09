@@ -256,6 +256,8 @@ FileSystem::FileSystem()
 
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
+
+    DV_LOGDEBUG("Singleton FileSystem constructed");
 }
 
 FileSystem::~FileSystem()
@@ -268,6 +270,8 @@ FileSystem::~FileSystem()
 
         asyncExecQueue_.Clear();
     }
+
+    DV_LOGDEBUG("Singleton FileSystem destructed");
 
 #ifdef _DEBUG
     file_system_destructed = true;

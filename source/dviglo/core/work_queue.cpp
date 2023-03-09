@@ -74,6 +74,7 @@ WorkQueue::WorkQueue() :
     maxNonThreadedWorkMs_(5)
 {
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(WorkQueue, HandleBeginFrame));
+    DV_LOGDEBUG("Singleton WorkQueue constructed");
 }
 
 WorkQueue::~WorkQueue()
@@ -84,6 +85,8 @@ WorkQueue::~WorkQueue()
 
     for (const SharedPtr<WorkerThread>& thread : threads_)
         thread->Stop();
+
+    DV_LOGDEBUG("Singleton WorkQueue destructed");
 
 #ifdef _DEBUG
     work_queue_destructed = true;
@@ -248,7 +251,6 @@ void WorkQueue::Resume()
         paused_ = false;
     }
 }
-
 
 void WorkQueue::Complete(i32 priority)
 {

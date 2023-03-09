@@ -396,10 +396,13 @@ Input::Input() :
 
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
+
+    DV_LOGDEBUG("Singleton Input constructed");
 }
 
 Input::~Input()
 {
+    DV_LOGDEBUG("Singleton Input destructed");
 #ifdef _DEBUG
     input_destructed = true;
 #endif

@@ -260,6 +260,8 @@ Network::Network() :
     blacklistedRemoteEvents_.Insert(E_NETWORKUPDATE);
     blacklistedRemoteEvents_.Insert(E_NETWORKUPDATESENT);
     blacklistedRemoteEvents_.Insert(E_NETWORKSCENELOADFAILED);
+
+    DV_LOGDEBUG("Singleton Network constructed");
 }
 
 Network::~Network()
@@ -285,6 +287,8 @@ Network::~Network()
     SLNet::RakPeerInterface::DestroyInstance(rakPeerClient_);
     rakPeer_ = nullptr;
     rakPeerClient_ = nullptr;
+
+    DV_LOGDEBUG("Singleton Network destructed");
 
 #ifdef _DEBUG
     network_destructed = true;

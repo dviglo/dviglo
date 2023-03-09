@@ -4,6 +4,7 @@
 
 #include "timer.h"
 
+#include "../io/log.h"
 #include "core_events.h"
 #include "profiler.h"
 
@@ -58,12 +59,14 @@ Time::Time() :
     HiresTimer::frequency = 1000000;
     HiresTimer::supported = true;
 #endif
+
+    DV_LOGDEBUG("Singleton Time constructed");
 }
 
 Time::~Time()
 {
     SetTimerPeriod(0);
-
+    DV_LOGDEBUG("Singleton Time destructed");
 #ifdef _DEBUG
     timer_destructed = true;
 #endif

@@ -32,6 +32,8 @@ SdlHelper::SdlHelper()
 {
     // Гарантируем, что синглтон будет создан после лога
     Log::get_instance();
+
+    DV_LOGDEBUG("Singleton SdlHelper constructed");
 }
 
 SdlHelper::~SdlHelper()
@@ -39,7 +41,7 @@ SdlHelper::~SdlHelper()
     DV_LOGDEBUG("Quitting SDL");
     Gesture_Quit();
     SDL_Quit();
-
+    DV_LOGDEBUG("Singleton SdlHelper destructed");
 #ifdef _DEBUG
     sdl_helper_destructed = true;
 #endif

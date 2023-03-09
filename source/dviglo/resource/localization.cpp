@@ -31,10 +31,12 @@ Localization& Localization::get_instance()
 Localization::Localization() :
     languageIndex_(-1)
 {
+    DV_LOGDEBUG("Singleton Localization constructed");
 }
 
 Localization::~Localization()
 {
+    DV_LOGDEBUG("Singleton Localization destructed");
 #ifdef _DEBUG
     localization_destructed = true;
 #endif
