@@ -74,7 +74,7 @@ public:
     GParams() = delete;
 
     /// Если true, то доступ к Graphics и Renderer запрещён
-    static bool get_headless() { return headless; }
+    static bool is_headless() { return headless; }
 
     static GAPI get_gapi() { return gapi; }
 };

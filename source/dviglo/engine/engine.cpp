@@ -178,7 +178,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     GParams::gapi = gapi;
 
     // Register the rest of the subsystems
-    if (!GParams::get_headless())
+    if (!GParams::is_headless())
     {
         DV_CONTEXT.RegisterSubsystem(new Graphics());
         DV_CONTEXT.RegisterSubsystem(new Renderer());
@@ -224,7 +224,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         return false;
 
     // Initialize graphics & audio output
-    if (!GParams::get_headless())
+    if (!GParams::is_headless())
     {
         auto* graphics = GetSubsystem<Graphics>();
         auto* renderer = GetSubsystem<Renderer>();
@@ -467,7 +467,7 @@ void Engine::RunFrame()
     assert(initialized_);
 
     // If not headless, and the graphics subsystem no longer has a window open, assume we should exit
-    if (!GParams::get_headless() && !GetSubsystem<Graphics>()->IsInitialized())
+    if (!GParams::is_headless() && !GetSubsystem<Graphics>()->IsInitialized())
         exiting_ = true;
 
     if (exiting_)
@@ -511,7 +511,7 @@ void Engine::RunFrame()
 
 Console* Engine::CreateConsole()
 {
-    if (GParams::get_headless() || !initialized_)
+    if (GParams::is_headless() || !initialized_)
         return nullptr;
 
     // Return existing console if possible
@@ -527,7 +527,7 @@ Console* Engine::CreateConsole()
 
 DebugHud* Engine::CreateDebugHud()
 {
-    if (GParams::get_headless() || !initialized_)
+    if (GParams::is_headless() || !initialized_)
         return nullptr;
 
     // Return existing debug HUD if possible
@@ -679,7 +679,7 @@ void Engine::Update()
 
 void Engine::Render()
 {
-    if (GParams::get_headless())
+    if (GParams::is_headless())
         return;
 
     DV_PROFILE(Render);
