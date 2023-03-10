@@ -27,7 +27,6 @@ enum MouseMode
 };
 
 class Deserializer;
-class Graphics;
 class Serializer;
 class UIElement;
 class XMLFile;
@@ -366,8 +365,6 @@ private:
     void HandleEndFrame(StringHash eventType, VariantMap& eventData);
 #endif
 
-    /// Graphics subsystem.
-    WeakPtr<Graphics> graphics_;
     /// Key down state.
     HashSet<int> keyDown_;
     /// Key pressed state.
