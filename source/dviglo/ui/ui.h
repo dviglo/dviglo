@@ -28,7 +28,6 @@ enum FontHintLevel
 };
 
 class Cursor;
-class Graphics;
 class ResourceCache;
 class Timer;
 class UIBatch;
