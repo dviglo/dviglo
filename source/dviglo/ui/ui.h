@@ -337,8 +337,6 @@ private:
     /// Return effective size of the root element, according to UI scale and resolution / custom size.
     IntVector2 GetEffectiveRootElementSize(bool applyScale = true) const;
 
-    /// Graphics subsystem.
-    WeakPtr<Graphics> graphics_;
     /// UI root element.
     SharedPtr<UIElement> rootElement_;
     /// UI root modal element.
