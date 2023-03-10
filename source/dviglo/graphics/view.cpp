@@ -299,7 +299,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     rtSize_ = IntVector2(rtWidth, rtHeight);
 
     // On OpenGL flip the viewport if rendering to a texture for consistent UV addressing with Direct3D9
-    if (Graphics::GetGAPI() == GAPI_OPENGL && renderTarget_)
+    if (GParams::get_gapi() == GAPI_OPENGL && renderTarget_)
     {
         viewRect_.bottom_ = rtHeight - viewRect_.top_;
         viewRect_.top_ = viewRect_.bottom_ - viewSize_.y_;
@@ -353,7 +353,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     scenePasses_.Clear();
     geometriesUpdated_ = false;
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
 #if defined(DV_GLES2)
         // On OpenGL ES we assume a stencil is not available or would not give a good performance, and disable light stencil
@@ -572,7 +572,7 @@ void View::Render()
     }
 #endif
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL && renderTarget_)
+    if (GParams::get_gapi() == GAPI_OPENGL && renderTarget_)
     {
         // On OpenGL, flip the projection if rendering to a texture so that the texture can be addressed in the same way
         // as a render texture produced on Direct3D9
@@ -628,7 +628,7 @@ void View::Render()
         }
     }
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL && renderTarget_)
+    if (GParams::get_gapi() == GAPI_OPENGL && renderTarget_)
     {
         // Restores original setting of FlipVertical when flipped by code above.
         if (camera_)
@@ -696,7 +696,7 @@ void View::SetCameraShaderParameters(Camera* camera)
     if (camera->IsOrthographic())
     {
         depthMode.x_ = 1.0f;
-        if (Graphics::GetGAPI() == GAPI_OPENGL)
+        if (GParams::get_gapi() == GAPI_OPENGL)
         {
             depthMode.z_ = 0.5f;
             depthMode.w_ = 0.5f;
@@ -724,7 +724,7 @@ void View::SetCameraShaderParameters(Camera* camera)
 
     Matrix4 projection = camera->GetGPUProjection();
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
         // Add constant depth bias manually to the projection matrix due to glPolygonOffset() inconsistency
         float constantBias = 2.0f * graphics_->GetDepthConstantBias();
@@ -755,7 +755,7 @@ void View::SetGBufferShaderParameters(const IntVector2& texSize, const IntRect& 
 
     Vector4 bufferUVOffset;
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
         bufferUVOffset = Vector4((float)viewRect.left_ / texWidth + widthRange,
             1.0f - ((float)viewRect.top_ / texHeight + heightRange), widthRange, heightRange);
@@ -1526,7 +1526,7 @@ void View::ExecuteRenderPathCommands()
                     // If the render path ends into a quad, it can be redirected to the final render target
                     // However, on OpenGL we can not reliably do this in case the final target is the backbuffer, and we want to
                     // render depth buffer sensitive debug geometry afterward (backbuffer and textures can not share depth)
-                    if (Graphics::GetGAPI() != GAPI_OPENGL)
+                    if (GParams::get_gapi() != GAPI_OPENGL)
                     {
                         if (i == lastCommandIndex && command.type_ == CMD_QUAD)
                             currentRenderTarget_ = renderTarget_;
@@ -1959,7 +1959,7 @@ void View::AllocateScreenBuffers()
         }
     }
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
         // Due to FBO limitations, in OpenGL deferred modes need to render to texture first and then blit to the backbuffer
         // Also, if rendering to a texture with full deferred rendering, it must be RGBA to comply with the rest of the buffers,
@@ -1994,7 +1994,7 @@ void View::AllocateScreenBuffers()
     }
 
     // On OpenGL 2 ensure that all MRT buffers are RGBA in deferred rendering
-    if (deferred_ && !renderer_->GetHDRRendering() && Graphics::GetGAPI() == GAPI_OPENGL && !Graphics::GetGL3Support())
+    if (deferred_ && !renderer_->GetHDRRendering() && GParams::get_gapi() == GAPI_OPENGL && !Graphics::GetGL3Support())
         format = Graphics::GetRGBAFormat();
 
     if (hasViewportRead)
@@ -2119,7 +2119,7 @@ void View::DrawFullscreenQuad(bool setIdentityProjection)
         Matrix3x4 model = Matrix3x4::IDENTITY;
         Matrix4 projection = Matrix4::IDENTITY;
 
-        if (Graphics::GetGAPI() == GAPI_OPENGL)
+        if (GParams::get_gapi() == GAPI_OPENGL)
         {
             if (camera_ && camera_->GetFlipVertical())
                 projection.m11_ = -1.0f;
@@ -2696,7 +2696,7 @@ void View::FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRec
             shadowCamera->SetZoom(shadowCamera->GetZoom() * ((shadowMapWidth - 2.0f) / shadowMapWidth));
         else
         {
-            if (Graphics::GetGAPI() == GAPI_OPENGL)
+            if (GParams::get_gapi() == GAPI_OPENGL)
                 shadowCamera->SetZoom(shadowCamera->GetZoom() * ((shadowMapWidth - 3.0f) / shadowMapWidth));
             else
                 shadowCamera->SetZoom(shadowCamera->GetZoom() * ((shadowMapWidth - 4.0f) / shadowMapWidth));

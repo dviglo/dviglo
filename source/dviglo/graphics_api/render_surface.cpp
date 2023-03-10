@@ -91,7 +91,7 @@ Viewport* RenderSurface::GetViewport(unsigned index) const
 
 RenderSurface::RenderSurface(Texture* parentTexture)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -112,7 +112,7 @@ RenderSurface::RenderSurface(Texture* parentTexture)
 
 bool RenderSurface::CreateRenderBuffer(unsigned width, unsigned height, unsigned format, int multiSample)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -129,7 +129,7 @@ bool RenderSurface::CreateRenderBuffer(unsigned width, unsigned height, unsigned
 
 void RenderSurface::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -144,7 +144,7 @@ void RenderSurface::OnDeviceLost()
 
 void RenderSurface::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

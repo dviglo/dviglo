@@ -427,7 +427,7 @@ Matrix4 Camera::GetProjection() const
 
 Matrix4 Camera::GetGPUProjection() const
 {
-    if (Graphics::GetGAPI() != GAPI_OPENGL)
+    if (GParams::get_gapi() != GAPI_OPENGL)
     {
         return GetProjection(); // Already matches API-specific format
     }

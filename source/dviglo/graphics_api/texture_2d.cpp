@@ -22,7 +22,7 @@ namespace dviglo
 Texture2D::Texture2D()
 {
 #ifdef DV_OPENGL
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
         target_ = GL_TEXTURE_2D;
 #endif
 }
@@ -173,7 +173,7 @@ void Texture2D::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& even
 
 void Texture2D::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -188,7 +188,7 @@ void Texture2D::OnDeviceLost()
 
 void Texture2D::OnDeviceReset()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -203,7 +203,7 @@ void Texture2D::OnDeviceReset()
 
 void Texture2D::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -218,7 +218,7 @@ void Texture2D::Release()
 
 bool Texture2D::SetData(unsigned level, int x, int y, int width, int height, const void* data)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -235,7 +235,7 @@ bool Texture2D::SetData(unsigned level, int x, int y, int width, int height, con
 
 bool Texture2D::SetData(Image* image, bool useAlpha)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -252,7 +252,7 @@ bool Texture2D::SetData(Image* image, bool useAlpha)
 
 bool Texture2D::GetData(unsigned level, void* dest) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -269,7 +269,7 @@ bool Texture2D::GetData(unsigned level, void* dest) const
 
 bool Texture2D::Create()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

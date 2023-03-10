@@ -195,7 +195,7 @@ void VertexBuffer::UpdateOffsets(Vector<VertexElement>& elements)
 
 void VertexBuffer::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -210,7 +210,7 @@ void VertexBuffer::OnDeviceLost()
 
 void VertexBuffer::OnDeviceReset()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -225,7 +225,7 @@ void VertexBuffer::OnDeviceReset()
 
 void VertexBuffer::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -240,7 +240,7 @@ void VertexBuffer::Release()
 
 bool VertexBuffer::SetData(const void* data)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -258,7 +258,7 @@ bool VertexBuffer::SetData(const void* data)
 bool VertexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -276,7 +276,7 @@ bool VertexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool dis
 void* VertexBuffer::Lock(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -293,7 +293,7 @@ void* VertexBuffer::Lock(i32 start, i32 count, bool discard)
 
 void VertexBuffer::Unlock()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -308,7 +308,7 @@ void VertexBuffer::Unlock()
 
 bool VertexBuffer::Create()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -325,7 +325,7 @@ bool VertexBuffer::Create()
 
 bool VertexBuffer::UpdateToGPU()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -343,7 +343,7 @@ bool VertexBuffer::UpdateToGPU()
 void* VertexBuffer::MapBuffer(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -360,7 +360,7 @@ void* VertexBuffer::MapBuffer(i32 start, i32 count, bool discard)
 
 void VertexBuffer::UnmapBuffer()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

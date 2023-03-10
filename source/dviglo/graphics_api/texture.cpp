@@ -264,7 +264,7 @@ void Texture::CheckTextureBudget(StringHash type)
 
 void Texture::SetSRGB(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -279,7 +279,7 @@ void Texture::SetSRGB(bool enable)
 
 void Texture::UpdateParameters()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -294,7 +294,7 @@ void Texture::UpdateParameters()
 
 bool Texture::GetParametersDirty() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -311,7 +311,7 @@ bool Texture::GetParametersDirty() const
 
 bool Texture::IsCompressed() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -328,7 +328,7 @@ bool Texture::IsCompressed() const
 
 unsigned Texture::GetRowDataSize(int width) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -345,7 +345,7 @@ unsigned Texture::GetRowDataSize(int width) const
 
 void Texture::RegenerateLevels()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

@@ -41,7 +41,7 @@ static SharedPtr<Image> GetTileImage(Image* src, int tileX, int tileY, int tileW
 TextureCube::TextureCube()
 {
 #ifdef DV_OPENGL
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
         target_ = GL_TEXTURE_CUBE_MAP;
 #endif
 
@@ -270,7 +270,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
         {
             renderSurfaces_[i] = new RenderSurface(this);
 #ifdef DV_OPENGL
-            if (Graphics::GetGAPI() == GAPI_OPENGL)
+            if (GParams::get_gapi() == GAPI_OPENGL)
                 renderSurfaces_[i]->target_ = GL_TEXTURE_CUBE_MAP_POSITIVE_X + i;
 #endif
         }
@@ -331,7 +331,7 @@ void TextureCube::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& ev
 
 void TextureCube::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -346,7 +346,7 @@ void TextureCube::OnDeviceLost()
 
 void TextureCube::OnDeviceReset()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -361,7 +361,7 @@ void TextureCube::OnDeviceReset()
 
 void TextureCube::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -376,7 +376,7 @@ void TextureCube::Release()
 
 bool TextureCube::SetData(CubeMapFace face, unsigned level, int x, int y, int width, int height, const void* data)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -393,7 +393,7 @@ bool TextureCube::SetData(CubeMapFace face, unsigned level, int x, int y, int wi
 
 bool TextureCube::SetData(CubeMapFace face, Deserializer& source)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -410,7 +410,7 @@ bool TextureCube::SetData(CubeMapFace face, Deserializer& source)
 
 bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -427,7 +427,7 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
 
 bool TextureCube::GetData(CubeMapFace face, unsigned level, void* dest) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -444,7 +444,7 @@ bool TextureCube::GetData(CubeMapFace face, unsigned level, void* dest) const
 
 bool TextureCube::Create()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

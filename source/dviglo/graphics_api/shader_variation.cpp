@@ -59,7 +59,7 @@ Shader* ShaderVariation::GetOwner() const
 
 void ShaderVariation::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -74,7 +74,7 @@ void ShaderVariation::OnDeviceLost()
 
 void ShaderVariation::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -89,7 +89,7 @@ void ShaderVariation::Release()
 
 bool ShaderVariation::Create()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -106,7 +106,7 @@ bool ShaderVariation::Create()
 
 void ShaderVariation::SetDefines(const String& defines)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

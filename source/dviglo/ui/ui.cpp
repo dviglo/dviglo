@@ -1006,7 +1006,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     Vector2 scale(2.0f * invScreenSize.x_, -2.0f * invScreenSize.y_);
     Vector2 offset(-1.0f, 1.0f);
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL && surface)
+    if (GParams::get_gapi() == GAPI_OPENGL && surface)
     {
         // On OpenGL, flip the projection if rendering to a texture so that the texture can be addressed in the
         // same way as a render texture produced on Direct3D.
@@ -1027,7 +1027,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     graphics_->SetColorWrite(true);
 
     // Reverse winding if rendering to texture on OpenGL
-    if (Graphics::GetGAPI() == GAPI_OPENGL && surface)
+    if (GParams::get_gapi() == GAPI_OPENGL && surface)
         graphics_->SetCullMode(CULL_CW);
     else
         graphics_->SetCullMode(CULL_CCW);
@@ -1114,7 +1114,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
         scissor.bottom_ = (int)(scissor.bottom_ * uiScale_);
 
         // Flip scissor vertically if using OpenGL texture rendering
-        if (Graphics::GetGAPI() == GAPI_OPENGL && surface)
+        if (GParams::get_gapi() == GAPI_OPENGL && surface)
         {
             int top = scissor.top_;
             int bottom = scissor.bottom_;

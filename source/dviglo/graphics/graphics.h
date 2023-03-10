@@ -58,20 +58,25 @@ class ShaderProgram_OGL;
 class ShaderProgram_D3D11;
 #endif
 
-/// Структура, которая хранит флаг headless
-struct DV_API Headless
+/// Структура, которая хранит параметры графики
+struct DV_API GParams
 {
     friend class Engine;
 
 private:
     /// Инициализируется в Engine
-    inline static bool value = false;
+    inline static bool headless = false;
+
+    /// Инициализируется в Engine
+    inline static GAPI gapi = GAPI_NONE;
 
 public:
-    Headless() = delete;
+    GParams() = delete;
 
     /// Если true, то доступ к Graphics и Renderer запрещён
-    static bool get() { return value; }
+    static bool get_headless() { return headless; }
+
+    static GAPI get_gapi() { return gapi; }
 };
 
 /// CPU-side scratch buffer for vertex data updates.
@@ -156,7 +161,7 @@ class DV_API Graphics : public Object
 
 public:
     /// Construct.
-    explicit Graphics(GAPI gapi);
+    explicit Graphics();
     /// Destruct. Release the Direct3D11 device and close the window.
     ~Graphics() override;
 
@@ -337,7 +342,7 @@ public:
     /// Return graphics implementation, which holds the actual API-specific resources.
     GraphicsImpl_OGL* GetImpl_OGL() const
     {
-        assert(Graphics::GetGAPI() == GAPI_OPENGL);
+        assert(GParams::get_gapi() == GAPI_OPENGL);
         return static_cast<GraphicsImpl_OGL*>(impl_);
     }
 #endif
@@ -346,7 +351,7 @@ public:
     /// Return graphics implementation, which holds the actual API-specific resources.
     GraphicsImpl_D3D11* GetImpl_D3D11() const
     {
-        assert(Graphics::GetGAPI() == GAPI_D3D11);
+        assert(GParams::get_gapi() == GAPI_D3D11);
         return static_cast<GraphicsImpl_D3D11*>(impl_);
     }
 #endif
@@ -656,12 +661,6 @@ public:
 
     /// Get or create a constant buffer. Will be shared between shaders if possible. Used only on OpenGL and DirectX 11.
     ConstantBuffer* GetOrCreateConstantBuffer(ShaderType type, unsigned index, unsigned size);
-
-    /// Get used graphics API.
-    static GAPI GetGAPI() { return gapi; }
-
-    /// Set GAP manually. Used for headless mode only https://github.com/urho3d/Urho3D/issues/3040
-    static GAPI SetGAPI(GAPI value) { return gapi = value; }
 
     /// Return the API-specific alpha texture format.
     static unsigned GetAlphaFormat();
@@ -1167,8 +1166,6 @@ private:
 #endif
     /// OpenGL3 support flag.
     inline static bool gl3Support;
-    /// Used graphics API.
-    inline static GAPI gapi;
 };
 
 /// Register Graphics library objects.

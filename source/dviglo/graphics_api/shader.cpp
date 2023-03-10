@@ -79,7 +79,7 @@ bool Shader::BeginLoad(Deserializer& source)
     CommentOutFunction(psSourceCode_, "void VS(");
 
     // OpenGL: rename either VS() or PS() to main()
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
         vsSourceCode_.Replace("void VS(", "void main(");
         psSourceCode_.Replace("void PS(", "void main(");

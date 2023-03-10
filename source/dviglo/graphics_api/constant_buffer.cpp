@@ -51,7 +51,7 @@ void ConstantBuffer::SetVector3ArrayParameter(unsigned offset, unsigned rows, co
 
 void ConstantBuffer::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -66,7 +66,7 @@ void ConstantBuffer::Release()
 
 void ConstantBuffer::OnDeviceReset()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -81,7 +81,7 @@ void ConstantBuffer::OnDeviceReset()
 
 bool ConstantBuffer::SetSize(unsigned size)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -98,7 +98,7 @@ bool ConstantBuffer::SetSize(unsigned size)
 
 void ConstantBuffer::Apply()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

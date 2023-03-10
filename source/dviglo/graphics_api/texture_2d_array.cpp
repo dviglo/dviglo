@@ -27,7 +27,7 @@ Texture2DArray::Texture2DArray()
 {
 #ifdef DV_OPENGL
 #ifndef DV_GLES2
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
         target_ = GL_TEXTURE_2D_ARRAY;
 #endif
 #endif
@@ -188,7 +188,7 @@ void Texture2DArray::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap&
 
 void Texture2DArray::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -203,7 +203,7 @@ void Texture2DArray::OnDeviceLost()
 
 void Texture2DArray::OnDeviceReset()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -218,7 +218,7 @@ void Texture2DArray::OnDeviceReset()
 
 void Texture2DArray::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -233,7 +233,7 @@ void Texture2DArray::Release()
 
 bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int width, int height, const void* data)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -250,7 +250,7 @@ bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int w
 
 bool Texture2DArray::SetData(unsigned layer, Deserializer& source)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -267,7 +267,7 @@ bool Texture2DArray::SetData(unsigned layer, Deserializer& source)
 
 bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -284,7 +284,7 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
 
 bool Texture2DArray::GetData(unsigned layer, unsigned level, void* dest) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -301,7 +301,7 @@ bool Texture2DArray::GetData(unsigned layer, unsigned level, void* dest) const
 
 bool Texture2DArray::Create()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

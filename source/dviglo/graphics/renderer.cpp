@@ -947,7 +947,7 @@ Texture2D* Renderer::GetShadowMap(Light* light, Camera* camera, i32 viewWidth, i
             newShadowMap->SetShadowCompare(shadowMapUsage == TEXTURE_DEPTHSTENCIL);
 #endif
 
-            if (Graphics::GetGAPI() != GAPI_OPENGL)
+            if (GParams::get_gapi() != GAPI_OPENGL)
             {
                 // Direct3D9: when shadow compare must be done manually, use nearest filtering so that the filtering of point lights
                 // and other shadowed lights matches
@@ -1038,7 +1038,7 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
 #ifdef DV_OPENGL
             // OpenGL hack: clear persistent floating point screen buffers to ensure the initial contents aren't illegal (NaN)?
             // Otherwise eg. the AutoExposure post process will not work correctly
-            if (Graphics::GetGAPI() == GAPI_OPENGL && persistentKey && Texture::GetDataType_OGL(format) == GL_FLOAT)
+            if (GParams::get_gapi() == GAPI_OPENGL && persistentKey && Texture::GetDataType_OGL(format) == GL_FLOAT)
             {
                 // Note: this loses current rendertarget assignment
                 graphics_->ResetRenderTargets();
@@ -1849,7 +1849,7 @@ void Renderer::SetIndirectionTextureData()
         {
             for (unsigned x = 0; x < 256; ++x)
             {
-                if (Graphics::GetGAPI() == GAPI_OPENGL)
+                if (GParams::get_gapi() == GAPI_OPENGL)
                 {
                     dest[0] = (unsigned char)x;
                     dest[1] = (unsigned char)(255 - y);
@@ -1912,7 +1912,7 @@ String Renderer::GetShadowVariations() const
     switch (shadowQuality_)
     {
         case SHADOWQUALITY_SIMPLE_16BIT:
-            if (Graphics::GetGAPI() == GAPI_OPENGL)
+            if (GParams::get_gapi() == GAPI_OPENGL)
             {
                 return "SIMPLE_SHADOW ";
             }
@@ -1926,7 +1926,7 @@ String Renderer::GetShadowVariations() const
         case SHADOWQUALITY_SIMPLE_24BIT:
             return "SIMPLE_SHADOW ";
         case SHADOWQUALITY_PCF_16BIT:
-            if (Graphics::GetGAPI() == GAPI_OPENGL)
+            if (GParams::get_gapi() == GAPI_OPENGL)
             {
                 return "PCF_SHADOW ";
             }

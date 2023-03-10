@@ -471,7 +471,7 @@ void Graphics::CreateWindowIcon()
 void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams& params, bool& maximize) const
 {
     // High DPI is supported only for OpenGL backend
-    if (Graphics::GetGAPI() != GAPI_OPENGL)
+    if (GParams::get_gapi() != GAPI_OPENGL)
         params.highDPI_ = false;
 
 #if defined(IOS) || defined(TVOS)
@@ -577,9 +577,12 @@ void Graphics::OnScreenModeChanged()
     SendEvent(E_SCREENMODE, eventData);
 }
 
-Graphics::Graphics(GAPI gapi)
+Graphics::Graphics()
 {
-    Graphics::gapi = gapi;
+    GAPI gapi = GParams::get_gapi();
+
+    // Проверяем, что gapi установлен перед вызовом конструктора
+    assert(gapi != GAPI_NONE);
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -600,7 +603,7 @@ Graphics::Graphics(GAPI gapi)
 
 Graphics::~Graphics()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -621,7 +624,7 @@ Graphics::~Graphics()
 
 bool Graphics::SetScreenMode(int width, int height, const ScreenModeParams& params, bool maximize)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -638,7 +641,7 @@ bool Graphics::SetScreenMode(int width, int height, const ScreenModeParams& para
 
 void Graphics::SetSRGB(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -653,7 +656,7 @@ void Graphics::SetSRGB(bool enable)
 
 void Graphics::SetDither(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -668,7 +671,7 @@ void Graphics::SetDither(bool enable)
 
 void Graphics::SetFlushGPU(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -683,7 +686,7 @@ void Graphics::SetFlushGPU(bool enable)
 
 void Graphics::SetForceGL2(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -698,7 +701,7 @@ void Graphics::SetForceGL2(bool enable)
 
 void Graphics::Close()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -713,7 +716,7 @@ void Graphics::Close()
 
 bool Graphics::TakeScreenShot(Image& destImage)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -730,7 +733,7 @@ bool Graphics::TakeScreenShot(Image& destImage)
 
 bool Graphics::BeginFrame()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -747,7 +750,7 @@ bool Graphics::BeginFrame()
 
 void Graphics::EndFrame()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -762,7 +765,7 @@ void Graphics::EndFrame()
 
 void Graphics::Clear(ClearTargetFlags flags, const Color& color, float depth, unsigned stencil)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -777,7 +780,7 @@ void Graphics::Clear(ClearTargetFlags flags, const Color& color, float depth, un
 
 bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect& viewport)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -794,7 +797,7 @@ bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect& viewport)
 
 bool Graphics::ResolveToTexture(Texture2D* texture)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -811,7 +814,7 @@ bool Graphics::ResolveToTexture(Texture2D* texture)
 
 bool Graphics::ResolveToTexture(TextureCube* texture)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -828,7 +831,7 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
 
 void Graphics::Draw(PrimitiveType type, unsigned vertexStart, unsigned vertexCount)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -843,7 +846,7 @@ void Graphics::Draw(PrimitiveType type, unsigned vertexStart, unsigned vertexCou
 
 void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -858,7 +861,7 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
 
 void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex, unsigned vertexCount)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -873,7 +876,7 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
 
 void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount, unsigned instanceCount)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -889,7 +892,7 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
 void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex,
     unsigned vertexCount, unsigned instanceCount)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -904,7 +907,7 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
 
 void Graphics::SetVertexBuffer(VertexBuffer* buffer)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -919,7 +922,7 @@ void Graphics::SetVertexBuffer(VertexBuffer* buffer)
 
 bool Graphics::SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned instanceOffset)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -936,7 +939,7 @@ bool Graphics::SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned i
 
 bool Graphics::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -953,7 +956,7 @@ bool Graphics::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, 
 
 void Graphics::SetIndexBuffer(IndexBuffer* buffer)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -968,7 +971,7 @@ void Graphics::SetIndexBuffer(IndexBuffer* buffer)
 
 void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -983,7 +986,7 @@ void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
 
 void Graphics::SetShaderParameter(StringHash param, const float* data, unsigned count)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -998,7 +1001,7 @@ void Graphics::SetShaderParameter(StringHash param, const float* data, unsigned 
 
 void Graphics::SetShaderParameter(StringHash param, float value)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1013,7 +1016,7 @@ void Graphics::SetShaderParameter(StringHash param, float value)
 
 void Graphics::SetShaderParameter(StringHash param, int value)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1028,7 +1031,7 @@ void Graphics::SetShaderParameter(StringHash param, int value)
 
 void Graphics::SetShaderParameter(StringHash param, bool value)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1043,7 +1046,7 @@ void Graphics::SetShaderParameter(StringHash param, bool value)
 
 void Graphics::SetShaderParameter(StringHash param, const Color& color)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1058,7 +1061,7 @@ void Graphics::SetShaderParameter(StringHash param, const Color& color)
 
 void Graphics::SetShaderParameter(StringHash param, const Vector2& vector)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1073,7 +1076,7 @@ void Graphics::SetShaderParameter(StringHash param, const Vector2& vector)
 
 void Graphics::SetShaderParameter(StringHash param, const Matrix3& matrix)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1088,7 +1091,7 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix3& matrix)
 
 void Graphics::SetShaderParameter(StringHash param, const Vector3& vector)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1103,7 +1106,7 @@ void Graphics::SetShaderParameter(StringHash param, const Vector3& vector)
 
 void Graphics::SetShaderParameter(StringHash param, const Matrix4& matrix)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1118,7 +1121,7 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix4& matrix)
 
 void Graphics::SetShaderParameter(StringHash param, const Vector4& vector)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1133,7 +1136,7 @@ void Graphics::SetShaderParameter(StringHash param, const Vector4& vector)
 
 void Graphics::SetShaderParameter(StringHash param, const Matrix3x4& matrix)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1148,7 +1151,7 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix3x4& matrix)
 
 bool Graphics::NeedParameterUpdate(ShaderParameterGroup group, const void* source)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1165,7 +1168,7 @@ bool Graphics::NeedParameterUpdate(ShaderParameterGroup group, const void* sourc
 
 bool Graphics::HasShaderParameter(StringHash param)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1182,7 +1185,7 @@ bool Graphics::HasShaderParameter(StringHash param)
 
 bool Graphics::HasTextureUnit(TextureUnit unit)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1199,7 +1202,7 @@ bool Graphics::HasTextureUnit(TextureUnit unit)
 
 void Graphics::ClearParameterSource(ShaderParameterGroup group)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1214,7 +1217,7 @@ void Graphics::ClearParameterSource(ShaderParameterGroup group)
 
 void Graphics::ClearParameterSources()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1229,7 +1232,7 @@ void Graphics::ClearParameterSources()
 
 void Graphics::ClearTransformSources()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1244,7 +1247,7 @@ void Graphics::ClearTransformSources()
 
 void Graphics::SetTexture(unsigned index, Texture* texture)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1259,7 +1262,7 @@ void Graphics::SetTexture(unsigned index, Texture* texture)
 
 void Graphics::SetDefaultTextureFilterMode(TextureFilterMode mode)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1274,7 +1277,7 @@ void Graphics::SetDefaultTextureFilterMode(TextureFilterMode mode)
 
 void Graphics::SetDefaultTextureAnisotropy(unsigned level)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1289,7 +1292,7 @@ void Graphics::SetDefaultTextureAnisotropy(unsigned level)
 
 void Graphics::ResetRenderTargets()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1304,7 +1307,7 @@ void Graphics::ResetRenderTargets()
 
 void Graphics::ResetRenderTarget(unsigned index)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1319,7 +1322,7 @@ void Graphics::ResetRenderTarget(unsigned index)
 
 void Graphics::ResetDepthStencil()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1334,7 +1337,7 @@ void Graphics::ResetDepthStencil()
 
 void Graphics::SetRenderTarget(unsigned index, RenderSurface* renderTarget)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1349,7 +1352,7 @@ void Graphics::SetRenderTarget(unsigned index, RenderSurface* renderTarget)
 
 void Graphics::SetRenderTarget(unsigned index, Texture2D* texture)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1364,7 +1367,7 @@ void Graphics::SetRenderTarget(unsigned index, Texture2D* texture)
 
 void Graphics::SetDepthStencil(RenderSurface* depthStencil)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1379,7 +1382,7 @@ void Graphics::SetDepthStencil(RenderSurface* depthStencil)
 
 void Graphics::SetDepthStencil(Texture2D* texture)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1394,7 +1397,7 @@ void Graphics::SetDepthStencil(Texture2D* texture)
 
 void Graphics::SetViewport(const IntRect& rect)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1409,7 +1412,7 @@ void Graphics::SetViewport(const IntRect& rect)
 
 void Graphics::SetBlendMode(BlendMode mode, bool alphaToCoverage)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1424,7 +1427,7 @@ void Graphics::SetBlendMode(BlendMode mode, bool alphaToCoverage)
 
 void Graphics::SetColorWrite(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1439,7 +1442,7 @@ void Graphics::SetColorWrite(bool enable)
 
 void Graphics::SetCullMode(CullMode mode)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1454,7 +1457,7 @@ void Graphics::SetCullMode(CullMode mode)
 
 void Graphics::SetDepthBias(float constantBias, float slopeScaledBias)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1469,7 +1472,7 @@ void Graphics::SetDepthBias(float constantBias, float slopeScaledBias)
 
 void Graphics::SetDepthTest(CompareMode mode)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1484,7 +1487,7 @@ void Graphics::SetDepthTest(CompareMode mode)
 
 void Graphics::SetDepthWrite(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1499,7 +1502,7 @@ void Graphics::SetDepthWrite(bool enable)
 
 void Graphics::SetFillMode(FillMode mode)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1514,7 +1517,7 @@ void Graphics::SetFillMode(FillMode mode)
 
 void Graphics::SetLineAntiAlias(bool enable)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1529,7 +1532,7 @@ void Graphics::SetLineAntiAlias(bool enable)
 
 void Graphics::SetScissorTest(bool enable, const Rect& rect, bool borderInclusive)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1544,7 +1547,7 @@ void Graphics::SetScissorTest(bool enable, const Rect& rect, bool borderInclusiv
 
 void Graphics::SetScissorTest(bool enable, const IntRect& rect)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1559,7 +1562,7 @@ void Graphics::SetScissorTest(bool enable, const IntRect& rect)
 
 void Graphics::SetClipPlane(bool enable, const Plane& clipPlane, const Matrix3x4& view, const Matrix4& projection)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1575,7 +1578,7 @@ void Graphics::SetClipPlane(bool enable, const Plane& clipPlane, const Matrix3x4
 void Graphics::SetStencilTest(bool enable, CompareMode mode, StencilOp pass, StencilOp fail, StencilOp zFail, u32 stencilRef,
     u32 compareMask, u32 writeMask)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1590,7 +1593,7 @@ void Graphics::SetStencilTest(bool enable, CompareMode mode, StencilOp pass, Ste
 
 bool Graphics::IsInitialized() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1607,7 +1610,7 @@ bool Graphics::IsInitialized() const
 
 bool Graphics::GetDither() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1624,7 +1627,7 @@ bool Graphics::GetDither() const
 
 bool Graphics::IsDeviceLost() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1641,7 +1644,7 @@ bool Graphics::IsDeviceLost() const
 
 Vector<int> Graphics::GetMultiSampleLevels() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1658,7 +1661,7 @@ Vector<int> Graphics::GetMultiSampleLevels() const
 
 unsigned Graphics::GetFormat(CompressedFormat format) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1675,7 +1678,7 @@ unsigned Graphics::GetFormat(CompressedFormat format) const
 
 ShaderVariation* Graphics::GetShader(ShaderType type, const String& name, const String& defines) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1692,7 +1695,7 @@ ShaderVariation* Graphics::GetShader(ShaderType type, const String& name, const 
 
 ShaderVariation* Graphics::GetShader(ShaderType type, const char* name, const char* defines) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1709,7 +1712,7 @@ ShaderVariation* Graphics::GetShader(ShaderType type, const char* name, const ch
 
 VertexBuffer* Graphics::GetVertexBuffer(unsigned index) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1726,7 +1729,7 @@ VertexBuffer* Graphics::GetVertexBuffer(unsigned index) const
 
 TextureUnit Graphics::GetTextureUnit(const String& name)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1743,7 +1746,7 @@ TextureUnit Graphics::GetTextureUnit(const String& name)
 
 const String& Graphics::GetTextureUnitName(TextureUnit unit)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1760,7 +1763,7 @@ const String& Graphics::GetTextureUnitName(TextureUnit unit)
 
 Texture* Graphics::GetTexture(unsigned index) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1777,7 +1780,7 @@ Texture* Graphics::GetTexture(unsigned index) const
 
 RenderSurface* Graphics::GetRenderTarget(unsigned index) const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1794,7 +1797,7 @@ RenderSurface* Graphics::GetRenderTarget(unsigned index) const
 
 IntVector2 Graphics::GetRenderTargetDimensions() const
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1811,7 +1814,7 @@ IntVector2 Graphics::GetRenderTargetDimensions() const
 
 void Graphics::OnWindowResized()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1826,7 +1829,7 @@ void Graphics::OnWindowResized()
 
 void Graphics::OnWindowMoved()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1841,7 +1844,7 @@ void Graphics::OnWindowMoved()
 
 ConstantBuffer* Graphics::GetOrCreateConstantBuffer(ShaderType type, unsigned index, unsigned size)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1858,7 +1861,7 @@ ConstantBuffer* Graphics::GetOrCreateConstantBuffer(ShaderType type, unsigned in
 
 unsigned Graphics::GetMaxBones()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1875,7 +1878,7 @@ unsigned Graphics::GetMaxBones()
 
 bool Graphics::GetGL3Support()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1892,7 +1895,7 @@ bool Graphics::GetGL3Support()
 
 unsigned Graphics::GetAlphaFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1909,7 +1912,7 @@ unsigned Graphics::GetAlphaFormat()
 
 unsigned Graphics::GetLuminanceFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1926,7 +1929,7 @@ unsigned Graphics::GetLuminanceFormat()
 
 unsigned Graphics::GetLuminanceAlphaFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1943,7 +1946,7 @@ unsigned Graphics::GetLuminanceAlphaFormat()
 
 unsigned Graphics::GetRGBFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1960,7 +1963,7 @@ unsigned Graphics::GetRGBFormat()
 
 unsigned Graphics::GetRGBAFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1977,7 +1980,7 @@ unsigned Graphics::GetRGBAFormat()
 
 unsigned Graphics::GetRGBA16Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -1994,7 +1997,7 @@ unsigned Graphics::GetRGBA16Format()
 
 unsigned Graphics::GetRGBAFloat16Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2011,7 +2014,7 @@ unsigned Graphics::GetRGBAFloat16Format()
 
 unsigned Graphics::GetRGBAFloat32Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2028,7 +2031,7 @@ unsigned Graphics::GetRGBAFloat32Format()
 
 unsigned Graphics::GetRG16Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2045,7 +2048,7 @@ unsigned Graphics::GetRG16Format()
 
 unsigned Graphics::GetRGFloat16Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2062,7 +2065,7 @@ unsigned Graphics::GetRGFloat16Format()
 
 unsigned Graphics::GetRGFloat32Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2079,7 +2082,7 @@ unsigned Graphics::GetRGFloat32Format()
 
 unsigned Graphics::GetFloat16Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2096,7 +2099,7 @@ unsigned Graphics::GetFloat16Format()
 
 unsigned Graphics::GetFloat32Format()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2113,7 +2116,7 @@ unsigned Graphics::GetFloat32Format()
 
 unsigned Graphics::GetLinearDepthFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2130,7 +2133,7 @@ unsigned Graphics::GetLinearDepthFormat()
 
 unsigned Graphics::GetDepthStencilFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2147,7 +2150,7 @@ unsigned Graphics::GetDepthStencilFormat()
 
 unsigned Graphics::GetReadableDepthFormat()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -2164,7 +2167,7 @@ unsigned Graphics::GetReadableDepthFormat()
 
 unsigned Graphics::GetFormat(const String& formatName)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)

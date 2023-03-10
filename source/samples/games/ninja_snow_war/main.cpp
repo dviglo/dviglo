@@ -104,7 +104,7 @@ public:
 
     void Start() override
     {
-        if (Headless::get())
+        if (GParams::get_headless())
             OpenConsoleWindow();
 
         ParseNetworkArguments();
@@ -140,7 +140,7 @@ public:
 
     void InitAudio()
     {
-        if (Headless::get())
+        if (GParams::get_headless())
             return;
 
         // Lower mastervolumes slightly.
@@ -165,7 +165,7 @@ public:
     {
         Engine* engine = GetSubsystem<Engine>();
 
-        if (Headless::get())
+        if (GParams::get_headless())
             return;
 
         XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
@@ -209,7 +209,7 @@ public:
         }
 
         // Precache shaders if possible
-        if (!Headless::get() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
+        if (!GParams::get_headless() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
             graphics->PrecacheShaders(*DV_RES_CACHE.GetFile("NinjaSnowWarShaders.xml"));
     }
 
@@ -268,7 +268,7 @@ public:
 
         Renderer* renderer = GetSubsystem<Renderer>();
 
-        if (!Headless::get())
+        if (!GParams::get_headless())
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
             renderer->SetViewport(0, viewport);
@@ -278,7 +278,7 @@ public:
 
     void CreateOverlays()
     {
-        if (Headless::get() || runServer)
+        if (GParams::get_headless() || runServer)
             return;
 
         i32 height = GetSubsystem<Graphics>()->GetHeight() / 22;
@@ -478,7 +478,7 @@ public:
         UpdateControls();
         CheckEndAndRestart();
 
-        if (Headless::get())
+        if (GParams::get_headless())
         {
             //String command = GetConsoleInput();
             //if (command.Length() > 0)
@@ -521,7 +521,7 @@ public:
 
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
     {
-        if (Headless::get())
+        if (GParams::get_headless())
             return;
 
         if (drawDebug)
@@ -1066,7 +1066,7 @@ public:
 
     void UpdateCamera()
     {
-        if (Headless::get())
+        if (GParams::get_headless())
             return;
 
         // On the server, use a simple freelook camera
@@ -1138,7 +1138,7 @@ public:
 
     void UpdateStatus()
     {
-        if (Headless::get() || runServer)
+        if (GParams::get_headless() || runServer)
             return;
 
         if (singlePlayer)

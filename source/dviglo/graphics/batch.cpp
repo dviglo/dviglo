@@ -94,7 +94,7 @@ void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, i32 split, Ren
     offset.x_ += scale.x_;
     offset.y_ += scale.y_;
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
         offset.z_ = 0.5f;
         scale.z_ = 0.5f;
@@ -132,7 +132,7 @@ void CalculateSpotMatrix(Matrix4& dest, Light* light)
     spotProj.m22_ = 1.0f / Max(light->GetRange(), M_EPSILON);
     spotProj.m32_ = 1.0f;
 
-    if (Graphics::GetGAPI() == GAPI_OPENGL)
+    if (GParams::get_gapi() == GAPI_OPENGL)
     {
         texAdjust.SetTranslation(Vector3(0.5f, 0.5f, 0.5f));
         texAdjust.SetScale(Vector3(0.5f, -0.5f, 0.5f));
@@ -339,7 +339,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         Matrix4 lightVecRot(lightNode->GetWorldRotation().RotationMatrix());
                         // HLSL compiler will pack the parameters as if the matrix is only 3x4, so must be careful to not overwrite
                         // the next parameter
-                        if (Graphics::GetGAPI() == GAPI_OPENGL)
+                        if (GParams::get_gapi() == GAPI_OPENGL)
                             graphics->SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 16);
                         else
                             graphics->SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 12);
@@ -398,7 +398,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         Matrix4 lightVecRot(lightNode->GetWorldRotation().RotationMatrix());
                         // HLSL compiler will pack the parameters as if the matrix is only 3x4, so must be careful to not overwrite
                         // the next parameter
-                        if (Graphics::GetGAPI() == GAPI_OPENGL)
+                        if (GParams::get_gapi() == GAPI_OPENGL)
                             graphics->SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 16);
                         else
                             graphics->SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 12);
@@ -418,7 +418,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     auto height = (float)shadowMap->GetHeight();
 
                     float mulX, mulY, addX, addY;
-                    if (Graphics::GetGAPI() == GAPI_OPENGL)
+                    if (GParams::get_gapi() == GAPI_OPENGL)
                     {
                         mulX = (float)(faceWidth - 3) / width;
                         mulY = (float)(faceHeight - 3) / height;

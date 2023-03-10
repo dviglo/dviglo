@@ -139,7 +139,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     DV_PROFILE(InitEngine);
 
-    Headless::value = GetParameter(parameters, EP_HEADLESS, false).GetBool();
+    GParams::headless = GetParameter(parameters, EP_HEADLESS, false).GetBool();
 
     // Detect GAPI even in headless mode
     // https://github.com/urho3d/Urho3D/issues/3040
@@ -175,16 +175,16 @@ bool Engine::Initialize(const VariantMap& parameters)
         return false;
     }
 
+    GParams::gapi = gapi;
+
     // Register the rest of the subsystems
-    if (!Headless::get())
+    if (!GParams::get_headless())
     {
-        DV_CONTEXT.RegisterSubsystem(new Graphics(gapi));
+        DV_CONTEXT.RegisterSubsystem(new Graphics());
         DV_CONTEXT.RegisterSubsystem(new Renderer());
     }
     else
     {
-        Graphics::SetGAPI(gapi); // https://github.com/urho3d/Urho3D/issues/3040
-
         // Register graphics library objects explicitly in headless mode to allow them to work without using actual GPU resources
         RegisterGraphicsLibrary();
     }
@@ -224,7 +224,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         return false;
 
     // Initialize graphics & audio output
-    if (!Headless::get())
+    if (!GParams::get_headless())
     {
         auto* graphics = GetSubsystem<Graphics>();
         auto* renderer = GetSubsystem<Renderer>();
@@ -240,7 +240,7 @@ bool Engine::Initialize(const VariantMap& parameters)
             graphics->SetWindowPosition(GetParameter(parameters, EP_WINDOW_POSITION_X).GetI32(),
                 GetParameter(parameters, EP_WINDOW_POSITION_Y).GetI32());
 
-        if (Graphics::GetGAPI() == GAPI_OPENGL)
+        if (GParams::get_gapi() == GAPI_OPENGL)
         {
             if (HasParameter(parameters, EP_FORCE_GL2))
                 graphics->SetForceGL2(GetParameter(parameters, EP_FORCE_GL2).GetBool());
@@ -467,7 +467,7 @@ void Engine::RunFrame()
     assert(initialized_);
 
     // If not headless, and the graphics subsystem no longer has a window open, assume we should exit
-    if (!Headless::get() && !GetSubsystem<Graphics>()->IsInitialized())
+    if (!GParams::get_headless() && !GetSubsystem<Graphics>()->IsInitialized())
         exiting_ = true;
 
     if (exiting_)
@@ -511,7 +511,7 @@ void Engine::RunFrame()
 
 Console* Engine::CreateConsole()
 {
-    if (Headless::get() || !initialized_)
+    if (GParams::get_headless() || !initialized_)
         return nullptr;
 
     // Return existing console if possible
@@ -527,7 +527,7 @@ Console* Engine::CreateConsole()
 
 DebugHud* Engine::CreateDebugHud()
 {
-    if (Headless::get() || !initialized_)
+    if (GParams::get_headless() || !initialized_)
         return nullptr;
 
     // Return existing debug HUD if possible
@@ -679,7 +679,7 @@ void Engine::Update()
 
 void Engine::Render()
 {
-    if (Headless::get())
+    if (GParams::get_headless())
         return;
 
     DV_PROFILE(Render);

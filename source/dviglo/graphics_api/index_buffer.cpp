@@ -125,7 +125,7 @@ bool IndexBuffer::GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& 
 
 void IndexBuffer::OnDeviceLost()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -140,7 +140,7 @@ void IndexBuffer::OnDeviceLost()
 
 void IndexBuffer::OnDeviceReset()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -155,7 +155,7 @@ void IndexBuffer::OnDeviceReset()
 
 void IndexBuffer::Release()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -170,7 +170,7 @@ void IndexBuffer::Release()
 
 bool IndexBuffer::SetData(const void* data)
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -188,7 +188,7 @@ bool IndexBuffer::SetData(const void* data)
 bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -206,7 +206,7 @@ bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool disc
 void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -223,7 +223,7 @@ void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
 
 void IndexBuffer::Unlock()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -238,7 +238,7 @@ void IndexBuffer::Unlock()
 
 bool IndexBuffer::Create()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -255,7 +255,7 @@ bool IndexBuffer::Create()
 
 bool IndexBuffer::UpdateToGPU()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -273,7 +273,7 @@ bool IndexBuffer::UpdateToGPU()
 void* IndexBuffer::MapBuffer(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
@@ -290,7 +290,7 @@ void* IndexBuffer::MapBuffer(i32 start, i32 count, bool discard)
 
 void IndexBuffer::UnmapBuffer()
 {
-    GAPI gapi = Graphics::GetGAPI();
+    GAPI gapi = GParams::get_gapi();
 
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
