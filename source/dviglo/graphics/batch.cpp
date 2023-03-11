@@ -167,8 +167,8 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
     if (!vertexShader_ || !pixelShader_)
         return;
 
-    Graphics* graphics = view->GetGraphics();
-    Renderer* renderer = view->GetRenderer();
+    Graphics* graphics = view->GetSubsystem<Graphics>();
+    Renderer* renderer = view->GetSubsystem<Renderer>();
     Node* cameraNode = camera ? camera->GetNode() : nullptr;
     Light* light = lightQueue_ ? lightQueue_->light_ : nullptr;
     Texture2D* shadowMap = lightQueue_ ? lightQueue_->shadowMap_ : nullptr;
@@ -629,7 +629,7 @@ void Batch::Draw(View* view, Camera* camera, bool allowDepthWrite) const
     if (!geometry_->IsEmpty())
     {
         Prepare(view, camera, true, allowDepthWrite);
-        geometry_->Draw(view->GetGraphics());
+        geometry_->Draw(view->GetSubsystem<Graphics>());
     }
 }
 
@@ -659,8 +659,8 @@ void BatchGroup::SetInstancingData(void* lockedData, i32 stride, i32& freeIndex)
 
 void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
 {
-    Graphics* graphics = view->GetGraphics();
-    Renderer* renderer = view->GetRenderer();
+    Graphics* graphics = view->GetSubsystem<Graphics>();
+    Renderer* renderer = view->GetSubsystem<Renderer>();
 
     if (instances_.Size() && !geometry_->IsEmpty())
     {
@@ -840,8 +840,8 @@ void BatchQueue::SetInstancingData(void* lockedData, i32 stride, i32& freeIndex)
 
 void BatchQueue::Draw(View* view, Camera* camera, bool markToStencil, bool usingLightOptimization, bool allowDepthWrite) const
 {
-    Graphics* graphics = view->GetGraphics();
-    Renderer* renderer = view->GetRenderer();
+    Graphics* graphics = view->GetSubsystem<Graphics>();
+    Renderer* renderer = view->GetSubsystem<Renderer>();
 
     // If View has set up its own light optimizations, do not disturb the stencil/scissor test settings
     if (!usingLightOptimization)

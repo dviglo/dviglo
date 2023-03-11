@@ -18,10 +18,8 @@ class Camera;
 class DebugRenderer;
 class Light;
 class Drawable;
-class Graphics;
 class OcclusionBuffer;
 class Octree;
-class Renderer;
 class RenderPath;
 class RenderSurface;
 class Technique;
@@ -107,11 +105,6 @@ public:
     void Update(const FrameInfo& frame);
     /// Render batches.
     void Render();
-
-    /// Return graphics subsystem.
-    Graphics* GetGraphics() const;
-    /// Return renderer subsystem.
-    Renderer* GetRenderer() const;
 
     /// Return scene.
     Scene* GetScene() const { return scene_; }
@@ -289,10 +282,6 @@ private:
         return hash;
     }
 
-    /// Graphics subsystem.
-    WeakPtr<Graphics> graphics_;
-    /// Renderer subsystem.
-    WeakPtr<Renderer> renderer_;
     /// Scene to use.
     Scene* scene_{};
     /// Octree to use.
