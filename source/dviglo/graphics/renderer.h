@@ -24,7 +24,6 @@ class Material;
 class Pass;
 class Technique;
 class Octree;
-class Graphics;
 class RenderPath;
 class RenderSurface;
 class ResourceCache;
@@ -453,8 +452,6 @@ private:
     /// Blur the shadow map.
     void BlurShadowMap(View* view, Texture2D* shadowMap, float blurScale);
 
-    /// Graphics subsystem.
-    WeakPtr<Graphics> graphics_;
     /// Default renderpath.
     SharedPtr<RenderPath> defaultRenderPath_;
     /// Default non-textured material technique.
@@ -587,4 +584,4 @@ private:
     bool resetViews_{};
 };
 
-}
+} // namespace dviglo

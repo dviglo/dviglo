@@ -332,7 +332,7 @@ void Renderer::SetMaterialQuality(MaterialQuality quality)
 
 void Renderer::SetDrawShadows(bool enable)
 {
-    if (!graphics_ || !graphics_->GetShadowMapFormat())
+    if (GParams::is_headless() || !GetSubsystem<Graphics>()->GetShadowMapFormat())
         return;
 
     drawShadows_ = enable;
@@ -342,7 +342,7 @@ void Renderer::SetDrawShadows(bool enable)
 
 void Renderer::SetShadowMapSize(int size)
 {
-    if (!graphics_)
+    if (GParams::is_headless()) // TODO: Вообще эта проверка не нужна, так как доступ к renderer запрещён
         return;
 
     size = NextPowerOfTwo((unsigned)Max(size, SHADOW_MIN_PIXELS));
@@ -355,11 +355,11 @@ void Renderer::SetShadowMapSize(int size)
 
 void Renderer::SetShadowQuality(ShadowQuality quality)
 {
-    if (!graphics_)
+    if (GParams::is_headless())
         return;
 
     // If no hardware PCF, do not allow to select one-sample quality
-    if (!graphics_->GetHardwareShadowSupport())
+    if (!GetSubsystem<Graphics>()->GetHardwareShadowSupport())
     {
         if (quality == SHADOWQUALITY_SIMPLE_16BIT)
             quality = SHADOWQUALITY_PCF_16BIT;
@@ -368,7 +368,7 @@ void Renderer::SetShadowQuality(ShadowQuality quality)
             quality = SHADOWQUALITY_PCF_24BIT;
     }
     // if high resolution is not allowed
-    if (!graphics_->GetHiresShadowMapFormat())
+    if (!GetSubsystem<Graphics>()->GetHiresShadowMapFormat())
     {
         if (quality == SHADOWQUALITY_SIMPLE_24BIT)
             quality = SHADOWQUALITY_SIMPLE_16BIT;
@@ -632,9 +632,12 @@ void Renderer::Update(float timeStep)
     views_.Clear();
     preparedViews_.Clear();
 
+    if (GParams::is_headless())
+        return;
+
     // If device lost, do not perform update. This is because any dynamic vertex/index buffer updates happen already here,
     // and if the device is lost, the updates queue up, causing memory use to rise constantly
-    if (!graphics_ || !graphics_->IsInitialized() || graphics_->IsDeviceLost())
+    if (!GetSubsystem<Graphics>()->IsInitialized() || GetSubsystem<Graphics>()->IsDeviceLost())
         return;
 
     // Set up the frameinfo structure for this frame
@@ -672,8 +675,12 @@ void Renderer::Update(float timeStep)
 
 void Renderer::Render()
 {
+    assert(!GParams::is_headless());
+
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     // Engine does not render when window is closed or device is lost
-    assert(graphics_ && graphics_->IsInitialized() && !graphics_->IsDeviceLost());
+    assert(graphics->IsInitialized() && !graphics->IsDeviceLost());
 
     DV_PROFILE(RenderViews);
 
@@ -681,8 +688,8 @@ void Renderer::Render()
     if (faceSelectCubeMap_ && faceSelectCubeMap_->IsDataLost())
         SetIndirectionTextureData();
 
-    graphics_->SetDefaultTextureFilterMode(textureFilterMode_);
-    graphics_->SetDefaultTextureAnisotropy((unsigned)textureAnisotropy_);
+    graphics->SetDefaultTextureFilterMode(textureFilterMode_);
+    graphics->SetDefaultTextureAnisotropy((unsigned)textureAnisotropy_);
 
     // If no views that render to the backbuffer, clear the screen so that e.g. the UI is not rendered on top of previous frame
     bool hasBackbufferViews = false;
@@ -698,13 +705,13 @@ void Renderer::Render()
 
     if (!hasBackbufferViews)
     {
-        graphics_->SetBlendMode(BLEND_REPLACE);
-        graphics_->SetColorWrite(true);
-        graphics_->SetDepthWrite(true);
-        graphics_->SetScissorTest(false);
-        graphics_->SetStencilTest(false);
-        graphics_->ResetRenderTargets();
-        graphics_->Clear(CLEAR_COLOR | CLEAR_DEPTH | CLEAR_STENCIL, defaultZone_->GetFogColor());
+        graphics->SetBlendMode(BLEND_REPLACE);
+        graphics->SetColorWrite(true);
+        graphics->SetDepthWrite(true);
+        graphics->SetScissorTest(false);
+        graphics->SetStencilTest(false);
+        graphics->ResetRenderTargets();
+        graphics->Clear(CLEAR_COLOR | CLEAR_DEPTH | CLEAR_STENCIL, defaultZone_->GetFogColor());
     }
 
     // Render views from last to first. Each main (backbuffer) view is rendered after the auxiliary views it depends on
@@ -719,8 +726,8 @@ void Renderer::Render()
     }
 
     // Copy the number of batches & primitives from Graphics so that we can account for 3D geometry only
-    numPrimitives_ = graphics_->GetNumPrimitives();
-    numBatches_ = graphics_->GetNumBatches();
+    numPrimitives_ = graphics->GetNumPrimitives();
+    numBatches_ = graphics->GetNumBatches();
 
     // Remove unused occlusion buffers and renderbuffers
     RemoveUnusedBuffers();
@@ -901,21 +908,23 @@ Texture2D* Renderer::GetShadowMap(Light* light, Camera* camera, i32 viewWidth, i
     TextureUsage shadowMapUsage = TEXTURE_DEPTHSTENCIL;
     int multiSample = 1;
 
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     switch (shadowQuality_)
     {
     case SHADOWQUALITY_SIMPLE_16BIT:
     case SHADOWQUALITY_PCF_16BIT:
-        shadowMapFormat = graphics_->GetShadowMapFormat();
+        shadowMapFormat = graphics->GetShadowMapFormat();
         break;
 
     case SHADOWQUALITY_SIMPLE_24BIT:
     case SHADOWQUALITY_PCF_24BIT:
-        shadowMapFormat = graphics_->GetHiresShadowMapFormat();
+        shadowMapFormat = graphics->GetHiresShadowMapFormat();
         break;
 
     case SHADOWQUALITY_VSM:
     case SHADOWQUALITY_BLUR_VSM:
-        shadowMapFormat = graphics_->GetRGFloat32Format();
+        shadowMapFormat = graphics->GetRGFloat32Format();
         shadowMapUsage = TEXTURE_RENDERTARGET;
         multiSample = vsmMultiSample_;
         break;
@@ -926,7 +935,7 @@ Texture2D* Renderer::GetShadowMap(Light* light, Camera* camera, i32 viewWidth, i
 
     SharedPtr<Texture2D> newShadowMap(new Texture2D());
     int retries = 3;
-    unsigned dummyColorFormat = graphics_->GetDummyColorFormat();
+    unsigned dummyColorFormat = graphics->GetDummyColorFormat();
 
     // Disable mipmaps from the shadow map
     newShadowMap->SetNumLevels(1);
@@ -951,7 +960,7 @@ Texture2D* Renderer::GetShadowMap(Light* light, Camera* camera, i32 viewWidth, i
             {
                 // Direct3D9: when shadow compare must be done manually, use nearest filtering so that the filtering of point lights
                 // and other shadowed lights matches
-                newShadowMap->SetFilterMode(graphics_->GetHardwareShadowSupport() ? FILTER_BILINEAR : FILTER_NEAREST);
+                newShadowMap->SetFilterMode(graphics->GetHardwareShadowSupport() ? FILTER_BILINEAR : FILTER_NEAREST);
             }
 
             // Create dummy color texture for the shadow map if necessary: Direct3D9, or OpenGL when working around an OS X +
@@ -1024,6 +1033,8 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
     if (!depthStencil || persistentKey)
         ++screenBufferAllocations_[searchKey];
 
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     if (allocations >= screenBuffers_[searchKey].Size())
     {
         SharedPtr<Texture> newBuffer;
@@ -1041,11 +1052,11 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
             if (GParams::get_gapi() == GAPI_OPENGL && persistentKey && Texture::GetDataType_OGL(format) == GL_FLOAT)
             {
                 // Note: this loses current rendertarget assignment
-                graphics_->ResetRenderTargets();
-                graphics_->SetRenderTarget(0, newTex2D);
-                graphics_->SetDepthStencil((RenderSurface*)nullptr);
-                graphics_->SetViewport(IntRect(0, 0, width, height));
-                graphics_->Clear(CLEAR_COLOR);
+                graphics->ResetRenderTargets();
+                graphics->SetRenderTarget(0, newTex2D);
+                graphics->SetDepthStencil((RenderSurface*)nullptr);
+                graphics->SetViewport(IntRect(0, 0, width, height));
+                graphics->Clear(CLEAR_COLOR);
             }
 #endif
 
@@ -1078,10 +1089,12 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
 
 RenderSurface* Renderer::GetDepthStencil(int width, int height, int multiSample, bool autoResolve)
 {
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     // Return the default depth-stencil surface if applicable
     // (when using OpenGL Graphics will allocate right size surfaces on demand to emulate Direct3D9)
-    if (width == graphics_->GetWidth() && height == graphics_->GetHeight() && multiSample == 1 &&
-        graphics_->GetMultiSample() == multiSample)
+    if (width == graphics->GetWidth() && height == graphics->GetHeight() && multiSample == 1 &&
+        graphics->GetMultiSample() == multiSample)
         return nullptr;
     else
     {
@@ -1308,15 +1321,17 @@ void Renderer::SetLightVolumeBatchShaders(Batch& batch, Camera* camera, const St
         psi += DLPS_ORTHO;
     }
 
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     if (vsDefines.Length())
-        batch.vertexShader_ = graphics_->GetShader(VS, vsName, deferredLightVSVariations[vsi] + vsDefines);
+        batch.vertexShader_ = graphics->GetShader(VS, vsName, deferredLightVSVariations[vsi] + vsDefines);
     else
-        batch.vertexShader_ = graphics_->GetShader(VS, vsName, deferredLightVSVariations[vsi]);
+        batch.vertexShader_ = graphics->GetShader(VS, vsName, deferredLightVSVariations[vsi]);
 
     if (psDefines.Length())
-        batch.pixelShader_ = graphics_->GetShader(PS, psName, deferredLightPSVariations_[psi] + psDefines);
+        batch.pixelShader_ = graphics->GetShader(PS, psName, deferredLightPSVariations_[psi] + psDefines);
     else
-        batch.pixelShader_ = graphics_->GetShader(PS, psName, deferredLightPSVariations_[psi]);
+        batch.pixelShader_ = graphics->GetShader(PS, psName, deferredLightPSVariations_[psi]);
 }
 
 void Renderer::SetCullMode(CullMode mode, Camera* camera)
@@ -1330,7 +1345,7 @@ void Renderer::SetCullMode(CullMode mode, Camera* camera)
             mode = CULL_CW;
     }
 
-    graphics_->SetCullMode(mode);
+    GetSubsystem<Graphics>()->SetCullMode(mode);
 }
 
 bool Renderer::ResizeInstancingBuffer(i32 numInstances)
@@ -1364,19 +1379,21 @@ bool Renderer::ResizeInstancingBuffer(i32 numInstances)
 void Renderer::OptimizeLightByScissor(Light* light, Camera* camera)
 {
     if (light && light->GetLightType() != LIGHT_DIRECTIONAL)
-        graphics_->SetScissorTest(true, GetLightScissor(light, camera));
+        GetSubsystem<Graphics>()->SetScissorTest(true, GetLightScissor(light, camera));
     else
-        graphics_->SetScissorTest(false);
+        GetSubsystem<Graphics>()->SetScissorTest(false);
 }
 
 void Renderer::OptimizeLightByStencil(Light* light, Camera* camera)
 {
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     if (light)
     {
         LightType type = light->GetLightType();
         if (type == LIGHT_DIRECTIONAL)
         {
-            graphics_->SetStencilTest(false);
+            graphics->SetStencilTest(false);
             return;
         }
 
@@ -1394,14 +1411,14 @@ void Renderer::OptimizeLightByStencil(Light* light, Camera* camera)
         // If the camera is actually inside the light volume, do not draw to stencil as it would waste fillrate
         if (lightDist < M_EPSILON)
         {
-            graphics_->SetStencilTest(false);
+            graphics->SetStencilTest(false);
             return;
         }
 
         // If the stencil value has wrapped, clear the whole stencil first
         if (!lightStencilValue_)
         {
-            graphics_->Clear(CLEAR_STENCIL);
+            graphics->Clear(CLEAR_STENCIL);
             lightStencilValue_ = 1;
         }
 
@@ -1410,34 +1427,34 @@ void Renderer::OptimizeLightByStencil(Light* light, Camera* camera)
         if (lightDist < camera->GetNearClip() * 2.0f)
         {
             SetCullMode(CULL_CW, camera);
-            graphics_->SetDepthTest(CMP_GREATER);
+            graphics->SetDepthTest(CMP_GREATER);
         }
         else
         {
             SetCullMode(CULL_CCW, camera);
-            graphics_->SetDepthTest(CMP_LESSEQUAL);
+            graphics->SetDepthTest(CMP_LESSEQUAL);
         }
 
-        graphics_->SetColorWrite(false);
-        graphics_->SetDepthWrite(false);
-        graphics_->SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, lightStencilValue_);
-        graphics_->SetShaders(graphics_->GetShader(VS, "Stencil"), graphics_->GetShader(PS, "Stencil"));
-        graphics_->SetShaderParameter(VSP_VIEW, view);
-        graphics_->SetShaderParameter(VSP_VIEWINV, camera->GetEffectiveWorldTransform());
-        graphics_->SetShaderParameter(VSP_VIEWPROJ, projection * view);
-        graphics_->SetShaderParameter(VSP_MODEL, light->GetVolumeTransform(camera));
+        graphics->SetColorWrite(false);
+        graphics->SetDepthWrite(false);
+        graphics->SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, lightStencilValue_);
+        graphics->SetShaders(graphics->GetShader(VS, "Stencil"), graphics->GetShader(PS, "Stencil"));
+        graphics->SetShaderParameter(VSP_VIEW, view);
+        graphics->SetShaderParameter(VSP_VIEWINV, camera->GetEffectiveWorldTransform());
+        graphics->SetShaderParameter(VSP_VIEWPROJ, projection * view);
+        graphics->SetShaderParameter(VSP_MODEL, light->GetVolumeTransform(camera));
 
-        geometry->Draw(graphics_);
+        geometry->Draw(graphics);
 
-        graphics_->ClearTransformSources();
-        graphics_->SetColorWrite(true);
-        graphics_->SetStencilTest(true, CMP_EQUAL, OP_KEEP, OP_KEEP, OP_KEEP, lightStencilValue_);
+        graphics->ClearTransformSources();
+        graphics->SetColorWrite(true);
+        graphics->SetStencilTest(true, CMP_EQUAL, OP_KEEP, OP_KEEP, OP_KEEP, lightStencilValue_);
 
         // Increase stencil value for next light
         ++lightStencilValue_;
     }
     else
-        graphics_->SetStencilTest(false);
+        graphics->SetStencilTest(false);
 }
 
 const Rect& Renderer::GetLightScissor(Light* light, Camera* camera)
@@ -1501,7 +1518,7 @@ void Renderer::UpdateQueuedViewport(i32 index)
         frame_.camera_ = viewport->GetCamera();
         frame_.viewSize_ = viewRect.Size();
         if (frame_.viewSize_ == IntVector2::ZERO)
-            frame_.viewSize_ = IntVector2(graphics_->GetWidth(), graphics_->GetHeight());
+            frame_.viewSize_ = IntVector2(GetSubsystem<Graphics>()->GetWidth(), GetSubsystem<Graphics>()->GetHeight());
         octree->Update(frame_);
         updatedOctrees_.Insert(octree);
 
@@ -1579,9 +1596,7 @@ void Renderer::Initialize()
 
     DV_PROFILE(InitRenderer);
 
-    graphics_ = graphics;
-
-    if (!graphics_->GetShadowMapFormat())
+    if (!GetSubsystem<Graphics>()->GetShadowMapFormat())
         drawShadows_ = false;
     // Validate the shadow quality level
     SetShadowQuality(shadowQuality_);
@@ -1667,6 +1682,8 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
         psDefines += "VSM_SHADOW ";
     }
 
+    Graphics* graphics = GetSubsystem<Graphics>();
+
     if (pass->GetLightingMode() == LIGHTING_PERPIXEL)
     {
         // Load forward pixel lit variations
@@ -1678,7 +1695,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
             unsigned g = j / MAX_LIGHT_VS_VARIATIONS;
             unsigned l = j % MAX_LIGHT_VS_VARIATIONS;
 
-            vertexShaders[j] = graphics_->GetShader(VS, pass->GetVertexShader(),
+            vertexShaders[j] = graphics->GetShader(VS, pass->GetVertexShader(),
                 vsDefines + lightVSVariations[l] + geometryVSVariations[g]);
         }
         for (unsigned j = 0; j < MAX_LIGHT_PS_VARIATIONS * 2; ++j)
@@ -1688,12 +1705,12 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
 
             if (l & LPS_SHADOW)
             {
-                pixelShaders[j] = graphics_->GetShader(PS, pass->GetPixelShader(),
+                pixelShaders[j] = graphics->GetShader(PS, pass->GetPixelShader(),
                     psDefines + lightPSVariations[l] + GetShadowVariations() +
                     heightFogVariations[h]);
             }
             else
-                pixelShaders[j] = graphics_->GetShader(PS, pass->GetPixelShader(),
+                pixelShaders[j] = graphics->GetShader(PS, pass->GetPixelShader(),
                     psDefines + lightPSVariations[l] + heightFogVariations[h]);
         }
     }
@@ -1707,7 +1724,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
             {
                 unsigned g = j / MAX_VERTEXLIGHT_VS_VARIATIONS;
                 unsigned l = j % MAX_VERTEXLIGHT_VS_VARIATIONS;
-                vertexShaders[j] = graphics_->GetShader(VS, pass->GetVertexShader(),
+                vertexShaders[j] = graphics->GetShader(VS, pass->GetVertexShader(),
                     vsDefines + vertexLightVSVariations[l] + geometryVSVariations[g]);
             }
         }
@@ -1716,7 +1733,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
             vertexShaders.Resize(MAX_GEOMETRYTYPES);
             for (unsigned j = 0; j < MAX_GEOMETRYTYPES; ++j)
             {
-                vertexShaders[j] = graphics_->GetShader(VS, pass->GetVertexShader(),
+                vertexShaders[j] = graphics->GetShader(VS, pass->GetVertexShader(),
                     vsDefines + geometryVSVariations[j]);
             }
         }
@@ -1725,7 +1742,7 @@ void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& v
         for (unsigned j = 0; j < 2; ++j)
         {
             pixelShaders[j] =
-                graphics_->GetShader(PS, pass->GetPixelShader(), psDefines + heightFogVariations[j]);
+                graphics->GetShader(PS, pass->GetPixelShader(), psDefines + heightFogVariations[j]);
         }
     }
 
@@ -1805,17 +1822,19 @@ void Renderer::CreateGeometries()
     pointLightGeometry_->SetIndexBuffer(plib);
     pointLightGeometry_->SetDrawRange(TRIANGLE_LIST, 0, plib->GetIndexCount());
 
+    Graphics* graphics = GetSubsystem<Graphics>();
+
 #if !defined(DV_GLES2)
-    if (graphics_->GetShadowMapFormat())
+    if (graphics->GetShadowMapFormat())
     {
         faceSelectCubeMap_ = new TextureCube();
         faceSelectCubeMap_->SetNumLevels(1);
-        faceSelectCubeMap_->SetSize(1, graphics_->GetRGBAFormat());
+        faceSelectCubeMap_->SetSize(1, graphics->GetRGBAFormat());
         faceSelectCubeMap_->SetFilterMode(FILTER_NEAREST);
 
         indirectionCubeMap_ = new TextureCube();
         indirectionCubeMap_->SetNumLevels(1);
-        indirectionCubeMap_->SetSize(256, graphics_->GetRGBAFormat());
+        indirectionCubeMap_->SetSize(256, graphics->GetRGBAFormat());
         indirectionCubeMap_->SetFilterMode(FILTER_BILINEAR);
         indirectionCubeMap_->SetAddressMode(COORD_U, ADDRESS_CLAMP);
         indirectionCubeMap_->SetAddressMode(COORD_V, ADDRESS_CLAMP);
@@ -1877,7 +1896,7 @@ void Renderer::SetIndirectionTextureData()
 void Renderer::CreateInstancingBuffer()
 {
     // Do not create buffer if instancing not supported
-    if (!graphics_->GetInstancingSupport())
+    if (!GetSubsystem<Graphics>()->GetInstancingSupport())
     {
         instancingBuffer_.Reset();
         dynamicInstancing_ = false;
@@ -1918,7 +1937,7 @@ String Renderer::GetShadowVariations() const
             }
             else
             {
-                if (graphics_->GetHardwareShadowSupport())
+                if (GetSubsystem<Graphics>()->GetHardwareShadowSupport())
                     return "SIMPLE_SHADOW ";
                 else
                     return "SIMPLE_SHADOW SHADOWCMP ";
@@ -1932,7 +1951,7 @@ String Renderer::GetShadowVariations() const
             }
             else
             {
-                if (graphics_->GetHardwareShadowSupport())
+                if (GetSubsystem<Graphics>()->GetHardwareShadowSupport())
                     return "PCF_SHADOW ";
                 else
                     return "PCF_SHADOW SHADOWCMP ";
@@ -1965,40 +1984,43 @@ void Renderer::HandleRenderUpdate(StringHash eventType, VariantMap& eventData)
 
 void Renderer::BlurShadowMap(View* view, Texture2D* shadowMap, float blurScale)
 {
-    graphics_->SetBlendMode(BLEND_REPLACE);
-    graphics_->SetDepthTest(CMP_ALWAYS);
-    graphics_->SetClipPlane(false);
-    graphics_->SetScissorTest(false);
+    Graphics* graphics = GetSubsystem<Graphics>();
+
+    graphics->SetBlendMode(BLEND_REPLACE);
+    graphics->SetDepthTest(CMP_ALWAYS);
+    graphics->SetClipPlane(false);
+    graphics->SetScissorTest(false);
 
     // Get a temporary render buffer
     auto* tmpBuffer = static_cast<Texture2D*>(GetScreenBuffer(shadowMap->GetWidth(), shadowMap->GetHeight(),
         shadowMap->GetFormat(), 1, false, false, false, false));
-    graphics_->SetRenderTarget(0, tmpBuffer->GetRenderSurface());
-    graphics_->SetDepthStencil(GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(), shadowMap->GetMultiSample(),
+    graphics->SetRenderTarget(0, tmpBuffer->GetRenderSurface());
+    graphics->SetDepthStencil(GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(), shadowMap->GetMultiSample(),
         shadowMap->GetAutoResolve()));
-    graphics_->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
+    graphics->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
 
     // Get shaders
     static const char* shaderName = "ShadowBlur";
-    ShaderVariation* vs = graphics_->GetShader(VS, shaderName);
-    ShaderVariation* ps = graphics_->GetShader(PS, shaderName);
-    graphics_->SetShaders(vs, ps);
+    ShaderVariation* vs = graphics->GetShader(VS, shaderName);
+    ShaderVariation* ps = graphics->GetShader(PS, shaderName);
+    graphics->SetShaders(vs, ps);
 
     view->SetGBufferShaderParameters(IntVector2(shadowMap->GetWidth(), shadowMap->GetHeight()), IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
 
     // Horizontal blur of the shadow map
     static const StringHash blurOffsetParam("BlurOffsets");
 
-    graphics_->SetShaderParameter(blurOffsetParam, Vector2(shadowSoftness_ * blurScale / shadowMap->GetWidth(), 0.0f));
-    graphics_->SetTexture(TU_DIFFUSE, shadowMap);
+    graphics->SetShaderParameter(blurOffsetParam, Vector2(shadowSoftness_ * blurScale / shadowMap->GetWidth(), 0.0f));
+    graphics->SetTexture(TU_DIFFUSE, shadowMap);
     view->DrawFullscreenQuad(true);
 
     // Vertical blur
-    graphics_->SetRenderTarget(0, shadowMap);
-    graphics_->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
-    graphics_->SetShaderParameter(blurOffsetParam, Vector2(0.0f, shadowSoftness_ * blurScale / shadowMap->GetHeight()));
+    graphics->SetRenderTarget(0, shadowMap);
+    graphics->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
+    graphics->SetShaderParameter(blurOffsetParam, Vector2(0.0f, shadowSoftness_ * blurScale / shadowMap->GetHeight()));
 
-    graphics_->SetTexture(TU_DIFFUSE, tmpBuffer);
+    graphics->SetTexture(TU_DIFFUSE, tmpBuffer);
     view->DrawFullscreenQuad(true);
 }
-}
+
+} // namespace dviglo
