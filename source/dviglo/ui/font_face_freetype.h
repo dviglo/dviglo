@@ -9,7 +9,6 @@
 namespace dviglo
 {
 
-class FreeTypeLibrary;
 class Texture2D;
 
 /// Free type font face description.
@@ -37,8 +36,6 @@ private:
     /// Smooth one row of a horizontally oversampled glyph image.
     void BoxFilter(unsigned char* dest, size_t destSize, const unsigned char* src, size_t srcSize);
 
-    /// FreeType library.
-    SharedPtr<FreeTypeLibrary> freeType_;
     /// FreeType face. Non-null after creation only in dynamic mode.
     void* face_{};
     /// Load mode.

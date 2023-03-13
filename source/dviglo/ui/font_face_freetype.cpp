@@ -28,26 +28,48 @@ inline float FixedToFloat(FT_Pos value)
     return value / 64.0f;
 }
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool free_type_lib_destructed = false;
+#endif
+
 /// FreeType library subsystem.
 class FreeTypeLibrary : public Object
 {
     DV_OBJECT(FreeTypeLibrary, Object);
 
 public:
+    static FreeTypeLibrary& get_instance()
+    {
+        assert(!free_type_lib_destructed);
+        static FreeTypeLibrary instance;
+        return instance;
+    }
+
+private:
     /// Construct.
     explicit FreeTypeLibrary()
     {
         FT_Error error = FT_Init_FreeType(&library_);
         if (error)
             DV_LOGERROR("Could not initialize FreeType library");
+
+        DV_LOGDEBUG("Singleton FreeTypeLibrary constructed");
     }
 
     /// Destruct.
     ~FreeTypeLibrary() override
     {
         FT_Done_FreeType(library_);
+
+        DV_LOGDEBUG("Singleton FreeTypeLibrary destructed");
+
+#ifdef _DEBUG
+        free_type_lib_destructed = true;
+#endif
     }
 
+public:
     FT_Library GetLibrary() const { return library_; }
 
 private:
@@ -73,12 +95,7 @@ FontFaceFreeType::~FontFaceFreeType()
 bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
 {
     // Create & initialize FreeType library if it does not exist yet
-    auto* freeType = font_->GetSubsystem<FreeTypeLibrary>();
-    if (!freeType)
-        DV_CONTEXT.RegisterSubsystem(freeType = new FreeTypeLibrary());
-
-    // Ensure the FreeType library is kept alive as long as TTF font resources exist
-    freeType_ = freeType;
+    FreeTypeLibrary& freeType = FreeTypeLibrary::get_instance();
 
     UI& ui = DV_UI;
     const int maxTextureSize = ui.GetMaxFontTextureSize();
@@ -100,7 +117,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
         return false;
     }
 
-    FT_Library library = freeType->GetLibrary();
+    FT_Library library = freeType.GetLibrary();
     FT_Face face;
     FT_Error error = FT_New_Memory_Face(library, fontData, fontDataSize, 0, &face);
     if (error)
