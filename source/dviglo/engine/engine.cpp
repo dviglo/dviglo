@@ -122,9 +122,6 @@ Engine::Engine() :
 #endif
     Audio::get_instance();
 
-    // Register self as a subsystem
-    DV_CONTEXT.RegisterSubsystem(this);
-
     // Register object factories for libraries which are not automatically registered along with subsystem creation
     RegisterSceneLibrary();
 
