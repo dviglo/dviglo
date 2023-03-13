@@ -105,8 +105,8 @@ void ConsoleInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
 void ConsoleInput::HandleEscKeyDown(StringHash eventType, VariantMap& eventData)
 {
     // Unlike the other samples, exiting the engine when ESC is pressed instead of just closing the console
-    if (eventData[KeyDown::P_KEY].GetI32() == KEY_ESCAPE && GetPlatform() != "Web")
-        engine_->Exit();
+    if (eventData[KeyDown::P_KEY].GetI32() == KEY_ESCAPE)
+        DV_ENGINE.Exit();
 }
 
 void ConsoleInput::StartGame()
@@ -190,7 +190,9 @@ void ConsoleInput::HandleInput(const String& input)
     }
 
     if (inputLower == "quit" || inputLower == "exit")
-        engine_->Exit();
+    {
+        DV_ENGINE.Exit();
+    }
     else if (gameOn_)
     {
         // Game is on
@@ -251,7 +253,7 @@ void ConsoleInput::HandleInput(const String& input)
         if (inputLower[0] == 'y')
             StartGame();
         else if (inputLower[0] == 'n')
-            engine_->Exit();
+            DV_ENGINE.Exit();
         else
             Print("Please answer 'y' or 'n'.");
     }

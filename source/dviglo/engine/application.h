@@ -13,8 +13,6 @@
 namespace dviglo
 {
 
-class Engine;
-
 /// Base class for creating applications which initialize the Urho3D engine and run a main loop until exited.
 class DV_API Application : public Object
 {
@@ -42,8 +40,6 @@ protected:
     /// Handle log message.
     void HandleLogMessage(StringHash eventType, VariantMap& eventData);
 
-    /// Urho3D engine.
-    SharedPtr<Engine> engine_;
     /// Engine parameters map.
     VariantMap engineParameters_;
     /// Collected startup error log messages.

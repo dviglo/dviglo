@@ -75,6 +75,21 @@ namespace dviglo
 
 extern const char* logLevelPrefixes[];
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool engine_destructed = false;
+#endif
+
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+Engine& Engine::get_instance()
+{
+    assert(!engine_destructed);
+    static Engine instance;
+    return instance;
+}
+
 Engine::Engine() :
     timeStep_(0.0f),
     timeStepSmoothing_(2),
@@ -126,9 +141,18 @@ Engine::Engine() :
 #endif
 
     SubscribeToEvent(E_EXITREQUESTED, DV_HANDLER(Engine, HandleExitRequested));
+
+    DV_LOGDEBUG("Singleton Engine constructed");
 }
 
-Engine::~Engine() = default;
+Engine::~Engine()
+{
+    DV_LOGDEBUG("Singleton Engine destructed");
+
+#ifdef _DEBUG
+    engine_destructed = true;
+#endif
+}
 
 bool Engine::Initialize(const VariantMap& parameters)
 {

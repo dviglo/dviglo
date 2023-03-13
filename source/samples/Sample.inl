@@ -80,7 +80,7 @@ void Sample::Start()
 
 void Sample::Stop()
 {
-    engine_->DumpResources(true);
+    DV_ENGINE.DumpResources(true);
 }
 
 void Sample::InitTouchInput()
@@ -182,12 +182,12 @@ void Sample::CreateConsoleAndDebugHud()
     XMLFile* xmlFile = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Create console
-    Console* console = engine_->CreateConsole();
+    Console* console = DV_ENGINE.CreateConsole();
     console->SetDefaultStyle(xmlFile);
     console->GetBackground()->SetOpacity(0.8f);
 
     // Create debug HUD.
-    DebugHud* debugHud = engine_->CreateDebugHud();
+    DebugHud* debugHud = DV_ENGINE.CreateDebugHud();
     debugHud->SetDefaultStyle(xmlFile);
 }
 
@@ -205,16 +205,7 @@ void Sample::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
         if (console->IsVisible())
             console->SetVisible(false);
         else
-        {
-            if (GetPlatform() == "Web")
-            {
-                DV_INPUT.SetMouseVisible(true);
-                if (useMouseMode_ != MM_ABSOLUTE)
-                    DV_INPUT.SetMouseMode(MM_FREE);
-            }
-            else
-                engine_->Exit();
-        }
+            DV_ENGINE.Exit();
     }
 }
 

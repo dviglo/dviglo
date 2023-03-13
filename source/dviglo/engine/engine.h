@@ -19,10 +19,18 @@ class DV_API Engine : public Object
     DV_OBJECT(Engine, Object);
 
 public:
+    static Engine& get_instance();
+
+private:
     /// Construct.
     explicit Engine();
     /// Destruct. Free all subsystems.
     ~Engine() override;
+
+public:
+    // Запрещаем копирование
+    Engine(const Engine&) = delete;
+    Engine& operator =(const Engine&) = delete;
 
     /// Initialize engine using parameters given and show the application window. Return true if successful.
     bool Initialize(const VariantMap& parameters);
@@ -132,5 +140,7 @@ private:
     /// Audio paused flag.
     bool audioPaused_;
 };
+
+#define DV_ENGINE (dviglo::Engine::get_instance())
 
 }

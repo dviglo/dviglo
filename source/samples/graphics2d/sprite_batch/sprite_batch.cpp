@@ -39,14 +39,14 @@ public:
 
     void Start()
     {
-        //GetSubsystem<Engine>()->SetMaxFps(10);
+        //DV_ENGINE.SetMaxFps(10);
 
         CreateScene();
         SetupViewport();
         SubscribeToEvents();
 
         XMLFile* xmlFile = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
-        DebugHud* debugHud = engine_->CreateDebugHud();
+        DebugHud* debugHud = DV_ENGINE.CreateDebugHud();
         debugHud->SetDefaultStyle(xmlFile);
 
         screenSpaceSpriteBatch_ = new SpriteBatch();

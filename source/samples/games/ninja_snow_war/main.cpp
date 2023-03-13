@@ -134,7 +134,7 @@ public:
         if (singlePlayer)
         {
             StartGame(nullptr);
-            GetSubsystem<Engine>()->SetPauseMinimized(true);
+            DV_ENGINE.SetPauseMinimized(true);
         }
     }
 
@@ -163,19 +163,17 @@ public:
 
     void InitConsole()
     {
-        Engine* engine = GetSubsystem<Engine>();
-
         if (GParams::is_headless())
             return;
 
         XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
         DV_UI.GetRoot()->SetDefaultStyle(uiStyle);
 
-        Console* console = engine->CreateConsole();
+        Console* console = DV_ENGINE.CreateConsole();
         console->SetDefaultStyle(uiStyle);
         console->GetBackground()->SetOpacity(0.8f);
 
-        DebugHud* debug_hud = engine->CreateDebugHud();
+        DebugHud* debug_hud = DV_ENGINE.CreateDebugHud();
         debug_hud->SetDefaultStyle(uiStyle);
     }
 
@@ -537,14 +535,13 @@ public:
     {
         Console* console = GetSubsystem<Console>();
         DebugHud* debugHud = GetSubsystem<DebugHud>();
-        Engine* engine = GetSubsystem<Engine>();
 
         i32 key = eventData["Key"].GetI32();
 
         if (key == KEY_ESCAPE)
         {
             if (!console->IsVisible())
-                engine->Exit();
+                DV_ENGINE.Exit();
             else
                 console->SetVisible(false);
         }

@@ -179,8 +179,7 @@ void HelloGUI::HandleDragEnd(StringHash eventType, VariantMap& eventData) // For
 
 void HelloGUI::HandleClosePressed(StringHash eventType, VariantMap& eventData)
 {
-    if (GetPlatform() != "Web")
-        engine_->Exit();
+    DV_ENGINE.Exit();
 }
 
 void HelloGUI::HandleControlClicked(StringHash eventType, VariantMap& eventData)

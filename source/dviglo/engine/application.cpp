@@ -16,24 +16,13 @@
 namespace dviglo
 {
 
-#if defined(IOS) || defined(TVOS) || defined(__EMSCRIPTEN__)
-// Code for supporting SDL_iPhoneSetAnimationCallback() and emscripten_set_main_loop_arg()
-#if defined(__EMSCRIPTEN__)
-#include <emscripten/emscripten.h>
-#endif
-void RunFrame(void* data)
-{
-    static_cast<Engine*>(data)->RunFrame();
-}
-#endif
-
 Application::Application() :
     exitCode_(EXIT_SUCCESS)
 {
     engineParameters_ = Engine::ParseParameters(GetArguments());
 
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
-    engine_ = new Engine();
+    Engine::get_instance();
 
     // Subscribe to log messages so that can show errors if ErrorExit() is called with empty message
     SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));
@@ -49,7 +38,7 @@ int Application::Run()
         if (exitCode_)
             return exitCode_;
 
-        if (!engine_->Initialize(engineParameters_))
+        if (!DV_ENGINE.Initialize(engineParameters_))
         {
             ErrorExit();
             return exitCode_;
@@ -59,21 +48,10 @@ int Application::Run()
         if (exitCode_)
             return exitCode_;
 
-        // Platforms other than iOS/tvOS and Emscripten run a blocking main loop
-#if !defined(IOS) && !defined(TVOS) && !defined(__EMSCRIPTEN__)
-        while (!engine_->IsExiting())
-            engine_->RunFrame();
+        while (!DV_ENGINE.IsExiting())
+            DV_ENGINE.RunFrame();
 
         Stop();
-        // iOS/tvOS will setup a timer for running animation frames so eg. Game Center can run. In this case we do not
-        // support calling the Stop() function, as the application will never stop manually
-#else
-#if defined(IOS) || defined(TVOS)
-        SDL_iPhoneSetAnimationCallback(DV_GRAPHICS.GetWindow(), 1, &RunFrame, engine_);
-#elif defined(__EMSCRIPTEN__)
-        emscripten_set_main_loop_arg(RunFrame, engine_, 0, 1);
-#endif
-#endif
 
         return exitCode_;
 #if !defined(__GNUC__) || __EXCEPTIONS
@@ -88,7 +66,7 @@ int Application::Run()
 
 void Application::ErrorExit(const String& message)
 {
-    engine_->Exit(); // Close the rendering window
+    DV_ENGINE.Exit(); // Close the rendering window
     exitCode_ = EXIT_FAILURE;
 
     if (!message.Length())
