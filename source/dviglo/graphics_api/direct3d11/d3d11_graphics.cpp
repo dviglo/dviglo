@@ -228,7 +228,7 @@ void Graphics::Destructor_D3D11()
     DV_SAFE_RELEASE(impl->resolveTexture_);
     DV_SAFE_RELEASE(impl->swapChain_);
     DV_SAFE_RELEASE(impl->deviceContext_);
-    DV_SAFE_RELEASE(impl->device_);
+    DV_SAFE_RELEASE(impl->device_); // TODO: Это закрывает программу и последующие синглтоны не уничтожаются должным образом
 
     if (window_)
     {
