@@ -160,10 +160,18 @@ class DV_API Graphics : public Object
     DV_OBJECT(Graphics, Object);
 
 public:
+    static Graphics& get_instance();
+
+private:
     /// Construct.
     explicit Graphics();
     /// Destruct. Release the Direct3D11 device and close the window.
     ~Graphics() override;
+
+public:
+    // Запрещаем копирование
+    Graphics(const Graphics&) = delete;
+    Graphics& operator =(const Graphics&) = delete;
 
     /// Set external window handle. Only effective before setting the initial screen mode.
     void SetExternalWindow(void* window);
@@ -1171,5 +1179,6 @@ private:
 /// Register Graphics library objects.
 void DV_API RegisterGraphicsLibrary();
 
-} // namespace dviglo
+#define DV_GRAPHICS (dviglo::Graphics::get_instance())
 
+} // namespace dviglo

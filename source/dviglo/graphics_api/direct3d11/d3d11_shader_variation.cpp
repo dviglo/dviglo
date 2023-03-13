@@ -46,7 +46,7 @@ bool ShaderVariation::Create_D3D11()
 {
     Release_D3D11();
 
-    if (!graphics_)
+    if (GParams::is_headless())
         return false;
 
     if (!owner_)
@@ -60,7 +60,7 @@ bool ShaderVariation::Create_D3D11()
     SplitPath(owner_->GetName(), path, name, extension);
     extension = type_ == VS ? ".vs4" : ".ps4";
 
-    String binaryShaderName = graphics_->GetShaderCacheDir() + name + "_" + StringHash(defines_).ToString() + extension;
+    String binaryShaderName = DV_GRAPHICS.GetShaderCacheDir() + name + "_" + StringHash(defines_).ToString() + extension;
 
     if (!LoadByteCode_D3D11(binaryShaderName))
     {
@@ -73,7 +73,7 @@ bool ShaderVariation::Create_D3D11()
     }
 
     // Then create shader from the bytecode
-    ID3D11Device* device = graphics_->GetImpl_D3D11()->GetDevice();
+    ID3D11Device* device = DV_GRAPHICS.GetImpl_D3D11()->GetDevice();
     if (type_ == VS)
     {
         if (device && byteCode_.Size())
@@ -110,20 +110,22 @@ void ShaderVariation::Release_D3D11()
 {
     if (object_.ptr_)
     {
-        if (!graphics_)
+        if (GParams::is_headless())
             return;
 
-        graphics_->CleanupShaderPrograms_D3D11(this);
+        Graphics& graphics = DV_GRAPHICS;
+
+        graphics.CleanupShaderPrograms_D3D11(this);
 
         if (type_ == VS)
         {
-            if (graphics_->GetVertexShader() == this)
-                graphics_->SetShaders(nullptr, nullptr);
+            if (graphics.GetVertexShader() == this)
+                graphics.SetShaders(nullptr, nullptr);
         }
         else
         {
-            if (graphics_->GetPixelShader() == this)
-                graphics_->SetShaders(nullptr, nullptr);
+            if (graphics.GetPixelShader() == this)
+                graphics.SetShaders(nullptr, nullptr);
         }
 
         DV_SAFE_RELEASE(object_.ptr_);
@@ -433,7 +435,7 @@ void ShaderVariation::SaveByteCode_D3D11(const String& binaryShaderName)
     {
         if (useTextureUnits_[i])
         {
-            file->WriteString(graphics_->GetTextureUnitName((TextureUnit)i));
+            file->WriteString(DV_GRAPHICS.GetTextureUnitName((TextureUnit)i));
             file->WriteU8((unsigned char)i);
         }
     }

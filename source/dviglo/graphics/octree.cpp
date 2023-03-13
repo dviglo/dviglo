@@ -298,7 +298,7 @@ Octree::Octree() :
 {
     // If the engine is running headless, subscribe to RenderUpdate events for manually updating the octree
     // to allow raycasts and animation update
-    if (!GetSubsystem<Graphics>())
+    if (GParams::is_headless())
         SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Octree, HandleRenderUpdate));
 }
 

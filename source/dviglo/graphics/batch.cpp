@@ -61,7 +61,7 @@ inline bool CompareBatchGroupOrder(BatchGroup* lhs, BatchGroup* rhs)
     return lhs->renderOrder_ < rhs->renderOrder_;
 }
 
-void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, i32 split, Renderer* renderer)
+void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, i32 split)
 {
     assert(split >= 0);
 
@@ -106,7 +106,7 @@ void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, i32 split, Ren
     }
 
     // If using 4 shadow samples, offset the position diagonally by half pixel
-    if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
+    if (DV_RENDERER.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || DV_RENDERER.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
     {
         offset.x_ -= 0.5f / width;
         offset.y_ -= 0.5f / height;
@@ -167,14 +167,14 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
     if (!vertexShader_ || !pixelShader_)
         return;
 
-    Graphics* graphics = view->GetSubsystem<Graphics>();
-    Renderer* renderer = view->GetSubsystem<Renderer>();
+    Graphics& graphics = DV_GRAPHICS;
+    Renderer& renderer = DV_RENDERER;
     Node* cameraNode = camera ? camera->GetNode() : nullptr;
     Light* light = lightQueue_ ? lightQueue_->light_ : nullptr;
     Texture2D* shadowMap = lightQueue_ ? lightQueue_->shadowMap_ : nullptr;
 
     // Set shaders first. The available shader parameters and their register/uniform positions depend on the currently set shaders
-    graphics->SetShaders(vertexShader_, pixelShader_);
+    graphics.SetShaders(vertexShader_, pixelShader_);
 
     // Set pass / material-specific renderstates
     if (pass_ && material_)
@@ -188,8 +188,8 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
             else if (blend == BLEND_ADDALPHA)
                 blend = BLEND_SUBTRACTALPHA;
         }
-        graphics->SetBlendMode(blend, pass_->GetAlphaToCoverage() || material_->GetAlphaToCoverage());
-        graphics->SetLineAntiAlias(material_->GetLineAntiAlias());
+        graphics.SetBlendMode(blend, pass_->GetAlphaToCoverage() || material_->GetAlphaToCoverage());
+        graphics.SetLineAntiAlias(material_->GetLineAntiAlias());
 
         bool isShadowPass = pass_->GetIndex() == Technique::shadowPassIndex;
         CullMode effectiveCullMode = pass_->GetCullMode();
@@ -197,29 +197,29 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         if (effectiveCullMode == MAX_CULLMODES)
             effectiveCullMode = isShadowPass ? material_->GetShadowCullMode() : material_->GetCullMode();
 
-        renderer->SetCullMode(effectiveCullMode, camera);
+        renderer.SetCullMode(effectiveCullMode, camera);
         if (!isShadowPass)
         {
             const BiasParameters& depthBias = material_->GetDepthBias();
-            graphics->SetDepthBias(depthBias.constantBias_, depthBias.slopeScaledBias_);
+            graphics.SetDepthBias(depthBias.constantBias_, depthBias.slopeScaledBias_);
         }
 
         // Use the "least filled" fill mode combined from camera & material
-        graphics->SetFillMode((FillMode)(Max(camera->GetFillMode(), material_->GetFillMode())));
-        graphics->SetDepthTest(pass_->GetDepthTestMode());
-        graphics->SetDepthWrite(pass_->GetDepthWrite() && allowDepthWrite);
+        graphics.SetFillMode((FillMode)(Max(camera->GetFillMode(), material_->GetFillMode())));
+        graphics.SetDepthTest(pass_->GetDepthTestMode());
+        graphics.SetDepthWrite(pass_->GetDepthWrite() && allowDepthWrite);
     }
 
     // Set global (per-frame) shader parameters
-    if (graphics->NeedParameterUpdate(SP_FRAME, nullptr))
+    if (graphics.NeedParameterUpdate(SP_FRAME, nullptr))
         view->SetGlobalShaderParameters();
 
     // Set camera & viewport shader parameters
     hash32 cameraHash = (hash32)(size_t)camera;
-    IntRect viewport = graphics->GetViewport();
+    IntRect viewport = graphics.GetViewport();
     IntVector2 viewSize = IntVector2(viewport.Width(), viewport.Height());
     hash32 viewportHash = (hash32)viewSize.x_ | (hash32)viewSize.y_ << 16u;
-    if (graphics->NeedParameterUpdate(SP_CAMERA, reinterpret_cast<const void*>(cameraHash + viewportHash)))
+    if (graphics.NeedParameterUpdate(SP_CAMERA, reinterpret_cast<const void*>(cameraHash + viewportHash)))
     {
         view->SetCameraShaderParameters(camera);
         // During renderpath commands the G-Buffer or viewport texture is assumed to always be viewport-sized
@@ -227,37 +227,37 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
     }
 
     // Set model or skinning transforms
-    if (setModelTransform && graphics->NeedParameterUpdate(SP_OBJECT, worldTransform_))
+    if (setModelTransform && graphics.NeedParameterUpdate(SP_OBJECT, worldTransform_))
     {
         if (geometryType_ == GEOM_SKINNED)
         {
-            graphics->SetShaderParameter(VSP_SKINMATRICES, reinterpret_cast<const float*>(worldTransform_),
+            graphics.SetShaderParameter(VSP_SKINMATRICES, reinterpret_cast<const float*>(worldTransform_),
                 12 * numWorldTransforms_);
         }
         else
-            graphics->SetShaderParameter(VSP_MODEL, *worldTransform_);
+            graphics.SetShaderParameter(VSP_MODEL, *worldTransform_);
 
         // Set the orientation for billboards, either from the object itself or from the camera
         if (geometryType_ == GEOM_BILLBOARD)
         {
             if (numWorldTransforms_ > 1)
-                graphics->SetShaderParameter(VSP_BILLBOARDROT, worldTransform_[1].RotationMatrix());
+                graphics.SetShaderParameter(VSP_BILLBOARDROT, worldTransform_[1].RotationMatrix());
             else
-                graphics->SetShaderParameter(VSP_BILLBOARDROT, cameraNode->GetWorldRotation().RotationMatrix());
+                graphics.SetShaderParameter(VSP_BILLBOARDROT, cameraNode->GetWorldRotation().RotationMatrix());
         }
     }
 
     // Set zone-related shader parameters
-    BlendMode blend = graphics->GetBlendMode();
+    BlendMode blend = graphics.GetBlendMode();
     // If the pass is additive, override fog color to black so that shaders do not need a separate additive path
     bool overrideFogColorToBlack = blend == BLEND_ADD || blend == BLEND_ADDALPHA;
     hash32 zoneHash = (hash32)(size_t)zone_;
     if (overrideFogColorToBlack)
         zoneHash += 0x80000000;
-    if (zone_ && graphics->NeedParameterUpdate(SP_ZONE, reinterpret_cast<const void*>(zoneHash)))
+    if (zone_ && graphics.NeedParameterUpdate(SP_ZONE, reinterpret_cast<const void*>(zoneHash)))
     {
-        graphics->SetShaderParameter(VSP_AMBIENTSTARTCOLOR, zone_->GetAmbientStartColor());
-        graphics->SetShaderParameter(VSP_AMBIENTENDCOLOR,
+        graphics.SetShaderParameter(VSP_AMBIENTSTARTCOLOR, zone_->GetAmbientStartColor());
+        graphics.SetShaderParameter(VSP_AMBIENTENDCOLOR,
             zone_->GetAmbientEndColor().ToVector4() - zone_->GetAmbientStartColor().ToVector4());
 
         const BoundingBox& box = zone_->GetBoundingBox();
@@ -266,12 +266,12 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         adjust.SetScale(Vector3(1.0f / boxSize.x_, 1.0f / boxSize.y_, 1.0f / boxSize.z_));
         adjust.SetTranslation(Vector3(0.5f, 0.5f, 0.5f));
         Matrix3x4 zoneTransform = adjust * zone_->GetInverseWorldTransform();
-        graphics->SetShaderParameter(VSP_ZONE, zoneTransform);
+        graphics.SetShaderParameter(VSP_ZONE, zoneTransform);
 
-        graphics->SetShaderParameter(PSP_AMBIENTCOLOR, zone_->GetAmbientColor());
-        graphics->SetShaderParameter(PSP_FOGCOLOR, overrideFogColorToBlack ? Color::BLACK : zone_->GetFogColor());
-        graphics->SetShaderParameter(PSP_ZONEMIN, zone_->GetBoundingBox().min_);
-        graphics->SetShaderParameter(PSP_ZONEMAX, zone_->GetBoundingBox().max_);
+        graphics.SetShaderParameter(PSP_AMBIENTCOLOR, zone_->GetAmbientColor());
+        graphics.SetShaderParameter(PSP_FOGCOLOR, overrideFogColorToBlack ? Color::BLACK : zone_->GetFogColor());
+        graphics.SetShaderParameter(PSP_ZONEMIN, zone_->GetBoundingBox().min_);
+        graphics.SetShaderParameter(PSP_ZONEMAX, zone_->GetBoundingBox().max_);
 
         float farClip = camera->GetFarClip();
         float fogStart = Min(zone_->GetFogStart(), farClip);
@@ -289,23 +289,23 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
             fogParams.w_ = zone_->GetFogHeightScale() / Max(zoneNode->GetWorldScale().y_, M_EPSILON);
         }
 
-        graphics->SetShaderParameter(PSP_FOGPARAMS, fogParams);
+        graphics.SetShaderParameter(PSP_FOGPARAMS, fogParams);
     }
 
     // Set light-related shader parameters
     if (lightQueue_)
     {
-        if (light && graphics->NeedParameterUpdate(SP_LIGHT, lightQueue_))
+        if (light && graphics.NeedParameterUpdate(SP_LIGHT, lightQueue_))
         {
             Node* lightNode = light->GetNode();
             float atten = 1.0f / Max(light->GetRange(), M_EPSILON);
             Vector3 lightDir(lightNode->GetWorldRotation() * Vector3::BACK);
             Vector4 lightPos(lightNode->GetWorldPosition(), atten);
 
-            graphics->SetShaderParameter(VSP_LIGHTDIR, lightDir);
-            graphics->SetShaderParameter(VSP_LIGHTPOS, lightPos);
+            graphics.SetShaderParameter(VSP_LIGHTDIR, lightDir);
+            graphics.SetShaderParameter(VSP_LIGHTPOS, lightPos);
 
-            if (graphics->HasShaderParameter(VSP_LIGHTMATRICES))
+            if (graphics.HasShaderParameter(VSP_LIGHTMATRICES))
             {
                 switch (light->GetLightType())
                 {
@@ -315,9 +315,9 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         i32 numSplits = Min(MAX_CASCADE_SPLITS, lightQueue_->shadowSplits_.Size());
 
                         for (i32 i = 0; i < numSplits; ++i)
-                            CalculateShadowMatrix(shadowMatrices[i], lightQueue_, i, renderer);
+                            CalculateShadowMatrix(shadowMatrices[i], lightQueue_, i);
 
-                        graphics->SetShaderParameter(VSP_LIGHTMATRICES, shadowMatrices[0].Data(), 16 * numSplits);
+                        graphics.SetShaderParameter(VSP_LIGHTMATRICES, shadowMatrices[0].Data(), 16 * numSplits);
                     }
                     break;
 
@@ -326,11 +326,11 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         Matrix4 shadowMatrices[2];
 
                         CalculateSpotMatrix(shadowMatrices[0], light);
-                        bool isShadowed = shadowMap && graphics->HasTextureUnit(TU_SHADOWMAP);
+                        bool isShadowed = shadowMap && graphics.HasTextureUnit(TU_SHADOWMAP);
                         if (isShadowed)
-                            CalculateShadowMatrix(shadowMatrices[1], lightQueue_, 0, renderer);
+                            CalculateShadowMatrix(shadowMatrices[1], lightQueue_, 0);
 
-                        graphics->SetShaderParameter(VSP_LIGHTMATRICES, shadowMatrices[0].Data(), isShadowed ? 32 : 16);
+                        graphics.SetShaderParameter(VSP_LIGHTMATRICES, shadowMatrices[0].Data(), isShadowed ? 32 : 16);
                     }
                     break;
 
@@ -340,9 +340,9 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         // HLSL compiler will pack the parameters as if the matrix is only 3x4, so must be careful to not overwrite
                         // the next parameter
                         if (GParams::get_gapi() == GAPI_OPENGL)
-                            graphics->SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 16);
+                            graphics.SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 16);
                         else
-                            graphics->SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 12);
+                            graphics.SetShaderParameter(VSP_LIGHTMATRICES, lightVecRot.Data(), 12);
                     }
                     break;
                 }
@@ -357,14 +357,14 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                 fade = Min(1.0f - (light->GetDistance() - fadeStart) / (fadeEnd - fadeStart), 1.0f);
 
             // Negative lights will use subtract blending, so write absolute RGB values to the shader parameter
-            graphics->SetShaderParameter(PSP_LIGHTCOLOR, Color(light->GetEffectiveColor().Abs(),
+            graphics.SetShaderParameter(PSP_LIGHTCOLOR, Color(light->GetEffectiveColor().Abs(),
                 light->GetEffectiveSpecularIntensity()) * fade);
-            graphics->SetShaderParameter(PSP_LIGHTDIR, lightDir);
-            graphics->SetShaderParameter(PSP_LIGHTPOS, lightPos);
-            graphics->SetShaderParameter(PSP_LIGHTRAD, light->GetRadius());
-            graphics->SetShaderParameter(PSP_LIGHTLENGTH, light->GetLength());
+            graphics.SetShaderParameter(PSP_LIGHTDIR, lightDir);
+            graphics.SetShaderParameter(PSP_LIGHTPOS, lightPos);
+            graphics.SetShaderParameter(PSP_LIGHTRAD, light->GetRadius());
+            graphics.SetShaderParameter(PSP_LIGHTLENGTH, light->GetLength());
 
-            if (graphics->HasShaderParameter(PSP_LIGHTMATRICES))
+            if (graphics.HasShaderParameter(PSP_LIGHTMATRICES))
             {
                 switch (light->GetLightType())
                 {
@@ -374,9 +374,9 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         i32 numSplits = Min(MAX_CASCADE_SPLITS, lightQueue_->shadowSplits_.Size());
 
                         for (i32 i = 0; i < numSplits; ++i)
-                            CalculateShadowMatrix(shadowMatrices[i], lightQueue_, i, renderer);
+                            CalculateShadowMatrix(shadowMatrices[i], lightQueue_, i);
 
-                        graphics->SetShaderParameter(PSP_LIGHTMATRICES, shadowMatrices[0].Data(), 16 * numSplits);
+                        graphics.SetShaderParameter(PSP_LIGHTMATRICES, shadowMatrices[0].Data(), 16 * numSplits);
                     }
                     break;
 
@@ -387,9 +387,9 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         CalculateSpotMatrix(shadowMatrices[0], light);
                         bool isShadowed = lightQueue_->shadowMap_ != nullptr;
                         if (isShadowed)
-                            CalculateShadowMatrix(shadowMatrices[1], lightQueue_, 0, renderer);
+                            CalculateShadowMatrix(shadowMatrices[1], lightQueue_, 0);
 
-                        graphics->SetShaderParameter(PSP_LIGHTMATRICES, shadowMatrices[0].Data(), isShadowed ? 32 : 16);
+                        graphics.SetShaderParameter(PSP_LIGHTMATRICES, shadowMatrices[0].Data(), isShadowed ? 32 : 16);
                     }
                     break;
 
@@ -399,9 +399,9 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                         // HLSL compiler will pack the parameters as if the matrix is only 3x4, so must be careful to not overwrite
                         // the next parameter
                         if (GParams::get_gapi() == GAPI_OPENGL)
-                            graphics->SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 16);
+                            graphics.SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 16);
                         else
-                            graphics->SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 12);
+                            graphics.SetShaderParameter(PSP_LIGHTMATRICES, lightVecRot.Data(), 12);
                     }
                     break;
                 }
@@ -434,12 +434,12 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     }
 
                     // If using 4 shadow samples, offset the position diagonally by half pixel
-                    if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
+                    if (renderer.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
                     {
                         addX -= 0.5f / width;
                         addY -= 0.5f / height;
                     }
-                    graphics->SetShaderParameter(PSP_SHADOWCUBEADJUST, Vector4(mulX, mulY, addX, addY));
+                    graphics.SetShaderParameter(PSP_SHADOWCUBEADJUST, Vector4(mulX, mulY, addX, addY));
                 }
 
                 {
@@ -458,7 +458,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     float fadeEnd = shadowRange / viewFarClip;
                     float fadeRange = fadeEnd - fadeStart;
 
-                    graphics->SetShaderParameter(PSP_SHADOWDEPTHFADE, Vector4(q, r, fadeStart, 1.0f / fadeRange));
+                    graphics.SetShaderParameter(PSP_SHADOWDEPTHFADE, Vector4(q, r, fadeStart, 1.0f / fadeRange));
                 }
 
                 {
@@ -470,14 +470,14 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                             Lerp(intensity, 1.0f, Clamp((light->GetDistance() - fadeStart) / (fadeEnd - fadeStart), 0.0f, 1.0f));
                     float pcfValues = (1.0f - intensity);
                     float samples = 1.0f;
-                    if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
+                    if (renderer.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
                         samples = 4.0f;
-                    graphics->SetShaderParameter(PSP_SHADOWINTENSITY, Vector4(pcfValues / samples, intensity, 0.0f, 0.0f));
+                    graphics.SetShaderParameter(PSP_SHADOWINTENSITY, Vector4(pcfValues / samples, intensity, 0.0f, 0.0f));
                 }
 
                 float sizeX = 1.0f / (float)shadowMap->GetWidth();
                 float sizeY = 1.0f / (float)shadowMap->GetHeight();
-                graphics->SetShaderParameter(PSP_SHADOWMAPINVSIZE, Vector2(sizeX, sizeY));
+                graphics.SetShaderParameter(PSP_SHADOWMAPINVSIZE, Vector2(sizeX, sizeY));
 
                 Vector4 lightSplits(M_LARGE_VALUE, M_LARGE_VALUE, M_LARGE_VALUE, M_LARGE_VALUE);
                 if (lightQueue_->shadowSplits_.Size() > 1)
@@ -487,10 +487,10 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                 if (lightQueue_->shadowSplits_.Size() > 3)
                     lightSplits.z_ = lightQueue_->shadowSplits_[2].farSplit_ / camera->GetFarClip();
 
-                graphics->SetShaderParameter(PSP_SHADOWSPLITS, lightSplits);
+                graphics.SetShaderParameter(PSP_SHADOWSPLITS, lightSplits);
 
-                if (graphics->HasShaderParameter(PSP_VSMSHADOWPARAMS))
-                    graphics->SetShaderParameter(PSP_VSMSHADOWPARAMS, renderer->GetVSMShadowParameters());
+                if (graphics.HasShaderParameter(PSP_VSMSHADOWPARAMS))
+                    graphics.SetShaderParameter(PSP_VSMSHADOWPARAMS, renderer.GetVSMShadowParameters());
 
                 if (light->GetShadowBias().normalOffset_ > 0.0f)
                 {
@@ -515,15 +515,15 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
 
                     normalOffsetScale *= light->GetShadowBias().normalOffset_;
 #ifdef MOBILE_GRAPHICS
-                    normalOffsetScale *= renderer->GetMobileNormalOffsetMul();
+                    normalOffsetScale *= renderer.GetMobileNormalOffsetMul();
 #endif
-                    graphics->SetShaderParameter(VSP_NORMALOFFSETSCALE, normalOffsetScale);
-                    graphics->SetShaderParameter(PSP_NORMALOFFSETSCALE, normalOffsetScale);
+                    graphics.SetShaderParameter(VSP_NORMALOFFSETSCALE, normalOffsetScale);
+                    graphics.SetShaderParameter(PSP_NORMALOFFSETSCALE, normalOffsetScale);
                 }
             }
         }
-        else if (lightQueue_->vertexLights_.Size() && graphics->HasShaderParameter(VSP_VERTEXLIGHTS) &&
-                 graphics->NeedParameterUpdate(SP_LIGHT, lightQueue_))
+        else if (lightQueue_->vertexLights_.Size() && graphics.HasShaderParameter(VSP_VERTEXLIGHTS) &&
+                 graphics.NeedParameterUpdate(SP_LIGHT, lightQueue_))
         {
             Vector4 vertexLights[MAX_VERTEX_LIGHTS * 3];
             const Vector<Light*>& lights = lightQueue_->vertexLights_;
@@ -570,56 +570,56 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                 vertexLights[i * 3 + 2] = Vector4(vertexLightNode->GetWorldPosition(), invCutoff);
             }
 
-            graphics->SetShaderParameter(VSP_VERTEXLIGHTS, vertexLights[0].Data(), lights.Size() * 3 * 4);
+            graphics.SetShaderParameter(VSP_VERTEXLIGHTS, vertexLights[0].Data(), lights.Size() * 3 * 4);
         }
     }
 
     // Set zone texture if necessary
 #ifndef DV_GLES2
-    if (zone_ && graphics->HasTextureUnit(TU_ZONE))
-        graphics->SetTexture(TU_ZONE, zone_->GetZoneTexture());
+    if (zone_ && graphics.HasTextureUnit(TU_ZONE))
+        graphics.SetTexture(TU_ZONE, zone_->GetZoneTexture());
 #else
     // On OpenGL ES2 set the zone texture to the environment unit instead
-    if (zone_ && zone_->GetZoneTexture() && graphics->HasTextureUnit(TU_ENVIRONMENT))
-        graphics->SetTexture(TU_ENVIRONMENT, zone_->GetZoneTexture());
+    if (zone_ && zone_->GetZoneTexture() && graphics.HasTextureUnit(TU_ENVIRONMENT))
+        graphics.SetTexture(TU_ENVIRONMENT, zone_->GetZoneTexture());
 #endif
 
     // Set material-specific shader parameters and textures
     if (material_)
     {
-        if (graphics->NeedParameterUpdate(SP_MATERIAL, reinterpret_cast<const void*>(material_->GetShaderParameterHash())))
+        if (graphics.NeedParameterUpdate(SP_MATERIAL, reinterpret_cast<const void*>(material_->GetShaderParameterHash())))
         {
             const HashMap<StringHash, MaterialShaderParameter>& parameters = material_->GetShaderParameters();
             for (HashMap<StringHash, MaterialShaderParameter>::ConstIterator i = parameters.Begin(); i != parameters.End(); ++i)
-                graphics->SetShaderParameter(i->first_, i->second_.value_);
+                graphics.SetShaderParameter(i->first_, i->second_.value_);
         }
 
         const HashMap<TextureUnit, SharedPtr<Texture>>& textures = material_->GetTextures();
         for (HashMap<TextureUnit, SharedPtr<Texture>>::ConstIterator i = textures.Begin(); i != textures.End(); ++i)
         {
-            if (graphics->HasTextureUnit(i->first_))
-                graphics->SetTexture(i->first_, i->second_.Get());
+            if (graphics.HasTextureUnit(i->first_))
+                graphics.SetTexture(i->first_, i->second_.Get());
         }
     }
 
     // Set light-related textures
     if (light)
     {
-        if (shadowMap && graphics->HasTextureUnit(TU_SHADOWMAP))
-            graphics->SetTexture(TU_SHADOWMAP, shadowMap);
-        if (graphics->HasTextureUnit(TU_LIGHTRAMP))
+        if (shadowMap && graphics.HasTextureUnit(TU_SHADOWMAP))
+            graphics.SetTexture(TU_SHADOWMAP, shadowMap);
+        if (graphics.HasTextureUnit(TU_LIGHTRAMP))
         {
             Texture* rampTexture = light->GetRampTexture();
             if (!rampTexture)
-                rampTexture = renderer->GetDefaultLightRamp();
-            graphics->SetTexture(TU_LIGHTRAMP, rampTexture);
+                rampTexture = renderer.GetDefaultLightRamp();
+            graphics.SetTexture(TU_LIGHTRAMP, rampTexture);
         }
-        if (graphics->HasTextureUnit(TU_LIGHTSHAPE))
+        if (graphics.HasTextureUnit(TU_LIGHTSHAPE))
         {
             Texture* shapeTexture = light->GetShapeTexture();
             if (!shapeTexture && light->GetLightType() == LIGHT_SPOT)
-                shapeTexture = renderer->GetDefaultLightSpot();
-            graphics->SetTexture(TU_LIGHTSHAPE, shapeTexture);
+                shapeTexture = renderer.GetDefaultLightSpot();
+            graphics.SetTexture(TU_LIGHTSHAPE, shapeTexture);
         }
     }
 }
@@ -629,7 +629,7 @@ void Batch::Draw(View* view, Camera* camera, bool allowDepthWrite) const
     if (!geometry_->IsEmpty())
     {
         Prepare(view, camera, true, allowDepthWrite);
-        geometry_->Draw(view->GetSubsystem<Graphics>());
+        geometry_->Draw();
     }
 }
 
@@ -659,26 +659,25 @@ void BatchGroup::SetInstancingData(void* lockedData, i32 stride, i32& freeIndex)
 
 void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
 {
-    Graphics* graphics = view->GetSubsystem<Graphics>();
-    Renderer* renderer = view->GetSubsystem<Renderer>();
+    Graphics& graphics = DV_GRAPHICS;
 
     if (instances_.Size() && !geometry_->IsEmpty())
     {
         // Draw as individual objects if instancing not supported or could not fill the instancing buffer
-        VertexBuffer* instanceBuffer = renderer->GetInstancingBuffer();
+        VertexBuffer* instanceBuffer = DV_RENDERER.GetInstancingBuffer();
         if (!instanceBuffer || geometryType_ != GEOM_INSTANCED || startIndex_ == NINDEX)
         {
             Batch::Prepare(view, camera, false, allowDepthWrite);
 
-            graphics->SetIndexBuffer(geometry_->GetIndexBuffer());
-            graphics->SetVertexBuffers(geometry_->GetVertexBuffers());
+            graphics.SetIndexBuffer(geometry_->GetIndexBuffer());
+            graphics.SetVertexBuffers(geometry_->GetVertexBuffers());
 
             for (const InstanceData& instance : instances_)
             {
-                if (graphics->NeedParameterUpdate(SP_OBJECT, instance.worldTransform_))
-                    graphics->SetShaderParameter(VSP_MODEL, *instance.worldTransform_);
+                if (graphics.NeedParameterUpdate(SP_OBJECT, instance.worldTransform_))
+                    graphics.SetShaderParameter(VSP_MODEL, *instance.worldTransform_);
 
-                graphics->Draw(geometry_->GetPrimitiveType(), geometry_->GetIndexStart(), geometry_->GetIndexCount(),
+                graphics.Draw(geometry_->GetPrimitiveType(), geometry_->GetIndexStart(), geometry_->GetIndexCount(),
                     geometry_->GetVertexStart(), geometry_->GetVertexCount());
             }
         }
@@ -692,9 +691,9 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
                 geometry_->GetVertexBuffers());
             vertexBuffers.Push(SharedPtr<VertexBuffer>(instanceBuffer));
 
-            graphics->SetIndexBuffer(geometry_->GetIndexBuffer());
-            graphics->SetVertexBuffers(vertexBuffers, startIndex_);
-            graphics->DrawInstanced(geometry_->GetPrimitiveType(), geometry_->GetIndexStart(), geometry_->GetIndexCount(),
+            graphics.SetIndexBuffer(geometry_->GetIndexBuffer());
+            graphics.SetVertexBuffers(vertexBuffers, startIndex_);
+            graphics.DrawInstanced(geometry_->GetPrimitiveType(), geometry_->GetIndexStart(), geometry_->GetIndexCount(),
                 geometry_->GetVertexStart(), geometry_->GetVertexCount(), instances_.Size());
 
             // Remove the instancing buffer & element mask now
@@ -840,17 +839,16 @@ void BatchQueue::SetInstancingData(void* lockedData, i32 stride, i32& freeIndex)
 
 void BatchQueue::Draw(View* view, Camera* camera, bool markToStencil, bool usingLightOptimization, bool allowDepthWrite) const
 {
-    Graphics* graphics = view->GetSubsystem<Graphics>();
-    Renderer* renderer = view->GetSubsystem<Renderer>();
+    Graphics& graphics = DV_GRAPHICS;
 
     // If View has set up its own light optimizations, do not disturb the stencil/scissor test settings
     if (!usingLightOptimization)
     {
-        graphics->SetScissorTest(false);
+        graphics.SetScissorTest(false);
 
         // During G-buffer rendering, mark opaque pixels' lightmask to stencil buffer if requested
         if (!markToStencil)
-            graphics->SetStencilTest(false);
+            graphics.SetStencilTest(false);
     }
 
     // Instanced
@@ -858,7 +856,7 @@ void BatchQueue::Draw(View* view, Camera* camera, bool markToStencil, bool using
     {
         BatchGroup* group = *i;
         if (markToStencil)
-            graphics->SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, group->lightMask_);
+            graphics.SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, group->lightMask_);
 
         group->Draw(view, camera, allowDepthWrite);
     }
@@ -867,14 +865,14 @@ void BatchQueue::Draw(View* view, Camera* camera, bool markToStencil, bool using
     {
         Batch* batch = *i;
         if (markToStencil)
-            graphics->SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, batch->lightMask_);
+            graphics.SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, batch->lightMask_);
         if (!usingLightOptimization)
         {
             // If drawing an alpha batch, we can optimize fillrate by scissor test
             if (!batch->isBase_ && batch->lightQueue_)
-                renderer->OptimizeLightByScissor(batch->lightQueue_->light_, camera);
+                DV_RENDERER.OptimizeLightByScissor(batch->lightQueue_->light_, camera);
             else
-                graphics->SetScissorTest(false);
+                graphics.SetScissorTest(false);
         }
 
         batch->Draw(view, camera, allowDepthWrite);

@@ -26,7 +26,7 @@ class DV_API GPUObject
 {
 public:
     /// Construct with graphics subsystem pointer.
-    explicit GPUObject(Graphics* graphics);
+    explicit GPUObject();
     /// Destruct. Remove from the Graphics.
     virtual ~GPUObject();
 
@@ -40,8 +40,6 @@ public:
     /// Clear the data lost flag.
     void ClearDataLost();
 
-    /// Return the graphics subsystem associated with this GPU object.
-    Graphics* GetGraphics() const;
     /// Return the object pointer. Applicable only on Direct3D.
     void* GetGPUObject() const { return object_.ptr_; }
     /// Return the object name. Applicable only on OpenGL.
@@ -52,8 +50,6 @@ public:
     bool HasPendingData() const { return dataPending_; }
 
 protected:
-    /// Graphics subsystem.
-    WeakPtr<Graphics> graphics_;
     /// Object pointer or name.
     GPUObjectHandle object_{};
     /// Data lost flag.
@@ -62,5 +58,4 @@ protected:
     bool dataPending_{};
 };
 
-}
-
+} // namespace dviglo

@@ -39,7 +39,6 @@ i32 ShaderProgram_OGL::globalFrameNumber = 0;
 const void* ShaderProgram_OGL::globalParameterSources[MAX_SHADER_PARAMETER_GROUPS];
 
 ShaderProgram_OGL::ShaderProgram_OGL(Graphics* graphics, ShaderVariation* vertexShader, ShaderVariation* pixelShader) :
-    GPUObject(graphics),
     vertexShader_(vertexShader),
     pixelShader_(pixelShader)
 {
@@ -54,13 +53,13 @@ ShaderProgram_OGL::~ShaderProgram_OGL()
 
 void ShaderProgram_OGL::OnDeviceLost()
 {
-    if (object_.name_ && !graphics_->IsDeviceLost())
+    if (object_.name_ && !GParams::is_headless() && !DV_GRAPHICS.IsDeviceLost())
         glDeleteProgram(object_.name_);
 
     GPUObject::OnDeviceLost();
 
-    if (graphics_ && graphics_->GetShaderProgram_OGL() == this)
-        graphics_->SetShaders(nullptr, nullptr);
+    if (!GParams::is_headless() && DV_GRAPHICS.GetShaderProgram_OGL() == this)
+        DV_GRAPHICS.SetShaders(nullptr, nullptr);
 
     linkerOutput_.Clear();
 }
@@ -69,13 +68,15 @@ void ShaderProgram_OGL::Release()
 {
     if (object_.name_)
     {
-        if (!graphics_)
+        if (GParams::is_headless())
             return;
 
-        if (!graphics_->IsDeviceLost())
+        Graphics& graphics = DV_GRAPHICS;
+
+        if (!graphics.IsDeviceLost())
         {
-            if (graphics_->GetShaderProgram_OGL() == this)
-                graphics_->SetShaders(nullptr, nullptr);
+            if (graphics.GetShaderProgram_OGL() == this)
+                graphics.SetShaders(nullptr, nullptr);
 
             glDeleteProgram(object_.name_);
         }
@@ -228,7 +229,7 @@ bool ShaderProgram_OGL::Link()
             glUniformBlockBinding(object_.name_, blockIndex, bindingIndex);
             blockToBinding[blockIndex] = bindingIndex;
 
-            constantBuffers_[bindingIndex] = graphics_->GetOrCreateConstantBuffer(shaderType, bindingIndex, (unsigned)dataSize);
+            constantBuffers_[bindingIndex] = DV_GRAPHICS.GetOrCreateConstantBuffer(shaderType, bindingIndex, (unsigned)dataSize);
         }
     }
 #endif
@@ -281,7 +282,7 @@ bool ShaderProgram_OGL::Link()
         else if (location >= 0 && name[0] == 's')
         {
             // Set the samplers here so that they do not have to be set later
-            unsigned unit = graphics_->GetTextureUnit(name.Substring(1));
+            unsigned unit = DV_GRAPHICS.GetTextureUnit(name.Substring(1));
             if (unit >= MAX_TEXTURE_UNITS)
                 unit = NumberPostfix(name);
 

@@ -40,6 +40,21 @@
 namespace dviglo
 {
 
+#ifdef _DEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool graphics_destructed = false;
+#endif
+
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+Graphics& Graphics::get_instance()
+{
+    assert(!graphics_destructed);
+    static Graphics instance;
+    return instance;
+}
+
 void Graphics::SetExternalWindow(void* window)
 {
     if (!window_)
@@ -579,6 +594,8 @@ void Graphics::OnScreenModeChanged()
 
 Graphics::Graphics()
 {
+    assert(!GParams::is_headless());
+
     GAPI gapi = GParams::get_gapi();
 
     // Проверяем, что gapi установлен перед вызовом конструктора
@@ -588,7 +605,7 @@ Graphics::Graphics()
     if (gapi == GAPI_OPENGL)
     {
         Constructor_OGL();
-        return;
+        goto end;
     }
 #endif
 
@@ -596,9 +613,12 @@ Graphics::Graphics()
     if (gapi == GAPI_D3D11)
     {
         Constructor_D3D11();
-        return;
+        goto end;
     }
 #endif
+
+end:
+    DV_LOGDEBUG("Singleton Graphics constructed");
 }
 
 Graphics::~Graphics()
@@ -619,6 +639,13 @@ Graphics::~Graphics()
         Destructor_D3D11();
         return;
     }
+#endif
+
+end:
+    DV_LOGDEBUG("Singleton Graphics destructed");
+
+#ifdef _DEBUG
+    graphics_destructed = true;
 #endif
 }
 

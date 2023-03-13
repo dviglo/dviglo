@@ -14,7 +14,6 @@ namespace dviglo
 {
 
 IndexBuffer::IndexBuffer() :
-    GPUObject(GetSubsystem<Graphics>()),
     indexCount_(0),
     indexSize_(0),
     lockState_(LOCK_NONE),
@@ -26,7 +25,7 @@ IndexBuffer::IndexBuffer() :
     discardLock_(false)
 {
     // Force shadowing mode if graphics subsystem does not exist
-    if (!graphics_)
+    if (GParams::is_headless())
         shadowed_ = true;
 }
 
@@ -38,7 +37,7 @@ IndexBuffer::~IndexBuffer()
 void IndexBuffer::SetShadowed(bool enable)
 {
     // If no graphics subsystem, can not disable shadowing
-    if (!graphics_)
+    if (GParams::is_headless())
         enable = true;
 
     if (enable != shadowed_)

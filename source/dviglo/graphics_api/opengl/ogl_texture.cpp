@@ -52,8 +52,8 @@ static GLenum GetWrapMode(TextureAddressMode mode)
 
 void Texture::SetSRGB_OGL(bool enable)
 {
-    if (graphics_)
-        enable &= graphics_->GetSRGBSupport();
+    if (!GParams::is_headless())
+        enable &= DV_GRAPHICS.GetSRGBSupport();
 
     if (enable != sRGB_)
     {
@@ -63,14 +63,14 @@ void Texture::SetSRGB_OGL(bool enable)
             Create();
 
         // If texture in use in the framebuffer, mark it dirty
-        if (graphics_ && graphics_->GetRenderTarget(0) && graphics_->GetRenderTarget(0)->GetParentTexture() == this)
-            graphics_->MarkFBODirty_OGL();
+        if (!GParams::is_headless() && DV_GRAPHICS.GetRenderTarget(0) && DV_GRAPHICS.GetRenderTarget(0)->GetParentTexture() == this)
+            DV_GRAPHICS.MarkFBODirty_OGL();
     }
 }
 
 void Texture::UpdateParameters_OGL()
 {
-    if (!object_.name_ || !graphics_)
+    if (!object_.name_ || GParams::is_headless())
         return;
 
     // If texture is multisampled, do not attempt to set parameters as it's illegal, just return
@@ -91,7 +91,7 @@ void Texture::UpdateParameters_OGL()
 
     TextureFilterMode filterMode = filterMode_;
     if (filterMode == FILTER_DEFAULT)
-        filterMode = graphics_->GetDefaultTextureFilterMode();
+        filterMode = DV_GRAPHICS.GetDefaultTextureFilterMode();
 
     // Filtering
     switch (filterMode)
@@ -135,9 +135,9 @@ void Texture::UpdateParameters_OGL()
 
 #ifndef GL_ES_VERSION_2_0
     // Anisotropy
-    if (graphics_->GetAnisotropySupport())
+    if (DV_GRAPHICS.GetAnisotropySupport())
     {
-        unsigned maxAnisotropy = anisotropy_ ? anisotropy_ : graphics_->GetDefaultTextureAnisotropy();
+        unsigned maxAnisotropy = anisotropy_ ? anisotropy_ : DV_GRAPHICS.GetDefaultTextureAnisotropy();
         glTexParameterf(target_, GL_TEXTURE_MAX_ANISOTROPY_EXT,
             (filterMode == FILTER_ANISOTROPIC || filterMode == FILTER_NEAREST_ANISOTROPIC) ? (float)maxAnisotropy : 1.0f);
     }
@@ -341,7 +341,7 @@ unsigned Texture::GetDataType_OGL(unsigned format)
 unsigned Texture::GetSRGBFormat_OGL(unsigned format)
 {
 #if !defined(GL_ES_VERSION_2_0) || defined(GL_ES_VERSION_3_0)
-    if (!graphics_ || !graphics_->GetSRGBSupport())
+    if (GParams::is_headless() || !DV_GRAPHICS.GetSRGBSupport())
         return format;
 
     switch (format)

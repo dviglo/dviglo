@@ -190,8 +190,7 @@ void Material::RegisterObject()
 bool Material::BeginLoad(Deserializer& source)
 {
     // In headless mode, do not actually load the material, just return success
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics)
+    if (GParams::is_headless())
         return true;
 
     String extension = GetExtension(source.GetName());
@@ -225,8 +224,7 @@ bool Material::BeginLoad(Deserializer& source)
 bool Material::EndLoad()
 {
     // In headless mode, do not actually load the material, just return success
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics)
+    if (GParams::is_headless())
         return true;
 
     bool success = false;
@@ -1235,8 +1233,7 @@ void Material::ResetToDefaults()
     pixelShaderDefines_.Clear();
 
     SetNumTechniques(1);
-    auto* renderer = GetSubsystem<Renderer>();
-    SetTechnique(0, renderer ? renderer->GetDefaultTechnique() :
+    SetTechnique(0, (!GParams::is_headless()) ? DV_RENDERER.GetDefaultTechnique() :
         DV_RES_CACHE.GetResource<Technique>("Techniques/NoTexture.xml"));
 
     textures_.Clear();

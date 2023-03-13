@@ -136,11 +136,6 @@ private:
     void UpdateViewProjMatrix();
     IntRect GetViewportRect();
 
-protected:
-
-    // Кешируем доступ к подсистеме. Инициализируется в конструкторе
-    Graphics* graphics_ = nullptr;
-
 public:
 
     // Режим наложения

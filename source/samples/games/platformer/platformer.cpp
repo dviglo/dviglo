@@ -95,17 +95,15 @@ void Urho2DPlatformer::CreateScene()
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
-    auto* graphics = GetSubsystem<Graphics>();
-    camera->SetOrthoSize((float)graphics->GetHeight() * PIXEL_SIZE);
-    camera->SetZoom(2.0f * Min((float)graphics->GetWidth() / 1280.0f, (float)graphics->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (2.0) is set for full visibility at 1280x800 resolution)
+    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
+    camera->SetZoom(2.0f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (2.0) is set for full visibility at 1280x800 resolution)
 
     // Setup the viewport for displaying the scene
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera));
-    auto* renderer = GetSubsystem<Renderer>();
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
     // Set background color for the scene
-    Zone* zone = renderer->GetDefaultZone();
+    Zone* zone = DV_RENDERER.GetDefaultZone();
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
 
     // Create tile map from tmx file

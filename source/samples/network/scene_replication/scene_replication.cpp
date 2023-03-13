@@ -150,8 +150,7 @@ void SceneReplication::CreateUI()
     cursor->SetStyleAuto(uiStyle);
     ui.SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    auto* graphics = GetSubsystem<Graphics>();
-    cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Construct the instructions text element
     instructionsText_ = ui.GetRoot()->CreateChild<Text>();
@@ -162,7 +161,7 @@ void SceneReplication::CreateUI()
     // Position the text relative to the screen center
     instructionsText_->SetHorizontalAlignment(HA_CENTER);
     instructionsText_->SetVerticalAlignment(VA_CENTER);
-    instructionsText_->SetPosition(0, graphics->GetHeight() / 4);
+    instructionsText_->SetPosition(0, DV_GRAPHICS.GetHeight() / 4);
     // Hide until connected
     instructionsText_->SetVisible(false);
 
@@ -197,11 +196,9 @@ void SceneReplication::CreateUI()
 
 void SceneReplication::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void SceneReplication::SubscribeToEvents()

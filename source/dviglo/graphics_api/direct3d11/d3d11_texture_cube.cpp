@@ -35,12 +35,14 @@ void TextureCube::OnDeviceReset_D3D11()
 
 void TextureCube::Release_D3D11()
 {
-    if (graphics_)
+    if (!GParams::is_headless())
     {
+        Graphics& graphics = DV_GRAPHICS;
+
         for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
         {
-            if (graphics_->GetTexture(i) == this)
-                graphics_->SetTexture(i, nullptr);
+            if (graphics.GetTexture(i) == this)
+                graphics.SetTexture(i, nullptr);
         }
     }
 
@@ -102,6 +104,8 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, unsigned level, int x, int y, 
     unsigned rowStart = GetRowDataSize_D3D11(x);
     unsigned subResource = D3D11CalcSubresource(level, face, levels_);
 
+    Graphics& graphics = DV_GRAPHICS;
+
     if (usage_ == TEXTURE_DYNAMIC)
     {
         if (IsCompressed_D3D11())
@@ -113,7 +117,7 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, unsigned level, int x, int y, 
         D3D11_MAPPED_SUBRESOURCE mappedData;
         mappedData.pData = nullptr;
 
-        HRESULT hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)object_.ptr_, subResource, D3D11_MAP_WRITE_DISCARD, 0,
+        HRESULT hr = graphics.GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)object_.ptr_, subResource, D3D11_MAP_WRITE_DISCARD, 0,
             &mappedData);
         if (FAILED(hr) || !mappedData.pData)
         {
@@ -124,7 +128,7 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, unsigned level, int x, int y, 
         {
             for (int row = 0; row < height; ++row)
                 memcpy((unsigned char*)mappedData.pData + (row + y) * mappedData.RowPitch + rowStart, src + row * rowSize, rowSize);
-            graphics_->GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)object_.ptr_, subResource);
+            graphics.GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)object_.ptr_, subResource);
         }
     }
     else
@@ -137,7 +141,7 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, unsigned level, int x, int y, 
         destBox.front = 0;
         destBox.back = 1;
 
-        graphics_->GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Resource*)object_.ptr_, subResource, &destBox, data,
+        graphics.GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Resource*)object_.ptr_, subResource, &destBox, data,
             rowSize, 0);
     }
 
@@ -165,9 +169,8 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, Image* image, bool useAlpha)
     SharedPtr<Image> mipImage;
     unsigned memoryUse = 0;
     MaterialQuality quality = QUALITY_HIGH;
-    Renderer* renderer = GetSubsystem<Renderer>();
-    if (renderer)
-        quality = renderer->GetTextureQuality();
+    if (!GParams::is_headless())
+        quality = DV_RENDERER.GetTextureQuality();
 
     if (!image->IsCompressed())
     {
@@ -255,7 +258,7 @@ bool TextureCube::SetData_D3D11(CubeMapFace face, Image* image, bool useAlpha)
         int width = image->GetWidth();
         int height = image->GetHeight();
         unsigned levels = image->GetNumCompressedLevels();
-        unsigned format = graphics_->GetFormat(image->GetCompressedFormat());
+        unsigned format = DV_GRAPHICS.GetFormat(image->GetCompressedFormat());
         bool needDecompress = false;
 
         if (width != height)
@@ -352,8 +355,10 @@ bool TextureCube::GetData_D3D11(CubeMapFace face, unsigned level, void* dest) co
         return false;
     }
 
+    Graphics& graphics = DV_GRAPHICS;
+
     if (resolveDirty_)
-        graphics_->ResolveToTexture(const_cast<TextureCube*>(this));
+        graphics.ResolveToTexture(const_cast<TextureCube*>(this));
 
     int levelWidth = GetLevelWidth(level);
     int levelHeight = GetLevelHeight(level);
@@ -371,7 +376,7 @@ bool TextureCube::GetData_D3D11(CubeMapFace face, unsigned level, void* dest) co
     textureDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 
     ID3D11Texture2D* stagingTexture = nullptr;
-    HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, &stagingTexture);
+    HRESULT hr = graphics.GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, &stagingTexture);
     if (FAILED(hr))
     {
         DV_LOGD3DERROR("Failed to create staging texture for GetData", hr);
@@ -389,7 +394,7 @@ bool TextureCube::GetData_D3D11(CubeMapFace face, unsigned level, void* dest) co
     srcBox.bottom = (UINT)levelHeight;
     srcBox.front = 0;
     srcBox.back = 1;
-    graphics_->GetImpl_D3D11()->GetDeviceContext()->CopySubresourceRegion(stagingTexture, 0, 0, 0, 0, srcResource,
+    graphics.GetImpl_D3D11()->GetDeviceContext()->CopySubresourceRegion(stagingTexture, 0, 0, 0, 0, srcResource,
         srcSubResource, &srcBox);
 
     D3D11_MAPPED_SUBRESOURCE mappedData;
@@ -397,7 +402,7 @@ bool TextureCube::GetData_D3D11(CubeMapFace face, unsigned level, void* dest) co
     unsigned rowSize = GetRowDataSize_D3D11(levelWidth);
     unsigned numRows = (unsigned)(IsCompressed_D3D11() ? (levelHeight + 3) >> 2 : levelHeight);
 
-    hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)stagingTexture, 0, D3D11_MAP_READ, 0, &mappedData);
+    hr = graphics.GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)stagingTexture, 0, D3D11_MAP_READ, 0, &mappedData);
     if (FAILED(hr) || !mappedData.pData)
     {
         DV_LOGD3DERROR("Failed to map staging texture for GetData", hr);
@@ -408,7 +413,7 @@ bool TextureCube::GetData_D3D11(CubeMapFace face, unsigned level, void* dest) co
     {
         for (unsigned row = 0; row < numRows; ++row)
             memcpy((unsigned char*)dest + row * rowSize, (unsigned char*)mappedData.pData + row * mappedData.RowPitch, rowSize);
-        graphics_->GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)stagingTexture, 0);
+        graphics.GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)stagingTexture, 0);
         DV_SAFE_RELEASE(stagingTexture);
         return true;
     }
@@ -418,7 +423,7 @@ bool TextureCube::Create_D3D11()
 {
     Release_D3D11();
 
-    if (!graphics_ || !width_ || !height_)
+    if (GParams::is_headless() || !width_ || !height_)
         return false;
 
     levels_ = CheckMaxLevels(width_, height_, requestedLevels_);
@@ -427,8 +432,10 @@ bool TextureCube::Create_D3D11()
     memset(&textureDesc, 0, sizeof textureDesc);
     textureDesc.Format = (DXGI_FORMAT)(sRGB_ ? GetSRGBFormat_D3D11(format_) : format_);
 
+    Graphics& graphics = DV_GRAPHICS;
+
     // Disable multisampling if not supported
-    if (multiSample_ > 1 && !graphics_->GetImpl_D3D11()->CheckMultiSampleSupport(textureDesc.Format, multiSample_))
+    if (multiSample_ > 1 && !graphics.GetImpl_D3D11()->CheckMultiSampleSupport(textureDesc.Format, multiSample_))
     {
         multiSample_ = 1;
         autoResolve_ = false;
@@ -444,7 +451,7 @@ bool TextureCube::Create_D3D11()
     textureDesc.MipLevels = (multiSample_ == 1 && usage_ != TEXTURE_DYNAMIC) ? levels_ : 1;
     textureDesc.ArraySize = MAX_CUBEMAP_FACES;
     textureDesc.SampleDesc.Count = (UINT)multiSample_;
-    textureDesc.SampleDesc.Quality = graphics_->GetImpl_D3D11()->GetMultiSampleQuality(textureDesc.Format, multiSample_);
+    textureDesc.SampleDesc.Quality = graphics.GetImpl_D3D11()->GetMultiSampleQuality(textureDesc.Format, multiSample_);
     textureDesc.Usage = usage_ == TEXTURE_DYNAMIC ? D3D11_USAGE_DYNAMIC : D3D11_USAGE_DEFAULT;
     textureDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
     if (usage_ == TEXTURE_RENDERTARGET)
@@ -457,7 +464,7 @@ bool TextureCube::Create_D3D11()
     if (multiSample_ < 2)
         textureDesc.MiscFlags |= D3D11_RESOURCE_MISC_TEXTURECUBE;
 
-    HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, (ID3D11Texture2D**)&object_.ptr_);
+    HRESULT hr = graphics.GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, (ID3D11Texture2D**)&object_.ptr_);
     if (FAILED(hr))
     {
         DV_LOGD3DERROR("Failed to create texture", hr);
@@ -474,7 +481,7 @@ bool TextureCube::Create_D3D11()
         if (levels_ != 1)
             textureDesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
 
-        HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, (ID3D11Texture2D**)&resolveTexture_);
+        HRESULT hr = graphics.GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, (ID3D11Texture2D**)&resolveTexture_);
         if (FAILED(hr))
         {
             DV_LOGD3DERROR("Failed to create resolve texture", hr);
@@ -491,7 +498,7 @@ bool TextureCube::Create_D3D11()
 
     // Sample the resolve texture if created, otherwise the original
     ID3D11Resource* viewObject = resolveTexture_ ? (ID3D11Resource*)resolveTexture_ : (ID3D11Resource*)object_.ptr_;
-    hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateShaderResourceView(viewObject, &resourceViewDesc,
+    hr = graphics.GetImpl_D3D11()->GetDevice()->CreateShaderResourceView(viewObject, &resourceViewDesc,
         (ID3D11ShaderResourceView**)&shaderResourceView_);
     if (FAILED(hr))
     {
@@ -521,7 +528,7 @@ bool TextureCube::Create_D3D11()
                 renderTargetViewDesc.Texture2DArray.MipSlice = 0;
             }
 
-            hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateRenderTargetView((ID3D11Resource*)object_.ptr_, &renderTargetViewDesc,
+            hr = graphics.GetImpl_D3D11()->GetDevice()->CreateRenderTargetView((ID3D11Resource*)object_.ptr_, &renderTargetViewDesc,
                 (ID3D11RenderTargetView**)&renderSurfaces_[i]->renderTargetView_);
 
             if (FAILED(hr))

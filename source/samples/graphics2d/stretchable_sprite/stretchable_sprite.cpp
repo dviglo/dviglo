@@ -61,8 +61,7 @@ void Urho2DStretchableSprite::CreateScene()
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
-    auto* graphics = GetSubsystem<Graphics>();
-    camera->SetOrthoSize((float)graphics->GetHeight() * PIXEL_SIZE);
+    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
 
     refSpriteNode_ = scene_->CreateChild("regular sprite");
     stretchSpriteNode_ = scene_->CreateChild("stretchable sprite");
@@ -100,11 +99,9 @@ void Urho2DStretchableSprite::CreateInstructions()
 
 void Urho2DStretchableSprite::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void Urho2DStretchableSprite::SubscribeToEvents()

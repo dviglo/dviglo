@@ -36,7 +36,6 @@ ShaderParameter::ShaderParameter(ShaderType type, const String& name, unsigned r
 }
 
 ShaderVariation::ShaderVariation(Shader* owner, ShaderType type) :
-    GPUObject(owner->GetSubsystem<Graphics>()),
     owner_(owner),
     type_(type)
 {

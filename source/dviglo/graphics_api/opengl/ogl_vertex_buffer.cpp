@@ -14,7 +14,7 @@ namespace dviglo
 
 void VertexBuffer::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !graphics_->IsDeviceLost())
+    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteBuffers(1, &object_.name_);
 
     GPUObject::OnDeviceLost();
@@ -39,18 +39,20 @@ void VertexBuffer::Release_OGL()
 
     if (object_.name_)
     {
-        if (!graphics_)
+        if (GParams::is_headless())
             return;
 
-        if (!graphics_->IsDeviceLost())
+        Graphics& graphics = DV_GRAPHICS;
+
+        if (!graphics.IsDeviceLost())
         {
             for (i32 i = 0; i < MAX_VERTEX_STREAMS; ++i)
             {
-                if (graphics_->GetVertexBuffer(i) == this)
-                    graphics_->SetVertexBuffer(nullptr);
+                if (graphics.GetVertexBuffer(i) == this)
+                    graphics.SetVertexBuffer(nullptr);
             }
 
-            graphics_->SetVBO_OGL(0);
+            graphics.SetVBO_OGL(0);
             glDeleteBuffers(1, &object_.name_);
         }
 
@@ -77,9 +79,9 @@ bool VertexBuffer::SetData_OGL(const void* data)
 
     if (object_.name_)
     {
-        if (!graphics_->IsDeviceLost())
+        if (!DV_GRAPHICS.IsDeviceLost())
         {
-            graphics_->SetVBO_OGL(object_.name_);
+            DV_GRAPHICS.SetVBO_OGL(object_.name_);
             glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         }
         else
@@ -127,9 +129,9 @@ bool VertexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool
 
     if (object_.name_)
     {
-        if (!graphics_->IsDeviceLost())
+        if (!DV_GRAPHICS.IsDeviceLost())
         {
-            graphics_->SetVBO_OGL(object_.name_);
+            DV_GRAPHICS.SetVBO_OGL(object_.name_);
             if (!discard || start != 0)
                 glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)start * vertexSize_, (GLsizeiptr)count * vertexSize_, data);
             else
@@ -179,10 +181,10 @@ void* VertexBuffer::Lock_OGL(i32 start, i32 count, bool discard)
         lockState_ = LOCK_SHADOW;
         return shadowData_.Get() + (intptr_t)start * vertexSize_;
     }
-    else if (graphics_)
+    else if (!GParams::is_headless())
     {
         lockState_ = LOCK_SCRATCH;
-        lockScratchData_ = graphics_->ReserveScratchBuffer(count * vertexSize_);
+        lockScratchData_ = DV_GRAPHICS.ReserveScratchBuffer(count * vertexSize_);
         return lockScratchData_;
     }
     else
@@ -200,8 +202,8 @@ void VertexBuffer::Unlock_OGL()
 
     case LOCK_SCRATCH:
         SetDataRange_OGL(lockScratchData_, lockStart_, lockCount_, discardLock_);
-        if (graphics_)
-            graphics_->FreeScratchBuffer(lockScratchData_);
+        if (!GParams::is_headless())
+            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
         lockScratchData_ = nullptr;
         lockState_ = LOCK_NONE;
         break;
@@ -219,9 +221,9 @@ bool VertexBuffer::Create_OGL()
         return true;
     }
 
-    if (graphics_)
+    if (!GParams::is_headless())
     {
-        if (graphics_->IsDeviceLost())
+        if (DV_GRAPHICS.IsDeviceLost())
         {
             DV_LOGWARNING("Vertex buffer creation while device is lost");
             return true;
@@ -235,7 +237,7 @@ bool VertexBuffer::Create_OGL()
             return false;
         }
 
-        graphics_->SetVBO_OGL(object_.name_);
+        DV_GRAPHICS.SetVBO_OGL(object_.name_);
         glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, nullptr, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     }
 

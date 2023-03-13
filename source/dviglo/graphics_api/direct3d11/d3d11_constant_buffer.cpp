@@ -44,7 +44,7 @@ bool ConstantBuffer::SetSize_D3D11(unsigned size)
     shadowData_ = new unsigned char[size_];
     memset(shadowData_.Get(), 0, size_);
 
-    if (graphics_)
+    if (!GParams::is_headless())
     {
         D3D11_BUFFER_DESC bufferDesc;
         memset(&bufferDesc, 0, sizeof bufferDesc);
@@ -54,7 +54,7 @@ bool ConstantBuffer::SetSize_D3D11(unsigned size)
         bufferDesc.CPUAccessFlags = 0;
         bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 
-        HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, 0, (ID3D11Buffer**)&object_.ptr_);
+        HRESULT hr = DV_GRAPHICS.GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, 0, (ID3D11Buffer**)&object_.ptr_);
         if (FAILED(hr))
         {
             DV_SAFE_RELEASE(object_.ptr_);
@@ -70,7 +70,7 @@ void ConstantBuffer::Apply_D3D11()
 {
     if (dirty_ && object_.ptr_)
     {
-        graphics_->GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Buffer*)object_.ptr_, 0, 0, shadowData_.Get(), 0, 0);
+        DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Buffer*)object_.ptr_, 0, 0, shadowData_.Get(), 0, 0);
         dirty_ = false;
     }
 }

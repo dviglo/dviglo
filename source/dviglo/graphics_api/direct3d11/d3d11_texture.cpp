@@ -40,8 +40,8 @@ static const D3D11_TEXTURE_ADDRESS_MODE d3dAddressMode[] =
 
 void Texture::SetSRGB_D3D11(bool enable)
 {
-    if (graphics_)
-        enable &= graphics_->GetSRGBSupport();
+    if (!GParams::is_headless())
+        enable &= DV_GRAPHICS.GetSRGBSupport();
 
     if (enable != sRGB_)
     {
@@ -111,22 +111,24 @@ void Texture::UpdateParameters_D3D11()
     // Release old sampler
     DV_SAFE_RELEASE(sampler_);
 
+    Graphics& graphics = DV_GRAPHICS;
+
     D3D11_SAMPLER_DESC samplerDesc;
     memset(&samplerDesc, 0, sizeof samplerDesc);
-    unsigned filterModeIndex = filterMode_ != FILTER_DEFAULT ? filterMode_ : graphics_->GetDefaultTextureFilterMode();
+    unsigned filterModeIndex = filterMode_ != FILTER_DEFAULT ? filterMode_ : graphics.GetDefaultTextureFilterMode();
     if (shadowCompare_)
         filterModeIndex += 5;
     samplerDesc.Filter = d3dFilterMode[filterModeIndex];
     samplerDesc.AddressU = d3dAddressMode[addressModes_[0]];
     samplerDesc.AddressV = d3dAddressMode[addressModes_[1]];
     samplerDesc.AddressW = d3dAddressMode[addressModes_[2]];
-    samplerDesc.MaxAnisotropy = anisotropy_ ? anisotropy_ : graphics_->GetDefaultTextureAnisotropy();
+    samplerDesc.MaxAnisotropy = anisotropy_ ? anisotropy_ : graphics.GetDefaultTextureAnisotropy();
     samplerDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
     samplerDesc.MinLOD = -M_INFINITY;
     samplerDesc.MaxLOD = M_INFINITY;
     memcpy(&samplerDesc.BorderColor, borderColor_.Data(), 4 * sizeof(float));
 
-    HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateSamplerState(&samplerDesc, (ID3D11SamplerState**)&sampler_);
+    HRESULT hr = graphics.GetImpl_D3D11()->GetDevice()->CreateSamplerState(&samplerDesc, (ID3D11SamplerState**)&sampler_);
     if (FAILED(hr))
     {
         DV_SAFE_RELEASE(sampler_);
@@ -179,7 +181,7 @@ void Texture::RegenerateLevels_D3D11()
     if (!shaderResourceView_)
         return;
 
-    graphics_->GetImpl_D3D11()->GetDeviceContext()->GenerateMips((ID3D11ShaderResourceView*)shaderResourceView_);
+    DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->GenerateMips((ID3D11ShaderResourceView*)shaderResourceView_);
     levelsDirty_ = false;
 }
 

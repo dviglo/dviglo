@@ -510,11 +510,10 @@ void Graphics::Clear_D3D11(ClearTargetFlags flags, const Color& color, float dep
     }
     else
     {
-        Renderer* renderer = GetSubsystem<Renderer>();
-        if (!renderer)
+        if (GParams::is_headless())
             return;
 
-        Geometry* geometry = renderer->GetQuadGeometry();
+        Geometry* geometry = DV_RENDERER.GetQuadGeometry();
 
         Matrix3x4 model = Matrix3x4::IDENTITY;
         Matrix4 projection = Matrix4::IDENTITY;
@@ -533,7 +532,7 @@ void Graphics::Clear_D3D11(ClearTargetFlags flags, const Color& color, float dep
         SetShaderParameter_D3D11(VSP_VIEWPROJ, projection);
         SetShaderParameter_D3D11(PSP_MATDIFFCOLOR, color);
 
-        geometry->Draw(this);
+        geometry->Draw();
 
         SetStencilTest_D3D11(false);
         ClearParameterSources_D3D11();

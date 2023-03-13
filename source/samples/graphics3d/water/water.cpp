@@ -161,12 +161,9 @@ void Water::CreateInstructions()
 
 void Water::SetupViewport()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
     // Create a mathematical plane to represent the water in calculations
     waterPlane_ = Plane(waterNode_->GetWorldRotation() * Vector3(0.0f, 1.0f, 0.0f), waterNode_->GetWorldPosition());
@@ -187,7 +184,7 @@ void Water::SetupViewport()
     reflectionCamera->SetUseClipping(true); // Enable clipping of geometry behind water plane
     reflectionCamera->SetClipPlane(waterClipPlane_);
     // The water reflection texture is rectangular. Set reflection camera aspect ratio to match
-    reflectionCamera->SetAspectRatio((float)graphics->GetWidth() / (float)graphics->GetHeight());
+    reflectionCamera->SetAspectRatio((float)DV_GRAPHICS.GetWidth() / (float)DV_GRAPHICS.GetHeight());
     // View override flags could be used to optimize reflection rendering. For example disable shadows
     //reflectionCamera->SetViewOverrideFlags(VO_DISABLE_SHADOWS);
 
@@ -243,9 +240,8 @@ void Water::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // In case resolution has changed, adjust the reflection camera aspect ratio
-    auto* graphics = GetSubsystem<Graphics>();
     auto* reflectionCamera = reflectionCameraNode_->GetComponent<Camera>();
-    reflectionCamera->SetAspectRatio((float)graphics->GetWidth() / (float)graphics->GetHeight());
+    reflectionCamera->SetAspectRatio((float)DV_GRAPHICS.GetWidth() / (float)DV_GRAPHICS.GetHeight());
 }
 
 void Water::HandleUpdate(StringHash eventType, VariantMap& eventData)

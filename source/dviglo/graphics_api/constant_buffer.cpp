@@ -11,8 +11,7 @@
 namespace dviglo
 {
 
-ConstantBuffer::ConstantBuffer() :
-    GPUObject(GetSubsystem<Graphics>())
+ConstantBuffer::ConstantBuffer()
 {
 }
 

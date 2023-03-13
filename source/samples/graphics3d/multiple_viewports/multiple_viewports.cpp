@@ -162,14 +162,11 @@ void MultipleViewports::CreateInstructions()
 
 void MultipleViewports::SetupViewports()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    auto* renderer = GetSubsystem<Renderer>();
-
-    renderer->SetNumViewports(2);
+    DV_RENDERER.SetNumViewports(2);
 
     // Set up the front camera viewport
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
     // Clone the default render path so that we do not interfere with the other viewport, then add
     // bloom and FXAA post process effects to the front viewport. Render path commands can be tagged
@@ -187,8 +184,8 @@ void MultipleViewports::SetupViewports()
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
     // The viewport index must be greater in that case, otherwise the view would be left behind
     SharedPtr<Viewport> rearViewport(new Viewport(scene_, rearCameraNode_->GetComponent<Camera>(),
-        IntRect(graphics->GetWidth() * 2 / 3, 32, graphics->GetWidth() - 32, graphics->GetHeight() / 3)));
-    renderer->SetViewport(1, rearViewport);
+        IntRect(DV_GRAPHICS.GetWidth() * 2 / 3, 32, DV_GRAPHICS.GetWidth() - 32, DV_GRAPHICS.GetHeight() / 3)));
+    DV_RENDERER.SetViewport(1, rearViewport);
 }
 
 void MultipleViewports::SubscribeToEvents()
@@ -234,7 +231,7 @@ void MultipleViewports::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // Toggle post processing effects on the front viewport. Note that the rear viewport is unaffected
-    RenderPath* effectRenderPath = GetSubsystem<Renderer>()->GetViewport(0)->GetRenderPath();
+    RenderPath* effectRenderPath = DV_RENDERER.GetViewport(0)->GetRenderPath();
     if (input.GetKeyPress(KEY_B))
         effectRenderPath->ToggleEnabled("Bloom");
     if (input.GetKeyPress(KEY_F))
@@ -261,5 +258,5 @@ void MultipleViewports::HandlePostRenderUpdate(StringHash eventType, VariantMap&
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Disable depth test so that we can see the effect of occlusion
     if (drawDebug_)
-        GetSubsystem<Renderer>()->DrawDebugGeometry(false);
+        DV_RENDERER.DrawDebugGeometry(false);
 }

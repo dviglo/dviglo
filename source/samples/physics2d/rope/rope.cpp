@@ -66,9 +66,8 @@ void Urho2DPhysicsRope::CreateScene()
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
-    auto* graphics = GetSubsystem<Graphics>();
-    camera->SetOrthoSize((float)graphics->GetHeight() * 0.05f);
-    camera->SetZoom(1.5f * Min((float)graphics->GetWidth() / 1280.0f, (float)graphics->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.5) is set for full visibility at 1280x800 resolution)
+    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * 0.05f);
+    camera->SetZoom(1.5f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.5) is set for full visibility at 1280x800 resolution)
 
     // Create 2D physics world component
     auto* physicsWorld = scene_->CreateComponent<PhysicsWorld2D>();
@@ -140,11 +139,9 @@ void Urho2DPhysicsRope::CreateInstructions()
 
 void Urho2DPhysicsRope::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void Urho2DPhysicsRope::MoveCamera(float timeStep)

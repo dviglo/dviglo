@@ -62,7 +62,7 @@ public:
     void SetupViewport()
     {
         SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-        GetSubsystem<Renderer>()->SetViewport(0, viewport);
+        DV_RENDERER.SetViewport(0, viewport);
     }
 
     void CreateScene()
@@ -189,7 +189,7 @@ public:
     void HandleEndViewRender(StringHash eventType, VariantMap& eventData)
     {
         ResourceCache& cache = DV_RES_CACHE;
-        Graphics* graphics = GetSubsystem<Graphics>();
+        Graphics& graphics = DV_GRAPHICS;
 
         // Размер текстуры должен быть степенью двойки (64, 128, 256, ...),
         // иначе она не будет работать в GL ES 1.0 (в вебе).
@@ -207,7 +207,7 @@ public:
         Font* font = cache.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
         // Очистка экрана. Если сцена пустая, то можно просто задать цвет зоны
-        //GetSubsystem<Graphics>()->Clear(CLEAR_COLOR, Color::GREEN);
+        //graphics.Clear(CLEAR_COLOR, Color::GREEN);
 
         String str;
 
@@ -273,12 +273,12 @@ public:
 
         // Выводим подсказку про ПКМ
         str = "Зажмите ПКМ для перемещения по сцене";
-        Vector2 pos{graphics->GetWidth() - 550.f, graphics->GetHeight() - 36.f}; // TODO: Добавить MeasureString
+        Vector2 pos{graphics.GetWidth() - 550.f, graphics.GetHeight() - 36.f}; // TODO: Добавить MeasureString
         screenSpaceSpriteBatch_->DrawString(str, font, 20.f, pos, 0xFFFFFFFF);
 
         // Выводим FPS
         str = "FPS: " + String(fpsValue_);
-        pos = {10.f, graphics->GetHeight() - 56.f};
+        pos = {10.f, graphics.GetHeight() - 56.f};
         screenSpaceSpriteBatch_->DrawString(str, font, 40.f, pos, 0xFF0000FF);
 
         screenSpaceSpriteBatch_->Flush();

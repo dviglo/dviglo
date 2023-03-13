@@ -47,7 +47,7 @@ public:
     /// Override raw index data to be returned for CPU-side operations.
     void SetRawIndexData(const SharedArrayPtr<byte>& data, i32 indexSize);
     /// Draw.
-    void Draw(Graphics* graphics);
+    void Draw();
 
     /// Return all vertex buffers.
     const Vector<SharedPtr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }

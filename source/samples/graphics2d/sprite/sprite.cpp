@@ -67,16 +67,15 @@ void Urho2DSprite::CreateScene()
     Camera* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
-    Graphics* graphics = GetSubsystem<Graphics>();
-    camera->SetOrthoSize((float)graphics->GetHeight() * PIXEL_SIZE);
+    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
 
     // Get sprite
     Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Aster.png");
     if (!sprite)
         return;
 
-    float halfWidth = graphics->GetWidth() * 0.5f * PIXEL_SIZE;
-    float halfHeight = graphics->GetHeight() * 0.5f * PIXEL_SIZE;
+    float halfWidth = DV_GRAPHICS.GetWidth() * 0.5f * PIXEL_SIZE;
+    float halfHeight = DV_GRAPHICS.GetHeight() * 0.5f * PIXEL_SIZE;
 
     for (unsigned i = 0; i < NUM_SPRITES; ++i)
     {
@@ -129,11 +128,9 @@ void Urho2DSprite::CreateInstructions()
 
 void Urho2DSprite::SetupViewport()
 {
-    Renderer* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void Urho2DSprite::MoveCamera(float timeStep)
@@ -189,9 +186,8 @@ void Urho2DSprite::HandleUpdate(StringHash eventType, VariantMap& eventData)
     // Move the camera, scale movement with time step
     MoveCamera(timeStep);
 
-    Graphics* graphics = GetSubsystem<Graphics>();
-    float halfWidth = (float)graphics->GetWidth() * 0.5f * PIXEL_SIZE;
-    float halfHeight = (float)graphics->GetHeight() * 0.5f * PIXEL_SIZE;
+    float halfWidth = (float)DV_GRAPHICS.GetWidth() * 0.5f * PIXEL_SIZE;
+    float halfHeight = (float)DV_GRAPHICS.GetHeight() * 0.5f * PIXEL_SIZE;
 
     for (const SharedPtr<Node>& node : spriteNodes_)
     {

@@ -42,11 +42,10 @@ void AppState_Base::SetupViewport()
     Camera* camera = cameraNode->GetComponent<Camera>();
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera));
 
-    Renderer* renderer = GetSubsystem<Renderer>();
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void AppState_Base::DestroyViewport()
 {
-    GetSubsystem<Renderer>()->SetViewport(0, nullptr);
+    DV_RENDERER.SetViewport(0, nullptr);
 }

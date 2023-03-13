@@ -35,12 +35,14 @@ void Texture2DArray::OnDeviceReset_D3D11()
 
 void Texture2DArray::Release_D3D11()
 {
-    if (graphics_)
+    if (!GParams::is_headless())
     {
+        Graphics& graphics = DV_GRAPHICS;
+
         for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
         {
-            if (graphics_->GetTexture(i) == this)
-                graphics_->SetTexture(i, nullptr);
+            if (graphics.GetTexture(i) == this)
+                graphics.SetTexture(i, nullptr);
         }
     }
 
@@ -117,7 +119,7 @@ bool Texture2DArray::SetData_D3D11(unsigned layer, unsigned level, int x, int y,
         D3D11_MAPPED_SUBRESOURCE mappedData;
         mappedData.pData = nullptr;
 
-        HRESULT hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)object_.ptr_, subResource, D3D11_MAP_WRITE_DISCARD, 0,
+        HRESULT hr = DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)object_.ptr_, subResource, D3D11_MAP_WRITE_DISCARD, 0,
             &mappedData);
         if (FAILED(hr) || !mappedData.pData)
         {
@@ -128,7 +130,7 @@ bool Texture2DArray::SetData_D3D11(unsigned layer, unsigned level, int x, int y,
         {
             for (int row = 0; row < height; ++row)
                 memcpy((unsigned char*)mappedData.pData + (row + y) * mappedData.RowPitch + rowStart, src + row * rowSize, rowSize);
-            graphics_->GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)object_.ptr_, subResource);
+            DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)object_.ptr_, subResource);
         }
     }
     else
@@ -141,7 +143,7 @@ bool Texture2DArray::SetData_D3D11(unsigned layer, unsigned level, int x, int y,
         destBox.front = 0;
         destBox.back = 1;
 
-        graphics_->GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Resource*)object_.ptr_, subResource, &destBox, data,
+        DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Resource*)object_.ptr_, subResource, &destBox, data,
             rowSize, 0);
     }
 
@@ -179,9 +181,8 @@ bool Texture2DArray::SetData_D3D11(unsigned layer, Image* image, bool useAlpha)
     SharedPtr<Image> mipImage;
     unsigned memoryUse = 0;
     MaterialQuality quality = QUALITY_HIGH;
-    Renderer* renderer = GetSubsystem<Renderer>();
-    if (renderer)
-        quality = renderer->GetTextureQuality();
+    if (!GParams::is_headless())
+        quality = DV_RENDERER.GetTextureQuality();
 
     if (!image->IsCompressed())
     {
@@ -264,7 +265,7 @@ bool Texture2DArray::SetData_D3D11(unsigned layer, Image* image, bool useAlpha)
         int width = image->GetWidth();
         int height = image->GetHeight();
         unsigned levels = image->GetNumCompressedLevels();
-        unsigned format = graphics_->GetFormat(image->GetCompressedFormat());
+        unsigned format = DV_GRAPHICS.GetFormat(image->GetCompressedFormat());
         bool needDecompress = false;
 
         if (!format)
@@ -370,8 +371,10 @@ bool Texture2DArray::GetData_D3D11(unsigned layer, unsigned level, void* dest) c
     textureDesc.Usage = D3D11_USAGE_STAGING;
     textureDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
 
+    Graphics& graphics = DV_GRAPHICS;
+
     ID3D11Texture2D* stagingTexture = nullptr;
-    HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, &stagingTexture);
+    HRESULT hr = graphics.GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, &stagingTexture);
     if (FAILED(hr))
     {
         DV_LOGD3DERROR("Failed to create staging texture for GetData", hr);
@@ -387,7 +390,7 @@ bool Texture2DArray::GetData_D3D11(unsigned layer, unsigned level, void* dest) c
     srcBox.bottom = (UINT)levelHeight;
     srcBox.front = 0;
     srcBox.back = 1;
-    graphics_->GetImpl_D3D11()->GetDeviceContext()->CopySubresourceRegion(stagingTexture, 0, 0, 0, 0, (ID3D11Resource*)object_.ptr_,
+    graphics.GetImpl_D3D11()->GetDeviceContext()->CopySubresourceRegion(stagingTexture, 0, 0, 0, 0, (ID3D11Resource*)object_.ptr_,
         srcSubResource, &srcBox);
 
     D3D11_MAPPED_SUBRESOURCE mappedData;
@@ -395,7 +398,7 @@ bool Texture2DArray::GetData_D3D11(unsigned layer, unsigned level, void* dest) c
     unsigned rowSize = GetRowDataSize_D3D11(levelWidth);
     unsigned numRows = (unsigned)(IsCompressed_D3D11() ? (levelHeight + 3) >> 2 : levelHeight);
 
-    hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)stagingTexture, 0, D3D11_MAP_READ, 0, &mappedData);
+    hr = graphics.GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Resource*)stagingTexture, 0, D3D11_MAP_READ, 0, &mappedData);
     if (FAILED(hr) || !mappedData.pData)
     {
         DV_LOGD3DERROR("Failed to map staging texture for GetData", hr);
@@ -406,7 +409,7 @@ bool Texture2DArray::GetData_D3D11(unsigned layer, unsigned level, void* dest) c
     {
         for (unsigned row = 0; row < numRows; ++row)
             memcpy((unsigned char*)dest + row * rowSize, (unsigned char*)mappedData.pData + row * mappedData.RowPitch, rowSize);
-        graphics_->GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)stagingTexture, 0);
+        graphics.GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Resource*)stagingTexture, 0);
         DV_SAFE_RELEASE(stagingTexture);
         return true;
     }
@@ -416,7 +419,7 @@ bool Texture2DArray::Create_D3D11()
 {
     Release_D3D11();
 
-    if (!graphics_ || !width_ || !height_ || !layers_)
+    if (GParams::is_headless() || !width_ || !height_ || !layers_)
         return false;
 
     levels_ = CheckMaxLevels(width_, height_, requestedLevels_);
@@ -427,6 +430,8 @@ bool Texture2DArray::Create_D3D11()
     // Set mipmapping
     if (usage_ == TEXTURE_RENDERTARGET && levels_ != 1)
         textureDesc.MiscFlags |= D3D11_RESOURCE_MISC_GENERATE_MIPS;
+
+    Graphics& graphics = DV_GRAPHICS;
 
     textureDesc.Width = (UINT)width_;
     textureDesc.Height = (UINT)height_;
@@ -443,7 +448,7 @@ bool Texture2DArray::Create_D3D11()
         textureDesc.BindFlags |= D3D11_BIND_DEPTH_STENCIL;
     textureDesc.CPUAccessFlags = usage_ == TEXTURE_DYNAMIC ? D3D11_CPU_ACCESS_WRITE : 0;
 
-    HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, (ID3D11Texture2D**)&object_);
+    HRESULT hr = graphics.GetImpl_D3D11()->GetDevice()->CreateTexture2D(&textureDesc, nullptr, (ID3D11Texture2D**)&object_);
     if (FAILED(hr))
     {
         DV_LOGD3DERROR("Failed to create texture array", hr);
@@ -469,7 +474,7 @@ bool Texture2DArray::Create_D3D11()
         srvDesc.Texture2DArray.MostDetailedMip = 0;
     }
 
-    hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateShaderResourceView((ID3D11Resource*)object_.ptr_, &srvDesc,
+    hr = graphics.GetImpl_D3D11()->GetDevice()->CreateShaderResourceView((ID3D11Resource*)object_.ptr_, &srvDesc,
         (ID3D11ShaderResourceView**)&shaderResourceView_);
     if (FAILED(hr))
     {
@@ -496,7 +501,7 @@ bool Texture2DArray::Create_D3D11()
             renderTargetViewDesc.Texture2DArray.FirstArraySlice = 0;
         }
 
-        hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateRenderTargetView((ID3D11Resource*)object_.ptr_, &renderTargetViewDesc,
+        hr = graphics.GetImpl_D3D11()->GetDevice()->CreateRenderTargetView((ID3D11Resource*)object_.ptr_, &renderTargetViewDesc,
             (ID3D11RenderTargetView**)&renderSurface_->renderTargetView_);
 
         if (FAILED(hr))

@@ -65,9 +65,8 @@ void Urho2DTileMap::CreateScene()
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
-    auto* graphics = GetSubsystem<Graphics>();
-    camera->SetOrthoSize((float)graphics->GetHeight() * PIXEL_SIZE);
-    camera->SetZoom(1.0f * Min((float)graphics->GetWidth() / 1280.0f, (float)graphics->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.0) is set for full visibility at 1280x800 resolution)
+    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
+    camera->SetZoom(1.0f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.0) is set for full visibility at 1280x800 resolution)
 
     // Get tmx file
     auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("Urho2D/isometric_grass_and_water.tmx");
@@ -103,11 +102,9 @@ void Urho2DTileMap::CreateInstructions()
 
 void Urho2DTileMap::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void Urho2DTileMap::MoveCamera(float timeStep)
@@ -200,9 +197,8 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
 
 Vector2 Urho2DTileMap::GetMousePositionXY()
 {
-    auto* graphics = GetSubsystem<Graphics>();
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / graphics->GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / graphics->GetHeight(), 10.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / DV_GRAPHICS.GetHeight(), 10.0f);
     Vector3 worldPoint = camera->ScreenToWorldPoint(screenPoint);
     return Vector2(worldPoint.x_, worldPoint.y_);
 }

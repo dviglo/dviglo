@@ -26,12 +26,14 @@ void VertexBuffer::Release_D3D11()
 {
     Unlock_D3D11();
 
-    if (graphics_)
+    if (!GParams::is_headless())
     {
+        Graphics& graphics = DV_GRAPHICS;
+
         for (i32 i = 0; i < MAX_VERTEX_STREAMS; ++i)
         {
-            if (graphics_->GetVertexBuffer(i) == this)
-                graphics_->SetVertexBuffer(nullptr);
+            if (graphics.GetVertexBuffer(i) == this)
+                graphics.SetVertexBuffer(nullptr);
         }
     }
 
@@ -78,7 +80,7 @@ bool VertexBuffer::SetData_D3D11(const void* data)
             destBox.front = 0;
             destBox.back = 1;
 
-            graphics_->GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Buffer*)object_.ptr_, 0, &destBox, data, 0, 0);
+            DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Buffer*)object_.ptr_, 0, &destBox, data, 0, 0);
         }
     }
 
@@ -140,7 +142,7 @@ bool VertexBuffer::SetDataRange_D3D11(const void* data, i32 start, i32 count, bo
             destBox.front = 0;
             destBox.back = 1;
 
-            graphics_->GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Buffer*)object_.ptr_, 0, &destBox, data, 0, 0);
+            DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->UpdateSubresource((ID3D11Buffer*)object_.ptr_, 0, &destBox, data, 0, 0);
         }
     }
 
@@ -183,10 +185,10 @@ void* VertexBuffer::Lock_D3D11(i32 start, i32 count, bool discard)
         lockState_ = LOCK_SHADOW;
         return shadowData_.Get() + (intptr_t)start * vertexSize_;
     }
-    else if (graphics_)
+    else if (!GParams::is_headless())
     {
         lockState_ = LOCK_SCRATCH;
-        lockScratchData_ = graphics_->ReserveScratchBuffer(count * vertexSize_);
+        lockScratchData_ = DV_GRAPHICS.ReserveScratchBuffer(count * vertexSize_);
         return lockScratchData_;
     }
     else
@@ -208,8 +210,8 @@ void VertexBuffer::Unlock_D3D11()
 
     case LOCK_SCRATCH:
         SetDataRange_D3D11(lockScratchData_, lockStart_, lockCount_);
-        if (graphics_)
-            graphics_->FreeScratchBuffer(lockScratchData_);
+        if (!GParams::is_headless())
+            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
         lockScratchData_ = nullptr;
         lockState_ = LOCK_NONE;
         break;
@@ -225,7 +227,7 @@ bool VertexBuffer::Create_D3D11()
     if (!vertexCount_ || !elementMask_)
         return true;
 
-    if (graphics_)
+    if (!GParams::is_headless())
     {
         D3D11_BUFFER_DESC bufferDesc;
         memset(&bufferDesc, 0, sizeof bufferDesc);
@@ -234,7 +236,7 @@ bool VertexBuffer::Create_D3D11()
         bufferDesc.Usage = dynamic_ ? D3D11_USAGE_DYNAMIC : D3D11_USAGE_DEFAULT;
         bufferDesc.ByteWidth = (UINT)vertexCount_ * vertexSize_;
 
-        HRESULT hr = graphics_->GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, nullptr, (ID3D11Buffer**)&object_.ptr_);
+        HRESULT hr = DV_GRAPHICS.GetImpl_D3D11()->GetDevice()->CreateBuffer(&bufferDesc, nullptr, (ID3D11Buffer**)&object_.ptr_);
         if (FAILED(hr))
         {
             DV_SAFE_RELEASE(object_.ptr_);
@@ -264,7 +266,7 @@ void* VertexBuffer::MapBuffer_D3D11(i32 start, i32 count, bool discard)
         D3D11_MAPPED_SUBRESOURCE mappedData;
         mappedData.pData = nullptr;
 
-        HRESULT hr = graphics_->GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Buffer*)object_.ptr_, 0, discard ? D3D11_MAP_WRITE_DISCARD :
+        HRESULT hr = DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->Map((ID3D11Buffer*)object_.ptr_, 0, discard ? D3D11_MAP_WRITE_DISCARD :
             D3D11_MAP_WRITE, 0, &mappedData);
         if (FAILED(hr) || !mappedData.pData)
             DV_LOGD3DERROR("Failed to map vertex buffer", hr);
@@ -282,7 +284,7 @@ void VertexBuffer::UnmapBuffer_D3D11()
 {
     if (object_.ptr_ && lockState_ == LOCK_HARDWARE)
     {
-        graphics_->GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Buffer*)object_.ptr_, 0);
+        DV_GRAPHICS.GetImpl_D3D11()->GetDeviceContext()->Unmap((ID3D11Buffer*)object_.ptr_, 0);
         lockState_ = LOCK_NONE;
     }
 }

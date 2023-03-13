@@ -188,16 +188,13 @@ public:
         if (runClient)
             return;
 
-        Renderer* renderer = GetSubsystem<Renderer>();
-        Graphics* graphics = GetSubsystem<Graphics>();
-
         gameScene->LoadXML(*DV_RES_CACHE.GetFile("Scenes/NinjaSnowWar.xml"));
 
         // On mobile devices render the shadowmap first for better performance, adjust the cascaded shadows
         String platform = GetPlatform();
         if (platform == "Android" || platform == "iOS" || platform == "Raspberry Pi")
         {
-            renderer->SetReuseShadowMaps(false);
+            DV_RENDERER.SetReuseShadowMaps(false);
             // Adjust the directional light shadow range slightly further, as only the first
             // cascade is supported
             Node* dirLightNode = gameScene->GetChild("GlobalLight", true);
@@ -210,7 +207,7 @@ public:
 
         // Precache shaders if possible
         if (!GParams::is_headless() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
-            graphics->PrecacheShaders(*DV_RES_CACHE.GetFile("NinjaSnowWarShaders.xml"));
+            DV_GRAPHICS.PrecacheShaders(*DV_RES_CACHE.GetFile("NinjaSnowWarShaders.xml"));
     }
 
     void InitNetworking()
@@ -266,12 +263,10 @@ public:
         gameCamera->SetNearClip(0.5f);
         gameCamera->SetFarClip(160.f);
 
-        Renderer* renderer = GetSubsystem<Renderer>();
-
         if (!GParams::is_headless())
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
-            renderer->SetViewport(0, viewport);
+            DV_RENDERER.SetViewport(0, viewport);
             DV_AUDIO.SetListener(gameCameraNode->CreateComponent<SoundListener>());
         }
     }
@@ -281,7 +276,7 @@ public:
         if (GParams::is_headless() || runServer)
             return;
 
-        i32 height = GetSubsystem<Graphics>()->GetHeight() / 22;
+        i32 height = DV_GRAPHICS.GetHeight() / 22;
         if (height > 64)
             height = 64;
 
@@ -543,7 +538,6 @@ public:
         Console* console = GetSubsystem<Console>();
         DebugHud* debugHud = GetSubsystem<DebugHud>();
         Engine* engine = GetSubsystem<Engine>();
-        Graphics* graphics = GetSubsystem<Graphics>();
 
         i32 key = eventData["Key"].GetI32();
 
@@ -571,7 +565,7 @@ public:
         else if (key == KEY_F6)
         {
             Image screenshot;
-            graphics->TakeScreenShot(screenshot);
+            DV_GRAPHICS.TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(DV_FILE_SYSTEM.GetProgramDir() + "Data/Screenshot_" +
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
@@ -916,7 +910,6 @@ public:
     void UpdateControls()
     {
         Input& input = DV_INPUT;
-        Graphics* graphics = GetSubsystem<Graphics>();
         Console* console = GetSubsystem<Console>();
 
         if (singlePlayer || runClient)
@@ -932,8 +925,8 @@ public:
                     if (!touch->touchedElement_)
                     {
                         // Touch on empty space
-                        playerControls.yaw_ += TOUCH_SENSITIVITY * gameCamera->GetFov() / graphics->GetHeight() * touch->delta_.x_;
-                        playerControls.pitch_ += TOUCH_SENSITIVITY * gameCamera->GetFov() / graphics->GetHeight() * touch->delta_.y_;
+                        playerControls.yaw_ += TOUCH_SENSITIVITY * gameCamera->GetFov() / DV_GRAPHICS.GetHeight() * touch->delta_.x_;
+                        playerControls.pitch_ += TOUCH_SENSITIVITY * gameCamera->GetFov() / DV_GRAPHICS.GetHeight() * touch->delta_.y_;
                     }
                 }
             }
@@ -1169,8 +1162,7 @@ public:
 
     void HandleScreenMode(StringHash eventType, VariantMap& eventData)
     {
-        Graphics* graphics = GetSubsystem<Graphics>();
-        i32 height = graphics->GetHeight() / 22;
+        i32 height = DV_GRAPHICS.GetHeight() / 22;
         if (height > 64)
             height = 64;
         sight->SetSize(height, height);

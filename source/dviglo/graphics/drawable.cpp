@@ -14,6 +14,7 @@
 #include "../io/file.h"
 #include "../io/log.h"
 #include "../scene/scene.h"
+#include "graphics.h"
 
 #include "../common/debug_new.h"
 
@@ -243,14 +244,18 @@ bool Drawable::IsInView() const
 {
     // Note: in headless mode there is no renderer subsystem and no view frustum tests are performed, so return
     // always false in that case
-    auto* renderer = GetSubsystem<Renderer>();
-    return renderer && viewFrameNumber_ == renderer->GetFrameInfo().frameNumber_ && !viewCameras_.Empty();
+    if (GParams::is_headless())
+        return false;
+
+    return viewFrameNumber_ == DV_RENDERER.GetFrameInfo().frameNumber_ && !viewCameras_.Empty();
 }
 
 bool Drawable::IsInView(Camera* camera) const
 {
-    auto* renderer = GetSubsystem<Renderer>();
-    return renderer && viewFrameNumber_ == renderer->GetFrameInfo().frameNumber_ && (!camera || viewCameras_.Contains(camera));
+    if (GParams::is_headless())
+        return false;
+
+    return viewFrameNumber_ == DV_RENDERER.GetFrameInfo().frameNumber_ && (!camera || viewCameras_.Contains(camera));
 }
 
 bool Drawable::IsInView(const FrameInfo& frame, bool anyCamera) const

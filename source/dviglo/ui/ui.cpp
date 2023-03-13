@@ -494,7 +494,7 @@ void UI::Render(bool renderUICommand)
             cursor_->ApplyOSCursorShape();
     }
 
-    Graphics* graphics = GetSubsystem<Graphics>();
+    Graphics& graphics = DV_GRAPHICS;
 
     // Perform the default backbuffer render only if not rendered yet, or additional renders through RenderUI command
     if (renderUICommand || !uiRendered_)
@@ -503,7 +503,7 @@ void UI::Render(bool renderUICommand)
         SetVertexData(debugVertexBuffer_, debugVertexData_);
 
         if (!renderUICommand)
-            graphics->ResetRenderTargets();
+            graphics.ResetRenderTargets();
         // Render non-modal batches
         Render(vertexBuffer_, batches_, 0, nonModalBatchSize_);
         // Render debug draw
@@ -524,10 +524,10 @@ void UI::Render(bool renderUICommand)
                 SetVertexData(data.debugVertexBuffer_, data.debugVertexData_);
 
                 RenderSurface* surface = data.texture_->GetRenderSurface();
-                graphics->SetDepthStencil(surface->GetLinkedDepthStencil());
-                graphics->SetRenderTarget(0, surface);
-                graphics->SetViewport(IntRect(0, 0, surface->GetWidth(), surface->GetHeight()));
-                graphics->Clear(dviglo::CLEAR_COLOR);
+                graphics.SetDepthStencil(surface->GetLinkedDepthStencil());
+                graphics.SetRenderTarget(0, surface);
+                graphics.SetViewport(IntRect(0, 0, surface->GetWidth(), surface->GetHeight()));
+                graphics.Clear(dviglo::CLEAR_COLOR);
 
                 Render(data.vertexBuffer_, data.batches_, 0, data.batches_.Size());
                 Render(data.debugVertexBuffer_, data.debugDrawBatches_, 0, data.debugDrawBatches_.Size());
@@ -537,7 +537,7 @@ void UI::Render(bool renderUICommand)
         }
 
         if (renderToTexture_.Size())
-            graphics->ResetRenderTargets();
+            graphics.ResetRenderTargets();
     }
 
     // Clear the debug draw batches and data
@@ -941,7 +941,7 @@ bool UI::HasModalElement() const
 
 void UI::Initialize()
 {
-    if (GParams::is_headless() || !GetSubsystem<Graphics>()->IsInitialized())
+    if (GParams::is_headless() || !DV_GRAPHICS.IsInitialized())
         return;
 
     DV_PROFILE(InitUI);
@@ -994,17 +994,17 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
 {
     assert(!GParams::is_headless());
 
-    Graphics* graphics = GetSubsystem<Graphics>();
+    Graphics& graphics = DV_GRAPHICS;
 
     // Engine does not render when window is closed or device is lost
-    assert(graphics->IsInitialized() && !graphics->IsDeviceLost());
+    assert(graphics.IsInitialized() && !graphics.IsDeviceLost());
 
     if (batches.Empty())
         return;
 
     unsigned alphaFormat = Graphics::GetAlphaFormat();
-    RenderSurface* surface = graphics->GetRenderTarget(0);
-    IntVector2 viewSize = graphics->GetViewport().Size();
+    RenderSurface* surface = graphics.GetRenderTarget(0);
+    IntVector2 viewSize = graphics.GetViewport().Size();
     Vector2 invScreenSize(1.0f / (float)viewSize.x_, 1.0f / (float)viewSize.y_);
     Vector2 scale(2.0f * invScreenSize.x_, -2.0f * invScreenSize.y_);
     Vector2 offset(-1.0f, 1.0f);
@@ -1026,27 +1026,27 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     projection.m23_ = 0.0f;
     projection.m33_ = 1.0f;
 
-    graphics->ClearParameterSources();
-    graphics->SetColorWrite(true);
+    graphics.ClearParameterSources();
+    graphics.SetColorWrite(true);
 
     // Reverse winding if rendering to texture on OpenGL
     if (GParams::get_gapi() == GAPI_OPENGL && surface)
-        graphics->SetCullMode(CULL_CW);
+        graphics.SetCullMode(CULL_CW);
     else
-        graphics->SetCullMode(CULL_CCW);
+        graphics.SetCullMode(CULL_CCW);
 
-    graphics->SetDepthTest(CMP_ALWAYS);
-    graphics->SetDepthWrite(false);
-    graphics->SetFillMode(FILL_SOLID);
-    graphics->SetStencilTest(false);
-    graphics->SetVertexBuffer(buffer);
+    graphics.SetDepthTest(CMP_ALWAYS);
+    graphics.SetDepthWrite(false);
+    graphics.SetFillMode(FILL_SOLID);
+    graphics.SetStencilTest(false);
+    graphics.SetVertexBuffer(buffer);
 
-    ShaderVariation* noTextureVS = graphics->GetShader(VS, "Basic", "VERTEXCOLOR");
-    ShaderVariation* diffTextureVS = graphics->GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
-    ShaderVariation* noTexturePS = graphics->GetShader(PS, "Basic", "VERTEXCOLOR");
-    ShaderVariation* diffTexturePS = graphics->GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");
-    ShaderVariation* diffMaskTexturePS = graphics->GetShader(PS, "Basic", "DIFFMAP ALPHAMASK VERTEXCOLOR");
-    ShaderVariation* alphaTexturePS = graphics->GetShader(PS, "Basic", "ALPHAMAP VERTEXCOLOR");
+    ShaderVariation* noTextureVS = graphics.GetShader(VS, "Basic", "VERTEXCOLOR");
+    ShaderVariation* diffTextureVS = graphics.GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
+    ShaderVariation* noTexturePS = graphics.GetShader(PS, "Basic", "VERTEXCOLOR");
+    ShaderVariation* diffTexturePS = graphics.GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");
+    ShaderVariation* diffMaskTexturePS = graphics.GetShader(PS, "Basic", "DIFFMAP ALPHAMASK VERTEXCOLOR");
+    ShaderVariation* alphaTexturePS = graphics.GetShader(PS, "Basic", "ALPHAMAP VERTEXCOLOR");
 
 
     for (unsigned i = batchStart; i < batchEnd; ++i)
@@ -1090,25 +1090,25 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
                     pass = technique->GetPass(i);
                     if (pass)
                     {
-                        vs = graphics->GetShader(VS, pass->GetVertexShader(), batch.customMaterial_->GetVertexShaderDefines());
-                        ps = graphics->GetShader(PS, pass->GetPixelShader(), batch.customMaterial_->GetPixelShaderDefines());
+                        vs = graphics.GetShader(VS, pass->GetVertexShader(), batch.customMaterial_->GetVertexShaderDefines());
+                        ps = graphics.GetShader(PS, pass->GetPixelShader(), batch.customMaterial_->GetPixelShaderDefines());
                         break;
                     }
                 }
             }
         }
 
-        graphics->SetShaders(vs, ps);
-        if (graphics->NeedParameterUpdate(SP_OBJECT, this))
-            graphics->SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
-        if (graphics->NeedParameterUpdate(SP_CAMERA, this))
-            graphics->SetShaderParameter(VSP_VIEWPROJ, projection);
-        if (graphics->NeedParameterUpdate(SP_MATERIAL, this))
-            graphics->SetShaderParameter(PSP_MATDIFFCOLOR, Color(1.0f, 1.0f, 1.0f, 1.0f));
+        graphics.SetShaders(vs, ps);
+        if (graphics.NeedParameterUpdate(SP_OBJECT, this))
+            graphics.SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
+        if (graphics.NeedParameterUpdate(SP_CAMERA, this))
+            graphics.SetShaderParameter(VSP_VIEWPROJ, projection);
+        if (graphics.NeedParameterUpdate(SP_MATERIAL, this))
+            graphics.SetShaderParameter(PSP_MATDIFFCOLOR, Color(1.0f, 1.0f, 1.0f, 1.0f));
 
         float elapsedTime = DV_TIME.GetElapsedTime();
-        graphics->SetShaderParameter(VSP_ELAPSEDTIME, elapsedTime);
-        graphics->SetShaderParameter(PSP_ELAPSEDTIME, elapsedTime);
+        graphics.SetShaderParameter(VSP_ELAPSEDTIME, elapsedTime);
+        graphics.SetShaderParameter(PSP_ELAPSEDTIME, elapsedTime);
 
         IntRect scissor = batch.scissor_;
         scissor.left_ = (int)(scissor.left_ * uiScale_);
@@ -1125,31 +1125,32 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
             scissor.bottom_ = viewSize.y_ - top;
         }
 
-        graphics->SetBlendMode(batch.blendMode_);
-        graphics->SetScissorTest(true, scissor);
+        graphics.SetBlendMode(batch.blendMode_);
+        graphics.SetScissorTest(true, scissor);
         if (!batch.customMaterial_)
         {
-            graphics->SetTexture(0, batch.texture_);
-        } else
+            graphics.SetTexture(0, batch.texture_);
+        }
+        else
         {
             // Update custom shader parameters if needed
-            if (graphics->NeedParameterUpdate(SP_MATERIAL, reinterpret_cast<const void*>(batch.customMaterial_->GetShaderParameterHash())))
+            if (graphics.NeedParameterUpdate(SP_MATERIAL, reinterpret_cast<const void*>(batch.customMaterial_->GetShaderParameterHash())))
             {
                 auto shader_parameters = batch.customMaterial_->GetShaderParameters();
                 for (auto it = shader_parameters.Begin(); it != shader_parameters.End(); ++it)
                 {
-                    graphics->SetShaderParameter(it->second_.name_, it->second_.value_);
+                    graphics.SetShaderParameter(it->second_.name_, it->second_.value_);
                 }
             }
             // Apply custom shader textures
             auto textures = batch.customMaterial_->GetTextures();
             for (auto it = textures.Begin(); it != textures.End(); ++it)
             {
-                graphics->SetTexture(it->first_, it->second_);
+                graphics.SetTexture(it->first_, it->second_);
             }
         }
 
-        graphics->Draw(TRIANGLE_LIST, batch.vertexStart_ / UI_VERTEX_SIZE,
+        graphics.Draw(TRIANGLE_LIST, batch.vertexStart_ / UI_VERTEX_SIZE,
             (batch.vertexEnd_ - batch.vertexStart_) / UI_VERTEX_SIZE);
 
         if (batch.customMaterial_)
@@ -1157,9 +1158,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
             // Reset textures used by the batch custom material
             auto textures = batch.customMaterial_->GetTextures();
             for (auto it = textures.Begin(); it != textures.End(); ++it)
-            {
-                graphics->SetTexture(it->first_, 0);
-            }
+                graphics.SetTexture(it->first_, 0);
         }
     }
 }
@@ -2159,10 +2158,8 @@ void UI::ResizeRootElement()
 
 IntVector2 UI::GetEffectiveRootElementSize(bool applyScale) const
 {
-    Graphics* graphics = GetSubsystem<Graphics>();
-
     // Use a fake size in headless mode
-    IntVector2 size = graphics ? IntVector2(graphics->GetWidth(), graphics->GetHeight()) : IntVector2(1024, 768);
+    IntVector2 size = !GParams::is_headless() ? IntVector2(DV_GRAPHICS.GetWidth(), DV_GRAPHICS.GetHeight()) : IntVector2(1024, 768);
     if (customSize_.x_ > 0 && customSize_.y_ > 0)
         size = customSize_;
 

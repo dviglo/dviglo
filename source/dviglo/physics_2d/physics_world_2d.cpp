@@ -601,10 +601,11 @@ RigidBody2D* PhysicsWorld2D::GetRigidBody(const Vector2& point, u16 collisionMas
 
 RigidBody2D* PhysicsWorld2D::GetRigidBody(int screenX, int screenY, u16 collisionMask/* = M_U16_MASK_ALL_BITS*/)
 {
-    auto* renderer = GetSubsystem<Renderer>();
-    for (unsigned i = 0; i < renderer->GetNumViewports(); ++i)
+    Renderer& renderer = DV_RENDERER;
+
+    for (unsigned i = 0; i < renderer.GetNumViewports(); ++i)
     {
-        Viewport* viewport = renderer->GetViewport(i);
+        Viewport* viewport = renderer.GetViewport(i);
         // Find a viewport with same scene
         if (viewport && viewport->GetScene() == GetScene())
         {

@@ -62,8 +62,7 @@ void Shader::RegisterObject()
 
 bool Shader::BeginLoad(Deserializer& source)
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics)
+    if (GParams::is_headless())
         return false;
 
     // Load the shader source code and resolve any includes

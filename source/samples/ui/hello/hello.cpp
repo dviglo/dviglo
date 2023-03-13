@@ -24,7 +24,6 @@
 DV_DEFINE_APPLICATION_MAIN(HelloGUI)
 
 HelloGUI::HelloGUI() :
-    uiRoot_(DV_UI.GetRoot()),
     dragBeginPosition_(IntVector2::ZERO)
 {
 }
@@ -39,6 +38,8 @@ void HelloGUI::Start()
 
     // Load XML file containing default UI style sheet
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+    uiRoot_ = DV_UI.GetRoot();
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
@@ -131,14 +132,12 @@ void HelloGUI::InitWindow()
 
 void HelloGUI::CreateDraggableFish()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-
     // Create a draggable Fish button
     auto* draggableFish = new Button();
     draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
-    draggableFish->SetPosition((graphics->GetWidth() - draggableFish->GetWidth()) / 2, 200);
+    draggableFish->SetPosition((DV_GRAPHICS.GetWidth() - draggableFish->GetWidth()) / 2, 200);
     draggableFish->SetName("Fish");
     uiRoot_->AddChild(draggableFish);
 

@@ -90,16 +90,14 @@ void Urho2DConstraints::CreateScene()
     camera_ = cameraNode_->CreateComponent<Camera>();
     camera_->SetOrthographic(true);
 
-    auto* graphics = GetSubsystem<Graphics>();
-    camera_->SetOrthoSize((float)graphics->GetHeight() * PIXEL_SIZE);
-    camera_->SetZoom(1.2f * Min((float)graphics->GetWidth() / 1280.0f, (float)graphics->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
+    camera_->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
+    camera_->SetZoom(1.2f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera_));
-    auto* renderer = GetSubsystem<Renderer>();
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
-    Zone* zone = renderer->GetDefaultZone();
+    Zone* zone = DV_RENDERER.GetDefaultZone();
     zone->SetFogColor(Color(0.1f, 0.1f, 0.1f)); // Set background color for the scene
 
     // Create 4x3 grid
@@ -500,8 +498,7 @@ void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& ev
 
 Vector2 Urho2DConstraints::GetMousePositionXY()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / graphics->GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / graphics->GetHeight(), 0.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / DV_GRAPHICS.GetHeight(), 0.0f);
     Vector3 worldPoint = camera_->ScreenToWorldPoint(screenPoint);
     return Vector2(worldPoint.x_, worldPoint.y_);
 }
@@ -521,7 +518,6 @@ void Urho2DConstraints::HandleTouchBegin3(StringHash eventType, VariantMap& even
     if (!touchEnabled_)
         InitTouchInput();
 
-    auto* graphics = GetSubsystem<Graphics>();
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
     using namespace TouchBegin;
     RigidBody2D* rigidBody = physicsWorld->GetRigidBody(eventData[P_X].GetI32(), eventData[P_Y].GetI32()); // Raycast for RigidBody2Ds to pick
@@ -534,7 +530,7 @@ void Urho2DConstraints::HandleTouchBegin3(StringHash eventType, VariantMap& even
 
         // Create a ConstraintMouse2D - Temporary apply this constraint to the pickedNode to allow grasping and moving with touch
         auto* constraintMouse = pickedNode->CreateComponent<ConstraintMouse2D>();
-        Vector3 pos = camera_->ScreenToWorldPoint(Vector3((float)eventData[P_X].GetI32() / graphics->GetWidth(), (float)eventData[P_Y].GetI32() / graphics->GetHeight(), 0.0f));
+        Vector3 pos = camera_->ScreenToWorldPoint(Vector3((float)eventData[P_X].GetI32() / DV_GRAPHICS.GetWidth(), (float)eventData[P_Y].GetI32() / DV_GRAPHICS.GetHeight(), 0.0f));
         constraintMouse->SetTarget(Vector2(pos.x_, pos.y_));
         constraintMouse->SetMaxForce(1000 * rigidBody->GetMass());
         constraintMouse->SetCollideConnected(true);
@@ -549,10 +545,9 @@ void Urho2DConstraints::HandleTouchMove3(StringHash eventType, VariantMap& event
 {
     if (pickedNode)
     {
-        auto* graphics = GetSubsystem<Graphics>();
         auto* constraintMouse = pickedNode->GetComponent<ConstraintMouse2D>();
         using namespace TouchMove;
-        Vector3 pos = camera_->ScreenToWorldPoint(Vector3(float(eventData[P_X].GetI32()) / graphics->GetWidth(), float(eventData[P_Y].GetI32()) / graphics->GetHeight(), 0.0f));
+        Vector3 pos = camera_->ScreenToWorldPoint(Vector3(float(eventData[P_X].GetI32()) / DV_GRAPHICS.GetWidth(), float(eventData[P_Y].GetI32()) / DV_GRAPHICS.GetHeight(), 0.0f));
         constraintMouse->SetTarget(Vector2(pos.x_, pos.y_));
     }
 }

@@ -161,10 +161,18 @@ class DV_API Renderer : public Object
 public:
     using ShadowMapFilter = void(Object::*)(View* view, Texture2D* shadowMap, float blurScale);
 
+    static Renderer& get_instance();
+
+private:
     /// Construct.
     explicit Renderer();
     /// Destruct.
     ~Renderer() override;
+
+public:
+    // Запрещаем копирование
+    Renderer(const Renderer&) = delete;
+    Renderer& operator =(const Renderer&) = delete;
 
     /// Set number of backbuffer viewports to render.
     void SetNumViewports(i32 num);
@@ -583,5 +591,7 @@ private:
     /// Flag for views needing reset.
     bool resetViews_{};
 };
+
+#define DV_RENDERER (dviglo::Renderer::get_instance())
 
 } // namespace dviglo

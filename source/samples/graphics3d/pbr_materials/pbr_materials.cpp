@@ -110,8 +110,7 @@ void PBRMaterials::CreateUI()
     cursor->SetStyleAuto();
     ui.SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    auto* graphics = GetSubsystem<Graphics>();
-    cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     roughnessLabel_ = ui.GetRoot()->CreateChild<Text>();
     roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
@@ -177,13 +176,11 @@ void PBRMaterials::HandleAmbientSliderChanged(StringHash eventType, VariantMap& 
 
 void PBRMaterials::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
-    renderer->SetHDRRendering(true);
+    DV_RENDERER.SetHDRRendering(true);
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
     // Add post-processing effects appropriate with the example scene
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();

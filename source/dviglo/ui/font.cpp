@@ -55,8 +55,7 @@ void Font::RegisterObject()
 bool Font::BeginLoad(Deserializer& source)
 {
     // In headless mode, do not actually load, just return success
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics)
+    if (GParams::is_headless())
         return true;
 
     fontType_ = FONT_NONE;
@@ -118,8 +117,7 @@ void Font::SetScaledGlyphOffset(const Vector2& offset)
 FontFace* Font::GetFace(float pointSize)
 {
     // In headless mode, always return null
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics)
+    if (GParams::is_headless())
         return nullptr;
 
     // For bitmap font type, always return the same font face provided by the font's bitmap file regardless of the actual requested point size

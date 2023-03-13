@@ -22,7 +22,7 @@ namespace dviglo
 
 void Texture2D::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !graphics_->IsDeviceLost())
+    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteTextures(1, &object_.name_);
 
     GPUObject::OnDeviceLost();
@@ -53,15 +53,17 @@ void Texture2D::Release_OGL()
 {
     if (object_.name_)
     {
-        if (!graphics_)
+        if (GParams::is_headless())
             return;
 
-        if (!graphics_->IsDeviceLost())
+        Graphics& graphics = DV_GRAPHICS;
+
+        if (!graphics.IsDeviceLost())
         {
             for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
             {
-                if (graphics_->GetTexture(i) == this)
-                    graphics_->SetTexture(i, nullptr);
+                if (graphics.GetTexture(i) == this)
+                    graphics.SetTexture(i, nullptr);
             }
 
             glDeleteTextures(1, &object_.name_);
@@ -86,7 +88,7 @@ bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height,
 {
     DV_PROFILE(SetTextureData);
 
-    if (!object_.name_ || !graphics_)
+    if (!object_.name_ || GParams::is_headless())
     {
         DV_LOGERROR("No texture created, can not set data");
         return false;
@@ -104,7 +106,9 @@ bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height,
         return false;
     }
 
-    if (graphics_->IsDeviceLost())
+    Graphics& graphics = DV_GRAPHICS;
+
+    if (graphics.IsDeviceLost())
     {
         DV_LOGWARNING("Texture data assignment while device is lost");
         dataPending_ = true;
@@ -125,7 +129,7 @@ bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height,
         return false;
     }
 
-    graphics_->SetTextureForUpdate_OGL(this);
+    graphics.SetTextureForUpdate_OGL(this);
 
     bool wholeLevel = x == 0 && y == 0 && width == levelWidth && height == levelHeight;
     unsigned format = GetSRGB() ? GetSRGBFormat_OGL(format_) : format_;
@@ -145,7 +149,7 @@ bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height,
             glCompressedTexSubImage2D(target_, level, x, y, width, height, format, GetDataSize(width, height), data);
     }
 
-    graphics_->SetTexture(0, nullptr);
+    graphics.SetTexture(0, nullptr);
     return true;
 }
 
@@ -161,9 +165,8 @@ bool Texture2D::SetData_OGL(Image* image, bool useAlpha)
     SharedPtr<Image> mipImage;
     unsigned memoryUse = sizeof(Texture2D);
     MaterialQuality quality = QUALITY_HIGH;
-    auto* renderer = GetSubsystem<Renderer>();
-    if (renderer)
-        quality = renderer->GetTextureQuality();
+    if (!GParams::is_headless())
+        quality = DV_RENDERER.GetTextureQuality();
 
     if (!image->IsCompressed())
     {
@@ -240,7 +243,7 @@ bool Texture2D::SetData_OGL(Image* image, bool useAlpha)
         int width = image->GetWidth();
         int height = image->GetHeight();
         unsigned levels = image->GetNumCompressedLevels();
-        unsigned format = graphics_->GetFormat(image->GetCompressedFormat());
+        unsigned format = DV_GRAPHICS.GetFormat(image->GetCompressedFormat());
         bool needDecompress = false;
 
         if (!format)
@@ -285,11 +288,13 @@ bool Texture2D::SetData_OGL(Image* image, bool useAlpha)
 
 bool Texture2D::GetData_OGL(unsigned level, void* dest) const
 {
-    if (!object_.name_ || !graphics_)
+    if (!object_.name_ || GParams::is_headless())
     {
         DV_LOGERROR("No texture created, can not get data");
         return false;
     }
+
+    Graphics& graphics = DV_GRAPHICS;
 
 #ifndef GL_ES_VERSION_2_0
     if (!dest)
@@ -304,7 +309,7 @@ bool Texture2D::GetData_OGL(unsigned level, void* dest) const
         return false;
     }
 
-    if (graphics_->IsDeviceLost())
+    if (graphics.IsDeviceLost())
     {
         DV_LOGWARNING("Getting texture data while device is lost");
         return false;
@@ -317,24 +322,24 @@ bool Texture2D::GetData_OGL(unsigned level, void* dest) const
     }
 
     if (resolveDirty_)
-        graphics_->ResolveToTexture(const_cast<Texture2D*>(this));
+        graphics.ResolveToTexture(const_cast<Texture2D*>(this));
 
-    graphics_->SetTextureForUpdate_OGL(const_cast<Texture2D*>(this));
+    graphics.SetTextureForUpdate_OGL(const_cast<Texture2D*>(this));
 
     if (!IsCompressed_OGL())
         glGetTexImage(target_, level, GetExternalFormat_OGL(format_), GetDataType_OGL(format_), dest);
     else
         glGetCompressedTexImage(target_, level, dest);
 
-    graphics_->SetTexture(0, nullptr);
+    graphics.SetTexture(0, nullptr);
     return true;
 #else
     // Special case on GLES: if the texture is a rendertarget, can make it current and use glReadPixels()
     if (usage_ == TEXTURE_RENDERTARGET)
     {
-        graphics_->SetRenderTarget(0, const_cast<Texture2D*>(this));
+        graphics.SetRenderTarget(0, const_cast<Texture2D*>(this));
         // Ensure the FBO is current; this viewport is actually never rendered to
-        graphics_->SetViewport(IntRect(0, 0, width_, height_));
+        graphics.SetViewport(IntRect(0, 0, width_, height_));
         glReadPixels(0, 0, width_, height_, GetExternalFormat_OGL(format_), GetDataType_OGL(format_), dest);
         return true;
     }
@@ -348,10 +353,12 @@ bool Texture2D::Create_OGL()
 {
     Release_OGL();
 
-    if (!graphics_ || !width_ || !height_)
+    if (GParams::is_headless() || !width_ || !height_)
         return false;
 
-    if (graphics_->IsDeviceLost())
+    Graphics& graphics = DV_GRAPHICS;
+
+    if (graphics.IsDeviceLost())
     {
         DV_LOGWARNING("Texture creation while device is lost");
         return true;
@@ -376,7 +383,7 @@ bool Texture2D::Create_OGL()
     if (format == Graphics::GetDepthStencilFormat())
 #else
     if (format == GL_DEPTH_COMPONENT16 || format == GL_DEPTH_COMPONENT24_OES || format == GL_DEPTH24_STENCIL8_OES ||
-        (format == GL_DEPTH_COMPONENT && !graphics_->GetShadowMapFormat()))
+        (format == GL_DEPTH_COMPONENT && !DV_GRAPHICS.GetShadowMapFormat()))
 #endif
     {
         if (renderSurface_)
@@ -417,7 +424,7 @@ bool Texture2D::Create_OGL()
     glGenTextures(1, &object_.name_);
 
     // Ensure that our texture is bound to OpenGL texture unit 0
-    graphics_->SetTextureForUpdate_OGL(this);
+    graphics.SetTextureForUpdate_OGL(this);
 
     // If not compressed, create the initial level 0 texture with null data
     bool success = true;
@@ -470,7 +477,7 @@ bool Texture2D::Create_OGL()
 
     // Set initial parameters, then unbind the texture
     UpdateParameters();
-    graphics_->SetTexture(0, nullptr);
+    graphics.SetTexture(0, nullptr);
 
     return success;
 }

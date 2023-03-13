@@ -60,7 +60,6 @@ void LANDiscovery::CreateUI()
 {
     SetLogoVisible(true); // We need the full rendering window
 
-    auto* graphics = GetSubsystem<Graphics>();
     UIElement* root = DV_UI.GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
@@ -82,7 +81,7 @@ void LANDiscovery::CreateUI()
     serverList_ = CreateLabel("", IntVector2(20, marginTop));
 
     // No viewports or scene is defined. However, the default zone's fog color controls the fill color
-    GetSubsystem<Renderer>()->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
+    DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
 void LANDiscovery::SubscribeToEvents()

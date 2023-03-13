@@ -76,10 +76,11 @@ DebugHud::~DebugHud()
 
 void DebugHud::Update()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    auto* renderer = GetSubsystem<Renderer>();
-    if (!renderer || !graphics)
+    if (GParams::is_headless())
         return;
+
+    Graphics& graphics = DV_GRAPHICS;
+    Renderer& renderer = DV_RENDERER;
 
     // Ensure UI-elements are not detached
     if (!statsText_->GetParent())
@@ -94,23 +95,23 @@ void DebugHud::Update()
         unsigned primitives, batches;
         if (!useRendererStats_)
         {
-            primitives = graphics->GetNumPrimitives();
-            batches = graphics->GetNumBatches();
+            primitives = graphics.GetNumPrimitives();
+            batches = graphics.GetNumBatches();
         }
         else
         {
-            primitives = renderer->GetNumPrimitives();
-            batches = renderer->GetNumBatches();
+            primitives = renderer.GetNumPrimitives();
+            batches = renderer.GetNumBatches();
         }
 
         String stats;
         stats.AppendWithFormat("Triangles %u\nBatches %u\nViews %u\nLights %u\nShadowmaps %u\nOccluders %u",
             primitives,
             batches,
-            renderer->GetNumViews(),
-            renderer->GetNumLights(true),
-            renderer->GetNumShadowMaps(true),
-            renderer->GetNumOccluders(true));
+            renderer.GetNumViews(),
+            renderer.GetNumLights(true),
+            renderer.GetNumShadowMaps(true),
+            renderer.GetNumOccluders(true));
 
         if (!appStats_.Empty())
         {
@@ -126,18 +127,18 @@ void DebugHud::Update()
     {
         String mode;
         mode.AppendWithFormat("Tex:%s Mat:%s Spec:%s Shadows:%s Size:%i Quality:%s Occlusion:%s Instancing:%s API:%s",
-            qualityTexts[renderer->GetTextureQuality()],
-            qualityTexts[Min((i32)renderer->GetMaterialQuality(), 3)],
-            renderer->GetSpecularLighting() ? "On" : "Off",
-            renderer->GetDrawShadows() ? "On" : "Off",
-            renderer->GetShadowMapSize(),
-            shadowQualityTexts[renderer->GetShadowQuality()],
-            renderer->GetMaxOccluderTriangles() > 0 ? "On" : "Off",
-            renderer->GetDynamicInstancing() ? "On" : "Off",
-            graphics->GetApiName().c_str());
+            qualityTexts[renderer.GetTextureQuality()],
+            qualityTexts[Min((i32)renderer.GetMaterialQuality(), 3)],
+            renderer.GetSpecularLighting() ? "On" : "Off",
+            renderer.GetDrawShadows() ? "On" : "Off",
+            renderer.GetShadowMapSize(),
+            shadowQualityTexts[renderer.GetShadowQuality()],
+            renderer.GetMaxOccluderTriangles() > 0 ? "On" : "Off",
+            renderer.GetDynamicInstancing() ? "On" : "Off",
+            graphics.GetApiName().c_str());
     #ifdef DV_OPENGL
-        mode.AppendWithFormat(" Renderer:%s Version:%s", graphics->GetRendererName().c_str(),
-            graphics->GetVersionString().c_str());
+        mode.AppendWithFormat(" Renderer:%s Version:%s", graphics.GetRendererName().c_str(),
+            graphics.GetVersionString().c_str());
     #endif
 
 
@@ -237,4 +238,4 @@ void DebugHud::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     Update();
 }
 
-}
+} // namespace dviglo

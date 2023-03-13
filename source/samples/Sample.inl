@@ -170,10 +170,10 @@ void Sample::CreateLogo()
 
 void Sample::SetWindowTitleAndIcon()
 {
-    Graphics* graphics = GetSubsystem<Graphics>();
+    Graphics& graphics = DV_GRAPHICS;
     Image* icon = DV_RES_CACHE.GetResource<Image>("Textures/UrhoIcon.png");
-    graphics->SetWindowIcon(icon);
-    graphics->SetWindowTitle("Urho3D Sample");
+    graphics.SetWindowIcon(icon);
+    graphics.SetWindowTitle("Urho3D Sample");
 }
 
 void Sample::CreateConsoleAndDebugHud()
@@ -235,7 +235,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
     // Common rendering quality controls, only when UI has no focused element
     else if (!DV_UI.GetFocusElement())
     {
-        Renderer* renderer = GetSubsystem<Renderer>();
+        Renderer& renderer = DV_RENDERER;
 
         // Preferences / Pause
         if (key == KEY_SELECT && touchEnabled_)
@@ -256,69 +256,68 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         // Texture quality
         else if (key == '1')
         {
-            auto quality = (unsigned)renderer->GetTextureQuality();
+            auto quality = (unsigned)renderer.GetTextureQuality();
             ++quality;
             if (quality > QUALITY_HIGH)
                 quality = QUALITY_LOW;
-            renderer->SetTextureQuality((MaterialQuality)quality);
+            renderer.SetTextureQuality((MaterialQuality)quality);
         }
 
         // Material quality
         else if (key == '2')
         {
-            auto quality = (unsigned)renderer->GetMaterialQuality();
+            auto quality = (unsigned)renderer.GetMaterialQuality();
             ++quality;
             if (quality > QUALITY_HIGH)
                 quality = QUALITY_LOW;
-            renderer->SetMaterialQuality((MaterialQuality)quality);
+            renderer.SetMaterialQuality((MaterialQuality)quality);
         }
 
         // Specular lighting
         else if (key == '3')
-            renderer->SetSpecularLighting(!renderer->GetSpecularLighting());
+            renderer.SetSpecularLighting(!renderer.GetSpecularLighting());
 
         // Shadow rendering
         else if (key == '4')
-            renderer->SetDrawShadows(!renderer->GetDrawShadows());
+            renderer.SetDrawShadows(!renderer.GetDrawShadows());
 
         // Shadow map resolution
         else if (key == '5')
         {
-            int shadowMapSize = renderer->GetShadowMapSize();
+            int shadowMapSize = renderer.GetShadowMapSize();
             shadowMapSize *= 2;
             if (shadowMapSize > 2048)
                 shadowMapSize = 512;
-            renderer->SetShadowMapSize(shadowMapSize);
+            renderer.SetShadowMapSize(shadowMapSize);
         }
 
         // Shadow depth and filtering quality
         else if (key == '6')
         {
-            ShadowQuality quality = renderer->GetShadowQuality();
+            ShadowQuality quality = renderer.GetShadowQuality();
             quality = (ShadowQuality)(quality + 1);
             if (quality > SHADOWQUALITY_BLUR_VSM)
                 quality = SHADOWQUALITY_SIMPLE_16BIT;
-            renderer->SetShadowQuality(quality);
+            renderer.SetShadowQuality(quality);
         }
 
         // Occlusion culling
         else if (key == '7')
         {
-            bool occlusion = renderer->GetMaxOccluderTriangles() > 0;
+            bool occlusion = renderer.GetMaxOccluderTriangles() > 0;
             occlusion = !occlusion;
-            renderer->SetMaxOccluderTriangles(occlusion ? 5000 : 0);
+            renderer.SetMaxOccluderTriangles(occlusion ? 5000 : 0);
         }
 
         // Instancing
         else if (key == '8')
-            renderer->SetDynamicInstancing(!renderer->GetDynamicInstancing());
+            renderer.SetDynamicInstancing(!renderer.GetDynamicInstancing());
 
         // Take screenshot
         else if (key == '9')
         {
-            Graphics* graphics = GetSubsystem<Graphics>();
             Image screenshot;
-            graphics->TakeScreenShot(screenshot);
+            DV_GRAPHICS.TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(DV_FILE_SYSTEM.GetProgramDir() + "Data/Screenshot_" +
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
@@ -343,9 +342,9 @@ void Sample::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
                     if (!camera)
                         return;
 
-                    Graphics* graphics = GetSubsystem<Graphics>();
-                    yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
-                    pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
+                    Graphics& graphics = DV_GRAPHICS;
+                    yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics.GetHeight() * state->delta_.x_;
+                    pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics.GetHeight() * state->delta_.y_;
 
                     // Construct new orientation for the camera scene node from yaw and pitch; roll is fixed to zero
                     cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));

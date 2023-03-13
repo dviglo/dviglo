@@ -163,9 +163,8 @@ void L10n::CreateScene()
     text3D->SetAlignment(HA_CENTER, VA_BOTTOM);
     text3DNode->SetScale(15);
 
-    auto* renderer = GetSubsystem<Renderer>();
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
     SubscribeToEvent(E_UPDATE, DV_HANDLER(L10n, HandleUpdate));
 }

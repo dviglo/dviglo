@@ -80,7 +80,7 @@ void CharacterDemo::CreateScene()
     cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
-    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(scene_, camera));
+    DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->CreateChild("Zone");
@@ -270,9 +270,8 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
                         if (!camera)
                             return;
 
-                        auto* graphics = GetSubsystem<Graphics>();
-                        character_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
-                        character_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
+                        character_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.x_;
+                        character_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.y_;
                     }
                 }
             }

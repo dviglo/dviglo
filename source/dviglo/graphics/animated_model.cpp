@@ -1329,8 +1329,7 @@ void AnimatedModel::UpdateSkinning()
 
 void AnimatedModel::UpdateMorphs()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics)
+    if (GParams::is_headless())
         return;
 
     if (morphs_.Size())

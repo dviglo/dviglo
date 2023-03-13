@@ -66,7 +66,6 @@ void Chat::CreateUI()
 {
     SetLogoVisible(false); // We need the full rendering window
 
-    auto* graphics = GetSubsystem<Graphics>();
     UIElement* root = DV_UI.GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
@@ -77,8 +76,8 @@ void Chat::CreateUI()
     chatHistoryText_->SetFont(font, 12);
 
     buttonContainer_ = root->CreateChild<UIElement>();
-    buttonContainer_->SetFixedSize(graphics->GetWidth(), 20);
-    buttonContainer_->SetPosition(0, graphics->GetHeight() - 20);
+    buttonContainer_->SetFixedSize(DV_GRAPHICS.GetWidth(), 20);
+    buttonContainer_->SetPosition(0, DV_GRAPHICS.GetHeight() - 20);
     buttonContainer_->SetLayoutMode(LM_HORIZONTAL);
 
     textEdit_ = buttonContainer_->CreateChild<LineEdit>();
@@ -95,12 +94,12 @@ void Chat::CreateUI()
     // Row height would be zero if the font failed to load
     if (rowHeight)
     {
-        float numberOfRows = (graphics->GetHeight() - 100) / rowHeight;
+        float numberOfRows = (DV_GRAPHICS.GetHeight() - 100) / rowHeight;
         chatHistory_.Resize(static_cast<unsigned int>(numberOfRows));
     }
 
     // No viewports or scene is defined. However, the default zone's fog color controls the fill color
-    GetSubsystem<Renderer>()->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
+    DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
 void Chat::SubscribeToEvents()

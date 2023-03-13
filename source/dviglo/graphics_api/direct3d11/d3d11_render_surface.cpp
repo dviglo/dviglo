@@ -23,17 +23,18 @@ void RenderSurface::Constructor_D3D11(Texture* parentTexture)
 
 void RenderSurface::Release_D3D11()
 {
-    Graphics* graphics = parentTexture_->GetGraphics();
-    if (graphics && renderTargetView_)
+    if (!GParams::is_headless() && renderTargetView_)
     {
+        Graphics& graphics = DV_GRAPHICS;
+
         for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
         {
-            if (graphics->GetRenderTarget(i) == this)
-                graphics->ResetRenderTarget(i);
+            if (graphics.GetRenderTarget(i) == this)
+                graphics.ResetRenderTarget(i);
         }
 
-        if (graphics->GetDepthStencil() == this)
-            graphics->ResetDepthStencil();
+        if (graphics.GetDepthStencil() == this)
+            graphics.ResetDepthStencil();
     }
 
     DV_SAFE_RELEASE(renderTargetView_);

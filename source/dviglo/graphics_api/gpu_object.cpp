@@ -10,22 +10,21 @@
 namespace dviglo
 {
 
-GPUObject::GPUObject(Graphics* graphics) :
-    graphics_(graphics)
+GPUObject::GPUObject()
 {
     if (GParams::get_gapi() == GAPI_OPENGL)
         object_.name_ = 0;
     else
         object_.ptr_ = nullptr;
 
-    if (graphics_)
-        graphics->AddGPUObject(this);
+    if (!GParams::is_headless())
+        DV_GRAPHICS.AddGPUObject(this);
 }
 
 GPUObject::~GPUObject()
 {
-    if (graphics_)
-        graphics_->RemoveGPUObject(this);
+    if (!GParams::is_headless())
+        DV_GRAPHICS.RemoveGPUObject(this);
 }
 
 void GPUObject::OnDeviceLost()
@@ -50,9 +49,4 @@ void GPUObject::ClearDataLost()
     dataLost_ = false;
 }
 
-Graphics* GPUObject::GetGraphics() const
-{
-    return graphics_;
-}
-
-}
+} // namespace dviglo

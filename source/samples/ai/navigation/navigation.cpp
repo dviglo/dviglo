@@ -158,8 +158,7 @@ void Navigation::CreateUI()
     DV_UI.SetCursor(cursor);
 
     // Set starting position of the cursor at the rendering window center
-    auto* graphics = GetSubsystem<Graphics>();
-    cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
@@ -182,11 +181,9 @@ void Navigation::CreateUI()
 
 void Navigation::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void Navigation::SubscribeToEvents()
@@ -332,9 +329,8 @@ bool Navigation::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawa
 
     pos = DV_UI.ConvertUIToSystem(pos);
 
-    auto* graphics = GetSubsystem<Graphics>();
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Ray cameraRay = camera->GetScreenRay((float)pos.x_ / graphics->GetWidth(), (float)pos.y_ / graphics->GetHeight());
+    Ray cameraRay = camera->GetScreenRay((float)pos.x_ / DV_GRAPHICS.GetWidth(), (float)pos.y_ / DV_GRAPHICS.GetHeight());
     // Pick only geometry objects, not eg. zones or lights, only get the first (closest) hit
     Vector<RayQueryResult> results;
     RayOctreeQuery query(results, cameraRay, RAY_TRIANGLE, maxDistance, DrawableTypes::Geometry);

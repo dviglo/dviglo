@@ -70,7 +70,7 @@ void RaycastVehicleDemo::CreateScene()
     cameraNode_ = new Node();
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(500.0f);
-    GetSubsystem<Renderer>()->SetViewport(0, new Viewport(scene_, camera));
+    DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->CreateChild("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
@@ -194,9 +194,8 @@ void RaycastVehicleDemo::HandleUpdate(StringHash eventType,
                         {
                             return;
                         }
-                        auto* graphics = GetSubsystem<Graphics>();
-                        vehicle_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.x_;
-                        vehicle_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics->GetHeight() * state->delta_.y_;
+                        vehicle_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.x_;
+                        vehicle_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.y_;
                     }
                 }
             }

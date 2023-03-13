@@ -165,18 +165,20 @@ void Geometry::SetRawIndexData(const SharedArrayPtr<byte>& data, i32 indexSize)
     rawIndexSize_ = indexSize;
 }
 
-void Geometry::Draw(Graphics* graphics)
+void Geometry::Draw()
 {
+    Graphics& graphics = DV_GRAPHICS;
+
     if (indexBuffer_ && indexCount_ > 0)
     {
-        graphics->SetIndexBuffer(indexBuffer_);
-        graphics->SetVertexBuffers(vertexBuffers_);
-        graphics->Draw(primitiveType_, indexStart_, indexCount_, vertexStart_, vertexCount_);
+        graphics.SetIndexBuffer(indexBuffer_);
+        graphics.SetVertexBuffers(vertexBuffers_);
+        graphics.Draw(primitiveType_, indexStart_, indexCount_, vertexStart_, vertexCount_);
     }
     else if (vertexCount_ > 0)
     {
-        graphics->SetVertexBuffers(vertexBuffers_);
-        graphics->Draw(primitiveType_, vertexStart_, vertexCount_);
+        graphics.SetVertexBuffers(vertexBuffers_);
+        graphics.Draw(primitiveType_, vertexStart_, vertexCount_);
     }
 }
 

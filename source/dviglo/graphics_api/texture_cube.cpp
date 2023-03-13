@@ -66,11 +66,11 @@ bool TextureCube::BeginLoad(Deserializer& source)
     ResourceCache& cache = DV_RES_CACHE;
 
     // In headless mode, do not actually load the texture, just return success
-    if (!graphics_)
+    if (GParams::is_headless())
         return true;
 
     // If device is lost, retry later
-    if (graphics_->IsDeviceLost())
+    if (DV_GRAPHICS.IsDeviceLost())
     {
         DV_LOGWARNING("Texture load while device is lost");
         dataPending_ = true;
@@ -218,7 +218,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
 bool TextureCube::EndLoad()
 {
     // In headless mode, do not actually load the texture, just return success
-    if (!graphics_ || graphics_->IsDeviceLost())
+    if (GParams::is_headless() || DV_GRAPHICS.IsDeviceLost())
         return true;
 
     // If over the texture budget, see if materials can be freed to allow textures to be freed
@@ -316,14 +316,12 @@ SharedPtr<Image> TextureCube::GetImage(CubeMapFace face) const
 
 void TextureCube::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& eventData)
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     for (auto& renderSurface : renderSurfaces_)
     {
         if (renderSurface && (renderSurface->GetUpdateMode() == SURFACE_UPDATEALWAYS || renderSurface->IsUpdateQueued()))
         {
-            if (renderer)
-                renderer->QueueRenderSurface(renderSurface);
+            if (!GParams::is_headless())
+                DV_RENDERER.QueueRenderSurface(renderSurface);
             renderSurface->ResetUpdateQueued();
         }
     }

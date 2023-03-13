@@ -105,9 +105,7 @@ Engine::Engine() :
 #ifdef DV_NETWORK
     Network::get_instance();
 #endif
-    Input::get_instance();
     Audio::get_instance();
-    UI::get_instance();
 
     // Register self as a subsystem
     DV_CONTEXT.RegisterSubsystem(this);
@@ -177,17 +175,20 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     GParams::gapi = gapi;
 
-    // Register the rest of the subsystems
+    // Создаём остальные синглтоны, которые зависят от параметров движка
     if (!GParams::is_headless())
     {
-        DV_CONTEXT.RegisterSubsystem(new Graphics());
-        DV_CONTEXT.RegisterSubsystem(new Renderer());
+        Graphics::get_instance();
+        Renderer::get_instance();
     }
     else
     {
         // Register graphics library objects explicitly in headless mode to allow them to work without using actual GPU resources
         RegisterGraphicsLibrary();
     }
+
+    Input::get_instance();
+    UI::get_instance();
 
 #ifdef DV_URHO2D
     // 2D graphics library is dependent on 3D graphics library
@@ -226,27 +227,27 @@ bool Engine::Initialize(const VariantMap& parameters)
     // Initialize graphics & audio output
     if (!GParams::is_headless())
     {
-        auto* graphics = GetSubsystem<Graphics>();
-        auto* renderer = GetSubsystem<Renderer>();
+        Graphics& graphics = DV_GRAPHICS;
+        Renderer& renderer = DV_RENDERER;
 
         if (HasParameter(parameters, EP_EXTERNAL_WINDOW))
-            graphics->SetExternalWindow(GetParameter(parameters, EP_EXTERNAL_WINDOW).GetVoidPtr());
-        graphics->SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Urho3D").GetString());
-        graphics->SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
-        graphics->SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());
-        graphics->SetOrientations(GetParameter(parameters, EP_ORIENTATIONS, "LandscapeLeft LandscapeRight").GetString());
+            graphics.SetExternalWindow(GetParameter(parameters, EP_EXTERNAL_WINDOW).GetVoidPtr());
+        graphics.SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Urho3D").GetString());
+        graphics.SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
+        graphics.SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());
+        graphics.SetOrientations(GetParameter(parameters, EP_ORIENTATIONS, "LandscapeLeft LandscapeRight").GetString());
 
         if (HasParameter(parameters, EP_WINDOW_POSITION_X) && HasParameter(parameters, EP_WINDOW_POSITION_Y))
-            graphics->SetWindowPosition(GetParameter(parameters, EP_WINDOW_POSITION_X).GetI32(),
+            graphics.SetWindowPosition(GetParameter(parameters, EP_WINDOW_POSITION_X).GetI32(),
                 GetParameter(parameters, EP_WINDOW_POSITION_Y).GetI32());
 
         if (GParams::get_gapi() == GAPI_OPENGL)
         {
             if (HasParameter(parameters, EP_FORCE_GL2))
-                graphics->SetForceGL2(GetParameter(parameters, EP_FORCE_GL2).GetBool());
+                graphics.SetForceGL2(GetParameter(parameters, EP_FORCE_GL2).GetBool());
         }
 
-        if (!graphics->SetMode(
+        if (!graphics.SetMode(
             GetParameter(parameters, EP_WINDOW_WIDTH, 0).GetI32(),
             GetParameter(parameters, EP_WINDOW_HEIGHT, 0).GetI32(),
             GetParameter(parameters, EP_FULL_SCREEN, true).GetBool(),
@@ -261,20 +262,20 @@ bool Engine::Initialize(const VariantMap& parameters)
         ))
             return false;
 
-        graphics->SetShaderCacheDir(GetParameter(parameters, EP_SHADER_CACHE_DIR, get_pref_path("urho3d", "shadercache")).GetString());
+        graphics.SetShaderCacheDir(GetParameter(parameters, EP_SHADER_CACHE_DIR, get_pref_path("urho3d", "shadercache")).GetString());
 
         if (HasParameter(parameters, EP_DUMP_SHADERS))
-            graphics->BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
+            graphics.BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))
-            renderer->SetDefaultRenderPath(DV_RES_CACHE.GetResource<XMLFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
+            renderer.SetDefaultRenderPath(DV_RES_CACHE.GetResource<XMLFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
 
-        renderer->SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
-        if (renderer->GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())
-            renderer->SetShadowQuality(SHADOWQUALITY_SIMPLE_16BIT);
-        renderer->SetMaterialQuality((MaterialQuality)GetParameter(parameters, EP_MATERIAL_QUALITY, QUALITY_HIGH).GetI32());
-        renderer->SetTextureQuality((MaterialQuality)GetParameter(parameters, EP_TEXTURE_QUALITY, QUALITY_HIGH).GetI32());
-        renderer->SetTextureFilterMode((TextureFilterMode)GetParameter(parameters, EP_TEXTURE_FILTER_MODE, FILTER_TRILINEAR).GetI32());
-        renderer->SetTextureAnisotropy(GetParameter(parameters, EP_TEXTURE_ANISOTROPY, 4).GetI32());
+        renderer.SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
+        if (renderer.GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())
+            renderer.SetShadowQuality(SHADOWQUALITY_SIMPLE_16BIT);
+        renderer.SetMaterialQuality((MaterialQuality)GetParameter(parameters, EP_MATERIAL_QUALITY, QUALITY_HIGH).GetI32());
+        renderer.SetTextureQuality((MaterialQuality)GetParameter(parameters, EP_TEXTURE_QUALITY, QUALITY_HIGH).GetI32());
+        renderer.SetTextureFilterMode((TextureFilterMode)GetParameter(parameters, EP_TEXTURE_FILTER_MODE, FILTER_TRILINEAR).GetI32());
+        renderer.SetTextureAnisotropy(GetParameter(parameters, EP_TEXTURE_ANISOTROPY, 4).GetI32());
 
         if (GetParameter(parameters, EP_SOUND, true).GetBool())
         {
@@ -467,7 +468,7 @@ void Engine::RunFrame()
     assert(initialized_);
 
     // If not headless, and the graphics subsystem no longer has a window open, assume we should exit
-    if (!GParams::is_headless() && !GetSubsystem<Graphics>()->IsInitialized())
+    if (!GParams::is_headless() && !DV_GRAPHICS.IsInitialized())
         exiting_ = true;
 
     if (exiting_)
@@ -685,13 +686,12 @@ void Engine::Render()
     DV_PROFILE(Render);
 
     // If device is lost, BeginFrame will fail and we skip rendering
-    auto* graphics = GetSubsystem<Graphics>();
-    if (!graphics->BeginFrame())
+    if (!DV_GRAPHICS.BeginFrame())
         return;
 
-    GetSubsystem<Renderer>()->Render();
+    DV_RENDERER.Render();
     DV_UI.Render();
-    graphics->EndFrame();
+    DV_GRAPHICS.EndFrame();
 }
 
 void Engine::ApplyFrameLimit()
@@ -962,9 +962,8 @@ void Engine::HandleExitRequested(StringHash eventType, VariantMap& eventData)
 
 void Engine::DoExit()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-    if (graphics)
-        graphics->Close();
+    if (!GParams::is_headless())
+        DV_GRAPHICS.Close();
 
     exiting_ = true;
 #if defined(__EMSCRIPTEN__) && defined(DV_TESTING)

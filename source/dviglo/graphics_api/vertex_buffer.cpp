@@ -13,13 +13,11 @@
 namespace dviglo
 {
 
-VertexBuffer::VertexBuffer() :
-    GPUObject(GetSubsystem<Graphics>())
-{
+VertexBuffer::VertexBuffer(){
     UpdateOffsets();
 
     // Force shadowing mode if graphics subsystem does not exist
-    if (!graphics_)
+    if (GParams::is_headless())
         shadowed_ = true;
 }
 
@@ -31,7 +29,7 @@ VertexBuffer::~VertexBuffer()
 void VertexBuffer::SetShadowed(bool enable)
 {
     // If no graphics subsystem, can not disable shadowing
-    if (!graphics_)
+    if (GParams::is_headless())
         enable = true;
 
     if (enable != shadowed_)

@@ -190,7 +190,7 @@ void SoundEffects::HandleSoundVolume(StringHash eventType, VariantMap& eventData
     using namespace SliderChanged;
 
     float newVolume = eventData[P_VALUE].GetFloat();
-    GetSubsystem<Audio>()->SetMasterGain(SOUND_EFFECT, newVolume);
+    DV_AUDIO.SetMasterGain(SOUND_EFFECT, newVolume);
 }
 
 void SoundEffects::HandleMusicVolume(StringHash eventType, VariantMap& eventData)
@@ -198,5 +198,5 @@ void SoundEffects::HandleMusicVolume(StringHash eventType, VariantMap& eventData
     using namespace SliderChanged;
 
     float newVolume = eventData[P_VALUE].GetFloat();
-    GetSubsystem<Audio>()->SetMasterGain(SOUND_MUSIC, newVolume);
+    DV_AUDIO.SetMasterGain(SOUND_MUSIC, newVolume);
 }

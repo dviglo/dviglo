@@ -159,8 +159,7 @@ void Decals::CreateUI()
     cursor->SetStyleAuto(style);
     DV_UI.SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    auto* graphics = GetSubsystem<Graphics>();
-    cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
@@ -182,11 +181,9 @@ void Decals::CreateUI()
 
 void Decals::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void Decals::SubscribeToEvents()
@@ -279,9 +276,8 @@ bool Decals::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable)
     if (!DV_UI.GetCursor()->IsVisible() || DV_UI.GetElementAt(pos, true))
         return false;
 
-    auto* graphics = GetSubsystem<Graphics>();
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Ray cameraRay = camera->GetScreenRay((float)pos.x_ / graphics->GetWidth(), (float)pos.y_ / graphics->GetHeight());
+    Ray cameraRay = camera->GetScreenRay((float)pos.x_ / DV_GRAPHICS.GetWidth(), (float)pos.y_ / DV_GRAPHICS.GetHeight());
     // Pick only geometry objects, not eg. zones or lights, only get the first (closest) hit
     Vector<RayQueryResult> results;
     RayOctreeQuery query(results, cameraRay, RAY_TRIANGLE, maxDistance, DrawableTypes::Geometry);
@@ -312,5 +308,5 @@ void Decals::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw viewport debug geometry. Disable depth test so that we can see the effect of occlusion
     if (drawDebug_)
-        GetSubsystem<Renderer>()->DrawDebugGeometry(false);
+        DV_RENDERER.DrawDebugGeometry(false);
 }

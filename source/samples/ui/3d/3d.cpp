@@ -31,7 +31,6 @@
 DV_DEFINE_APPLICATION_MAIN(Hello3DUI)
 
 Hello3DUI::Hello3DUI() :
-    uiRoot_(DV_UI.GetRoot()),
     dragBeginPosition_(IntVector2::ZERO),
     animateCube_(true),
     renderOnCube_(false),
@@ -49,6 +48,8 @@ void Hello3DUI::Start()
 
     // Load XML file containing default UI style sheet
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+
+    uiRoot_ = DV_UI.GetRoot();
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
@@ -195,9 +196,8 @@ void Hello3DUI::InitScene()
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
     // Set up a viewport so 3D scene can be visible.
-    auto* renderer = GetSubsystem<Renderer>();
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
     SubscribeToEvent(E_UPDATE, DV_HANDLER(Hello3DUI, HandleUpdate));
@@ -205,14 +205,12 @@ void Hello3DUI::InitScene()
 
 void Hello3DUI::CreateDraggableFish()
 {
-    auto* graphics = GetSubsystem<Graphics>();
-
     // Create a draggable Fish button
     auto* draggableFish = new Button();
     draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
-    draggableFish->SetPosition((graphics->GetWidth() - draggableFish->GetWidth()) / 2, 200);
+    draggableFish->SetPosition((DV_GRAPHICS.GetWidth() - draggableFish->GetWidth()) / 2, 200);
     draggableFish->SetName("Fish");
     uiRoot_->AddChild(draggableFish);
 

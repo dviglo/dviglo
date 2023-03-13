@@ -73,8 +73,7 @@ void SceneAndUILoad::CreateUI()
     cursor->SetStyleAuto();
     DV_UI.SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    auto* graphics = GetSubsystem<Graphics>();
-    cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Load UI content prepared in the editor and add to the UI hierarchy
     SharedPtr<UIElement> layoutRoot = DV_UI.LoadLayout(DV_RES_CACHE.GetResource<XMLFile>("UI/UILoadExample.xml"));
@@ -91,11 +90,9 @@ void SceneAndUILoad::CreateUI()
 
 void SceneAndUILoad::SetupViewport()
 {
-    auto* renderer = GetSubsystem<Renderer>();
-
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    renderer->SetViewport(0, viewport);
+    DV_RENDERER.SetViewport(0, viewport);
 }
 
 void SceneAndUILoad::SubscribeToEvents()
