@@ -92,7 +92,7 @@ void RenderSurface::OnDeviceLost_OGL()
 
 void RenderSurface::Release_OGL()
 {
-    if (GParams::is_headless())
+    if (GParams::is_headless() || Graphics::is_destructed())
         return;
 
     Graphics& graphics = DV_GRAPHICS;

@@ -23,7 +23,7 @@ GPUObject::GPUObject()
 
 GPUObject::~GPUObject()
 {
-    if (!GParams::is_headless())
+    if (!GParams::is_headless() && !Graphics::is_destructed())
         DV_GRAPHICS.RemoveGPUObject(this);
 }
 

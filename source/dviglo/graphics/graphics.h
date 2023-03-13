@@ -161,6 +161,7 @@ class DV_API Graphics : public Object
 
 public:
     static Graphics& get_instance();
+    static bool is_destructed();
 
 private:
     /// Construct.

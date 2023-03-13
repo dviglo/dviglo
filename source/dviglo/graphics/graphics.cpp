@@ -40,10 +40,8 @@
 namespace dviglo
 {
 
-#ifdef _DEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool graphics_destructed = false;
-#endif
 
 // Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
 // Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
@@ -53,6 +51,11 @@ Graphics& Graphics::get_instance()
     assert(!graphics_destructed);
     static Graphics instance;
     return instance;
+}
+
+bool Graphics::is_destructed()
+{
+    return graphics_destructed;
 }
 
 void Graphics::SetExternalWindow(void* window)
@@ -629,7 +632,7 @@ Graphics::~Graphics()
     if (gapi == GAPI_OPENGL)
     {
         Destructor_OGL();
-        return;
+        goto end;
     }
 #endif
 
@@ -637,16 +640,14 @@ Graphics::~Graphics()
     if (gapi == GAPI_D3D11)
     {
         Destructor_D3D11();
-        return;
+        goto end;
     }
 #endif
 
 end:
     DV_LOGDEBUG("Singleton Graphics destructed");
 
-#ifdef _DEBUG
     graphics_destructed = true;
-#endif
 }
 
 bool Graphics::SetScreenMode(int width, int height, const ScreenModeParams& params, bool maximize)
