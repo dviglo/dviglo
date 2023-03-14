@@ -39,7 +39,7 @@ static int Emscripten_VideoInit(_THIS);
 static int Emscripten_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode);
 static void Emscripten_VideoQuit(_THIS);
 static int Emscripten_GetDisplayUsableBounds(_THIS, SDL_VideoDisplay *display, SDL_Rect *rect);
-static int Emscripten_GetDisplayDPI(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi);
+static int Emscripten_GetDisplayPhysicalDPI(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi);
 
 static int Emscripten_CreateWindow(_THIS, SDL_Window *window);
 static void Emscripten_SetWindowSize(_THIS, SDL_Window *window);
@@ -77,7 +77,7 @@ static SDL_VideoDevice *Emscripten_CreateDevice(void)
     device->VideoInit = Emscripten_VideoInit;
     device->VideoQuit = Emscripten_VideoQuit;
     device->GetDisplayUsableBounds = Emscripten_GetDisplayUsableBounds;
-    device->GetDisplayDPI = Emscripten_GetDisplayDPI;
+    device->GetDisplayPhysicalDPI = Emscripten_GetDisplayPhysicalDPI;
     device->SetDisplayMode = Emscripten_SetDisplayMode;
 
     device->PumpEvents = Emscripten_PumpEvents;
@@ -127,11 +127,10 @@ int Emscripten_VideoInit(_THIS)
     SDL_DisplayMode mode;
 
     /* Use a fake 32-bpp desktop mode */
+    SDL_zero(mode);
     mode.format = SDL_PIXELFORMAT_RGB888;
     emscripten_get_screen_size(&mode.w, &mode.h);
 
-    mode.refresh_rate = 0.0f;
-    mode.driverdata = NULL;
     if (SDL_AddBasicVideoDisplay(&mode) < 0) {
         return -1;
     }
@@ -170,7 +169,7 @@ static int Emscripten_GetDisplayUsableBounds(_THIS, SDL_VideoDisplay *display, S
     return 0;
 }
 
-static int Emscripten_GetDisplayDPI(_THIS, SDL_VideoDisplay *display, float *ddpi_out, float *hdpi_out, float *vdpi_out)
+static int Emscripten_GetDisplayPhysicalDPI(_THIS, SDL_VideoDisplay *display, float *ddpi_out, float *hdpi_out, float *vdpi_out)
 {
     const float dpi_reference = 96.0f;
     float dpi;
@@ -235,7 +234,7 @@ static int Emscripten_CreateWindow(_THIS, SDL_Window *window)
         scaled_w = css_w * wdata->pixel_ratio;
         scaled_h = css_h * wdata->pixel_ratio;
 
-        SDL_SendWindowEvent(window, SDL_WINDOWEVENT_RESIZED, css_w, css_h);
+        SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_RESIZED, css_w, css_h);
     }
     emscripten_set_canvas_element_size(wdata->canvas_id, scaled_w, scaled_h);
 

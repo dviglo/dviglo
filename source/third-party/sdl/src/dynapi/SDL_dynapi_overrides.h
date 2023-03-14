@@ -57,7 +57,6 @@
 #define SDL_BlitSurfaceScaled SDL_BlitSurfaceScaled_REAL
 #define SDL_BlitSurfaceUnchecked SDL_BlitSurfaceUnchecked_REAL
 #define SDL_BlitSurfaceUncheckedScaled SDL_BlitSurfaceUncheckedScaled_REAL
-#define SDL_BuildAudioCVT SDL_BuildAudioCVT_REAL
 #define SDL_CaptureMouse SDL_CaptureMouse_REAL
 #define SDL_ClearAudioStream SDL_ClearAudioStream_REAL
 #define SDL_ClearComposition SDL_ClearComposition_REAL
@@ -73,7 +72,6 @@
 #define SDL_CondSignal SDL_CondSignal_REAL
 #define SDL_CondWait SDL_CondWait_REAL
 #define SDL_CondWaitTimeout SDL_CondWaitTimeout_REAL
-#define SDL_ConvertAudio SDL_ConvertAudio_REAL
 #define SDL_ConvertPixels SDL_ConvertPixels_REAL
 #define SDL_ConvertSurface SDL_ConvertSurface_REAL
 #define SDL_ConvertSurfaceFormat SDL_ConvertSurfaceFormat_REAL
@@ -191,7 +189,7 @@
 #define SDL_GetDefaultCursor SDL_GetDefaultCursor_REAL
 #define SDL_GetDesktopDisplayMode SDL_GetDesktopDisplayMode_REAL
 #define SDL_GetDisplayBounds SDL_GetDisplayBounds_REAL
-#define SDL_GetDisplayDPI SDL_GetDisplayDPI_REAL
+#define SDL_GetDisplayPhysicalDPI SDL_GetDisplayPhysicalDPI_REAL
 #define SDL_GetDisplayIndexForPoint SDL_GetDisplayIndexForPoint_REAL
 #define SDL_GetDisplayIndexForRect SDL_GetDisplayIndexForRect_REAL
 #define SDL_GetDisplayMode SDL_GetDisplayMode_REAL
@@ -226,8 +224,8 @@
 #define SDL_GetGamepadMappingForGUID SDL_GetGamepadMappingForGUID_REAL
 #define SDL_GetGamepadMappingForIndex SDL_GetGamepadMappingForIndex_REAL
 #define SDL_GetGamepadName SDL_GetGamepadName_REAL
-#define SDL_GetGamepadNumTouchpadFingers SDL_GetGamepadNumTouchpadFingers_REAL
-#define SDL_GetGamepadNumTouchpads SDL_GetGamepadNumTouchpads_REAL
+#define SDL_GetNumGamepadTouchpadFingers SDL_GetNumGamepadTouchpadFingers_REAL
+#define SDL_GetNumGamepadTouchpads SDL_GetNumGamepadTouchpads_REAL
 #define SDL_GetGamepadPath SDL_GetGamepadPath_REAL
 #define SDL_GetGamepadPlayerIndex SDL_GetGamepadPlayerIndex_REAL
 #define SDL_GetGamepadProduct SDL_GetGamepadProduct_REAL
@@ -870,3 +868,4 @@
 #define SDL_PlayAudioDevice SDL_PlayAudioDevice_REAL
 #define SDL_aligned_alloc SDL_aligned_alloc_REAL
 #define SDL_aligned_free SDL_aligned_free_REAL
+#define SDL_ConvertAudioSamples SDL_ConvertAudioSamples_REAL

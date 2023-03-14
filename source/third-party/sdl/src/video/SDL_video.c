@@ -160,9 +160,9 @@ extern SDL_bool Cocoa_SetWindowFullscreenSpace(SDL_Window *window, SDL_bool stat
 #endif
 
 /* Convenience functions for reading driver flags */
-static SDL_bool DisableDisplayModeSwitching(_THIS)
+static SDL_bool ModeSwitchingEmulated(_THIS)
 {
-    return !!(_this->quirk_flags & VIDEO_DEVICE_QUIRK_DISABLE_DISPLAY_MODE_SWITCHING);
+    return !!(_this->quirk_flags & VIDEO_DEVICE_QUIRK_MODE_SWITCHING_EMULATED);
 }
 
 static SDL_bool DisableUnsetFullscreenOnMinimize(_THIS)
@@ -203,6 +203,9 @@ static int SDL_CreateWindowTexture(SDL_VideoDevice *_this, SDL_Window *window, U
     SDL_RendererInfo info;
     SDL_WindowTextureData *data = SDL_GetWindowData(window, SDL_WINDOWTEXTUREDATA);
     int i;
+    int w, h;
+
+    SDL_GetWindowSizeInPixels(window, &w, &h);
 
     if (data == NULL) {
         SDL_Renderer *renderer = NULL;
@@ -280,7 +283,7 @@ static int SDL_CreateWindowTexture(SDL_VideoDevice *_this, SDL_Window *window, U
 
     data->texture = SDL_CreateTexture(data->renderer, *format,
                                       SDL_TEXTUREACCESS_STREAMING,
-                                      window->w, window->h);
+                                      w, h);
     if (!data->texture) {
         /* codechecker_false_positive [Malloc] Static analyzer doesn't realize allocated `data` is saved to SDL_WINDOWTEXTUREDATA and not leaked here. */
         return -1; /* NOLINT(clang-analyzer-unix.Malloc) */
@@ -288,11 +291,11 @@ static int SDL_CreateWindowTexture(SDL_VideoDevice *_this, SDL_Window *window, U
 
     /* Create framebuffer data */
     data->bytes_per_pixel = SDL_BYTESPERPIXEL(*format);
-    data->pitch = (((window->w * data->bytes_per_pixel) + 3) & ~3);
+    data->pitch = (((w * data->bytes_per_pixel) + 3) & ~3);
 
     {
         /* Make static analysis happy about potential SDL_malloc(0) calls. */
-        const size_t allocsize = (size_t)window->h * data->pitch;
+        const size_t allocsize = (size_t)h * data->pitch;
         data->pixels = SDL_malloc((allocsize > 0) ? allocsize : 1);
         if (!data->pixels) {
             return SDL_OutOfMemory();
@@ -316,6 +319,9 @@ static int SDL_UpdateWindowTexture(SDL_VideoDevice *unused, SDL_Window *window, 
     SDL_WindowTextureData *data;
     SDL_Rect rect;
     void *src;
+    int w, h;
+
+    SDL_GetWindowSizeInPixels(window, &w, &h);
 
     data = SDL_GetWindowData(window, SDL_WINDOWTEXTUREDATA);
     if (data == NULL || !data->texture) {
@@ -323,7 +329,7 @@ static int SDL_UpdateWindowTexture(SDL_VideoDevice *unused, SDL_Window *window, 
     }
 
     /* Update a single rect that contains subrects for best DMA performance */
-    if (SDL_GetSpanEnclosingRect(window->w, window->h, numrects, rects, &rect)) {
+    if (SDL_GetSpanEnclosingRect(w, h, numrects, rects, &rect)) {
         src = (void *)((Uint8 *)data->pixels +
                        rect.y * data->pitch +
                        rect.x * data->bytes_per_pixel);
@@ -376,12 +382,16 @@ static int SDLCALL cmpmodes(const void *A, const void *B)
 {
     const SDL_DisplayMode *a = (const SDL_DisplayMode *)A;
     const SDL_DisplayMode *b = (const SDL_DisplayMode *)B;
+    float a_display_scale = (a->display_scale == 0.0f) ? 1.0f : a->display_scale;
+    float b_display_scale = (b->display_scale == 0.0f) ? 1.0f : b->display_scale;
     if (a == b) {
         return 0;
     } else if (a->w != b->w) {
         return b->w - a->w;
     } else if (a->h != b->h) {
         return b->h - a->h;
+    } else if (a_display_scale != b_display_scale) {
+        return (int)(a_display_scale * 100) - (int)(b_display_scale * 100);
     } else if (SDL_BITSPERPIXEL(a->format) != SDL_BITSPERPIXEL(b->format)) {
         return SDL_BITSPERPIXEL(b->format) - SDL_BITSPERPIXEL(a->format);
     } else if (SDL_PIXELLAYOUT(a->format) != SDL_PIXELLAYOUT(b->format)) {
@@ -582,6 +592,9 @@ int SDL_AddBasicVideoDisplay(const SDL_DisplayMode *desktop_mode)
     SDL_zero(display);
     if (desktop_mode) {
         display.desktop_mode = *desktop_mode;
+        if (display.desktop_mode.display_scale == 0.0f) {
+            display.desktop_mode.display_scale = 1.0f;
+        }
     }
     display.current_mode = display.desktop_mode;
 
@@ -611,8 +624,14 @@ int SDL_AddVideoDisplay(const SDL_VideoDisplay *display, SDL_bool send_event)
             displays[index].name = SDL_strdup(name);
         }
 
+        if (displays[index].desktop_mode.display_scale == 0.0f) {
+            displays[index].desktop_mode.display_scale = 1.0f;
+        }
+        if (displays[index].current_mode.display_scale == 0.0f) {
+            displays[index].current_mode.display_scale = 1.0f;
+        }
         if (send_event) {
-            SDL_SendDisplayEvent(&_this->displays[index], SDL_DISPLAYEVENT_CONNECTED, 0);
+            SDL_SendDisplayEvent(&_this->displays[index], SDL_EVENT_DISPLAY_CONNECTED, 0);
         }
     } else {
         SDL_OutOfMemory();
@@ -626,7 +645,7 @@ void SDL_DelVideoDisplay(int index)
         return;
     }
 
-    SDL_SendDisplayEvent(&_this->displays[index], SDL_DISPLAYEVENT_DISCONNECTED, 0);
+    SDL_SendDisplayEvent(&_this->displays[index], SDL_EVENT_DISPLAY_DISCONNECTED, 0);
 
     if (index < (_this->num_displays - 1)) {
         SDL_free(_this->displays[index].driverdata);
@@ -703,8 +722,8 @@ int SDL_GetDisplayBounds(int displayIndex, SDL_Rect *rect)
         SDL_GetDisplayBounds(displayIndex - 1, rect);
         rect->x += rect->w;
     }
-    rect->w = display->current_mode.w;
-    rect->h = display->current_mode.h;
+    rect->w = (int)(display->current_mode.w / display->current_mode.display_scale);
+    rect->h = (int)(display->current_mode.h / display->current_mode.display_scale);
     return 0;
 }
 
@@ -740,7 +759,7 @@ int SDL_GetDisplayUsableBounds(int displayIndex, SDL_Rect *rect)
     return SDL_GetDisplayBounds(displayIndex, rect);
 }
 
-int SDL_GetDisplayDPI(int displayIndex, float *ddpi, float *hdpi, float *vdpi)
+int SDL_GetDisplayPhysicalDPI(int displayIndex, float *ddpi, float *hdpi, float *vdpi)
 {
     SDL_VideoDisplay *display;
 
@@ -748,8 +767,8 @@ int SDL_GetDisplayDPI(int displayIndex, float *ddpi, float *hdpi, float *vdpi)
 
     display = &_this->displays[displayIndex];
 
-    if (_this->GetDisplayDPI) {
-        if (_this->GetDisplayDPI(_this, display, ddpi, hdpi, vdpi) == 0) {
+    if (_this->GetDisplayPhysicalDPI) {
+        if (_this->GetDisplayPhysicalDPI(_this, display, ddpi, hdpi, vdpi) == 0) {
             return 0;
         }
     } else {
@@ -785,9 +804,7 @@ SDL_bool SDL_AddDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mo
 
     /* Go ahead and add the new mode */
     if (nmodes == display->max_display_modes) {
-        modes =
-            SDL_realloc(modes,
-                        (display->max_display_modes + 32) * sizeof(*modes));
+        modes = SDL_realloc(modes, (display->max_display_modes + 32) * sizeof(*modes));
         if (modes == NULL) {
             return SDL_FALSE;
         }
@@ -795,6 +812,9 @@ SDL_bool SDL_AddDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mo
         display->max_display_modes += 32;
     }
     modes[nmodes] = *mode;
+    if (modes[nmodes].display_scale == 0.0f) {
+        modes[nmodes].display_scale = 1.0f;
+    }
     display->num_display_modes++;
 
     /* Re-sort video modes */
@@ -807,11 +827,17 @@ SDL_bool SDL_AddDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mo
 void SDL_SetCurrentDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mode)
 {
     SDL_memcpy(&display->current_mode, mode, sizeof(*mode));
+    if (display->current_mode.display_scale == 0.0f) {
+        display->current_mode.display_scale = 1.0f;
+    }
 }
 
 void SDL_SetDesktopDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mode)
 {
     SDL_memcpy(&display->desktop_mode, mode, sizeof(*mode));
+    if (display->desktop_mode.display_scale == 0.0f) {
+        display->desktop_mode.display_scale = 1.0f;
+    }
 }
 
 static int SDL_GetNumDisplayModesForDisplay(SDL_VideoDisplay *display)
@@ -896,6 +922,7 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
                                                             SDL_DisplayMode *closest)
 {
     Uint32 target_format;
+    float target_display_scale;
     float target_refresh_rate;
     int i;
     SDL_DisplayMode *current, *match;
@@ -910,6 +937,13 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
         target_format = mode->format;
     } else {
         target_format = display->desktop_mode.format;
+    }
+
+    /* Default to 1.0 scale */
+    if (mode->display_scale > 0.0f) {
+        target_display_scale = mode->display_scale;
+    } else {
+        target_display_scale = 1.0f;
     }
 
     /* Default to the desktop refresh rate */
@@ -956,6 +990,14 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
             /* Sorted highest refresh to lowest */
             if (current->refresh_rate >= target_refresh_rate) {
                 match = current;
+                continue;
+            }
+        }
+        if (current->display_scale != match->display_scale) {
+            /* Sorted lowest display scale to highest */
+            if (current->display_scale <= target_display_scale) {
+                match = current;
+                continue;
             }
         }
     }
@@ -972,6 +1014,14 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
             closest->w = mode->w;
             closest->h = mode->h;
         }
+        if (match->display_scale > 0.0f) {
+            closest->display_scale = match->display_scale;
+        } else if (mode->display_scale > 0.0f) {
+            closest->display_scale = mode->display_scale;
+        } else {
+            closest->display_scale = 1.0f;
+        }
+
         if (match->refresh_rate > 0.0f) {
             closest->refresh_rate = match->refresh_rate;
         } else {
@@ -1013,8 +1063,8 @@ static int SDL_SetDisplayModeForDisplay(SDL_VideoDisplay *display, const SDL_Dis
     SDL_DisplayMode current_mode;
     int result;
 
-    /* Mode switching disabled via driver quirk flag, nothing to do and cannot fail. */
-    if (DisableDisplayModeSwitching(_this)) {
+    /* Mode switching set as emulated via driver quirk flag, nothing to do and cannot fail. */
+    if (ModeSwitchingEmulated(_this)) {
         return 0;
     }
 
@@ -1237,7 +1287,7 @@ int SDL_SetWindowDisplayMode(SDL_Window *window, const SDL_DisplayMode *mode)
                  * use fullscreen_mode.w and fullscreen_mode.h, but rather get our current native size.  As such,
                  * Android's SetWindowFullscreen will generate the window event for us with the proper final size.
                  */
-                SDL_SendWindowEvent(window, SDL_WINDOWEVENT_RESIZED, fullscreen_mode.w, fullscreen_mode.h);
+                SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_RESIZED, fullscreen_mode.w, fullscreen_mode.h);
 #endif
             }
         }
@@ -1318,6 +1368,7 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
 {
     SDL_VideoDisplay *display;
     SDL_Window *other;
+    int retval = 0;
 
     CHECK_WINDOW_MAGIC(window, -1);
 
@@ -1448,10 +1499,10 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
                      */
 
                     /* This is also unnecessary on Win32 (WIN_SetWindowFullscreen calls SetWindowPos,
-                     * WM_WINDOWPOSCHANGED will send SDL_WINDOWEVENT_RESIZED). Also, on Windows with DPI scaling enabled,
+                     * WM_WINDOWPOSCHANGED will send SDL_EVENT_WINDOW_RESIZED). Also, on Windows with DPI scaling enabled,
                      * we're keeping modes in pixels, but window sizes in dpi-scaled points, so this would be a unit mismatch.
                      */
-                    SDL_SendWindowEvent(other, SDL_WINDOWEVENT_RESIZED,
+                    SDL_SendWindowEvent(other, SDL_EVENT_WINDOW_RESIZED,
                                         fullscreen_mode.w, fullscreen_mode.h);
 #endif
                 } else {
@@ -1462,6 +1513,9 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
 
                 window->last_fullscreen_flags = window->flags;
                 return 0;
+            } else {
+                /* Failed to find a matching mode, return an error after restoring windowed mode. */
+                retval = -1;
             }
         }
     }
@@ -1481,7 +1535,7 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
     SDL_RestoreMousePosition(window);
 
     window->last_fullscreen_flags = window->flags;
-    return 0;
+    return retval;
 }
 
 #define CREATE_FLAGS \
@@ -1489,7 +1543,7 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
 
 static SDL_INLINE SDL_bool IsAcceptingDragAndDrop(void)
 {
-    if (SDL_EventEnabled(SDL_DROPFILE) || SDL_EventEnabled(SDL_DROPTEXT)) {
+    if (SDL_EventEnabled(SDL_EVENT_DROP_FILE) || SDL_EventEnabled(SDL_EVENT_DROP_TEXT)) {
         return SDL_TRUE;
     }
     return SDL_FALSE;
@@ -1640,13 +1694,8 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
         }
     }
 
-    /* Unless the user has specified the high-DPI disabling hint, respect the
-     * SDL_WINDOW_ALLOW_HIGHDPI flag.
-     */
-    if (flags & SDL_WINDOW_ALLOW_HIGHDPI) {
-        if (SDL_GetHintBoolean(SDL_HINT_VIDEO_HIGHDPI_DISABLED, SDL_FALSE)) {
-            flags &= ~SDL_WINDOW_ALLOW_HIGHDPI;
-        }
+    if (!SDL_GetHintBoolean("SDL_VIDEO_HIGHDPI_DISABLED", SDL_FALSE)) {
+        flags |= SDL_WINDOW_ALLOW_HIGHDPI;
     }
 
     window = (SDL_Window *)SDL_calloc(1, sizeof(*window));
@@ -2289,7 +2338,7 @@ void SDL_SetWindowSize(SDL_Window *window, int w, int h)
             _this->SetWindowSize(_this, window);
         }
         if (window->w != old_w || window->h != old_h) {
-            /* We didn't get a SDL_WINDOWEVENT_RESIZED event (by design) */
+            /* We didn't get a SDL_EVENT_WINDOW_RESIZED event (by design) */
             SDL_OnWindowResized(window);
         }
     }
@@ -2352,7 +2401,15 @@ void SDL_GetWindowSizeInPixels(SDL_Window *window, int *w, int *h)
     if (_this->GetWindowSizeInPixels) {
         _this->GetWindowSizeInPixels(_this, window, w, h);
     } else {
+        SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
+
         SDL_GetWindowSize(window, w, h);
+
+        if (display)
+        {
+            *w = (int)SDL_ceilf(*w * display->current_mode.display_scale);
+            *h = (int)SDL_ceilf(*h * display->current_mode.display_scale);
+        }
     }
 }
 
@@ -2448,7 +2505,7 @@ void SDL_ShowWindow(SDL_Window *window)
     if (_this->ShowWindow) {
         _this->ShowWindow(_this, window);
     }
-    SDL_SendWindowEvent(window, SDL_WINDOWEVENT_SHOWN, 0, 0);
+    SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_SHOWN, 0, 0);
 }
 
 void SDL_HideWindow(SDL_Window *window)
@@ -2466,7 +2523,7 @@ void SDL_HideWindow(SDL_Window *window)
         _this->HideWindow(_this, window);
     }
     window->is_hiding = SDL_FALSE;
-    SDL_SendWindowEvent(window, SDL_WINDOWEVENT_HIDDEN, 0, 0);
+    SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_HIDDEN, 0, 0);
 }
 
 void SDL_RaiseWindow(SDL_Window *window)
@@ -2569,6 +2626,9 @@ static SDL_Surface *SDL_CreateWindowFramebuffer(SDL_Window *window)
     void *pixels = NULL;
     int pitch = 0;
     SDL_bool created_framebuffer = SDL_FALSE;
+    int w, h;
+
+    SDL_GetWindowSizeInPixels(window, &w, &h);
 
     /* This will switch the video backend from using a software surface to
        using a GPU texture through the 2D render API, if we think this would
@@ -2643,7 +2703,7 @@ static SDL_Surface *SDL_CreateWindowFramebuffer(SDL_Window *window)
         return window->surface;
     }
 
-    return SDL_CreateSurfaceFrom(pixels, window->w, window->h, pitch, format);
+    return SDL_CreateSurfaceFrom(pixels, w, h, pitch, format);
 }
 
 SDL_Surface *SDL_GetWindowSurface(SDL_Window *window)
@@ -2673,8 +2733,8 @@ int SDL_UpdateWindowSurface(SDL_Window *window)
 
     full_rect.x = 0;
     full_rect.y = 0;
-    full_rect.w = window->w;
-    full_rect.h = window->h;
+    SDL_GetWindowSizeInPixels(window, &full_rect.w, &full_rect.h);
+
     return SDL_UpdateWindowSurfaceRects(window, &full_rect, 1);
 }
 
@@ -2910,17 +2970,57 @@ void SDL_OnWindowHidden(SDL_Window *window)
     SDL_UpdateFullscreenMode(window, SDL_FALSE);
 }
 
+void SDL_OnWindowDisplayChanged(SDL_Window *window)
+{
+    if (window->flags & SDL_WINDOW_FULLSCREEN) {
+        SDL_Rect rect;
+
+        if (FULLSCREEN_VISIBLE(window) && (window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+            window->last_fullscreen_flags = 0;
+
+            if (SDL_UpdateFullscreenMode(window, SDL_TRUE) != 0) {
+                /* Something went wrong and the window is no longer fullscreen. */
+                window->flags &= ~FULLSCREEN_MASK;
+                return;
+            }
+        }
+
+        /*
+         * If mode switching is being emulated, the display bounds don't necessarily reflect the
+         * emulated mode dimensions since the window is just being scaled.
+         */
+        if (!ModeSwitchingEmulated(_this) &&
+            SDL_GetDisplayBounds(window->display_index, &rect) == 0) {
+            int old_w = window->w;
+            int old_h = window->h;
+            window->x = rect.x;
+            window->y = rect.y;
+            window->w = rect.w;
+            window->h = rect.h;
+            window->fullscreen_mode.w = rect.w;
+            window->fullscreen_mode.h = rect.h;
+            if (_this->SetWindowSize) {
+                _this->SetWindowSize(_this, window);
+            }
+
+            if (window->w != old_w || window->h != old_h) {
+                SDL_OnWindowResized(window);
+            }
+        }
+    }
+}
+
 void SDL_OnWindowResized(SDL_Window *window)
 {
     int display_index = SDL_GetWindowDisplayIndex(window);
     window->surface_valid = SDL_FALSE;
 
     if (!window->is_destroying) {
-        SDL_SendWindowEvent(window, SDL_WINDOWEVENT_SIZE_CHANGED, window->w, window->h);
+        SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_SIZE_CHANGED, window->w, window->h);
 
         if (display_index != window->display_index && display_index != -1) {
             window->display_index = display_index;
-            SDL_SendWindowEvent(window, SDL_WINDOWEVENT_DISPLAY_CHANGED, window->display_index, 0);
+            SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_DISPLAY_CHANGED, window->display_index, 0);
         }
     }
 }
@@ -2931,7 +3031,7 @@ void SDL_OnWindowMoved(SDL_Window *window)
 
     if (!window->is_destroying && display_index != window->display_index && display_index != -1) {
         window->display_index = display_index;
-        SDL_SendWindowEvent(window, SDL_WINDOWEVENT_DISPLAY_CHANGED, window->display_index, 0);
+        SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_DISPLAY_CHANGED, window->display_index, 0);
     }
 }
 
@@ -3011,7 +3111,7 @@ static SDL_bool SDL_ShouldMinimizeOnFocusLoss(SDL_Window *window)
     hint = SDL_GetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS);
     if (hint == NULL || !*hint || SDL_strcasecmp(hint, "auto") == 0) {
         if ((window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) == SDL_WINDOW_FULLSCREEN_DESKTOP ||
-            DisableDisplayModeSwitching(_this) == SDL_TRUE) {
+            ModeSwitchingEmulated(_this) == SDL_TRUE) {
             return SDL_FALSE;
         } else {
             return SDL_TRUE;
@@ -3300,7 +3400,7 @@ void SDL_GL_UnloadLibrary(void)
 
 #if SDL_VIDEO_OPENGL || SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
 typedef GLenum (APIENTRY* PFNGLGETERRORPROC) (void);
-typedef void (APIENTRY* PFNGLGETINTEGERVPROC) (GLenum pname, GLint * params);
+typedef void (APIENTRY* PFNGLGETINTEGERVPROC) (GLenum pname, GLint *params);
 typedef const GLubyte *(APIENTRY* PFNGLGETSTRINGPROC) (GLenum name);
 #if !SDL_VIDEO_OPENGL
 typedef const GLubyte *(APIENTRY* PFNGLGETSTRINGIPROC) (GLenum name, GLuint index);
@@ -4083,7 +4183,7 @@ void SDL_GL_DeleteContext(SDL_GLContext context)
  * Utility function used by SDL_WM_SetIcon(); flags & 1 for color key, flags
  * & 2 for alpha channel.
  */
-static void CreateMaskFromColorKeyOrAlpha(SDL_Surface * icon, Uint8 * mask, int flags)
+static void CreateMaskFromColorKeyOrAlpha(SDL_Surface *icon, Uint8 *mask, int flags)
 {
     int x, y;
     Uint32 colorkey;
@@ -4147,7 +4247,7 @@ static void CreateMaskFromColorKeyOrAlpha(SDL_Surface * icon, Uint8 * mask, int 
 /*
  * Sets the window manager icon for the display window.
  */
-void SDL_WM_SetIcon(SDL_Surface * icon, Uint8 * mask)
+void SDL_WM_SetIcon(SDL_Surface *icon, Uint8 *mask)
 {
     if (icon && _this->SetIcon) {
         /* Generate a mask if necessary, and create the icon! */
@@ -4207,8 +4307,8 @@ void SDL_StartTextInput(void)
     SDL_Window *window;
 
     /* First, enable text events */
-    SDL_SetEventEnabled(SDL_TEXTINPUT, SDL_TRUE);
-    SDL_SetEventEnabled(SDL_TEXTEDITING, SDL_TRUE);
+    SDL_SetEventEnabled(SDL_EVENT_TEXT_INPUT, SDL_TRUE);
+    SDL_SetEventEnabled(SDL_EVENT_TEXT_EDITING, SDL_TRUE);
 
     /* Then show the on-screen keyboard, if any */
     window = SDL_GetFocusWindow();
@@ -4240,7 +4340,7 @@ SDL_bool SDL_TextInputShown(void)
 
 SDL_bool SDL_TextInputActive(void)
 {
-    return SDL_EventEnabled(SDL_TEXTINPUT);
+    return SDL_EventEnabled(SDL_EVENT_TEXT_INPUT);
 }
 
 void SDL_StopTextInput(void)
@@ -4259,8 +4359,8 @@ void SDL_StopTextInput(void)
     }
 
     /* Finally disable text events */
-    SDL_SetEventEnabled(SDL_TEXTINPUT, SDL_FALSE);
-    SDL_SetEventEnabled(SDL_TEXTEDITING, SDL_FALSE);
+    SDL_SetEventEnabled(SDL_EVENT_TEXT_INPUT, SDL_FALSE);
+    SDL_SetEventEnabled(SDL_EVENT_TEXT_EDITING, SDL_FALSE);
 }
 
 void SDL_SetTextInputRect(const SDL_Rect *rect)
@@ -4547,12 +4647,12 @@ float SDL_ComputeDiagonalDPI(int hpix, int vpix, float hinches, float vinches)
  */
 void SDL_OnApplicationWillTerminate(void)
 {
-    SDL_SendAppEvent(SDL_APP_TERMINATING);
+    SDL_SendAppEvent(SDL_EVENT_TERMINATING);
 }
 
 void SDL_OnApplicationDidReceiveMemoryWarning(void)
 {
-    SDL_SendAppEvent(SDL_APP_LOWMEMORY);
+    SDL_SendAppEvent(SDL_EVENT_LOW_MEMORY);
 }
 
 void SDL_OnApplicationWillResignActive(void)
@@ -4560,32 +4660,32 @@ void SDL_OnApplicationWillResignActive(void)
     if (_this) {
         SDL_Window *window;
         for (window = _this->windows; window != NULL; window = window->next) {
-            SDL_SendWindowEvent(window, SDL_WINDOWEVENT_FOCUS_LOST, 0, 0);
-            SDL_SendWindowEvent(window, SDL_WINDOWEVENT_MINIMIZED, 0, 0);
+            SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_FOCUS_LOST, 0, 0);
+            SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_MINIMIZED, 0, 0);
         }
     }
-    SDL_SendAppEvent(SDL_APP_WILLENTERBACKGROUND);
+    SDL_SendAppEvent(SDL_EVENT_WILL_ENTER_BACKGROUND);
 }
 
 void SDL_OnApplicationDidEnterBackground(void)
 {
-    SDL_SendAppEvent(SDL_APP_DIDENTERBACKGROUND);
+    SDL_SendAppEvent(SDL_EVENT_DID_ENTER_BACKGROUND);
 }
 
 void SDL_OnApplicationWillEnterForeground(void)
 {
-    SDL_SendAppEvent(SDL_APP_WILLENTERFOREGROUND);
+    SDL_SendAppEvent(SDL_EVENT_WILL_ENTER_FOREGROUND);
 }
 
 void SDL_OnApplicationDidBecomeActive(void)
 {
-    SDL_SendAppEvent(SDL_APP_DIDENTERFOREGROUND);
+    SDL_SendAppEvent(SDL_EVENT_DID_ENTER_FOREGROUND);
 
     if (_this) {
         SDL_Window *window;
         for (window = _this->windows; window != NULL; window = window->next) {
-            SDL_SendWindowEvent(window, SDL_WINDOWEVENT_FOCUS_GAINED, 0, 0);
-            SDL_SendWindowEvent(window, SDL_WINDOWEVENT_RESTORED, 0, 0);
+            SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_FOCUS_GAINED, 0, 0);
+            SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_RESTORED, 0, 0);
         }
     }
 }

@@ -69,7 +69,7 @@ static void SW_WindowEvent(SDL_Renderer *renderer, const SDL_WindowEvent *event)
 {
     SW_RenderData *data = (SW_RenderData *)renderer->driverdata;
 
-    if (event->type == SDL_WINDOWEVENT_SIZE_CHANGED) {
+    if (event->type == SDL_EVENT_WINDOW_SIZE_CHANGED) {
         data->surface = NULL;
         data->window = NULL;
     }
@@ -90,7 +90,7 @@ static int SW_GetOutputSize(SDL_Renderer *renderer, int *w, int *h)
     }
 
     if (renderer->window) {
-        SDL_GetWindowSize(renderer->window, w, h);
+        SDL_GetWindowSizeInPixels(renderer->window, w, h);
         return 0;
     }
 

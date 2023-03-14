@@ -143,7 +143,7 @@ struct SDL_SysWMinfo;
 /* Video device flags */
 typedef enum
 {
-    VIDEO_DEVICE_QUIRK_DISABLE_DISPLAY_MODE_SWITCHING = 0x01,
+    VIDEO_DEVICE_QUIRK_MODE_SWITCHING_EMULATED = 0x01,
     VIDEO_DEVICE_QUIRK_DISABLE_UNSET_FULLSCREEN_ON_MINIMIZE = 0x02,
 } DeviceQuirkFlags;
 
@@ -196,7 +196,7 @@ struct SDL_VideoDevice
     /*
      * Get the dots/pixels-per-inch of a display
      */
-    int (*GetDisplayDPI)(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi);
+    int (*GetDisplayPhysicalDPI)(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi);
 
     /*
      * Get a list of the available display modes for a display.
@@ -504,6 +504,7 @@ extern void SDL_OnWindowEnter(SDL_Window *window);
 extern void SDL_OnWindowLeave(SDL_Window *window);
 extern void SDL_OnWindowFocusGained(SDL_Window *window);
 extern void SDL_OnWindowFocusLost(SDL_Window *window);
+extern void SDL_OnWindowDisplayChanged(SDL_Window *window);
 extern void SDL_UpdateWindowGrab(SDL_Window *window);
 extern SDL_Window *SDL_GetFocusWindow(void);
 
@@ -514,5 +515,8 @@ extern float SDL_ComputeDiagonalDPI(int hpix, int vpix, float hinches, float vin
 extern void SDL_ToggleDragAndDropSupport(void);
 
 extern int SDL_GetDisplayIndexForPoint(const SDL_Point *point);
+
+/* This has been moved out of the public API, but is still available for now */
+#define SDL_WINDOW_ALLOW_HIGHDPI    0x00002000
 
 #endif /* SDL_sysvideo_h_ */

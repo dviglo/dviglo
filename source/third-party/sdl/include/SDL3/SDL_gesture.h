@@ -778,7 +778,13 @@ static void GestureProcessEvent(const SDL_Event *event)
     float dtheta;
     float dDist;
 
-    if (event->type == SDL_FINGERMOTION || event->type == SDL_FINGERDOWN || event->type == SDL_FINGERUP) {
+    // Dviglo: Закомментировано
+    //if (event->type == SDL_FINGERMOTION || event->type == SDL_FINGERDOWN || event->type == SDL_FINGERUP) {
+
+    // Dviglo: Добавлено
+    if (event->type == SDL_EVENT_FINGER_MOTION || event->type == SDL_EVENT_FINGER_DOWN || event->type == SDL_EVENT_FINGER_UP) {
+
+
         GestureTouch *inTouch = GestureGetTouch(event->tfinger.touchId);
 
         if (inTouch == NULL) {  /* we maybe didn't see this one before. */
@@ -792,7 +798,13 @@ static void GestureProcessEvent(const SDL_Event *event)
         y = event->tfinger.y;
 
         /* Finger Up */
-        if (event->type == SDL_FINGERUP) {
+
+        // Dviglo: Закомментировано
+        //if (event->type == SDL_FINGERUP) {
+
+        // Dviglo: Добавлено
+        if (event->type == SDL_EVENT_FINGER_UP) {
+
             SDL_FPoint path[GESTURE_DOLLARNPOINTS];
             inTouch->numDownFingers--;
 
@@ -830,7 +842,13 @@ static void GestureProcessEvent(const SDL_Event *event)
                 inTouch->centroid.x = (inTouch->centroid.x * (inTouch->numDownFingers + 1) - x) / inTouch->numDownFingers;
                 inTouch->centroid.y = (inTouch->centroid.y * (inTouch->numDownFingers + 1) - y) / inTouch->numDownFingers;
             }
-        } else if (event->type == SDL_FINGERMOTION) {
+
+        // Dviglo: Закомментировано
+        //} else if (event->type == SDL_FINGERMOTION) {
+
+        // Dviglo: Добавлено
+        } else if (event->type == SDL_EVENT_FINGER_MOTION) {
+
             const float dx = event->tfinger.dx;
             const float dy = event->tfinger.dy;
             GestureDollarPath *path = &inTouch->dollarPath;
@@ -899,7 +917,13 @@ static void GestureProcessEvent(const SDL_Event *event)
             inTouch->gestureLast[j].f.p.y = y;
             break;
             pressure? */
-        } else if (event->type == SDL_FINGERDOWN) {
+
+        // Dviglo: Закомментировано
+        //} else if (event->type == SDL_FINGERDOWN) {
+
+        // Dviglo: Добавлено
+        } else if (event->type == SDL_EVENT_FINGER_DOWN) {
+
             inTouch->numDownFingers++;
             inTouch->centroid.x = (inTouch->centroid.x * (inTouch->numDownFingers - 1) +
                                    x) /

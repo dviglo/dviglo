@@ -291,7 +291,7 @@ int EmscriptenInput::HandleSDLEvents(void* userData, SDL_Event* event)
 // On Windows repaint while the window is actively being resized.
 int Win32_ResizingEventWatcher(void* data, SDL_Event* event)
 {
-    if (event->type == SDL_WINDOWEVENT_RESIZED)
+    if (event->type == SDL_EVENT_WINDOW_RESIZED)
     {
         SDL_Window* win = SDL_GetWindowFromID(event->window.windowID);
         if (win == (SDL_Window*)data)
@@ -1876,18 +1876,18 @@ void Input::HandleSDLEvent(void* sdlEvent)
     SDL_Event& evt = *static_cast<SDL_Event*>(sdlEvent);
 
     // While not having input focus, skip key/mouse/touch/joystick events, except for the "click to focus" mechanism
-    if (!inputFocus_ && evt.type >= SDL_KEYDOWN && evt.type <= GESTURE_MULTIGESTURE)
+    if (!inputFocus_ && evt.type >= SDL_EVENT_KEY_DOWN && evt.type <= GESTURE_MULTIGESTURE)
     {
 #ifdef REQUIRE_CLICK_TO_FOCUS
         // Require the click to be at least 1 pixel inside the window to disregard clicks in the title bar
-        if (evt.type == SDL_MOUSEBUTTONDOWN && evt.button.x > 0 && evt.button.y > 0 && evt.button.x < graphics.GetWidth() - 1 &&
+        if (evt.type == SDL_EVENT_MOUSE_BUTTONDOWN && evt.button.x > 0 && evt.button.y > 0 && evt.button.x < graphics.GetWidth() - 1 &&
             evt.button.y < graphics.GetHeight() - 1)
         {
             focusedThisFrame_ = true;
             // Do not cause the click to actually go throughfin
             return;
         }
-        else if (evt.type == SDL_FINGERDOWN)
+        else if (evt.type == SDL_EVENT_FINGER_DOWN)
         {
             // When focusing by touch, call GainFocus() immediately as it resets the state; a touch has sustained state
             // which should be kept
@@ -1913,15 +1913,15 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
     switch (evt.type)
     {
-    case SDL_KEYDOWN:
+    case SDL_EVENT_KEY_DOWN:
         SetKey(ConvertSDLKeyCode(evt.key.keysym.sym, evt.key.keysym.scancode), (Scancode)evt.key.keysym.scancode, true);
         break;
 
-    case SDL_KEYUP:
+    case SDL_EVENT_KEY_UP:
         SetKey(ConvertSDLKeyCode(evt.key.keysym.sym, evt.key.keysym.scancode), (Scancode)evt.key.keysym.scancode, false);
         break;
 
-    case SDL_TEXTINPUT:
+    case SDL_EVENT_TEXT_INPUT:
         {
             using namespace TextInput;
 
@@ -1931,7 +1931,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_TEXTEDITING:
+    case SDL_EVENT_TEXT_EDITING:
         {
             using namespace TextEditing;
 
@@ -1943,7 +1943,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_MOUSEBUTTONDOWN:
+    case SDL_EVENT_MOUSE_BUTTONDOWN:
         if (!touchEmulation_)
         {
             const auto mouseButton = static_cast<MouseButton>(1u << (evt.button.button - 1u));  // NOLINT(misc-misplaced-widening-cast)
@@ -1957,7 +1957,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
             y = (int)(y * inputScale_.y_);
 
             SDL_Event event;
-            event.type = SDL_FINGERDOWN;
+            event.type = SDL_EVENT_FINGER_DOWN;
             event.tfinger.touchId = 0;
             event.tfinger.fingerId = evt.button.button - 1;
             event.tfinger.pressure = 1.0f;
@@ -1969,7 +1969,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_MOUSEBUTTONUP:
+    case SDL_EVENT_MOUSE_BUTTONUP:
         if (!touchEmulation_)
         {
             const auto mouseButton = static_cast<MouseButton>(1u << (evt.button.button - 1u));  // NOLINT(misc-misplaced-widening-cast)
@@ -1983,7 +1983,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
             y = (int)(y * inputScale_.y_);
 
             SDL_Event event;
-            event.type = SDL_FINGERUP;
+            event.type = SDL_EVENT_FINGER_UP;
             event.tfinger.touchId = 0;
             event.tfinger.fingerId = evt.button.button - 1;
             event.tfinger.pressure = 0.0f;
@@ -1995,7 +1995,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_MOUSEMOTION:
+    case SDL_EVENT_MOUSE_MOTION:
 #ifndef __EMSCRIPTEN__
         if ((sdlMouseRelative_ || mouseVisible_ || mouseMode_ == MM_FREE) && !touchEmulation_)
 #else
@@ -2039,7 +2039,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
             y = (int)(y * inputScale_.y_);
 
             SDL_Event event;
-            event.type = SDL_FINGERMOTION;
+            event.type = SDL_EVENT_FINGER_MOTION;
             event.tfinger.touchId = 0;
             event.tfinger.fingerId = 0;
             event.tfinger.pressure = 1.0f;
@@ -2051,12 +2051,12 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_MOUSEWHEEL:
+    case SDL_EVENT_MOUSE_WHEEL:
         if (!touchEmulation_)
             SetMouseWheel(evt.wheel.y);
         break;
 
-    case SDL_FINGERDOWN:
+    case SDL_EVENT_FINGER_DOWN:
         if (evt.tfinger.touchId != SDL_TOUCH_MOUSEID)
         {
             int touchID = GetTouchIndexFromID(evt.tfinger.fingerId & 0x7ffffffu);
@@ -2082,7 +2082,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_FINGERUP:
+    case SDL_EVENT_FINGER_UP:
         if (evt.tfinger.touchId != SDL_TOUCH_MOUSEID)
         {
             int touchID = GetTouchIndexFromID(evt.tfinger.fingerId & 0x7ffffffu);
@@ -2105,7 +2105,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_FINGERMOTION:
+    case SDL_EVENT_FINGER_MOTION:
         if (evt.tfinger.touchId != SDL_TOUCH_MOUSEID)
         {
             int touchID = GetTouchIndexFromID(evt.tfinger.fingerId & 0x7ffffffu);
@@ -2177,7 +2177,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_JOYDEVICEADDED:
+    case SDL_EVENT_JOYSTICK_ADDED:
         {
             using namespace JoystickConnected;
 
@@ -2189,7 +2189,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_JOYDEVICEREMOVED:
+    case SDL_EVENT_JOYSTICK_REMOVED:
         {
             using namespace JoystickDisconnected;
 
@@ -2201,7 +2201,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_JOYBUTTONDOWN:
+    case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
         {
             using namespace JoystickButtonDown;
 
@@ -2226,7 +2226,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_JOYBUTTONUP:
+    case SDL_EVENT_JOYSTICK_BUTTON_UP:
         {
             using namespace JoystickButtonUp;
 
@@ -2250,7 +2250,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_JOYAXISMOTION:
+    case SDL_EVENT_JOYSTICK_AXIS_MOTION:
         {
             using namespace JoystickAxisMove;
 
@@ -2276,7 +2276,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_JOYHATMOTION:
+    case SDL_EVENT_JOYSTICK_HAT_MOTION:
         {
             using namespace JoystickHatMove;
 
@@ -2296,7 +2296,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_GAMEPADBUTTONDOWN:
+    case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
         {
             using namespace JoystickButtonDown;
 
@@ -2317,7 +2317,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_GAMEPADBUTTONUP:
+    case SDL_EVENT_GAMEPAD_BUTTON_UP:
         {
             using namespace JoystickButtonUp;
 
@@ -2337,7 +2337,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_GAMEPADAXISMOTION:
+    case SDL_EVENT_GAMEPAD_AXIS_MOTION:
         {
             using namespace JoystickAxisMove;
 
@@ -2357,13 +2357,13 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_WINDOWEVENT_MINIMIZED:
+    case SDL_EVENT_WINDOW_MINIMIZED:
         minimized_ = true;
         SendInputFocusEvent();
         break;
 
-    case SDL_WINDOWEVENT_MAXIMIZED:
-    case SDL_WINDOWEVENT_RESTORED:
+    case SDL_EVENT_WINDOW_MAXIMIZED:
+    case SDL_EVENT_WINDOW_RESTORED:
 #if defined(IOS) || defined(TVOS) || defined (__ANDROID__)
         // On iOS/tvOS we never lose the GL context, but may have done GPU object changes that could not be applied yet. Apply them now
         // On Android the old GL context may be lost already, restore GPU objects to the new GL context
@@ -2373,15 +2373,15 @@ void Input::HandleSDLEvent(void* sdlEvent)
         SendInputFocusEvent();
         break;
 
-    case SDL_WINDOWEVENT_RESIZED:
+    case SDL_EVENT_WINDOW_RESIZED:
         graphics.OnWindowResized();
         break;
 
-    case SDL_WINDOWEVENT_MOVED:
+    case SDL_EVENT_WINDOW_MOVED:
         graphics.OnWindowMoved();
         break;
 
-    case SDL_DROPFILE:
+    case SDL_EVENT_DROP_FILE:
         {
             using namespace DropFile;
 
@@ -2393,7 +2393,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_QUIT:
+    case SDL_EVENT_QUIT:
         SendEvent(E_EXITREQUESTED);
         break;
 
@@ -2493,7 +2493,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
         const Variant& mouseButtonBindingVar = element->GetVar(VAR_BUTTON_MOUSE_BUTTON_BINDING);
         if (keyBindingVar.IsEmpty() && mouseButtonBindingVar.IsEmpty())
         {
-            evt.type = eventType == E_TOUCHBEGIN ? SDL_JOYBUTTONDOWN : SDL_JOYBUTTONUP;
+            evt.type = eventType == E_TOUCHBEGIN ? SDL_EVENT_JOYSTICK_BUTTON_DOWN : SDL_EVENT_JOYSTICK_BUTTON_UP;
             evt.jbutton.which = joystickID;
             evt.jbutton.button = (Uint8)ToU32(name.Substring(6));
         }
@@ -2501,7 +2501,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
         {
             if (!keyBindingVar.IsEmpty())
             {
-                evt.type = eventType == E_TOUCHBEGIN ? SDL_KEYDOWN : SDL_KEYUP;
+                evt.type = eventType == E_TOUCHBEGIN ? SDL_EVENT_KEY_DOWN : SDL_EVENT_KEY_UP;
                 evt.key.keysym.sym = ToLower(keyBindingVar.GetI32());
                 evt.key.keysym.scancode = SDL_SCANCODE_UNKNOWN;
             }
@@ -2513,7 +2513,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
                 touchEmulation_ = false;
 
                 SDL_Event mouseEvent;
-                mouseEvent.type = eventType == E_TOUCHBEGIN ? SDL_MOUSEBUTTONDOWN : SDL_MOUSEBUTTONUP;
+                mouseEvent.type = eventType == E_TOUCHBEGIN ? SDL_EVENT_MOUSE_BUTTONDOWN : SDL_EVENT_MOUSE_BUTTONUP;
                 mouseEvent.button.button = (Uint8)mouseButtonBindingVar.GetI32();
                 HandleSDLEvent(&mouseEvent);
 
@@ -2526,7 +2526,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
         Variant keyBindingVar = element->GetVar(VAR_BUTTON_KEY_BINDING);
         if (keyBindingVar.IsEmpty())
         {
-            evt.type = SDL_JOYHATMOTION;
+            evt.type = SDL_EVENT_JOYSTICK_HAT_MOTION;
             evt.jaxis.which = joystickID;
             evt.jhat.hat = (Uint8)ToU32(name.Substring(3));
             evt.jhat.value = HAT_CENTER;
@@ -2550,7 +2550,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
 
             if (eventType == E_TOUCHEND)
             {
-                evt.type = SDL_KEYUP;
+                evt.type = SDL_EVENT_KEY_UP;
                 evt.key.keysym.sym = element->GetVar(VAR_LAST_KEYSYM).GetI32();
                 if (!evt.key.keysym.sym)
                     return;
@@ -2559,7 +2559,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
             }
             else
             {
-                evt.type = SDL_KEYDOWN;
+                evt.type = SDL_EVENT_KEY_DOWN;
                 IntVector2 relPosition = position - element->GetScreenPosition() - element->GetSize() / 2;
                 if (relPosition.y_ < 0 && Abs(relPosition.x_ * 3 / 2) < Abs(relPosition.y_))
                     evt.key.keysym.sym = keyBinding.left_;      // The integers are encoded in WSAD order to l-t-r-b
@@ -2576,7 +2576,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
                 {
                     // Dragging past the directional boundary will cause an additional key up event for previous key symbol
                     SDL_Event keyEvent;
-                    keyEvent.type = SDL_KEYUP;
+                    keyEvent.type = SDL_EVENT_KEY_UP;
                     keyEvent.key.keysym.sym = element->GetVar(VAR_LAST_KEYSYM).GetI32();
                     if (keyEvent.key.keysym.sym)
                     {

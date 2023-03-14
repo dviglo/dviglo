@@ -308,8 +308,9 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
             flags |= SDL_WINDOW_RESIZABLE;
 
 #ifndef __EMSCRIPTEN__
-        if (newParams.highDPI_)
-            flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+        // TODO: Удалено в SDL3
+        //if (newParams.highDPI_)
+        //    flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 #endif
 
         SDL_SetHint(SDL_HINT_ORIENTATIONS, orientations_.c_str());

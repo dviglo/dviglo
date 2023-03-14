@@ -77,6 +77,7 @@ include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
 include(CheckStructHasMember)
 include(CMakeDependentOption)
+include(CMakeParseArguments)
 include(CMakePushCheckState)
 include(GNUInstallDirs)
 
@@ -85,6 +86,7 @@ find_package(PkgConfig)
 list(APPEND CMAKE_MODULE_PATH "${SDL3_SOURCE_DIR}/cmake")
 include(${SDL3_SOURCE_DIR}/cmake/macros.cmake)
 include(${SDL3_SOURCE_DIR}/cmake/sdlchecks.cmake)
+include(${SDL3_SOURCE_DIR}/cmake/sdlfind.cmake)
 include(${SDL3_SOURCE_DIR}/cmake/sdlplatform.cmake)
 include(${SDL3_SOURCE_DIR}/cmake/CheckCPUArchitecture.cmake)
 include(${SDL3_SOURCE_DIR}/cmake/GetGitRevisionDescription.cmake)
@@ -599,17 +601,11 @@ if(USE_GCC OR USE_CLANG)
       endif()
     endif()
     target_compile_options(sdl-global-options INTERFACE "-Wdocumentation")
-  endif()
 
-  check_c_compiler_flag(-Wdocumentation-unknown-command HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND)
-  if(HAVE_GCC_WDOCUMENTATION_UNKNOWN_COMMAND)
-    if(SDL_WERROR)
-      check_c_compiler_flag(-Werror=documentation-unknown-command HAVE_GCC_WERROR_DOCUMENTATION_UNKNOWN_COMMAND)
-      if(HAVE_GCC_WERROR_DOCUMENTATION_UNKNOWN_COMMAND)
-        target_compile_options(sdl-global-options INTERFACE "-Werror=documentation-unknown-command")
-      endif()
+    check_c_compiler_flag(-fcomment-block-commands=threadsafety HAVE_GCC_COMMENT_BLOCK_COMMANDS)
+    if(HAVE_GCC_COMMENT_BLOCK_COMMANDS)
+      target_compile_options(sdl-global-options INTERFACE "-fcomment-block-commands=threadsafety")
     endif()
-    target_compile_options(sdl-global-options INTERFACE "-Wdocumentation-unknown-command")
   endif()
 
   if(DEPENDENCY_TRACKING)
@@ -638,6 +634,19 @@ if(USE_GCC OR USE_CLANG)
           return 0; }" HAVE_GCC_SYNC_LOCK_TEST_AND_SET)
     endif()
   endif()
+
+  cmake_push_check_state()
+  set(CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} -fvisibility=hidden -Werror")
+  check_c_source_compiles("
+      #if !defined(__GNUC__) || __GNUC__ < 4
+      #error SDL only uses visibility attributes in GCC 4 or newer
+      #endif
+      __attribute__((visibility(\"default\"))) int foo(void);
+      __attribute__((visibility(\"hidden\")))  int bar(void);
+      int foo(void) { return 0; }
+      int bar(void) { return 1; }
+      int main(void) { return 0; }" HAVE_GCC_FVISIBILITY)
+  cmake_pop_check_state()
 
   check_c_compiler_flag(-Wshadow HAVE_GCC_WSHADOW)
   if(HAVE_GCC_WSHADOW)
@@ -2451,6 +2460,9 @@ elseif(VITA)
         set(SDL_VIDEO_OPENGL_ES2 1)
         list(APPEND SDL_EXTRA_LIBS
           pib
+          libScePiglet_stub_weak
+          taihen_stub_weak
+          SceShaccCg_stub_weak
         )
         set(HAVE_VIDEO_VITA_PIB ON)
         set(SDL_VIDEO_VITA_PIB 1)
@@ -2463,7 +2475,6 @@ elseif(VITA)
       check_include_file(gpu_es4/psp2_pvr_hint.h HAVE_PVR_H)
       if(HAVE_PVR_H)
         target_compile_definitions(sdl-build-options INTERFACE "__psp2__")
-        check_include_file(gl4esinit.h HAVE_GL4ES_H)
         set(SDL_VIDEO_OPENGL_EGL 1)
         set(HAVE_OPENGLES TRUE)
         set(SDL_VIDEO_OPENGL_ES 1)
@@ -2473,17 +2484,21 @@ elseif(VITA)
         list(APPEND SDL_EXTRA_LIBS
           libgpu_es4_ext_stub_weak
           libIMGEGL_stub_weak
+          SceIme_stub
         )
 
         set(HAVE_VIDEO_VITA_PVR ON)
         set(SDL_VIDEO_VITA_PVR 1)
 
-        if(HAVE_GL4ES_H)
-          set(HAVE_OPENGL TRUE)
-          set(SDL_VIDEO_OPENGL 1)
-          set(SDL_VIDEO_RENDER_OGL 1)
-          list(APPEND SDL_EXTRA_LIBS libGL_stub)
-          set(SDL_VIDEO_VITA_PVR_OGL 1)
+        if(SDL_OPENGL)
+          check_include_file(gl4esinit.h HAVE_GL4ES_H)
+          if(HAVE_GL4ES_H)
+            set(HAVE_OPENGL TRUE)
+            set(SDL_VIDEO_OPENGL 1)
+            set(SDL_VIDEO_RENDER_OGL 1)
+            list(APPEND SDL_EXTRA_LIBS libGL_stub)
+            set(SDL_VIDEO_VITA_PVR_OGL 1)
+          endif()
         endif()
 
       else()
@@ -2513,19 +2528,6 @@ elseif(VITA)
       SceProcessmgr_stub
       m
     )
-    if(HAVE_VITA_PIB)
-        list(PREPEND SDL_EXTRA_LIBS
-          pib
-          libScePiglet_stub
-          SceShaccCg_stub
-          taihen_stub
-        )
-    endif()
-    if(HAVE_VITA_PVR)
-        list(PREPEND SDL_EXTRA_LIBS
-          SceIme_stub
-        )
-    endif()
   endif()
 
   set(HAVE_ARMSIMD TRUE)
@@ -2734,6 +2736,13 @@ elseif(N3DS)
   else()
     message_error("SDL_FILE must be enabled to build on N3DS")
   endif()
+
+  foreach(lib ${CMAKE_C_STANDARD_LIBRARIES})
+    if(lib MATCHES "^-l")
+      string(SUBSTRING "${lib}" 2 -1 lib)
+    endif()
+    list(APPEND SDL_EXTRA_LIBS ${lib})
+  endforeach()
 endif()
 
 if(HAVE_VULKAN AND NOT SDL_LOADSO)
@@ -2898,37 +2907,6 @@ else()
   set(sdl_static_libname "SDL3")
 endif()
 
-# Clean up variables for sdl3.pc
-
-if(SDL_SHARED)
-  set(PKGCONFIG_LIBS_PRIV "\nLibs.private:")
-else()
-  set(PKGCONFIG_LIBS_PRIV "")
-endif()
-
-# Clean up the different lists
-listtostr(SDL_EXTRA_LIBS EXTRA_LIBS_L "-l")
-set(SDL_PC_STATIC_LIBS ${SDL_EXTRA_LDFLAGS} ${EXTRA_LIBS_L})
-list(REMOVE_DUPLICATES SDL_PC_STATIC_LIBS)
-listtostr(SDL_PC_STATIC_LIBS SDL_PC_STATIC_LIBS)
-listtostr(SDL_PC_LIBS SDL_PC_LIBS)
-listtostr(SDL_PC_CFLAGS SDL_PC_CFLAGS)
-listtostr(SDL_PC_PRIVATE_REQUIRES SDL_PC_PRIVATE_REQUIRES)
-string(REGEX REPLACE "-lSDL3( |$)" "-l${sdl_static_libname} " SDL_PC_STATIC_LIBS "${SDL_PC_STATIC_LIBS}")
-if(NOT SDL_SHARED)
-  string(REGEX REPLACE "-lSDL3( |$)" "-l${sdl_static_libname} " SDL_PC_LIBS "${SDL_PC_LIBS}")
-endif()
-
-if(SDL_STATIC AND SDL_SHARED AND NOT sdl_static_libname STREQUAL "SDL3")
-  message(STATUS "\"pkg-config --static --libs sdl3\" will return invalid information")
-endif()
-
-# message(STATUS "SDL_PC_CFLAGS:   ${SDL_PC_CFLAGS}")
-# message(STATUS "SDL_PC_LIBS:     ${SDL_PC_LIBS}")
-# message(STATUS "SDL_PC_STATIC_LIBS: ${SDL_PC_STATIC_LIBS}")
-
-configure_file(cmake/sdl3.pc.in sdl3.pc @ONLY)
-
 macro(check_add_debug_flag FLAG SUFFIX)
     check_c_compiler_flag(${FLAG} HAS_C_FLAG_${SUFFIX})
     if (HAS_C_FLAG_${SUFFIX})
@@ -3035,6 +3013,7 @@ list(REMOVE_DUPLICATES INFO_SHARED_LDFLAGS)
 listtostr(INFO_SHARED_LDFLAGS INFO_SHARED_LDFLAGS)
 
 listtostr(SDL_EXTRA_LIBS INFO_EXTRA_LIBS)
+listtostr(SDL_CMAKE_DEPENDS INFO_CMAKE_DEPENDS)
 
 ##### Info output #####
 message(STATUS "")
@@ -3070,7 +3049,7 @@ message(STATUS " EXTRA DEFS:    ${INFO_DEFS}")
 message(STATUS " EXTRA CFLAGS:  ${INFO_CFLAGS} ${INFO_CHECKS}")
 message(STATUS " EXTRA INCDIRS: ${INFO_INCDIRS}")
 message(STATUS " EXTRA LDFLAGS: ${INFO_SHARED_LDFLAGS} ${INFO_EXTRA_LDFLAGS}")
-message(STATUS " EXTRA LIBS:    ${INFO_EXTRA_LIBS}")
+message(STATUS " EXTRA LIBS:    ${INFO_EXTRA_LIBS} ${INFO_CMAKE_DEPENDS}")
 message(STATUS "")
 message(STATUS " Build Shared Library: ${SDL_SHARED}")
 message(STATUS " Build Static Library: ${SDL_STATIC}")
@@ -3132,13 +3111,17 @@ if(SDL_SHARED)
   # alias target for in-tree builds
   add_library(SDL3::SDL3 ALIAS SDL3)
   set_target_properties(SDL3 PROPERTIES
-    C_VISIBILITY_PRESET "hidden"
-    CXX_VISIBILITY_PRESET "hidden"
-    OBJC_VISIBILITY_PRESET "hidden"
     POSITION_INDEPENDENT_CODE TRUE
     LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/dynapi/SDL_dynapi.sym"
     INTERFACE_LINK_DEPENDS "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/dynapi/SDL_dynapi.sym>"
   )
+  if(HAVE_GCC_FVISIBILITY)
+    set_target_properties(SDL3 PROPERTIES
+      C_VISIBILITY_PRESET "hidden"
+      CXX_VISIBILITY_PRESET "hidden"
+      OBJC_VISIBILITY_PRESET "hidden"
+    )
+  endif()
   if(NOT SDL_LIBC)
     if(MSVC AND SDL_CPU_X86)
       # FIXME: should be added for all architectures (missing symbols for ARM)
@@ -3275,13 +3258,20 @@ if(NOT SDL3_DISABLE_INSTALL)
   endif()
   set(SDL_INSTALL_CMAKEDIR_ROOT "${SDL_INSTALL_CMAKEDIR_ROOT_DEFAULT}" CACHE STRING "Root folder where to install SDL3Config.cmake related files (SDL3 subfolder for MSVC projects)")
 
+  if(FREEBSD)
+    # FreeBSD uses ${PREFIX}/libdata/pkgconfig
+    set(SDL_PKGCONFIG_INSTALLDIR "libdata/pkgconfig")
+  else()
+    set(SDL_PKGCONFIG_INSTALLDIR "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+  endif()
+
   if(WINDOWS AND NOT MINGW)
     set(SDL_INSTALL_CMAKEDIR "${SDL_INSTALL_CMAKEDIR_ROOT}")
     set(LICENSES_PREFIX "licenses/SDL3")
   else()
     set(SDL_INSTALL_CMAKEDIR "${SDL_INSTALL_CMAKEDIR_ROOT}/SDL3")
     set(LICENSES_PREFIX "${CMAKE_INSTALL_DATAROOTDIR}/licenses/${PROJECT_NAME}")
-  endif ()
+  endif()
 
   ##### Installation targets #####
 
@@ -3306,7 +3296,44 @@ if(NOT SDL3_DISABLE_INSTALL)
       RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
   endif()
 
-  ##### Export files #####
+  ##### sdl3.pc #####
+
+  # Clean up variables for sdl3.pc
+  if(SDL_SHARED)
+    set(PKGCONFIG_LIBS_PRIV "\nLibs.private:")
+  else()
+    set(PKGCONFIG_LIBS_PRIV "")
+  endif()
+
+  # Clean up the different lists
+  listtostr(SDL_EXTRA_LIBS EXTRA_LIBS_L "-l")
+  set(SDL_PC_STATIC_LIBS ${SDL_EXTRA_LDFLAGS} ${EXTRA_LIBS_L})
+  list(REMOVE_DUPLICATES SDL_PC_STATIC_LIBS)
+  listtostr(SDL_PC_STATIC_LIBS SDL_PC_STATIC_LIBS)
+  listtostr(SDL_PC_LIBS SDL_PC_LIBS)
+  listtostr(SDL_PC_CFLAGS SDL_PC_CFLAGS)
+  listtostr(SDL_PC_PRIVATE_REQUIRES SDL_PC_PRIVATE_REQUIRES)
+  string(REGEX REPLACE "-lSDL3( |$)" "-l${sdl_static_libname} " SDL_PC_STATIC_LIBS "${SDL_PC_STATIC_LIBS}")
+  if(NOT SDL_SHARED)
+    string(REGEX REPLACE "-lSDL3( |$)" "-l${sdl_static_libname} " SDL_PC_LIBS "${SDL_PC_LIBS}")
+  endif()
+
+  if(SDL_STATIC AND SDL_SHARED AND NOT sdl_static_libname STREQUAL "SDL3")
+    message(STATUS "\"pkg-config --static --libs sdl3\" will return invalid information")
+  endif()
+
+  file(RELATIVE_PATH SDL_PATH_PREFIX_RELATIVE_TO_PKGCONFIG "${CMAKE_INSTALL_PREFIX}/${SDL_PKGCONFIG_INSTALLDIR}" "${CMAKE_INSTALL_PREFIX}")
+  string(REGEX REPLACE "[/]+$" "" SDL_PATH_PREFIX_RELATIVE_TO_PKGCONFIG "${SDL_PATH_PREFIX_RELATIVE_TO_PKGCONFIG}")
+  set(SDL_PKGCONFIG_PREFIX "\${pcfiledir}/${SDL_PATH_PREFIX_RELATIVE_TO_PKGCONFIG}")
+
+  # message(STATUS "SDL_PC_CFLAGS:   ${SDL_PC_CFLAGS}")
+  # message(STATUS "SDL_PC_LIBS:     ${SDL_PC_LIBS}")
+  # message(STATUS "SDL_PC_STATIC_LIBS: ${SDL_PC_STATIC_LIBS}")
+
+  configure_file(cmake/sdl3.pc.in sdl3.pc @ONLY)
+  install(FILES ${SDL3_BINARY_DIR}/sdl3.pc DESTINATION "${SDL_PKGCONFIG_INSTALLDIR}")
+
+  ##### CMake Export files #####
 
   include(CMakePackageConfigHelpers)
   configure_package_config_file(cmake/SDL3Config.cmake.in SDL3Config.cmake
@@ -3377,13 +3404,6 @@ if(NOT SDL3_DISABLE_INSTALL)
   endif()
 
   install(FILES "LICENSE.txt" DESTINATION "${LICENSES_PREFIX}")
-  if(FREEBSD)
-    # FreeBSD uses ${PREFIX}/libdata/pkgconfig
-    install(FILES ${SDL3_BINARY_DIR}/sdl3.pc DESTINATION "libdata/pkgconfig")
-  else()
-    install(FILES ${SDL3_BINARY_DIR}/sdl3.pc
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-  endif()
 endif()
 
 ##### Uninstall target #####
