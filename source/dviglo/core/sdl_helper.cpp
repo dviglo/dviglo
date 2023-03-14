@@ -40,7 +40,7 @@ SdlHelper::~SdlHelper()
 {
     DV_LOGDEBUG("Quitting SDL");
     Gesture_Quit();
-    SDL_Quit();
+//    SDL_Quit(); // TODO: крэшится в OpenGL shared версии
     DV_LOGDEBUG("Singleton SdlHelper destructed");
 #ifdef _DEBUG
     sdl_helper_destructed = true;
