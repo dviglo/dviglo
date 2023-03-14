@@ -250,8 +250,8 @@ Vector<IntVector3> Graphics::GetResolutions(int monitor) const
     {
         SDL_DisplayMode mode;
         SDL_GetDisplayMode(monitor, i, &mode);
-        int width = mode.w;
-        int height = mode.h;
+        int width = mode.pixel_w;
+        int height = mode.pixel_h;
         int rate = mode.refresh_rate;
 
         // Store mode if unique
@@ -302,7 +302,7 @@ IntVector2 Graphics::GetDesktopResolution(int monitor) const
 #if !defined(__ANDROID__) && !defined(IOS) && !defined(TVOS)
     SDL_DisplayMode mode;
     SDL_GetDesktopDisplayMode(monitor, &mode);
-    return IntVector2(mode.w, mode.h);
+    return IntVector2(mode.pixel_w, mode.pixel_h);
 #else
     // SDL_GetDesktopDisplayMode() may not work correctly on mobile platforms. Rather return the window size
     return IntVector2(width_, height_);
@@ -530,8 +530,8 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
         {
             SDL_DisplayMode mode;
             SDL_GetDesktopDisplayMode(params.monitor_, &mode);
-            newWidth = mode.w;
-            newHeight = mode.h;
+            newWidth = mode.pixel_w;
+            newHeight = mode.pixel_h;
         }
         else
         {

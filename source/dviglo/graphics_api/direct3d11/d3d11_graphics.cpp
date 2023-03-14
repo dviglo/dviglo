@@ -2027,7 +2027,7 @@ void Graphics::AdjustWindow_D3D11(int& newWidth, int& newHeight, bool& newFullsc
         SDL_SetWindowFullscreen(window_, SDL_FALSE);
         // Hack fix: on SDL 2.0.4 a fullscreen->windowed transition results in a maximized window when the D3D device is reset, so hide before
         if (!newFullscreen) SDL_HideWindow(window_);
-        SDL_SetWindowFullscreen(window_, newFullscreen ? SDL_WINDOW_FULLSCREEN : 0);
+        SDL_SetWindowFullscreen(window_, newFullscreen ? SDL_WINDOW_FULLSCREEN_EXCLUSIVE : 0);
         SDL_SetWindowBordered(window_, newBorderless ? SDL_FALSE : SDL_TRUE);
         SDL_SetWindowResizable(window_, newResizable ? SDL_TRUE : SDL_FALSE);
         if (!newFullscreen) SDL_ShowWindow(window_);

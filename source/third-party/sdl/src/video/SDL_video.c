@@ -151,8 +151,6 @@ static VideoBootStrap *bootstrap[] = {
         return retval;                                                  \
     }
 
-#define FULLSCREEN_MASK (SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_FULLSCREEN)
-
 #if defined(__MACOS__) && defined(SDL_VIDEO_DRIVER_COCOA)
 /* Support for macOS fullscreen spaces */
 extern SDL_bool Cocoa_IsWindowInFullscreenSpace(SDL_Window *window);
@@ -382,16 +380,16 @@ static int SDLCALL cmpmodes(const void *A, const void *B)
 {
     const SDL_DisplayMode *a = (const SDL_DisplayMode *)A;
     const SDL_DisplayMode *b = (const SDL_DisplayMode *)B;
-    float a_display_scale = (a->display_scale == 0.0f) ? 1.0f : a->display_scale;
-    float b_display_scale = (b->display_scale == 0.0f) ? 1.0f : b->display_scale;
     if (a == b) {
         return 0;
-    } else if (a->w != b->w) {
-        return b->w - a->w;
-    } else if (a->h != b->h) {
-        return b->h - a->h;
-    } else if (a_display_scale != b_display_scale) {
-        return (int)(a_display_scale * 100) - (int)(b_display_scale * 100);
+    } else if (a->screen_w != b->screen_w) {
+        return b->screen_w - a->screen_w;
+    } else if (a->screen_h != b->screen_h) {
+        return b->screen_h - a->screen_h;
+    } else if (a->pixel_w != b->pixel_w) {
+        return b->pixel_w - a->pixel_w;
+    } else if (a->pixel_h != b->pixel_h) {
+        return b->pixel_h - a->pixel_h;
     } else if (SDL_BITSPERPIXEL(a->format) != SDL_BITSPERPIXEL(b->format)) {
         return SDL_BITSPERPIXEL(b->format) - SDL_BITSPERPIXEL(a->format);
     } else if (SDL_PIXELLAYOUT(a->format) != SDL_PIXELLAYOUT(b->format)) {
@@ -585,6 +583,40 @@ SDL_bool SDL_OnVideoThread()
     return (_this && SDL_ThreadID() == _this->thread) ? SDL_TRUE : SDL_FALSE;
 }
 
+static void SDL_FinalizeDisplayMode(SDL_DisplayMode *mode)
+{
+    /* Make sure all the fields are set up correctly */
+    if (mode->display_scale <= 0.0f) {
+        if (mode->screen_w == 0 && mode->screen_h == 0) {
+            mode->screen_w = mode->pixel_w;
+            mode->screen_h = mode->pixel_h;
+        }
+        if (mode->pixel_w == 0 && mode->pixel_h == 0) {
+            mode->pixel_w = mode->screen_w;
+            mode->pixel_h = mode->screen_h;
+        }
+        if (mode->screen_w > 0) {
+            mode->display_scale = (float)mode->pixel_w / mode->screen_w;
+        }
+    } else {
+        if (mode->screen_w == 0 && mode->screen_h == 0) {
+            mode->screen_w = (int)SDL_floorf(mode->pixel_w / mode->display_scale);
+            mode->screen_h = (int)SDL_floorf(mode->pixel_h / mode->display_scale);
+        }
+        if (mode->pixel_w == 0 && mode->pixel_h == 0) {
+            mode->pixel_w = (int)SDL_ceilf(mode->screen_w * mode->display_scale);
+            mode->pixel_h = (int)SDL_ceilf(mode->screen_h * mode->display_scale);
+        }
+    }
+
+    /* Make sure the screen width, pixel width, and display scale all match */
+    if (mode->display_scale != 0.0f) {
+        SDL_assert(mode->display_scale > 0.0f);
+        SDL_assert(SDL_fabsf(mode->screen_w - (mode->pixel_w / mode->display_scale)) < 1.0f);
+        SDL_assert(SDL_fabsf(mode->screen_h - (mode->pixel_h / mode->display_scale)) < 1.0f);
+    }
+}
+
 int SDL_AddBasicVideoDisplay(const SDL_DisplayMode *desktop_mode)
 {
     SDL_VideoDisplay display;
@@ -592,9 +624,7 @@ int SDL_AddBasicVideoDisplay(const SDL_DisplayMode *desktop_mode)
     SDL_zero(display);
     if (desktop_mode) {
         display.desktop_mode = *desktop_mode;
-        if (display.desktop_mode.display_scale == 0.0f) {
-            display.desktop_mode.display_scale = 1.0f;
-        }
+        SDL_FinalizeDisplayMode(&display.desktop_mode);
     }
     display.current_mode = display.desktop_mode;
 
@@ -624,12 +654,9 @@ int SDL_AddVideoDisplay(const SDL_VideoDisplay *display, SDL_bool send_event)
             displays[index].name = SDL_strdup(name);
         }
 
-        if (displays[index].desktop_mode.display_scale == 0.0f) {
-            displays[index].desktop_mode.display_scale = 1.0f;
-        }
-        if (displays[index].current_mode.display_scale == 0.0f) {
-            displays[index].current_mode.display_scale = 1.0f;
-        }
+        SDL_FinalizeDisplayMode(&displays[index].desktop_mode);
+        SDL_FinalizeDisplayMode(&displays[index].current_mode);
+
         if (send_event) {
             SDL_SendDisplayEvent(&_this->displays[index], SDL_EVENT_DISPLAY_CONNECTED, 0);
         }
@@ -722,8 +749,8 @@ int SDL_GetDisplayBounds(int displayIndex, SDL_Rect *rect)
         SDL_GetDisplayBounds(displayIndex - 1, rect);
         rect->x += rect->w;
     }
-    rect->w = (int)(display->current_mode.w / display->current_mode.display_scale);
-    rect->h = (int)(display->current_mode.h / display->current_mode.display_scale);
+    rect->w = display->current_mode.screen_w;
+    rect->h = display->current_mode.screen_h;
     return 0;
 }
 
@@ -812,9 +839,7 @@ SDL_bool SDL_AddDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mo
         display->max_display_modes += 32;
     }
     modes[nmodes] = *mode;
-    if (modes[nmodes].display_scale == 0.0f) {
-        modes[nmodes].display_scale = 1.0f;
-    }
+    SDL_FinalizeDisplayMode(&modes[nmodes]);
     display->num_display_modes++;
 
     /* Re-sort video modes */
@@ -827,17 +852,13 @@ SDL_bool SDL_AddDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mo
 void SDL_SetCurrentDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mode)
 {
     SDL_memcpy(&display->current_mode, mode, sizeof(*mode));
-    if (display->current_mode.display_scale == 0.0f) {
-        display->current_mode.display_scale = 1.0f;
-    }
+    SDL_FinalizeDisplayMode(&display->current_mode);
 }
 
 void SDL_SetDesktopDisplayMode(SDL_VideoDisplay *display, const SDL_DisplayMode *mode)
 {
     SDL_memcpy(&display->desktop_mode, mode, sizeof(*mode));
-    if (display->desktop_mode.display_scale == 0.0f) {
-        display->desktop_mode.display_scale = 1.0f;
-    }
+    SDL_FinalizeDisplayMode(&display->desktop_mode);
 }
 
 static int SDL_GetNumDisplayModesForDisplay(SDL_VideoDisplay *display)
@@ -922,9 +943,9 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
                                                             SDL_DisplayMode *closest)
 {
     Uint32 target_format;
-    float target_display_scale;
     float target_refresh_rate;
     int i;
+    SDL_DisplayMode requested_mode;
     SDL_DisplayMode *current, *match;
 
     if (mode == NULL || closest == NULL) {
@@ -932,18 +953,16 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
         return NULL;
     }
 
+    /* Make sure all the fields are filled out in the requested mode */
+    requested_mode = *mode;
+    SDL_FinalizeDisplayMode(&requested_mode);
+    mode = &requested_mode;
+
     /* Default to the desktop format */
     if (mode->format) {
         target_format = mode->format;
     } else {
         target_format = display->desktop_mode.format;
-    }
-
-    /* Default to 1.0 scale */
-    if (mode->display_scale > 0.0f) {
-        target_display_scale = mode->display_scale;
-    } else {
-        target_display_scale = 1.0f;
     }
 
     /* Default to the desktop refresh rate */
@@ -957,12 +976,12 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
     for (i = 0; i < SDL_GetNumDisplayModesForDisplay(display); ++i) {
         current = &display->display_modes[i];
 
-        if (current->w && (current->w < mode->w)) {
+        if (current->pixel_w && (current->pixel_w < mode->pixel_w)) {
             /* Out of sorted modes large enough here */
             break;
         }
-        if (current->h && (current->h < mode->h)) {
-            if (current->w && (current->w == mode->w)) {
+        if (current->pixel_h && (current->pixel_h < mode->pixel_h)) {
+            if (current->pixel_w && (current->pixel_w == mode->pixel_w)) {
                 /* Out of sorted modes large enough here */
                 break;
             }
@@ -971,7 +990,7 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
                modes may still follow. */
             continue;
         }
-        if (match == NULL || current->w < match->w || current->h < match->h) {
+        if (match == NULL || current->pixel_w < match->pixel_w || current->pixel_h < match->pixel_h) {
             match = current;
             continue;
         }
@@ -993,35 +1012,29 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
                 continue;
             }
         }
-        if (current->display_scale != match->display_scale) {
-            /* Sorted lowest display scale to highest */
-            if (current->display_scale <= target_display_scale) {
-                match = current;
-                continue;
-            }
-        }
     }
+
     if (match) {
+        SDL_zerop(closest);
         if (match->format) {
             closest->format = match->format;
         } else {
             closest->format = mode->format;
         }
-        if (match->w && match->h) {
-            closest->w = match->w;
-            closest->h = match->h;
+        if (match->screen_w && match->screen_h) {
+            closest->screen_w = match->screen_w;
+            closest->screen_h = match->screen_h;
         } else {
-            closest->w = mode->w;
-            closest->h = mode->h;
+            closest->screen_w = mode->screen_w;
+            closest->screen_h = mode->screen_h;
         }
-        if (match->display_scale > 0.0f) {
-            closest->display_scale = match->display_scale;
-        } else if (mode->display_scale > 0.0f) {
-            closest->display_scale = mode->display_scale;
+        if (match->pixel_w && match->pixel_h) {
+            closest->pixel_w = match->pixel_w;
+            closest->pixel_h = match->pixel_h;
         } else {
-            closest->display_scale = 1.0f;
+            closest->pixel_w = mode->pixel_w;
+            closest->pixel_h = mode->pixel_h;
         }
-
         if (match->refresh_rate > 0.0f) {
             closest->refresh_rate = match->refresh_rate;
         } else {
@@ -1029,19 +1042,17 @@ static SDL_DisplayMode *SDL_GetClosestDisplayModeForDisplay(SDL_VideoDisplay *di
         }
         closest->driverdata = match->driverdata;
 
-        /*
-         * Pick some reasonable defaults if the app and driver don't
-         * care
-         */
+        /* Pick some reasonable defaults if the app and driver don't care */
         if (!closest->format) {
             closest->format = SDL_PIXELFORMAT_RGB888;
         }
-        if (!closest->w) {
-            closest->w = 640;
+        if (!closest->screen_w) {
+            closest->screen_w = 640;
         }
-        if (!closest->h) {
-            closest->h = 480;
+        if (!closest->screen_h) {
+            closest->screen_h = 480;
         }
+        SDL_FinalizeDisplayMode(closest);
         return closest;
     }
     return NULL;
@@ -1075,11 +1086,17 @@ static int SDL_SetDisplayModeForDisplay(SDL_VideoDisplay *display, const SDL_Dis
         if (!display_mode.format) {
             display_mode.format = display->current_mode.format;
         }
-        if (!display_mode.w) {
-            display_mode.w = display->current_mode.w;
+        if (!display_mode.pixel_w) {
+            display_mode.pixel_w = display->current_mode.pixel_w;
         }
-        if (!display_mode.h) {
-            display_mode.h = display->current_mode.h;
+        if (!display_mode.pixel_h) {
+            display_mode.pixel_h = display->current_mode.pixel_h;
+        }
+        if (!display_mode.screen_w) {
+            display_mode.screen_w = display->current_mode.screen_w;
+        }
+        if (!display_mode.screen_h) {
+            display_mode.screen_h = display->current_mode.screen_h;
         }
         if (display_mode.refresh_rate == 0.0f) {
             display_mode.refresh_rate = display->current_mode.refresh_rate;
@@ -1087,7 +1104,9 @@ static int SDL_SetDisplayModeForDisplay(SDL_VideoDisplay *display, const SDL_Dis
 
         /* Get a good video mode, the closest one possible */
         if (!SDL_GetClosestDisplayModeForDisplay(display, &display_mode, &display_mode)) {
-            return SDL_SetError("No video mode large enough for %dx%d", display_mode.w, display_mode.h);
+            return SDL_SetError("No video mode large enough for %dx%d (%dx%d)",
+                                display_mode.pixel_w, display_mode.pixel_h,
+                                display_mode.screen_w, display_mode.screen_h);
         }
     } else {
         display_mode = display->desktop_mode;
@@ -1277,18 +1296,18 @@ int SDL_SetWindowDisplayMode(SDL_Window *window, const SDL_DisplayMode *mode)
         SDL_zero(window->fullscreen_mode);
     }
 
-    if (FULLSCREEN_VISIBLE(window) && (window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+    if (SDL_WINDOW_FULLSCREEN_VISIBLE(window) && (window->flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0) {
         SDL_DisplayMode fullscreen_mode;
         if (SDL_GetWindowDisplayMode(window, &fullscreen_mode) == 0) {
             if (SDL_SetDisplayModeForDisplay(SDL_GetDisplayForWindow(window), &fullscreen_mode) == 0) {
 #ifndef __ANDROID__
                 /* Android may not resize the window to exactly what our fullscreen mode is, especially on
                  * windowed Android environments like the Chromebook or Samsung DeX.  Given this, we shouldn't
-                 * use fullscreen_mode.w and fullscreen_mode.h, but rather get our current native size.  As such,
+                 * use fullscreen_mode.screen_w and fullscreen_mode.screen_h, but rather get our current native size.  As such,
                  * Android's SetWindowFullscreen will generate the window event for us with the proper final size.
                  */
-                SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_RESIZED, fullscreen_mode.w, fullscreen_mode.h);
-#endif
+                SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_RESIZED, fullscreen_mode.screen_w, fullscreen_mode.screen_h);
+#endif /* !__ANDROID__ */
             }
         }
     }
@@ -1307,17 +1326,17 @@ int SDL_GetWindowDisplayMode(SDL_Window *window, SDL_DisplayMode *mode)
     }
 
     fullscreen_mode = window->fullscreen_mode;
-    if (!fullscreen_mode.w) {
-        fullscreen_mode.w = window->windowed.w;
+    if (!fullscreen_mode.screen_w) {
+        fullscreen_mode.screen_w = window->windowed.w;
     }
-    if (!fullscreen_mode.h) {
-        fullscreen_mode.h = window->windowed.h;
+    if (!fullscreen_mode.screen_h) {
+        fullscreen_mode.screen_h = window->windowed.h;
     }
 
     display = SDL_GetDisplayForWindow(window);
 
     /* if in desktop size mode, just return the size of the desktop */
-    if ((window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) == SDL_WINDOW_FULLSCREEN_DESKTOP) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0) {
         fullscreen_mode = display->desktop_mode;
     } else if (!SDL_GetClosestDisplayModeForDisplay(SDL_GetDisplayForWindow(window),
                                                     &fullscreen_mode,
@@ -1382,16 +1401,20 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
        do nothing, or else we may trigger an ugly double-transition
      */
     if (SDL_strcmp(_this->name, "cocoa") == 0) { /* don't do this for X11, etc */
-        if (window->is_destroying && (window->last_fullscreen_flags & FULLSCREEN_MASK) == SDL_WINDOW_FULLSCREEN_DESKTOP) {
+        if (window->is_destroying && (window->last_fullscreen_flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0) {
             return 0;
         }
 
         /* If we're switching between a fullscreen Space and "normal" fullscreen, we need to get back to normal first. */
-        if (fullscreen && ((window->last_fullscreen_flags & FULLSCREEN_MASK) == SDL_WINDOW_FULLSCREEN_DESKTOP) && ((window->flags & FULLSCREEN_MASK) == SDL_WINDOW_FULLSCREEN)) {
+        if (fullscreen &&
+            (window->last_fullscreen_flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 &&
+            (window->flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0) {
             if (!Cocoa_SetWindowFullscreenSpace(window, SDL_FALSE)) {
                 return -1;
             }
-        } else if (fullscreen && ((window->last_fullscreen_flags & FULLSCREEN_MASK) == SDL_WINDOW_FULLSCREEN) && ((window->flags & FULLSCREEN_MASK) == SDL_WINDOW_FULLSCREEN_DESKTOP)) {
+        } else if (fullscreen &&
+                   (window->last_fullscreen_flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0 &&
+                   (window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0) {
             display = SDL_GetDisplayForWindow(window);
             SDL_SetDisplayModeForDisplay(display, NULL);
             if (_this->SetWindowFullscreen) {
@@ -1416,7 +1439,7 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
        to fullscreen (being active, or not), and figure out a return/error code
        from that.
     */
-    if (fullscreen == !(WINRT_DetectWindowFlags(window) & FULLSCREEN_MASK)) {
+    if (fullscreen == !(WINRT_DetectWindowFlags(window) & SDL_WINDOW_FULLSCREEN_MASK)) {
         /* Uh oh, either:
             1. fullscreen was requested, and we're already windowed
             2. windowed-mode was requested, and we're already fullscreen
@@ -1445,7 +1468,7 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
 
     /* See if anything needs to be done now */
     if ((display->fullscreen_window == window) == fullscreen) {
-        if ((window->last_fullscreen_flags & FULLSCREEN_MASK) == (window->flags & FULLSCREEN_MASK)) {
+        if ((window->last_fullscreen_flags & SDL_WINDOW_FULLSCREEN_MASK) == (window->flags & SDL_WINDOW_FULLSCREEN_MASK)) {
             return 0;
         }
     }
@@ -1456,7 +1479,7 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
 
         if (other == window) {
             setDisplayMode = fullscreen;
-        } else if (FULLSCREEN_VISIBLE(other) &&
+        } else if (SDL_WINDOW_FULLSCREEN_VISIBLE(other) &&
                    SDL_GetDisplayForWindow(other) == display) {
             setDisplayMode = SDL_TRUE;
         }
@@ -1469,12 +1492,12 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
             if (SDL_GetWindowDisplayMode(other, &fullscreen_mode) == 0) {
                 SDL_bool resized = SDL_TRUE;
 
-                if (other->w == fullscreen_mode.w && other->h == fullscreen_mode.h) {
+                if (other->w == fullscreen_mode.screen_w && other->h == fullscreen_mode.screen_h) {
                     resized = SDL_FALSE;
                 }
 
                 /* only do the mode change if we want exclusive fullscreen */
-                if ((window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+                if ((window->flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0) {
                     if (SDL_SetDisplayModeForDisplay(display, &fullscreen_mode) < 0) {
                         return -1;
                     }
@@ -1499,11 +1522,10 @@ static int SDL_UpdateFullscreenMode(SDL_Window *window, SDL_bool fullscreen)
                      */
 
                     /* This is also unnecessary on Win32 (WIN_SetWindowFullscreen calls SetWindowPos,
-                     * WM_WINDOWPOSCHANGED will send SDL_EVENT_WINDOW_RESIZED). Also, on Windows with DPI scaling enabled,
-                     * we're keeping modes in pixels, but window sizes in dpi-scaled points, so this would be a unit mismatch.
+                     * WM_WINDOWPOSCHANGED will send SDL_EVENT_WINDOW_RESIZED).
                      */
                     SDL_SendWindowEvent(other, SDL_EVENT_WINDOW_RESIZED,
-                                        fullscreen_mode.w, fullscreen_mode.h);
+                                        fullscreen_mode.screen_w, fullscreen_mode.screen_h);
 #endif
                 } else {
                     SDL_OnWindowResized(other);
@@ -1579,7 +1601,7 @@ static void SDL_FinishWindowCreation(SDL_Window *window, Uint32 flags)
     if (flags & SDL_WINDOW_MINIMIZED) {
         SDL_MinimizeWindow(window);
     }
-    if (flags & SDL_WINDOW_FULLSCREEN) {
+    if (flags & SDL_WINDOW_FULLSCREEN_MASK) {
         SDL_SetWindowFullscreen(window, flags);
     }
     if (flags & SDL_WINDOW_MOUSE_GRABBED) {
@@ -1729,7 +1751,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
     window->windowed.w = window->w;
     window->windowed.h = window->h;
 
-    if (flags & SDL_WINDOW_FULLSCREEN) {
+    if (flags & SDL_WINDOW_FULLSCREEN_MASK) {
         SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
         int displayIndex;
         SDL_Rect bounds;
@@ -1740,18 +1762,18 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
         /* for real fullscreen we might switch the resolution, so get width and height
          * from closest supported mode and use that instead of current resolution
          */
-        if ((flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP && (bounds.w != w || bounds.h != h)) {
+        if ((flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0 && (bounds.w != w || bounds.h != h)) {
             SDL_DisplayMode fullscreen_mode, closest_mode;
             SDL_zero(fullscreen_mode);
-            fullscreen_mode.w = w;
-            fullscreen_mode.h = h;
+            fullscreen_mode.screen_w = w;
+            fullscreen_mode.screen_h = h;
             if (SDL_GetClosestDisplayModeForDisplay(display, &fullscreen_mode, &closest_mode) != NULL) {
-                bounds.w = closest_mode.w;
-                bounds.h = closest_mode.h;
+                bounds.w = closest_mode.screen_w;
+                bounds.h = closest_mode.screen_h;
             }
         }
-        window->fullscreen_mode.w = bounds.w;
-        window->fullscreen_mode.h = bounds.h;
+        window->fullscreen_mode.screen_w = bounds.w;
+        window->fullscreen_mode.screen_h = bounds.h;
         window->x = bounds.x;
         window->y = bounds.y;
         window->w = bounds.w;
@@ -1802,7 +1824,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
     SDL_FinishWindowCreation(window, flags);
 
     /* If the window was created fullscreen, make sure the mode code matches */
-    SDL_UpdateFullscreenMode(window, FULLSCREEN_VISIBLE(window));
+    SDL_UpdateFullscreenMode(window, SDL_WINDOW_FULLSCREEN_VISIBLE(window));
 
     return window;
 }
@@ -2181,7 +2203,7 @@ void SDL_SetWindowPosition(SDL_Window *window, int x, int y)
         }
     }
 
-    if ((window->flags & SDL_WINDOW_FULLSCREEN)) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) != 0) {
         if (!SDL_WINDOWPOS_ISUNDEFINED(x)) {
             window->windowed.x = x;
         }
@@ -2207,7 +2229,7 @@ void SDL_GetWindowPosition(SDL_Window *window, int *x, int *y)
     CHECK_WINDOW_MAGIC(window, );
 
     /* Fullscreen windows are always at their display's origin */
-    if (window->flags & SDL_WINDOW_FULLSCREEN) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) != 0) {
         int displayIndex;
 
         if (x) {
@@ -2246,7 +2268,7 @@ void SDL_GetWindowPosition(SDL_Window *window, int *x, int *y)
 void SDL_SetWindowBordered(SDL_Window *window, SDL_bool bordered)
 {
     CHECK_WINDOW_MAGIC(window, );
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN)) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
         const int want = (bordered != SDL_FALSE); /* normalize the flag. */
         const int have = ((window->flags & SDL_WINDOW_BORDERLESS) == 0);
         if ((want != have) && (_this->SetWindowBordered)) {
@@ -2263,7 +2285,7 @@ void SDL_SetWindowBordered(SDL_Window *window, SDL_bool bordered)
 void SDL_SetWindowResizable(SDL_Window *window, SDL_bool resizable)
 {
     CHECK_WINDOW_MAGIC(window, );
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN)) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
         const int want = (resizable != SDL_FALSE); /* normalize the flag. */
         const int have = ((window->flags & SDL_WINDOW_RESIZABLE) != 0);
         if ((want != have) && (_this->SetWindowResizable)) {
@@ -2280,7 +2302,7 @@ void SDL_SetWindowResizable(SDL_Window *window, SDL_bool resizable)
 void SDL_SetWindowAlwaysOnTop(SDL_Window *window, SDL_bool on_top)
 {
     CHECK_WINDOW_MAGIC(window, );
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN)) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
         const int want = (on_top != SDL_FALSE); /* normalize the flag. */
         const int have = ((window->flags & SDL_WINDOW_ALWAYS_ON_TOP) != 0);
         if ((want != have) && (_this->SetWindowAlwaysOnTop)) {
@@ -2324,8 +2346,9 @@ void SDL_SetWindowSize(SDL_Window *window, int w, int h)
     window->windowed.w = w;
     window->windowed.h = h;
 
-    if (window->flags & SDL_WINDOW_FULLSCREEN) {
-        if (FULLSCREEN_VISIBLE(window) && (window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) != 0) {
+        if (SDL_WINDOW_FULLSCREEN_VISIBLE(window) &&
+            (window->flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0) {
             window->last_fullscreen_flags = 0;
             SDL_UpdateFullscreenMode(window, SDL_TRUE);
         }
@@ -2407,8 +2430,16 @@ void SDL_GetWindowSizeInPixels(SDL_Window *window, int *w, int *h)
 
         if (display)
         {
-            *w = (int)SDL_ceilf(*w * display->current_mode.display_scale);
-            *h = (int)SDL_ceilf(*h * display->current_mode.display_scale);
+            if (*w == display->current_mode.screen_w) {
+                *w = display->current_mode.pixel_w;
+            } else {
+                *w = (int)SDL_ceilf(*w * display->current_mode.display_scale);
+            }
+            if (*h == display->current_mode.screen_h) {
+                *h = display->current_mode.pixel_h;
+            } else {
+                *h = (int)SDL_ceilf(*h * display->current_mode.display_scale);
+            }
         }
     }
 }
@@ -2434,7 +2465,7 @@ void SDL_SetWindowMinimumSize(SDL_Window *window, int min_w, int min_h)
     window->min_w = min_w;
     window->min_h = min_h;
 
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN)) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
         if (_this->SetWindowMinimumSize) {
             _this->SetWindowMinimumSize(_this, window);
         }
@@ -2474,7 +2505,7 @@ void SDL_SetWindowMaximumSize(SDL_Window *window, int max_w, int max_h)
     window->max_w = max_w;
     window->max_h = max_h;
 
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN)) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
         if (_this->SetWindowMaximumSize) {
             _this->SetWindowMaximumSize(_this, window);
         }
@@ -2600,22 +2631,27 @@ int SDL_SetWindowFullscreen(SDL_Window *window, Uint32 flags)
     Uint32 oldflags;
     CHECK_WINDOW_MAGIC(window, -1);
 
-    flags &= FULLSCREEN_MASK;
+    flags &= SDL_WINDOW_FULLSCREEN_MASK;
 
-    if (flags == (window->flags & FULLSCREEN_MASK)) {
+    /* If both fullscreen exclusive and desktop flags are set, default to desktop */
+    if ((flags & SDL_WINDOW_FULLSCREEN_MASK) == SDL_WINDOW_FULLSCREEN_MASK) {
+        flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
+    }
+
+    if (flags == (window->flags & SDL_WINDOW_FULLSCREEN_MASK)) {
         return 0;
     }
 
     /* clear the previous flags and OR in the new ones */
-    oldflags = window->flags & FULLSCREEN_MASK;
-    window->flags &= ~FULLSCREEN_MASK;
+    oldflags = window->flags & SDL_WINDOW_FULLSCREEN_MASK;
+    window->flags &= ~SDL_WINDOW_FULLSCREEN_MASK;
     window->flags |= flags;
 
-    if (SDL_UpdateFullscreenMode(window, FULLSCREEN_VISIBLE(window)) == 0) {
+    if (SDL_UpdateFullscreenMode(window, SDL_WINDOW_FULLSCREEN_VISIBLE(window)) == 0) {
         return 0;
     }
 
-    window->flags &= ~FULLSCREEN_MASK;
+    window->flags &= ~SDL_WINDOW_FULLSCREEN_MASK;
     window->flags |= oldflags;
     return -1;
 }
@@ -2972,15 +3008,15 @@ void SDL_OnWindowHidden(SDL_Window *window)
 
 void SDL_OnWindowDisplayChanged(SDL_Window *window)
 {
-    if (window->flags & SDL_WINDOW_FULLSCREEN) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) != 0) {
         SDL_Rect rect;
 
-        if (FULLSCREEN_VISIBLE(window) && (window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+        if (SDL_WINDOW_FULLSCREEN_VISIBLE(window) && (window->flags & SDL_WINDOW_FULLSCREEN_EXCLUSIVE) != 0) {
             window->last_fullscreen_flags = 0;
 
             if (SDL_UpdateFullscreenMode(window, SDL_TRUE) != 0) {
                 /* Something went wrong and the window is no longer fullscreen. */
-                window->flags &= ~FULLSCREEN_MASK;
+                window->flags &= ~SDL_WINDOW_FULLSCREEN_MASK;
                 return;
             }
         }
@@ -2997,8 +3033,8 @@ void SDL_OnWindowDisplayChanged(SDL_Window *window)
             window->y = rect.y;
             window->w = rect.w;
             window->h = rect.h;
-            window->fullscreen_mode.w = rect.w;
-            window->fullscreen_mode.h = rect.h;
+            window->fullscreen_mode.screen_w = rect.w;
+            window->fullscreen_mode.screen_h = rect.h;
             if (_this->SetWindowSize) {
                 _this->SetWindowSize(_this, window);
             }
@@ -3052,7 +3088,7 @@ void SDL_OnWindowRestored(SDL_Window *window)
      */
     /*SDL_RaiseWindow(window);*/
 
-    if (FULLSCREEN_VISIBLE(window)) {
+    if (SDL_WINDOW_FULLSCREEN_VISIBLE(window)) {
         SDL_UpdateFullscreenMode(window, SDL_TRUE);
     }
 }
@@ -3086,7 +3122,7 @@ static SDL_bool SDL_ShouldMinimizeOnFocusLoss(SDL_Window *window)
 {
     const char *hint;
 
-    if (!(window->flags & SDL_WINDOW_FULLSCREEN) || window->is_destroying) {
+    if ((window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0 || window->is_destroying) {
         return SDL_FALSE;
     }
 
@@ -3110,7 +3146,7 @@ static SDL_bool SDL_ShouldMinimizeOnFocusLoss(SDL_Window *window)
     /* Real fullscreen windows should minimize on focus loss so the desktop video mode is restored */
     hint = SDL_GetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS);
     if (hint == NULL || !*hint || SDL_strcasecmp(hint, "auto") == 0) {
-        if ((window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) == SDL_WINDOW_FULLSCREEN_DESKTOP ||
+        if ((window->flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != 0 ||
             ModeSwitchingEmulated(_this) == SDL_TRUE) {
             return SDL_FALSE;
         } else {

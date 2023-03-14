@@ -301,7 +301,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
         unsigned flags = SDL_WINDOW_OPENGL;
         if (newParams.fullscreen_)
-            flags |= SDL_WINDOW_FULLSCREEN;
+            flags |= SDL_WINDOW_FULLSCREEN_EXCLUSIVE;
         if (newParams.borderless_)
             flags |= SDL_WINDOW_BORDERLESS;
         if (newParams.resizable_)
