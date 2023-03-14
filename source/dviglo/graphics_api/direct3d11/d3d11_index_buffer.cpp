@@ -27,7 +27,7 @@ void IndexBuffer::Release_D3D11()
 {
     Unlock_D3D11();
 
-    if (!GParams::is_headless() && DV_GRAPHICS.GetIndexBuffer() == this)
+    if (!GParams::is_headless() && !Graphics::is_destructed() && DV_GRAPHICS.GetIndexBuffer() == this)
         DV_GRAPHICS.SetIndexBuffer(nullptr);
 
     DV_SAFE_RELEASE(object_.ptr_);
