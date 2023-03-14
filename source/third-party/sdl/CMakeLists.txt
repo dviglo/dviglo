@@ -1,12 +1,15 @@
 # Модифицировано для Dviglo
 
 # Dviglo: Добавлено
-set (SDL_TEST_ENABLED_BY_DEFAULT FALSE) # Тесты не нужны
-set (SDL_SHARED_ENABLED_BY_DEFAULT FALSE) # Нужна только статическая версия библиотеки
+set(SDL_TEST_ENABLED_BY_DEFAULT FALSE) # Тесты не нужны
+set(SDL_SHARED_ENABLED_BY_DEFAULT FALSE) # Нужна только статическая версия библиотеки
 
 # Dviglo: Добавлено. Перезаписываем опции, для которых нельзя указать дефолтные значения
 # https://stackoverflow.com/questions/39588836/why-do-i-need-force-to-override-a-cmake-option
-set (SDL3_DISABLE_UNINSTALL ON CACHE BOOL "" FORCE)
+set(SDL3_DISABLE_UNINSTALL ON CACHE BOOL "" FORCE)
+
+# Dviglo: Добавлено. Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if(${CMAKE_CURRENT_SOURCE_DIR} STREQUAL ${CMAKE_CURRENT_BINARY_DIR})
   message(FATAL_ERROR "Prevented in-tree build. Please create a build directory outside of the SDL source code and run \"cmake -S ${CMAKE_SOURCE_DIR} -B .\" from there")
@@ -570,14 +573,20 @@ if(USE_GCC OR USE_CLANG)
         if(CMAKE_VERSION VERSION_LESS 3.3)
           target_compile_options(sdl-global-options INTERFACE "-Werror=declaration-after-statement")
         else()
-          target_compile_options(sdl-global-options INTERFACE "$<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:OBJCC>>:-Werror=declaration-after-statement>")
+          target_compile_options(sdl-global-options INTERFACE "$<$<COMPILE_LANGUAGE:C>:-Werror=declaration-after-statement>")
+          if(CMAKE_OBJC_COMPILER)
+              target_compile_options(sdl-global-options INTERFACE "$<$<COMPILE_LANGUAGE:OBJC>:-Werror=declaration-after-statement>")
+          endif()
         endif()
       endif()
     endif()
     if(CMAKE_VERSION VERSION_LESS 3.3)
       target_compile_options(sdl-global-options INTERFACE "-Wdeclaration-after-statement")
     else()
-      target_compile_options(sdl-global-options INTERFACE "$<$<OR:$<COMPILE_LANGUAGE:C>,$<COMPILE_LANGUAGE:OBJC>>:-Wdeclaration-after-statement>")
+      target_compile_options(sdl-global-options INTERFACE "$<$<COMPILE_LANGUAGE:C>:-Wdeclaration-after-statement>")
+      if(CMAKE_OBJC_COMPILER)
+          target_compile_options(sdl-global-options INTERFACE "$<$<COMPILE_LANGUAGE:OBJC>:-Wdeclaration-after-statement>")
+      endif()
     endif()
   endif()
 
@@ -1524,7 +1533,7 @@ elseif(UNIX AND NOT APPLE AND NOT RISCOS AND NOT HAIKU)
         pkg_search_module(INOTIFY libinotify)
         if(INOTIFY_FOUND)
           set(HAVE_INOTIFY 1)
-          target_include_directories(sdl-build-options INTERFACE "${INOTIFY_INCLUDE_DIRS}")
+          target_include_directories(sdl-build-options INTERFACE ${INOTIFY_INCLUDE_DIRS})
           list(APPEND SDL_EXTRA_LIBS ${INOTIFY_LIBRARIES})
         endif()
       endif()
@@ -3403,6 +3412,3 @@ set(CMAKE_OBJC_FLAGS "${CMAKE_OBJC_FLAGS} ${CMAKE_C_FLAGS}")
 if(TARGET SDL3::SDL3-static AND NOT TARGET SDL3::SDL3)
   add_library(SDL3::SDL3 ALIAS SDL3-static)
 endif()
-
-# Dviglo: Добавлено. Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
-set_property(TARGET SDL3-static PROPERTY POSITION_INDEPENDENT_CODE ON)

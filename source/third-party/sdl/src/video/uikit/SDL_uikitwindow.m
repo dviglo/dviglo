@@ -34,7 +34,6 @@
 #include "SDL_uikitview.h"
 #include "SDL_uikitopenglview.h"
 
-#define SDL_ENABLE_SYSWM_UIKIT
 #include <SDL3/SDL_syswm.h>
 
 #include <Foundation/Foundation.h>
@@ -98,9 +97,6 @@ static int SetupWindowData(_THIS, SDL_Window *window, UIWindow *uiwindow, SDL_bo
     window->driverdata = (void *)CFBridgingRetain(data);
 
     data.uiwindow = uiwindow;
-
-    /* only one window on iOS, always shown */
-    window->flags &= ~SDL_WINDOW_HIDDEN;
 
     if (displaydata.uiscreen != [UIScreen mainScreen]) {
         window->flags &= ~SDL_WINDOW_RESIZABLE;   /* window is NEVER resizable */

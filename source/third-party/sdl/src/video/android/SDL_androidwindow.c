@@ -31,7 +31,6 @@
 #include "SDL_androidvideo.h"
 #include "SDL_androidwindow.h"
 
-#define SDL_ENABLE_SYSWM_ANDROID
 #include <SDL3/SDL_syswm.h>
 
 /* Currently only one window */
@@ -57,8 +56,6 @@ int Android_CreateWindow(_THIS, SDL_Window *window)
     window->y = 0;
     window->w = Android_SurfaceWidth;
     window->h = Android_SurfaceHeight;
-
-    window->flags &= ~SDL_WINDOW_HIDDEN;
 
     /* One window, it always has focus */
     SDL_SetMouseFocus(window);
