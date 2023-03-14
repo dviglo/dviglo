@@ -35,7 +35,7 @@ void TextureCube::OnDeviceReset_D3D11()
 
 void TextureCube::Release_D3D11()
 {
-    if (!GParams::is_headless())
+    if (!GParams::is_headless() && !Graphics::is_destructed())
     {
         Graphics& graphics = DV_GRAPHICS;
 
