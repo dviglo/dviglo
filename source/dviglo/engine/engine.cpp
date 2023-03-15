@@ -160,41 +160,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     GParams::headless = GetParameter(parameters, EP_HEADLESS, false).GetBool();
 
-    // Detect GAPI even in headless mode
-    // https://github.com/urho3d/Urho3D/issues/3040
-    GAPI gapi = GAPI_NONE;
-
-    // Try to set any possible graphics API as default
-
-#ifdef DV_OPENGL
-    gapi = GAPI_OPENGL;
-#endif
-
-#ifdef DV_D3D11
-    gapi = GAPI_D3D11;
-#endif
-
-    // Use command line parameters
-
-#ifdef DV_OPENGL
-    bool gapi_gl = GetParameter(parameters, EP_OPENGL, false).GetBool();
-    if (gapi_gl)
-        gapi = GAPI_OPENGL;
-#endif
-
-#ifdef DV_D3D11
-    bool gapi_d3d11 = GetParameter(parameters, EP_DIRECT3D11, false).GetBool();
-    if (gapi_d3d11)
-        gapi = GAPI_D3D11;
-#endif
-
-    if (gapi == GAPI_NONE)
-    {
-        DV_LOGERROR("Graphics API not selected");
-        return false;
-    }
-
-    GParams::gapi = gapi;
+    GParams::gapi = GAPI_OPENGL;
 
     // Создаём остальные синглтоны, которые зависят от параметров движка
     if (!GParams::is_headless())
@@ -804,10 +770,6 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
                 ret[EP_FRAME_LIMITER] = false;
             else if (argument == "flushgpu")
                 ret[EP_FLUSH_GPU] = true;
-            else if (argument == "opengl")
-                ret[EP_OPENGL] = true;
-            else if (argument == "d3d11")
-                ret[EP_DIRECT3D11] = true;
             else if (argument == "landscape")
                 ret[EP_ORIENTATIONS] = "LandscapeLeft LandscapeRight " + ret[EP_ORIENTATIONS].GetString();
             else if (argument == "portrait")
