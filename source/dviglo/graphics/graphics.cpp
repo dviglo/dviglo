@@ -712,21 +712,6 @@ void Graphics::SetFlushGPU(bool enable)
 #endif
 }
 
-void Graphics::SetForceGL2(bool enable)
-{
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return SetForceGL2_OGL(enable);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetForceGL2_D3D11(enable);
-#endif
-}
-
 void Graphics::Close()
 {
     GAPI gapi = GParams::get_gapi();

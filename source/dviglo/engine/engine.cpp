@@ -262,12 +262,6 @@ bool Engine::Initialize(const VariantMap& parameters)
             graphics.SetWindowPosition(GetParameter(parameters, EP_WINDOW_POSITION_X).GetI32(),
                 GetParameter(parameters, EP_WINDOW_POSITION_Y).GetI32());
 
-        if (GParams::get_gapi() == GAPI_OPENGL)
-        {
-            if (HasParameter(parameters, EP_FORCE_GL2))
-                graphics.SetForceGL2(GetParameter(parameters, EP_FORCE_GL2).GetBool());
-        }
-
         if (!graphics.SetMode(
             GetParameter(parameters, EP_WINDOW_WIDTH, 0).GetI32(),
             GetParameter(parameters, EP_WINDOW_HEIGHT, 0).GetI32(),
@@ -814,8 +808,6 @@ VariantMap Engine::ParseParameters(const Vector<String>& arguments)
                 ret[EP_OPENGL] = true;
             else if (argument == "d3d11")
                 ret[EP_DIRECT3D11] = true;
-            else if (argument == "gl2")
-                ret[EP_FORCE_GL2] = true;
             else if (argument == "landscape")
                 ret[EP_ORIENTATIONS] = "LandscapeLeft LandscapeRight " + ret[EP_ORIENTATIONS].GetString();
             else if (argument == "portrait")

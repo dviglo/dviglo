@@ -265,20 +265,11 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
         SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
-        if (!forceGL2_)
-        {
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-            apiName_ = "GL3";
-        }
-        else
-        {
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
-            apiName_ = "GL2";
-        }
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        apiName_ = "GL3";
+
 #else
 #if defined(GL_ES_VERSION_3_0)
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
@@ -443,17 +434,6 @@ void Graphics::SetDither_OGL(bool enable)
 void Graphics::SetFlushGPU_OGL(bool enable)
 {
     // Currently unimplemented on OpenGL
-}
-
-void Graphics::SetForceGL2_OGL(bool enable)
-{
-    if (IsInitialized_OGL())
-    {
-        DV_LOGERROR("OpenGL 2 can only be forced before setting the initial screen mode");
-        return;
-    }
-
-    forceGL2_ = enable;
 }
 
 void Graphics::Close_OGL()
@@ -2398,19 +2378,6 @@ void Graphics::Restore_OGL()
     {
         impl->context_ = SDL_GL_CreateContext(window_);
 
-#ifndef GL_ES_VERSION_2_0
-        // If we're trying to use OpenGL 3, but context creation fails, retry with 2
-        if (!forceGL2_ && !impl->context_)
-        {
-            forceGL2_ = true;
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 0);
-            impl->context_ = SDL_GL_CreateContext(window_);
-            apiName_ = "GL2";
-        }
-#endif
-
 #if defined(IOS) || defined(TVOS)
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, (GLint*)&impl->systemFBO_);
 #endif
@@ -2434,32 +2401,13 @@ void Graphics::Restore_OGL()
             return;
         }
 
-        if (!forceGL2_ && GLEW_VERSION_3_2)
-        {
-            gl3Support = true;
-            apiName_ = "GL3";
+        gl3Support = true;
+        apiName_ = "GL3";
 
-            // Create and bind a vertex array object that will stay in use throughout
-            unsigned vertexArrayObject;
-            glGenVertexArrays(1, &vertexArrayObject);
-            glBindVertexArray(vertexArrayObject);
-        }
-        else if (GLEW_VERSION_2_0)
-        {
-            if (!GLEW_EXT_framebuffer_object || !GLEW_EXT_packed_depth_stencil)
-            {
-                DV_LOGERROR("EXT_framebuffer_object and EXT_packed_depth_stencil OpenGL extensions are required");
-                return;
-            }
-
-            gl3Support = false;
-            apiName_ = "GL2";
-        }
-        else
-        {
-            DV_LOGERROR("OpenGL 2.0 is required");
-            return;
-        }
+        // Create and bind a vertex array object that will stay in use throughout
+        unsigned vertexArrayObject;
+        glGenVertexArrays(1, &vertexArrayObject);
+        glBindVertexArray(vertexArrayObject);
 
         // Enable seamless cubemap if possible
         // Note: even though we check the extension, this can lead to software fallback on some old GPU's

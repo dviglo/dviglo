@@ -206,8 +206,6 @@ public:
     void SetDither(bool enable);
     /// Set whether to flush the GPU command buffer to prevent multiple frames being queued and uneven frame timesteps. Default off, may decrease performance if enabled. Not currently implemented on OpenGL.
     void SetFlushGPU(bool enable);
-    /// Set forced use of OpenGL 2 even if OpenGL 3 is available. Must be called before setting the screen mode for the first time. Default false. No effect on Direct3D9 & 11.
-    void SetForceGL2(bool enable);
     /// Set allowed screen orientations as a space-separated list of "LandscapeLeft", "LandscapeRight", "Portrait" and "PortraitUpsideDown". Affects currently only iOS platform.
     void SetOrientations(const String& orientations);
     /// Toggle between full screen and windowed mode. Return true if successful.
@@ -427,9 +425,6 @@ public:
 
     /// Return whether the GPU command buffer is flushed each frame.
     bool GetFlushGPU() const { return flushGPU_; }
-
-    /// Return whether OpenGL 2 use is forced. Effective only on OpenGL.
-    bool GetForceGL2() const { return forceGL2_; }
 
     /// Return allowed screen orientations.
     const String& GetOrientations() const { return orientations_; }
@@ -809,7 +804,6 @@ private:
     void SetSRGB_OGL(bool enable);
     void SetDither_OGL(bool enable);
     void SetFlushGPU_OGL(bool enable);
-    void SetForceGL2_OGL(bool enable);
     void Close_OGL();
     bool TakeScreenShot_OGL(Image& destImage);
     bool BeginFrame_OGL();
@@ -913,7 +907,6 @@ private:
     void SetSRGB_D3D11(bool enable);
     void SetDither_D3D11(bool enable);
     void SetFlushGPU_D3D11(bool enable);
-    void SetForceGL2_D3D11(bool enable);
     void Close_D3D11();
     bool TakeScreenShot_D3D11(Image& destImage);
     bool BeginFrame_D3D11();
@@ -1037,8 +1030,6 @@ private:
     ScreenModeParams screenParams_;
     /// Flush GPU command buffer flag.
     bool flushGPU_{};
-    /// Force OpenGL 2 flag. Only used on OpenGL.
-    bool forceGL2_{};
     /// sRGB conversion on write flag for the main window.
     bool sRGB_{};
     /// Light pre-pass rendering support flag.

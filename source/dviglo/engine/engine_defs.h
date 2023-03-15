@@ -15,7 +15,6 @@ static const String EP_EXTERNAL_WINDOW = "ExternalWindow";
 static const String EP_FLUSH_GPU = "FlushGPU";
 static const String EP_OPENGL = "OpenGL";
 static const String EP_DIRECT3D11 = "Direct3D11";
-static const String EP_FORCE_GL2 = "ForceGL2";
 static const String EP_FRAME_LIMITER = "FrameLimiter";
 static const String EP_FULL_SCREEN = "FullScreen";
 static const String EP_HEADLESS = "Headless";
