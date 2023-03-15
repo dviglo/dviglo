@@ -10,19 +10,20 @@ set(CMAKE_DEBUG_POSTFIX _d)
 
 # Начинаем формировать список исходников
 file(GLOB source_files
-    audio/*.cpp        audio/*.h
-    common/*.cpp       common/*.h
-    containers/*.cpp   containers/*.h
-    core/*.cpp         core/*.h
-    engine/*.cpp       engine/*.h
-    graphics/*.cpp     graphics/*.h
-    graphics_api/*.cpp graphics_api/*.h
-    input/*.cpp        input/*.h
-    io/*.cpp           io/*.h
-    math/*.cpp         math/*.h
-    resource/*.cpp     resource/*.h
-    scene/*.cpp        scene/*.h
-    ui/*.cpp           ui/*.h
+    audio/*.cpp                audio/*.h
+    common/*.cpp               common/*.h
+    containers/*.cpp           containers/*.h
+    core/*.cpp                 core/*.h
+    engine/*.cpp               engine/*.h
+    graphics/*.cpp             graphics/*.h
+    graphics_api/*.cpp         graphics_api/*.h
+    graphics_api/opengl/*.cpp  graphics_api/opengl/*.h
+    input/*.cpp                input/*.h
+    io/*.cpp                   io/*.h
+    math/*.cpp                 math/*.h
+    resource/*.cpp             resource/*.h
+    scene/*.cpp                scene/*.h
+    ui/*.cpp                   ui/*.h
 )
 
 # Заодно начинаем формировать содержимое файла dviglo_all.h
@@ -34,6 +35,7 @@ file(GLOB dviglo_all_content RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
     engine/*.h
     graphics/*.h
     graphics_api/*.h
+    graphics_api/opengl/*.h
     input/*.h
     io/*.h
     math/*.h
@@ -47,18 +49,6 @@ list(REMOVE_ITEM dviglo_all_content "common/debug_new.h" "common/config.h")
 
 # Обрамляем каждый элемент в списке
 list(TRANSFORM dviglo_all_content REPLACE "(.+)" "#include <dviglo/\\1>")
-
-if(DV_D3D11)
-    # Пополняем список исходников
-    file(GLOB tmp_var graphics_api/direct3d11/*.cpp graphics_api/direct3d11/*.h)
-    list(APPEND source_files ${tmp_var})
-endif()
-
-if(DV_OPENGL)
-    # Пополняем список исходников
-    file(GLOB tmp_var graphics_api/opengl/*.cpp graphics_api/opengl/*.h)
-    list(APPEND source_files ${tmp_var})
-endif()
 
 if(DV_NAVIGATION)
     # Пополняем список исходников
@@ -141,22 +131,15 @@ endif()
 target_compile_definitions(${TARGET_NAME} PRIVATE DV_IS_BUILDING=1)
 
 # Подключаем библиотеки из папки third-party
-target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static stb rapidjson lz4 pugixml freetype etcpack)
+target_link_libraries(${TARGET_NAME} PUBLIC SDL3-static stb rapidjson lz4 pugixml freetype etcpack glew)
 
 # Не линкуем libcpuid при сборке для Linux
 if(NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
     target_link_libraries(${TARGET_NAME} PUBLIC libcpuid)
 endif()
 
-if(DV_D3D11)
-    target_compile_definitions(${TARGET_NAME} PUBLIC DV_D3D11=1)
-    target_link_libraries(${TARGET_NAME} PUBLIC ${DIRECT3D_LIBRARIES})
-endif()
-
-if(DV_OPENGL)
-    target_compile_definitions(${TARGET_NAME} PUBLIC DV_OPENGL=1)
-    target_link_libraries(${TARGET_NAME} PUBLIC glew)
-endif()
+# TODO: Будет удалено
+target_compile_definitions(${TARGET_NAME} PUBLIC DV_OPENGL=1)
 
 if(DV_MINIDUMPS)
     target_compile_definitions(${TARGET_NAME} PUBLIC DV_MINIDUMPS=1)
