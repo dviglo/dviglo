@@ -175,7 +175,7 @@ bool ShaderProgram_OGL::Link()
 #ifndef DV_GLES2
     HashMap<unsigned, unsigned> blockToBinding;
 
-    if (Graphics::GetGL3Support())
+    //if (Graphics::GetGL3Support())
     {
         int numUniformBlocks = 0;
 
@@ -262,7 +262,7 @@ bool ShaderProgram_OGL::Link()
 
 #ifndef DV_GLES2
             // If running OpenGL 3, the uniform may be inside a constant buffer
-            if (parameter.location_ < 0 && Graphics::GetGL3Support())
+            if (parameter.location_ < 0)
             {
                 int blockIndex, blockOffset;
                 glGetActiveUniformsiv(object_.name_, 1, (const GLuint*)&i, GL_UNIFORM_BLOCK_INDEX, &blockIndex);

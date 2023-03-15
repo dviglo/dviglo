@@ -19,18 +19,6 @@
 namespace dviglo
 {
 
-static GLenum glWrapModes[] =
-{
-    GL_REPEAT,
-    GL_MIRRORED_REPEAT,
-    GL_CLAMP_TO_EDGE,
-#ifndef GL_ES_VERSION_2_0
-    GL_CLAMP
-#else
-    GL_CLAMP_TO_EDGE
-#endif
-};
-
 #ifndef GL_ES_VERSION_2_0
 static GLenum gl3WrapModes[] =
 {
@@ -43,11 +31,7 @@ static GLenum gl3WrapModes[] =
 
 static GLenum GetWrapMode(TextureAddressMode mode)
 {
-#ifndef GL_ES_VERSION_2_0
-    return Graphics::GetGL3Support() ? gl3WrapModes[mode] : glWrapModes[mode];
-#else
-    return glWrapModes[mode];
-#endif
+    return gl3WrapModes[mode];
 }
 
 void Texture::SetSRGB_OGL(bool enable)
@@ -375,14 +359,7 @@ void Texture::RegenerateLevels_OGL()
     if (!object_.name_)
         return;
 
-#ifndef GL_ES_VERSION_2_0
-    if (Graphics::GetGL3Support())
-        glGenerateMipmap(target_);
-    else
-        glGenerateMipmapEXT(target_);
-#else
     glGenerateMipmap(target_);
-#endif
 
     levelsDirty_ = false;
 }

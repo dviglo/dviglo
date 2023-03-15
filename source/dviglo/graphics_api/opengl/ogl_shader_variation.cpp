@@ -110,7 +110,7 @@ bool ShaderVariation::Create_OGL()
         }
     }
     // Force GLSL version 150 if no version define and GL3 is being used
-    if (!verEnd && Graphics::GetGL3Support())
+    if (!verEnd)
     {
 #if defined(MOBILE_GRAPHICS) || DV_GLES3
         shaderCode += "#version 300 es\n";
@@ -153,8 +153,7 @@ bool ShaderVariation::Create_OGL()
 #ifdef __EMSCRIPTEN__
     shaderCode += "#define WEBGL\n";
 #endif
-    if (Graphics::GetGL3Support())
-        shaderCode += "#define GL3\n";
+    shaderCode += "#define GL3\n";
 
     // When version define found, do not insert it a second time
     if (verEnd > 0)

@@ -158,7 +158,7 @@ bool Texture3D::SetData_OGL(Image* image, bool useAlpha)
     {
         // Convert unsuitable formats to RGBA
         unsigned components = image->GetComponents();
-        if (Graphics::GetGL3Support() && ((components == 1 && !useAlpha) || components == 2))
+        if ((components == 1 && !useAlpha) || components == 2)
         {
             mipImage = image->ConvertToRGBA(); image = mipImage;
             if (!image)

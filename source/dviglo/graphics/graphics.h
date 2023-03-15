@@ -675,8 +675,6 @@ public:
 
     /// Return maximum number of supported bones for skinning.
     static unsigned GetMaxBones();
-    /// Return whether is using an OpenGL 3 context. Return always false on Direct3D9 & Direct3D11.
-    static bool GetGL3Support();
 
 private:
     /// Create the application window icon.
@@ -820,7 +818,6 @@ private:
     ConstantBuffer* GetOrCreateConstantBuffer_OGL(ShaderType type, unsigned index, unsigned size);
 
     static unsigned GetMaxBones_OGL();
-    static bool GetGL3Support_OGL();
     static unsigned GetAlphaFormat_OGL();
     static unsigned GetLuminanceFormat_OGL();
     static unsigned GetLuminanceAlphaFormat_OGL();
@@ -1001,8 +998,6 @@ private:
     /// Version of GL drivers
     String versionString_;
 #endif
-    /// OpenGL3 support flag.
-    inline static bool gl3Support;
 };
 
 /// Register Graphics library objects.

@@ -1478,18 +1478,6 @@ unsigned Graphics::GetMaxBones()
     return {}; // Prevent warning
 }
 
-bool Graphics::GetGL3Support()
-{
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return GetGL3Support_OGL();
-#endif
-
-    return {}; // Prevent warning
-}
-
 unsigned Graphics::GetAlphaFormat()
 {
     GAPI gapi = GParams::get_gapi();

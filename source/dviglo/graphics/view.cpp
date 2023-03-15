@@ -1978,8 +1978,7 @@ void View::AllocateScreenBuffers()
         // Due to FBO limitations, in OpenGL deferred modes need to render to texture first and then blit to the backbuffer
         // Also, if rendering to a texture with full deferred rendering, it must be RGBA to comply with the rest of the buffers,
         // unless using OpenGL 3
-        if (((deferred_ || hasScenePassToRTs) && !renderTarget_) || (!Graphics::GetGL3Support() && deferredAmbient_ && renderTarget_
-            && renderTarget_->GetParentTexture()->GetFormat() != Graphics::GetRGBAFormat()))
+        if ((deferred_ || hasScenePassToRTs) && !renderTarget_)
             needSubstitute = true;
         // Also need substitute if rendering to backbuffer using a custom (readable) depth buffer
         if (!renderTarget_ && hasCustomDepth)
@@ -2006,10 +2005,6 @@ void View::AllocateScreenBuffers()
         format = Graphics::GetRGBAFloat16Format();
         needSubstitute = true;
     }
-
-    // On OpenGL 2 ensure that all MRT buffers are RGBA in deferred rendering
-    if (deferred_ && !renderer.GetHDRRendering() && GParams::get_gapi() == GAPI_OPENGL && !Graphics::GetGL3Support())
-        format = Graphics::GetRGBAFormat();
 
     if (hasViewportRead)
     {
