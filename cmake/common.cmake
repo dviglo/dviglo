@@ -160,12 +160,6 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
             list(APPEND libs ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS})
         endif()
 
-        # Добавляем d3dcompiler_xx.dll в список. Этот файл есть в Windows SDK,
-        # но отсутствует в DirectX redist, поэтому его надо распространять вместе с игрой
-        if(WIN32)
-            list(APPEND libs ${DIRECT3D_DLL})
-        endif()
-
         # Если список пустой, то не создаём кастомный таргет
         if(NOT libs)
             return()
