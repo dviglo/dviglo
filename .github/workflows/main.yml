@@ -151,7 +151,7 @@ jobs:
         rm mesa.7z
 
         # Перемещаем нужные dll в папку bin
-        mv mesa/x64/dxil.dll build/bin
+        #mv mesa/x64/dxil.dll build/bin # Используется при эмуляции через DirectX
         mv mesa/x64/libgallium_wgl.dll build/bin
         mv mesa/x64/libglapi.dll build/bin
         mv mesa/x64/opengl32.dll build/bin
@@ -166,6 +166,11 @@ jobs:
           # Для Visual Studio нужно указывать тип сборки (конфигурацию)
           ARGS+=(-C ${{ matrix.BUILD_TYPE }})
         fi
+
+        # Настройка для Mesa (не используем DirectX для эмуляции).
+        # Без этого не проходит тест примера pbr_materials.
+        # https://docs.mesa3d.org/envvars.html
+        export LIBGL_ALWAYS_SOFTWARE=true
 
         ctest "${ARGS[@]}"
         EXIT_CODE=$? # Код возврата предыдущей команды
