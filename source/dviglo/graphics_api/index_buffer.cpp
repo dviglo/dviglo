@@ -130,11 +130,6 @@ void IndexBuffer::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void IndexBuffer::OnDeviceReset()
@@ -144,11 +139,6 @@ void IndexBuffer::OnDeviceReset()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceReset_D3D11();
 #endif
 }
 
@@ -160,11 +150,6 @@ void IndexBuffer::Release()
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
-#endif
 }
 
 bool IndexBuffer::SetData(const void* data)
@@ -174,11 +159,6 @@ bool IndexBuffer::SetData(const void* data)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(data);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(data);;
 #endif
 
     return {}; // Prevent warning
@@ -194,11 +174,6 @@ bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool disc
         return SetDataRange_OGL(data, start, count, discard);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDataRange_D3D11(data, start, count, discard);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -212,11 +187,6 @@ void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
         return Lock_OGL(start, count, discard);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Lock_D3D11(start, count, discard);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -227,11 +197,6 @@ void IndexBuffer::Unlock()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Unlock_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Unlock_D3D11();
 #endif
 }
 
@@ -244,11 +209,6 @@ bool IndexBuffer::Create()
         return Create_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Create_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -259,11 +219,6 @@ bool IndexBuffer::UpdateToGPU()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return UpdateToGPU_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return UpdateToGPU_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -279,11 +234,6 @@ void* IndexBuffer::MapBuffer(i32 start, i32 count, bool discard)
         return MapBuffer_OGL(start, count, discard);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return MapBuffer_D3D11(start, count, discard);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -294,11 +244,6 @@ void IndexBuffer::UnmapBuffer()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return UnmapBuffer_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return UnmapBuffer_D3D11();
 #endif
 }
 

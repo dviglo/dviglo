@@ -100,14 +100,6 @@ RenderSurface::RenderSurface(Texture* parentTexture)
         return;
     }
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-    {
-        Constructor_D3D11(parentTexture);
-        return;
-    }
-#endif
 }
 
 bool RenderSurface::CreateRenderBuffer(unsigned width, unsigned height, unsigned format, int multiSample)
@@ -117,11 +109,6 @@ bool RenderSurface::CreateRenderBuffer(unsigned width, unsigned height, unsigned
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return CreateRenderBuffer_OGL(width, height, format, multiSample);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return CreateRenderBuffer_D3D11(width, height, format, multiSample);
 #endif
 
     return {}; // Prevent warning
@@ -135,11 +122,6 @@ void RenderSurface::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void RenderSurface::Release()
@@ -149,11 +131,6 @@ void RenderSurface::Release()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
 #endif
 }
 

@@ -42,20 +42,11 @@ class VertexBuffer;
 class GraphicsImpl_OGL;
 #endif
 
-#ifdef DV_D3D11
-class GraphicsImpl_D3D11;
-#endif
-
 struct ShaderParameter;
 
 #ifdef DV_OPENGL
 // Note: ShaderProgram_OGL class is purposefully API-specific. It should not be used by Urho3D client applications.
 class ShaderProgram_OGL;
-#endif
-
-#ifdef DV_D3D11
-// Note: ShaderProgram_D3D11 class is purposefully API-specific. It should not be used by Urho3D client applications.
-class ShaderProgram_D3D11;
 #endif
 
 /// Структура, которая хранит параметры графики
@@ -354,15 +345,6 @@ public:
     }
 #endif
 
-#ifdef DV_D3D11
-    /// Return graphics implementation, which holds the actual API-specific resources.
-    GraphicsImpl_D3D11* GetImpl_D3D11() const
-    {
-        assert(GParams::get_gapi() == GAPI_D3D11);
-        return static_cast<GraphicsImpl_D3D11*>(impl_);
-    }
-#endif
-
     /// Return OS-specific external window handle. Null if not in use.
     void* GetExternalWindow() const { return externalWindow_; }
 
@@ -514,16 +496,6 @@ public:
 
     /// Clean up shader parameters when a shader variation is released or destroyed.
     void CleanupShaderPrograms_OGL(ShaderVariation* variation);
-#endif
-
-#ifdef DV_D3D11
-    // Note: ShaderProgram_D3D11 class is purposefully API-specific. It should not be used by Urho3D client applications.
-
-    /// Return shader program. This is an API-specific class and should not be used by applications.
-    ShaderProgram_D3D11* GetShaderProgram_D3D11() const;
-
-    /// Clean up shader parameters when a shader variation is released or destroyed.
-    void CleanupShaderPrograms_D3D11(ShaderVariation* variation);
 #endif
 
     /// Return texture unit index by name.
@@ -716,38 +688,6 @@ private:
     /// Called when screen mode is successfully changed by the backend.
     void OnScreenModeChanged();
 
-#ifdef DV_D3D11
-    /// Create the application window.
-    bool OpenWindow_D3D11(int width, int height, bool resizable, bool borderless);
-
-    /// Adjust the window for new resolution and fullscreen mode.
-    void AdjustWindow_D3D11(int& newWidth, int& newHeight, bool& newFullscreen, bool& newBorderless, bool& newResizable, int& monitor);
-
-    /// Create the Direct3D11 device and swap chain. Requires an open window. Can also be called again to recreate swap chain. Return true on success.
-    bool CreateDevice_D3D11(int width, int height);
-
-    /// Update Direct3D11 swap chain state for a new mode and create views for the backbuffer & default depth buffer. Return true on success.
-    bool UpdateSwapChain_D3D11(int width, int height);
-
-    /// Create intermediate texture for multisampled backbuffer resolve. No-op if already exists.
-    void CreateResolveTexture_D3D11();
-
-    /// Process dirtied state before draw.
-    void PrepareDraw_D3D11();
-
-    /// Check supported rendering features.
-    void CheckFeatureSupport_D3D11();
-
-    /// Reset cached rendering state.
-    void ResetCachedState_D3D11();
-
-    /// Initialize texture unit mappings.
-    void SetTextureUnitMappings_D3D11();
-
-    /// Dirty texture parameters of all textures (when global settings change). Used on OpenGL and DirectX 11.
-    void SetTextureParametersDirty_D3D11();
-#endif // def DV_D3D11
-
 #ifdef DV_OPENGL
     /// Clean up all framebuffers. Called when destroying the context. Used only on OpenGL.
     void CleanupFramebuffers_OGL();
@@ -899,109 +839,6 @@ private:
     static unsigned GetReadableDepthFormat_OGL();
     static unsigned GetFormat_OGL(const String& formatName);
 #endif // def DV_OPENGL
-
-#ifdef DV_D3D11
-    void Constructor_D3D11();
-    void Destructor_D3D11();
-    bool SetScreenMode_D3D11(int width, int height, const ScreenModeParams& params, bool maximize);
-    void SetSRGB_D3D11(bool enable);
-    void SetDither_D3D11(bool enable);
-    void SetFlushGPU_D3D11(bool enable);
-    void Close_D3D11();
-    bool TakeScreenShot_D3D11(Image& destImage);
-    bool BeginFrame_D3D11();
-    void EndFrame_D3D11();
-    void Clear_D3D11(ClearTargetFlags flags, const Color& color = Color(0.0f, 0.0f, 0.0f, 0.0f), float depth = 1.0f, u32 stencil = 0);
-    bool ResolveToTexture_D3D11(Texture2D* destination, const IntRect& viewport);
-    bool ResolveToTexture_D3D11(Texture2D* texture);
-    bool ResolveToTexture_D3D11(TextureCube* texture);
-    void Draw_D3D11(PrimitiveType type, unsigned vertexStart, unsigned vertexCount);
-    void Draw_D3D11(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount);
-    void Draw_D3D11(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex, unsigned vertexCount);
-    void DrawInstanced_D3D11(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount, unsigned instanceCount);
-    void DrawInstanced_D3D11(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex, unsigned vertexCount, unsigned instanceCount);
-    void SetVertexBuffer_D3D11(VertexBuffer* buffer);
-    bool SetVertexBuffers_D3D11(const Vector<VertexBuffer*>& buffers, unsigned instanceOffset = 0);
-    bool SetVertexBuffers_D3D11(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset = 0);
-    void SetIndexBuffer_D3D11(IndexBuffer* buffer);
-    void SetShaders_D3D11(ShaderVariation* vs, ShaderVariation* ps);
-    void SetShaderParameter_D3D11(StringHash param, const float* data, unsigned count);
-    void SetShaderParameter_D3D11(StringHash param, float value);
-    void SetShaderParameter_D3D11(StringHash param, int value);
-    void SetShaderParameter_D3D11(StringHash param, bool value);
-    void SetShaderParameter_D3D11(StringHash param, const Color& color);
-    void SetShaderParameter_D3D11(StringHash param, const Vector2& vector);
-    void SetShaderParameter_D3D11(StringHash param, const Matrix3& matrix);
-    void SetShaderParameter_D3D11(StringHash param, const Vector3& vector);
-    void SetShaderParameter_D3D11(StringHash param, const Matrix4& matrix);
-    void SetShaderParameter_D3D11(StringHash param, const Vector4& vector);
-    void SetShaderParameter_D3D11(StringHash param, const Matrix3x4& matrix);
-    bool NeedParameterUpdate_D3D11(ShaderParameterGroup group, const void* source);
-    bool HasShaderParameter_D3D11(StringHash param);
-    bool HasTextureUnit_D3D11(TextureUnit unit);
-    void ClearParameterSource_D3D11(ShaderParameterGroup group);
-    void ClearParameterSources_D3D11();
-    void ClearTransformSources_D3D11();
-    void SetTexture_D3D11(unsigned index, Texture* texture);
-    void SetDefaultTextureFilterMode_D3D11(TextureFilterMode mode);
-    void SetDefaultTextureAnisotropy_D3D11(unsigned level);
-    void ResetRenderTargets_D3D11();
-    void ResetRenderTarget_D3D11(unsigned index);
-    void ResetDepthStencil_D3D11();
-    void SetRenderTarget_D3D11(unsigned index, RenderSurface* renderTarget);
-    void SetRenderTarget_D3D11(unsigned index, Texture2D* texture);
-    void SetDepthStencil_D3D11(RenderSurface* depthStencil);
-    void SetDepthStencil_D3D11(Texture2D* texture);
-    void SetViewport_D3D11(const IntRect& rect);
-    void SetBlendMode_D3D11(BlendMode mode, bool alphaToCoverage = false);
-    void SetColorWrite_D3D11(bool enable);
-    void SetCullMode_D3D11(CullMode mode);
-    void SetDepthBias_D3D11(float constantBias, float slopeScaledBias);
-    void SetDepthTest_D3D11(CompareMode mode);
-    void SetDepthWrite_D3D11(bool enable);
-    void SetFillMode_D3D11(FillMode mode);
-    void SetLineAntiAlias_D3D11(bool enable);
-    void SetScissorTest_D3D11(bool enable, const Rect& rect = Rect::FULL, bool borderInclusive = true);
-    void SetScissorTest_D3D11(bool enable, const IntRect& rect);
-    void SetClipPlane_D3D11(bool enable, const Plane& clipPlane, const Matrix3x4& view, const Matrix4& projection);
-    void SetStencilTest_D3D11(bool enable, CompareMode mode = CMP_ALWAYS, StencilOp pass = OP_KEEP, StencilOp fail = OP_KEEP, StencilOp zFail = OP_KEEP, u32 stencilRef = 0, u32 compareMask = M_U32_MASK_ALL_BITS, u32 writeMask = M_U32_MASK_ALL_BITS);
-    bool IsInitialized_D3D11() const;
-    bool GetDither_D3D11() const;
-    bool IsDeviceLost_D3D11() const;
-    Vector<int> GetMultiSampleLevels_D3D11() const;
-    unsigned GetFormat_D3D11(CompressedFormat format) const;
-    ShaderVariation* GetShader_D3D11(ShaderType type, const String& name, const String& defines = String::EMPTY) const;
-    ShaderVariation* GetShader_D3D11(ShaderType type, const char* name, const char* defines) const;
-    VertexBuffer* GetVertexBuffer_D3D11(unsigned index) const;
-    TextureUnit GetTextureUnit_D3D11(const String& name);
-    const String& GetTextureUnitName_D3D11(TextureUnit unit);
-    Texture* GetTexture_D3D11(unsigned index) const;
-    RenderSurface* GetRenderTarget_D3D11(unsigned index) const;
-    IntVector2 GetRenderTargetDimensions_D3D11() const;
-    void OnWindowResized_D3D11();
-    void OnWindowMoved_D3D11();
-    ConstantBuffer* GetOrCreateConstantBuffer_D3D11(ShaderType type, unsigned index, unsigned size);
-
-    static unsigned GetMaxBones_D3D11();
-    static bool GetGL3Support_D3D11();
-    static unsigned GetAlphaFormat_D3D11();
-    static unsigned GetLuminanceFormat_D3D11();
-    static unsigned GetLuminanceAlphaFormat_D3D11();
-    static unsigned GetRGBFormat_D3D11();
-    static unsigned GetRGBAFormat_D3D11();
-    static unsigned GetRGBA16Format_D3D11();
-    static unsigned GetRGBAFloat16Format_D3D11();
-    static unsigned GetRGBAFloat32Format_D3D11();
-    static unsigned GetRG16Format_D3D11();
-    static unsigned GetRGFloat16Format_D3D11();
-    static unsigned GetRGFloat32Format_D3D11();
-    static unsigned GetFloat16Format_D3D11();
-    static unsigned GetFloat32Format_D3D11();
-    static unsigned GetLinearDepthFormat_D3D11();
-    static unsigned GetDepthStencilFormat_D3D11();
-    static unsigned GetReadableDepthFormat_D3D11();
-    static unsigned GetFormat_D3D11(const String& formatName);
-#endif // def DV_D3D11
 
     /// Mutex for accessing the GPU objects vector from several threads.
     std::recursive_mutex gpuObjectMutex_;

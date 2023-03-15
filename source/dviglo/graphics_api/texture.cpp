@@ -269,11 +269,6 @@ void Texture::SetSRGB(bool enable)
     if (gapi == GAPI_OPENGL)
         return SetSRGB_OGL(enable);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetSRGB_D3D11(enable);
-#endif
 }
 
 void Texture::UpdateParameters()
@@ -284,11 +279,6 @@ void Texture::UpdateParameters()
     if (gapi == GAPI_OPENGL)
         return UpdateParameters_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return UpdateParameters_D3D11();
-#endif
 }
 
 bool Texture::GetParametersDirty() const
@@ -298,11 +288,6 @@ bool Texture::GetParametersDirty() const
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetParametersDirty_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetParametersDirty_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -317,11 +302,6 @@ bool Texture::IsCompressed() const
         return IsCompressed_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return IsCompressed_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -334,11 +314,6 @@ unsigned Texture::GetRowDataSize(int width) const
         return GetRowDataSize_OGL(width);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRowDataSize_D3D11(width);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -349,11 +324,6 @@ void Texture::RegenerateLevels()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return RegenerateLevels_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return RegenerateLevels_D3D11();
 #endif
 }
 

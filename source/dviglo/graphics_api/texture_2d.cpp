@@ -178,11 +178,6 @@ void Texture2D::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void Texture2D::OnDeviceReset()
@@ -192,11 +187,6 @@ void Texture2D::OnDeviceReset()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceReset_D3D11();
 #endif
 }
 
@@ -208,11 +198,6 @@ void Texture2D::Release()
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
-#endif
 }
 
 bool Texture2D::SetData(unsigned level, int x, int y, int width, int height, const void* data)
@@ -222,11 +207,6 @@ bool Texture2D::SetData(unsigned level, int x, int y, int width, int height, con
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(level, x, y, width, height, data);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(level, x, y, width, height, data);
 #endif
 
     return {}; // Prevent warning
@@ -241,11 +221,6 @@ bool Texture2D::SetData(Image* image, bool useAlpha)
         return SetData_OGL(image, useAlpha);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(image, useAlpha);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -258,11 +233,6 @@ bool Texture2D::GetData(unsigned level, void* dest) const
         return GetData_OGL(level, dest);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetData_D3D11(level, dest);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -273,11 +243,6 @@ bool Texture2D::Create()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Create_D3D11();
 #endif
 
     return {}; // Prevent warning

@@ -51,13 +51,6 @@ private:
     void Apply_OGL();
 #endif // def DV_OPENGL
 
-#ifdef DV_D3D11
-    void Release_D3D11();
-    void OnDeviceReset_D3D11();
-    bool SetSize_D3D11(unsigned size);
-    void Apply_D3D11();
-#endif // def DV_D3D11
-
     /// Shadow data.
     SharedArrayPtr<unsigned char> shadowData_;
     /// Buffer byte size.

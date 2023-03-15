@@ -174,17 +174,6 @@ protected:
     static unsigned GetExternalFormat_OGL(unsigned format);
 #endif // def DV_OPENGL
 
-#ifdef DV_D3D11
-    /// Convert format to sRGB. Not used on Direct3D9.
-    unsigned GetSRGBFormat_D3D11(unsigned format);
-
-    /// Return the shader resource view format corresponding to a texture format. Handles conversion of typeless depth texture formats. Only used on Direct3D11.
-    static unsigned GetSRVFormat_D3D11(unsigned format);
-
-    /// Return the depth-stencil view format corresponding to a texture format. Handles conversion of typeless depth texture formats. Only used on Direct3D11.
-    static unsigned GetDSVFormat_D3D11(unsigned format);
-#endif // def DV_D3D11
-
     // For proxy functions
 
 #ifdef DV_OPENGL
@@ -195,15 +184,6 @@ protected:
     unsigned GetRowDataSize_OGL(int width) const;
     void RegenerateLevels_OGL();
 #endif // def DV_OPENGL
-
-#ifdef DV_D3D11
-    void SetSRGB_D3D11(bool enable);
-    void UpdateParameters_D3D11();
-    bool GetParametersDirty_D3D11() const;
-    bool IsCompressed_D3D11() const;
-    unsigned GetRowDataSize_D3D11(int width) const;
-    void RegenerateLevels_D3D11();
-#endif // def DV_D3D11
 
     /// Check whether texture memory budget has been exceeded. Free unused materials in that case to release the texture references.
     void CheckTextureBudget(StringHash type);

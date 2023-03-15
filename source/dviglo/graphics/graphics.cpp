@@ -612,14 +612,6 @@ Graphics::Graphics()
     }
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-    {
-        Constructor_D3D11();
-        goto end;
-    }
-#endif
-
 end:
     DV_LOGDEBUG("Singleton Graphics constructed");
 }
@@ -632,14 +624,6 @@ Graphics::~Graphics()
     if (gapi == GAPI_OPENGL)
     {
         Destructor_OGL();
-        goto end;
-    }
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-    {
-        Destructor_D3D11();
         goto end;
     }
 #endif
@@ -659,11 +643,6 @@ bool Graphics::SetScreenMode(int width, int height, const ScreenModeParams& para
         return SetScreenMode_OGL(width, height, params, maximize);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetScreenMode_D3D11(width, height, params, maximize);;
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -675,11 +654,6 @@ void Graphics::SetSRGB(bool enable)
     if (gapi == GAPI_OPENGL)
         return SetSRGB_OGL(enable);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetSRGB_D3D11(enable);
-#endif
 }
 
 void Graphics::SetDither(bool enable)
@@ -689,11 +663,6 @@ void Graphics::SetDither(bool enable)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDither_OGL(enable);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDither_D3D11(enable);
 #endif
 }
 
@@ -705,11 +674,6 @@ void Graphics::SetFlushGPU(bool enable)
     if (gapi == GAPI_OPENGL)
         return SetFlushGPU_OGL(enable);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetFlushGPU_D3D11(enable);;
-#endif
 }
 
 void Graphics::Close()
@@ -720,11 +684,6 @@ void Graphics::Close()
     if (gapi == GAPI_OPENGL)
         return Close_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Close_D3D11();
-#endif
 }
 
 bool Graphics::TakeScreenShot(Image& destImage)
@@ -734,11 +693,6 @@ bool Graphics::TakeScreenShot(Image& destImage)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return TakeScreenShot_OGL(destImage);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return TakeScreenShot_D3D11(destImage);
 #endif
 
     return {}; // Prevent warning
@@ -753,11 +707,6 @@ bool Graphics::BeginFrame()
         return BeginFrame_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return BeginFrame_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -769,11 +718,6 @@ void Graphics::EndFrame()
     if (gapi == GAPI_OPENGL)
         return EndFrame_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return EndFrame_D3D11();
-#endif
 }
 
 void Graphics::Clear(ClearTargetFlags flags, const Color& color, float depth, unsigned stencil)
@@ -784,11 +728,6 @@ void Graphics::Clear(ClearTargetFlags flags, const Color& color, float depth, un
     if (gapi == GAPI_OPENGL)
         return Clear_OGL(flags, color, depth, stencil);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Clear_D3D11(flags, color, depth, stencil);
-#endif
 }
 
 bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect& viewport)
@@ -798,11 +737,6 @@ bool Graphics::ResolveToTexture(Texture2D* destination, const IntRect& viewport)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return ResolveToTexture_OGL(destination, viewport);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ResolveToTexture_D3D11(destination, viewport);
 #endif
 
     return {}; // Prevent warning
@@ -817,11 +751,6 @@ bool Graphics::ResolveToTexture(Texture2D* texture)
         return ResolveToTexture_OGL(texture);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ResolveToTexture_D3D11(texture);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -832,11 +761,6 @@ bool Graphics::ResolveToTexture(TextureCube* texture)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return ResolveToTexture_OGL(texture);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ResolveToTexture_D3D11(texture);
 #endif
 
     return {}; // Prevent warning
@@ -850,11 +774,6 @@ void Graphics::Draw(PrimitiveType type, unsigned vertexStart, unsigned vertexCou
     if (gapi == GAPI_OPENGL)
         return Draw_OGL(type, vertexStart, vertexCount);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Draw_D3D11(type, vertexStart, vertexCount);;
-#endif
 }
 
 void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount)
@@ -864,11 +783,6 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Draw_OGL(type, indexStart, indexCount, minVertex, vertexCount);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Draw_D3D11(type, indexStart, indexCount, minVertex, vertexCount);
 #endif
 }
 
@@ -880,11 +794,6 @@ void Graphics::Draw(PrimitiveType type, unsigned indexStart, unsigned indexCount
     if (gapi == GAPI_OPENGL)
         return Draw_OGL(type, indexStart, indexCount, baseVertexIndex, minVertex, vertexCount);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Draw_D3D11(type, indexStart, indexCount, baseVertexIndex, minVertex, vertexCount);
-#endif
 }
 
 void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount, unsigned instanceCount)
@@ -894,11 +803,6 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return DrawInstanced_OGL(type, indexStart, indexCount, minVertex, vertexCount, instanceCount);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return DrawInstanced_D3D11(type, indexStart, indexCount, minVertex, vertexCount, instanceCount);
 #endif
 }
 
@@ -911,11 +815,6 @@ void Graphics::DrawInstanced(PrimitiveType type, unsigned indexStart, unsigned i
     if (gapi == GAPI_OPENGL)
         return DrawInstanced_OGL(type, indexStart, indexCount, baseVertexIndex, minVertex, vertexCount, instanceCount);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return DrawInstanced_D3D11(type, indexStart, indexCount, baseVertexIndex, minVertex, vertexCount, instanceCount);
-#endif
 }
 
 void Graphics::SetVertexBuffer(VertexBuffer* buffer)
@@ -926,11 +825,6 @@ void Graphics::SetVertexBuffer(VertexBuffer* buffer)
     if (gapi == GAPI_OPENGL)
         return SetVertexBuffer_OGL(buffer);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetVertexBuffer_D3D11(buffer);
-#endif
 }
 
 bool Graphics::SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned instanceOffset)
@@ -940,11 +834,6 @@ bool Graphics::SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned i
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetVertexBuffers_OGL(buffers, instanceOffset);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetVertexBuffers_D3D11(buffers, instanceOffset);
 #endif
 
     return {}; // Prevent warning
@@ -959,11 +848,6 @@ bool Graphics::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, 
         return SetVertexBuffers_OGL(buffers, instanceOffset);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetVertexBuffers_D3D11(buffers, instanceOffset);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -975,11 +859,6 @@ void Graphics::SetIndexBuffer(IndexBuffer* buffer)
     if (gapi == GAPI_OPENGL)
         return SetIndexBuffer_OGL(buffer);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetIndexBuffer_D3D11(buffer);
-#endif
 }
 
 void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
@@ -989,11 +868,6 @@ void Graphics::SetShaders(ShaderVariation* vs, ShaderVariation* ps)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetShaders_OGL(vs, ps);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaders_D3D11(vs, ps);
 #endif
 }
 
@@ -1005,11 +879,6 @@ void Graphics::SetShaderParameter(StringHash param, const float* data, unsigned 
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, data, count);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, data, count);
-#endif
 }
 
 void Graphics::SetShaderParameter(StringHash param, float value)
@@ -1019,11 +888,6 @@ void Graphics::SetShaderParameter(StringHash param, float value)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, value);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, value);
 #endif
 }
 
@@ -1035,11 +899,6 @@ void Graphics::SetShaderParameter(StringHash param, int value)
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, value);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, value);
-#endif
 }
 
 void Graphics::SetShaderParameter(StringHash param, bool value)
@@ -1049,11 +908,6 @@ void Graphics::SetShaderParameter(StringHash param, bool value)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, value);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, value);
 #endif
 }
 
@@ -1065,11 +919,6 @@ void Graphics::SetShaderParameter(StringHash param, const Color& color)
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, color);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, color);
-#endif
 }
 
 void Graphics::SetShaderParameter(StringHash param, const Vector2& vector)
@@ -1079,11 +928,6 @@ void Graphics::SetShaderParameter(StringHash param, const Vector2& vector)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, vector);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, vector);
 #endif
 }
 
@@ -1095,11 +939,6 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix3& matrix)
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, matrix);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, matrix);
-#endif
 }
 
 void Graphics::SetShaderParameter(StringHash param, const Vector3& vector)
@@ -1109,11 +948,6 @@ void Graphics::SetShaderParameter(StringHash param, const Vector3& vector)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, vector);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, vector);
 #endif
 }
 
@@ -1125,11 +959,6 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix4& matrix)
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, matrix);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, matrix);
-#endif
 }
 
 void Graphics::SetShaderParameter(StringHash param, const Vector4& vector)
@@ -1139,11 +968,6 @@ void Graphics::SetShaderParameter(StringHash param, const Vector4& vector)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, vector);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, vector);
 #endif
 }
 
@@ -1155,11 +979,6 @@ void Graphics::SetShaderParameter(StringHash param, const Matrix3x4& matrix)
     if (gapi == GAPI_OPENGL)
         return SetShaderParameter_OGL(param, matrix);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetShaderParameter_D3D11(param, matrix);
-#endif
 }
 
 bool Graphics::NeedParameterUpdate(ShaderParameterGroup group, const void* source)
@@ -1169,11 +988,6 @@ bool Graphics::NeedParameterUpdate(ShaderParameterGroup group, const void* sourc
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return NeedParameterUpdate_OGL(group, source);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return NeedParameterUpdate_D3D11(group, source);
 #endif
 
     return {}; // Prevent warning
@@ -1188,11 +1002,6 @@ bool Graphics::HasShaderParameter(StringHash param)
         return HasShaderParameter_OGL(param);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return HasShaderParameter_D3D11(param);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1203,11 +1012,6 @@ bool Graphics::HasTextureUnit(TextureUnit unit)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return HasTextureUnit_OGL(unit);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return HasTextureUnit_D3D11(unit);
 #endif
 
     return {}; // Prevent warning
@@ -1221,11 +1025,6 @@ void Graphics::ClearParameterSource(ShaderParameterGroup group)
     if (gapi == GAPI_OPENGL)
         return ClearParameterSource_OGL(group);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ClearParameterSource_D3D11(group);
-#endif
 }
 
 void Graphics::ClearParameterSources()
@@ -1235,11 +1034,6 @@ void Graphics::ClearParameterSources()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return ClearParameterSources_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ClearParameterSources_D3D11();
 #endif
 }
 
@@ -1251,11 +1045,6 @@ void Graphics::ClearTransformSources()
     if (gapi == GAPI_OPENGL)
         return ClearTransformSources_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ClearTransformSources_D3D11();
-#endif
 }
 
 void Graphics::SetTexture(unsigned index, Texture* texture)
@@ -1265,11 +1054,6 @@ void Graphics::SetTexture(unsigned index, Texture* texture)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetTexture_OGL(index, texture);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetTexture_D3D11(index, texture);
 #endif
 }
 
@@ -1281,11 +1065,6 @@ void Graphics::SetDefaultTextureFilterMode(TextureFilterMode mode)
     if (gapi == GAPI_OPENGL)
         return SetDefaultTextureFilterMode_OGL(mode);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDefaultTextureFilterMode_D3D11(mode);
-#endif
 }
 
 void Graphics::SetDefaultTextureAnisotropy(unsigned level)
@@ -1295,11 +1074,6 @@ void Graphics::SetDefaultTextureAnisotropy(unsigned level)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDefaultTextureAnisotropy_OGL(level);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDefaultTextureAnisotropy_D3D11(level);
 #endif
 }
 
@@ -1311,11 +1085,6 @@ void Graphics::ResetRenderTargets()
     if (gapi == GAPI_OPENGL)
         return ResetRenderTargets_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ResetRenderTargets_D3D11();
-#endif
 }
 
 void Graphics::ResetRenderTarget(unsigned index)
@@ -1325,11 +1094,6 @@ void Graphics::ResetRenderTarget(unsigned index)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return ResetRenderTarget_OGL(index);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ResetRenderTarget_D3D11(index);
 #endif
 }
 
@@ -1341,11 +1105,6 @@ void Graphics::ResetDepthStencil()
     if (gapi == GAPI_OPENGL)
         return ResetDepthStencil_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return ResetDepthStencil_D3D11();
-#endif
 }
 
 void Graphics::SetRenderTarget(unsigned index, RenderSurface* renderTarget)
@@ -1355,11 +1114,6 @@ void Graphics::SetRenderTarget(unsigned index, RenderSurface* renderTarget)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetRenderTarget_OGL(index, renderTarget);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetRenderTarget_D3D11(index, renderTarget);
 #endif
 }
 
@@ -1371,11 +1125,6 @@ void Graphics::SetRenderTarget(unsigned index, Texture2D* texture)
     if (gapi == GAPI_OPENGL)
         return SetRenderTarget_OGL(index, texture);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetRenderTarget_D3D11(index, texture);
-#endif
 }
 
 void Graphics::SetDepthStencil(RenderSurface* depthStencil)
@@ -1385,11 +1134,6 @@ void Graphics::SetDepthStencil(RenderSurface* depthStencil)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDepthStencil_OGL(depthStencil);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDepthStencil_D3D11(depthStencil);
 #endif
 }
 
@@ -1401,11 +1145,6 @@ void Graphics::SetDepthStencil(Texture2D* texture)
     if (gapi == GAPI_OPENGL)
         return SetDepthStencil_OGL(texture);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDepthStencil_D3D11(texture);
-#endif
 }
 
 void Graphics::SetViewport(const IntRect& rect)
@@ -1415,11 +1154,6 @@ void Graphics::SetViewport(const IntRect& rect)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetViewport_OGL(rect);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetViewport_D3D11(rect);
 #endif
 }
 
@@ -1431,11 +1165,6 @@ void Graphics::SetBlendMode(BlendMode mode, bool alphaToCoverage)
     if (gapi == GAPI_OPENGL)
         return SetBlendMode_OGL(mode, alphaToCoverage);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetBlendMode_D3D11(mode, alphaToCoverage);
-#endif
 }
 
 void Graphics::SetColorWrite(bool enable)
@@ -1445,11 +1174,6 @@ void Graphics::SetColorWrite(bool enable)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetColorWrite_OGL(enable);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetColorWrite_D3D11(enable);
 #endif
 }
 
@@ -1461,11 +1185,6 @@ void Graphics::SetCullMode(CullMode mode)
     if (gapi == GAPI_OPENGL)
         return SetCullMode_OGL(mode);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetCullMode_D3D11(mode);
-#endif
 }
 
 void Graphics::SetDepthBias(float constantBias, float slopeScaledBias)
@@ -1475,11 +1194,6 @@ void Graphics::SetDepthBias(float constantBias, float slopeScaledBias)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDepthBias_OGL(constantBias, slopeScaledBias);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDepthBias_D3D11(constantBias, slopeScaledBias);
 #endif
 }
 
@@ -1491,11 +1205,6 @@ void Graphics::SetDepthTest(CompareMode mode)
     if (gapi == GAPI_OPENGL)
         return SetDepthTest_OGL(mode);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDepthTest_D3D11(mode);
-#endif
 }
 
 void Graphics::SetDepthWrite(bool enable)
@@ -1505,11 +1214,6 @@ void Graphics::SetDepthWrite(bool enable)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDepthWrite_OGL(enable);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDepthWrite_D3D11(enable);
 #endif
 }
 
@@ -1521,11 +1225,6 @@ void Graphics::SetFillMode(FillMode mode)
     if (gapi == GAPI_OPENGL)
         return SetFillMode_OGL(mode);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetFillMode_D3D11(mode);
-#endif
 }
 
 void Graphics::SetLineAntiAlias(bool enable)
@@ -1535,11 +1234,6 @@ void Graphics::SetLineAntiAlias(bool enable)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetLineAntiAlias_OGL(enable);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetLineAntiAlias_D3D11(enable);
 #endif
 }
 
@@ -1551,11 +1245,6 @@ void Graphics::SetScissorTest(bool enable, const Rect& rect, bool borderInclusiv
     if (gapi == GAPI_OPENGL)
         return SetScissorTest_OGL(enable, rect, borderInclusive);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetScissorTest_D3D11(enable, rect, borderInclusive);
-#endif
 }
 
 void Graphics::SetScissorTest(bool enable, const IntRect& rect)
@@ -1566,11 +1255,6 @@ void Graphics::SetScissorTest(bool enable, const IntRect& rect)
     if (gapi == GAPI_OPENGL)
         return SetScissorTest_OGL(enable, rect);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetScissorTest_D3D11(enable, rect);
-#endif
 }
 
 void Graphics::SetClipPlane(bool enable, const Plane& clipPlane, const Matrix3x4& view, const Matrix4& projection)
@@ -1580,11 +1264,6 @@ void Graphics::SetClipPlane(bool enable, const Plane& clipPlane, const Matrix3x4
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetClipPlane_OGL(enable, clipPlane, view, projection);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetClipPlane_D3D11(enable, clipPlane, view, projection);
 #endif
 }
 
@@ -1597,11 +1276,6 @@ void Graphics::SetStencilTest(bool enable, CompareMode mode, StencilOp pass, Ste
     if (gapi == GAPI_OPENGL)
         return SetStencilTest_OGL(enable, mode, pass, fail, zFail, stencilRef, compareMask, writeMask);
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetStencilTest_D3D11(enable, mode, pass, fail, zFail, stencilRef, compareMask, writeMask);
-#endif
 }
 
 bool Graphics::IsInitialized() const
@@ -1611,11 +1285,6 @@ bool Graphics::IsInitialized() const
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return IsInitialized_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return IsInitialized_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -1630,11 +1299,6 @@ bool Graphics::GetDither() const
         return GetDither_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetDither_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1645,11 +1309,6 @@ bool Graphics::IsDeviceLost() const
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return IsDeviceLost_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return IsDeviceLost_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -1664,11 +1323,6 @@ Vector<int> Graphics::GetMultiSampleLevels() const
         return GetMultiSampleLevels_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetMultiSampleLevels_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1679,11 +1333,6 @@ unsigned Graphics::GetFormat(CompressedFormat format) const
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetFormat_OGL(format);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetFormat_D3D11(format);
 #endif
 
     return {}; // Prevent warning
@@ -1698,11 +1347,6 @@ ShaderVariation* Graphics::GetShader(ShaderType type, const String& name, const 
         return GetShader_OGL(type, name, defines);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetShader_D3D11(type, name, defines);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1713,11 +1357,6 @@ ShaderVariation* Graphics::GetShader(ShaderType type, const char* name, const ch
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetShader_OGL(type, name, defines);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetShader_D3D11(type, name, defines);
 #endif
 
     return {}; // Prevent warning
@@ -1732,11 +1371,6 @@ VertexBuffer* Graphics::GetVertexBuffer(unsigned index) const
         return GetVertexBuffer_OGL(index);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetVertexBuffer_D3D11(index);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1747,11 +1381,6 @@ TextureUnit Graphics::GetTextureUnit(const String& name)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetTextureUnit_OGL(name);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetTextureUnit_D3D11(name);
 #endif
 
     return {}; // Prevent warning
@@ -1766,11 +1395,6 @@ const String& Graphics::GetTextureUnitName(TextureUnit unit)
         return GetTextureUnitName_OGL(unit);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetTextureUnitName_D3D11(unit);
-#endif
-
     return String::EMPTY; // Prevent warning
 }
 
@@ -1781,11 +1405,6 @@ Texture* Graphics::GetTexture(unsigned index) const
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetTexture_OGL(index);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetTexture_D3D11(index);
 #endif
 
     return {}; // Prevent warning
@@ -1800,11 +1419,6 @@ RenderSurface* Graphics::GetRenderTarget(unsigned index) const
         return GetRenderTarget_OGL(index);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRenderTarget_D3D11(index);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1815,11 +1429,6 @@ IntVector2 Graphics::GetRenderTargetDimensions() const
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetRenderTargetDimensions_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRenderTargetDimensions_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -1833,11 +1442,6 @@ void Graphics::OnWindowResized()
     if (gapi == GAPI_OPENGL)
         return OnWindowResized_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnWindowResized_D3D11();
-#endif
 }
 
 void Graphics::OnWindowMoved()
@@ -1848,11 +1452,6 @@ void Graphics::OnWindowMoved()
     if (gapi == GAPI_OPENGL)
         return OnWindowMoved_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnWindowMoved_D3D11();
-#endif
 }
 
 ConstantBuffer* Graphics::GetOrCreateConstantBuffer(ShaderType type, unsigned index, unsigned size)
@@ -1862,11 +1461,6 @@ ConstantBuffer* Graphics::GetOrCreateConstantBuffer(ShaderType type, unsigned in
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetOrCreateConstantBuffer_OGL(type, index, size);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetOrCreateConstantBuffer_D3D11(type, index, size);
 #endif
 
     return {}; // Prevent warning
@@ -1881,11 +1475,6 @@ unsigned Graphics::GetMaxBones()
         return GetMaxBones_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetMaxBones_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1896,11 +1485,6 @@ bool Graphics::GetGL3Support()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetGL3Support_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetGL3Support_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -1915,11 +1499,6 @@ unsigned Graphics::GetAlphaFormat()
         return GetAlphaFormat_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetAlphaFormat_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1930,11 +1509,6 @@ unsigned Graphics::GetLuminanceFormat()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetLuminanceFormat_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetLuminanceFormat_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -1949,11 +1523,6 @@ unsigned Graphics::GetLuminanceAlphaFormat()
         return GetLuminanceAlphaFormat_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetLuminanceAlphaFormat_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1964,11 +1533,6 @@ unsigned Graphics::GetRGBFormat()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetRGBFormat_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGBFormat_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -1983,11 +1547,6 @@ unsigned Graphics::GetRGBAFormat()
         return GetRGBAFormat_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGBAFormat_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -1998,11 +1557,6 @@ unsigned Graphics::GetRGBA16Format()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetRGBA16Format_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGBA16Format_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -2017,11 +1571,6 @@ unsigned Graphics::GetRGBAFloat16Format()
         return GetRGBAFloat16Format_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGBAFloat16Format_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -2032,11 +1581,6 @@ unsigned Graphics::GetRGBAFloat32Format()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetRGBAFloat32Format_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGBAFloat32Format_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -2051,11 +1595,6 @@ unsigned Graphics::GetRG16Format()
         return GetRG16Format_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRG16Format_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -2066,11 +1605,6 @@ unsigned Graphics::GetRGFloat16Format()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetRGFloat16Format_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGFloat16Format_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -2085,11 +1619,6 @@ unsigned Graphics::GetRGFloat32Format()
         return GetRGFloat32Format_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetRGFloat32Format_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -2100,11 +1629,6 @@ unsigned Graphics::GetFloat16Format()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetFloat16Format_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetFloat16Format_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -2119,11 +1643,6 @@ unsigned Graphics::GetFloat32Format()
         return GetFloat32Format_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetFloat32Format_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -2134,11 +1653,6 @@ unsigned Graphics::GetLinearDepthFormat()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetLinearDepthFormat_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetLinearDepthFormat_D3D11();
 #endif
 
     return {}; // Prevent warning
@@ -2153,11 +1667,6 @@ unsigned Graphics::GetDepthStencilFormat()
         return GetDepthStencilFormat_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetDepthStencilFormat_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -2170,11 +1679,6 @@ unsigned Graphics::GetReadableDepthFormat()
         return GetReadableDepthFormat_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetReadableDepthFormat_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -2185,11 +1689,6 @@ unsigned Graphics::GetFormat(const String& formatName)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return GetFormat_OGL(formatName);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetFormat_D3D11(formatName);
 #endif
 
     return {}; // Prevent warning

@@ -193,11 +193,6 @@ void Texture2DArray::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void Texture2DArray::OnDeviceReset()
@@ -207,11 +202,6 @@ void Texture2DArray::OnDeviceReset()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceReset_D3D11();
 #endif
 }
 
@@ -223,11 +213,6 @@ void Texture2DArray::Release()
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
-#endif
 }
 
 bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int width, int height, const void* data)
@@ -237,11 +222,6 @@ bool Texture2DArray::SetData(unsigned layer, unsigned level, int x, int y, int w
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(layer, level, x, y, width, height, data);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(layer, level, x, y, width, height, data);
 #endif
 
     return {}; // Prevent warning
@@ -256,11 +236,6 @@ bool Texture2DArray::SetData(unsigned layer, Deserializer& source)
         return SetData_OGL(layer, source);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(layer, source);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -271,11 +246,6 @@ bool Texture2DArray::SetData(unsigned layer, Image* image, bool useAlpha)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(layer, image, useAlpha);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(layer, image, useAlpha);
 #endif
 
     return {}; // Prevent warning
@@ -290,11 +260,6 @@ bool Texture2DArray::GetData(unsigned layer, unsigned level, void* dest) const
         return GetData_OGL(layer, level, dest);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetData_D3D11(layer, level, dest);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -305,11 +270,6 @@ bool Texture2DArray::Create()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Create_D3D11();
 #endif
 
     return {}; // Prevent warning

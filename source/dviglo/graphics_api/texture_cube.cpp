@@ -335,11 +335,6 @@ void TextureCube::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void TextureCube::OnDeviceReset()
@@ -349,11 +344,6 @@ void TextureCube::OnDeviceReset()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceReset_D3D11();
 #endif
 }
 
@@ -365,11 +355,6 @@ void TextureCube::Release()
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
-#endif
 }
 
 bool TextureCube::SetData(CubeMapFace face, unsigned level, int x, int y, int width, int height, const void* data)
@@ -379,11 +364,6 @@ bool TextureCube::SetData(CubeMapFace face, unsigned level, int x, int y, int wi
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(face, level, x, y, width, height, data);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(face, level, x, y, width, height, data);
 #endif
 
     return {}; // Prevent warning
@@ -398,11 +378,6 @@ bool TextureCube::SetData(CubeMapFace face, Deserializer& source)
         return SetData_OGL(face, source);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(face, source);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -413,11 +388,6 @@ bool TextureCube::SetData(CubeMapFace face, Image* image, bool useAlpha)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(face, image, useAlpha);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(face, image, useAlpha);
 #endif
 
     return {}; // Prevent warning
@@ -432,11 +402,6 @@ bool TextureCube::GetData(CubeMapFace face, unsigned level, void* dest) const
         return GetData_OGL(face, level, dest);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetData_D3D11(face, level, dest);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -447,11 +412,6 @@ bool TextureCube::Create()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Create_D3D11();
 #endif
 
     return {}; // Prevent warning

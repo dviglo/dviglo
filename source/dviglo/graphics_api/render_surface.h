@@ -112,13 +112,6 @@ private:
     void Release_OGL();
 #endif // def DV_OPENGL
 
-#ifdef DV_D3D11
-    void Constructor_D3D11(Texture* parentTexture);
-    bool CreateRenderBuffer_D3D11(unsigned width, unsigned height, unsigned format, int multiSample);
-    void OnDeviceLost_D3D11();
-    void Release_D3D11();
-#endif // def DV_D3D11
-
     /// Parent texture.
     Texture* parentTexture_;
 

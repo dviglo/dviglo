@@ -10,7 +10,3 @@
 #ifdef DV_OPENGL
 #include "opengl/ogl_graphics_impl.h"
 #endif
-
-#ifdef DV_D3D11
-#include "direct3d11/d3d11_graphics_impl.h"
-#endif

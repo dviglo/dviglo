@@ -122,7 +122,6 @@ jobs:
 
         ARGS+=(-D DV_SHARED=${{ matrix.DV_SHARED.VALUE }})
         ARGS+=(-D DV_TESTING=1)
-        ARGS+=(-D DV_OPENGL=1 -D DV_D3D11=1)
 
         cmake "${ARGS[@]}"
 
@@ -360,7 +359,6 @@ jobs:
         TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
 
         cmake engine_repo -B engine_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
-          -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
           -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}
@@ -384,7 +382,6 @@ jobs:
         TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
 
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
-          -D DV_OPENGL=1 -D DV_D3D11=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
           -D CMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE.VALUE }} \
           -D DV_SHARED=${{ matrix.DV_SHARED.VALUE }}

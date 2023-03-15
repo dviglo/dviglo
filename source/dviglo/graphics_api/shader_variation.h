@@ -126,26 +126,6 @@ public:
     static const char* elementSemanticNames_D3D11[];
 
 private:
-
-    // Internal functions
-
-#ifdef DV_D3D11
-    /// Load bytecode from a file. Return true if successful.
-    bool LoadByteCode_D3D11(const String& binaryShaderName);
-
-    /// Compile from source. Return true if successful.
-    bool Compile_D3D11();
-
-    /// Inspect the constant parameters and input layout (if applicable) from the shader bytecode.
-    void ParseParameters_D3D11(unsigned char* bufData, unsigned bufSize);
-
-    /// Save bytecode to a file.
-    void SaveByteCode_D3D11(const String& binaryShaderName);
-
-    /// Calculate constant buffer sizes from parameters.
-    void CalculateConstantBufferSizes_D3D11();
-#endif // def DV_D3D11
-
     // For proxy functions
 
 #ifdef DV_OPENGL
@@ -154,13 +134,6 @@ private:
     bool Create_OGL();
     void SetDefines_OGL(const String& defines);
 #endif // def DV_OPENGL
-
-#ifdef DV_D3D11
-    void OnDeviceLost_D3D11();
-    void Release_D3D11();
-    bool Create_D3D11();
-    void SetDefines_D3D11(const String& defines);
-#endif // def DV_D3D11
 
     /// Shader this variation belongs to.
     WeakPtr<Shader> owner_;

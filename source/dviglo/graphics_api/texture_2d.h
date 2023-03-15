@@ -73,16 +73,6 @@ private:
     bool Create_OGL();
 #endif // def DV_OPENGL
 
-#ifdef DV_D3D11
-    void OnDeviceLost_D3D11();
-    void OnDeviceReset_D3D11();
-    void Release_D3D11();
-    bool SetData_D3D11(unsigned level, int x, int y, int width, int height, const void* data);
-    bool SetData_D3D11(Image* image, bool useAlpha);
-    bool GetData_D3D11(unsigned level, void* dest) const;
-    bool Create_D3D11();
-#endif // def DV_D3D11
-
     /// Handle render surface update event.
     void HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& eventData);
 

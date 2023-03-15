@@ -64,11 +64,6 @@ void ShaderVariation::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void ShaderVariation::Release()
@@ -78,11 +73,6 @@ void ShaderVariation::Release()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
 #endif
 }
 
@@ -95,11 +85,6 @@ bool ShaderVariation::Create()
         return Create_OGL();
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Create_D3D11();
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -110,11 +95,6 @@ void ShaderVariation::SetDefines(const String& defines)
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetDefines_OGL(defines);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetDefines_D3D11(defines);
 #endif
 }
 

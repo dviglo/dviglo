@@ -165,11 +165,6 @@ void Texture3D::OnDeviceLost()
     if (gapi == GAPI_OPENGL)
         return OnDeviceLost_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceLost_D3D11();
-#endif
 }
 
 void Texture3D::OnDeviceReset()
@@ -179,11 +174,6 @@ void Texture3D::OnDeviceReset()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return OnDeviceReset_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return OnDeviceReset_D3D11();
 #endif
 }
 
@@ -195,11 +185,6 @@ void Texture3D::Release()
     if (gapi == GAPI_OPENGL)
         return Release_OGL();
 #endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Release_D3D11();
-#endif
 }
 
 bool Texture3D::SetData(unsigned level, int x, int y, int z, int width, int height, int depth, const void* data)
@@ -209,11 +194,6 @@ bool Texture3D::SetData(unsigned level, int x, int y, int z, int width, int heig
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return SetData_OGL(level, x, y, z, width, height, depth, data);
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(level, x, y, z, width, height, depth, data);
 #endif
 
     return {}; // Prevent warning
@@ -228,11 +208,6 @@ bool Texture3D::SetData(Image* image, bool useAlpha)
         return SetData_OGL(image, useAlpha);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return SetData_D3D11(image, useAlpha);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -245,11 +220,6 @@ bool Texture3D::GetData(unsigned level, void* dest) const
         return GetData_OGL(level, dest);
 #endif
 
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return GetData_D3D11(level, dest);
-#endif
-
     return {}; // Prevent warning
 }
 
@@ -260,11 +230,6 @@ bool Texture3D::Create()
 #ifdef DV_OPENGL
     if (gapi == GAPI_OPENGL)
         return Create_OGL();
-#endif
-
-#ifdef DV_D3D11
-    if (gapi == GAPI_D3D11)
-        return Create_D3D11();
 #endif
 
     return {}; // Prevent warning
