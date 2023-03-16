@@ -135,15 +135,6 @@ public:
     /// Update dirty parameters to the texture object. Called by Graphics when assigning the texture.
     void UpdateParameters();
 
-    /// Return shader resource view. Only used on Direct3D11.
-    void* GetShaderResourceView() const { return shaderResourceView_; }
-
-    /// Return sampler state object. Only used on Direct3D11.
-    void* GetSampler() const { return sampler_; }
-
-    /// Return resolve texture. Only used on Direct3D11.
-    void* GetResolveTexture() const { return resolveTexture_; }
-
     /// Return texture's target. Only used on OpenGL.
     unsigned GetTarget() const { return target_; }
 
@@ -192,13 +183,6 @@ protected:
 
     /// OpenGL target.
     unsigned target_{};
-
-    /// Direct3D11 shader resource view.
-    void* shaderResourceView_{};
-    /// Direct3D11 sampler state object.
-    void* sampler_{};
-    /// Direct3D11 resolve texture object when multisample with autoresolve is used.
-    void* resolveTexture_{};
 
     /// Texture format.
     unsigned format_{};
