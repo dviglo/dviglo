@@ -69,17 +69,6 @@ if(DV_TESTING)
     enable_testing() # Должно быть в корневом CMakeLists.txt
 endif()
 
-# ==================== Ищем DirectX ====================
-
-set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/Modules)
-
-if(WIN32)
-    find_package(DirectX REQUIRED D3D11)
-    if(NOT DIRECTX_FOUND)
-        message(FATAL_ERROR "D3D11 не найден" )
-    endif()
-endif ()
-
 # ==================== Утилиты ====================
 
 # Добавляет все поддиректории, в которых есть CMakeLists.txt.
