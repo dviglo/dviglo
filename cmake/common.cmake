@@ -154,6 +154,8 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
         if(MSVC AND NOT DV_STATIC_RUNTIME)
             # Помимо релизных будут искаться и отладочные версии библиотек
             set(CMAKE_INSTALL_DEBUG_LIBRARIES TRUE)
+            # Не создаём таргет INSTALL
+            set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS_SKIP TRUE)
             # Заполняем список CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS
             include(InstallRequiredSystemLibraries)
             # Добавляем в список
