@@ -202,18 +202,6 @@ public:
     void SetScreenKeyboardVisible(bool enable);
     /// Set touch emulation by mouse. Only available on desktop platforms. When enabled, actual mouse events are no longer sent and the mouse cursor is forced visible.
     void SetTouchEmulation(bool enable);
-    /// Begin recording a touch gesture. Return true if successful. The E_GESTURERECORDED event (which contains the ID for the new gesture) will be sent when recording finishes.
-    bool RecordGesture();
-    /// Save all in-memory touch gestures. Return true if successful.
-    bool SaveGestures(Serializer& dest);
-    /// Save a specific in-memory touch gesture to a file. Return true if successful.
-    bool SaveGesture(Serializer& dest, unsigned gestureID);
-    /// Load touch gestures from a file. Return number of loaded gestures, or 0 on failure.
-    i32 LoadGestures(Deserializer& source);
-    /// Remove an in-memory gesture by ID. Return true if was found.
-    bool RemoveGesture(unsigned gestureID);
-    /// Remove all in-memory gestures.
-    void RemoveAllGestures();
     /// Set the mouse cursor position. Uses the backbuffer (Graphics width/height) coordinates.
     void SetMousePosition(const IntVector2& position);
     /// Center the mouse position.

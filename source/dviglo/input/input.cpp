@@ -14,7 +14,6 @@
 #include "../graphics/graphics_events.h"
 #include "../io/log.h"
 #include "../io/path.h"
-#include "../io/rw_ops_wrapper.h"
 #include "../resource/resource_cache.h"
 #include "../ui/text.h"
 #include "../ui/ui.h"
@@ -24,13 +23,6 @@
 #endif
 
 #include <SDL3/SDL.h>
-
-#define SDL_GESTURE_IMPLEMENTATION
-#include <SDL3/SDL_gesture.h>
-
-#ifdef __EMSCRIPTEN__
-#include <emscripten/html5.h>
-#endif
 
 #include "../common/debug_new.h"
 
@@ -43,7 +35,7 @@ extern "C" int SDL_AddTouch(SDL_TouchID touchID, SDL_TouchDeviceType type, const
 #define REQUIRE_CLICK_TO_FOCUS
 #endif
 
-// TODO: Gestures не протестированы и джойстик тоже. После обновления SDL до 3й версии по индексам к джойстикам обращаться нельзя
+// TODO: После обновления SDL до 3й версии по индексам к джойстикам обращаться нельзя
 
 namespace dviglo
 {
@@ -1212,60 +1204,6 @@ void Input::SetTouchEmulation(bool enable)
 #endif
 }
 
-bool Input::RecordGesture()
-{
-    // If have no touch devices, fail
-    if (!SDL_GetNumTouchDevices())
-    {
-        DV_LOGERROR("Can not record gesture: no touch devices");
-        return false;
-    }
-
-    return Gesture_RecordGesture(-1) != 0;
-}
-
-bool Input::SaveGestures(Serializer& dest)
-{
-    RWOpsWrapper<Serializer> wrapper(dest);
-    return Gesture_SaveAllDollarTemplates(wrapper.GetRWOps()) != 0;
-}
-
-bool Input::SaveGesture(Serializer& dest, unsigned gestureID)
-{
-    RWOpsWrapper<Serializer> wrapper(dest);
-    return Gesture_SaveDollarTemplate(gestureID, wrapper.GetRWOps()) != 0;
-}
-
-i32 Input::LoadGestures(Deserializer& source)
-{
-    // If have no touch devices, fail
-    if (!SDL_GetNumTouchDevices())
-    {
-        DV_LOGERROR("Can not load gestures: no touch devices");
-        return 0;
-    }
-
-    RWOpsWrapper<Deserializer> wrapper(source);
-    return Gesture_LoadDollarTemplates(-1, wrapper.GetRWOps());
-}
-
-
-bool Input::RemoveGesture(unsigned gestureID)
-{
-#ifdef __EMSCRIPTEN__
-    return false;
-#else
-    return Gesture_RemoveDollarTemplate(gestureID) != 0;
-#endif
-}
-
-void Input::RemoveAllGestures()
-{
-#ifndef __EMSCRIPTEN__
-    Gesture_RemoveAllDollarTemplates();
-#endif
-}
-
 SDL_JoystickID Input::OpenJoystick(SDL_JoystickID id)
 {
     assert(id > 0);
@@ -1876,7 +1814,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
     SDL_Event& evt = *static_cast<SDL_Event*>(sdlEvent);
 
     // While not having input focus, skip key/mouse/touch/joystick events, except for the "click to focus" mechanism
-    if (!inputFocus_ && evt.type >= SDL_EVENT_KEY_DOWN && evt.type <= GESTURE_MULTIGESTURE)
+    if (!inputFocus_ && evt.type >= SDL_EVENT_KEY_DOWN && evt.type <= SDL_EVENT_FINGER_MOTION)
     {
 #ifdef REQUIRE_CLICK_TO_FOCUS
         // Require the click to be at least 1 pixel inside the window to disregard clicks in the title bar
@@ -2133,47 +2071,6 @@ void Input::HandleSDLEvent(void* sdlEvent)
             // Finger touch may move the mouse cursor. Suppress next mouse move when cursor hidden to prevent jumps
             if (!mouseVisible_)
                 SuppressNextMouseMove();
-        }
-        break;
-
-    case GESTURE_DOLLARRECORD:
-        {
-            using namespace GestureRecorded;
-
-            VariantMap& eventData = GetEventDataMap();
-            Gesture_DollarGestureEvent& e = (Gesture_DollarGestureEvent&)evt;
-            eventData[P_GESTUREID] = (int)e.gestureId;
-            SendEvent(E_GESTURERECORDED, eventData);
-        }
-        break;
-
-    case GESTURE_DOLLARGESTURE:
-        {
-            using namespace GestureInput;
-
-            VariantMap& eventData = GetEventDataMap();
-            Gesture_DollarGestureEvent& e = (Gesture_DollarGestureEvent&)evt;
-            eventData[P_GESTUREID] = (int)e.gestureId;
-            eventData[P_CENTERX] = (int)(e.x * graphics.GetWidth());
-            eventData[P_CENTERY] = (int)(e.y * graphics.GetHeight());
-            eventData[P_NUMFINGERS] = (int)e.numFingers;
-            eventData[P_ERROR] = e.error;
-            SendEvent(E_GESTUREINPUT, eventData);
-        }
-        break;
-
-    case GESTURE_MULTIGESTURE:
-        {
-            using namespace MultiGesture;
-
-            VariantMap& eventData = GetEventDataMap();
-            Gesture_MultiGestureEvent& e = (Gesture_MultiGestureEvent&)evt;
-            eventData[P_CENTERX] = (int)(e.x * graphics.GetWidth());
-            eventData[P_CENTERY] = (int)(e.y * graphics.GetHeight());
-            eventData[P_NUMFINGERS] = (int)e.numFingers;
-            eventData[P_DTHETA] = M_RADTODEG * e.dTheta;
-            eventData[P_DDIST] = e.dDist;
-            SendEvent(E_MULTIGESTURE, eventData);
         }
         break;
 

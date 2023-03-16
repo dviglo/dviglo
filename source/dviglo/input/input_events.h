@@ -150,32 +150,6 @@ DV_EVENT(E_TOUCHMOVE, TouchMove)
     DV_PARAM(P_PRESSURE, Pressure);            // float
 }
 
-/// A touch gesture finished recording.
-DV_EVENT(E_GESTURERECORDED, GestureRecorded)
-{
-    DV_PARAM(P_GESTUREID, GestureID);          // unsigned
-}
-
-/// A recognized touch gesture was input by the user.
-DV_EVENT(E_GESTUREINPUT, GestureInput)
-{
-    DV_PARAM(P_GESTUREID, GestureID);          // unsigned
-    DV_PARAM(P_CENTERX, CenterX);              // int
-    DV_PARAM(P_CENTERY, CenterY);              // int
-    DV_PARAM(P_NUMFINGERS, NumFingers);        // int
-    DV_PARAM(P_ERROR, Error);                  // float
-}
-
-/// Pinch/rotate multi-finger touch gesture motion update.
-DV_EVENT(E_MULTIGESTURE, MultiGesture)
-{
-    DV_PARAM(P_CENTERX, CenterX);              // int
-    DV_PARAM(P_CENTERY, CenterY);              // int
-    DV_PARAM(P_NUMFINGERS, NumFingers);        // int
-    DV_PARAM(P_DTHETA, DTheta);                // float (degrees)
-    DV_PARAM(P_DDIST, DDist);                  // float
-}
-
 /// A file was drag-dropped into the application window.
 DV_EVENT(E_DROPFILE, DropFile)
 {

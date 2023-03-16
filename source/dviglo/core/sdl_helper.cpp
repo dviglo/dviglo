@@ -6,7 +6,6 @@
 #include "../io/log.h"
 
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_gesture.h>
 
 #include "../common/debug_new.h"
 
@@ -39,7 +38,6 @@ SdlHelper::SdlHelper()
 SdlHelper::~SdlHelper()
 {
     DV_LOGDEBUG("Quitting SDL");
-    Gesture_Quit();
 //    SDL_Quit(); // TODO: крэшится в OpenGL shared версии
     DV_LOGDEBUG("Singleton SdlHelper destructed");
 #ifdef _DEBUG
@@ -60,9 +58,6 @@ bool SdlHelper::require(u32 sdl_subsystem)
             DV_LOGERRORF("Failed to initialize SDL: %s", SDL_GetError());
             return false;
         }
-
-        // Начиная с SDL 3 Gesture больше не часть библиотеки
-        Gesture_Init(); // Всегда возвращает 0
 
         sdl_inited_ = true;
     }
