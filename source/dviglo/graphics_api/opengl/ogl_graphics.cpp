@@ -195,11 +195,6 @@ void Graphics::Constructor_OGL()
     shaderPath_ = "Shaders/GLSL/";
     shaderExtension_ = ".glsl";
     orientations_ = "LandscapeLeft LandscapeRight";
-#ifndef GL_ES_VERSION_2_0
-    apiName_ = "GL2";
-#else
-    apiName_ = "GLES2";
-#endif
 
     SetTextureUnitMappings_OGL();
     ResetCachedState_OGL();
@@ -251,7 +246,6 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-#ifndef GL_ES_VERSION_2_0
         SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
         SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
         SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
@@ -266,19 +260,6 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-        apiName_ = "GL3";
-
-#else
-#if defined(GL_ES_VERSION_3_0)
-        SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-        apiName_ = "GLES3";
-#else
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-        apiName_ = "GLES2";
-#endif
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-#endif
 
         SDL_Rect display_rect;
         SDL_GetDisplayBounds(newParams.display_, &display_rect);
@@ -406,6 +387,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
     CheckFeatureSupport_OGL();
 
 #ifdef DV_LOGGING
+    DV_LOGINFO("API: OpenGL 3.2");
     DV_LOGINFOF("Adapter used %s %s", (const char *) glGetString(GL_VENDOR), (const char *) glGetString(GL_RENDERER));
 #endif
 
@@ -2336,8 +2318,6 @@ void Graphics::Restore_OGL()
             DV_LOGERRORF("Could not initialize OpenGL extensions, root cause: '%s'", glewGetErrorString(err));
             return;
         }
-
-        apiName_ = "GL3";
 
         // Create and bind a vertex array object that will stay in use throughout
         unsigned vertexArrayObject;

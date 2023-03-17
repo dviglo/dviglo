@@ -356,9 +356,6 @@ public:
     /// Return window title.
     const String& GetWindowTitle() const { return windowTitle_; }
 
-    /// Return graphics API name.
-    const String& GetApiName() const { return apiName_; }
-
     /// Return window position.
     IntVector2 GetWindowPosition() const;
 
@@ -990,8 +987,7 @@ private:
     SharedPtr<ShaderPrecache> shaderPrecache_;
     /// Allowed screen orientations.
     String orientations_;
-    /// Graphics API name.
-    String apiName_;
+
 #ifdef DV_OPENGL
     /// Renderer name (usually GPU name)
     String rendererName_;

@@ -126,7 +126,7 @@ void DebugHud::Update()
     if (modeText_->IsVisible())
     {
         String mode;
-        mode.AppendWithFormat("Tex:%s Mat:%s Spec:%s Shadows:%s Size:%i Quality:%s Occlusion:%s Instancing:%s API:%s",
+        mode.AppendWithFormat("Tex:%s Mat:%s Spec:%s Shadows:%s Size:%i Quality:%s Occlusion:%s Instancing:%s",
             qualityTexts[renderer.GetTextureQuality()],
             qualityTexts[Min((i32)renderer.GetMaterialQuality(), 3)],
             renderer.GetSpecularLighting() ? "On" : "Off",
@@ -134,8 +134,7 @@ void DebugHud::Update()
             renderer.GetShadowMapSize(),
             shadowQualityTexts[renderer.GetShadowQuality()],
             renderer.GetMaxOccluderTriangles() > 0 ? "On" : "Off",
-            renderer.GetDynamicInstancing() ? "On" : "Off",
-            graphics.GetApiName().c_str());
+            renderer.GetDynamicInstancing() ? "On" : "Off");
     #ifdef DV_OPENGL
         mode.AppendWithFormat(" Renderer:%s Version:%s", graphics.GetRendererName().c_str(),
             graphics.GetVersionString().c_str());
