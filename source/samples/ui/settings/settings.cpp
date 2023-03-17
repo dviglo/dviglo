@@ -255,7 +255,7 @@ void WindowSettingsDemo::SynchronizeSettings()
     Graphics& graphics = DV_GRAPHICS;
 
     // Synchronize monitor
-    const unsigned currentMonitor = graphics.GetMonitor();
+    const SDL_DisplayID currentMonitor = graphics.GetDisplay();
     monitorControl_->SetSelection(currentMonitor);
 
     // Synchronize resolution list
