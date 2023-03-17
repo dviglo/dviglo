@@ -229,7 +229,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt update
-        sudo apt install libgl1-mesa-dev
+        # xrandr позволяет узнать список поддерживаемх разрешений
+        sudo apt install libgl1-mesa-dev libxrandr-dev
 
         # Репозиторий Ubuntu содержит устаревшую версию Doxygen 1.9.1. Качаем собственную сборку
         mkdir $HOME/programs
