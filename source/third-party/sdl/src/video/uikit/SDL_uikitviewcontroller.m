@@ -136,6 +136,11 @@ static void SDLCALL SDL_HideHomeIndicatorHintChanged(void *userdata, const char 
 #endif
 }
 
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+    SDL_SetSystemTheme(UIKit_GetSystemTheme());
+}
+
 - (void)setAnimationCallback:(int)interval
                     callback:(void (*)(void *))callback
                callbackParam:(void *)callbackParam
@@ -156,7 +161,7 @@ static void SDLCALL SDL_HideHomeIndicatorHintChanged(void *userdata, const char 
     displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(doLoop:)];
 
 #ifdef __IPHONE_10_3
-    SDL_WindowData *data = (__bridge SDL_WindowData *)window->driverdata;
+    SDL_UIKitWindowData *data = (__bridge SDL_UIKitWindowData *)window->driverdata;
 
     if ([displayLink respondsToSelector:@selector(preferredFramesPerSecond)] && data != nil && data.uiwindow != nil && [data.uiwindow.screen respondsToSelector:@selector(maximumFramesPerSecond)]) {
         displayLink.preferredFramesPerSecond = data.uiwindow.screen.maximumFramesPerSecond / animationInterval;
@@ -212,7 +217,7 @@ static void SDLCALL SDL_HideHomeIndicatorHintChanged(void *userdata, const char 
 
 - (BOOL)prefersStatusBarHidden
 {
-    BOOL hidden = (window->flags & (SDL_WINDOW_FULLSCREEN_MASK | SDL_WINDOW_BORDERLESS)) != 0;
+    BOOL hidden = (window->flags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS)) != 0;
     return hidden;
 }
 
@@ -236,7 +241,7 @@ static void SDLCALL SDL_HideHomeIndicatorHintChanged(void *userdata, const char 
     }
 
     /* By default, fullscreen and borderless windows get all screen gestures */
-    if ((window->flags & (SDL_WINDOW_FULLSCREEN_MASK | SDL_WINDOW_BORDERLESS)) != 0) {
+    if ((window->flags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_BORDERLESS)) != 0) {
         return UIRectEdgeAll;
     } else {
         return UIRectEdgeNone;
@@ -513,7 +518,7 @@ static SDL_uikitviewcontroller *GetWindowViewController(SDL_Window *window)
         return nil;
     }
 
-    SDL_WindowData *data = (__bridge SDL_WindowData *)window->driverdata;
+    SDL_UIKitWindowData *data = (__bridge SDL_UIKitWindowData *)window->driverdata;
 
     return data.viewcontroller;
 }
@@ -552,13 +557,8 @@ UIKit_IsScreenKeyboardShown(_THIS, SDL_Window *window)
     }
 }
 
-void UIKit_SetTextInputRect(_THIS, const SDL_Rect *rect)
+int UIKit_SetTextInputRect(_THIS, const SDL_Rect *rect)
 {
-    if (!rect) {
-        SDL_InvalidParamError("rect");
-        return;
-    }
-
     @autoreleasepool {
         SDL_uikitviewcontroller *vc = GetWindowViewController(SDL_GetFocusWindow());
         if (vc != nil) {
@@ -569,6 +569,7 @@ void UIKit_SetTextInputRect(_THIS, const SDL_Rect *rect)
             }
         }
     }
+    return 0;
 }
 
 #endif /* SDL_IPHONE_KEYBOARD */

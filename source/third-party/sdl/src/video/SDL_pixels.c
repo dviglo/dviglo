@@ -628,7 +628,6 @@ void SDL_DestroyPixelFormat(SDL_PixelFormat *format)
     SDL_PixelFormat *prev;
 
     if (format == NULL) {
-        SDL_InvalidParamError("format");
         return;
     }
 
@@ -657,6 +656,7 @@ void SDL_DestroyPixelFormat(SDL_PixelFormat *format)
         SDL_DestroyPalette(format->palette);
     }
     SDL_free(format);
+    return;
 }
 
 SDL_Palette *
@@ -747,7 +747,6 @@ int SDL_SetPaletteColors(SDL_Palette *palette, const SDL_Color *colors,
 void SDL_DestroyPalette(SDL_Palette *palette)
 {
     if (palette == NULL) {
-        SDL_InvalidParamError("palette");
         return;
     }
     if (--palette->refcount > 0) {

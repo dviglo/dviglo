@@ -69,7 +69,7 @@ static void SW_WindowEvent(SDL_Renderer *renderer, const SDL_WindowEvent *event)
 {
     SW_RenderData *data = (SW_RenderData *)renderer->driverdata;
 
-    if (event->type == SDL_EVENT_WINDOW_SIZE_CHANGED) {
+    if (event->type == SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED) {
         data->surface = NULL;
         data->window = NULL;
     }
@@ -227,7 +227,7 @@ static int SW_QueueFillRects(SDL_Renderer *renderer, SDL_RenderCommand *cmd, con
 }
 
 static int SW_QueueCopy(SDL_Renderer *renderer, SDL_RenderCommand *cmd, SDL_Texture *texture,
-                        const SDL_Rect *srcrect, const SDL_FRect *dstrect)
+                        const SDL_FRect *srcrect, const SDL_FRect *dstrect)
 {
     SDL_Rect *verts = (SDL_Rect *)SDL_AllocateRenderVertices(renderer, 2 * sizeof(SDL_Rect), 0, &cmd->data.draw.first);
 
@@ -237,7 +237,10 @@ static int SW_QueueCopy(SDL_Renderer *renderer, SDL_RenderCommand *cmd, SDL_Text
 
     cmd->data.draw.count = 1;
 
-    SDL_copyp(verts, srcrect);
+    verts->x = (int)srcrect->x;
+    verts->y = (int)srcrect->y;
+    verts->w = (int)srcrect->w;
+    verts->h = (int)srcrect->h;
     verts++;
 
     verts->x = (int)dstrect->x;
@@ -260,7 +263,7 @@ typedef struct CopyExData
 } CopyExData;
 
 static int SW_QueueCopyEx(SDL_Renderer *renderer, SDL_RenderCommand *cmd, SDL_Texture *texture,
-                          const SDL_Rect *srcrect, const SDL_FRect *dstrect,
+                          const SDL_FRect *srcrect, const SDL_FRect *dstrect,
                           const double angle, const SDL_FPoint *center, const SDL_RendererFlip flip, float scale_x, float scale_y)
 {
     CopyExData *verts = (CopyExData *)SDL_AllocateRenderVertices(renderer, sizeof(CopyExData), 0, &cmd->data.draw.first);
@@ -271,8 +274,10 @@ static int SW_QueueCopyEx(SDL_Renderer *renderer, SDL_RenderCommand *cmd, SDL_Te
 
     cmd->data.draw.count = 1;
 
-    SDL_copyp(&verts->srcrect, srcrect);
-
+    verts->srcrect.x = (int)srcrect->x;
+    verts->srcrect.y = (int)srcrect->y;
+    verts->srcrect.w = (int)srcrect->w;
+    verts->srcrect.h = (int)srcrect->h;
     verts->dstrect.x = (int)dstrect->x;
     verts->dstrect.y = (int)dstrect->y;
     verts->dstrect.w = (int)dstrect->w;
@@ -416,7 +421,7 @@ static int SW_RenderCopyEx(SDL_Renderer *renderer, SDL_Surface *surface, SDL_Tex
         SDLgfx_rotozoomSurfaceSizeTrig(tmp_rect.w, tmp_rect.h, angle, center,
                                        &rect_dest, &cangle, &sangle);
         src_rotated = SDLgfx_rotateSurface(src_clone, angle,
-                                           (texture->scaleMode == SDL_ScaleModeNearest) ? 0 : 1, flip & SDL_FLIP_HORIZONTAL, flip & SDL_FLIP_VERTICAL,
+                                           (texture->scaleMode == SDL_SCALEMODE_NEAREST) ? 0 : 1, flip & SDL_FLIP_HORIZONTAL, flip & SDL_FLIP_VERTICAL,
                                            &rect_dest, cangle, sangle, center);
         if (src_rotated == NULL) {
             retval = -1;
@@ -1175,7 +1180,7 @@ static SDL_Renderer *SW_CreateRenderer(SDL_Window *window, Uint32 flags)
 SDL_RenderDriver SW_RenderDriver = {
     SW_CreateRenderer,
     { "software",
-      SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE,
+      (SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC),
       0,
       { /* formats filled in later */
         SDL_PIXELFORMAT_UNKNOWN },

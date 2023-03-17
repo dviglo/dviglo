@@ -22,7 +22,7 @@
 /**
  *  \file SDL_stdinc.h
  *
- *  This is a general header that includes C language support.
+ *  \brief This is a general header that includes C language support.
  */
 
 #ifndef SDL_stdinc_h_
@@ -394,6 +394,11 @@ typedef void (SDLCALL *SDL_free_func)(void *mem);
 /**
  * Get the original set of SDL memory functions
  *
+ * \param malloc_func filled with malloc function
+ * \param calloc_func filled with calloc function
+ * \param realloc_func filled with realloc function
+ * \param free_func filled with free function
+ *
  * \since This function is available since SDL 3.0.0.
  */
 extern DECLSPEC void SDLCALL SDL_GetOriginalMemoryFunctions(SDL_malloc_func *malloc_func,
@@ -404,6 +409,11 @@ extern DECLSPEC void SDLCALL SDL_GetOriginalMemoryFunctions(SDL_malloc_func *mal
 /**
  * Get the current set of SDL memory functions
  *
+ * \param malloc_func filled with malloc function
+ * \param calloc_func filled with calloc function
+ * \param realloc_func filled with realloc function
+ * \param free_func filled with free function
+ *
  * \since This function is available since SDL 3.0.0.
  */
 extern DECLSPEC void SDLCALL SDL_GetMemoryFunctions(SDL_malloc_func *malloc_func,
@@ -413,6 +423,13 @@ extern DECLSPEC void SDLCALL SDL_GetMemoryFunctions(SDL_malloc_func *malloc_func
 
 /**
  * Replace SDL's memory allocation functions with a custom set
+ *
+ * \param malloc_func custom malloc function
+ * \param calloc_func custom calloc function
+ * \param realloc_func custom realloc function
+ * \param free_func custom free function
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -453,6 +470,8 @@ extern DECLSPEC void SDLCALL SDL_aligned_free(void *mem);
 
 /**
  * Get the number of outstanding (unfreed) allocations
+ *
+ * \returns the number of allocations
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -643,8 +662,8 @@ extern DECLSPEC size_t SDLCALL SDL_iconv(SDL_iconv_t cd, const char **inbuf,
                                          size_t * outbytesleft);
 
 /**
- * This function converts a string between encodings in one pass, returning a
- * string that must be freed with SDL_free() or NULL on error.
+ * This function converts a buffer or string between encodings in one pass,
+ * returning a string that must be freed with SDL_free() or NULL on error.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -713,7 +732,7 @@ SDL_FORCE_INLINE void *SDL_memcpy4(SDL_OUT_BYTECAP(dwords*4) void *dst, SDL_IN_B
  * If a * b would overflow, return -1. Otherwise store a * b via ret
  * and return 0.
  *
- * \since This function is available since SDL 2.24.0.
+ * \since This function is available since SDL 3.0.0.
  */
 SDL_FORCE_INLINE int SDL_size_mul_overflow (size_t a,
                                             size_t b,
@@ -743,7 +762,7 @@ SDL_FORCE_INLINE int SDL_size_mul_overflow_builtin (size_t a,
  * If a + b would overflow, return -1. Otherwise store a + b via ret
  * and return 0.
  *
- * \since This function is available since SDL 2.24.0.
+ * \since This function is available since SDL 3.0.0.
  */
 SDL_FORCE_INLINE int SDL_size_add_overflow (size_t a,
                                             size_t b,

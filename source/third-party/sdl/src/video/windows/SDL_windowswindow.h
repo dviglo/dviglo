@@ -34,7 +34,7 @@
 extern "C" {
 #endif
 
-typedef struct
+struct SDL_WindowData
 {
     SDL_Window *window;
     HWND hwnd;
@@ -62,7 +62,10 @@ typedef struct
     RECT cursor_clipped_rect;
     SDL_Point last_raw_mouse_position;
     SDL_bool mouse_tracked;
+    SDL_bool destroy_parent_with_window;
+    SDL_DisplayID last_displayID;
     WCHAR *ICMFileName;
+    SDL_Window *keyboard_focus;
     struct SDL_VideoData *videodata;
 #if SDL_VIDEO_OPENGL_EGL
     EGLSurface egl_surface;
@@ -72,12 +75,12 @@ typedef struct
      * between dpi-scaled points and pixels. Only used if videodata->dpi_scaling_enabled.
      */
     int scaling_dpi;
-} SDL_WindowData;
+};
 
 extern int WIN_CreateWindow(_THIS, SDL_Window *window);
 extern int WIN_CreateWindowFrom(_THIS, SDL_Window *window, const void *data);
 extern void WIN_SetWindowTitle(_THIS, SDL_Window *window);
-extern void WIN_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
+extern int WIN_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
 extern void WIN_SetWindowPosition(_THIS, SDL_Window *window);
 extern void WIN_SetWindowSize(_THIS, SDL_Window *window);
 extern int WIN_GetWindowBordersSize(_THIS, SDL_Window *window, int *top, int *left, int *bottom, int *right);
@@ -109,6 +112,8 @@ extern void WIN_ClientPointFromSDL(const SDL_Window *window, int *x, int *y);
 extern void WIN_ClientPointFromSDLFloat(const SDL_Window *window, float x, float y, LONG *xOut, LONG *yOut);
 extern void WIN_AcceptDragAndDrop(SDL_Window *window, SDL_bool accept);
 extern int WIN_FlashWindow(_THIS, SDL_Window *window, SDL_FlashOperation operation);
+extern void WIN_UpdateDarkModeForHWND(HWND hwnd);
+extern void WIN_SetWindowPositionInternal(SDL_Window *window, UINT flags);
 
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus

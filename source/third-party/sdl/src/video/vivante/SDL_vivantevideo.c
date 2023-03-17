@@ -39,10 +39,8 @@
 
 static void VIVANTE_Destroy(SDL_VideoDevice *device)
 {
-    if (device->driverdata != NULL) {
-        SDL_free(device->driverdata);
-        device->driverdata = NULL;
-    }
+    SDL_free(device->driverdata);
+    SDL_free(device);
 }
 
 static SDL_VideoDevice *VIVANTE_Create()
@@ -76,8 +74,6 @@ static SDL_VideoDevice *VIVANTE_Create()
     /* Setup all functions which we can handle */
     device->VideoInit = VIVANTE_VideoInit;
     device->VideoQuit = VIVANTE_VideoQuit;
-    device->GetDisplayModes = VIVANTE_GetDisplayModes;
-    device->SetDisplayMode = VIVANTE_SetDisplayMode;
     device->CreateSDLWindow = VIVANTE_CreateWindow;
     device->SetWindowTitle = VIVANTE_SetWindowTitle;
     device->SetWindowPosition = VIVANTE_SetWindowPosition;
@@ -161,15 +157,16 @@ static int VIVANTE_AddVideoDisplays(_THIS)
     SDL_zero(display);
     display.name = VIVANTE_GetDisplayName(_this);
     display.desktop_mode = mode;
-    display.current_mode = mode;
     display.driverdata = data;
-    SDL_AddVideoDisplay(&display, SDL_FALSE);
+    if (SDL_AddVideoDisplay(&display, SDL_FALSE) == 0) {
+        return -1;
+    }
     return 0;
 }
 
 int VIVANTE_VideoInit(_THIS)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
 
 #if SDL_VIDEO_DRIVER_VIVANTE_VDK
     videodata->vdk_private = vdkInitialize();
@@ -221,7 +218,7 @@ int VIVANTE_VideoInit(_THIS)
 
 void VIVANTE_VideoQuit(_THIS)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
 
 #ifdef SDL_INPUT_LINUXEV
     SDL_EVDEV_Quit();
@@ -242,20 +239,9 @@ void VIVANTE_VideoQuit(_THIS)
 #endif
 }
 
-void VIVANTE_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
-{
-    /* Only one display mode available, the current one */
-    SDL_AddDisplayMode(display, &display->current_mode);
-}
-
-int VIVANTE_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode)
-{
-    return 0;
-}
-
 int VIVANTE_CreateWindow(_THIS, SDL_Window *window)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     SDL_DisplayData *displaydata;
     SDL_WindowData *data;
 
@@ -281,7 +267,7 @@ int VIVANTE_CreateWindow(_THIS, SDL_Window *window)
 
 #if SDL_VIDEO_OPENGL_EGL
     if (window->flags & SDL_WINDOW_OPENGL) {
-        data->egl_surface = SDL_EGL_CreateSurface(_this, data->native_window);
+        data->egl_surface = SDL_EGL_CreateSurface(_this, window, data->native_window);
         if (data->egl_surface == EGL_NO_SURFACE) {
             return SDL_SetError("VIVANTE: Can't create EGL surface");
         }
@@ -296,7 +282,7 @@ int VIVANTE_CreateWindow(_THIS, SDL_Window *window)
 
 void VIVANTE_DestroyWindow(_THIS, SDL_Window *window)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     SDL_WindowData *data;
 
     data = window->driverdata;
@@ -361,7 +347,7 @@ void VIVANTE_HideWindow(_THIS, SDL_Window *window)
 /*****************************************************************************/
 int VIVANTE_GetWindowWMInfo(_THIS, SDL_Window *window, struct SDL_SysWMinfo *info)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     SDL_DisplayData *displaydata = SDL_GetDisplayDriverData(0);
 
     info->subsystem = SDL_SYSWM_VIVANTE;

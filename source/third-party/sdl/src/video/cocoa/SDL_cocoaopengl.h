@@ -41,7 +41,7 @@ struct SDL_GLDriverData
 
 @interface SDLOpenGLContext : NSOpenGLContext
 {
-    SDL_atomic_t dirty;
+    SDL_AtomicInt dirty;
     SDL_Window *window;
     CVDisplayLinkRef displayLink;
   @public
@@ -49,9 +49,9 @@ struct SDL_GLDriverData
   @public
     SDL_cond *swapIntervalCond;
   @public
-    SDL_atomic_t swapIntervalSetting;
+    SDL_AtomicInt swapIntervalSetting;
   @public
-    SDL_atomic_t swapIntervalsPassed;
+    SDL_AtomicInt swapIntervalsPassed;
 }
 
 - (id)initWithFormat:(NSOpenGLPixelFormat *)format
@@ -62,7 +62,7 @@ struct SDL_GLDriverData
 - (void)setWindow:(SDL_Window *)window;
 - (SDL_Window *)window;
 - (void)explicitUpdate;
-- (void)dealloc;
+- (void)cleanup;
 
 @property(retain, nonatomic) NSOpenGLPixelFormat *openglPixelFormat; // macOS 10.10 has -[NSOpenGLContext pixelFormat] but this handles older OS releases.
 
@@ -78,7 +78,7 @@ extern int Cocoa_GL_MakeCurrent(_THIS, SDL_Window *window,
 extern int Cocoa_GL_SetSwapInterval(_THIS, int interval);
 extern int Cocoa_GL_GetSwapInterval(_THIS, int *interval);
 extern int Cocoa_GL_SwapWindow(_THIS, SDL_Window *window);
-extern void Cocoa_GL_DeleteContext(_THIS, SDL_GLContext context);
+extern int Cocoa_GL_DeleteContext(_THIS, SDL_GLContext context);
 
 #ifdef __clang__
 #pragma clang diagnostic pop

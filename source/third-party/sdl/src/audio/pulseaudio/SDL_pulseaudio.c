@@ -529,8 +529,7 @@ static int PULSEAUDIO_OpenDevice(_THIS, const char *devname)
     int rc = 0;
 
     /* Initialize all variables that we clean on shutdown */
-    h = this->hidden = (struct SDL_PrivateAudioData *)
-        SDL_malloc((sizeof *this->hidden));
+    h = this->hidden = (struct SDL_PrivateAudioData *)SDL_malloc(sizeof(*this->hidden));
     if (this->hidden == NULL) {
         return SDL_OutOfMemory();
     }
@@ -802,7 +801,7 @@ static int SDLCALL HotplugThread(void *data)
     return 0;
 }
 
-static void PULSEAUDIO_DetectDevices()
+static void PULSEAUDIO_DetectDevices(void)
 {
     WaitForPulseOperation(hotplug_mainloop, PULSEAUDIO_pa_context_get_server_info(hotplug_context, ServerInfoCallback, NULL));
     WaitForPulseOperation(hotplug_mainloop, PULSEAUDIO_pa_context_get_sink_info_list(hotplug_context, SinkInfoCallback, (void *)((intptr_t)SDL_TRUE)));

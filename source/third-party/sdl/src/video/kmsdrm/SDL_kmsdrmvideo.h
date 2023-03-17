@@ -33,7 +33,7 @@
 #include <gbm.h>
 #include <EGL/egl.h>
 
-typedef struct SDL_VideoData
+struct SDL_VideoData
 {
     int devindex;     /* device index that was passed on creation */
     int drm_fd;       /* DRM file desc */
@@ -53,14 +53,14 @@ typedef struct SDL_VideoData
        open 1 FD and create 1 gbm device. */
     SDL_bool gbm_init;
 
-} SDL_VideoData;
+};
 
-typedef struct SDL_DisplayModeData
+struct SDL_DisplayModeData
 {
     int mode_index;
-} SDL_DisplayModeData;
+};
 
-typedef struct SDL_DisplayData
+struct SDL_DisplayData
 {
     drmModeConnector *connector;
     drmModeCrtc *crtc;
@@ -80,9 +80,9 @@ typedef struct SDL_DisplayData
     uint64_t cursor_w, cursor_h;
 
     SDL_bool default_cursor_init;
-} SDL_DisplayData;
+};
 
-typedef struct SDL_WindowData
+struct SDL_WindowData
 {
     SDL_VideoData *viddata;
     /* SDL internals expect EGL surface to be here, and in KMSDRM the GBM surface is
@@ -98,7 +98,7 @@ typedef struct SDL_WindowData
 
     EGLSurface egl_surface;
     SDL_bool egl_surface_dirty;
-} SDL_WindowData;
+};
 
 typedef struct KMSDRM_FBInfo
 {
@@ -119,12 +119,11 @@ SDL_bool KMSDRM_WaitPageflip(_THIS, SDL_WindowData *windata);
 /* Display and window functions */
 int KMSDRM_VideoInit(_THIS);
 void KMSDRM_VideoQuit(_THIS);
-void KMSDRM_GetDisplayModes(_THIS, SDL_VideoDisplay *display);
+int KMSDRM_GetDisplayModes(_THIS, SDL_VideoDisplay *display);
 int KMSDRM_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode);
 int KMSDRM_CreateWindow(_THIS, SDL_Window *window);
 int KMSDRM_CreateWindowFrom(_THIS, SDL_Window *window, const void *data);
 void KMSDRM_SetWindowTitle(_THIS, SDL_Window *window);
-void KMSDRM_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
 void KMSDRM_SetWindowPosition(_THIS, SDL_Window *window);
 void KMSDRM_SetWindowSize(_THIS, SDL_Window *window);
 void KMSDRM_SetWindowFullscreen(_THIS, SDL_Window *window, SDL_VideoDisplay *_display, SDL_bool fullscreen);
@@ -148,6 +147,6 @@ int KMSDRM_GLES_MakeCurrent(_THIS, SDL_Window *window, SDL_GLContext context);
 int KMSDRM_GLES_SetSwapInterval(_THIS, int interval);
 int KMSDRM_GLES_GetSwapInterval(_THIS);
 int KMSDRM_GLES_SwapWindow(_THIS, SDL_Window *window);
-void KMSDRM_GLES_DeleteContext(_THIS, SDL_GLContext context);
+int KMSDRM_GLES_DeleteContext(_THIS, SDL_GLContext context);
 
 #endif /* SDL_kmsdrmvideo_h */

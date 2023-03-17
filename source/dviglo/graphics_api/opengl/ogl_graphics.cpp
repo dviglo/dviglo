@@ -281,7 +281,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 #endif
 
         SDL_Rect display_rect;
-        SDL_GetDisplayBounds(newParams.monitor_, &display_rect);
+        SDL_GetDisplayBounds(newParams.display_, &display_rect);
         reposition = newParams.fullscreen_ || (newParams.borderless_ && width >= display_rect.w && height >= display_rect.h);
 
         const int x = reposition ? display_rect.x : position_.x_;
@@ -289,7 +289,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
         unsigned flags = SDL_WINDOW_OPENGL;
         if (newParams.fullscreen_)
-            flags |= SDL_WINDOW_FULLSCREEN_EXCLUSIVE;
+            flags |= SDL_WINDOW_FULLSCREEN;
         if (newParams.borderless_)
             flags |= SDL_WINDOW_BORDERLESS;
         if (newParams.resizable_)
@@ -323,7 +323,11 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
                 }
 
                 if (!externalWindow_)
-                    window_ = SDL_CreateWindow(windowTitle_.c_str(), x, y, width, height, flags);
+                {
+                    // TODO
+                    //window_ = SDL_CreateWindow(windowTitle_.c_str(), x, y, width, height, flags);
+                    window_ = SDL_CreateWindow(windowTitle_.c_str(), width, height, flags);
+                }
                 else
                 {
     #ifndef __EMSCRIPTEN__
@@ -363,7 +367,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
         if (maximize)
         {
             Maximize();
-            SDL_GL_GetDrawableSize(window_, &width, &height);
+            SDL_GetWindowSizeInPixels(window_, &width, &height);
         }
 
         // Create/restore context and GPU objects and set initial renderstate
@@ -384,7 +388,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
 
     screenParams_ = newParams;
 
-    SDL_GL_GetDrawableSize(window_, &width_, &height_);
+    SDL_GetWindowSizeInPixels(window_, &width_, &height_);
     if (!reposition)
         SDL_GetWindowPosition(window_, &position_.x_, &position_.y_);
 
@@ -482,7 +486,7 @@ bool Graphics::BeginFrame_OGL()
     {
         int width, height;
 
-        SDL_GL_GetDrawableSize(window_, &width, &height);
+        SDL_GetWindowSizeInPixels(window_, &width, &height);
         if (width != width_ || height != height_)
             SetMode(width, height);
     }
@@ -2080,7 +2084,7 @@ void Graphics::OnWindowResized_OGL()
 
     int newWidth, newHeight;
 
-    SDL_GL_GetDrawableSize(window_, &newWidth, &newHeight);
+    SDL_GetWindowSizeInPixels(window_, &newWidth, &newHeight);
     if (newWidth == width_ && newHeight == height_)
         return;
 

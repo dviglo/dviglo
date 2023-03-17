@@ -22,7 +22,7 @@
 /**
  *  \file SDL_intrin.h
  *
- *  Header file for CPU intrinsics for SDL
+ *  \brief Header file for CPU intrinsics for SDL
  */
 
 #ifndef SDL_intrin_h_
@@ -65,15 +65,15 @@ _m_prefetch(void *__P)
 #endif
 #elif defined(__MINGW64_VERSION_MAJOR)
 #include <intrin.h>
-#if !defined(SDL_DISABLE_ARM_NEON_H) && defined(__ARM_NEON)
+#if defined(__ARM_NEON) && !defined(SDL_DISABLE_NEON)
 #  include <arm_neon.h>
 #endif
 #else
-/* altivec.h redefining bool causes a number of problems, see bugs 3993 and 4392, so you need to explicitly define SDL_ENABLE_ALTIVEC_H to have it included. */
-#if defined(HAVE_ALTIVEC_H) && defined(__ALTIVEC__) && !defined(__APPLE_ALTIVEC__) && defined(SDL_ENABLE_ALTIVEC_H)
+/* altivec.h redefining bool causes a number of problems, see bugs 3993 and 4392, so you need to explicitly define SDL_ENABLE_ALTIVEC to have it included. */
+#if defined(__ALTIVEC__) && defined(SDL_ENABLE_ALTIVEC)
 #include <altivec.h>
 #endif
-#if !defined(SDL_DISABLE_ARM_NEON_H)
+#if !defined(SDL_DISABLE_NEON)
 #  if defined(__ARM_NEON)
 #    include <arm_neon.h>
 #  elif defined(__WINDOWS__) || defined(__WINRT__) || defined(__GDK__)
@@ -93,29 +93,26 @@ _m_prefetch(void *__P)
 #endif
 #endif /* compiler version */
 
-#if defined(__loongarch_sx) && !defined(SDL_DISABLE_LSX_H)
+#if defined(__loongarch_sx) && !defined(SDL_DISABLE_LSX)
 #include <lsxintrin.h>
-#define __LSX__
 #endif
-#if defined(__loongarch_asx) && !defined(SDL_DISABLE_LASX_H)
+#if defined(__loongarch_asx) && !defined(SDL_DISABLE_LASX)
 #include <lasxintrin.h>
-#define __LASX__
 #endif
-#if defined(HAVE_IMMINTRIN_H) && !defined(SDL_DISABLE_IMMINTRIN_H)
+#if defined(__AVX__) && !defined(SDL_DISABLE_AVX)
 #include <immintrin.h>
-#else
-#if defined(__MMX__) && !defined(SDL_DISABLE_MMINTRIN_H)
+#endif
+#if defined(__MMX__) && !defined(SDL_DISABLE_MMX)
 #include <mmintrin.h>
 #endif
-#if defined(__SSE__) && !defined(SDL_DISABLE_XMMINTRIN_H)
+#if defined(__SSE__) && !defined(SDL_DISABLE_SSE)
 #include <xmmintrin.h>
 #endif
-#if defined(__SSE2__) && !defined(SDL_DISABLE_EMMINTRIN_H)
+#if defined(__SSE2__) && !defined(SDL_DISABLE_SSE2)
 #include <emmintrin.h>
 #endif
-#if defined(__SSE3__) && !defined(SDL_DISABLE_PMMINTRIN_H)
+#if defined(__SSE3__) && !defined(SDL_DISABLE_SSE3)
 #include <pmmintrin.h>
 #endif
-#endif /* HAVE_IMMINTRIN_H */
 
 #endif /* SDL_intrin_h_ */

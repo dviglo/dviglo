@@ -102,12 +102,9 @@ static SDL_VideoDevice *RPI_Create()
     /* Setup all functions which we can handle */
     device->VideoInit = RPI_VideoInit;
     device->VideoQuit = RPI_VideoQuit;
-    device->GetDisplayModes = RPI_GetDisplayModes;
-    device->SetDisplayMode = RPI_SetDisplayMode;
     device->CreateSDLWindow = RPI_CreateWindow;
     device->CreateSDLWindowFrom = RPI_CreateWindowFrom;
     device->SetWindowTitle = RPI_SetWindowTitle;
-    device->SetWindowIcon = RPI_SetWindowIcon;
     device->SetWindowPosition = RPI_SetWindowPosition;
     device->SetWindowSize = RPI_SetWindowSize;
     device->ShowWindow = RPI_ShowWindow;
@@ -172,7 +169,6 @@ static void AddDispManXDisplay(const int display_id)
 
     SDL_zero(display);
     display.desktop_mode = mode;
-    display.current_mode = mode;
 
     /* Allocate display internal data */
     data = (SDL_DisplayData *)SDL_calloc(1, sizeof(SDL_DisplayData));
@@ -214,20 +210,9 @@ void RPI_VideoQuit(_THIS)
 #endif
 }
 
-void RPI_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
-{
-    /* Only one display mode available, the current one */
-    SDL_AddDisplayMode(display, &display->current_mode);
-}
-
-int RPI_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode)
-{
-    return 0;
-}
-
 static void RPI_vsync_callback(DISPMANX_UPDATE_HANDLE_T u, void *data)
 {
-    SDL_WindowData *wdata = ((SDL_WindowData *)data);
+    SDL_WindowData *wdata = (SDL_WindowData *)data;
 
     SDL_LockMutex(wdata->vsync_cond_mutex);
     SDL_CondSignal(wdata->vsync_cond);
@@ -256,12 +241,12 @@ int RPI_CreateWindow(_THIS, SDL_Window *window)
     if (wdata == NULL) {
         return SDL_OutOfMemory();
     }
-    display = SDL_GetDisplayForWindow(window);
-    displaydata = (SDL_DisplayData *)display->driverdata;
+    display = SDL_GetVideoDisplayForWindow(window);
+    displaydata = display->driverdata;
 
     /* Windows have one size for now */
-    window->w = display->desktop_mode.w;
-    window->h = display->desktop_mode.h;
+    window->w = display->desktop_mode.screen_w;
+    window->h = display->desktop_mode.screen_h;
 
     /* OpenGL ES is the law here, buddy */
     window->flags |= SDL_WINDOW_OPENGL;
@@ -302,7 +287,7 @@ int RPI_CreateWindow(_THIS, SDL_Window *window)
             return -1;
         }
     }
-    wdata->egl_surface = SDL_EGL_CreateSurface(_this, (NativeWindowType)&wdata->dispman_window);
+    wdata->egl_surface = SDL_EGL_CreateSurface(_this, window, (NativeWindowType)&wdata->dispman_window);
 
     if (wdata->egl_surface == EGL_NO_SURFACE) {
         return SDL_SetError("Could not create GLES window surface");
@@ -330,9 +315,8 @@ int RPI_CreateWindow(_THIS, SDL_Window *window)
 
 void RPI_DestroyWindow(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
-    SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
-    SDL_DisplayData *displaydata = (SDL_DisplayData *)display->driverdata;
+    SDL_WindowData *data = window->driverdata;
+    SDL_DisplayData *displaydata = SDL_GetDisplayDriverDataForWindow(window);
 
     if (data) {
         if (data->double_buffer) {
@@ -363,9 +347,6 @@ int RPI_CreateWindowFrom(_THIS, SDL_Window *window, const void *data)
 }
 
 void RPI_SetWindowTitle(_THIS, SDL_Window *window)
-{
-}
-void RPI_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon)
 {
 }
 void RPI_SetWindowPosition(_THIS, SDL_Window *window)

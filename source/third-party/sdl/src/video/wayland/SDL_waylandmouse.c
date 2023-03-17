@@ -330,7 +330,7 @@ static int create_buffer_from_shm(Wayland_CursorData *d,
                                   uint32_t format)
 {
     SDL_VideoDevice *vd = SDL_GetVideoDevice();
-    SDL_VideoData *data = (SDL_VideoData *)vd->driverdata;
+    SDL_VideoData *data = vd->driverdata;
     struct wl_shm_pool *shm_pool;
 
     int stride = width * 4;
@@ -381,7 +381,7 @@ static SDL_Cursor *Wayland_CreateCursor(SDL_Surface *surface, int hot_x, int hot
     cursor = SDL_calloc(1, sizeof(*cursor));
     if (cursor) {
         SDL_VideoDevice *vd = SDL_GetVideoDevice();
-        SDL_VideoData *wd = (SDL_VideoData *)vd->driverdata;
+        SDL_VideoData *wd = vd->driverdata;
         Wayland_CursorData *data = SDL_calloc(1, sizeof(Wayland_CursorData));
         if (data == NULL) {
             SDL_OutOfMemory();
@@ -448,7 +448,7 @@ static SDL_Cursor *Wayland_CreateSystemCursor(SDL_SystemCursor id)
     return cursor;
 }
 
-static SDL_Cursor *Wayland_CreateDefaultCursor()
+static SDL_Cursor *Wayland_CreateDefaultCursor(void)
 {
     return Wayland_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
 }
@@ -533,28 +533,29 @@ static int Wayland_ShowCursor(SDL_Cursor *cursor)
     return 0;
 }
 
-static void Wayland_WarpMouse(SDL_Window *window, float x, float y)
+static int Wayland_WarpMouse(SDL_Window *window, float x, float y)
 {
     SDL_VideoDevice *vd = SDL_GetVideoDevice();
     SDL_VideoData *d = vd->driverdata;
     struct SDL_WaylandInput *input = d->input;
 
     if (input->cursor_visible == SDL_TRUE) {
-        SDL_Unsupported();
+        return SDL_Unsupported();
     } else if (input->warp_emulation_prohibited) {
-        SDL_Unsupported();
+        return SDL_Unsupported();
     } else {
         if (!d->relative_mouse_mode) {
             Wayland_input_lock_pointer(input);
             input->relative_mode_override = SDL_TRUE;
         }
     }
+    return 0;
 }
 
 static int Wayland_SetRelativeMouseMode(SDL_bool enabled)
 {
     SDL_VideoDevice *vd = SDL_GetVideoDevice();
-    SDL_VideoData *data = (SDL_VideoData *)vd->driverdata;
+    SDL_VideoData *data = vd->driverdata;
 
     if (enabled) {
         /* Disable mouse warp emulation if it's enabled. */

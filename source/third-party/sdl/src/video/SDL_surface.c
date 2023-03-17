@@ -615,11 +615,16 @@ SDL_SetSurfaceClipRect(SDL_Surface *surface, const SDL_Rect *rect)
     return SDL_GetRectIntersection(rect, &full_rect, &surface->clip_rect);
 }
 
-void SDL_GetSurfaceClipRect(SDL_Surface *surface, SDL_Rect *rect)
+int SDL_GetSurfaceClipRect(SDL_Surface *surface, SDL_Rect *rect)
 {
-    if (surface && rect) {
-        *rect = surface->clip_rect;
+    if (!surface) {
+        return SDL_InvalidParamError("surface");
     }
+    if (!rect) {
+        return SDL_InvalidParamError("rect");
+    }
+    *rect = surface->clip_rect;
+    return 0;
 }
 
 /*
@@ -759,7 +764,7 @@ int SDL_BlitSurface(SDL_Surface *src, const SDL_Rect *srcrect,
 int SDL_BlitSurfaceScaled(SDL_Surface *src, const SDL_Rect *srcrect,
                         SDL_Surface *dst, SDL_Rect *dstrect)
 {
-    return SDL_PrivateBlitSurfaceScaled(src, srcrect, dst, dstrect, SDL_ScaleModeNearest);
+    return SDL_PrivateBlitSurfaceScaled(src, srcrect, dst, dstrect, SDL_SCALEMODE_NEAREST);
 }
 
 int SDL_PrivateBlitSurfaceScaled(SDL_Surface *src, const SDL_Rect *srcrect,
@@ -927,7 +932,7 @@ int SDL_PrivateBlitSurfaceScaled(SDL_Surface *src, const SDL_Rect *srcrect,
 int SDL_BlitSurfaceUncheckedScaled(SDL_Surface *src, SDL_Rect *srcrect,
                         SDL_Surface *dst, SDL_Rect *dstrect)
 {
-    return SDL_PrivateBlitSurfaceUncheckedScaled(src, srcrect, dst, dstrect, SDL_ScaleModeNearest);
+    return SDL_PrivateBlitSurfaceUncheckedScaled(src, srcrect, dst, dstrect, SDL_SCALEMODE_NEAREST);
 }
 
 int SDL_PrivateBlitSurfaceUncheckedScaled(SDL_Surface *src, SDL_Rect *srcrect,
@@ -947,7 +952,7 @@ int SDL_PrivateBlitSurfaceUncheckedScaled(SDL_Surface *src, SDL_Rect *srcrect,
         SDL_InvalidateMap(src->map);
     }
 
-    if (scaleMode == SDL_ScaleModeNearest) {
+    if (scaleMode == SDL_SCALEMODE_NEAREST) {
         if (!(src->map->info.flags & complex_copy_flags) &&
             src->format->format == dst->format->format &&
             !SDL_ISPIXELFORMAT_INDEXED(src->format->format)) {
@@ -1324,7 +1329,7 @@ end:
         (copy_flags & SDL_COPY_MODULATE_ALPHA)) {
         SDL_SetSurfaceBlendMode(convert, SDL_BLENDMODE_BLEND);
     }
-    if ((copy_flags & SDL_COPY_RLE_DESIRED)) {
+    if (copy_flags & SDL_COPY_RLE_DESIRED) {
         SDL_SetSurfaceRLE(convert, SDL_RLEACCEL);
     }
 

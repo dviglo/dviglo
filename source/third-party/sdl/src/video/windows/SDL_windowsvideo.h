@@ -364,7 +364,7 @@ typedef struct tagINPUTCONTEXT2
 
 /* Private display data */
 
-typedef struct SDL_VideoData
+struct SDL_VideoData
 {
     int render;
 
@@ -457,7 +457,7 @@ typedef struct SDL_VideoData
 
     BYTE pre_hook_key_state[256];
     UINT _SDL_WAKEUP;
-} SDL_VideoData;
+};
 
 extern SDL_bool g_WindowsEnableMessageLoop;
 extern SDL_bool g_WindowsEnableMenuMnemonics;
@@ -466,6 +466,7 @@ extern SDL_bool g_WindowFrameUsableWhileCursorHidden;
 typedef struct IDirect3D9 IDirect3D9;
 extern SDL_bool D3D_LoadDLL(void **pD3DDLL, IDirect3D9 **pDirect3D9Interface);
 
+extern SDL_SystemTheme WIN_GetSystemTheme(void);
 extern SDL_bool WIN_IsPerMonitorV2DPIAware(_THIS);
 
 #endif /* SDL_windowsvideo_h_ */

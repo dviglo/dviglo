@@ -63,7 +63,7 @@ int SDL_SYS_CreateThread(SDL_Thread *thread)
 
     TInt status = CreateUnique(NewThread, &rthread, thread);
     if (status != KErrNone) {
-        delete (((RThread *)(thread->handle)));
+        delete (RThread *)thread->handle;
         thread->handle = NULL;
         return SDL_SetError("Not enough resources to create thread");
     }
@@ -109,6 +109,3 @@ void SDL_SYS_DetachThread(SDL_Thread *thread)
 }
 
 #endif /* SDL_THREAD_NGAGE */
-
-/* vim: ts=4 sw=4
- */

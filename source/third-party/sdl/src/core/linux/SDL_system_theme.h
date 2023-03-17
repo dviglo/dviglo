@@ -19,13 +19,13 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-#ifndef SDLname_h_
-#define SDLname_h_
+#ifndef SDL_system_theme_h_
+#define SDL_system_theme_h_
 
-#if defined(__STDC__) || defined(__cplusplus)
-#define NeedFunctionPrototypes 1
-#endif
+#include "SDL_internal.h"
 
-#define SDL_NAME(X) SDL_##X
+extern SDL_bool SDL_SystemTheme_Init(void);
+extern SDL_SystemTheme SDL_SystemTheme_Get(void);
+extern void SDL_SystemTheme_PumpEvents(void);
 
-#endif /* SDLname_h_ */
+#endif /* SDL_system_theme_h_ */

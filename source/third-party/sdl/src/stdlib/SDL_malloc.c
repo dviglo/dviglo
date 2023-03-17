@@ -2531,11 +2531,14 @@ static int init_mparams(void) {
       int fd;
       unsigned char buf[sizeof(size_t)];
       /* Try to use /dev/urandom, else fall back on using time */
-      if ((fd = open("/dev/urandom", O_RDONLY)) >= 0 &&
-          read(fd, buf, sizeof(buf)) == sizeof(buf)) {
-        s = *((size_t *) buf);
+      if ((fd = open("/dev/urandom", O_RDONLY)) < 0) {
+        s = 0;
+      } else {
+        s = read(fd, buf, sizeof(buf));
         close(fd);
       }
+      if (s == sizeof(buf))
+        s = *((size_t *)buf);
       else
 #endif /* USE_DEV_RANDOM */
         s = (size_t)(time(0) ^ (size_t)0x55555555U);
@@ -5200,7 +5203,7 @@ static struct
     SDL_calloc_func calloc_func;
     SDL_realloc_func realloc_func;
     SDL_free_func free_func;
-    SDL_atomic_t num_allocations;
+    SDL_AtomicInt num_allocations;
 } s_mem = {
     real_malloc, real_calloc, real_realloc, real_free, { 0 }
 };

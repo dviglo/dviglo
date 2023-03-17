@@ -64,7 +64,7 @@ SDL_GLContext
 WIN_GLES_CreateContext(_THIS, SDL_Window *window)
 {
     SDL_GLContext context;
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
 
 #if SDL_VIDEO_OPENGL_WGL
     if (_this->gl_config.profile_mask != SDL_GL_CONTEXT_PROFILE_ES &&
@@ -94,19 +94,21 @@ WIN_GLES_CreateContext(_THIS, SDL_Window *window)
     return context;
 }
 
-void WIN_GLES_DeleteContext(_THIS, SDL_GLContext context)
+int WIN_GLES_DeleteContext(_THIS, SDL_GLContext context)
 {
     SDL_EGL_DeleteContext(_this, context);
-    WIN_GLES_UnloadLibrary(_this);
+    return 0;
 }
 
+/* *INDENT-OFF* */ /* clang-format off */
 SDL_EGL_SwapWindow_impl(WIN)
-    SDL_EGL_MakeCurrent_impl(WIN)
+SDL_EGL_MakeCurrent_impl(WIN)
+/* *INDENT-ON* */ /* clang-format on */
 
-        int WIN_GLES_SetupWindow(_THIS, SDL_Window *window)
+int WIN_GLES_SetupWindow(_THIS, SDL_Window *window)
 {
     /* The current context is lost in here; save it and reset it. */
-    SDL_WindowData *windowdata = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *windowdata = window->driverdata;
     SDL_Window *current_win = SDL_GL_GetCurrentWindow();
     SDL_GLContext current_ctx = SDL_GL_GetCurrentContext();
 
@@ -123,7 +125,7 @@ SDL_EGL_SwapWindow_impl(WIN)
     }
 
     /* Create the GLES window surface */
-    windowdata->egl_surface = SDL_EGL_CreateSurface(_this, (NativeWindowType)windowdata->hwnd);
+    windowdata->egl_surface = SDL_EGL_CreateSurface(_this, window, (NativeWindowType)windowdata->hwnd);
 
     if (windowdata->egl_surface == EGL_NO_SURFACE) {
         return SDL_SetError("Could not create GLES window surface");
@@ -135,7 +137,7 @@ SDL_EGL_SwapWindow_impl(WIN)
 EGLSurface
 WIN_GLES_GetEGLSurface(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *windowdata = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *windowdata = window->driverdata;
 
     return windowdata->egl_surface;
 }

@@ -177,7 +177,7 @@ static void PS2_SetTextureScaleMode(SDL_Renderer *renderer, SDL_Texture *texture
      gskit scale mode is either GS_FILTER_NEAREST (good for tile-map)
      or GS_FILTER_LINEAR (good for scaling)
      */
-    uint32_t gsKitScaleMode = (scaleMode == SDL_ScaleModeNearest
+    uint32_t gsKitScaleMode = (scaleMode == SDL_SCALEMODE_NEAREST
                                    ? GS_FILTER_NEAREST
                                    : GS_FILTER_LINEAR);
     ps2_texture->Filter = gsKitScaleMode;
@@ -233,7 +233,7 @@ static int PS2_QueueGeometry(SDL_Renderer *renderer, SDL_RenderCommand *cmd, SDL
     size_indices = indices ? size_indices : 0;
 
     if (texture) {
-        GSPRIMUVPOINT *vertices = (GSPRIMUVPOINT *) SDL_AllocateRenderVertices(renderer, count * sizeof (GSPRIMUVPOINT), 4, &cmd->data.draw.first);
+        GSPRIMUVPOINT *vertices = (GSPRIMUVPOINT *) SDL_AllocateRenderVertices(renderer, count * sizeof(GSPRIMUVPOINT), 4, &cmd->data.draw.first);
         GSTEXTURE *ps2_tex = (GSTEXTURE *) texture->driverdata;
 
         if (vertices == NULL) {
@@ -665,7 +665,7 @@ SDL_RenderDriver PS2_RenderDriver = {
     .CreateRenderer = PS2_CreateRenderer,
     .info = {
         .name = "PS2 gsKit",
-        .flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE,
+        .flags = (SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC),
         .num_texture_formats = 2,
         .texture_formats = {
             [0] = SDL_PIXELFORMAT_ABGR1555,

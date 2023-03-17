@@ -19,14 +19,14 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+/**
+ *  \file SDL_build_config.h
+ *
+ *  \brief This is a set of defines to configure the SDL features
+ */
+
 #ifndef SDL_build_config_h_
 #define SDL_build_config_h_
-
-/**
- *  \file SDL_build_config.h.in
- *
- *  This is a set of defines to configure the SDL features
- */
 
 /* General platform specific identifiers */
 #include <SDL3/SDL_platform_defines.h>
@@ -215,7 +215,6 @@
 #cmakedefine HAVE_FLOAT_H 1
 #endif /* HAVE_LIBC */
 
-#cmakedefine HAVE_ALTIVEC_H 1
 #cmakedefine HAVE_DBUS_DBUS_H 1
 #cmakedefine HAVE_FCITX 1
 #cmakedefine HAVE_IBUS_IBUS_H 1
@@ -225,18 +224,6 @@
 #cmakedefine HAVE_INOTIFY 1
 #cmakedefine HAVE_LIBUSB 1
 #cmakedefine HAVE_O_CLOEXEC 1
-
-/* Apple platforms might be building universal binaries, where Intel builds
-   can use immintrin.h but other architectures can't. */
-#ifdef __APPLE__
-#  if defined(__has_include) && (defined(__i386__) || defined(__x86_64))
-#    if __has_include(<immintrin.h>)
-#       define HAVE_IMMINTRIN_H 1
-#    endif
-#  endif
-#else  /* non-Apple platforms can use the normal CMake check for this. */
-#cmakedefine HAVE_IMMINTRIN_H 1
-#endif
 
 #cmakedefine HAVE_LIBUDEV_H 1
 #cmakedefine HAVE_LIBSAMPLERATE_H 1
@@ -596,5 +583,16 @@ typedef unsigned int uintptr_t;
 #endif
 #endif /* Visual Studio 2008 */
 #endif /* !_STDINT_H_ && !HAVE_STDINT_H */
+
+/* Configure use of intrinsics */
+
+#cmakedefine SDL_DISABLE_SSE 1
+#cmakedefine SDL_DISABLE_SSE2 1
+#cmakedefine SDL_DISABLE_SSE3 1
+#cmakedefine SDL_DISABLE_AVX 1
+#cmakedefine SDL_DISABLE_MMX 1
+#cmakedefine SDL_DISABLE_LSX 1
+#cmakedefine SDL_DISABLE_LASX 1
+#cmakedefine SDL_DISABLE_NEON 1
 
 #endif /* SDL_build_config_h_ */

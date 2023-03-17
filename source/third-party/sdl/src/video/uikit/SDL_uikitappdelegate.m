@@ -468,7 +468,7 @@ static UIImage *SDL_LoadLaunchImageNamed(NSString *name, int screenh)
     if (_this) {
         SDL_Window *window = NULL;
         for (window = _this->windows; window != NULL; window = window->next) {
-            SDL_WindowData *data = (__bridge SDL_WindowData *)window->driverdata;
+            SDL_UIKitWindowData *data = (__bridge SDL_UIKitWindowData *)window->driverdata;
             if (data != nil) {
                 return data.uiwindow;
             }

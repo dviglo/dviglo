@@ -251,7 +251,7 @@ static void SDL_EVDEV_udev_callback(SDL_UDEV_deviceevent udev_event, int udev_cl
             return;
         }
 
-        if ((udev_class & SDL_UDEV_DEVICE_JOYSTICK)) {
+        if (udev_class & SDL_UDEV_DEVICE_JOYSTICK) {
             return;
         }
 
@@ -287,7 +287,7 @@ void SDL_EVDEV_Poll(void)
     mouse = SDL_GetMouse();
 
     for (item = _this->first; item != NULL; item = item->next) {
-        while ((len = read(item->fd, events, (sizeof events))) > 0) {
+        while ((len = read(item->fd, events, sizeof(events))) > 0) {
             len /= sizeof(events[0]);
             for (i = 0; i < len; ++i) {
                 struct input_event *event = &events[i];
@@ -782,7 +782,6 @@ static void SDL_EVDEV_sync_device(SDL_evdevlist_item *item)
 
 static int SDL_EVDEV_device_added(const char *dev_path, int udev_class)
 {
-    int ret;
     SDL_evdevlist_item *item;
     unsigned long relbit[NBITS(REL_MAX)] = { 0 };
 
@@ -819,6 +818,7 @@ static int SDL_EVDEV_device_added(const char *dev_path, int udev_class)
 
     /* For now, we just treat a touchpad like a touchscreen */
     if (udev_class & (SDL_UDEV_DEVICE_TOUCHSCREEN | SDL_UDEV_DEVICE_TOUCHPAD)) {
+        int ret;
         item->is_touchscreen = SDL_TRUE;
         ret = SDL_EVDEV_init_touchscreen(item, udev_class);
         if (ret < 0) {

@@ -32,12 +32,12 @@
 
 int RISCOS_CreateWindowFramebuffer(_THIS, SDL_Window *window, Uint32 *format, void **pixels, int *pitch)
 {
-    SDL_WindowData *driverdata = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *driverdata = window->driverdata;
     const char *sprite_name = "display";
     unsigned int sprite_mode;
     _kernel_oserror *error;
     _kernel_swi_regs regs;
-    SDL_DisplayMode mode;
+    const SDL_DisplayMode *mode;
     int size;
     int w, h;
 
@@ -47,10 +47,10 @@ int RISCOS_CreateWindowFramebuffer(_THIS, SDL_Window *window, Uint32 *format, vo
     RISCOS_DestroyWindowFramebuffer(_this, window);
 
     /* Create a new one */
-    SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window), &mode);
-    if ((SDL_ISPIXELFORMAT_PACKED(mode.format) || SDL_ISPIXELFORMAT_ARRAY(mode.format))) {
-        *format = mode.format;
-        sprite_mode = (unsigned int)mode.driverdata;
+    mode = SDL_GetCurrentDisplayMode(SDL_GetDisplayForWindow(window));
+    if ((SDL_ISPIXELFORMAT_PACKED(mode->format) || SDL_ISPIXELFORMAT_ARRAY(mode->format))) {
+        *format = mode->format;
+        sprite_mode = (unsigned int)mode->driverdata;
     } else {
         *format = SDL_PIXELFORMAT_BGR888;
         sprite_mode = (1 | (90 << 1) | (90 << 14) | (6 << 27));
@@ -93,7 +93,7 @@ int RISCOS_CreateWindowFramebuffer(_THIS, SDL_Window *window, Uint32 *format, vo
 
 int RISCOS_UpdateWindowFramebuffer(_THIS, SDL_Window *window, const SDL_Rect *rects, int numrects)
 {
-    SDL_WindowData *driverdata = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *driverdata = window->driverdata;
     _kernel_swi_regs regs;
     _kernel_oserror *error;
 
@@ -115,7 +115,7 @@ int RISCOS_UpdateWindowFramebuffer(_THIS, SDL_Window *window, const SDL_Rect *re
 
 void RISCOS_DestroyWindowFramebuffer(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *driverdata = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *driverdata = window->driverdata;
 
     if (driverdata->fb_area) {
         SDL_free(driverdata->fb_area);

@@ -1389,7 +1389,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
     {
 #ifdef REQUIRE_CLICK_TO_FOCUS
         // Require the click to be at least 1 pixel inside the window to disregard clicks in the title bar
-        if (evt.type == SDL_EVENT_MOUSE_BUTTONDOWN && evt.button.x > 0 && evt.button.y > 0 && evt.button.x < graphics.GetWidth() - 1 &&
+        if (evt.type == SDL_EVENT_MOUSE_BUTTON_DOWN && evt.button.x > 0 && evt.button.y > 0 && evt.button.x < graphics.GetWidth() - 1 &&
             evt.button.y < graphics.GetHeight() - 1)
         {
             focusedThisFrame_ = true;
@@ -1452,7 +1452,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_EVENT_MOUSE_BUTTONDOWN:
+    case SDL_EVENT_MOUSE_BUTTON_DOWN:
         if (!touchEmulation_)
         {
             const auto mouseButton = static_cast<MouseButton>(1u << (evt.button.button - 1u));  // NOLINT(misc-misplaced-widening-cast)
@@ -1478,7 +1478,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
         }
         break;
 
-    case SDL_EVENT_MOUSE_BUTTONUP:
+    case SDL_EVENT_MOUSE_BUTTON_UP:
         if (!touchEmulation_)
         {
             const auto mouseButton = static_cast<MouseButton>(1u << (evt.button.button - 1u));  // NOLINT(misc-misplaced-widening-cast)
@@ -1756,8 +1756,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
         {
             using namespace JoystickButtonDown;
 
-            unsigned button = evt.cbutton.button;
-            SDL_JoystickID joystickID = evt.cbutton.which;
+            unsigned button = evt.gbutton.button;
+            SDL_JoystickID joystickID = evt.gbutton.which;
             JoystickState& state = joysticks_[joystickID];
 
             VariantMap& eventData = GetEventDataMap();
@@ -1777,8 +1777,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
         {
             using namespace JoystickButtonUp;
 
-            unsigned button = evt.cbutton.button;
-            SDL_JoystickID joystickID = evt.cbutton.which;
+            unsigned button = evt.gbutton.button;
+            SDL_JoystickID joystickID = evt.gbutton.which;
             JoystickState& state = joysticks_[joystickID];
 
             VariantMap& eventData = GetEventDataMap();
@@ -1797,17 +1797,17 @@ void Input::HandleSDLEvent(void* sdlEvent)
         {
             using namespace JoystickAxisMove;
 
-            SDL_JoystickID joystickID = evt.caxis.which;
+            SDL_JoystickID joystickID = evt.gaxis.which;
             JoystickState& state = joysticks_[joystickID];
 
             VariantMap& eventData = GetEventDataMap();
             eventData[P_JOYSTICKID] = joystickID;
-            eventData[P_AXIS] = evt.caxis.axis;
-            eventData[P_POSITION] = Clamp((float)evt.caxis.value / 32767.0f, -1.0f, 1.0f);
+            eventData[P_AXIS] = evt.gaxis.axis;
+            eventData[P_POSITION] = Clamp((float)evt.gaxis.value / 32767.0f, -1.0f, 1.0f);
 
-            if (evt.caxis.axis < state.axes_.Size())
+            if (evt.gaxis.axis < state.axes_.Size())
             {
-                state.axes_[evt.caxis.axis] = eventData[P_POSITION].GetFloat();
+                state.axes_[evt.gaxis.axis] = eventData[P_POSITION].GetFloat();
                 SendEvent(E_JOYSTICKAXISMOVE, eventData);
             }
         }
@@ -1959,7 +1959,7 @@ void Input::HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventDat
                 touchEmulation_ = false;
 
                 SDL_Event mouseEvent;
-                mouseEvent.type = eventType == E_TOUCHBEGIN ? SDL_EVENT_MOUSE_BUTTONDOWN : SDL_EVENT_MOUSE_BUTTONUP;
+                mouseEvent.type = eventType == E_TOUCHBEGIN ? SDL_EVENT_MOUSE_BUTTON_DOWN : SDL_EVENT_MOUSE_BUTTON_UP;
                 mouseEvent.button.button = (Uint8)mouseButtonBindingVar.GetI32();
                 HandleSDLEvent(&mouseEvent);
 

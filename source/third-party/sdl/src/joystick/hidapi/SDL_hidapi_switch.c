@@ -1214,7 +1214,7 @@ static void UpdateDeviceIdentity(SDL_HIDAPI_Device *device)
     }
     device->guid.data[15] = ctx->m_eControllerType;
 
-    (void)SDL_snprintf(serial, sizeof serial, "%.2x-%.2x-%.2x-%.2x-%.2x-%.2x",
+    (void)SDL_snprintf(serial, sizeof(serial), "%.2x-%.2x-%.2x-%.2x-%.2x-%.2x",
                        ctx->m_rgucMACAddress[0],
                        ctx->m_rgucMACAddress[1],
                        ctx->m_rgucMACAddress[2],
@@ -1543,8 +1543,10 @@ static Uint32 HIDAPI_DriverSwitch_GetJoystickCapabilities(SDL_HIDAPI_Device *dev
     if (ctx->m_eControllerType == k_eSwitchDeviceInfoControllerType_ProController && !ctx->m_bInputOnly) {
         /* Doesn't have an RGB LED, so don't return SDL_JOYCAP_LED here */
         result |= SDL_JOYCAP_RUMBLE;
+    } else if (ctx->m_eControllerType == k_eSwitchDeviceInfoControllerType_JoyConLeft ||
+               ctx->m_eControllerType == k_eSwitchDeviceInfoControllerType_JoyConRight) {
+        result |= SDL_JOYCAP_RUMBLE;
     }
-
     return result;
 }
 
@@ -2161,7 +2163,11 @@ static SDL_bool HIDAPI_DriverSwitch_UpdateDevice(SDL_HIDAPI_Device *device)
                 const int INPUT_WAIT_TIMEOUT_MS = 100;
                 if (now >= (ctx->m_ulLastInput + INPUT_WAIT_TIMEOUT_MS)) {
                     /* Steam may have put the controller back into non-reporting mode */
+                    SDL_bool wasSyncWrite = ctx->m_bSyncWrite;
+
+                    ctx->m_bSyncWrite = SDL_TRUE;
                     WriteProprietary(ctx, k_eSwitchProprietaryCommandIDs_ForceUSB, NULL, 0, SDL_FALSE);
+                    ctx->m_bSyncWrite = wasSyncWrite;
                 }
             } else if (device->is_bluetooth) {
                 const int INPUT_WAIT_TIMEOUT_MS = 3000;

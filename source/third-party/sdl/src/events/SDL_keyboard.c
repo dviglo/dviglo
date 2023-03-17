@@ -746,9 +746,16 @@ SDL_GetKeyboardFocus(void)
     return keyboard->focus;
 }
 
-void SDL_SetKeyboardFocus(SDL_Window *window)
+int SDL_SetKeyboardFocus(SDL_Window *window)
 {
+    SDL_VideoDevice *video = SDL_GetVideoDevice();
     SDL_Keyboard *keyboard = &SDL_keyboard;
+
+    if (window) {
+        if (!video || window->magic != &video->window_magic || window->is_destroying) {
+            return SDL_SetError("Invalid window");
+        }
+    }
 
     if (keyboard->focus && window == NULL) {
         /* We won't get anymore keyboard messages, so reset keyboard state */
@@ -773,7 +780,6 @@ void SDL_SetKeyboardFocus(SDL_Window *window)
 
         /* Ensures IME compositions are committed */
         if (SDL_EventEnabled(SDL_EVENT_TEXT_INPUT)) {
-            SDL_VideoDevice *video = SDL_GetVideoDevice();
             if (video && video->StopTextInput) {
                 video->StopTextInput(video);
             }
@@ -787,12 +793,12 @@ void SDL_SetKeyboardFocus(SDL_Window *window)
                             0, 0);
 
         if (SDL_EventEnabled(SDL_EVENT_TEXT_INPUT)) {
-            SDL_VideoDevice *video = SDL_GetVideoDevice();
             if (video && video->StartTextInput) {
                 video->StartTextInput(video);
             }
         }
     }
+    return 0;
 }
 
 static int SDL_SendKeyboardKeyInternal(Uint64 timestamp, SDL_KeyboardFlags flags, Uint8 state, SDL_Scancode scancode, SDL_Keycode keycode)
@@ -930,8 +936,8 @@ static int SDL_SendKeyboardKeyInternal(Uint64 timestamp, SDL_KeyboardFlags flags
         state == SDL_PRESSED &&
         (keyboard->modstate & SDL_KMOD_ALT) &&
         keyboard->focus &&
-        (keyboard->focus->flags & SDL_WINDOW_KEYBOARD_GRABBED) != 0 &&
-        (keyboard->focus->flags & SDL_WINDOW_FULLSCREEN_MASK) != 0 &&
+        (keyboard->focus->flags & SDL_WINDOW_KEYBOARD_GRABBED) &&
+        (keyboard->focus->flags & SDL_WINDOW_FULLSCREEN) &&
         SDL_GetHintBoolean(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, SDL_TRUE)) {
         /* We will temporarily forfeit our grab by minimizing our window,
            allowing the user to escape the application */
@@ -1009,7 +1015,7 @@ SDL_HardwareKeyboardKeyPressed(void)
     SDL_Scancode scancode;
 
     for (scancode = SDL_SCANCODE_UNKNOWN; scancode < SDL_NUM_SCANCODES; ++scancode) {
-        if ((keyboard->keysource[scancode] & KEYBOARD_HARDWARE) != 0) {
+        if (keyboard->keysource[scancode] & KEYBOARD_HARDWARE) {
             return SDL_TRUE;
         }
     }
@@ -1059,7 +1065,7 @@ int SDL_SendEditingText(const char *text, int start, int length)
 
         if (SDL_GetHintBoolean(SDL_HINT_IME_SUPPORT_EXTENDED_TEXT, SDL_FALSE) &&
             SDL_strlen(text) >= SDL_arraysize(event.text.text)) {
-            event.type = SDL_EVENT_TEXTEDITING_EXT;
+            event.type = SDL_EVENT_TEXT_EDITING_EXT;
             event.common.timestamp = 0;
             event.editExt.windowID = keyboard->focus ? keyboard->focus->id : 0;
             event.editExt.text = text ? SDL_strdup(text) : NULL;

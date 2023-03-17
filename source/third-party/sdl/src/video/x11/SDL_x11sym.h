@@ -155,6 +155,8 @@ SDL_X11_SYM(void,XRefreshKeyboardMapping,(XMappingEvent *a),(a),)
 SDL_X11_SYM(int,XQueryTree,(Display* a,Window b,Window* c,Window* d,Window** e,unsigned int* f),(a,b,c,d,e,f),return)
 SDL_X11_SYM(Bool,XSupportsLocale,(void),(),return)
 SDL_X11_SYM(Status,XmbTextListToTextProperty,(Display* a,char** b,int c,XICCEncodingStyle d,XTextProperty* e),(a,b,c,d,e),return)
+SDL_X11_SYM(Region,XCreateRegion,(void),(),return)
+SDL_X11_SYM(void,XDestroyRegion,(Region),(a),)
 
 #if SDL_VIDEO_DRIVER_X11_XFIXES
 SDL_X11_MODULE(XFIXES)
@@ -278,7 +280,7 @@ SDL_X11_SYM(Bool,XIWarpPointer,(Display *a,int b,Window c,Window d,double e,doub
 #if SDL_VIDEO_DRIVER_X11_XRANDR
 SDL_X11_MODULE(XRANDR)
 SDL_X11_SYM(Status,XRRQueryVersion,(Display *dpy,int *major_versionp,int *minor_versionp),(dpy,major_versionp,minor_versionp),return)
-SDL_X11_SYM(Bool,XRRQueryExtension,(Display *dpy,int *event_base_return,int *error_base_return),(dpy,event_base_return,error_base_return),return);
+SDL_X11_SYM(Bool,XRRQueryExtension,(Display *dpy,int *event_base_return,int *error_base_return),(dpy,event_base_return,error_base_return),return)
 SDL_X11_SYM(XRRScreenConfiguration *,XRRGetScreenInfo,(Display *dpy,Drawable draw),(dpy,draw),return)
 SDL_X11_SYM(SizeID,XRRConfigCurrentConfiguration,(XRRScreenConfiguration *config,Rotation *rotation),(config,rotation),return)
 SDL_X11_SYM(short,XRRConfigCurrentRate,(XRRScreenConfiguration *config),(config),return)
@@ -314,6 +316,7 @@ SDL_X11_SYM(void,XScreenSaverSuspend,(Display *dpy,Bool suspend),(dpy,suspend),r
 #if SDL_VIDEO_DRIVER_X11_XSHAPE
 SDL_X11_MODULE(XSHAPE)
 SDL_X11_SYM(void,XShapeCombineMask,(Display *dpy,Window dest,int dest_kind,int x_off,int y_off,Pixmap src,int op),(dpy,dest,dest_kind,x_off,y_off,src,op),)
+SDL_X11_SYM(void,XShapeCombineRegion,(Display *a,Window b,int c,int d,int e,Region f,int g),(a,b,c,d,e,f,g),)
 #endif
 
 #undef SDL_X11_MODULE

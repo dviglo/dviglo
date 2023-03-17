@@ -141,7 +141,7 @@ bool Graphics::SetDefaultWindowModes(int width, int height, const ScreenModePara
 }
 
 bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, bool resizable,
-    bool highDPI, bool vsync, bool tripleBuffer, int multiSample, int monitor, int refreshRate)
+    bool highDPI, bool vsync, bool tripleBuffer, int multiSample, SDL_DisplayID display, int refreshRate)
 {
     ScreenModeParams params;
     params.fullscreen_ = fullscreen;
@@ -151,7 +151,7 @@ bool Graphics::SetMode(int width, int height, bool fullscreen, bool borderless, 
     params.vsync_ = vsync;
     params.tripleBuffer_ = tripleBuffer;
     params.multiSample_ = multiSample;
-    params.monitor_ = monitor;
+    params.display_ = display;
     params.refreshRate_ = refreshRate;
 
     return SetDefaultWindowModes(width, height, params);
@@ -238,44 +238,47 @@ IntVector2 Graphics::GetWindowPosition() const
     return position_;
 }
 
-Vector<IntVector3> Graphics::GetResolutions(int monitor) const
+Vector<IntVector3> Graphics::GetResolutions(SDL_DisplayID display) const
 {
     Vector<IntVector3> ret;
 
-    // Emscripten is not able to return a valid list
-#ifndef __EMSCRIPTEN__
-    i32 numModes = SDL_GetNumDisplayModes(monitor);
+    int num_modes = 0;
+    const SDL_DisplayMode** modes = SDL_GetFullscreenDisplayModes(display, &num_modes);
 
-    for (i32 i = 0; i < numModes; ++i)
+    if (modes)
     {
-        SDL_DisplayMode mode;
-        SDL_GetDisplayMode(monitor, i, &mode);
-        int width = mode.pixel_w;
-        int height = mode.pixel_h;
-        int rate = mode.refresh_rate;
-
-        // Store mode if unique
-        bool unique = true;
-        for (const IntVector3& resolution : ret)
+        for (i32 i = 0; i < num_modes; ++i)
         {
-            if (resolution.x_ == width && resolution.y_ == height && resolution.z_ == rate)
+            const SDL_DisplayMode* mode = modes[i];
+
+            i32 width = mode->pixel_w;
+            i32 height = mode->pixel_h;
+            i32 rate = mode->refresh_rate;
+
+            // Store mode if unique
+            bool unique = true;
+            for (const IntVector3& resolution : ret)
             {
-                unique = false;
-                break;
+                if (resolution.x_ == width && resolution.y_ == height && resolution.z_ == rate)
+                {
+                    unique = false;
+                    break;
+                }
             }
+
+            if (unique)
+                ret.Push(IntVector3(width, height, rate));
         }
 
-        if (unique)
-            ret.Push(IntVector3(width, height, rate));
+        SDL_free(modes);
     }
-#endif
 
     return ret;
 }
 
-i32 Graphics::FindBestResolutionIndex(int monitor, int width, int height, int refreshRate) const
+i32 Graphics::FindBestResolutionIndex(SDL_DisplayID display, int width, int height, int refreshRate) const
 {
-    const Vector<IntVector3> resolutions = GetResolutions(monitor);
+    const Vector<IntVector3> resolutions = GetResolutions(display);
     if (resolutions.Empty())
         return NINDEX;
 
@@ -297,38 +300,28 @@ i32 Graphics::FindBestResolutionIndex(int monitor, int width, int height, int re
     return best;
 }
 
-IntVector2 Graphics::GetDesktopResolution(int monitor) const
+IntVector2 Graphics::GetDesktopResolution(SDL_DisplayID display) const
 {
-#if !defined(__ANDROID__) && !defined(IOS) && !defined(TVOS)
-    SDL_DisplayMode mode;
-    SDL_GetDesktopDisplayMode(monitor, &mode);
-    return IntVector2(mode.pixel_w, mode.pixel_h);
-#else
-    // SDL_GetDesktopDisplayMode() may not work correctly on mobile platforms. Rather return the window size
-    return IntVector2(width_, height_);
-#endif
+    const SDL_DisplayMode* mode = SDL_GetDesktopDisplayMode(display);
+    return IntVector2(mode->pixel_w, mode->pixel_h);
 }
 
 int Graphics::GetMonitorCount() const
 {
-    return SDL_GetNumVideoDisplays();
+    i32 count = 0;
+    SDL_DisplayID* ids = SDL_GetDisplays(&count);
+    SDL_free(ids);
+    return count;
 }
 
-int Graphics::GetCurrentMonitor() const
+SDL_DisplayID Graphics::GetCurrentDisplay() const
 {
-    return window_ ? SDL_GetWindowDisplayIndex(window_) : 0;
+    return window_ ? SDL_GetDisplayForWindow(window_) : 0;
 }
 
 bool Graphics::GetMaximized() const
 {
     return window_? static_cast<bool>(SDL_GetWindowFlags(window_) & SDL_WINDOW_MAXIMIZED) : false;
-}
-
-Vector3 Graphics::GetDisplayDPI(int monitor) const
-{
-    Vector3 result;
-    SDL_GetDisplayPhysicalDPI(monitor, &result.z_, &result.x_, &result.y_);
-    return result;
 }
 
 void Graphics::Maximize()
@@ -498,9 +491,9 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
 #endif
 
     // Make sure monitor index is not bigger than the currently detected monitors
-    const int numMonitors = SDL_GetNumVideoDisplays();
+    /*const int numMonitors = SDL_GetNumVideoDisplays();
     if (params.monitor_ >= numMonitors || params.monitor_ < 0)
-        params.monitor_ = 0; // this monitor is not present, use first monitor
+        params.monitor_ = 0; // this monitor is not present, use first monitor*/
 
     // Fullscreen or Borderless can not be resizable and cannot be maximized
     if (params.fullscreen_ || params.borderless_)
@@ -528,10 +521,9 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
     {
         if (params.fullscreen_ || params.borderless_)
         {
-            SDL_DisplayMode mode;
-            SDL_GetDesktopDisplayMode(params.monitor_, &mode);
-            newWidth = mode.pixel_w;
-            newHeight = mode.pixel_h;
+            const SDL_DisplayMode* mode = SDL_GetDesktopDisplayMode(params.display_);
+            newWidth = mode->pixel_w;
+            newHeight = mode->pixel_h;
         }
         else
         {
@@ -544,10 +536,10 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
 #ifdef DESKTOP_GRAPHICS
     if (params.fullscreen_)
     {
-        const Vector<IntVector3> resolutions = GetResolutions(params.monitor_);
+        const Vector<IntVector3> resolutions = GetResolutions(params.display_);
         if (!resolutions.Empty())
         {
-            const i32 bestResolution = FindBestResolutionIndex(params.monitor_,
+            const i32 bestResolution = FindBestResolutionIndex(params.display_,
                 newWidth, newHeight, params.refreshRate_);
             newWidth = resolutions[bestResolution].x_;
             newHeight = resolutions[bestResolution].y_;
@@ -557,9 +549,8 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
     else
     {
         // If windowed, use the same refresh rate as desktop
-        SDL_DisplayMode mode;
-        SDL_GetDesktopDisplayMode(params.monitor_, &mode);
-        params.refreshRate_ = mode.refresh_rate;
+        const SDL_DisplayMode* mode = SDL_GetDesktopDisplayMode(params.display_);
+        params.refreshRate_ = mode->refresh_rate;
     }
 #endif
 }
@@ -569,7 +560,7 @@ void Graphics::OnScreenModeChanged()
 #ifdef DV_LOGGING
     String msg;
     msg.AppendWithFormat("Set screen mode %dx%d rate %d Hz %s monitor %d", width_, height_, screenParams_.refreshRate_,
-        (screenParams_.fullscreen_ ? "fullscreen" : "windowed"), screenParams_.monitor_);
+        (screenParams_.fullscreen_ ? "fullscreen" : "windowed"), screenParams_.display_);
     if (screenParams_.borderless_)
         msg.Append(" borderless");
     if (screenParams_.resizable_)
@@ -590,7 +581,7 @@ void Graphics::OnScreenModeChanged()
     eventData[P_BORDERLESS] = screenParams_.borderless_;
     eventData[P_RESIZABLE] = screenParams_.resizable_;
     eventData[P_HIGHDPI] = screenParams_.highDPI_;
-    eventData[P_MONITOR] = screenParams_.monitor_;
+    eventData[P_MONITOR] = screenParams_.display_;
     eventData[P_REFRESHRATE] = screenParams_.refreshRate_;
     SendEvent(E_SCREENMODE, eventData);
 }

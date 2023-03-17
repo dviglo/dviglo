@@ -29,7 +29,7 @@
 #include "../SDL_egl_c.h"
 #endif
 
-@class SDL_WindowData;
+@class SDL_CocoaWindowData;
 
 typedef enum
 {
@@ -41,10 +41,10 @@ typedef enum
 
 @interface Cocoa_WindowListener : NSResponder <NSWindowDelegate>
 {
-    /* SDL_WindowData owns this Listener and has a strong reference to it.
+    /* SDL_CocoaWindowData owns this Listener and has a strong reference to it.
      * To avoid reference cycles, we could have either a weak or an
      * unretained ref to the WindowData. */
-    __weak SDL_WindowData *_data;
+    __weak SDL_CocoaWindowData *_data;
     BOOL observingVisible;
     BOOL wasCtrlLeft;
     BOOL wasVisible;
@@ -58,7 +58,7 @@ typedef enum
 }
 
 - (BOOL)isTouchFromTrackpad:(NSEvent *)theEvent;
-- (void)listen:(SDL_WindowData *)data;
+- (void)listen:(SDL_CocoaWindowData *)data;
 - (void)pauseVisibleObservation;
 - (void)resumeVisibleObservation;
 - (BOOL)setFullscreenSpace:(BOOL)state;
@@ -120,9 +120,9 @@ typedef enum
 /* *INDENT-ON* */
 
 @class SDLOpenGLContext;
-@class SDL_VideoData;
+@class SDL_CocoaVideoData;
 
-@interface SDL_WindowData : NSObject
+@interface SDL_CocoaWindowData : NSObject
 @property(nonatomic) SDL_Window *window;
 @property(nonatomic) NSWindow *nswindow;
 @property(nonatomic) NSView *sdlContentView;
@@ -131,8 +131,9 @@ typedef enum
 @property(nonatomic) SDL_bool inWindowFullscreenTransition;
 @property(nonatomic) NSInteger window_number;
 @property(nonatomic) NSInteger flash_request;
+@property(nonatomic) SDL_Window *keyboard_focus;
 @property(nonatomic) Cocoa_WindowListener *listener;
-@property(nonatomic) SDL_VideoData *videodata;
+@property(nonatomic) SDL_CocoaVideoData *videodata;
 #if SDL_VIDEO_OPENGL_EGL
 @property(nonatomic) EGLSurface egl_surface;
 #endif
@@ -142,7 +143,7 @@ extern int Cocoa_CreateWindow(_THIS, SDL_Window *window);
 extern int Cocoa_CreateWindowFrom(_THIS, SDL_Window *window,
                                   const void *data);
 extern void Cocoa_SetWindowTitle(_THIS, SDL_Window *window);
-extern void Cocoa_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
+extern int Cocoa_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
 extern void Cocoa_SetWindowPosition(_THIS, SDL_Window *window);
 extern void Cocoa_SetWindowSize(_THIS, SDL_Window *window);
 extern void Cocoa_SetWindowMinimumSize(_THIS, SDL_Window *window);
@@ -160,7 +161,7 @@ extern void Cocoa_SetWindowResizable(_THIS, SDL_Window *window, SDL_bool resizab
 extern void Cocoa_SetWindowAlwaysOnTop(_THIS, SDL_Window *window, SDL_bool on_top);
 extern void Cocoa_SetWindowFullscreen(_THIS, SDL_Window *window, SDL_VideoDisplay *display, SDL_bool fullscreen);
 extern void *Cocoa_GetWindowICCProfile(_THIS, SDL_Window *window, size_t *size);
-extern int Cocoa_GetWindowDisplayIndex(_THIS, SDL_Window *window);
+extern SDL_DisplayID Cocoa_GetDisplayForWindow(_THIS, SDL_Window *window);
 extern void Cocoa_SetWindowMouseRect(_THIS, SDL_Window *window);
 extern void Cocoa_SetWindowMouseGrab(_THIS, SDL_Window *window, SDL_bool grabbed);
 extern void Cocoa_DestroyWindow(_THIS, SDL_Window *window);

@@ -38,6 +38,8 @@ class Vector3;
 class Vector4;
 class VertexBuffer;
 
+typedef unsigned SDL_DisplayID;
+
 #ifdef DV_OPENGL
 class GraphicsImpl_OGL;
 #endif
@@ -106,7 +108,7 @@ struct ScreenModeParams
     /// Level of multisampling.
     int multiSample_{ 1 };
     /// Monitor for fullscreen mode. Has no effect in windowed mode.
-    int monitor_{};
+    SDL_DisplayID display_ = 0;
     /// Refresh rate. 0 to pick automatically.
     int refreshRate_{};
 
@@ -120,7 +122,7 @@ struct ScreenModeParams
             // && vsync_ == rhs.vsync_
             && tripleBuffer_ == rhs.tripleBuffer_
             && multiSample_ == rhs.multiSample_
-            && monitor_ == rhs.monitor_
+            && display_ == rhs.display_
             && refreshRate_ == rhs.refreshRate_;
     }
 
@@ -188,7 +190,7 @@ public:
     bool SetDefaultWindowModes(int width, int height, const ScreenModeParams& params);
     /// Set default window modes. Deprecated. Return true if successful.
     bool SetMode(int width, int height, bool fullscreen, bool borderless, bool resizable,
-        bool highDPI, bool vsync, bool tripleBuffer, int multiSample, int monitor, int refreshRate);
+        bool highDPI, bool vsync, bool tripleBuffer, int multiSample, SDL_DisplayID display, int refreshRate);
     /// Set screen resolution only. Deprecated. Return true if successful.
     bool SetMode(int width, int height);
     /// Set whether the main window uses sRGB conversion on write.
@@ -394,7 +396,7 @@ public:
     int GetRefreshRate() const { return screenParams_.refreshRate_; }
 
     /// Return the current monitor index. Effective on in fullscreen
-    int GetMonitor() const { return screenParams_.monitor_; }
+    SDL_DisplayID GetDisplay() const { return screenParams_.display_; }
 
     /// Return whether triple buffering is enabled.
     bool GetTripleBuffer() const { return screenParams_.tripleBuffer_; }
@@ -454,21 +456,19 @@ public:
     bool GetSRGBWriteSupport() const { return sRGBWriteSupport_; }
 
     /// Return supported fullscreen resolutions (third component is refreshRate). Will be empty if listing the resolutions is not supported on the platform (e.g. Web).
-    Vector<IntVector3> GetResolutions(int monitor) const;
+    Vector<IntVector3> GetResolutions(SDL_DisplayID display) const;
     /// Return index of the best resolution for requested width, height and refresh rate.
-    i32 FindBestResolutionIndex(int monitor, int width, int height, int refreshRate) const;
+    i32 FindBestResolutionIndex(SDL_DisplayID display, int width, int height, int refreshRate) const;
     /// Return supported multisampling levels.
     Vector<int> GetMultiSampleLevels() const;
     /// Return the desktop resolution.
-    IntVector2 GetDesktopResolution(int monitor) const;
+    IntVector2 GetDesktopResolution(SDL_DisplayID display) const;
     /// Return the number of currently connected monitors.
     int GetMonitorCount() const;
     /// Returns the index of the display containing the center of the window on success or a negative error code on failure.
-    int GetCurrentMonitor() const;
+    SDL_DisplayID GetCurrentDisplay() const;
     /// Returns true if window is maximized or runs in full screen mode.
     bool GetMaximized() const;
-    /// Return display dpi information: (hdpi, vdpi, ddpi). On failure returns zero vector.
-    Vector3 GetDisplayDPI(int monitor=0) const;
 
     /// Return hardware format for a compressed image format, or 0 if unsupported.
     unsigned GetFormat(CompressedFormat format) const;

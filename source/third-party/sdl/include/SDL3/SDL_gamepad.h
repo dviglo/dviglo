@@ -22,7 +22,7 @@
 /**
  *  \file SDL_gamepad.h
  *
- *  Include file for SDL gamepad event handling
+ *  \brief Include file for SDL gamepad event handling
  */
 
 #ifndef SDL_gamepad_h_
@@ -162,8 +162,12 @@ typedef struct SDL_GamepadBinding
  * string value from SDL_GetJoystickGUIDString(), name is the human readable
  * string for the device and mappings are gamepad mappings to joystick ones.
  * Under Windows there is a reserved GUID of "xinput" that covers all XInput
- * devices. The mapping format for joystick is: {| |bX |a joystick button,
- * index X |- |hX.Y |hat X with value Y |- |aX |axis X of the joystick |}
+ * devices. The mapping format for joystick is:
+ *
+ * - `bX`: a joystick button, index X
+ * - `hX.Y`: hat X with value Y
+ * - `aX`: axis X of the joystick
+ *
  * Buttons can be used as a gamepad axes and vice versa.
  *
  * This string shows an example of a valid mapping for a gamepad:
@@ -232,6 +236,7 @@ extern DECLSPEC int SDLCALL SDL_GetNumGamepadMappings(void);
 /**
  * Get the mapping at a particular index.
  *
+ * \param mapping_index mapping index
  * \returns the mapping string. Must be freed with SDL_free(). Returns NULL if
  *          the index is out of range.
  *
@@ -537,10 +542,12 @@ extern DECLSPEC int SDLCALL SDL_GetGamepadPlayerIndex(SDL_Gamepad *gamepad);
  * \param gamepad the gamepad object to adjust.
  * \param player_index Player index to assign to this gamepad, or -1 to clear
  *                     the player index and turn off player LEDs.
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
-extern DECLSPEC void SDLCALL SDL_SetGamepadPlayerIndex(SDL_Gamepad *gamepad, int player_index);
+extern DECLSPEC int SDLCALL SDL_SetGamepadPlayerIndex(SDL_Gamepad *gamepad, int player_index);
 
 /**
  * Get the USB vendor ID of an opened gamepad, if available.
@@ -548,7 +555,7 @@ extern DECLSPEC void SDLCALL SDL_SetGamepadPlayerIndex(SDL_Gamepad *gamepad, int
  * If the vendor ID isn't available this function returns 0.
  *
  * \param gamepad the gamepad object to query.
- * \return the USB vendor ID, or zero if unavailable.
+ * \returns the USB vendor ID, or zero if unavailable.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -560,7 +567,7 @@ extern DECLSPEC Uint16 SDLCALL SDL_GetGamepadVendor(SDL_Gamepad *gamepad);
  * If the product ID isn't available this function returns 0.
  *
  * \param gamepad the gamepad object to query.
- * \return the USB product ID, or zero if unavailable.
+ * \returns the USB product ID, or zero if unavailable.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -572,7 +579,7 @@ extern DECLSPEC Uint16 SDLCALL SDL_GetGamepadProduct(SDL_Gamepad *gamepad);
  * If the product version isn't available this function returns 0.
  *
  * \param gamepad the gamepad object to query.
- * \return the USB product version, or zero if unavailable.
+ * \returns the USB product version, or zero if unavailable.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -584,7 +591,7 @@ extern DECLSPEC Uint16 SDLCALL SDL_GetGamepadProductVersion(SDL_Gamepad *gamepad
  * If the firmware version isn't available this function returns 0.
  *
  * \param gamepad the gamepad object to query.
- * \return the gamepad firmware version, or zero if unavailable.
+ * \returns the gamepad firmware version, or zero if unavailable.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -596,7 +603,7 @@ extern DECLSPEC Uint16 SDLCALL SDL_GetGamepadFirmwareVersion(SDL_Gamepad *gamepa
  * Returns the serial number of the gamepad, or NULL if it is not available.
  *
  * \param gamepad the gamepad object to query.
- * \return the serial number, or NULL if unavailable.
+ * \returns the serial number, or NULL if unavailable.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -841,6 +848,9 @@ extern DECLSPEC Uint8 SDLCALL SDL_GetGamepadButton(SDL_Gamepad *gamepad, SDL_Gam
 /**
  * Get the number of touchpads on a gamepad.
  *
+ * \param gamepad a gamepad
+ * \returns number of touchpads
+ *
  * \since This function is available since SDL 3.0.0.
  */
 extern DECLSPEC int SDLCALL SDL_GetNumGamepadTouchpads(SDL_Gamepad *gamepad);
@@ -849,12 +859,26 @@ extern DECLSPEC int SDLCALL SDL_GetNumGamepadTouchpads(SDL_Gamepad *gamepad);
  * Get the number of supported simultaneous fingers on a touchpad on a game
  * gamepad.
  *
+ * \param gamepad a gamepad
+ * \param touchpad a touchpad
+ * \returns number of supported simultaneous fingers
+ *
  * \since This function is available since SDL 3.0.0.
  */
 extern DECLSPEC int SDLCALL SDL_GetNumGamepadTouchpadFingers(SDL_Gamepad *gamepad, int touchpad);
 
 /**
  * Get the current state of a finger on a touchpad on a gamepad.
+ *
+ * \param gamepad a gamepad
+ * \param touchpad a touchpad
+ * \param finger a finger
+ * \param state filled with state
+ * \param x filled with x position
+ * \param y filled with y position
+ * \param pressure filled with pressure value
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -877,7 +901,8 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GamepadHasSensor(SDL_Gamepad *gamepad, SDL_
  * \param gamepad The gamepad to update
  * \param type The type of sensor to enable/disable
  * \param enabled Whether data reporting should be enabled
- * \returns 0 or -1 if an error occurred.
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -899,7 +924,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GamepadSensorEnabled(SDL_Gamepad *gamepad, 
  *
  * \param gamepad The gamepad to query
  * \param type The type of sensor to query
- * \return the data rate, or 0.0f if the data rate is not available.
+ * \returns the data rate, or 0.0f if the data rate is not available.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -915,7 +940,8 @@ extern DECLSPEC float SDLCALL SDL_GetGamepadSensorDataRate(SDL_Gamepad *gamepad,
  * \param type The type of sensor to query
  * \param data A pointer filled with the current sensor state
  * \param num_values The number of values to write to data
- * \return 0 or -1 if an error occurred.
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -957,7 +983,8 @@ extern DECLSPEC int SDLCALL SDL_RumbleGamepad(SDL_Gamepad *gamepad, Uint16 low_f
  * \param right_rumble The intensity of the right trigger rumble motor, from 0
  *                     to 0xFFFF
  * \param duration_ms The duration of the rumble effect, in milliseconds
- * \returns 0, or -1 if trigger rumble isn't supported on this gamepad
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  *
@@ -1009,7 +1036,8 @@ extern DECLSPEC SDL_bool SDLCALL SDL_GamepadHasRumbleTriggers(SDL_Gamepad *gamep
  * \param red The intensity of the red LED
  * \param green The intensity of the green LED
  * \param blue The intensity of the blue LED
- * \returns 0, or -1 if this gamepad does not have a modifiable LED
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -1021,7 +1049,8 @@ extern DECLSPEC int SDLCALL SDL_SetGamepadLED(SDL_Gamepad *gamepad, Uint8 red, U
  * \param gamepad The gamepad to affect
  * \param data The data to send to the gamepad
  * \param size The size of the data to send to the gamepad
- * \returns 0, or -1 if this gamepad or driver doesn't support effect packets
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */

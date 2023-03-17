@@ -208,8 +208,7 @@ static int NETBSDAUDIO_OpenDevice(_THIS, const char *devname)
     }
 
     /* Initialize all variables that we clean on shutdown */
-    this->hidden = (struct SDL_PrivateAudioData *)
-        SDL_malloc((sizeof *this->hidden));
+    this->hidden = (struct SDL_PrivateAudioData *) SDL_malloc(sizeof(*this->hidden));
     if (this->hidden == NULL) {
         return SDL_OutOfMemory();
     }
@@ -249,12 +248,6 @@ static int NETBSDAUDIO_OpenDevice(_THIS, const char *devname)
             break;
         case AUDIO_S16MSB:
             encoding = AUDIO_ENCODING_SLINEAR_BE;
-            break;
-        case AUDIO_U16LSB:
-            encoding = AUDIO_ENCODING_ULINEAR_LE;
-            break;
-        case AUDIO_U16MSB:
-            encoding = AUDIO_ENCODING_ULINEAR_BE;
             break;
         case AUDIO_S32LSB:
             encoding = AUDIO_ENCODING_SLINEAR_LE;

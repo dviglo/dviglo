@@ -277,15 +277,15 @@ void WIN_SetCursorPos(int x, int y)
     }
 }
 
-static void WIN_WarpMouse(SDL_Window *window, float x, float y)
+static int WIN_WarpMouse(SDL_Window *window, float x, float y)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     HWND hwnd = data->hwnd;
     POINT pt;
 
     /* Don't warp the mouse while we're doing a modal interaction */
     if (data->in_title_click || data->focus_click_pending) {
-        return;
+        return 0;
     }
 
     WIN_ClientPointFromSDLFloat(window, x, y, &pt.x, &pt.y);
@@ -294,6 +294,7 @@ static void WIN_WarpMouse(SDL_Window *window, float x, float y)
 
     /* Send the exact mouse motion associated with this warp */
     SDL_SendMouseMotion(0, window, SDL_GetMouse()->mouseID, 0, x, y);
+    return 0;
 }
 
 static int WIN_WarpMouseGlobal(float x, float y)
@@ -313,13 +314,13 @@ static int WIN_SetRelativeMouseMode(SDL_bool enabled)
 static int WIN_CaptureMouse(SDL_Window *window)
 {
     if (window) {
-        SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+        SDL_WindowData *data = window->driverdata;
         SetCapture(data->hwnd);
     } else {
         SDL_Window *focus_window = SDL_GetMouseFocus();
 
         if (focus_window) {
-            SDL_WindowData *data = (SDL_WindowData *)focus_window->driverdata;
+            SDL_WindowData *data = focus_window->driverdata;
             if (!data->mouse_tracked) {
                 SDL_SetMouseFocus(NULL);
             }

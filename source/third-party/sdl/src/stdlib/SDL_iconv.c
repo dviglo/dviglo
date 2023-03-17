@@ -387,7 +387,7 @@ SDL_iconv(SDL_iconv_t cd,
                     left = 1;
                 }
             } else {
-                if ((p[0] & 0x80) != 0x00) {
+                if (p[0] & 0x80) {
                     /* Skip illegal sequences
                        return SDL_ICONV_EILSEQ;
                      */
@@ -808,7 +808,7 @@ SDL_iconv_string(const char *tocode, const char *fromcode, const char *inbuf,
     }
 
     stringsize = inbytesleft > 4 ? inbytesleft : 4;
-    string = (char *)SDL_malloc(stringsize);
+    string = (char *)SDL_malloc(stringsize + 1);
     if (string == NULL) {
         SDL_iconv_close(cd);
         return NULL;
@@ -825,7 +825,7 @@ SDL_iconv_string(const char *tocode, const char *fromcode, const char *inbuf,
         {
             char *oldstring = string;
             stringsize *= 2;
-            string = (char *)SDL_realloc(string, stringsize);
+            string = (char *)SDL_realloc(string, stringsize + 1);
             if (string == NULL) {
                 SDL_free(oldstring);
                 SDL_iconv_close(cd);
@@ -851,6 +851,7 @@ SDL_iconv_string(const char *tocode, const char *fromcode, const char *inbuf,
             break;
         }
     }
+    *outbuf = '\0';
     SDL_iconv_close(cd);
 
     return string;

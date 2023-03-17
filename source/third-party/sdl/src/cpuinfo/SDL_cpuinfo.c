@@ -83,6 +83,10 @@
 #include <kernel.h>
 #endif
 
+#ifdef __HAIKU__
+#include <kernel/OS.h>
+#endif
+
 #define CPU_HAS_RDTSC    (1 << 0)
 #define CPU_HAS_ALTIVEC  (1 << 1)
 #define CPU_HAS_MMX      (1 << 2)
@@ -366,7 +370,7 @@ static int CPU_haveARMSIMD(void)
     fd = open("/proc/self/auxv", O_RDONLY | O_CLOEXEC);
     if (fd >= 0) {
         Elf32_auxv_t aux;
-        while (read(fd, &aux, sizeof aux) == sizeof aux) {
+        while (read(fd, &aux, sizeof(aux)) == sizeof(aux)) {
             if (aux.a_type == AT_PLATFORM) {
                 const char *plat = (const char *)aux.a_un.a_val;
                 if (plat) {
@@ -476,7 +480,7 @@ static int CPU_haveNEON(void)
         AndroidCpuFamily cpu_family = android_getCpuFamily();
         if (cpu_family == ANDROID_CPU_FAMILY_ARM) {
             uint64_t cpu_features = android_getCpuFeatures();
-            if ((cpu_features & ANDROID_CPU_ARM_FEATURE_NEON) != 0) {
+            if (cpu_features & ANDROID_CPU_ARM_FEATURE_NEON) {
                 return 1;
             }
         }
@@ -700,7 +704,8 @@ static const char *SDL_GetCPUType(void)
 }
 #endif
 
-#ifdef TEST_MAIN /* !!! FIXME: only used for test at the moment. */
+#if 0
+!!! FIXME: Not used at the moment. */
 #if defined(__e2k__)
 inline const char *
 SDL_GetCPUName(void)
@@ -1079,6 +1084,16 @@ int SDL_GetSystemRAM(void)
             SDL_SystemRAM = GetMemorySize();
         }
 #endif
+#ifdef __HAIKU__
+        if (SDL_SystemRAM <= 0) {
+            system_info info;
+            if (get_system_info(&info) == B_OK) {
+                /* To have an accurate amount, we also take in account the inaccessible pages (aka ignored)
+                  which is a bit handier compared to the legacy system's api (i.e. used_pages).*/
+                SDL_SystemRAM = (int)round((info.max_pages + info.ignored_pages > 0 ? info.ignored_pages : 0) * B_PAGE_SIZE / 1048576.0);
+            }
+        }
+#endif
 #endif
     }
     return SDL_SystemRAM;
@@ -1093,34 +1108,3 @@ SDL_SIMDGetAlignment(void)
     SDL_assert(SDL_SIMDAlignment != 0);
     return SDL_SIMDAlignment;
 }
-
-#ifdef TEST_MAIN
-
-#include <stdio.h>
-
-int main()
-{
-    printf("CPU count: %d\n", SDL_GetCPUCount());
-    printf("CPU type: %s\n", SDL_GetCPUType());
-    printf("CPU name: %s\n", SDL_GetCPUName());
-    printf("CacheLine size: %d\n", SDL_GetCPUCacheLineSize());
-    printf("RDTSC: %d\n", SDL_HasRDTSC());
-    printf("Altivec: %d\n", SDL_HasAltiVec());
-    printf("MMX: %d\n", SDL_HasMMX());
-    printf("SSE: %d\n", SDL_HasSSE());
-    printf("SSE2: %d\n", SDL_HasSSE2());
-    printf("SSE3: %d\n", SDL_HasSSE3());
-    printf("SSE4.1: %d\n", SDL_HasSSE41());
-    printf("SSE4.2: %d\n", SDL_HasSSE42());
-    printf("AVX: %d\n", SDL_HasAVX());
-    printf("AVX2: %d\n", SDL_HasAVX2());
-    printf("AVX-512F: %d\n", SDL_HasAVX512F());
-    printf("ARM SIMD: %d\n", SDL_HasARMSIMD());
-    printf("NEON: %d\n", SDL_HasNEON());
-    printf("LSX: %d\n", SDL_HasLSX());
-    printf("LASX: %d\n", SDL_HasLASX());
-    printf("RAM: %d MB\n", SDL_GetSystemRAM());
-    return 0;
-}
-
-#endif /* TEST_MAIN */

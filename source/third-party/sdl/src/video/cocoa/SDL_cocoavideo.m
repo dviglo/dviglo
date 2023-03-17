@@ -32,7 +32,7 @@
 #include "SDL_cocoametalview.h"
 #include "SDL_cocoaopengles.h"
 
-@implementation SDL_VideoData
+@implementation SDL_CocoaVideoData
 
 @end
 
@@ -57,14 +57,14 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
 {
     @autoreleasepool {
         SDL_VideoDevice *device;
-        SDL_VideoData *data;
+        SDL_CocoaVideoData *data;
 
         Cocoa_RegisterApp();
 
         /* Initialize all variables that we clean on shutdown */
         device = (SDL_VideoDevice *)SDL_calloc(1, sizeof(SDL_VideoDevice));
         if (device) {
-            data = [[SDL_VideoData alloc] init];
+            data = [[SDL_CocoaVideoData alloc] init];
         } else {
             data = nil;
         }
@@ -73,15 +73,15 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
             SDL_free(device);
             return NULL;
         }
-        device->driverdata = (void *)CFBridgingRetain(data);
+        device->driverdata = (SDL_VideoData *)CFBridgingRetain(data);
         device->wakeup_lock = SDL_CreateMutex();
+        device->system_theme = Cocoa_GetSystemTheme();
 
         /* Set the function pointers */
         device->VideoInit = Cocoa_VideoInit;
         device->VideoQuit = Cocoa_VideoQuit;
         device->GetDisplayBounds = Cocoa_GetDisplayBounds;
         device->GetDisplayUsableBounds = Cocoa_GetDisplayUsableBounds;
-        device->GetDisplayPhysicalDPI = Cocoa_GetDisplayPhysicalDPI;
         device->GetDisplayModes = Cocoa_GetDisplayModes;
         device->SetDisplayMode = Cocoa_SetDisplayMode;
         device->PumpEvents = Cocoa_PumpEvents;
@@ -110,7 +110,7 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
         device->SetWindowAlwaysOnTop = Cocoa_SetWindowAlwaysOnTop;
         device->SetWindowFullscreen = Cocoa_SetWindowFullscreen;
         device->GetWindowICCProfile = Cocoa_GetWindowICCProfile;
-        device->GetWindowDisplayIndex = Cocoa_GetWindowDisplayIndex;
+        device->GetDisplayForWindow = Cocoa_GetDisplayForWindow;
         device->SetWindowMouseRect = Cocoa_SetWindowMouseRect;
         device->SetWindowMouseGrab = Cocoa_SetWindowMouseGrab;
         device->SetWindowKeyboardGrab = Cocoa_SetWindowKeyboardGrab;
@@ -122,7 +122,6 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
 
         device->shape_driver.CreateShaper = Cocoa_CreateShaper;
         device->shape_driver.SetWindowShape = Cocoa_SetWindowShape;
-        device->shape_driver.ResizeWindowShape = Cocoa_ResizeWindowShape;
 
 #if SDL_VIDEO_OPENGL_CGL
         device->GL_LoadLibrary = Cocoa_GL_LoadLibrary;
@@ -145,7 +144,6 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
             device->GL_UnloadLibrary = Cocoa_GLES_UnloadLibrary;
             device->GL_CreateContext = Cocoa_GLES_CreateContext;
             device->GL_MakeCurrent = Cocoa_GLES_MakeCurrent;
-            device->GL_GetDrawableSize = Cocoa_GLES_GetDrawableSize;
             device->GL_SetSwapInterval = Cocoa_GLES_SetSwapInterval;
             device->GL_GetSwapInterval = Cocoa_GLES_GetSwapInterval;
             device->GL_SwapWindow = Cocoa_GLES_SwapWindow;
@@ -161,14 +159,12 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
         device->Vulkan_UnloadLibrary = Cocoa_Vulkan_UnloadLibrary;
         device->Vulkan_GetInstanceExtensions = Cocoa_Vulkan_GetInstanceExtensions;
         device->Vulkan_CreateSurface = Cocoa_Vulkan_CreateSurface;
-        device->Vulkan_GetDrawableSize = Cocoa_Vulkan_GetDrawableSize;
 #endif
 
 #if SDL_VIDEO_METAL
         device->Metal_CreateView = Cocoa_Metal_CreateView;
         device->Metal_DestroyView = Cocoa_Metal_DestroyView;
         device->Metal_GetLayer = Cocoa_Metal_GetLayer;
-        device->Metal_GetDrawableSize = Cocoa_Metal_GetDrawableSize;
 #endif
 
         device->StartTextInput = Cocoa_StartTextInput;
@@ -180,6 +176,8 @@ static SDL_VideoDevice *Cocoa_CreateDevice(void)
         device->HasClipboardText = Cocoa_HasClipboardText;
 
         device->free = Cocoa_DeleteDevice;
+
+        device->quirk_flags = VIDEO_DEVICE_QUIRK_HAS_POPUP_WINDOW_SUPPORT;
 
         return device;
     }
@@ -193,7 +191,7 @@ VideoBootStrap COCOA_bootstrap = {
 int Cocoa_VideoInit(_THIS)
 {
     @autoreleasepool {
-        SDL_VideoData *data = (__bridge SDL_VideoData *)_this->driverdata;
+        SDL_CocoaVideoData *data = (__bridge SDL_CocoaVideoData *)_this->driverdata;
 
         Cocoa_InitModes(_this);
         Cocoa_InitKeyboard(_this);
@@ -216,7 +214,7 @@ int Cocoa_VideoInit(_THIS)
 void Cocoa_VideoQuit(_THIS)
 {
     @autoreleasepool {
-        SDL_VideoData *data = (__bridge SDL_VideoData *)_this->driverdata;
+        SDL_CocoaVideoData *data = (__bridge SDL_CocoaVideoData *)_this->driverdata;
         Cocoa_QuitModes(_this);
         Cocoa_QuitKeyboard(_this);
         Cocoa_QuitMouse(_this);
@@ -226,8 +224,22 @@ void Cocoa_VideoQuit(_THIS)
 }
 
 /* This function assumes that it's called from within an autorelease pool */
-NSImage *
-Cocoa_CreateImage(SDL_Surface *surface)
+SDL_SystemTheme Cocoa_GetSystemTheme(void)
+{
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= 101400 /* Added in the 10.14.0 SDK. */
+    if ([[NSApplication sharedApplication] respondsToSelector:@selector(effectiveAppearance)]) {
+        NSAppearance* appearance = [[NSApplication sharedApplication] effectiveAppearance];
+
+        if ([appearance.name containsString: @"Dark"]) {
+            return SDL_SYSTEM_THEME_DARK;
+        }
+    }
+#endif
+    return SDL_SYSTEM_THEME_LIGHT;
+}
+
+/* This function assumes that it's called from within an autorelease pool */
+NSImage *Cocoa_CreateImage(SDL_Surface *surface)
 {
     SDL_Surface *converted;
     NSBitmapImageRep *imgrep;
@@ -257,7 +269,7 @@ Cocoa_CreateImage(SDL_Surface *surface)
 
     /* Copy the pixels */
     pixels = [imgrep bitmapData];
-    SDL_memcpy(pixels, converted->pixels, converted->h * converted->pitch);
+    SDL_memcpy(pixels, converted->pixels, (size_t)converted->h * converted->pitch);
     SDL_DestroySurface(converted);
 
     /* Premultiply the alpha channel */
@@ -300,5 +312,3 @@ void SDL_NSLog(const char *prefix, const char *text)
 }
 
 #endif /* SDL_VIDEO_DRIVER_COCOA */
-
-/* vim: set ts=4 sw=4 expandtab: */

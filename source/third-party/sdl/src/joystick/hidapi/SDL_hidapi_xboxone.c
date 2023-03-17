@@ -653,6 +653,9 @@ static void HIDAPI_DriverXboxOne_HandleStatePacket(SDL_Joystick *joystick, SDL_D
     Sint16 axis;
     Uint64 timestamp = SDL_GetTicksNS();
 
+    /* Some controllers have larger packets over NDIS, but the real size is in data[3] */
+    size = SDL_min(4 + data[3], size);
+
     /* Enable paddles on the Xbox Elite controller when connected over USB */
     if (ctx->has_paddles && !ctx->has_unmapped_state && size == 50) {
         Uint8 packet[] = { 0x4d, 0x00, 0x00, 0x02, 0x07, 0x00 };
@@ -791,13 +794,13 @@ static void HIDAPI_DriverXboxOne_HandleStatePacket(SDL_Joystick *joystick, SDL_D
     if (axis == 32704) {
         axis = 32767;
     }
-    if (axis == -32768 && size == 30 && (data[22] & 0x80) != 0) {
+    if (axis == -32768 && size == 30 && (data[22] & 0x80)) {
         axis = 32767;
     }
     SDL_SendJoystickAxis(timestamp, joystick, SDL_GAMEPAD_AXIS_LEFT_TRIGGER, axis);
 
     axis = ((int)SDL_SwapLE16(*(Sint16 *)(&data[8])) * 64) - 32768;
-    if (axis == -32768 && size == 30 && (data[22] & 0x40) != 0) {
+    if (axis == -32768 && size == 30 && (data[22] & 0x40)) {
         axis = 32767;
     }
     if (axis == 32704) {

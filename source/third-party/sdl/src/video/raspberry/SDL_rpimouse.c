@@ -42,7 +42,7 @@
 static SDL_Cursor *RPI_CreateDefaultCursor(void);
 static SDL_Cursor *RPI_CreateCursor(SDL_Surface *surface, int hot_x, int hot_y);
 static int RPI_ShowCursor(SDL_Cursor *cursor);
-static void RPI_MoveCursor(SDL_Cursor *cursor);
+static int RPI_MoveCursor(SDL_Cursor *cursor);
 static void RPI_FreeCursor(SDL_Cursor *cursor);
 
 static SDL_Cursor *global_cursor;
@@ -107,7 +107,6 @@ static int RPI_ShowCursor(SDL_Cursor *cursor)
     RPI_CursorData *curdata;
     VC_RECT_T src_rect, dst_rect;
     SDL_Mouse *mouse;
-    SDL_VideoDisplay *display;
     SDL_DisplayData *data;
     VC_DISPMANX_ALPHA_T alpha = { DISPMANX_FLAGS_ALPHA_FROM_SOURCE /* flags */, 255 /*opacity 0->255*/, 0 /* mask */ };
     uint32_t layer = SDL_RPI_MOUSELAYER;
@@ -147,12 +146,7 @@ static int RPI_ShowCursor(SDL_Cursor *cursor)
         return -1;
     }
 
-    display = SDL_GetDisplayForWindow(mouse->focus);
-    if (display == NULL) {
-        return -1;
-    }
-
-    data = (SDL_DisplayData *)display->driverdata;
+    data = SDL_GetDisplayDriverDataForWindow(mouse->focus);
     if (data == NULL) {
         return -1;
     }
@@ -289,9 +283,9 @@ static int RPI_WarpMouseGlobal(float x, float y)
     return RPI_WarpMouseGlobalGraphically(x, y);
 }
 
-static void RPI_WarpMouse(SDL_Window *window, float x, float y)
+static int RPI_WarpMouse(SDL_Window *window, float x, float y)
 {
-    RPI_WarpMouseGlobal(x, y);
+    return RPI_WarpMouseGlobal(x, y);
 }
 
 void RPI_InitMouse(_THIS)
@@ -316,12 +310,12 @@ void RPI_QuitMouse(_THIS)
 }
 
 /* This is called when a mouse motion event occurs */
-static void RPI_MoveCursor(SDL_Cursor *cursor)
+static int RPI_MoveCursor(SDL_Cursor *cursor)
 {
     SDL_Mouse *mouse = SDL_GetMouse();
     /* We must NOT call SDL_SendMouseMotion() on the next call or we will enter recursivity,
      * so we create a version of WarpMouseGlobal without it. */
-    RPI_WarpMouseGlobalGraphically(mouse->x, mouse->y);
+    return RPI_WarpMouseGlobalGraphically(mouse->x, mouse->y);
 }
 
 #endif /* SDL_VIDEO_DRIVER_RPI */

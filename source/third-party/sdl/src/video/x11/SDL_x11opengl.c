@@ -232,7 +232,7 @@ int X11_GL_LoadLibrary(_THIS, const char *path)
         return SDL_SetError("Could not retrieve OpenGL functions");
     }
 
-    display = ((SDL_VideoData *)_this->driverdata)->display;
+    display = _this->driverdata->display;
     if (!_this->gl_data->glXQueryExtension(display, &_this->gl_data->errorBase, &_this->gl_data->eventBase)) {
         return SDL_SetError("GLX is not supported");
     }
@@ -335,7 +335,7 @@ static SDL_bool HasExtension(const char *extension, const char *extensions)
 
 static void X11_GL_InitExtensions(_THIS)
 {
-    Display *display = ((SDL_VideoData *)_this->driverdata)->display;
+    Display *display = _this->driverdata->display;
     const int screen = DefaultScreen(display);
     XVisualInfo *vinfo = NULL;
     Window w = 0;
@@ -345,7 +345,7 @@ static void X11_GL_InitExtensions(_THIS)
     const char *(*glXQueryExtensionsStringFunc)(Display *, int);
     const char *extensions;
 
-    vinfo = X11_GL_GetVisual(_this, display, screen);
+    vinfo = X11_GL_GetVisual(_this, display, screen, SDL_FALSE);
     if (vinfo) {
         GLXContext (*glXGetCurrentContextFunc)(void) =
             (GLXContext(*)(void))
@@ -484,7 +484,7 @@ static void X11_GL_InitExtensions(_THIS)
  *  In case of failure, if that pointer is not NULL, set that pointer to None
  *  and try again.
  */
-static int X11_GL_GetAttributes(_THIS, Display *display, int screen, int *attribs, int size, Bool for_FBConfig, int **_pvistypeattr)
+static int X11_GL_GetAttributes(_THIS, Display *display, int screen, int *attribs, int size, Bool for_FBConfig, int **_pvistypeattr, SDL_bool transparent)
 {
     int i = 0;
     const int MAX_ATTRIBUTES = 64;
@@ -583,13 +583,15 @@ static int X11_GL_GetAttributes(_THIS, Display *display, int screen, int *attrib
         attribs[i++] = _this->gl_config.accelerated ? GLX_NONE_EXT : GLX_SLOW_VISUAL_EXT;
     }
 
-    /* If we're supposed to use DirectColor visuals, and we've got the
-       EXT_visual_info extension, then add GLX_X_VISUAL_TYPE_EXT. */
-    if (X11_UseDirectColorVisuals() &&
-        _this->gl_data->HAS_GLX_EXT_visual_info) {
-        pvistypeattr = &attribs[i];
-        attribs[i++] = GLX_X_VISUAL_TYPE_EXT;
-        attribs[i++] = GLX_DIRECT_COLOR_EXT;
+    /* Un-wanted when we request a transparent buffer */
+    if (!transparent) {
+        /* If we're supposed to use DirectColor visuals, and we've got the
+           EXT_visual_info extension, then add GLX_X_VISUAL_TYPE_EXT. */
+        if (X11_UseDirectColorVisuals() && _this->gl_data->HAS_GLX_EXT_visual_info) {
+            pvistypeattr = &attribs[i];
+            attribs[i++] = GLX_X_VISUAL_TYPE_EXT;
+            attribs[i++] = GLX_DIRECT_COLOR_EXT;
+        }
     }
 
     attribs[i++] = None;
@@ -603,7 +605,7 @@ static int X11_GL_GetAttributes(_THIS, Display *display, int screen, int *attrib
     return i;
 }
 
-XVisualInfo *X11_GL_GetVisual(_THIS, Display *display, int screen)
+XVisualInfo *X11_GL_GetVisual(_THIS, Display *display, int screen, SDL_bool transparent)
 {
     /* 64 seems nice. */
     int attribs[64];
@@ -620,11 +622,28 @@ XVisualInfo *X11_GL_GetVisual(_THIS, Display *display, int screen)
         GLXFBConfig *framebuffer_config = NULL;
         int fbcount = 0;
 
-        X11_GL_GetAttributes(_this, display, screen, attribs, 64, SDL_TRUE, &pvistypeattr);
+        X11_GL_GetAttributes(_this, display, screen, attribs, 64, SDL_TRUE, &pvistypeattr, transparent);
         framebuffer_config = _this->gl_data->glXChooseFBConfig(display, screen, attribs, &fbcount);
         if (!framebuffer_config && (pvistypeattr != NULL)) {
             *pvistypeattr = None;
             framebuffer_config = _this->gl_data->glXChooseFBConfig(display, screen, attribs, &fbcount);
+        }
+
+        if (transparent) {
+            /* Return the first transparent Visual */
+            int i;
+            for (i = 0; i < fbcount; i++) {
+                Uint32 format;
+                vinfo = _this->gl_data->glXGetVisualFromFBConfig(display, framebuffer_config[i]);
+                format = X11_GetPixelFormatFromVisualInfo(display, vinfo);
+                if (SDL_ISPIXELFORMAT_ALPHA(format)) { /* found! */
+                    X11_XFree(framebuffer_config);
+                    framebuffer_config = NULL;
+                    break;
+                }
+                X11_XFree(vinfo);
+                vinfo = NULL;
+            }
         }
 
         if (framebuffer_config) {
@@ -635,7 +654,7 @@ XVisualInfo *X11_GL_GetVisual(_THIS, Display *display, int screen)
     }
 
     if (!vinfo) {
-        X11_GL_GetAttributes(_this, display, screen, attribs, 64, SDL_FALSE, &pvistypeattr);
+        X11_GL_GetAttributes(_this, display, screen, attribs, 64, SDL_FALSE, &pvistypeattr, transparent);
         vinfo = _this->gl_data->glXChooseVisual(display, screen, attribs);
 
         if (!vinfo && (pvistypeattr != NULL)) {
@@ -689,14 +708,14 @@ SDL_bool X11_GL_UseEGL(_THIS)
 
 SDL_GLContext X11_GL_CreateContext(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     Display *display = data->videodata->display;
-    int screen =
-        ((SDL_DisplayData *)SDL_GetDisplayForWindow(window)->driverdata)->screen;
+    int screen = SDL_GetDisplayDriverDataForWindow(window)->screen;
     XWindowAttributes xattr;
     XVisualInfo v, *vinfo;
     int n;
     GLXContext context = NULL, share_context;
+    const int transparent = (window->flags & SDL_WINDOW_TRANSPARENT) ? SDL_TRUE : SDL_FALSE;
 
     if (_this->gl_config.share_with_current_context) {
         share_context = (GLXContext)SDL_GL_GetCurrentContext();
@@ -717,7 +736,7 @@ SDL_GLContext X11_GL_CreateContext(_THIS, SDL_Window *window)
     if (vinfo) {
         if (_this->gl_config.major_version < 3 &&
             _this->gl_config.profile_mask == 0 &&
-            _this->gl_config.flags == 0) {
+            _this->gl_config.flags == 0 && !transparent) {
             /* Create legacy context */
             context =
                 _this->gl_data->glXCreateContext(display, vinfo, share_context, True);
@@ -777,7 +796,7 @@ SDL_GLContext X11_GL_CreateContext(_THIS, SDL_Window *window)
                 int fbcount = 0;
                 int *pvistypeattr = NULL;
 
-                X11_GL_GetAttributes(_this, display, screen, glxAttribs, 64, SDL_TRUE, &pvistypeattr);
+                X11_GL_GetAttributes(_this, display, screen, glxAttribs, 64, SDL_TRUE, &pvistypeattr, transparent);
 
                 if (_this->gl_data->glXChooseFBConfig) {
                     framebuffer_config = _this->gl_data->glXChooseFBConfig(display,
@@ -822,9 +841,9 @@ SDL_GLContext X11_GL_CreateContext(_THIS, SDL_Window *window)
 
 int X11_GL_MakeCurrent(_THIS, SDL_Window *window, SDL_GLContext context)
 {
-    Display *display = ((SDL_VideoData *)_this->driverdata)->display;
+    Display *display = _this->driverdata->display;
     Window drawable =
-        (context ? ((SDL_WindowData *)window->driverdata)->xwindow : None);
+        (context ? window->driverdata->xwindow : None);
     GLXContext glx_context = (GLXContext)context;
     int rc;
 
@@ -864,12 +883,10 @@ int X11_GL_SetSwapInterval(_THIS, int interval)
     int status = -1;
 
     if ((interval < 0) && (!_this->gl_data->HAS_GLX_EXT_swap_control_tear)) {
-        SDL_SetError("Negative swap interval unsupported in this GL");
+        return SDL_SetError("Negative swap interval unsupported in this GL");
     } else if (_this->gl_data->glXSwapIntervalEXT) {
-        Display *display = ((SDL_VideoData *)_this->driverdata)->display;
-        const SDL_WindowData *windowdata = (SDL_WindowData *)
-                                               SDL_GL_GetCurrentWindow()
-                                                   ->driverdata;
+        Display *display = _this->driverdata->display;
+        const SDL_WindowData *windowdata = SDL_GL_GetCurrentWindow()->driverdata;
 
         Window drawable = windowdata->xwindow;
 
@@ -903,7 +920,7 @@ int X11_GL_SetSwapInterval(_THIS, int interval)
             swapinterval = interval;
         }
     } else {
-        SDL_Unsupported();
+        return SDL_Unsupported();
     }
     return status;
 }
@@ -911,10 +928,8 @@ int X11_GL_SetSwapInterval(_THIS, int interval)
 int X11_GL_GetSwapInterval(_THIS, int *interval)
 {
     if (_this->gl_data->glXSwapIntervalEXT) {
-        Display *display = ((SDL_VideoData *)_this->driverdata)->display;
-        const SDL_WindowData *windowdata = (SDL_WindowData *)
-                                               SDL_GL_GetCurrentWindow()
-                                                   ->driverdata;
+        Display *display = _this->driverdata->display;
+        const SDL_WindowData *windowdata = SDL_GL_GetCurrentWindow()->driverdata;
         Window drawable = windowdata->xwindow;
         unsigned int allow_late_swap_tearing = 0;
         unsigned int val = 0;
@@ -950,23 +965,24 @@ int X11_GL_GetSwapInterval(_THIS, int *interval)
 
 int X11_GL_SwapWindow(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     Display *display = data->videodata->display;
 
     _this->gl_data->glXSwapBuffers(display, data->xwindow);
     return 0;
 }
 
-void X11_GL_DeleteContext(_THIS, SDL_GLContext context)
+int X11_GL_DeleteContext(_THIS, SDL_GLContext context)
 {
-    Display *display = ((SDL_VideoData *)_this->driverdata)->display;
+    Display *display = _this->driverdata->display;
     GLXContext glx_context = (GLXContext)context;
 
     if (!_this->gl_data) {
-        return;
+        return 0;
     }
     _this->gl_data->glXDestroyContext(display, glx_context);
     X11_XSync(display, False);
+    return 0;
 }
 
 #endif /* SDL_VIDEO_OPENGL_GLX */

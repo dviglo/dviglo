@@ -44,7 +44,6 @@ extern SDL_bool Android_JNI_IsScreenKeyboardShown(void);
 extern ANativeWindow *Android_JNI_GetNativeWindow(void);
 
 extern SDL_DisplayOrientation Android_JNI_GetDisplayOrientation(void);
-extern int Android_JNI_GetDisplayPhysicalDPI(float *ddpi, float *xdpi, float *ydpi);
 
 /* Audio support */
 extern void Android_DetectDevices(void);
@@ -87,7 +86,7 @@ void Android_JNI_HapticRun(int device_id, float intensity, int length);
 void Android_JNI_HapticStop(int device_id);
 
 /* Video */
-void Android_JNI_SuspendScreenSaver(SDL_bool suspend);
+int Android_JNI_SuspendScreenSaver(SDL_bool suspend);
 
 /* Touch support */
 void Android_JNI_InitTouch(void);

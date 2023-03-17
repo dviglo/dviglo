@@ -22,7 +22,7 @@
 /**
  *  \file SDL_surface.h
  *
- *  Header file for ::SDL_Surface definition and management functions.
+ *  \brief Header file for ::SDL_Surface definition and management functions.
  */
 
 #ifndef SDL_surface_h_
@@ -351,7 +351,7 @@ extern DECLSPEC int SDLCALL SDL_SetSurfaceColorKey(SDL_Surface *surface,
  * It is safe to pass a NULL `surface` here; it will return SDL_FALSE.
  *
  * \param surface the SDL_Surface structure to query
- * \return SDL_TRUE if the surface has a color key, SDL_FALSE otherwise.
+ * \returns SDL_TRUE if the surface has a color key, SDL_FALSE otherwise.
  *
  * \since This function is available since SDL 3.0.0.
  *
@@ -529,13 +529,15 @@ extern DECLSPEC SDL_bool SDLCALL SDL_SetSurfaceClipRect(SDL_Surface *surface,
  *                clipped
  * \param rect an SDL_Rect structure filled in with the clipping rectangle for
  *             the surface
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_BlitSurface
  * \sa SDL_SetSurfaceClipRect
  */
-extern DECLSPEC void SDLCALL SDL_GetSurfaceClipRect(SDL_Surface *surface,
+extern DECLSPEC int SDLCALL SDL_GetSurfaceClipRect(SDL_Surface *surface,
                                              SDL_Rect *rect);
 
 /*
@@ -546,6 +548,8 @@ extern DECLSPEC void SDLCALL SDL_GetSurfaceClipRect(SDL_Surface *surface,
  * \param surface the surface to duplicate.
  * \returns a copy of the surface, or NULL on failure; call SDL_GetError() for
  *          more information.
+ *
+ * \since This function is available since SDL 3.0.0.
  */
 extern DECLSPEC SDL_Surface *SDLCALL SDL_DuplicateSurface(SDL_Surface *surface);
 
@@ -793,7 +797,16 @@ extern DECLSPEC int SDLCALL SDL_BlitSurfaceUnchecked
  * Perform a fast, low quality, stretch blit between two surfaces of the same
  * format.
  *
- * Please use SDL_BlitScaled() instead.
+ * **WARNING**: Please use SDL_BlitScaled() instead.
+ *
+ * \param src the SDL_Surface structure to be copied from
+ * \param srcrect the SDL_Rect structure representing the rectangle to be
+ *                copied
+ * \param dst the SDL_Surface structure that is the blit target
+ * \param dstrect the SDL_Rect structure representing the rectangle that is
+ *                copied into
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -804,6 +817,15 @@ extern DECLSPEC int SDLCALL SDL_SoftStretch(SDL_Surface *src,
 
 /**
  * Perform bilinear scaling between two surfaces of the same format, 32BPP.
+ *
+ * \param src the SDL_Surface structure to be copied from
+ * \param srcrect the SDL_Rect structure representing the rectangle to be
+ *                copied
+ * \param dst the SDL_Surface structure that is the blit target
+ * \param dstrect the SDL_Rect structure representing the rectangle that is
+ *                copied into
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -859,12 +881,16 @@ extern DECLSPEC int SDLCALL SDL_BlitSurfaceUncheckedScaled
 /**
  * Set the YUV conversion mode
  *
+ * \param mode YUV conversion mode
+ *
  * \since This function is available since SDL 3.0.0.
  */
 extern DECLSPEC void SDLCALL SDL_SetYUVConversionMode(SDL_YUV_CONVERSION_MODE mode);
 
 /**
  * Get the YUV conversion mode
+ *
+ * \returns YUV conversion mode
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -873,6 +899,10 @@ extern DECLSPEC SDL_YUV_CONVERSION_MODE SDLCALL SDL_GetYUVConversionMode(void);
 /**
  * Get the YUV conversion mode, returning the correct mode for the resolution
  * when the current conversion mode is SDL_YUV_CONVERSION_AUTOMATIC
+ *
+ * \param width width
+ * \param height height
+ * \returns YUV conversion mode
  *
  * \since This function is available since SDL 3.0.0.
  */

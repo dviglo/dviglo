@@ -25,14 +25,13 @@
 
 #include "SDL_offscreenvideo.h"
 
-typedef struct
+struct SDL_WindowData
 {
     SDL_Window *sdl_window;
 #if SDL_VIDEO_OPENGL_EGL
     EGLSurface egl_surface;
 #endif
-
-} OFFSCREEN_Window;
+};
 
 extern int OFFSCREEN_CreateWindow(_THIS, SDL_Window *window);
 extern void OFFSCREEN_DestroyWindow(_THIS, SDL_Window *window);

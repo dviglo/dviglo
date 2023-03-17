@@ -236,8 +236,8 @@ static SDL_bool GetDisplayMode(_THIS, CGDisplayModeRef vidmode, SDL_bool vidmode
              * in case there are duplicate modes with different IO flags or IO
              * display mode IDs in the future. In that case I think it's better
              * to try them all in SetDisplayMode than to risk one of them being
-             * correct but it being filtered out by SDL_AddDisplayMode as being
-             * a duplicate.
+             * correct but it being filtered out by SDL_AddFullscreenDisplayMode
+             * as being a duplicate.
              */
             if (width == otherW && height == otherH && pixelW == otherpixelW && pixelH == otherpixelH && usableForGUI == otherGUI && refreshrate == otherrefresh && format == otherformat) {
                 CFArrayAppendValue(modes, othermode);
@@ -352,7 +352,6 @@ void Cocoa_InitModes(_THIS)
                 CGDisplayModeRelease(moderef);
 
                 display.desktop_mode = mode;
-                display.current_mode = mode;
                 display.driverdata = displaydata;
                 SDL_AddVideoDisplay(&display, SDL_FALSE);
                 SDL_free(display.name);
@@ -407,102 +406,16 @@ int Cocoa_GetDisplayUsableBounds(_THIS, SDL_VideoDisplay *display, SDL_Rect *rec
     return 0;
 }
 
-int Cocoa_GetDisplayPhysicalDPI(_THIS, SDL_VideoDisplay *display, float *ddpi, float *hdpi, float *vdpi)
-{
-    @autoreleasepool {
-        const float MM_IN_INCH = 25.4f;
-
-        SDL_DisplayData *data = (SDL_DisplayData *)display->driverdata;
-
-        /* we need the backingScaleFactor for Retina displays, which is only exposed through NSScreen, not CGDisplay, afaik, so find our screen... */
-        NSArray *screens = [NSScreen screens];
-        NSSize displayNativeSize;
-        displayNativeSize.width = (int)CGDisplayPixelsWide(data->display);
-        displayNativeSize.height = (int)CGDisplayPixelsHigh(data->display);
-
-        for (NSScreen *screen in screens) {
-            const CGDirectDisplayID dpyid = (const CGDirectDisplayID)[[[screen deviceDescription] objectForKey:@"NSScreenNumber"] unsignedIntValue];
-            if (dpyid == data->display) {
-                /* Neither CGDisplayScreenSize(description's NSScreenNumber) nor [NSScreen backingScaleFactor] can calculate the correct dpi in macOS. E.g. backingScaleFactor is always 2 in all display modes for rMBP 16" */
-                CFStringRef dmKeys[1] = { kCGDisplayShowDuplicateLowResolutionModes };
-                CFBooleanRef dmValues[1] = { kCFBooleanTrue };
-                CFDictionaryRef dmOptions = CFDictionaryCreate(kCFAllocatorDefault, (const void **)dmKeys, (const void **)dmValues, 1, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-                CFArrayRef allDisplayModes = CGDisplayCopyAllDisplayModes(dpyid, dmOptions);
-                CFIndex n = CFArrayGetCount(allDisplayModes);
-                for (CFIndex i = 0; i < n; ++i) {
-                    CGDisplayModeRef m = (CGDisplayModeRef)CFArrayGetValueAtIndex(allDisplayModes, i);
-                    CGFloat width = CGDisplayModeGetPixelWidth(m);
-                    CGFloat height = CGDisplayModeGetPixelHeight(m);
-                    CGFloat HiDPIWidth = CGDisplayModeGetWidth(m);
-
-                    // Only check 1x mode
-                    if (width == HiDPIWidth) {
-                        if (CGDisplayModeGetIOFlags(m) & kDisplayModeNativeFlag) {
-                            displayNativeSize.width = width;
-                            displayNativeSize.height = height;
-                            break;
-                        }
-
-                        // Get the largest size even if kDisplayModeNativeFlag is not present e.g. iMac 27-Inch with 5K Retina
-                        if (width > displayNativeSize.width) {
-                            displayNativeSize.width = width;
-                            displayNativeSize.height = height;
-                        }
-                    }
-                }
-                CFRelease(allDisplayModes);
-                CFRelease(dmOptions);
-            }
-        }
-
-        {
-            const CGSize displaySize = CGDisplayScreenSize(data->display);
-            const int pixelWidth = displayNativeSize.width;
-            const int pixelHeight = displayNativeSize.height;
-
-            if (ddpi) {
-                *ddpi = (SDL_ComputeDiagonalDPI(pixelWidth, pixelHeight, displaySize.width / MM_IN_INCH, displaySize.height / MM_IN_INCH));
-            }
-            if (hdpi) {
-                *hdpi = (pixelWidth * MM_IN_INCH / displaySize.width);
-            }
-            if (vdpi) {
-                *vdpi = (pixelHeight * MM_IN_INCH / displaySize.height);
-            }
-        }
-        return 0;
-    }
-}
-
-void Cocoa_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
+int Cocoa_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
 {
     SDL_DisplayData *data = (SDL_DisplayData *)display->driverdata;
     CVDisplayLinkRef link = NULL;
-    CGDisplayModeRef desktopmoderef;
-    SDL_DisplayMode desktopmode;
     CFArrayRef modes;
     CFDictionaryRef dict = NULL;
     const CFStringRef dictkeys[] = { kCGDisplayShowDuplicateLowResolutionModes };
     const CFBooleanRef dictvalues[] = { kCFBooleanTrue };
 
     CVDisplayLinkCreateWithCGDisplay(data->display, &link);
-
-    desktopmoderef = CGDisplayCopyDisplayMode(data->display);
-
-    /* CopyAllDisplayModes won't always contain the desktop display mode (if
-     * NULL is passed in) - for example on a retina 15" MBP, System Preferences
-     * allows choosing 1920x1200 but it's not in the list. AddDisplayMode makes
-     * sure there are no duplicates so it's safe to always add the desktop mode
-     * even in cases where it is in the CopyAllDisplayModes list.
-     */
-    if (desktopmoderef && GetDisplayMode(_this, desktopmoderef, SDL_TRUE, NULL, link, &desktopmode)) {
-        if (!SDL_AddDisplayMode(display, &desktopmode)) {
-            CFRelease(((SDL_DisplayModeData *)desktopmode.driverdata)->modes);
-            SDL_free(desktopmode.driverdata);
-        }
-    }
-
-    CGDisplayModeRelease(desktopmoderef);
 
     /* By default, CGDisplayCopyAllDisplayModes will only get a subset of the
      * system's available modes. For example on a 15" 2016 MBP, users can
@@ -538,7 +451,7 @@ void Cocoa_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
             SDL_DisplayMode mode;
 
             if (GetDisplayMode(_this, moderef, SDL_FALSE, modes, link, &mode)) {
-                if (!SDL_AddDisplayMode(display, &mode)) {
+                if (!SDL_AddFullscreenDisplayMode(display, &mode)) {
                     CFRelease(((SDL_DisplayModeData *)mode.driverdata)->modes);
                     SDL_free(mode.driverdata);
                 }
@@ -549,6 +462,7 @@ void Cocoa_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
     }
 
     CVDisplayLinkRelease(link);
+    return 0;
 }
 
 static CGError SetDisplayModeForDisplay(CGDirectDisplayID display, SDL_DisplayModeData *data)
@@ -642,15 +556,15 @@ void Cocoa_QuitModes(_THIS)
         SDL_VideoDisplay *display = &_this->displays[i];
         SDL_DisplayModeData *mode;
 
-        if (display->current_mode.driverdata != display->desktop_mode.driverdata) {
+        if (display->current_mode->driverdata != display->desktop_mode.driverdata) {
             Cocoa_SetDisplayMode(_this, display, &display->desktop_mode);
         }
 
         mode = (SDL_DisplayModeData *)display->desktop_mode.driverdata;
         CFRelease(mode->modes);
 
-        for (j = 0; j < display->num_display_modes; j++) {
-            mode = (SDL_DisplayModeData *)display->display_modes[j].driverdata;
+        for (j = 0; j < display->num_fullscreen_modes; j++) {
+            mode = (SDL_DisplayModeData *)display->fullscreen_modes[j].driverdata;
             CFRelease(mode->modes);
         }
     }

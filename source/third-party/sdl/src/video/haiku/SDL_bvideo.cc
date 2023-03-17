@@ -57,7 +57,6 @@ static SDL_INLINE SDL_BWin *_ToBeWin(SDL_Window *window) {
 static SDL_VideoDevice * HAIKU_CreateDevice(void)
 {
     SDL_VideoDevice *device;
-    /*SDL_VideoData *data;*/
 
     /* Initialize all variables that we clean on shutdown */
     device = (SDL_VideoDevice *) SDL_calloc(1, sizeof(SDL_VideoDevice));
@@ -78,7 +77,6 @@ static SDL_VideoDevice * HAIKU_CreateDevice(void)
     device->CreateSDLWindow = HAIKU_CreateWindow;
     device->CreateSDLWindowFrom = HAIKU_CreateWindowFrom;
     device->SetWindowTitle = HAIKU_SetWindowTitle;
-    device->SetWindowIcon = HAIKU_SetWindowIcon;
     device->SetWindowPosition = HAIKU_SetWindowPosition;
     device->SetWindowSize = HAIKU_SetWindowSize;
     device->ShowWindow = HAIKU_ShowWindow;
@@ -97,10 +95,6 @@ static SDL_VideoDevice * HAIKU_CreateDevice(void)
     device->CreateWindowFramebuffer = HAIKU_CreateWindowFramebuffer;
     device->UpdateWindowFramebuffer = HAIKU_UpdateWindowFramebuffer;
     device->DestroyWindowFramebuffer = HAIKU_DestroyWindowFramebuffer;
-    
-    device->shape_driver.CreateShaper = NULL;
-    device->shape_driver.SetWindowShape = NULL;
-    device->shape_driver.ResizeWindowShape = NULL;
 
 #if SDL_VIDEO_OPENGL
     device->GL_LoadLibrary = HAIKU_GL_LoadLibrary;
@@ -270,7 +264,7 @@ int HAIKU_VideoInit(_THIS)
     if (SDL_InitBeApp() < 0) {
         return -1;
     }
-    
+
     /* Initialize video modes */
     HAIKU_InitModes(_this);
 

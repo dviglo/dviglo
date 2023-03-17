@@ -30,7 +30,7 @@
 
 int X11_GLES_LoadLibrary(_THIS, const char *path)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
 
     /* If the profile requested is not GL ES, switch over to X11_GL functions  */
     if ((_this->gl_config.profile_mask != SDL_GL_CONTEXT_PROFILE_ES) &&
@@ -56,7 +56,7 @@ int X11_GLES_LoadLibrary(_THIS, const char *path)
 }
 
 XVisualInfo *
-X11_GLES_GetVisual(_THIS, Display *display, int screen)
+X11_GLES_GetVisual(_THIS, Display *display, int screen, SDL_bool transparent)
 {
 
     XVisualInfo *egl_visualinfo = NULL;
@@ -79,6 +79,23 @@ X11_GLES_GetVisual(_THIS, Display *display, int screen)
         egl_visualinfo = X11_XGetVisualInfo(display,
                                             VisualScreenMask,
                                             &vi_in, &out_count);
+
+        /* Return the first transparent Visual */
+        if (transparent) {
+            int i;
+            for (i = 0; i < out_count; i++) {
+                XVisualInfo *v = &egl_visualinfo[i];
+                Uint32 format = X11_GetPixelFormatFromVisualInfo(display, v);
+                if (SDL_ISPIXELFORMAT_ALPHA(format)) { /* found! */
+                    /* re-request it to have a copy that can be X11_XFree'ed later */
+                    vi_in.screen = screen;
+                    vi_in.visualid = v->visualid;
+                    X11_XFree(egl_visualinfo);
+                    egl_visualinfo = X11_XGetVisualInfo(display, VisualScreenMask | VisualIDMask, &vi_in, &out_count);
+                    return egl_visualinfo;
+                }
+            }
+        }
     } else {
         vi_in.screen = screen;
         vi_in.visualid = visual_id;
@@ -92,7 +109,7 @@ SDL_GLContext
 X11_GLES_CreateContext(_THIS, SDL_Window *window)
 {
     SDL_GLContext context;
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     Display *display = data->videodata->display;
 
     X11_XSync(display, False);
@@ -105,7 +122,7 @@ X11_GLES_CreateContext(_THIS, SDL_Window *window)
 SDL_EGLSurface
 X11_GLES_GetEGLSurface(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     return data->egl_surface;
 }
 

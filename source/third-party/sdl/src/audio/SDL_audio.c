@@ -611,12 +611,11 @@ SDL_GetQueuedAudioSize(SDL_AudioDeviceID devid)
     return retval;
 }
 
-void SDL_ClearQueuedAudio(SDL_AudioDeviceID devid)
+int SDL_ClearQueuedAudio(SDL_AudioDeviceID devid)
 {
     SDL_AudioDevice *device = get_audio_device(devid);
-
     if (!device) {
-        return; /* nothing to do. */
+        return SDL_InvalidParamError("devid");
     }
 
     /* Blank out the device and release the mutex. Free it afterwards. */
@@ -626,6 +625,7 @@ void SDL_ClearQueuedAudio(SDL_AudioDeviceID devid)
     SDL_ClearDataQueue(device->buffer_queue, SDL_AUDIOBUFFERQUEUE_PACKETLEN * 2);
 
     current_audio.impl.UnlockDevice(device);
+    return 0;
 }
 
 #if SDL_AUDIO_DRIVER_ANDROID
@@ -847,13 +847,8 @@ static SDL_AudioFormat SDL_ParseAudioFormat(const char *string)
     return AUDIO_##x
     CHECK_FMT_STRING(U8);
     CHECK_FMT_STRING(S8);
-    CHECK_FMT_STRING(U16LSB);
     CHECK_FMT_STRING(S16LSB);
-    CHECK_FMT_STRING(U16MSB);
     CHECK_FMT_STRING(S16MSB);
-    CHECK_FMT_STRING(U16SYS);
-    CHECK_FMT_STRING(S16SYS);
-    CHECK_FMT_STRING(U16);
     CHECK_FMT_STRING(S16);
     CHECK_FMT_STRING(S32LSB);
     CHECK_FMT_STRING(S32MSB);
@@ -981,7 +976,7 @@ int SDL_InitAudio(const char *driver_name)
  * Get the current audio driver name
  */
 const char *
-SDL_GetCurrentAudioDriver()
+SDL_GetCurrentAudioDriver(void)
 {
     return current_audio.name;
 }
@@ -1479,7 +1474,7 @@ static SDL_AudioDeviceID open_audio_device(const char *devname, int iscapture,
         const size_t stacksize = is_internal_thread ? 64 * 1024 : 0;
         char threadname[64];
 
-        (void)SDL_snprintf(threadname, sizeof threadname, "SDLAudio%c%" SDL_PRIu32, (iscapture) ? 'C' : 'P', device->id);
+        (void)SDL_snprintf(threadname, sizeof(threadname), "SDLAudio%c%" SDL_PRIu32, (iscapture) ? 'C' : 'P', device->id);
         device->thread = SDL_CreateThreadInternal(iscapture ? SDL_CaptureAudio : SDL_RunAudio, threadname, stacksize, device);
 
         if (device->thread == NULL) {
@@ -1518,47 +1513,58 @@ SDL_GetAudioDeviceStatus(SDL_AudioDeviceID devid)
     return status;
 }
 
-void SDL_PauseAudioDevice(SDL_AudioDeviceID devid)
+int SDL_PauseAudioDevice(SDL_AudioDeviceID devid)
 {
     SDL_AudioDevice *device = get_audio_device(devid);
-    if (device) {
-        current_audio.impl.LockDevice(device);
-        SDL_AtomicSet(&device->paused, 1);
-        current_audio.impl.UnlockDevice(device);
+    if (!device) {
+        return SDL_InvalidParamError("devid");
     }
+    current_audio.impl.LockDevice(device);
+    SDL_AtomicSet(&device->paused, 1);
+    current_audio.impl.UnlockDevice(device);
+    return 0;
 }
 
-void SDL_PlayAudioDevice(SDL_AudioDeviceID devid)
+int SDL_PlayAudioDevice(SDL_AudioDeviceID devid)
 {
     SDL_AudioDevice *device = get_audio_device(devid);
-    if (device) {
-        current_audio.impl.LockDevice(device);
-        SDL_AtomicSet(&device->paused, 0);
-        current_audio.impl.UnlockDevice(device);
+    if (!device) {
+        return SDL_InvalidParamError("devid");
     }
+    current_audio.impl.LockDevice(device);
+    SDL_AtomicSet(&device->paused, 0);
+    current_audio.impl.UnlockDevice(device);
+    return 0;
 }
 
-void SDL_LockAudioDevice(SDL_AudioDeviceID devid)
+int SDL_LockAudioDevice(SDL_AudioDeviceID devid)
 {
     /* Obtain a lock on the mixing buffers */
     SDL_AudioDevice *device = get_audio_device(devid);
-    if (device) {
-        current_audio.impl.LockDevice(device);
+    if (!device) {
+        return SDL_InvalidParamError("devid");
     }
+    current_audio.impl.LockDevice(device);
+    return 0;
 }
 
 void SDL_UnlockAudioDevice(SDL_AudioDeviceID devid)
 {
     /* Obtain a lock on the mixing buffers */
     SDL_AudioDevice *device = get_audio_device(devid);
-    if (device) {
-        current_audio.impl.UnlockDevice(device);
+    if (!device) {
+        return;
     }
+    current_audio.impl.UnlockDevice(device);
 }
 
 void SDL_CloseAudioDevice(SDL_AudioDeviceID devid)
 {
-    close_audio_device(get_audio_device(devid));
+    SDL_AudioDevice *device = get_audio_device(devid);
+    if (!device) {
+        return;
+    }
+    close_audio_device(device);
 }
 
 void SDL_QuitAudio(void)
@@ -1589,30 +1595,18 @@ void SDL_QuitAudio(void)
 #endif
 }
 
-#define NUM_FORMATS 10
-static int format_idx;
+#define NUM_FORMATS 8
+static int format_idx;  /* !!! FIXME: whoa, why are there globals in use here?! */
 static int format_idx_sub;
 static SDL_AudioFormat format_list[NUM_FORMATS][NUM_FORMATS] = {
-    { AUDIO_U8, AUDIO_S8, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_U16LSB,
-      AUDIO_U16MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB },
-    { AUDIO_S8, AUDIO_U8, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_U16LSB,
-      AUDIO_U16MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB },
-    { AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_U16LSB, AUDIO_U16MSB, AUDIO_S32LSB,
-      AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_S16MSB, AUDIO_S16LSB, AUDIO_U16MSB, AUDIO_U16LSB, AUDIO_S32MSB,
-      AUDIO_S32LSB, AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_U16LSB, AUDIO_U16MSB, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_S32LSB,
-      AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_U16MSB, AUDIO_U16LSB, AUDIO_S16MSB, AUDIO_S16LSB, AUDIO_S32MSB,
-      AUDIO_S32LSB, AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_S16LSB,
-      AUDIO_S16MSB, AUDIO_U16LSB, AUDIO_U16MSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_S32MSB, AUDIO_S32LSB, AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_S16MSB,
-      AUDIO_S16LSB, AUDIO_U16MSB, AUDIO_U16LSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_S16LSB,
-      AUDIO_S16MSB, AUDIO_U16LSB, AUDIO_U16MSB, AUDIO_U8, AUDIO_S8 },
-    { AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_S32MSB, AUDIO_S32LSB, AUDIO_S16MSB,
-      AUDIO_S16LSB, AUDIO_U16MSB, AUDIO_U16LSB, AUDIO_U8, AUDIO_S8 },
+    { AUDIO_U8, AUDIO_S8, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB },
+    { AUDIO_S8, AUDIO_U8, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB },
+    { AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_U8, AUDIO_S8 },
+    { AUDIO_S16MSB, AUDIO_S16LSB, AUDIO_S32MSB, AUDIO_S32LSB, AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_U8, AUDIO_S8 },
+    { AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_U8, AUDIO_S8 },
+    { AUDIO_S32MSB, AUDIO_S32LSB, AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_S16MSB, AUDIO_S16LSB, AUDIO_U8, AUDIO_S8 },
+    { AUDIO_F32LSB, AUDIO_F32MSB, AUDIO_S32LSB, AUDIO_S32MSB, AUDIO_S16LSB, AUDIO_S16MSB, AUDIO_U8, AUDIO_S8 },
+    { AUDIO_F32MSB, AUDIO_F32LSB, AUDIO_S32MSB, AUDIO_S32LSB, AUDIO_S16MSB, AUDIO_S16LSB, AUDIO_U8, AUDIO_S8 },
 };
 
 SDL_AudioFormat
@@ -1638,20 +1632,7 @@ SDL_GetNextAudioFormat(void)
 
 Uint8 SDL_GetSilenceValueForFormat(const SDL_AudioFormat format)
 {
-    switch (format) {
-    /* !!! FIXME: 0x80 isn't perfect for U16, but we can't fit 0x8000 in a
-       !!! FIXME:  byte for SDL_memset() use. This is actually 0.1953 percent
-       !!! FIXME:  off from silence. Maybe just don't use U16. */
-    case AUDIO_U16LSB:
-    case AUDIO_U16MSB:
-    case AUDIO_U8:
-        return 0x80;
-
-    default:
-        break;
-    }
-
-    return 0x00;
+    return (format == AUDIO_U8) ? 0x80 : 0x00;
 }
 
 void SDL_CalculateAudioSpec(SDL_AudioSpec *spec)
@@ -1663,8 +1644,8 @@ void SDL_CalculateAudioSpec(SDL_AudioSpec *spec)
 }
 
 int SDL_ConvertAudioSamples(
-        SDL_AudioFormat src_format, Uint8 src_channels, int src_rate, int src_len, Uint8 *src_data,
-        SDL_AudioFormat dst_format, Uint8 dst_channels, int dst_rate, int *dst_len, Uint8 **dst_data)
+        SDL_AudioFormat src_format, Uint8 src_channels, int src_rate, const Uint8 *src_data, int src_len,
+        SDL_AudioFormat dst_format, Uint8 dst_channels, int dst_rate, Uint8 **dst_data, int *dst_len)
 {
     int ret = -1;
     SDL_AudioStream *stream = NULL;
@@ -1673,21 +1654,21 @@ int SDL_ConvertAudioSamples(
     int real_dst_len;
 
 
-    if (src_len < 0) {
-        return SDL_InvalidParamError("src_len");
-    }
     if (src_data == NULL) {
         return SDL_InvalidParamError("src_data");
     }
-    if (dst_len == NULL) {
-        return SDL_InvalidParamError("dst_len");
+    if (src_len < 0) {
+        return SDL_InvalidParamError("src_len");
     }
     if (dst_data == NULL) {
         return SDL_InvalidParamError("dst_data");
     }
+    if (dst_len == NULL) {
+        return SDL_InvalidParamError("dst_len");
+    }
 
-    *dst_len = 0;
     *dst_data = NULL;
+    *dst_len = 0;
 
     stream = SDL_CreateAudioStream(src_format, src_channels, src_rate, dst_format, dst_channels, dst_rate);
     if (stream == NULL) {
@@ -1726,8 +1707,8 @@ int SDL_ConvertAudioSamples(
 end:
     if (ret != 0) {
         SDL_free(*dst_data);
-        *dst_len = 0;
         *dst_data = NULL;
+        *dst_len = 0;
     }
     SDL_DestroyAudioStream(stream);
     return ret;

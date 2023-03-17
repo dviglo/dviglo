@@ -535,8 +535,7 @@ static int ALSA_OpenDevice(_THIS, const char *devname)
 #endif
 
     /* Initialize all variables that we clean on shutdown */
-    this->hidden = (struct SDL_PrivateAudioData *)
-        SDL_malloc((sizeof *this->hidden));
+    this->hidden = (struct SDL_PrivateAudioData *)SDL_malloc(sizeof(*this->hidden));
     if (this->hidden == NULL) {
         return SDL_OutOfMemory();
     }
@@ -583,12 +582,6 @@ static int ALSA_OpenDevice(_THIS, const char *devname)
             break;
         case AUDIO_S16MSB:
             format = SND_PCM_FORMAT_S16_BE;
-            break;
-        case AUDIO_U16LSB:
-            format = SND_PCM_FORMAT_U16_LE;
-            break;
-        case AUDIO_U16MSB:
-            format = SND_PCM_FORMAT_U16_BE;
             break;
         case AUDIO_S32LSB:
             format = SND_PCM_FORMAT_S32_LE;
@@ -900,7 +893,7 @@ static void ALSA_HotplugIteration(void)
 }
 
 #if SDL_ALSA_HOTPLUG_THREAD
-static SDL_atomic_t ALSA_hotplug_shutdown;
+static SDL_AtomicInt ALSA_hotplug_shutdown;
 static SDL_Thread *ALSA_hotplug_thread;
 
 static int SDLCALL ALSA_HotplugThread(void *arg)

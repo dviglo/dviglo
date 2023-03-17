@@ -195,7 +195,7 @@ static SDL_bool CheckXRandR(Display *display, int *major, int *minor)
 static float CalculateXRandRRefreshRate(const XRRModeInfo *info)
 {
     if (info->hTotal && info->vTotal) {
-        return ((100 * info->dotClock) / (info->hTotal * info->vTotal)) / 100.0f;
+        return ((100 * (Sint64)info->dotClock) / (info->hTotal * info->vTotal)) / 100.0f;
     }
     return 0.0f;
 }
@@ -226,7 +226,8 @@ static SDL_bool SetXRandRModeInfo(Display *display, XRRScreenResources *res, RRC
             mode->refresh_rate = CalculateXRandRRefreshRate(info);
             ((SDL_DisplayModeData *)mode->driverdata)->xrandr_mode = modeID;
 #ifdef X11MODES_DEBUG
-            printf("XRandR mode %d: %dx%d@%dHz\n", (int)modeID, mode->w, mode->h, mode->refresh_rate);
+            printf("XRandR mode %d: %dx%d@%gHz\n", (int)modeID,
+                   mode->screen_w, mode->screen_h, mode->refresh_rate);
 #endif
             return SDL_TRUE;
         }
@@ -369,9 +370,6 @@ static int X11_AddXRandRDisplay(_THIS, Display *dpy, int screen, RROutput output
     displaydata->screen = screen;
     displaydata->visual = vinfo.visual;
     displaydata->depth = vinfo.depth;
-    displaydata->hdpi = display_mm_width ? (((float)mode.pixel_w) * 25.4f / display_mm_width) : 0.0f;
-    displaydata->vdpi = display_mm_height ? (((float)mode.pixel_h) * 25.4f / display_mm_height) : 0.0f;
-    displaydata->ddpi = SDL_ComputeDiagonalDPI(mode.pixel_w, mode.pixel_h, ((float)display_mm_width) / 25.4f, ((float)display_mm_height) / 25.4f);
     displaydata->scanline_pad = scanline_pad;
     displaydata->x = display_x;
     displaydata->y = display_y;
@@ -386,37 +384,39 @@ static int X11_AddXRandRDisplay(_THIS, Display *dpy, int screen, RROutput output
         display.name = display_name;
     }
     display.desktop_mode = mode;
-    display.current_mode = mode;
     display.driverdata = displaydata;
-    return SDL_AddVideoDisplay(&display, send_event);
+    if (SDL_AddVideoDisplay(&display, send_event) == 0) {
+        return -1;
+    }
+    return 0;
 }
 
 static void X11_HandleXRandROutputChange(_THIS, const XRROutputChangeNotifyEvent *ev)
 {
-    const int num_displays = SDL_GetNumVideoDisplays();
+    SDL_DisplayID *displays;
     SDL_VideoDisplay *display = NULL;
-    int displayidx = -1;
     int i;
 
 #if 0
     printf("XRROutputChangeNotifyEvent! [output=%u, crtc=%u, mode=%u, rotation=%u, connection=%u]", (unsigned int) ev->output, (unsigned int) ev->crtc, (unsigned int) ev->mode, (unsigned int) ev->rotation, (unsigned int) ev->connection);
 #endif
 
-    for (i = 0; i < num_displays; i++) {
-        SDL_VideoDisplay *thisdisplay = SDL_GetDisplay(i);
-        const SDL_DisplayData *displaydata = (const SDL_DisplayData *)thisdisplay->driverdata;
-        if (displaydata->xrandr_output == ev->output) {
-            display = thisdisplay;
-            displayidx = i;
-            break;
+    displays = SDL_GetDisplays(NULL);
+    if (displays) {
+        for (i = 0; displays[i]; ++i) {
+            SDL_VideoDisplay *thisdisplay = SDL_GetVideoDisplay(displays[i]);
+            const SDL_DisplayData *displaydata = thisdisplay->driverdata;
+            if (displaydata->xrandr_output == ev->output) {
+                display = thisdisplay;
+                break;
+            }
         }
+        SDL_free(displays);
     }
-
-    SDL_assert((displayidx == -1) == (display == NULL));
 
     if (ev->connection == RR_Disconnected) { /* output is going away */
         if (display != NULL) {
-            SDL_DelVideoDisplay(displayidx);
+            SDL_DelVideoDisplay(display->id, SDL_TRUE);
         }
     } else if (ev->connection == RR_Connected) { /* output is coming online */
         if (display != NULL) {
@@ -445,7 +445,7 @@ static void X11_HandleXRandROutputChange(_THIS, const XRROutputChangeNotifyEvent
 
 void X11_HandleXRandREvent(_THIS, const XEvent *xevent)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     SDL_assert(xevent->type == (videodata->xrandr_event_base + RRNotify));
 
     switch (((const XRRNotifyEvent *)xevent)->subtype) {
@@ -459,7 +459,7 @@ void X11_HandleXRandREvent(_THIS, const XEvent *xevent)
 
 static int X11_InitModes_XRandR(_THIS)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     Display *dpy = data->display;
     const int screencount = ScreenCount(dpy);
     const int default_screen = DefaultScreen(dpy);
@@ -520,40 +520,17 @@ static int X11_InitModes_XRandR(_THIS)
 }
 #endif /* SDL_VIDEO_DRIVER_X11_XRANDR */
 
-static int GetXftDPI(Display *dpy)
-{
-    char *xdefault_resource;
-    int xft_dpi, err;
-
-    xdefault_resource = X11_XGetDefault(dpy, "Xft", "dpi");
-
-    if (xdefault_resource == NULL) {
-        return 0;
-    }
-
-    /*
-     * It's possible for SDL_atoi to call SDL_strtol, if it fails due to a
-     * overflow or an underflow, it will return LONG_MAX or LONG_MIN and set
-     * errno to ERANGE. So we need to check for this so we dont get crazy dpi
-     * values
-     */
-    xft_dpi = SDL_atoi(xdefault_resource);
-    err = errno;
-
-    return err == ERANGE ? 0 : xft_dpi;
-}
-
 /* This is used if there's no better functionality--like XRandR--to use.
    It won't attempt to supply different display modes at all, but it can
    enumerate the current displays and their current sizes. */
 static int X11_InitModes_StdXlib(_THIS)
 {
     /* !!! FIXME: a lot of copy/paste from X11_InitModes_XRandR in this function. */
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     Display *dpy = data->display;
     const int default_screen = DefaultScreen(dpy);
     Screen *screen = ScreenOfDisplay(dpy, default_screen);
-    int display_mm_width, display_mm_height, xft_dpi, scanline_pad, n, i;
+    int scanline_pad, n, i;
     SDL_DisplayModeData *modedata;
     SDL_DisplayData *displaydata;
     SDL_DisplayMode mode;
@@ -590,21 +567,9 @@ static int X11_InitModes_StdXlib(_THIS)
     }
     mode.driverdata = modedata;
 
-    display_mm_width = WidthMMOfScreen(screen);
-    display_mm_height = HeightMMOfScreen(screen);
-
     displaydata->screen = default_screen;
     displaydata->visual = vinfo.visual;
     displaydata->depth = vinfo.depth;
-    displaydata->hdpi = display_mm_width ? (((float)mode.pixel_w) * 25.4f / display_mm_width) : 0.0f;
-    displaydata->vdpi = display_mm_height ? (((float)mode.pixel_h) * 25.4f / display_mm_height) : 0.0f;
-    displaydata->ddpi = SDL_ComputeDiagonalDPI(mode.pixel_w, mode.pixel_h, ((float)display_mm_width) / 25.4f, ((float)display_mm_height) / 25.4f);
-
-    xft_dpi = GetXftDPI(dpy);
-    if (xft_dpi > 0) {
-        displaydata->hdpi = (float)xft_dpi;
-        displaydata->vdpi = (float)xft_dpi;
-    }
 
     scanline_pad = SDL_BYTESPERPIXEL(pixelformat) * 8;
     pixmapformats = X11_XListPixmapFormats(dpy, &n);
@@ -626,10 +591,10 @@ static int X11_InitModes_StdXlib(_THIS)
     SDL_zero(display);
     display.name = (char *)"Generic X11 Display"; /* this is just copied and thrown away, it's safe to cast to char* here. */
     display.desktop_mode = mode;
-    display.current_mode = mode;
     display.driverdata = displaydata;
-    SDL_AddVideoDisplay(&display, SDL_TRUE);
-
+    if (SDL_AddVideoDisplay(&display, SDL_TRUE) == 0) {
+        return -1;
+    }
     return 0;
 }
 
@@ -640,7 +605,7 @@ int X11_InitModes(_THIS)
        desktop size. */
 #if SDL_VIDEO_DRIVER_X11_XRANDR
     {
-        SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+        SDL_VideoData *data = _this->driverdata;
         int xrandr_major, xrandr_minor;
         /* require at least XRandR v1.3 */
         if (CheckXRandR(data->display, &xrandr_major, &xrandr_minor) &&
@@ -654,9 +619,10 @@ int X11_InitModes(_THIS)
     return X11_InitModes_StdXlib(_this);
 }
 
-void X11_GetDisplayModes(_THIS, SDL_VideoDisplay *sdl_display)
+int X11_GetDisplayModes(_THIS, SDL_VideoDisplay *sdl_display)
 {
-    SDL_DisplayData *data = (SDL_DisplayData *)sdl_display->driverdata;
+#if SDL_VIDEO_DRIVER_X11_XRANDR
+    SDL_DisplayData *data = sdl_display->driverdata;
     SDL_DisplayMode mode;
 
     /* Unfortunately X11 requires the window to be created with the correct
@@ -666,11 +632,10 @@ void X11_GetDisplayModes(_THIS, SDL_VideoDisplay *sdl_display)
      * (or support recreating the window with a new visual behind the scenes)
      */
     SDL_zero(mode);
-    mode.format = sdl_display->current_mode.format;
+    mode.format = sdl_display->desktop_mode.format;
 
-#if SDL_VIDEO_DRIVER_X11_XRANDR
     if (data->use_xrandr) {
-        Display *display = ((SDL_VideoData *)_this->driverdata)->display;
+        Display *display = _this->driverdata->display;
         XRRScreenResources *res;
 
         res = X11_XRRGetScreenResources(display, RootWindow(display, data->screen));
@@ -689,7 +654,7 @@ void X11_GetDisplayModes(_THIS, SDL_VideoDisplay *sdl_display)
                     mode.driverdata = modedata;
 
                     if (!SetXRandRModeInfo(display, res, output_info->crtc, output_info->modes[i], &mode) ||
-                        !SDL_AddDisplayMode(sdl_display, &mode)) {
+                        !SDL_AddFullscreenDisplayMode(sdl_display, &mode)) {
                         SDL_free(modedata);
                     }
                 }
@@ -697,23 +662,9 @@ void X11_GetDisplayModes(_THIS, SDL_VideoDisplay *sdl_display)
             X11_XRRFreeOutputInfo(output_info);
             X11_XRRFreeScreenResources(res);
         }
-        return;
     }
 #endif /* SDL_VIDEO_DRIVER_X11_XRANDR */
-
-    if (!data->use_xrandr) {
-        SDL_DisplayModeData *modedata;
-        /* Add the desktop mode */
-        mode = sdl_display->desktop_mode;
-        modedata = (SDL_DisplayModeData *)SDL_calloc(1, sizeof(SDL_DisplayModeData));
-        if (modedata) {
-            *modedata = *(SDL_DisplayModeData *)sdl_display->desktop_mode.driverdata;
-        }
-        mode.driverdata = modedata;
-        if (!SDL_AddDisplayMode(sdl_display, &mode)) {
-            SDL_free(modedata);
-        }
-    }
+    return 0;
 }
 
 #if SDL_VIDEO_DRIVER_X11_XRANDR
@@ -734,8 +685,8 @@ static int SDL_XRRSetScreenSizeErrHandler(Display *d, XErrorEvent *e)
 
 int X11_SetDisplayMode(_THIS, SDL_VideoDisplay *sdl_display, SDL_DisplayMode *mode)
 {
-    SDL_VideoData *viddata = (SDL_VideoData *)_this->driverdata;
-    SDL_DisplayData *data = (SDL_DisplayData *)sdl_display->driverdata;
+    SDL_VideoData *viddata = _this->driverdata;
+    SDL_DisplayData *data = sdl_display->driverdata;
 
     viddata->last_mode_change_deadline = SDL_GetTicks() + (PENDING_FOCUS_TIME * 2);
 
@@ -827,36 +778,18 @@ void X11_QuitModes(_THIS)
 
 int X11_GetDisplayBounds(_THIS, SDL_VideoDisplay *sdl_display, SDL_Rect *rect)
 {
-    SDL_DisplayData *data = (SDL_DisplayData *)sdl_display->driverdata;
+    SDL_DisplayData *data = sdl_display->driverdata;
 
     rect->x = data->x;
     rect->y = data->y;
-    rect->w = sdl_display->current_mode.screen_w;
-    rect->h = sdl_display->current_mode.screen_h;
-
+    rect->w = sdl_display->current_mode->screen_w;
+    rect->h = sdl_display->current_mode->screen_h;
     return 0;
-}
-
-int X11_GetDisplayPhysicalDPI(_THIS, SDL_VideoDisplay *sdl_display, float *ddpi, float *hdpi, float *vdpi)
-{
-    SDL_DisplayData *data = (SDL_DisplayData *)sdl_display->driverdata;
-
-    if (ddpi) {
-        *ddpi = data->ddpi;
-    }
-    if (hdpi) {
-        *hdpi = data->hdpi;
-    }
-    if (vdpi) {
-        *vdpi = data->vdpi;
-    }
-
-    return data->ddpi != 0.0f ? 0 : SDL_SetError("Couldn't get DPI");
 }
 
 int X11_GetDisplayUsableBounds(_THIS, SDL_VideoDisplay *sdl_display, SDL_Rect *rect)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     Display *display = data->display;
     Atom _NET_WORKAREA;
     int status, real_format;

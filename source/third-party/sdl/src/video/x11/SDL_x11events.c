@@ -36,6 +36,7 @@
 #include "../../events/SDL_events_c.h"
 #include "../../events/SDL_mouse_c.h"
 #include "../../events/SDL_touch_c.h"
+#include "../../core/linux/SDL_system_theme.h"
 
 #include <SDL3/SDL_syswm.h>
 
@@ -349,7 +350,7 @@ static void X11_HandleGenericEvent(SDL_VideoData *videodata, XEvent *xev)
 
 static unsigned X11_GetNumLockModifierMask(_THIS)
 {
-    SDL_VideoData *viddata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *viddata = _this->driverdata;
     Display *display = viddata->display;
     unsigned num_mask = 0;
     int i, j;
@@ -374,7 +375,7 @@ static unsigned X11_GetNumLockModifierMask(_THIS)
 
 static unsigned X11_GetScrollLockModifierMask(_THIS)
 {
-    SDL_VideoData *viddata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *viddata = _this->driverdata;
     Display *display = viddata->display;
     unsigned num_mask = 0;
     int i, j;
@@ -399,7 +400,7 @@ static unsigned X11_GetScrollLockModifierMask(_THIS)
 
 void X11_ReconcileKeyboardState(_THIS)
 {
-    SDL_VideoData *viddata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *viddata = _this->driverdata;
     Display *display = viddata->display;
     char keys[32];
     int keycode;
@@ -412,9 +413,9 @@ void X11_ReconcileKeyboardState(_THIS)
 
     /* Sync up the keyboard modifier state */
     if (X11_XQueryPointer(display, DefaultRootWindow(display), &junk_window, &junk_window, &x, &y, &x, &y, &mask)) {
-        SDL_ToggleModState(SDL_KMOD_CAPS, (mask & LockMask) != 0);
-        SDL_ToggleModState(SDL_KMOD_NUM, (mask & X11_GetNumLockModifierMask(_this)) != 0);
-        SDL_ToggleModState(SDL_KMOD_SCROLL, (mask & X11_GetScrollLockModifierMask(_this)) != 0);
+        SDL_ToggleModState(SDL_KMOD_CAPS, (mask & LockMask) ? SDL_TRUE : SDL_FALSE);
+        SDL_ToggleModState(SDL_KMOD_NUM, (mask & X11_GetNumLockModifierMask(_this)) ? SDL_TRUE : SDL_FALSE);
+        SDL_ToggleModState(SDL_KMOD_SCROLL, (mask & X11_GetScrollLockModifierMask(_this)) ? SDL_TRUE : SDL_FALSE);
     }
 
     keyboardState = SDL_GetKeyboardState(0);
@@ -446,6 +447,34 @@ void X11_ReconcileKeyboardState(_THIS)
     }
 }
 
+static void X11_ShowChildren(_THIS, SDL_Window *window)
+{
+    for (window = window->first_child; window != NULL; window = window->next_sibling) {
+        window->driverdata->hidden_by_parent_focus = SDL_FALSE;
+        if (!(window->flags & SDL_WINDOW_HIDDEN)) {
+            X11_ShowWindow(_this, window);
+        }
+
+        if (window->first_child) {
+            X11_ShowChildren(_this, window);
+        }
+    }
+}
+
+static void X11_HideChildren(_THIS, SDL_Window *window)
+{
+    for (window = window->first_child; window != NULL; window = window->next_sibling) {
+        if (!(window->flags & SDL_WINDOW_HIDDEN)) {
+            window->driverdata->hidden_by_parent_focus = SDL_TRUE;
+            X11_HideWindow(_this, window);
+        }
+
+        if (window->first_child) {
+            X11_HideChildren(_this, window);
+        }
+    }
+}
+
 static void X11_DispatchFocusIn(_THIS, SDL_WindowData *data)
 {
 #ifdef DEBUG_XEVENTS
@@ -463,6 +492,9 @@ static void X11_DispatchFocusIn(_THIS, SDL_WindowData *data)
 #endif
     if (data->flashing_window) {
         X11_FlashWindow(_this, data->window, SDL_FLASH_CANCEL);
+    }
+    if (data->window->parent == NULL) {
+        X11_ShowChildren(_this, data->window);
     }
 }
 
@@ -486,6 +518,9 @@ static void X11_DispatchFocusOut(_THIS, SDL_WindowData *data)
 #ifdef SDL_USE_IME
     SDL_IME_SetFocus(SDL_FALSE);
 #endif
+    if (data->window->parent == NULL) {
+        X11_HideChildren(_this, data->window);
+    }
 }
 
 static void X11_DispatchMapNotify(SDL_WindowData *data)
@@ -500,13 +535,15 @@ static void X11_DispatchMapNotify(SDL_WindowData *data)
 
 static void X11_DispatchUnmapNotify(SDL_WindowData *data)
 {
-    SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_HIDDEN, 0, 0);
-    SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_MINIMIZED, 0, 0);
+    if (!data->hidden_by_parent_focus) {
+        SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_HIDDEN, 0, 0);
+        SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_MINIMIZED, 0, 0);
+    }
 }
 
 static void InitiateWindowMove(_THIS, const SDL_WindowData *data, const SDL_Point *point)
 {
-    SDL_VideoData *viddata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *viddata = _this->driverdata;
     SDL_Window *window = data->window;
     Display *display = viddata->display;
     XEvent evt;
@@ -531,7 +568,7 @@ static void InitiateWindowMove(_THIS, const SDL_WindowData *data, const SDL_Poin
 
 static void InitiateWindowResize(_THIS, const SDL_WindowData *data, const SDL_Point *point, int direction)
 {
-    SDL_VideoData *viddata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *viddata = _this->driverdata;
     SDL_Window *window = data->window;
     Display *display = viddata->display;
     XEvent evt;
@@ -614,7 +651,7 @@ static void X11_UpdateUserTime(SDL_WindowData *data, const unsigned long latest)
 static void X11_HandleClipboardEvent(_THIS, const XEvent *xevent)
 {
     int i;
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     Display *display = videodata->display;
 
     SDL_assert(videodata->clipboard_window != None);
@@ -755,7 +792,7 @@ static int XLookupStringAsUTF8(XKeyEvent *event_struct, char *buffer_return, int
 
 static void X11_DispatchEvent(_THIS, XEvent *xevent)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     Display *display;
     SDL_WindowData *data;
     int orig_event_type;
@@ -923,7 +960,7 @@ static void X11_DispatchEvent(_THIS, XEvent *xevent)
 #if SDL_VIDEO_DRIVER_X11_XFIXES
         {
             /* Only create the barriers if we have input focus */
-            SDL_WindowData *windowdata = (SDL_WindowData *)data->window->driverdata;
+            SDL_WindowData *windowdata = data->window->driverdata;
             if ((data->pointer_barrier_active == SDL_TRUE) && windowdata->window->flags & SDL_WINDOW_INPUT_FOCUS) {
                 X11_ConfineCursorWithFlags(_this, windowdata->window, &windowdata->barrier_rect, X11_BARRIER_HANDLED_BY_EVENT);
             }
@@ -962,7 +999,7 @@ static void X11_DispatchEvent(_THIS, XEvent *xevent)
 
             /* In order for interaction with the window decorations and menu to work properly
                on Mutter, we need to ungrab the keyboard when the the mouse leaves. */
-            if ((data->window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
+            if (!(data->window->flags & SDL_WINDOW_FULLSCREEN)) {
                 X11_SetWindowKeyboardGrab(_this, data->window, SDL_FALSE);
             }
 
@@ -1167,14 +1204,23 @@ static void X11_DispatchEvent(_THIS, XEvent *xevent)
 
         if (xevent->xconfigure.x != data->last_xconfigure.x ||
             xevent->xconfigure.y != data->last_xconfigure.y) {
+            SDL_Window *w;
+            int x = xevent->xconfigure.x;
+            int y = xevent->xconfigure.y;
+
+            SDL_GlobalToRelativeForWindow(data->window, x, y, &x, &y);
             SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_MOVED,
-                                xevent->xconfigure.x, xevent->xconfigure.y);
+                                x, y);
+
 #ifdef SDL_USE_IME
             if (SDL_EventEnabled(SDL_EVENT_TEXT_INPUT)) {
                 /* Update IME candidate list position */
                 SDL_IME_UpdateTextRect(NULL);
             }
 #endif
+            for (w = data->window->first_child; w != NULL; w = w->next_sibling) {
+                X11_UpdateWindowPosition(w);
+            }
         }
         if (xevent->xconfigure.width != data->last_xconfigure.width ||
             xevent->xconfigure.height != data->last_xconfigure.height) {
@@ -1222,6 +1268,18 @@ static void X11_DispatchEvent(_THIS, XEvent *xevent)
             }
             printf("Action requested by user is : %s\n", X11_XGetAtomName(display, act));
 #endif
+            {
+                /* Drag and Drop position */
+                int root_x, root_y, window_x, window_y;
+                Window ChildReturn;
+                root_x = xevent->xclient.data.l[2] >> 16;
+                root_y = xevent->xclient.data.l[2] & 0xffff;
+                /* Translate from root to current window position */
+                X11_XTranslateCoordinates(display, DefaultRootWindow(display), data->xwindow,
+                        root_x, root_y, &window_x, &window_y, &ChildReturn);
+
+                SDL_SendDropPosition(data->window, NULL, (float)window_x, (float)window_y); /* FIXME, can we get the filename ? */
+            }
 
             /* reply with status */
             SDL_memset(&m, 0, sizeof(XClientMessageEvent));
@@ -1464,16 +1522,16 @@ static void X11_DispatchEvent(_THIS, XEvent *xevent)
             const Uint32 flags = X11_GetNetWMState(_this, data->window, xevent->xproperty.window);
             const Uint32 changed = flags ^ data->window->flags;
 
-            if ((changed & (SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN_MASK)) != 0) {
-                if ((flags & SDL_WINDOW_HIDDEN) != 0) {
+            if ((changed & (SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN)) != 0) {
+                if (flags & SDL_WINDOW_HIDDEN) {
                     X11_DispatchUnmapNotify(data);
                 } else {
                     X11_DispatchMapNotify(data);
                 }
             }
 
-            if ((changed & SDL_WINDOW_MAXIMIZED) != 0) {
-                if ((flags & SDL_WINDOW_MAXIMIZED) != 0) {
+            if (changed & SDL_WINDOW_MAXIMIZED) {
+                if (flags & SDL_WINDOW_MAXIMIZED) {
                     SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_MAXIMIZED, 0, 0);
                 } else {
                     SDL_SendWindowEvent(data->window, SDL_EVENT_WINDOW_RESTORED, 0, 0);
@@ -1569,7 +1627,7 @@ static void X11_DispatchEvent(_THIS, XEvent *xevent)
 
 static void X11_HandleFocusChanges(_THIS)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     int i;
 
     if (videodata && videodata->windowlist) {
@@ -1606,9 +1664,9 @@ static SDL_bool X11_PollEvent(Display *display, XEvent *event)
 
 void X11_SendWakeupEvent(_THIS, SDL_Window *window)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     Display *req_display = data->request_display;
-    Window xwindow = ((SDL_WindowData *)window->driverdata)->xwindow;
+    Window xwindow = window->driverdata->xwindow;
     XClientMessageEvent event;
 
     SDL_memset(&event, 0, sizeof(XClientMessageEvent));
@@ -1626,7 +1684,7 @@ void X11_SendWakeupEvent(_THIS, SDL_Window *window)
 
 int X11_WaitEventTimeout(_THIS, Sint64 timeoutNS)
 {
-    SDL_VideoData *videodata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *videodata = _this->driverdata;
     Display *display;
     XEvent xevent;
     display = videodata->display;
@@ -1671,12 +1729,16 @@ int X11_WaitEventTimeout(_THIS, Sint64 timeoutNS)
         SDL_IME_PumpEvents();
     }
 #endif
+
+#ifdef SDL_USE_LIBDBUS
+    SDL_SystemTheme_PumpEvents();
+#endif
     return 1;
 }
 
 void X11_PumpEvents(_THIS)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     XEvent xevent;
     int i;
 
@@ -1713,6 +1775,10 @@ void X11_PumpEvents(_THIS)
     }
 #endif
 
+#ifdef SDL_USE_LIBDBUS
+    SDL_SystemTheme_PumpEvents();
+#endif
+
     /* FIXME: Only need to do this when there are pending focus changes */
     X11_HandleFocusChanges(_this);
 
@@ -1726,17 +1792,17 @@ void X11_PumpEvents(_THIS)
     }
 }
 
-void X11_SuspendScreenSaver(_THIS)
+int X11_SuspendScreenSaver(_THIS)
 {
 #if SDL_VIDEO_DRIVER_X11_XSCRNSAVER
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     int dummy;
     int major_version, minor_version;
 #endif /* SDL_VIDEO_DRIVER_X11_XSCRNSAVER */
 
 #if SDL_USE_LIBDBUS
     if (SDL_DBus_ScreensaverInhibit(_this->suspend_screensaver)) {
-        return;
+        return 0;
     }
 
     if (_this->suspend_screensaver) {
@@ -1751,13 +1817,15 @@ void X11_SuspendScreenSaver(_THIS)
             !X11_XScreenSaverQueryVersion(data->display,
                                           &major_version, &minor_version) ||
             major_version < 1 || (major_version == 1 && minor_version < 1)) {
-            return;
+            return SDL_Unsupported();
         }
 
         X11_XScreenSaverSuspend(data->display, _this->suspend_screensaver);
         X11_XResetScreenSaver(data->display);
+        return 0;
     }
 #endif
+    return SDL_Unsupported();
 }
 
 #endif /* SDL_VIDEO_DRIVER_X11 */

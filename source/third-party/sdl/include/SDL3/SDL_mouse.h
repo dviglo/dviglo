@@ -22,7 +22,7 @@
 /**
  *  \file SDL_mouse.h
  *
- *  Include file for SDL mouse event handling.
+ *  \brief Include file for SDL mouse event handling.
  */
 
 #ifndef SDL_mouse_h_
@@ -200,21 +200,15 @@ extern DECLSPEC int SDLCALL SDL_WarpMouseGlobal(float x, float y);
 /**
  * Set relative mouse mode.
  *
- * While the mouse is in relative mode, the cursor is hidden, and the driver
- * will try to report continuous motion in the current window. Only relative
- * motion events will be delivered, the mouse position will not change.
- *
- * Note that this function will not be able to provide continuous relative
- * motion when used over Microsoft Remote Desktop, instead motion is limited
- * to the bounds of the screen.
+ * While the mouse is in relative mode, the cursor is hidden, the mouse
+ * position is constrained to the window, and SDL will report continuous
+ * relative mouse motion even if the mouse is at the edge of the window.
  *
  * This function will flush any pending mouse motion.
  *
  * \param enabled SDL_TRUE to enable relative mode, SDL_FALSE to disable.
  * \returns 0 on success or a negative error code on failure; call
  *          SDL_GetError() for more information.
- *
- *          If relative mode is not supported, this returns -1.
  *
  * \since This function is available since SDL 3.0.0.
  *
@@ -259,8 +253,8 @@ extern DECLSPEC int SDLCALL SDL_SetRelativeMouseMode(SDL_bool enabled);
  * `SDL_HINT_MOUSE_AUTO_CAPTURE` hint to zero.
  *
  * \param enabled SDL_TRUE to enable capturing, SDL_FALSE to disable.
- * \returns 0 on success or -1 if not supported; call SDL_GetError() for more
- *          information.
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  *
@@ -364,13 +358,15 @@ extern DECLSPEC SDL_Cursor *SDLCALL SDL_CreateSystemCursor(SDL_SystemCursor id);
  * this is desired for any reason.
  *
  * \param cursor a cursor to make active
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_CreateCursor
  * \sa SDL_GetCursor
  */
-extern DECLSPEC void SDLCALL SDL_SetCursor(SDL_Cursor * cursor);
+extern DECLSPEC int SDLCALL SDL_SetCursor(SDL_Cursor * cursor);
 
 /**
  * Get the active cursor.

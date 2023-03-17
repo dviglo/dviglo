@@ -26,6 +26,7 @@
 
 #include "../SDL_sysvideo.h"
 #include "../SDL_pixels_c.h"
+#include "../../core/linux/SDL_system_theme.h"
 
 #include "SDL_x11video.h"
 #include "SDL_x11framebuffer.h"
@@ -45,7 +46,7 @@ static int X11_VideoInit(_THIS);
 static void X11_VideoQuit(_THIS);
 
 /* Find out what class name we should use */
-static char *get_classname()
+static char *get_classname(void)
 {
     char *spot;
 #if defined(__LINUX__) || defined(__FREEBSD__)
@@ -91,7 +92,7 @@ static int (*orig_x11_errhandler)(Display *, XErrorEvent *) = NULL;
 
 static void X11_DeleteDevice(SDL_VideoDevice *device)
 {
-    SDL_VideoData *data = (SDL_VideoData *)device->driverdata;
+    SDL_VideoData *data = device->driverdata;
     if (device->vulkan_config.loader_handle) {
         device->Vulkan_UnloadLibrary(device);
     }
@@ -125,8 +126,7 @@ static int X11_SafetyNetErrHandler(Display *d, XErrorEvent *e)
             int i;
             for (i = 0; i < device->num_displays; i++) {
                 SDL_VideoDisplay *display = &device->displays[i];
-                if (SDL_memcmp(&display->current_mode, &display->desktop_mode,
-                               sizeof(SDL_DisplayMode)) != 0) {
+                if (SDL_GetCurrentDisplayMode(display->id) != SDL_GetDesktopDisplayMode(display->id)) {
                     X11_SetDisplayMode(device, display, &display->desktop_mode);
                 }
             }
@@ -215,7 +215,6 @@ static SDL_VideoDevice *X11_CreateDevice(void)
     device->GetDisplayModes = X11_GetDisplayModes;
     device->GetDisplayBounds = X11_GetDisplayBounds;
     device->GetDisplayUsableBounds = X11_GetDisplayUsableBounds;
-    device->GetDisplayPhysicalDPI = X11_GetDisplayPhysicalDPI;
     device->GetWindowICCProfile = X11_GetWindowICCProfile;
     device->SetDisplayMode = X11_SetDisplayMode;
     device->SuspendScreenSaver = X11_SuspendScreenSaver;
@@ -262,7 +261,6 @@ static SDL_VideoDevice *X11_CreateDevice(void)
 
     device->shape_driver.CreateShaper = X11_CreateShaper;
     device->shape_driver.SetWindowShape = X11_SetWindowShape;
-    device->shape_driver.ResizeWindowShape = X11_ResizeWindowShape;
 
 #if SDL_VIDEO_OPENGL_GLX
     device->GL_LoadLibrary = X11_GL_LoadLibrary;
@@ -318,6 +316,13 @@ static SDL_VideoDevice *X11_CreateDevice(void)
     device->Vulkan_CreateSurface = X11_Vulkan_CreateSurface;
 #endif
 
+#ifdef SDL_USE_LIBDBUS
+    if (SDL_SystemTheme_Init())
+        device->system_theme = SDL_SystemTheme_Get();
+#endif
+
+    device->quirk_flags = VIDEO_DEVICE_QUIRK_HAS_POPUP_WINDOW_SUPPORT;
+
     return device;
 }
 
@@ -338,7 +343,7 @@ static int X11_CheckWindowManagerErrorHandler(Display *d, XErrorEvent *e)
 
 static void X11_CheckWindowManager(_THIS)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
     Display *display = data->display;
     Atom _NET_SUPPORTING_WM_CHECK;
     int status, real_format;
@@ -398,7 +403,7 @@ static void X11_CheckWindowManager(_THIS)
 
 int X11_VideoInit(_THIS)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
 
     /* Get the window class name, usually the name of the application */
     data->classname = get_classname();
@@ -476,7 +481,7 @@ int X11_VideoInit(_THIS)
 
 void X11_VideoQuit(_THIS)
 {
-    SDL_VideoData *data = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *data = _this->driverdata;
 
     if (data->clipboard_window) {
         X11_XDestroyWindow(data->display, data->clipboard_window);
@@ -502,5 +507,3 @@ X11_UseDirectColorVisuals(void)
 }
 
 #endif /* SDL_VIDEO_DRIVER_X11 */
-
-/* vim: set ts=4 sw=4 expandtab: */

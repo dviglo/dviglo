@@ -31,21 +31,16 @@
 #include <psp2/ime_dialog.h>
 #include <psp2/sysmodule.h>
 
-typedef struct SDL_VideoData
+struct SDL_VideoData
 {
     SDL_bool egl_initialized; /* OpenGL device initialization status */
     uint32_t egl_refcount;    /* OpenGL reference count              */
 
     SceWChar16 ime_buffer[SCE_IME_DIALOG_MAX_TEXT_LENGTH];
     SDL_bool ime_active;
-} SDL_VideoData;
+};
 
-typedef struct SDL_DisplayData
-{
-
-} SDL_DisplayData;
-
-typedef struct SDL_WindowData
+struct SDL_WindowData
 {
     SDL_bool uses_gles;
     SceUID buffer_uid;
@@ -54,7 +49,7 @@ typedef struct SDL_WindowData
     EGLSurface egl_surface;
     EGLContext egl_context;
 #endif
-} SDL_WindowData;
+};
 
 extern SDL_Window *Vita_Window;
 
@@ -65,12 +60,11 @@ extern SDL_Window *Vita_Window;
 /* Display and window functions */
 int VITA_VideoInit(_THIS);
 void VITA_VideoQuit(_THIS);
-void VITA_GetDisplayModes(_THIS, SDL_VideoDisplay *display);
+int VITA_GetDisplayModes(_THIS, SDL_VideoDisplay *display);
 int VITA_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode);
 int VITA_CreateWindow(_THIS, SDL_Window *window);
 int VITA_CreateWindowFrom(_THIS, SDL_Window *window, const void *data);
 void VITA_SetWindowTitle(_THIS, SDL_Window *window);
-void VITA_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
 void VITA_SetWindowPosition(_THIS, SDL_Window *window);
 void VITA_SetWindowSize(_THIS, SDL_Window *window);
 void VITA_ShowWindow(_THIS, SDL_Window *window);
@@ -99,7 +93,7 @@ int VITA_GLES_MakeCurrent(_THIS, SDL_Window *window, SDL_GLContext context);
 int VITA_GLES_SetSwapInterval(_THIS, int interval);
 int VITA_GLES_GetSwapInterval(_THIS, int *interval);
 int VITA_GLES_SwapWindow(_THIS, SDL_Window *window);
-void VITA_GLES_DeleteContext(_THIS, SDL_GLContext context);
+int VITA_GLES_DeleteContext(_THIS, SDL_GLContext context);
 #endif
 
 /* VITA on screen keyboard */

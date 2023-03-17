@@ -94,7 +94,7 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
 
 - (void)setSDLWindow:(SDL_Window *)window
 {
-    SDL_WindowData *data = nil;
+    SDL_UIKitWindowData *data = nil;
 
     if (window == sdlwindow) {
         return;
@@ -103,7 +103,7 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
     /* Remove ourself from the old window. */
     if (sdlwindow) {
         SDL_uikitview *view = nil;
-        data = (__bridge SDL_WindowData *)sdlwindow->driverdata;
+        data = (__bridge SDL_UIKitWindowData *)sdlwindow->driverdata;
 
         [data.views removeObject:self];
 
@@ -122,7 +122,7 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
 
     /* Add ourself to the new window. */
     if (window) {
-        data = (__bridge SDL_WindowData *)window->driverdata;
+        data = (__bridge SDL_UIKitWindowData *)window->driverdata;
 
         /* Make sure the SDL window has a strong reference to this view. */
         [data.views addObject:self];
@@ -233,7 +233,7 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
                     int i;
 
                     for (i = 1; i <= MAX_MOUSE_BUTTONS; ++i) {
-                        if ((event.buttonMask & SDL_BUTTON(i)) != 0) {
+                        if (event.buttonMask & SDL_BUTTON(i)) {
                             Uint8 button;
 
                             switch (i) {
@@ -289,7 +289,7 @@ extern int SDL_AppleTVRemoteOpenedAsJoystick;
                     int i;
 
                     for (i = 1; i <= MAX_MOUSE_BUTTONS; ++i) {
-                        if ((event.buttonMask & SDL_BUTTON(i)) != 0) {
+                        if (event.buttonMask & SDL_BUTTON(i)) {
                             Uint8 button;
 
                             switch (i) {

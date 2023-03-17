@@ -50,7 +50,7 @@ static SDL_Scancode SDL_RISCOS_translate_keycode(int keycode)
 
 void RISCOS_PollKeyboard(_THIS)
 {
-    SDL_VideoData *driverdata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *driverdata = _this->driverdata;
     Uint8 key = 2;
     int i;
 
@@ -110,13 +110,13 @@ static const Uint8 mouse_button_map[] = {
 
 void RISCOS_PollMouse(_THIS)
 {
-    SDL_VideoData *driverdata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *driverdata = _this->driverdata;
     SDL_Mouse *mouse = SDL_GetMouse();
     SDL_Rect rect;
     _kernel_swi_regs regs;
     int i, x, y, buttons;
 
-    if (SDL_GetDisplayBounds(0, &rect) < 0) {
+    if (SDL_GetDisplayBounds(SDL_GetPrimaryDisplay(), &rect) < 0) {
         return;
     }
 
@@ -139,7 +139,7 @@ void RISCOS_PollMouse(_THIS)
 
 int RISCOS_InitEvents(_THIS)
 {
-    SDL_VideoData *driverdata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *driverdata = _this->driverdata;
     _kernel_swi_regs regs;
     int i, status;
 
@@ -148,9 +148,9 @@ int RISCOS_InitEvents(_THIS)
     }
 
     status = (_kernel_osbyte(202, 0, 255) & 0xFF);
-    SDL_ToggleModState(SDL_KMOD_NUM, (status & (1 << 2)) == 0);
-    SDL_ToggleModState(SDL_KMOD_CAPS, (status & (1 << 4)) == 0);
-    SDL_ToggleModState(SDL_KMOD_SCROLL, (status & (1 << 1)) != 0);
+    SDL_ToggleModState(SDL_KMOD_NUM, (status & (1 << 2)) ? SDL_FALSE : SDL_TRUE);
+    SDL_ToggleModState(SDL_KMOD_CAPS, (status & (1 << 4)) ? SDL_FALSE : SDL_TRUE);
+    SDL_ToggleModState(SDL_KMOD_SCROLL, (status & (1 << 1)) ? SDL_TRUE : SDL_FALSE);
 
     _kernel_swi(OS_Mouse, &regs, &regs);
     driverdata->last_mouse_buttons = regs.r[2];

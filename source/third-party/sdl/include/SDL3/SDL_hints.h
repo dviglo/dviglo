@@ -22,7 +22,7 @@
 /**
  *  \file SDL_hints.h
  *
- *  Official documentation for SDL configuration variables
+ *  \brief Official documentation for SDL configuration variables
  *
  *  This file contains functions to set and get configuration hints,
  *  as well as listing each of them alphabetically.
@@ -1144,17 +1144,6 @@ extern "C" {
 #define SDL_HINT_MOUSE_RELATIVE_MODE_WARP    "SDL_MOUSE_RELATIVE_MODE_WARP"
 
 /**
- *  \brief  A variable controlling whether relative mouse motion is affected by renderer scaling
- *
- *  This variable can be set to the following values:
- *    "0"       - Relative motion is unaffected by display scale or renderer's logical size
- *    "1"       - Relative motion is scaled according to display scale scaling and logical size
- *
- *  By default relative mouse deltas are affected by display scale and renderer scaling
- */
-#define SDL_HINT_MOUSE_RELATIVE_SCALING "SDL_MOUSE_RELATIVE_SCALING"
-
-/**
  *  \brief  A variable setting the scale for mouse motion, in floating point, when the mouse is in relative mode
  */
 #define SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE    "SDL_MOUSE_RELATIVE_SPEED_SCALE"
@@ -1400,17 +1389,6 @@ extern "C" {
 #define SDL_HINT_RENDER_DRIVER              "SDL_RENDER_DRIVER"
 
 /**
- *  \brief  A variable controlling the scaling policy for SDL_SetRenderLogicalSize.
- *
- *  This variable can be set to the following values:
- *    "0" or "letterbox" - Uses letterbox/sidebars to fit the entire rendering on screen
- *    "1" or "overscan"  - Will zoom the rendering so it fills the entire screen, allowing edges to be drawn offscreen
- *
- *  By default letterbox is used
- */
-#define SDL_HINT_RENDER_LOGICAL_SIZE_MODE       "SDL_RENDER_LOGICAL_SIZE_MODE"
-
-/**
  *  \brief  A variable controlling whether the OpenGL render driver uses shaders if they are available.
  *
  *  This variable can be set to the following values:
@@ -1623,17 +1601,6 @@ extern "C" {
  * - Raspberry Pi (raspberrypi)
  */
 #define SDL_HINT_VIDEO_DOUBLE_BUFFER      "SDL_VIDEO_DOUBLE_BUFFER"
-
-/**
- * \brief A variable controlling whether the EGL window is allowed to be
- * composited as transparent, rather than opaque.
- *
- * Most window systems will always render windows opaque, even if the surface
- * format has an alpha channel. This is not always true, however, so by default
- * SDL will try to enforce opaque composition. To override this behavior, you
- * can set this hint to "1".
- */
-#define SDL_HINT_VIDEO_EGL_ALLOW_TRANSPARENCY "SDL_VIDEO_EGL_ALLOW_TRANSPARENCY"
 
 /**
  * \brief If eglGetPlatformDisplay fails, fall back to calling eglGetDisplay.

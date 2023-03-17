@@ -105,11 +105,9 @@ int OFFSCREEN_VideoInit(_THIS)
     mode.format = SDL_PIXELFORMAT_RGB888;
     mode.pixel_w = 1024;
     mode.pixel_h = 768;
-    if (SDL_AddBasicVideoDisplay(&mode) < 0) {
+    if (SDL_AddBasicVideoDisplay(&mode) == 0) {
         return -1;
     }
-
-    SDL_AddDisplayMode(&_this->displays[0], &mode);
 
     /* We're done! */
     return 0;

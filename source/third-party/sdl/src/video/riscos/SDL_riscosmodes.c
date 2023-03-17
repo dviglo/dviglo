@@ -224,10 +224,13 @@ int RISCOS_InitModes(_THIS)
         return SDL_OutOfMemory();
     }
 
-    return SDL_AddBasicVideoDisplay(&mode);
+    if (SDL_AddBasicVideoDisplay(&mode) == 0) {
+        return -1;
+    }
+    return 0;
 }
 
-void RISCOS_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
+int RISCOS_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
 {
     SDL_DisplayMode mode;
     _kernel_swi_regs regs;
@@ -240,14 +243,12 @@ void RISCOS_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
     regs.r[7] = 0;
     error = _kernel_swi(OS_ScreenMode, &regs, &regs);
     if (error != NULL) {
-        SDL_SetError("Unable to enumerate screen modes: %s (%i)", error->errmess, error->errnum);
-        return;
+        return SDL_SetError("Unable to enumerate screen modes: %s (%i)", error->errmess, error->errnum);
     }
 
     block = SDL_malloc(-regs.r[7]);
     if (block == NULL) {
-        SDL_OutOfMemory();
-        return;
+        return SDL_OutOfMemory();
     }
 
     regs.r[6] = (int)block;
@@ -255,8 +256,7 @@ void RISCOS_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
     error = _kernel_swi(OS_ScreenMode, &regs, &regs);
     if (error != NULL) {
         SDL_free(block);
-        SDL_SetError("Unable to enumerate screen modes: %s (%i)", error->errmess, error->errnum);
-        return;
+        return SDL_SetError("Unable to enumerate screen modes: %s (%i)", error->errmess, error->errnum);
     }
 
     for (pos = block; pos < (void *)regs.r[6]; pos += *((int *)pos)) {
@@ -270,16 +270,17 @@ void RISCOS_GetDisplayModes(_THIS, SDL_VideoDisplay *display)
 
         mode.driverdata = convert_mode_block(pos + 4);
         if (!mode.driverdata) {
-            SDL_OutOfMemory();
-            break;
+            SDL_free(block);
+            return SDL_OutOfMemory();
         }
 
-        if (!SDL_AddDisplayMode(display, &mode)) {
+        if (!SDL_AddFullscreenDisplayMode(display, &mode)) {
             SDL_free(mode.driverdata);
         }
     }
 
     SDL_free(block);
+    return 0;
 }
 
 int RISCOS_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMode *mode)

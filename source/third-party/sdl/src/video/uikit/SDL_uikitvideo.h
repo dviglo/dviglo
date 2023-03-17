@@ -27,7 +27,7 @@
 
 #include <UIKit/UIKit.h>
 
-@interface SDL_VideoData : NSObject
+@interface SDL_UIKitVideoData : NSObject
 
 @property(nonatomic, assign) id pasteboardObserver;
 
@@ -37,10 +37,12 @@ CGRect UIKit_ComputeViewFrame(SDL_Window *window, UIScreen *screen);
 
 #endif /* __OBJC__ */
 
-void UIKit_SuspendScreenSaver(_THIS);
+int UIKit_SuspendScreenSaver(_THIS);
 
 void UIKit_ForceUpdateHomeIndicator(void);
 
 SDL_bool UIKit_IsSystemVersionAtLeast(double version);
+
+SDL_SystemTheme UIKit_GetSystemTheme(void);
 
 #endif /* SDL_uikitvideo_h_ */

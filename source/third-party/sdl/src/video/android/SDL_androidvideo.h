@@ -29,16 +29,17 @@
 extern void Android_SetScreenResolution(int surfaceWidth, int surfaceHeight, int deviceWidth, int deviceHeight, float density, float rate);
 extern void Android_SetFormat(int format_wanted, int format_got);
 extern void Android_SendResize(SDL_Window *window);
+extern void Android_SetDarkMode(SDL_bool enabled);
 
 /* Private display data */
 
-typedef struct SDL_VideoData
+struct SDL_VideoData
 {
     SDL_Rect textRect;
     int isPaused;
     int isPausing;
     int pauseAudio;
-} SDL_VideoData;
+};
 
 extern int Android_SurfaceWidth;
 extern int Android_SurfaceHeight;

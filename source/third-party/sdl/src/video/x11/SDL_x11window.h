@@ -40,7 +40,7 @@ typedef enum
     PENDING_FOCUS_OUT
 } PendingFocusEnum;
 
-typedef struct
+struct SDL_WindowData
 {
     SDL_Window *window;
     Window xwindow;
@@ -60,6 +60,7 @@ typedef struct
     int border_top;
     int border_bottom;
     SDL_bool mouse_grabbed;
+    SDL_bool hidden_by_parent_focus;
     Uint64 last_focus_event_time;
     PendingFocusEnum pending_focus;
     Uint64 pending_focus_time;
@@ -70,6 +71,7 @@ typedef struct
     Window xdnd_source;
     SDL_bool flashing_window;
     Uint64 flash_cancel_time;
+    SDL_Window *keyboard_focus;
 #if SDL_VIDEO_OPENGL_EGL
     EGLSurface egl_surface;
 #endif
@@ -78,7 +80,7 @@ typedef struct
     PointerBarrier barrier[4];
     SDL_Rect barrier_rect;
 #endif /* SDL_VIDEO_DRIVER_X11_XFIXES */
-} SDL_WindowData;
+};
 
 extern void X11_SetNetWMState(_THIS, Window xwindow, Uint32 flags);
 extern Uint32 X11_GetNetWMState(_THIS, SDL_Window *window, Window xwindow);
@@ -87,7 +89,7 @@ extern int X11_CreateWindow(_THIS, SDL_Window *window);
 extern int X11_CreateWindowFrom(_THIS, SDL_Window *window, const void *data);
 extern char *X11_GetWindowTitle(_THIS, Window xwindow);
 extern void X11_SetWindowTitle(_THIS, SDL_Window *window);
-extern void X11_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
+extern int X11_SetWindowIcon(_THIS, SDL_Window *window, SDL_Surface *icon);
 extern void X11_SetWindowPosition(_THIS, SDL_Window *window);
 extern void X11_SetWindowMinimumSize(_THIS, SDL_Window *window);
 extern void X11_SetWindowMaximumSize(_THIS, SDL_Window *window);
@@ -116,5 +118,6 @@ extern void X11_AcceptDragAndDrop(SDL_Window *window, SDL_bool accept);
 extern int X11_FlashWindow(_THIS, SDL_Window *window, SDL_FlashOperation operation);
 
 int SDL_X11_SetWindowTitle(Display *display, Window xwindow, char *title);
+void X11_UpdateWindowPosition(SDL_Window *window);
 
 #endif /* SDL_x11window_h_ */

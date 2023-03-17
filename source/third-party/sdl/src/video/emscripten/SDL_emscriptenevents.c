@@ -658,10 +658,10 @@ static EM_BOOL Emscripten_HandleMouseButton(int eventType, const EmscriptenMouse
             emscripten_request_pointerlock(window_data->canvas_id, 0); /* try to regrab lost pointer lock. */
         }
         sdl_button_state = SDL_PRESSED;
-        sdl_event_type = SDL_EVENT_MOUSE_BUTTONDOWN;
+        sdl_event_type = SDL_EVENT_MOUSE_BUTTON_DOWN;
     } else {
         sdl_button_state = SDL_RELEASED;
-        sdl_event_type = SDL_EVENT_MOUSE_BUTTONUP;
+        sdl_event_type = SDL_EVENT_MOUSE_BUTTON_UP;
     }
     SDL_SendMouseButton(0, window_data->window, 0, sdl_button_state, sdl_button);
 
@@ -840,10 +840,10 @@ static EM_BOOL Emscripten_HandleFullscreenChange(int eventType, const Emscripten
 
         window_data->fullscreen_mode_flags = 0;
     } else {
-        window_data->window->flags &= ~SDL_WINDOW_FULLSCREEN_MASK;
+        window_data->window->flags &= ~SDL_WINDOW_FULLSCREEN;
 
         /* reset fullscreen window if the browser left fullscreen */
-        display = SDL_GetDisplayForWindow(window_data->window);
+        display = SDL_GetVideoDisplayForWindow(window_data->window);
 
         if (display->fullscreen_window == window_data->window) {
             display->fullscreen_window = NULL;
@@ -866,7 +866,7 @@ static EM_BOOL Emscripten_HandleResize(int eventType, const EmscriptenUiEvent *u
         }
     }
 
-    if ((window_data->window->flags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
+    if (!(window_data->window->flags & SDL_WINDOW_FULLSCREEN)) {
         /* this will only work if the canvas size is set through css */
         if (window_data->window->flags & SDL_WINDOW_RESIZABLE) {
             double w = window_data->window->w;

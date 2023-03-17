@@ -972,7 +972,7 @@ SDL_EGL_CreateContext(_THIS, EGLSurface egl_surface)
     }
 
 #if SDL_VIDEO_DRIVER_ANDROID
-    if ((_this->gl_config.flags & SDL_GL_CONTEXT_DEBUG_FLAG) != 0) {
+    if (_this->gl_config.flags & SDL_GL_CONTEXT_DEBUG_FLAG) {
         /* If SDL_GL_CONTEXT_DEBUG_FLAG is set but EGL_KHR_debug unsupported, unset.
          * This is required because some Android devices like to complain about it
          * by "silently" failing, logging a hint which could be easily overlooked:
@@ -1202,22 +1202,23 @@ int SDL_EGL_SwapBuffers(_THIS, EGLSurface egl_surface)
     return 0;
 }
 
-void SDL_EGL_DeleteContext(_THIS, SDL_GLContext context)
+int SDL_EGL_DeleteContext(_THIS, SDL_GLContext context)
 {
     EGLContext egl_context = (EGLContext)context;
 
     /* Clean up GLES and EGL */
     if (!_this->egl_data) {
-        return;
+        return 0;
     }
 
     if (egl_context != NULL && egl_context != EGL_NO_CONTEXT) {
         _this->egl_data->eglDestroyContext(_this->egl_data->egl_display, egl_context);
     }
+    return 0;
 }
 
 EGLSurface *
-SDL_EGL_CreateSurface(_THIS, NativeWindowType nw)
+SDL_EGL_CreateSurface(_THIS, SDL_Window *window, NativeWindowType nw)
 {
 #if SDL_VIDEO_DRIVER_ANDROID
     EGLint format_wanted;
@@ -1259,7 +1260,10 @@ SDL_EGL_CreateSurface(_THIS, NativeWindowType nw)
 
 #ifdef EGL_EXT_present_opaque
     if (SDL_EGL_HasExtension(_this, SDL_EGL_DISPLAY_EXTENSION, "EGL_EXT_present_opaque")) {
-        const SDL_bool allow_transparent = SDL_GetHintBoolean(SDL_HINT_VIDEO_EGL_ALLOW_TRANSPARENCY, SDL_FALSE);
+        SDL_bool allow_transparent = SDL_FALSE;
+        if (window && (window->flags & SDL_WINDOW_TRANSPARENT)) {
+            allow_transparent = SDL_TRUE;
+        }
         attribs[attr++] = EGL_PRESENT_OPAQUE_EXT;
         attribs[attr++] = allow_transparent ? EGL_FALSE : EGL_TRUE;
     }

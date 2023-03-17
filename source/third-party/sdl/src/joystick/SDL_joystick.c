@@ -113,7 +113,7 @@ static int SDL_joysticks_locked;
 static SDL_bool SDL_joysticks_initialized;
 static SDL_bool SDL_joysticks_quitting = SDL_FALSE;
 static SDL_Joystick *SDL_joysticks SDL_GUARDED_BY(SDL_joystick_lock) = NULL;
-static SDL_atomic_t SDL_last_joystick_instance_id SDL_GUARDED_BY(SDL_joystick_lock);
+static SDL_AtomicInt SDL_last_joystick_instance_id SDL_GUARDED_BY(SDL_joystick_lock);
 static int SDL_joystick_player_count SDL_GUARDED_BY(SDL_joystick_lock) = 0;
 static SDL_JoystickID *SDL_joystick_players SDL_GUARDED_BY(SDL_joystick_lock) = NULL;
 static SDL_bool SDL_joystick_allows_background_events = SDL_FALSE;
@@ -196,18 +196,18 @@ static SDL_bool SDL_GetDriverAndJoystickIndex(SDL_JoystickID instance_id, SDL_Jo
     return SDL_FALSE;
 }
 
-static int SDL_FindFreePlayerIndex()
+static int SDL_FindFreePlayerIndex(void)
 {
     int player_index;
 
     SDL_AssertJoysticksLocked();
 
     for (player_index = 0; player_index < SDL_joystick_player_count; ++player_index) {
-        if (SDL_joystick_players[player_index] == -1) {
+        if (SDL_joystick_players[player_index] == 0) {
             return player_index;
         }
     }
-    return player_index;
+    return -1;
 }
 
 static int SDL_GetPlayerIndexForJoystickID(SDL_JoystickID instance_id)
@@ -232,7 +232,7 @@ static SDL_JoystickID SDL_GetJoystickIDForPlayerIndex(int player_index)
     SDL_AssertJoysticksLocked();
 
     if (player_index < 0 || player_index >= SDL_joystick_player_count) {
-        return -1;
+        return 0;
     }
     return SDL_joystick_players[player_index];
 }
@@ -254,7 +254,7 @@ static SDL_bool SDL_SetJoystickIDForPlayerIndex(int player_index, SDL_JoystickID
         }
 
         SDL_joystick_players = new_players;
-        SDL_memset(&SDL_joystick_players[SDL_joystick_player_count], 0xFF, (player_index - SDL_joystick_player_count + 1) * sizeof(SDL_joystick_players[0]));
+        SDL_memset(&SDL_joystick_players[SDL_joystick_player_count], 0, (player_index - SDL_joystick_player_count + 1) * sizeof(SDL_joystick_players[0]));
         SDL_joystick_player_count = player_index + 1;
     } else if (player_index >= 0 && SDL_joystick_players[player_index] == instance_id) {
         /* Joystick is already assigned the requested player index */
@@ -264,7 +264,7 @@ static SDL_bool SDL_SetJoystickIDForPlayerIndex(int player_index, SDL_JoystickID
     /* Clear the old player index */
     existing_player_index = SDL_GetPlayerIndexForJoystickID(instance_id);
     if (existing_player_index >= 0) {
-        SDL_joystick_players[existing_player_index] = -1;
+        SDL_joystick_players[existing_player_index] = 0;
     }
 
     if (player_index >= 0) {
@@ -361,12 +361,12 @@ SDL_JoystickID *SDL_GetJoysticks(int *count)
             total_joysticks += SDL_joystick_drivers[i]->GetCount();
         }
 
-        if (count) {
-            *count = total_joysticks;
-        }
-
         joysticks = (SDL_JoystickID *)SDL_malloc((total_joysticks + 1) * sizeof(*joysticks));
         if (joysticks) {
+            if (count) {
+                *count = total_joysticks;
+            }
+
             for (i = 0; i < SDL_arraysize(SDL_joystick_drivers); ++i) {
                 num_joysticks = SDL_joystick_drivers[i]->GetCount();
                 for (device_index = 0; device_index < num_joysticks; ++device_index) {
@@ -379,6 +379,10 @@ SDL_JoystickID *SDL_GetJoysticks(int *count)
             SDL_assert(joystick_index == total_joysticks);
             joysticks[joystick_index] = 0;
         } else {
+            if (count) {
+                *count = 0;
+            }
+
             SDL_OutOfMemory();
         }
     }
@@ -391,7 +395,7 @@ SDL_JoystickID *SDL_GetJoysticks(int *count)
  * Return the next available joystick instance ID
  * This may be called by drivers from multiple threads, unprotected by any locks
  */
-SDL_JoystickID SDL_GetNextJoystickInstanceID()
+SDL_JoystickID SDL_GetNextJoystickInstanceID(void)
 {
     return SDL_AtomicIncRef(&SDL_last_joystick_instance_id) + 1;
 }
@@ -1039,15 +1043,16 @@ int SDL_GetJoystickPlayerIndex(SDL_Joystick *joystick)
 /**
  *  Set the player index of an opened joystick
  */
-void SDL_SetJoystickPlayerIndex(SDL_Joystick *joystick, int player_index)
+int SDL_SetJoystickPlayerIndex(SDL_Joystick *joystick, int player_index)
 {
     SDL_LockJoysticks();
     {
-        CHECK_JOYSTICK_MAGIC(joystick, );
+        CHECK_JOYSTICK_MAGIC(joystick, -1);
 
         SDL_SetJoystickIDForPlayerIndex(player_index, joystick->instance_id);
     }
     SDL_UnlockJoysticks();
+    return 0;
 }
 
 int SDL_RumbleJoystick(SDL_Joystick *joystick, Uint16 low_frequency_rumble, Uint16 high_frequency_rumble, Uint32 duration_ms)
@@ -1220,7 +1225,7 @@ void SDL_CloseJoystick(SDL_Joystick *joystick)
 
     SDL_LockJoysticks();
     {
-        CHECK_JOYSTICK_MAGIC(joystick, );
+        CHECK_JOYSTICK_MAGIC(joystick,);
 
         /* First decrement ref count */
         if (--joystick->ref_count > 0) {
@@ -1314,7 +1319,7 @@ void SDL_QuitJoysticks(void)
     SDL_UnlockJoysticks();
 }
 
-static SDL_bool SDL_PrivateJoystickShouldIgnoreEvent()
+static SDL_bool SDL_PrivateJoystickShouldIgnoreEvent(void)
 {
     if (SDL_joystick_allows_background_events) {
         return SDL_FALSE;
@@ -1476,7 +1481,7 @@ void SDL_PrivateJoystickRemoved(SDL_JoystickID instance_id)
 
     player_index = SDL_GetPlayerIndexForJoystickID(instance_id);
     if (player_index >= 0) {
-        SDL_joystick_players[player_index] = -1;
+        SDL_joystick_players[player_index] = 0;
     }
 }
 
@@ -1721,7 +1726,7 @@ void SDL_SetJoystickEventsEnabled(SDL_bool enabled)
 #endif /* SDL_EVENTS_DISABLED */
 }
 
-SDL_bool SDL_JoystickEventsEnabled()
+SDL_bool SDL_JoystickEventsEnabled(void)
 {
     SDL_bool enabled = SDL_FALSE;
 
@@ -2190,8 +2195,20 @@ SDL_bool SDL_IsJoystickXboxSeriesX(Uint16 vendor_id, Uint16 product_id)
             return SDL_TRUE;
         }
     }
+    if (vendor_id == USB_VENDOR_RAZER) {
+        if (product_id == USB_PRODUCT_RAZER_WOLVERINE_V2 ||
+            product_id == USB_PRODUCT_RAZER_WOLVERINE_V2_CHROMA) {
+            return SDL_TRUE;
+        }
+    }
     if (vendor_id == USB_VENDOR_THRUSTMASTER) {
         if (product_id == USB_PRODUCT_THRUSTMASTER_ESWAPX_PRO) {
+            return SDL_TRUE;
+        }
+    }
+    if (vendor_id == USB_VENDOR_TURTLE_BEACH) {
+        if (product_id == USB_PRODUCT_TURTLE_BEACH_SERIES_X_REACT_R ||
+            product_id == USB_PRODUCT_TURTLE_BEACH_SERIES_X_RECON) {
             return SDL_TRUE;
         }
     }
@@ -2316,7 +2333,7 @@ SDL_bool SDL_IsJoystickVIRTUAL(SDL_JoystickGUID guid)
 static SDL_bool SDL_IsJoystickProductWheel(Uint32 vidpid)
 {
     static Uint32 wheel_joysticks[] = {
-        MAKE_VIDPID(0x0079, 0x1864), /* PXN V900 (PS3) */
+        MAKE_VIDPID(0x0079, 0x1864), /* DragonRise Inc. Wired Wheel (active mode) (also known as PXN V900 (PS3), Superdrive SV-750, or a Genesis Seaborg 400) */
         MAKE_VIDPID(0x046d, 0xc294), /* Logitech generic wheel */
         MAKE_VIDPID(0x046d, 0xc295), /* Logitech Momo Force */
         MAKE_VIDPID(0x046d, 0xc298), /* Logitech Driving Force Pro */
@@ -2342,6 +2359,7 @@ static SDL_bool SDL_IsJoystickProductWheel(Uint32 vidpid)
         MAKE_VIDPID(0x044f, 0xb65e), /* Thrustmaster T500RS */
         MAKE_VIDPID(0x044f, 0xb664), /* Thrustmaster TX (initial mode) */
         MAKE_VIDPID(0x044f, 0xb669), /* Thrustmaster TX (active mode) */
+        MAKE_VIDPID(0x11ff, 0x0511), /* DragonRise Inc. Wired Wheel (initial mode) (also known as PXN V900 (PS3), Superdrive SV-750, or a Genesis Seaborg 400) */
     };
     int i;
 
@@ -2814,9 +2832,9 @@ SDL_JoystickType SDL_GetJoystickType(SDL_Joystick *joystick)
 }
 
 /* convert the guid to a printable string */
-void SDL_GetJoystickGUIDString(SDL_JoystickGUID guid, char *pszGUID, int cbGUID)
+int SDL_GetJoystickGUIDString(SDL_JoystickGUID guid, char *pszGUID, int cbGUID)
 {
-    SDL_GUIDToString(guid, pszGUID, cbGUID);
+    return SDL_GUIDToString(guid, pszGUID, cbGUID);
 }
 
 /* convert the string version of a joystick guid to the struct */
@@ -2941,12 +2959,12 @@ int SDL_SendJoystickTouchpad(Uint64 timestamp, SDL_Joystick *joystick, int touch
         SDL_Event event;
         event.type = event_type;
         event.common.timestamp = timestamp;
-        event.ctouchpad.which = joystick->instance_id;
-        event.ctouchpad.touchpad = touchpad;
-        event.ctouchpad.finger = finger;
-        event.ctouchpad.x = x;
-        event.ctouchpad.y = y;
-        event.ctouchpad.pressure = pressure;
+        event.gtouchpad.which = joystick->instance_id;
+        event.gtouchpad.touchpad = touchpad;
+        event.gtouchpad.finger = finger;
+        event.gtouchpad.x = x;
+        event.gtouchpad.y = y;
+        event.gtouchpad.pressure = pressure;
         posted = SDL_PushEvent(&event) == 1;
     }
 #endif /* !SDL_EVENTS_DISABLED */
@@ -2981,12 +2999,15 @@ int SDL_SendJoystickSensor(Uint64 timestamp, SDL_Joystick *joystick, SDL_SensorT
                     SDL_Event event;
                     event.type = SDL_EVENT_GAMEPAD_SENSOR_UPDATE;
                     event.common.timestamp = timestamp;
-                    event.csensor.which = joystick->instance_id;
-                    event.csensor.sensor = type;
-                    num_values = SDL_min(num_values, SDL_arraysize(event.csensor.data));
-                    SDL_memset(event.csensor.data, 0, sizeof(event.csensor.data));
-                    SDL_memcpy(event.csensor.data, data, num_values * sizeof(*data));
-                    event.csensor.sensor_timestamp = sensor_timestamp;
+                    event.gsensor.which = joystick->instance_id;
+                    event.gsensor.sensor = type;
+                    num_values = SDL_min(num_values,
+                                         SDL_arraysize(event.gsensor.data));
+                    SDL_memset(event.gsensor.data, 0,
+                               sizeof(event.gsensor.data));
+                    SDL_memcpy(event.gsensor.data, data,
+                               num_values * sizeof(*data));
+                    event.gsensor.sensor_timestamp = sensor_timestamp;
                     posted = SDL_PushEvent(&event) == 1;
                 }
 #endif /* !SDL_EVENTS_DISABLED */

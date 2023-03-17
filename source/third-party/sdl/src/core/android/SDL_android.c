@@ -124,6 +124,9 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(nativeLowMemory)(
 JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeLocaleChanged)(
     JNIEnv *env, jclass cls);
 
+JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeDarkModeChanged)(
+    JNIEnv *env, jclass cls, jboolean enabled);
+
 JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(nativeSendQuit)(
     JNIEnv *env, jclass cls);
 
@@ -183,6 +186,7 @@ static JNINativeMethod SDLActivity_tab[] = {
     { "onNativeClipboardChanged", "()V", SDL_JAVA_INTERFACE(onNativeClipboardChanged) },
     { "nativeLowMemory", "()V", SDL_JAVA_INTERFACE(nativeLowMemory) },
     { "onNativeLocaleChanged", "()V", SDL_JAVA_INTERFACE(onNativeLocaleChanged) },
+    { "onNativeDarkModeChanged", "(Z)V", SDL_JAVA_INTERFACE(onNativeDarkModeChanged) },
     { "nativeSendQuit", "()V", SDL_JAVA_INTERFACE(nativeSendQuit) },
     { "nativeQuit", "()V", SDL_JAVA_INTERFACE(nativeQuit) },
     { "nativePause", "()V", SDL_JAVA_INTERFACE(nativePause) },
@@ -251,7 +255,7 @@ JNIEXPORT void JNICALL SDL_JAVA_CONTROLLER_INTERFACE(onNativeHat)(
 JNIEXPORT jint JNICALL SDL_JAVA_CONTROLLER_INTERFACE(nativeAddJoystick)(
     JNIEnv *env, jclass jcls,
     jint device_id, jstring device_name, jstring device_desc, jint vendor_id, jint product_id,
-    jboolean is_accelerometer, jint button_mask, jint naxes, jint nhats);
+    jboolean is_accelerometer, jint button_mask, jint naxes, jint axis_mask, jint nhats);
 
 JNIEXPORT jint JNICALL SDL_JAVA_CONTROLLER_INTERFACE(nativeRemoveJoystick)(
     JNIEnv *env, jclass jcls,
@@ -271,7 +275,7 @@ static JNINativeMethod SDLControllerManager_tab[] = {
     { "onNativePadUp", "(II)I", SDL_JAVA_CONTROLLER_INTERFACE(onNativePadUp) },
     { "onNativeJoy", "(IIF)V", SDL_JAVA_CONTROLLER_INTERFACE(onNativeJoy) },
     { "onNativeHat", "(IIII)V", SDL_JAVA_CONTROLLER_INTERFACE(onNativeHat) },
-    { "nativeAddJoystick", "(ILjava/lang/String;Ljava/lang/String;IIZIII)I", SDL_JAVA_CONTROLLER_INTERFACE(nativeAddJoystick) },
+    { "nativeAddJoystick", "(ILjava/lang/String;Ljava/lang/String;IIZIIII)I", SDL_JAVA_CONTROLLER_INTERFACE(nativeAddJoystick) },
     { "nativeRemoveJoystick", "(I)I", SDL_JAVA_CONTROLLER_INTERFACE(nativeRemoveJoystick) },
     { "nativeAddHaptic", "(ILjava/lang/String;)I", SDL_JAVA_CONTROLLER_INTERFACE(nativeAddHaptic) },
     { "nativeRemoveHaptic", "(I)I", SDL_JAVA_CONTROLLER_INTERFACE(nativeRemoveHaptic) }
@@ -304,7 +308,6 @@ static jmethodID midClipboardSetText;
 static jmethodID midCreateCustomCursor;
 static jmethodID midDestroyCustomCursor;
 static jmethodID midGetContext;
-static jmethodID midGetDisplayPhysicalDPI;
 static jmethodID midGetManifestEnvironmentVariables;
 static jmethodID midGetNativeSurface;
 static jmethodID midInitTouch;
@@ -363,7 +366,7 @@ static SDL_bool bHasNewData;
 
 static SDL_bool bHasEnvironmentVariables;
 
-static SDL_atomic_t bPermissionRequestPending;
+static SDL_AtomicInt bPermissionRequestPending;
 static SDL_bool bPermissionRequestResult;
 
 /* Android AssetManager */
@@ -593,7 +596,6 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(nativeSetupJNI)(JNIEnv *env, jclass cl
     midCreateCustomCursor = (*env)->GetStaticMethodID(env, mActivityClass, "createCustomCursor", "([IIIII)I");
     midDestroyCustomCursor = (*env)->GetStaticMethodID(env, mActivityClass, "destroyCustomCursor", "(I)V");
     midGetContext = (*env)->GetStaticMethodID(env, mActivityClass, "getContext", "()Landroid/content/Context;");
-    midGetDisplayPhysicalDPI = (*env)->GetStaticMethodID(env, mActivityClass, "getDisplayDPI", "()Landroid/util/DisplayMetrics;");
     midGetManifestEnvironmentVariables = (*env)->GetStaticMethodID(env, mActivityClass, "getManifestEnvironmentVariables", "()Z");
     midGetNativeSurface = (*env)->GetStaticMethodID(env, mActivityClass, "getNativeSurface", "()Landroid/view/Surface;");
     midInitTouch = (*env)->GetStaticMethodID(env, mActivityClass, "initTouch", "()V");
@@ -624,7 +626,6 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(nativeSetupJNI)(JNIEnv *env, jclass cl
         !midCreateCustomCursor ||
         !midDestroyCustomCursor ||
         !midGetContext ||
-        !midGetDisplayPhysicalDPI ||
         !midGetManifestEnvironmentVariables ||
         !midGetNativeSurface ||
         !midInitTouch ||
@@ -775,11 +776,10 @@ JNIEXPORT int JNICALL SDL_JAVA_INTERFACE(nativeRunMain)(JNIEnv *env, jclass cls,
              */
             argv[argc++] = SDL_strdup("app_process");
             for (i = 0; i < len; ++i) {
-                const char *utf;
                 char *arg = NULL;
                 jstring string = (*env)->GetObjectArrayElement(env, array, i);
                 if (string) {
-                    utf = (*env)->GetStringUTFChars(env, string, 0);
+                    const char *utf = (*env)->GetStringUTFChars(env, string, 0);
                     if (utf) {
                         arg = SDL_strdup(utf);
                         (*env)->ReleaseStringUTFChars(env, string, utf);
@@ -901,7 +901,7 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeOrientationChanged)(
     displayOrientation = (SDL_DisplayOrientation)orientation;
 
     if (Android_Window) {
-        SDL_VideoDisplay *display = SDL_GetDisplay(0);
+        SDL_VideoDisplay *display = SDL_GetVideoDisplay(SDL_GetPrimaryDisplay());
         SDL_SendDisplayEvent(display, SDL_EVENT_DISPLAY_ORIENTATION, orientation);
     }
 
@@ -988,13 +988,13 @@ JNIEXPORT jint JNICALL SDL_JAVA_CONTROLLER_INTERFACE(nativeAddJoystick)(
     JNIEnv *env, jclass jcls,
     jint device_id, jstring device_name, jstring device_desc,
     jint vendor_id, jint product_id, jboolean is_accelerometer,
-    jint button_mask, jint naxes, jint nhats)
+    jint button_mask, jint naxes, jint axis_mask, jint nhats)
 {
     int retval;
     const char *name = (*env)->GetStringUTFChars(env, device_name, NULL);
     const char *desc = (*env)->GetStringUTFChars(env, device_desc, NULL);
 
-    retval = Android_AddJoystick(device_id, name, desc, vendor_id, product_id, is_accelerometer ? SDL_TRUE : SDL_FALSE, button_mask, naxes, nhats);
+    retval = Android_AddJoystick(device_id, name, desc, vendor_id, product_id, is_accelerometer ? SDL_TRUE : SDL_FALSE, button_mask, naxes, axis_mask, nhats);
 
     (*env)->ReleaseStringUTFChars(env, device_name, name);
     (*env)->ReleaseStringUTFChars(env, device_desc, desc);
@@ -1034,7 +1034,7 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeSurfaceCreated)(JNIEnv *env, j
     SDL_LockMutex(Android_ActivityMutex);
 
     if (Android_Window) {
-        SDL_WindowData *data = (SDL_WindowData *)Android_Window->driverdata;
+        SDL_WindowData *data = Android_Window->driverdata;
 
         data->native_window = Android_JNI_GetNativeWindow();
         if (data->native_window == NULL) {
@@ -1053,11 +1053,11 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeSurfaceChanged)(JNIEnv *env, j
 #if SDL_VIDEO_OPENGL_EGL
     if (Android_Window) {
         SDL_VideoDevice *_this = SDL_GetVideoDevice();
-        SDL_WindowData *data = (SDL_WindowData *)Android_Window->driverdata;
+        SDL_WindowData *data = Android_Window->driverdata;
 
         /* If the surface has been previously destroyed by onNativeSurfaceDestroyed, recreate it here */
         if (data->egl_surface == EGL_NO_SURFACE) {
-            data->egl_surface = SDL_EGL_CreateSurface(_this, (NativeWindowType)data->native_window);
+            data->egl_surface = SDL_EGL_CreateSurface(_this, Android_Window, (NativeWindowType)data->native_window);
         }
 
         /* GL Context handling is done in the event loop because this function is run from the Java thread */
@@ -1078,7 +1078,7 @@ retry:
 
     if (Android_Window) {
         SDL_VideoDevice *_this = SDL_GetVideoDevice();
-        SDL_WindowData *data = (SDL_WindowData *)Android_Window->driverdata;
+        SDL_WindowData *data = Android_Window->driverdata;
 
         /* Wait for Main thread being paused and context un-activated to release 'egl_surface' */
         if (!data->backup_done) {
@@ -1201,6 +1201,13 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeLocaleChanged)(
     JNIEnv *env, jclass cls)
 {
     SDL_SendAppEvent(SDL_EVENT_LOCALE_CHANGED);
+}
+
+/* Dark mode */
+JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(onNativeDarkModeChanged)(
+    JNIEnv *env, jclass cls, jboolean enabled)
+{
+    Android_SetDarkMode(enabled);
 }
 
 /* Send Quit event to "SDLThread" thread */
@@ -1352,7 +1359,7 @@ JNIEXPORT void JNICALL SDL_JAVA_INTERFACE(nativeSetenv)(
              Functions called by SDL into Java
 *******************************************************************************/
 
-static SDL_atomic_t s_active;
+static SDL_AtomicInt s_active;
 struct LocalReferenceHolder
 {
     JNIEnv *m_env;
@@ -1447,10 +1454,10 @@ SDL_bool Android_JNI_ShouldMinimizeOnFocusLoss()
 
 SDL_bool Android_JNI_GetAccelerometerValues(float values[3])
 {
-    int i;
     SDL_bool retval = SDL_FALSE;
 
     if (bHasNewData) {
+        int i;
         for (i = 0; i < 3; ++i) {
             values[i] = fLastAccelerometer[i];
         }
@@ -1648,37 +1655,6 @@ int Android_JNI_OpenAudioDevice(int iscapture, int device_id, SDL_AudioSpec *spe
 SDL_DisplayOrientation Android_JNI_GetDisplayOrientation(void)
 {
     return displayOrientation;
-}
-
-int Android_JNI_GetDisplayPhysicalDPI(float *ddpi, float *xdpi, float *ydpi)
-{
-    JNIEnv *env = Android_JNI_GetEnv();
-
-    jobject jDisplayObj = (*env)->CallStaticObjectMethod(env, mActivityClass, midGetDisplayPhysicalDPI);
-    jclass jDisplayClass = (*env)->GetObjectClass(env, jDisplayObj);
-
-    jfieldID fidXdpi = (*env)->GetFieldID(env, jDisplayClass, "xdpi", "F");
-    jfieldID fidYdpi = (*env)->GetFieldID(env, jDisplayClass, "ydpi", "F");
-    jfieldID fidDdpi = (*env)->GetFieldID(env, jDisplayClass, "densityDpi", "I");
-
-    float nativeXdpi = (*env)->GetFloatField(env, jDisplayObj, fidXdpi);
-    float nativeYdpi = (*env)->GetFloatField(env, jDisplayObj, fidYdpi);
-    int nativeDdpi = (*env)->GetIntField(env, jDisplayObj, fidDdpi);
-
-    (*env)->DeleteLocalRef(env, jDisplayObj);
-    (*env)->DeleteLocalRef(env, jDisplayClass);
-
-    if (ddpi) {
-        *ddpi = (float)nativeDdpi;
-    }
-    if (xdpi) {
-        *xdpi = nativeXdpi;
-    }
-    if (ydpi) {
-        *ydpi = nativeYdpi;
-    }
-
-    return 0;
 }
 
 void *Android_JNI_GetAudioBuffer(void)
@@ -2185,9 +2161,9 @@ int Android_JNI_SendMessage(int command, int param)
     return success ? 0 : -1;
 }
 
-void Android_JNI_SuspendScreenSaver(SDL_bool suspend)
+int Android_JNI_SuspendScreenSaver(SDL_bool suspend)
 {
-    Android_JNI_SendMessage(COMMAND_SET_KEEP_SCREEN_ON, (suspend == SDL_FALSE) ? 0 : 1);
+    return Android_JNI_SendMessage(COMMAND_SET_KEEP_SCREEN_ON, (suspend == SDL_FALSE) ? 0 : 1);
 }
 
 void Android_JNI_ShowTextInput(SDL_Rect *inputRect)
@@ -2429,19 +2405,22 @@ const char *SDL_AndroidGetInternalStoragePath(void)
     return s_AndroidInternalFilesPath;
 }
 
-int SDL_AndroidGetExternalStorageState(void)
+int SDL_AndroidGetExternalStorageState(Uint32 *state)
 {
     struct LocalReferenceHolder refs = LocalReferenceHolder_Setup(__FUNCTION__);
     jmethodID mid;
     jclass cls;
     jstring stateString;
-    const char *state;
+    const char *state_string;
     int stateFlags;
 
     JNIEnv *env = Android_JNI_GetEnv();
     if (!LocalReferenceHolder_Init(&refs, env)) {
         LocalReferenceHolder_Cleanup(&refs);
-        return 0;
+        if (state) {
+            *state = 0;
+        }
+        return -1;
     }
 
     cls = (*env)->FindClass(env, "android/os/Environment");
@@ -2449,23 +2428,26 @@ int SDL_AndroidGetExternalStorageState(void)
                                     "getExternalStorageState", "()Ljava/lang/String;");
     stateString = (jstring)(*env)->CallStaticObjectMethod(env, cls, mid);
 
-    state = (*env)->GetStringUTFChars(env, stateString, NULL);
+    state_string = (*env)->GetStringUTFChars(env, stateString, NULL);
 
     /* Print an info message so people debugging know the storage state */
-    __android_log_print(ANDROID_LOG_INFO, "SDL", "external storage state: %s", state);
+    __android_log_print(ANDROID_LOG_INFO, "SDL", "external storage state: %s", state_string);
 
-    if (SDL_strcmp(state, "mounted") == 0) {
+    if (SDL_strcmp(state_string, "mounted") == 0) {
         stateFlags = SDL_ANDROID_EXTERNAL_STORAGE_READ |
                      SDL_ANDROID_EXTERNAL_STORAGE_WRITE;
-    } else if (SDL_strcmp(state, "mounted_ro") == 0) {
+    } else if (SDL_strcmp(state_string, "mounted_ro") == 0) {
         stateFlags = SDL_ANDROID_EXTERNAL_STORAGE_READ;
     } else {
         stateFlags = 0;
     }
-    (*env)->ReleaseStringUTFChars(env, stateString, state);
+    (*env)->ReleaseStringUTFChars(env, stateString, state_string);
 
     LocalReferenceHolder_Cleanup(&refs);
-    return stateFlags;
+    if (state) {
+        *state = stateFlags;
+    }
+    return 0;
 }
 
 const char *SDL_AndroidGetExternalStoragePath(void)

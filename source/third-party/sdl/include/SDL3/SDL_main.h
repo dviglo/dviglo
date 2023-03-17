@@ -27,7 +27,7 @@
 /**
  *  \file SDL_main.h
  *
- *  Redefine main() on some platforms so that it is called by SDL.
+ *  \brief Redefine main() on some platforms so that it is called by SDL.
  */
 
 #ifndef SDL_MAIN_HANDLED
@@ -191,8 +191,8 @@ extern DECLSPEC void SDLCALL SDL_SetMainReady(void);
  *                     argc, char* argv[])
  * \param reserved should be NULL (reserved for future use, will probably be
  *                 platform-specific then)
- * \return the return value from mainFunction: 0 on success, -1 on failure;
- *         SDL_GetError() might have more information on the failure
+ * \returns the return value from mainFunction: 0 on success, -1 on failure;
+ *          SDL_GetError() might have more information on the failure
  *
  * \since This function is available since SDL 3.0.0.
  */
@@ -219,7 +219,8 @@ extern DECLSPEC int SDLCALL SDL_RunApp(int argc, char* argv[], SDL_main_func mai
  *              what is specified here.
  * \param hInst the HINSTANCE to use in WNDCLASSEX::hInstance. If zero, SDL
  *              will use `GetModuleHandle(NULL)` instead.
- * \returns 0 on success, -1 on error. SDL_GetError() may have details.
+ * \returns 0 on success or a negative error code on failure; call
+ *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
  */

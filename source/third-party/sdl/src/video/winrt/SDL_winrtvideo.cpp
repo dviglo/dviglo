@@ -84,7 +84,7 @@ static int WINRT_GetWindowWMInfo(_THIS, SDL_Window *window, SDL_SysWMinfo *info)
 
 /* Misc functions */
 static ABI::Windows::System::Display::IDisplayRequest *WINRT_CreateDisplayRequest(_THIS);
-extern void WINRT_SuspendScreenSaver(_THIS);
+extern int WINRT_SuspendScreenSaver(_THIS);
 
 /* SDL-internal globals: */
 SDL_Window *WINRT_GlobalSDLWindow = NULL;
@@ -94,7 +94,7 @@ SDL_Window *WINRT_GlobalSDLWindow = NULL;
 static void WINRT_DeleteDevice(SDL_VideoDevice *device)
 {
     if (device->driverdata) {
-        SDL_VideoData *video_data = (SDL_VideoData *)device->driverdata;
+        SDL_VideoData *video_data = device->driverdata;
         if (video_data->winrtEglWindow) {
             video_data->winrtEglWindow->Release();
         }
@@ -229,7 +229,7 @@ static void SDLCALL WINRT_SetDisplayOrientationsPreference(void *userdata, const
 
 int WINRT_VideoInit(_THIS)
 {
-    SDL_VideoData *driverdata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *driverdata = _this->driverdata;
     if (WINRT_InitModes(_this) < 0) {
         return -1;
     }
@@ -307,17 +307,12 @@ static int WINRT_AddDisplaysForOutput(_THIS, IDXGIAdapter1 *dxgiAdapter1, int ou
         mode.pixel_h = (dxgiOutputDesc.DesktopCoordinates.bottom - dxgiOutputDesc.DesktopCoordinates.top);
         mode.format = DXGI_FORMAT_B8G8R8A8_UNORM;
         display.desktop_mode = mode;
-        display.current_mode = mode;
-        if (!SDL_AddDisplayMode(&display, &mode)) {
-            goto done;
-        }
     } else if (FAILED(hr)) {
         WIN_SetErrorFromHRESULT(__FUNCTION__ ", IDXGIOutput::FindClosestMatchingMode failed", hr);
         goto done;
     } else {
         display.name = WIN_StringToUTF8(dxgiOutputDesc.DeviceName);
         WINRT_DXGIModeToSDLDisplayMode(&closestMatch, &display.desktop_mode);
-        display.current_mode = display.desktop_mode;
 
         hr = dxgiOutput->GetDisplayModeList(DXGI_FORMAT_B8G8R8A8_UNORM, 0, &numModes, NULL);
         if (FAILED(hr)) {
@@ -343,11 +338,11 @@ static int WINRT_AddDisplaysForOutput(_THIS, IDXGIAdapter1 *dxgiAdapter1, int ou
         for (UINT i = 0; i < numModes; ++i) {
             SDL_DisplayMode sdlMode;
             WINRT_DXGIModeToSDLDisplayMode(&dxgiModes[i], &sdlMode);
-            SDL_AddDisplayMode(&display, &sdlMode);
+            SDL_AddFullscreenDisplayMode(&display, &sdlMode);
         }
     }
 
-    if (SDL_AddVideoDisplay(&display, SDL_FALSE) < 0) {
+    if (SDL_AddVideoDisplay(&display, SDL_FALSE) == 0) {
         goto done;
     }
 
@@ -416,8 +411,8 @@ static int WINRT_AddDisplaysForAdapter(_THIS, IDXGIFactory2 *dxgiFactory2, int a
 #if (NTDDI_VERSION >= NTDDI_WIN10) || (SDL_WINRT_USE_APPLICATIONVIEW && WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
                 mode.pixel_w = WINRT_DIPS_TO_PHYSICAL_PIXELS(appView->VisibleBounds.Width);
                 mode.pixel_h = WINRT_DIPS_TO_PHYSICAL_PIXELS(appView->VisibleBounds.Height);
-                mode.screen_w = appView->VisibleBounds.Width;
-                mode.screen_h = appView->VisibleBounds.Height;
+                mode.screen_w = (int)SDL_floorf(appView->VisibleBounds.Width);
+                mode.screen_h = (int)SDL_floorf(appView->VisibleBounds.Height);
                 mode.display_scale = WINRT_DISPLAY_PROPERTY(LogicalDpi) / 96.0f;
 #else
                 /* On platform(s) that do not support VisibleBounds, such as Windows 8.1,
@@ -425,16 +420,14 @@ static int WINRT_AddDisplaysForAdapter(_THIS, IDXGIFactory2 *dxgiFactory2, int a
                 */
                 mode.pixel_w = WINRT_DIPS_TO_PHYSICAL_PIXELS(coreWin->Bounds.Width);
                 mode.pixel_h = WINRT_DIPS_TO_PHYSICAL_PIXELS(coreWin->Bounds.Height);
-                mode.screen_w = coreWin->Bounds.Width;
-                mode.screen_h = coreWin->Bounds.Height;
+                mode.screen_w = (int)SDL_floorf(coreWin->Bounds.Width);
+                mode.screen_h = (int)SDL_floorf(coreWin->Bounds.Height);
                 mode.display_scale = WINRT_DISPLAY_PROPERTY(LogicalDpi) / 96.0f;
 #endif
 
                 mode.format = DXGI_FORMAT_B8G8R8A8_UNORM;
                 display.desktop_mode = mode;
-                display.current_mode = mode;
-                bool error = SDL_AddDisplayMode(&display, &mode) < 0 ||
-                             SDL_AddVideoDisplay(&display, SDL_FALSE) < 0;
+                bool error = (SDL_AddVideoDisplay(&display, SDL_FALSE) == 0);
                 if (display.name) {
                     SDL_free(display.name);
                 }
@@ -483,7 +476,7 @@ static int WINRT_SetDisplayMode(_THIS, SDL_VideoDisplay *display, SDL_DisplayMod
 
 void WINRT_VideoQuit(_THIS)
 {
-    SDL_VideoData *driverdata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *driverdata = _this->driverdata;
     if (driverdata && driverdata->displayRequest) {
         driverdata->displayRequest->Release();
         driverdata->displayRequest = NULL;
@@ -492,13 +485,13 @@ void WINRT_VideoQuit(_THIS)
     WINRT_QuitMouse(_this);
 }
 
-static const Uint32 WINRT_DetectableFlags = SDL_WINDOW_MAXIMIZED | SDL_WINDOW_FULLSCREEN_MASK | SDL_WINDOW_HIDDEN | SDL_WINDOW_MOUSE_FOCUS;
+static const Uint32 WINRT_DetectableFlags = SDL_WINDOW_MAXIMIZED | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_HIDDEN | SDL_WINDOW_MOUSE_FOCUS;
 
 extern "C" Uint32
 WINRT_DetectWindowFlags(SDL_Window *window)
 {
     Uint32 latestFlags = 0;
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     bool is_fullscreen = false;
 
 #if SDL_WINRT_USE_APPLICATIONVIEW
@@ -511,7 +504,7 @@ WINRT_DetectWindowFlags(SDL_Window *window)
 
     if (data->coreWindow.Get()) {
         if (is_fullscreen) {
-            SDL_VideoDisplay *display = SDL_GetDisplayForWindow(window);
+            SDL_VideoDisplay *display = SDL_GetVideoDisplayForWindow(window);
             int w = WINRT_DIPS_TO_PHYSICAL_PIXELS(data->coreWindow->Bounds.Width);
             int h = WINRT_DIPS_TO_PHYSICAL_PIXELS(data->coreWindow->Bounds.Height);
 
@@ -539,7 +532,7 @@ WINRT_DetectWindowFlags(SDL_Window *window)
             if (display->desktop_mode.pixel_w != w || display->desktop_mode.pixel_h != h) {
                 latestFlags |= SDL_WINDOW_MAXIMIZED;
             } else {
-                latestFlags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+                latestFlags |= SDL_WINDOW_FULLSCREEN;
             }
         }
 
@@ -568,9 +561,6 @@ void WINRT_UpdateWindowFlags(SDL_Window *window, Uint32 mask)
     mask &= WINRT_DetectableFlags;
     if (window) {
         Uint32 apply = WINRT_DetectWindowFlags(window);
-        if (((apply & mask) & SDL_WINDOW_FULLSCREEN_MASK) != 0) {
-            window->last_fullscreen_flags = window->flags; // seems necessary to programmatically un-fullscreen, via SDL APIs
-        }
         window->flags = (window->flags & ~mask) | (apply & mask);
     }
 }
@@ -638,7 +628,7 @@ int WINRT_CreateWindow(_THIS, SDL_Window *window)
         data->egl_surface = EGL_NO_SURFACE;
     } else {
         /* OpenGL ES 2 was reuqested.  Set up an EGL surface. */
-        SDL_VideoData *video_data = (SDL_VideoData *)_this->driverdata;
+        SDL_VideoData *video_data = _this->driverdata;
 
         /* Call SDL_EGL_ChooseConfig and eglCreateWindowSurface directly,
          * rather than via SDL_EGL_CreateSurface, as older versions of
@@ -716,8 +706,8 @@ int WINRT_CreateWindow(_THIS, SDL_Window *window)
            mode apps, try this.
         */
         bool didSetSize = false;
-        if ((requestedFlags & SDL_WINDOW_FULLSCREEN_MASK) == 0) {
-            const Windows::Foundation::Size size(window->w, window->h);
+        if ((requestedFlags & SDL_WINDOW_FULLSCREEN) == 0) {
+            const Windows::Foundation::Size size((float)window->w, (float)window->h);
             didSetSize = data->appView->TryResizeView(size);
         }
         if (!didSetSize) {
@@ -753,8 +743,8 @@ int WINRT_CreateWindow(_THIS, SDL_Window *window)
 void WINRT_SetWindowSize(_THIS, SDL_Window *window)
 {
 #if NTDDI_VERSION >= NTDDI_WIN10
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
-    const Windows::Foundation::Size size(window->w, window->h);
+    SDL_WindowData *data = window->driverdata;
+    const Windows::Foundation::Size size((float)window->w, (float)window->h);
     data->appView->TryResizeView(size); // TODO, WinRT: return failure (to caller?) from TryResizeView()
 #endif
 }
@@ -762,7 +752,7 @@ void WINRT_SetWindowSize(_THIS, SDL_Window *window)
 void WINRT_SetWindowFullscreen(_THIS, SDL_Window *window, SDL_VideoDisplay *display, SDL_bool fullscreen)
 {
 #if NTDDI_VERSION >= NTDDI_WIN10
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
     bool isWindowActive = WINRT_IsCoreWindowActive(data->coreWindow.Get());
     if (isWindowActive) {
         if (fullscreen) {
@@ -780,7 +770,7 @@ void WINRT_SetWindowFullscreen(_THIS, SDL_Window *window, SDL_VideoDisplay *disp
 
 void WINRT_DestroyWindow(_THIS, SDL_Window *window)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
 
     if (WINRT_GlobalSDLWindow == window) {
         WINRT_GlobalSDLWindow = NULL;
@@ -796,7 +786,7 @@ void WINRT_DestroyWindow(_THIS, SDL_Window *window)
 
 int WINRT_GetWindowWMInfo(_THIS, SDL_Window *window, SDL_SysWMinfo *info)
 {
-    SDL_WindowData *data = (SDL_WindowData *)window->driverdata;
+    SDL_WindowData *data = window->driverdata;
 
     info->subsystem = SDL_SYSWM_WINRT;
     info->info.winrt.window = reinterpret_cast<IInspectable *>(data->coreWindow.Get());
@@ -847,9 +837,9 @@ done:
     return pDisplayRequest;
 }
 
-void WINRT_SuspendScreenSaver(_THIS)
+int WINRT_SuspendScreenSaver(_THIS)
 {
-    SDL_VideoData *driverdata = (SDL_VideoData *)_this->driverdata;
+    SDL_VideoData *driverdata = _this->driverdata;
     if (driverdata && driverdata->displayRequest) {
         ABI::Windows::System::Display::IDisplayRequest *displayRequest = (ABI::Windows::System::Display::IDisplayRequest *)driverdata->displayRequest;
         if (_this->suspend_screensaver) {
@@ -858,6 +848,7 @@ void WINRT_SuspendScreenSaver(_THIS)
             displayRequest->RequestRelease();
         }
     }
+    return 0;
 }
 
 #endif /* SDL_VIDEO_DRIVER_WINRT */

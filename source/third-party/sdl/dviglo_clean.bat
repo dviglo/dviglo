@@ -22,6 +22,7 @@ rd /s /q Xcode
 
 :: В корне удаляем ненужные файлы
 del .clang-format
+del .clang-tidy
 del .editorconfig
 del .gitignore
 del .wikiheaders-options

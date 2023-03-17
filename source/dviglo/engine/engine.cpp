@@ -238,7 +238,7 @@ bool Engine::Initialize(const VariantMap& parameters)
             GetParameter(parameters, EP_VSYNC, false).GetBool(),
             GetParameter(parameters, EP_TRIPLE_BUFFER, false).GetBool(),
             GetParameter(parameters, EP_MULTI_SAMPLE, 1).GetI32(),
-            GetParameter(parameters, EP_MONITOR, 0).GetI32(),
+            GetParameter(parameters, EP_MONITOR, SDL_GetPrimaryDisplay()).GetI32(),
             GetParameter(parameters, EP_REFRESH_RATE, 0).GetI32()
         ))
             return false;

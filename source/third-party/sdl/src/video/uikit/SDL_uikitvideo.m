@@ -39,7 +39,7 @@
 
 #define UIKITVID_DRIVER_NAME "uikit"
 
-@implementation SDL_VideoData
+@implementation SDL_UIKitVideoData
 
 @end
 
@@ -61,19 +61,20 @@ static SDL_VideoDevice *UIKit_CreateDevice(void)
 {
     @autoreleasepool {
         SDL_VideoDevice *device;
-        SDL_VideoData *data;
+        SDL_UIKitVideoData *data;
 
         /* Initialize all variables that we clean on shutdown */
         device = (SDL_VideoDevice *)SDL_calloc(1, sizeof(SDL_VideoDevice));
         if (device) {
-            data = [SDL_VideoData new];
+            data = [SDL_UIKitVideoData new];
         } else {
             SDL_free(device);
             SDL_OutOfMemory();
             return (0);
         }
 
-        device->driverdata = (void *)CFBridgingRetain(data);
+        device->driverdata = (SDL_VideoData *)CFBridgingRetain(data);
+        device->system_theme = UIKit_GetSystemTheme();
 
         /* Set the function pointers */
         device->VideoInit = UIKit_VideoInit;
@@ -93,7 +94,6 @@ static SDL_VideoDevice *UIKit_CreateDevice(void)
         device->DestroyWindow = UIKit_DestroyWindow;
         device->GetWindowWMInfo = UIKit_GetWindowWMInfo;
         device->GetDisplayUsableBounds = UIKit_GetDisplayUsableBounds;
-        device->GetDisplayPhysicalDPI = UIKit_GetDisplayPhysicalDPI;
         device->GetWindowSizeInPixels = UIKit_GetWindowSizeInPixels;
 
 #if SDL_IPHONE_KEYBOARD
@@ -111,7 +111,6 @@ static SDL_VideoDevice *UIKit_CreateDevice(void)
         /* OpenGL (ES) functions */
 #if SDL_VIDEO_OPENGL_ES || SDL_VIDEO_OPENGL_ES2
         device->GL_MakeCurrent = UIKit_GL_MakeCurrent;
-        device->GL_GetDrawableSize = UIKit_GL_GetDrawableSize;
         device->GL_SwapWindow = UIKit_GL_SwapWindow;
         device->GL_CreateContext = UIKit_GL_CreateContext;
         device->GL_DeleteContext = UIKit_GL_DeleteContext;
@@ -125,14 +124,12 @@ static SDL_VideoDevice *UIKit_CreateDevice(void)
         device->Vulkan_UnloadLibrary = UIKit_Vulkan_UnloadLibrary;
         device->Vulkan_GetInstanceExtensions = UIKit_Vulkan_GetInstanceExtensions;
         device->Vulkan_CreateSurface = UIKit_Vulkan_CreateSurface;
-        device->Vulkan_GetDrawableSize = UIKit_Vulkan_GetDrawableSize;
 #endif
 
 #if SDL_VIDEO_METAL
         device->Metal_CreateView = UIKit_Metal_CreateView;
         device->Metal_DestroyView = UIKit_Metal_DestroyView;
         device->Metal_GetLayer = UIKit_Metal_GetLayer;
-        device->Metal_GetDrawableSize = UIKit_Metal_GetDrawableSize;
 #endif
 
         device->gl_config.accelerated = 1;
@@ -168,7 +165,7 @@ void UIKit_VideoQuit(_THIS)
     UIKit_QuitModes(_this);
 }
 
-void UIKit_SuspendScreenSaver(_THIS)
+int UIKit_SuspendScreenSaver(_THIS)
 {
     @autoreleasepool {
         UIApplication *app = [UIApplication sharedApplication];
@@ -176,18 +173,32 @@ void UIKit_SuspendScreenSaver(_THIS)
         /* Prevent the display from dimming and going to sleep. */
         app.idleTimerDisabled = (_this->suspend_screensaver != SDL_FALSE);
     }
+    return 0;
 }
 
-SDL_bool
-UIKit_IsSystemVersionAtLeast(double version)
+SDL_bool UIKit_IsSystemVersionAtLeast(double version)
 {
     return [[UIDevice currentDevice].systemVersion doubleValue] >= version;
 }
 
-CGRect
-UIKit_ComputeViewFrame(SDL_Window *window, UIScreen *screen)
+SDL_SystemTheme UIKit_GetSystemTheme(void)
 {
-    SDL_WindowData *data = (__bridge SDL_WindowData *)window->driverdata;
+    if (@available(iOS 12.0, tvOS 10.0, *)) {
+        switch ([UIScreen mainScreen].traitCollection.userInterfaceStyle) {
+        case UIUserInterfaceStyleDark:
+            return SDL_SYSTEM_THEME_DARK;
+        case UIUserInterfaceStyleLight:
+            return SDL_SYSTEM_THEME_LIGHT;
+        default:
+            break;
+        }
+    }
+    return SDL_SYSTEM_THEME_UNKNOWN;
+}
+
+CGRect UIKit_ComputeViewFrame(SDL_Window *window, UIScreen *screen)
+{
+    SDL_UIKitWindowData *data = (__bridge SDL_UIKitWindowData *)window->driverdata;
     CGRect frame = screen.bounds;
 
     /* Use the UIWindow bounds instead of the UIScreen bounds, when possible.
@@ -207,7 +218,8 @@ UIKit_ComputeViewFrame(SDL_Window *window, UIScreen *screen)
      * https://bugzilla.libsdl.org/show_bug.cgi?id=3465
      * https://forums.developer.apple.com/thread/65337 */
     UIInterfaceOrientation orient = [UIApplication sharedApplication].statusBarOrientation;
-    BOOL landscape = UIInterfaceOrientationIsLandscape(orient);
+    BOOL landscape = UIInterfaceOrientationIsLandscape(orient) ||
+                    !(UIKit_GetSupportedOrientations(window) & (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown));
     BOOL fullscreen = CGRectEqualToRect(screen.bounds, frame);
 
     /* The orientation flip doesn't make sense when the window is smaller
@@ -228,7 +240,7 @@ void UIKit_ForceUpdateHomeIndicator()
     /* Force the main SDL window to re-evaluate home indicator state */
     SDL_Window *focus = SDL_GetFocusWindow();
     if (focus) {
-        SDL_WindowData *data = (__bridge SDL_WindowData *)focus->driverdata;
+        SDL_UIKitWindowData *data = (__bridge SDL_UIKitWindowData *)focus->driverdata;
         if (data != nil) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunguarded-availability-new"
