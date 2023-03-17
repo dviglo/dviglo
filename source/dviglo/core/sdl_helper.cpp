@@ -35,14 +35,27 @@ SdlHelper::SdlHelper()
     DV_LOGDEBUG("Singleton SdlHelper constructed");
 }
 
-SdlHelper::~SdlHelper()
+void SdlHelper::manual_destruct()
 {
     DV_LOGDEBUG("Quitting SDL");
-//    SDL_Quit(); // TODO: крэшится в OpenGL shared версии
+    SDL_Quit();
     DV_LOGDEBUG("Singleton SdlHelper destructed");
 #ifdef _DEBUG
     sdl_helper_destructed = true;
 #endif
+}
+
+SdlHelper::~SdlHelper()
+{
+    // Вызов SDL_Quit() тут вызывает крэш в dll версии движка в Windows
+    /*
+    DV_LOGDEBUG("Quitting SDL");
+    SDL_Quit();
+    DV_LOGDEBUG("Singleton SdlHelper destructed");
+#ifdef _DEBUG
+    sdl_helper_destructed = true;
+#endif
+    */
 }
 
 bool SdlHelper::require(u32 sdl_subsystem)

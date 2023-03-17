@@ -6,10 +6,7 @@
 #include "../io/io_events.h"
 #include "../io/log.h"
 
-#if defined(IOS) || defined(TVOS)
-#include "../graphics/graphics.h"
-#include <SDL3/SDL.h>
-#endif
+#include "../core/sdl_helper.h"
 
 #include "../common/debug_new.h"
 
@@ -52,6 +49,8 @@ int Application::Run()
             DV_ENGINE.RunFrame();
 
         Stop();
+
+        SdlHelper::manual_destruct();
 
         return exitCode_;
 #if !defined(__GNUC__) || __EXCEPTIONS

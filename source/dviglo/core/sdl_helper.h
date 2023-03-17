@@ -22,6 +22,13 @@ public:
     /// другие тоже могут не проинициализироваться
     bool require(u32 sdl_subsystem);
 
+    /// В Windows, когда движок скомпилирован как dll, при вызове SDL_Quit() в деструкторе синглтона
+    /// происходит крэш. Даже если поместить SDL_Quit() в atexit() в библиотеке, то проблема остается. В описании
+    /// SDL_Quit() об этом и написано. См также https://stackoverflow.com/questions/19402417/when-should-atexit-be-used
+    /// Поэтому завершаем SDL вручную. При этом нарушается порядок уничтожения синглтонов (SDL уничтожается первым),
+    /// но вроде всё работает.
+    static void manual_destruct();
+
 private:
     bool sdl_inited_ = false;
 
