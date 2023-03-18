@@ -133,7 +133,6 @@ private:
     void HandleScrollBarVisibleChanged(StringHash eventType, VariantMap& eventData);
     /// Handle content element resized.
     void HandleElementResized(StringHash eventType, VariantMap& eventData);
-    /// Handle touch move event for scrolling.
 };
 
 }
