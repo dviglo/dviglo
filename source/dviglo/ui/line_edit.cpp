@@ -383,10 +383,6 @@ void LineEdit::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
     case KEY_RETURN2:
     case KEY_KP_ENTER:
         {
-            // If using the on-screen keyboard, defocus this element to hide it now
-            if (DV_UI.GetUseScreenKeyboard() && HasFocus())
-                SetFocus(false);
-
             using namespace TextFinished;
 
             VariantMap& eventData = GetEventDataMap();
@@ -634,17 +630,11 @@ void LineEdit::HandleFocused(StringHash /*eventType*/, VariantMap& eventData)
         text_->SetSelection(0);
     }
     UpdateCursor();
-
-    if (DV_UI.GetUseScreenKeyboard())
-        DV_INPUT.SetScreenKeyboardVisible(true);
 }
 
 void LineEdit::HandleDefocused(StringHash /*eventType*/, VariantMap& /*eventData*/)
 {
     text_->ClearSelection();
-
-    if (DV_UI.GetUseScreenKeyboard())
-        DV_INPUT.SetScreenKeyboardVisible(false);
 }
 
 void LineEdit::HandleLayoutUpdated(StringHash /*eventType*/, VariantMap& /*eventData*/)

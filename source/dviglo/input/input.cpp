@@ -746,17 +746,6 @@ void Input::SetScreenJoystickVisible(SDL_JoystickID id, bool enable)
     }
 }
 
-void Input::SetScreenKeyboardVisible(bool enable)
-{
-    if (enable != (bool)SDL_TextInputActive())
-    {
-        if (enable)
-            SDL_StartTextInput();
-        else
-            SDL_StopTextInput();
-    }
-}
-
 void Input::SetTouchEmulation(bool enable)
 {
 #if !defined(__ANDROID__) && !defined(IOS)
@@ -1003,16 +992,6 @@ bool Input::IsScreenJoystickVisible(SDL_JoystickID id) const
 {
     HashMap<SDL_JoystickID, JoystickState>::ConstIterator i = joysticks_.Find(id);
     return i != joysticks_.End() && i->second_.screenJoystick_ && i->second_.screenJoystick_->IsVisible();
-}
-
-bool Input::GetScreenKeyboardSupport() const
-{
-    return SDL_HasScreenKeyboardSupport();
-}
-
-bool Input::IsScreenKeyboardVisible() const
-{
-    return SDL_TextInputActive();
 }
 
 bool Input::IsMouseLocked() const

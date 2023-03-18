@@ -50,8 +50,7 @@ Console::Console() :
 {
     UIElement* uiRoot = DV_UI.GetRoot();
 
-    // By default prevent the automatic showing of the screen keyboard
-    focusOnShow_ = !DV_UI.GetUseScreenKeyboard();
+    focusOnShow_ = true;
 
     background_ = uiRoot->CreateChild<BorderImage>();
     background_->SetBringToBack(false);

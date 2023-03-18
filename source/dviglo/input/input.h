@@ -190,8 +190,6 @@ public:
     bool RemoveScreenJoystick(SDL_JoystickID id);
     /// Set whether the virtual joystick is visible.
     void SetScreenJoystickVisible(SDL_JoystickID id, bool enable);
-    /// Show or hide on-screen keyboard on platforms that support it. When shown, keypresses from it are delivered as key events.
-    void SetScreenKeyboardVisible(bool enable);
     /// Set touch emulation by mouse. Only available on desktop platforms. When enabled, actual mouse events are no longer sent and the mouse cursor is forced visible.
     void SetTouchEmulation(bool enable);
     /// Set the mouse cursor position. Uses the backbuffer (Graphics width/height) coordinates.
@@ -261,10 +259,6 @@ public:
 
     /// Return whether a virtual joystick is visible.
     bool IsScreenJoystickVisible(SDL_JoystickID id) const;
-    /// Return whether on-screen keyboard is supported.
-    bool GetScreenKeyboardSupport() const;
-    /// Return whether on-screen keyboard is being shown.
-    bool IsScreenKeyboardVisible() const;
 
     /// Return whether touch emulation is enabled.
     bool GetTouchEmulation() const { return touchEmulation_; }

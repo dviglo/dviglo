@@ -97,8 +97,6 @@ public:
     void SetNonFocusedMouseWheel(bool nonFocusedMouseWheel);
     /// Set whether to use system clipboard. Default false.
     void SetUseSystemClipboard(bool enable);
-    /// Set whether to show the on-screen keyboard (if supported) when a %LineEdit is focused. Default true on mobile devices.
-    void SetUseScreenKeyboard(bool enable);
     /// Set whether to use mutable (eraseable) glyphs to ensure a font face never expands to more than one texture. Default false.
     void SetUseMutableGlyphs(bool enable);
     /// Set whether to force font autohinting instead of using FreeType's TTF bytecode interpreter.
@@ -181,9 +179,6 @@ public:
 
     /// Return whether is using the system clipboard.
     bool GetUseSystemClipboard() const { return useSystemClipboard_; }
-
-    /// Return whether focusing a %LineEdit will show the on-screen keyboard.
-    bool GetUseScreenKeyboard() const { return useScreenKeyboard_; }
 
     /// Return whether is using mutable (eraseable) glyphs for fonts.
     bool GetUseMutableGlyphs() const { return useMutableGlyphs_; }
@@ -384,8 +379,7 @@ private:
     bool nonFocusedMouseWheel_;
     /// Flag for using operating system clipboard instead of internal.
     bool useSystemClipboard_;
-    /// Flag for showing the on-screen keyboard on focusing a %LineEdit.
-    bool useScreenKeyboard_;
+
     /// Flag for using mutable (erasable) font glyphs.
     bool useMutableGlyphs_;
     /// Flag for forcing FreeType auto hinting.
