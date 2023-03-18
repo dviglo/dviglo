@@ -9,8 +9,7 @@
     Сервер удобно запускать в виде консольного приложения, используя параметры "-server -headless".
     С параметром "-address 127.0.0.1" игра запустится в режиме клиента и
     подключится к серверу, запущенному на этом же компьютере.
-    Также игра поддерживает геймпады и сенсорные экраны.
-    Параметр "-touch" позволяет сэмулировать тачскрин на ПК.
+    Также игра поддерживает геймпады.
     Друг другу игроки урон не наносят.
 */
 
@@ -30,7 +29,6 @@ namespace dviglo
 {
 
 static constexpr float MOUSE_SENSITIVITY = 0.125f;
-static constexpr float TOUCH_SENSITIVITY = 2.0f;
 static constexpr float JOY_SENSITIVITY = 0.5f;
 static constexpr float JOY_MOVE_DEAD_ZONE = 0.333f;
 static constexpr float JOY_LOOK_DEAD_ZONE = 0.05f;
@@ -74,10 +72,6 @@ private:
     float powerupSpawnTimer = 0.f;
     NodeId clientNodeID = 0;
     i32 clientScore = 0;
-
-    i32 screenJoystickID = -1;
-    i32 screenJoystickSettingsID = -1;
-    bool touchEnabled = false;
 
     Vector<Player> players;
     Vector<HiscoreEntry> hiscores;
@@ -245,12 +239,6 @@ public:
         }
     }
 
-    void InitTouchInput()
-    {
-        touchEnabled = true;
-        screenJoystickID = DV_INPUT.AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_NinjaSnowWar.xml"));
-    }
-
     void CreateCamera()
     {
         // Note: the camera is not in the scene
@@ -324,13 +312,6 @@ public:
         healthBar->SetPosition(2, 2);
         healthBar->SetSize(116, 16);
         healthBorder->AddChild(healthBar);
-
-        if (GetPlatform() == "Android" || GetPlatform() == "iOS")
-            // On mobile platform, enable touch by adding a screen joystick
-            InitTouchInput();
-        else if (DV_INPUT.GetNumJoysticks() == 0)
-            // On desktop platform, do not detect touch when we already got a joystick
-            SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(App, HandleTouchBegin));
     }
 
     void SetMessage(const String& message)
@@ -524,13 +505,6 @@ public:
             gameScene->GetComponent<Octree>()->DrawDebugGeometry(true);
     }
 
-    void HandleTouchBegin(StringHash eventType, VariantMap& eventData)
-    {
-        // On some platforms like Windows the presence of touch input can only be detected dynamically
-        InitTouchInput();
-        UnsubscribeFromEvent("TouchBegin");
-    }
-
     void HandleKeyDown(StringHash eventType, VariantMap& eventData)
     {
         Console* console = GetSubsystem<Console>();
@@ -575,25 +549,11 @@ public:
             {
                 SetMessage("PAUSED");
                 DV_AUDIO.PauseSoundType(SOUND_EFFECT);
-
-                // Open the settings joystick only if the controls screen joystick was already open
-                if (screenJoystickID >= 0)
-                {
-                    // Lazy initialization
-                    if (screenJoystickSettingsID < 0)
-                        screenJoystickSettingsID = DV_INPUT.AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_NinjaSnowWar.xml"));
-                    else
-                        DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsID, true);
-                }
             }
             else
             {
                 SetMessage("");
                 DV_AUDIO.ResumeSoundType(SOUND_EFFECT);
-
-                // Hide the settings joystick
-                if (screenJoystickSettingsID >= 0)
-                    DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsID, false);
             }
         }
     }
@@ -914,23 +874,9 @@ public:
             prevPlayerControls = playerControls;
             playerControls.Set(CTRL_ALL, false);
 
-            if (touchEnabled)
-            {
-                for (i32 i = 0; i < input.GetNumTouches(); ++i)
-                {
-                    TouchState* touch = input.GetTouch(i);
-                    if (!touch->touchedElement_)
-                    {
-                        // Touch on empty space
-                        playerControls.yaw_ += TOUCH_SENSITIVITY * gameCamera->GetFov() / DV_GRAPHICS.GetHeight() * touch->delta_.x_;
-                        playerControls.pitch_ += TOUCH_SENSITIVITY * gameCamera->GetFov() / DV_GRAPHICS.GetHeight() * touch->delta_.y_;
-                    }
-                }
-            }
-
             if (input.GetNumJoysticks() > 0)
             {
-                JoystickState* joystick = touchEnabled ? input.GetJoystick(screenJoystickID) : input.GetJoystickByIndex(0);
+                JoystickState* joystick = input.GetJoystickByIndex(0);
                 if (joystick->GetNumButtons() > 0)
                 {
                     if (joystick->GetButtonDown(0))
