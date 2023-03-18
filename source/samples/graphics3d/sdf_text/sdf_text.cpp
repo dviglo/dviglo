@@ -132,7 +132,7 @@ void SignedDistanceFieldText::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
-    instructionText->SetText("Use WASD keys and mouse/touch to move");
+    instructionText->SetText("Use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 
     // Position the text relative to the screen center

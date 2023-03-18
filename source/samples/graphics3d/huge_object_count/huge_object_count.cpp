@@ -147,7 +147,7 @@ void HugeObjectCount::CreateInstructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
-        "Use WASD keys and mouse/touch to move\n"
+        "Use WASD keys and mouse to move\n"
         "Space to toggle animation\n"
         "G to toggle object group optimization"
     );

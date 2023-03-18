@@ -27,9 +27,12 @@
 
 #include "character.h"
 #include "demo.h"
-#include "touch.h"
 
 #include <dviglo/common/debug_new.h>
+
+constexpr float CAMERA_MIN_DIST = 1.0f;
+constexpr float CAMERA_INITIAL_DIST = 5.0f;
+constexpr float CAMERA_MAX_DIST = 20.0f;
 
 DV_DEFINE_APPLICATION_MAIN(CharacterDemo)
 
@@ -46,8 +49,6 @@ void CharacterDemo::Start()
 {
     // Execute base class startup
     Sample::Start();
-    if (touchEnabled_)
-        touch_ = new Touch(TOUCH_SENSITIVITY);
 
     // Create static scene content
     CreateScene();
@@ -205,7 +206,7 @@ void CharacterDemo::CreateInstructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
-        "Use WASD keys and mouse/touch to move\n"
+        "Use WASD keys and mouse to move\n"
         "Space to jump, F to toggle 1st/3rd person\n"
         "F5 to save scene, F7 to load"
     );
@@ -242,44 +243,18 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
         // Clear previous controls
         character_->controls_.Set(CTRL_FORWARD | CTRL_BACK | CTRL_LEFT | CTRL_RIGHT | CTRL_JUMP, false);
 
-        // Update controls using touch utility class
-        if (touch_)
-            touch_->UpdateTouches(character_->controls_);
-
         // Update controls using keys
         if (!DV_UI.GetFocusElement())
         {
-            if (!touch_ || !touch_->useGyroscope_)
-            {
-                character_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
-                character_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));
-                character_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
-                character_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
-            }
+            character_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
+            character_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));
+            character_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
+            character_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
             character_->controls_.Set(CTRL_JUMP, input.GetKeyDown(KEY_SPACE));
 
-            // Add character yaw & pitch from the mouse motion or touch input
-            if (touchEnabled_)
-            {
-                for (unsigned i = 0; i < input.GetNumTouches(); ++i)
-                {
-                    TouchState* state = input.GetTouch(i);
-                    if (!state->touchedElement_)    // Touch on empty space
-                    {
-                        auto* camera = cameraNode_->GetComponent<Camera>();
-                        if (!camera)
-                            return;
-
-                        character_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.x_;
-                        character_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.y_;
-                    }
-                }
-            }
-            else
-            {
-                character_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
-                character_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
-            }
+            // Add character yaw & pitch from the mouse motion
+            character_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
+            character_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
             // Limit pitch
             character_->controls_.pitch_ = Clamp(character_->controls_.pitch_, -80.0f, 80.0f);
             // Set rotation already here so that it's updated every rendering frame instead of every physics frame
@@ -288,10 +263,6 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             // Switch between 1st and 3rd person
             if (input.GetKeyPress(KEY_F))
                 firstPerson_ = !firstPerson_;
-
-            // Turn on/off gyroscope on mobile platform
-            if (touch_ && input.GetKeyPress(KEY_G))
-                touch_->useGyroscope_ = !touch_->useGyroscope_;
 
             // Check for loading / saving the scene
             if (input.GetKeyPress(KEY_F5))
@@ -344,7 +315,7 @@ void CharacterDemo::HandlePostUpdate(StringHash eventType, VariantMap& eventData
 
         // Collide camera ray with static physics objects (layer bitmask 2) to ensure we see the character properly
         Vector3 rayDir = dir * Vector3::BACK;
-        float rayDistance = touch_ ? touch_->cameraDistance_ : CAMERA_INITIAL_DIST;
+        float rayDistance = CAMERA_INITIAL_DIST;
         PhysicsRaycastResult result;
         scene_->GetComponent<PhysicsWorld>()->RaycastSingle(result, Ray(aimPoint, rayDir), rayDistance, 2);
         if (result.body_)

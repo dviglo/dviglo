@@ -88,7 +88,7 @@ void Urho2DParticle::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
-    instructionText->SetText("Use mouse/touch to move the particle.");
+    instructionText->SetText("Use mouse to move the particle.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 
     // Position the text relative to the screen center
@@ -107,8 +107,6 @@ void Urho2DParticle::SetupViewport()
 void Urho2DParticle::SubscribeToEvents()
 {
     SubscribeToEvent(E_MOUSEMOVE, DV_HANDLER(Urho2DParticle, HandleMouseMove));
-    if (touchEnabled_)
-        SubscribeToEvent(E_TOUCHMOVE, DV_HANDLER(Urho2DParticle, HandleMouseMove));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);

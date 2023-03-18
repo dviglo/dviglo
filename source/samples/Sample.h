@@ -19,8 +19,6 @@ class Sprite;
 // All Urho3D classes reside in namespace dviglo
 using namespace dviglo;
 
-const float TOUCH_SENSITIVITY = 2.0f;
-
 /// Sample class, as framework for all samples.
 ///    - Initialization of the Urho3D engine (in Application class)
 ///    - Modify engine parameters for windowed mode and to show the class name as title
@@ -30,7 +28,6 @@ const float TOUCH_SENSITIVITY = 2.0f;
 ///    - Toggle rendering options from the keys 1-8
 ///    - Take screenshot with key 9
 ///    - Handle Esc key down to hide Console or exit application
-///    - Init touch input on mobile platform using screen joysticks (patched for each individual sample)
 class Sample : public Application
 {
     // Enable type information.
@@ -48,10 +45,6 @@ public:
     void Stop() override;
 
 protected:
-    /// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
-    virtual String GetScreenJoystickPatchString() const { return String::EMPTY; }
-    /// Initialize touch input on mobile platform.
-    void InitTouchInput();
     /// Initialize mouse mode on non-web platform.
     void InitMouseMode(MouseMode mode);
     /// Control logo visibility.
@@ -67,8 +60,6 @@ protected:
     float yaw_;
     /// Camera pitch angle.
     float pitch_;
-    /// Flag to indicate whether touch input has been enabled.
-    bool touchEnabled_;
     /// Mouse mode option to use in the sample.
     MouseMode useMouseMode_;
 
@@ -89,13 +80,7 @@ private:
     void HandleKeyUp(StringHash eventType, VariantMap& eventData);
     /// Handle scene update event to control camera's pitch and yaw for all samples.
     void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
-    /// Handle touch begin event to initialize touch input on desktop platform.
-    void HandleTouchBegin(StringHash eventType, VariantMap& eventData);
 
-    /// Screen joystick index for navigational controls (mobile platforms only).
-    unsigned screenJoystickIndex_;
-    /// Screen joystick index for settings (mobile platforms only).
-    unsigned screenJoystickSettingsIndex_;
     /// Pause flag.
     bool paused_;
 };

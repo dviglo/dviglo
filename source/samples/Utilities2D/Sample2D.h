@@ -91,27 +91,4 @@ public:
     String demoFilename_;
     /// The scene.
     Scene* scene_{};
-
-protected:
-    /// Return XML patch instructions for screen joystick layout.
-    virtual String GetScreenJoystickPatchString() const { return
-        "<patch>"
-        "    <remove sel=\"/element/element[./attribute[@name='Name' and @value='Button0']]/attribute[@name='Is Visible']\" />"
-        "    <replace sel=\"/element/element[./attribute[@name='Name' and @value='Button0']]/element[./attribute[@name='Name' and @value='Label']]/attribute[@name='Text']/@value\">Fight</replace>"
-        "    <add sel=\"/element/element[./attribute[@name='Name' and @value='Button0']]\">"
-        "        <element type=\"Text\">"
-        "            <attribute name=\"Name\" value=\"KeyBinding\" />"
-        "            <attribute name=\"Text\" value=\"SPACE\" />"
-        "        </element>"
-        "    </add>"
-        "    <remove sel=\"/element/element[./attribute[@name='Name' and @value='Button1']]/attribute[@name='Is Visible']\" />"
-        "    <replace sel=\"/element/element[./attribute[@name='Name' and @value='Button1']]/element[./attribute[@name='Name' and @value='Label']]/attribute[@name='Text']/@value\">Jump</replace>"
-        "    <add sel=\"/element/element[./attribute[@name='Name' and @value='Button1']]\">"
-        "        <element type=\"Text\">"
-        "            <attribute name=\"Name\" value=\"KeyBinding\" />"
-        "            <attribute name=\"Text\" value=\"UP\" />"
-        "        </element>"
-        "    </add>"
-        "</patch>";
-    }
 };

@@ -155,7 +155,7 @@ void VehicleDemo::CreateInstructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText(
-        "Use WASD keys to drive, mouse/touch to rotate camera\n"
+        "Use WASD keys to drive, mouse to rotate camera\n"
         "F5 to save scene, F7 to load"
     );
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
@@ -196,28 +196,9 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             vehicle_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
             vehicle_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
 
-            // Add yaw & pitch from the mouse motion or touch input. Used only for the camera, does not affect motion
-            if (touchEnabled_)
-            {
-                for (unsigned i = 0; i < input.GetNumTouches(); ++i)
-                {
-                    TouchState* state = input.GetTouch(i);
-                    if (!state->touchedElement_)    // Touch on empty space
-                    {
-                        auto* camera = cameraNode_->GetComponent<Camera>();
-                        if (!camera)
-                            return;
-
-                        vehicle_->controls_.yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.x_;
-                        vehicle_->controls_.pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / DV_GRAPHICS.GetHeight() * state->delta_.y_;
-                    }
-                }
-            }
-            else
-            {
-                vehicle_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
-                vehicle_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
-            }
+            // Add yaw & pitch from the mouse motion. Used only for the camera, does not affect motion
+            vehicle_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
+            vehicle_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
             // Limit pitch
             vehicle_->controls_.pitch_ = Clamp(vehicle_->controls_.pitch_, 0.0f, 80.0f);
 

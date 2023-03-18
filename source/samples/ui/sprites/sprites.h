@@ -23,16 +23,6 @@ public:
     /// Setup after engine initialization and before running the main loop.
     void Start() override;
 
-protected:
-    /// Return XML patch instructions for screen joystick layout for a specific sample app, if any.
-    String GetScreenJoystickPatchString() const override { return
-        "<patch>"
-        "    <add sel=\"/element/element[./attribute[@name='Name' and @value='Hat0']]\">"
-        "        <attribute name=\"Is Visible\" value=\"false\" />"
-        "    </add>"
-        "</patch>";
-    }
-
 private:
     /// Construct the sprites.
     void CreateSprites();

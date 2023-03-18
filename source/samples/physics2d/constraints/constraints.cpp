@@ -426,9 +426,6 @@ void Urho2DConstraints::SubscribeToEvents()
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);
-
-    // Overwrite the subscription from the base class
-    SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(Urho2DConstraints, HandleTouchBegin3));
 }
 
 void Urho2DConstraints::HandleUpdate(StringHash eventType, VariantMap& eventData)
@@ -510,58 +507,4 @@ void Urho2DConstraints::HandleMouseMove(StringHash eventType, VariantMap& eventD
         auto* constraintMouse = pickedNode->GetComponent<ConstraintMouse2D>();
         constraintMouse->SetTarget(GetMousePositionXY());
     }
-}
-
-void Urho2DConstraints::HandleTouchBegin3(StringHash eventType, VariantMap& eventData)
-{
-    // On some platforms like Windows the presence of touch input can only be detected dynamically
-    if (!touchEnabled_)
-        InitTouchInput();
-
-    auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-    using namespace TouchBegin;
-    RigidBody2D* rigidBody = physicsWorld->GetRigidBody(eventData[P_X].GetI32(), eventData[P_Y].GetI32()); // Raycast for RigidBody2Ds to pick
-    if (rigidBody)
-    {
-        pickedNode = rigidBody->GetNode();
-        auto* staticSprite = pickedNode->GetComponent<StaticSprite2D>();
-        staticSprite->SetColor(Color(1.0f, 0.0f, 0.0f, 1.0f)); // Temporary modify color of the picked sprite
-        auto* rigidBody = pickedNode->GetComponent<RigidBody2D>();
-
-        // Create a ConstraintMouse2D - Temporary apply this constraint to the pickedNode to allow grasping and moving with touch
-        auto* constraintMouse = pickedNode->CreateComponent<ConstraintMouse2D>();
-        Vector3 pos = camera_->ScreenToWorldPoint(Vector3((float)eventData[P_X].GetI32() / DV_GRAPHICS.GetWidth(), (float)eventData[P_Y].GetI32() / DV_GRAPHICS.GetHeight(), 0.0f));
-        constraintMouse->SetTarget(Vector2(pos.x_, pos.y_));
-        constraintMouse->SetMaxForce(1000 * rigidBody->GetMass());
-        constraintMouse->SetCollideConnected(true);
-        constraintMouse->SetOtherBody(dummyBody);  // Use dummy body instead of rigidBody. It's better to create a dummy body automatically in ConstraintMouse2D
-        constraintMouse->SetLinearStiffness(5.0f, 0.7f);
-    }
-    SubscribeToEvent(E_TOUCHMOVE, DV_HANDLER(Urho2DConstraints, HandleTouchMove3));
-    SubscribeToEvent(E_TOUCHEND, DV_HANDLER(Urho2DConstraints, HandleTouchEnd3));
-}
-
-void Urho2DConstraints::HandleTouchMove3(StringHash eventType, VariantMap& eventData)
-{
-    if (pickedNode)
-    {
-        auto* constraintMouse = pickedNode->GetComponent<ConstraintMouse2D>();
-        using namespace TouchMove;
-        Vector3 pos = camera_->ScreenToWorldPoint(Vector3(float(eventData[P_X].GetI32()) / DV_GRAPHICS.GetWidth(), float(eventData[P_Y].GetI32()) / DV_GRAPHICS.GetHeight(), 0.0f));
-        constraintMouse->SetTarget(Vector2(pos.x_, pos.y_));
-    }
-}
-
-void Urho2DConstraints::HandleTouchEnd3(StringHash eventType, VariantMap& eventData)
-{
-    if (pickedNode)
-    {
-        auto* staticSprite = pickedNode->GetComponent<StaticSprite2D>();
-        staticSprite->SetColor(Color(1.0f, 1.0f, 1.0f, 1.0f)); // Restore picked sprite color
-
-        pickedNode->RemoveComponent<ConstraintMouse2D>(); // Remove temporary constraint
-        pickedNode = nullptr;
-    }
-    UnsubscribeFromEvent(E_TOUCHMOVE);
-    UnsubscribeFromEvent(E_TOUCHEND);
 }

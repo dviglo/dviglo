@@ -28,10 +28,7 @@
 Sample::Sample() :
     yaw_(0.0f),
     pitch_(0.0f),
-    touchEnabled_(false),
     useMouseMode_(MM_ABSOLUTE),
-    screenJoystickIndex_(M_MAX_UNSIGNED),
-    screenJoystickSettingsIndex_(M_MAX_UNSIGNED),
     paused_(false)
 {
 }
@@ -54,13 +51,6 @@ void Sample::Setup()
 
 void Sample::Start()
 {
-    if (GetPlatform() == "Android" || GetPlatform() == "iOS")
-        // On mobile platform, enable touch by adding a screen joystick
-        InitTouchInput();
-    else if (DV_INPUT.GetNumJoysticks() == 0)
-        // On desktop platform, do not detect touch when we already got a joystick
-        SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(Sample, HandleTouchBegin));
-
     // Create logo
     CreateLogo();
 
@@ -81,23 +71,6 @@ void Sample::Start()
 void Sample::Stop()
 {
     DV_ENGINE.DumpResources(true);
-}
-
-void Sample::InitTouchInput()
-{
-    touchEnabled_ = true;
-
-    XMLFile* layout = DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystick_Samples.xml");
-    const String& patchString = GetScreenJoystickPatchString();
-    if (!patchString.Empty())
-    {
-        // Patch the screen joystick layout further on demand
-        SharedPtr<XMLFile> patchFile(new XMLFile());
-        if (patchFile->FromString(patchString))
-            layout->Patch(patchFile);
-    }
-    screenJoystickIndex_ = (unsigned)DV_INPUT.AddScreenJoystick(layout, DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
-    DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsIndex_, true);
 }
 
 void Sample::InitMouseMode(MouseMode mode)
@@ -228,24 +201,8 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
     {
         Renderer& renderer = DV_RENDERER;
 
-        // Preferences / Pause
-        if (key == KEY_SELECT && touchEnabled_)
-        {
-            paused_ = !paused_;
-
-            if (screenJoystickSettingsIndex_ == M_MAX_UNSIGNED)
-            {
-                // Lazy initialization
-                screenJoystickSettingsIndex_ = (unsigned)DV_INPUT.AddScreenJoystick(DV_RES_CACHE.GetResource<XMLFile>("UI/ScreenJoystickSettings_Samples.xml"), DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
-            }
-            else
-            {
-                DV_INPUT.SetScreenJoystickVisible(screenJoystickSettingsIndex_, paused_);
-            }
-        }
-
         // Texture quality
-        else if (key == '1')
+        if (key == '1')
         {
             auto quality = (unsigned)renderer.GetTextureQuality();
             ++quality;
@@ -318,45 +275,6 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 
 void Sample::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
 {
-    // Move the camera by touch, if the camera node is initialized by descendant sample class
-    if (touchEnabled_ && cameraNode_)
-    {
-        Input& input = DV_INPUT;
-        for (i32 i = 0; i < input.GetNumTouches(); ++i)
-        {
-            TouchState* state = input.GetTouch(i);
-            if (!state->touchedElement_)    // Touch on empty space
-            {
-                if (state->delta_.x_ ||state->delta_.y_)
-                {
-                    Camera* camera = cameraNode_->GetComponent<Camera>();
-                    if (!camera)
-                        return;
-
-                    Graphics& graphics = DV_GRAPHICS;
-                    yaw_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics.GetHeight() * state->delta_.x_;
-                    pitch_ += TOUCH_SENSITIVITY * camera->GetFov() / graphics.GetHeight() * state->delta_.y_;
-
-                    // Construct new orientation for the camera scene node from yaw and pitch; roll is fixed to zero
-                    cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
-                }
-                else
-                {
-                    // Move the cursor to the touch position
-                    Cursor* cursor = DV_UI.GetCursor();
-                    if (cursor && cursor->IsVisible())
-                        cursor->SetPosition(state->position_);
-                }
-            }
-        }
-    }
-}
-
-void Sample::HandleTouchBegin(StringHash /*eventType*/, VariantMap& eventData)
-{
-    // On some platforms like Windows the presence of touch input can only be detected dynamically
-    InitTouchInput();
-    UnsubscribeFromEvent("TouchBegin");
 }
 
 // If the user clicks the canvas, attempt to switch to relative mouse mode on web platform
