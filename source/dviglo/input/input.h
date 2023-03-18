@@ -108,8 +108,6 @@ struct JoystickState
     SDL_JoystickID joystickID_{};
     /// SDL gamepad.
     SDL_Gamepad* gamepad_{};
-    /// UI element containing the screen joystick.
-    UIElement* screenJoystick_{};
     /// Joystick name.
     String name_;
     /// Button up/down state.
@@ -174,22 +172,7 @@ public:
     void SetMouseMode(MouseMode mode, bool suppressEvent = false);
     /// Reset the last mouse mode that wasn't suppressed in SetMouseMode.
     void ResetMouseMode();
-    /// Add screen joystick.
-    /** Return the joystick instance ID when successful or negative on error.
-     *  If layout file is not given, use the default screen joystick layout.
-     *  If style file is not given, use the default style file from root UI element.
-     *
-     *  This method should only be called in main thread.
-     */
-    SDL_JoystickID AddScreenJoystick(XMLFile* layoutFile = nullptr, XMLFile* styleFile = nullptr);
-    /// Remove screen joystick by instance ID.
-    /** Return true if successful.
-     *
-     *  This method should only be called in main thread.
-     */
-    bool RemoveScreenJoystick(SDL_JoystickID id);
-    /// Set whether the virtual joystick is visible.
-    void SetScreenJoystickVisible(SDL_JoystickID id, bool enable);
+
     /// Set touch emulation by mouse. Only available on desktop platforms. When enabled, actual mouse events are no longer sent and the mouse cursor is forced visible.
     void SetTouchEmulation(bool enable);
     /// Set the mouse cursor position. Uses the backbuffer (Graphics width/height) coordinates.
@@ -257,9 +240,6 @@ public:
     /// Return whether fullscreen toggle is enabled.
     bool GetToggleFullscreen() const { return toggleFullscreen_; }
 
-    /// Return whether a virtual joystick is visible.
-    bool IsScreenJoystickVisible(SDL_JoystickID id) const;
-
     /// Return whether touch emulation is enabled.
     bool GetTouchEmulation() const { return touchEmulation_; }
 
@@ -318,8 +298,7 @@ private:
     void HandleScreenMode(StringHash eventType, VariantMap& eventData);
     /// Handle frame start event.
     void HandleBeginFrame(StringHash eventType, VariantMap& eventData);
-    /// Handle touch events from the controls of screen joystick(s).
-    void HandleScreenJoystickTouch(StringHash eventType, VariantMap& eventData);
+
     /// Handle SDL event.
     void HandleSDLEvent(void* sdlEvent);
 
