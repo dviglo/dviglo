@@ -239,7 +239,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
     GraphicsImpl_OGL* impl = GetImpl_OGL();
 
     // With an external window, only the size can change after initial setup, so do not recreate context
-    if (!externalWindow_ || !impl->context_)
+    //if (!externalWindow_ || !impl->context_) // Всегда true
     {
         // Close the existing window and OpenGL context, mark GPU objects as lost
         Release_OGL(false, true);
@@ -250,10 +250,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
         SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
         SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 
-        if (externalWindow_)
-            SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-        else
-            SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
+        SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
 
         SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
@@ -303,23 +300,9 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
                     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
                 }
 
-                if (!externalWindow_)
-                {
-                    // TODO
-                    //window_ = SDL_CreateWindow(windowTitle_.c_str(), x, y, width, height, flags);
-                    window_ = SDL_CreateWindow(windowTitle_.c_str(), width, height, flags);
-                }
-                else
-                {
-    #ifndef __EMSCRIPTEN__
-                    if (!window_)
-                    {
-                        SDL_SetHint(SDL_HINT_VIDEO_FOREIGN_WINDOW_OPENGL, "1");
-                        window_ = SDL_CreateWindowFrom(externalWindow_);
-                    }
-                    newParams.fullscreen_ = false;
-    #endif
-                }
+                // TODO
+                //window_ = SDL_CreateWindow(windowTitle_.c_str(), x, y, width, height, flags);
+                window_ = SDL_CreateWindow(windowTitle_.c_str(), width, height, flags);
 
                 if (window_)
                 {
@@ -462,17 +445,6 @@ bool Graphics::BeginFrame_OGL()
 {
     if (!IsInitialized_OGL() || IsDeviceLost_OGL())
         return false;
-
-    // If using an external window, check it for size changes, and reset screen mode if necessary
-    if (externalWindow_)
-    {
-        int width, height;
-
-        SDL_GetWindowSizeInPixels(window_, &width, &height);
-        if (width != width_ || height != height_)
-            SetMode(width, height);
-    }
-
     // Re-enable depth test and depth func in case a third party program has modified it
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(glCmpFunc[depthTestMode_]);
@@ -2244,12 +2216,6 @@ void Graphics::Release_OGL(bool clearGPUObjects, bool closeWindow)
     CleanupFramebuffers_OGL();
     impl->depthTextures_.Clear();
 
-    // End fullscreen mode first to counteract transition and getting stuck problems on OS X
-#if defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-    if (closeWindow && screenParams_.fullscreen_ && !externalWindow_)
-        SDL_SetWindowFullscreen(window_, 0);
-#endif
-
     if (impl->context_)
     {
         // Do not log this message if we are exiting
@@ -2265,7 +2231,7 @@ void Graphics::Release_OGL(bool clearGPUObjects, bool closeWindow)
         SDL_ShowCursor();
 
         // Do not destroy external window except when shutting down
-        if (!externalWindow_ || clearGPUObjects)
+        //if (!externalWindow_ || clearGPUObjects) // Всегда true
         {
             SDL_DestroyWindow(window_);
             window_ = nullptr;

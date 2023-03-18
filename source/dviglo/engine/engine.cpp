@@ -217,8 +217,6 @@ bool Engine::Initialize(const VariantMap& parameters)
         Graphics& graphics = DV_GRAPHICS;
         Renderer& renderer = DV_RENDERER;
 
-        if (HasParameter(parameters, EP_EXTERNAL_WINDOW))
-            graphics.SetExternalWindow(GetParameter(parameters, EP_EXTERNAL_WINDOW).GetVoidPtr());
         graphics.SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Urho3D").GetString());
         graphics.SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
         graphics.SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());

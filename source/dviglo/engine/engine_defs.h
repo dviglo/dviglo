@@ -11,7 +11,6 @@ namespace dviglo
 static const String EP_AUTOLOAD_PATHS = "AutoloadPaths";
 static const String EP_BORDERLESS = "Borderless";
 static const String EP_DUMP_SHADERS = "DumpShaders";
-static const String EP_EXTERNAL_WINDOW = "ExternalWindow";
 static const String EP_FLUSH_GPU = "FlushGPU";
 static const String EP_FRAME_LIMITER = "FrameLimiter";
 static const String EP_FULL_SCREEN = "FullScreen";

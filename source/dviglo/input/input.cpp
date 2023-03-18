@@ -207,7 +207,7 @@ void Input::Update()
             GainFocus();
 
         // Check for losing focus. The window flags are not reliable when using an external window, so prevent losing focus in that case
-        if (inputFocus_ && !graphics.GetExternalWindow() && (flags & SDL_WINDOW_INPUT_FOCUS) == 0)
+        if (inputFocus_ && (flags & SDL_WINDOW_INPUT_FOCUS) == 0)
             LoseFocus();
     }
     else
@@ -261,19 +261,14 @@ void Input::Update()
         }
     }
 
-    if (!touchEmulation_ && (graphics.GetExternalWindow() || ((!sdlMouseRelative_ && !mouseVisible_ && mouseMode_ != MM_FREE) && inputFocus_ && (flags & SDL_WINDOW_MOUSE_FOCUS))))
+    if (!touchEmulation_ && !sdlMouseRelative_ && !mouseVisible_ && mouseMode_ != MM_FREE && inputFocus_ && (flags & SDL_WINDOW_MOUSE_FOCUS))
     {
         const IntVector2 mousePosition = GetMousePosition();
         mouseMove_ = mousePosition - lastMousePosition_;
         mouseMoveScaled_ = true; // Already in backbuffer scale, since GetMousePosition() operates in that
 
-        if (graphics.GetExternalWindow())
-            lastMousePosition_ = mousePosition;
-        else
-        {
-            // Recenter the mouse cursor manually after move
-            CenterMousePosition();
-        }
+        // Recenter the mouse cursor manually after move
+        CenterMousePosition();
 
         // Send mouse move event if necessary
         if (mouseMove_ != IntVector2::ZERO)
@@ -324,15 +319,6 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
     {
         if (initialized_)
         {
-            // External windows can only support visible mouse cursor
-            if (DV_GRAPHICS.GetExternalWindow())
-            {
-                mouseVisible_ = true;
-                if (!suppressEvent)
-                    lastMouseVisible_ = true;
-                return;
-            }
-
             if (!enable && inputFocus_)
             {
                 if (mouseVisible_)
@@ -1047,10 +1033,6 @@ void Input::Initialize()
 {
     if (GParams::is_headless() || !DV_GRAPHICS.IsInitialized())
         return;
-
-    // In external window mode only visible mouse is supported
-    if (DV_GRAPHICS.GetExternalWindow())
-        mouseVisible_ = true;
 
     // Set the initial activation
     initialized_ = true;

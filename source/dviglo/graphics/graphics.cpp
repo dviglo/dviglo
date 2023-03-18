@@ -58,14 +58,6 @@ bool Graphics::is_destructed()
     return graphics_destructed;
 }
 
-void Graphics::SetExternalWindow(void* window)
-{
-    if (!window_)
-        externalWindow_ = window;
-    else
-        DV_LOGERROR("Window already opened, can not set external window");
-}
-
 void Graphics::SetWindowTitle(const String& windowTitle)
 {
     windowTitle_ = windowTitle;
@@ -505,12 +497,6 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
     // Borderless cannot be fullscreen, they are mutually exclusive
     if (params.borderless_)
         params.fullscreen_ = false;
-
-    // On iOS window needs to be resizable to handle orientation changes properly
-#ifdef IOS
-    if (!externalWindow_)
-        params.resizable_ = true;
-#endif
 
     // Ensure that multisample factor is in valid range
     params.multiSample_ = NextPowerOfTwo(Clamp(params.multiSample_, 1, 16));

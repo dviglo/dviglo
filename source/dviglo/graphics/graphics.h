@@ -167,8 +167,6 @@ public:
     Graphics(const Graphics&) = delete;
     Graphics& operator =(const Graphics&) = delete;
 
-    /// Set external window handle. Only effective before setting the initial screen mode.
-    void SetExternalWindow(void* window);
     /// Set window title.
     void SetWindowTitle(const String& windowTitle);
     /// Set window icon.
@@ -346,9 +344,6 @@ public:
         return static_cast<GraphicsImpl_OGL*>(impl_);
     }
 #endif
-
-    /// Return OS-specific external window handle. Null if not in use.
-    void* GetExternalWindow() const { return externalWindow_; }
 
     /// Return SDL window.
     SDL_Window* GetWindow() const { return window_; }
@@ -844,8 +839,6 @@ private:
     String windowTitle_;
     /// Window icon image.
     WeakPtr<Image> windowIcon_;
-    /// External window, null if not in use (default.)
-    void* externalWindow_{};
     /// Most recently applied window mode. It may not represent actual window state
     /// if window was resized by user or Graphics::SetScreenMode was explicitly called.
     WindowModeParams primaryWindowMode_;
