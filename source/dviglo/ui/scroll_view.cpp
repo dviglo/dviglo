@@ -24,20 +24,10 @@ ScrollView::ScrollView() :
     viewPosition_(IntVector2::ZERO),
     viewSize_(IntVector2::ZERO),
     viewPositionAttr_(IntVector2::ZERO),
-    touchScrollSpeed_(Vector2::ZERO),
-    touchScrollSpeedMax_(Vector2::ZERO),
     pageStep_(1.0f),
     scrollBarsAutoVisible_(true),
     ignoreEvents_(false),
-    resizeContentWidth_(false),
-    scrollDeceleration_(30.0f),
-    scrollSnapEpsilon_(M_EPSILON),
-    scrollTouchDown_(false),
-    barScrolling_(false),
-    autoDisableChildren_(false),
-    scrollChildrenDisable_(false),
-    touchDistanceSum_(0.0f),
-    autoDisableThreshold_(25.0f)
+    resizeContentWidth_(false)
 {
     clipChildren_ = true;
     SetEnabled(true);
@@ -60,10 +50,6 @@ ScrollView::ScrollView() :
     SubscribeToEvent(horizontalScrollBar_, E_VISIBLECHANGED, DV_HANDLER(ScrollView, HandleScrollBarVisibleChanged));
     SubscribeToEvent(verticalScrollBar_, E_SCROLLBARCHANGED, DV_HANDLER(ScrollView, HandleScrollBarChanged));
     SubscribeToEvent(verticalScrollBar_, E_VISIBLECHANGED, DV_HANDLER(ScrollView, HandleScrollBarVisibleChanged));
-    SubscribeToEvent(E_TOUCHMOVE, DV_HANDLER(ScrollView, HandleTouchMove));
-    SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(ScrollView, HandleTouchMove));
-    SubscribeToEvent(E_TOUCHEND, DV_HANDLER(ScrollView, HandleTouchMove));
-
 }
 
 ScrollView::~ScrollView() = default;
@@ -80,70 +66,6 @@ void ScrollView::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Scroll Step", GetScrollStep, SetScrollStep, 0.1f, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Page Step", GetPageStep, SetPageStep, 1.0f, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Auto Show/Hide Scrollbars", GetScrollBarsAutoVisible, SetScrollBarsAutoVisible, true, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Scroll Deceleration", GetScrollDeceleration, SetScrollDeceleration, 30.0f, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Scroll Snap Epsilon", GetScrollSnapEpsilon, SetScrollSnapEpsilon, M_EPSILON, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Auto Disable Children", GetAutoDisableChildren, SetAutoDisableChildren, false, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Auto Disable Threshold", GetAutoDisableThreshold, SetAutoDisableThreshold, 25.0f, AM_FILE);
-}
-
-void ScrollView::Update(float timeStep)
-{
-    // Update touch scrolling here if necessary
-    if (touchScrollSpeed_ == Vector2::ZERO && touchScrollSpeedMax_ == Vector2::ZERO && !barScrolling_)
-        return;
-
-    // Check if we should not scroll:
-    // - ScrollView is not visible, is not enabled, or doesn't have focus
-    // - The element being dragged is not a child of the ScrollView, or is one of our scrollbars
-    if (!IsVisible() || !IsEnabled() || !HasFocus())
-    {
-        touchScrollSpeed_ = Vector2::ZERO;
-        touchScrollSpeedMax_ = Vector2::ZERO;
-        return;
-    }
-
-    if (DV_UI.IsDragging())
-    {
-        Vector<UIElement*> dragElements = DV_UI.GetDragElements();
-
-        for (const UIElement* dragElement : dragElements)
-        {
-            MouseButtonFlags dragButtons = dragElement->GetDragButtonCombo();
-
-            if (dragButtons != MOUSEB_LEFT)
-                continue;
-
-            UIElement* dragParent = dragElement->GetParent();
-            bool dragElementIsChild = false;
-
-            while (dragParent)
-            {
-                if (dragParent == this)
-                {
-                    dragElementIsChild = true;
-                    break;
-                }
-                dragParent = dragParent->GetParent();
-            }
-
-            if (!dragElementIsChild || dragElement == horizontalScrollBar_->GetSlider() ||
-                dragElement == verticalScrollBar_->GetSlider())
-            {
-                touchScrollSpeed_ = Vector2::ZERO;
-                touchScrollSpeedMax_ = Vector2::ZERO;
-                return;
-            }
-        }
-    }
-
-    // Update view position
-    IntVector2 newPosition = viewPosition_;
-    newPosition.x_ += (int)touchScrollSpeed_.x_;
-    newPosition.y_ += (int)touchScrollSpeed_.y_;
-    SetViewPosition(newPosition);
-
-    // Smooth deceleration
-    ScrollSmooth(timeStep);
 }
 
 void ScrollView::ApplyAttributes()
@@ -524,181 +446,6 @@ void ScrollView::HandleElementResized(StringHash eventType, VariantMap& eventDat
 {
     if (!ignoreEvents_)
         OnResize(GetSize(), IntVector2::ZERO);
-}
-
-void ScrollView::HandleTouchMove(StringHash eventType, VariantMap& eventData)
-{
-    using namespace TouchMove;
-
-    if (eventType == E_TOUCHMOVE && !barScrolling_)
-    {
-        scrollTouchDown_ = true;
-        // Take new scrolling speed if it's faster than the current accumulated value
-        auto dX = (float)-eventData[P_DX].GetI32();
-        auto dY = (float)-eventData[P_DY].GetI32();
-
-        if (Abs(dX) > Abs(touchScrollSpeed_.x_))
-            touchScrollSpeed_.x_ = dX;
-        if (Abs(dY) > Abs(touchScrollSpeed_.y_))
-            touchScrollSpeed_.y_ = dY;
-
-        // Auto disable children
-        touchDistanceSum_ += dX * dX + dY * dY;
-        if (autoDisableChildren_ && touchDistanceSum_ >= autoDisableThreshold_)
-        {
-            if (visible_ && !scrollChildrenDisable_)
-            {
-                scrollChildrenDisable_ = true;
-                scrollPanel_->SetDeepEnabled(false);
-            }
-        }
-
-        touchScrollSpeedMax_.x_ = dX;
-        touchScrollSpeedMax_.y_ = dY;
-    }
-    else if (eventType == E_TOUCHBEGIN)
-    {
-        int X = eventData[P_X].GetI32();
-        int Y = eventData[P_Y].GetI32();
-        IntVector2 pos = IntVector2(X, Y);
-
-        // Prevent conflict between touch scroll and scrollbar scroll
-        if (horizontalScrollBar_->IsVisible() && horizontalScrollBar_->IsInsideCombined(pos, true))
-            barScrolling_ = true;
-
-        if (verticalScrollBar_->IsVisible() && verticalScrollBar_->IsInsideCombined(pos, true))
-            barScrolling_ = true;
-
-        // Stop the smooth scrolling
-        touchScrollSpeed_ = Vector2::ZERO;
-        touchScrollSpeedMax_ = Vector2::ZERO;
-    }
-    else if (eventType == E_TOUCHEND)
-    {
-        // 'Flick' action
-        // Release any auto disabled children
-        if (scrollChildrenDisable_)
-        {
-            touchDistanceSum_ = 0.0f;
-            scrollChildrenDisable_ = false;
-            scrollPanel_->ResetDeepEnabled();
-        }
-
-        barScrolling_ = false;
-        scrollTouchDown_ = false;
-        if (Abs(touchScrollSpeedMax_.x_) > scrollSnapEpsilon_)
-            touchScrollSpeed_.x_ = touchScrollSpeedMax_.x_;
-        else
-            touchScrollSpeed_.x_ = 0;
-
-        if (Abs(touchScrollSpeedMax_.y_) > scrollSnapEpsilon_)
-            touchScrollSpeed_.y_ = touchScrollSpeedMax_.y_;
-        else
-            touchScrollSpeed_.y_ = 0;
-        touchScrollSpeedMax_ = Vector2::ZERO;
-    }
-}
-
-void ScrollView::ScrollSmooth(float timeStep)
-{
-    // Decay the momentum
-    if (touchScrollSpeedMax_.x_ >= scrollSnapEpsilon_)
-    {
-        touchScrollSpeedMax_.x_ -= scrollDeceleration_ * timeStep;
-        touchScrollSpeedMax_.x_ = touchScrollSpeedMax_.x_ > 0 ? touchScrollSpeedMax_.x_ : 0;
-    }
-    else if (touchScrollSpeedMax_.x_ <= -scrollSnapEpsilon_)
-    {
-        touchScrollSpeedMax_.x_ += scrollDeceleration_ * timeStep;
-        touchScrollSpeedMax_.x_ = touchScrollSpeedMax_.x_ < 0 ? touchScrollSpeedMax_.x_ : 0;
-    }
-    else
-        touchScrollSpeedMax_.x_ = 0;
-
-    if (touchScrollSpeedMax_.y_ >= scrollSnapEpsilon_)
-    {
-        touchScrollSpeedMax_.y_ -= scrollDeceleration_ * timeStep;
-        touchScrollSpeedMax_.y_ = touchScrollSpeedMax_.y_ > 0 ? touchScrollSpeedMax_.y_ : 0;
-    }
-    else if (touchScrollSpeedMax_.y_ <= -scrollSnapEpsilon_)
-    {
-        touchScrollSpeedMax_.y_ += scrollDeceleration_ * timeStep;
-        touchScrollSpeedMax_.y_ = touchScrollSpeedMax_.y_ < 0 ? touchScrollSpeedMax_.y_ : 0;
-    }
-    else
-        touchScrollSpeedMax_.y_ = 0;
-
-    // Control vs flick
-    if (scrollTouchDown_)
-    {
-        // Finger is held down: control = instant stop
-        touchScrollSpeed_ = Vector2::ZERO;
-    }
-    else
-    {
-        // Finger is released: flick = smooth deceleration
-        if (touchScrollSpeed_.x_ >= scrollSnapEpsilon_)
-        {
-            touchScrollSpeed_.x_ -= scrollDeceleration_ * timeStep;
-            if (touchScrollSpeed_.x_ < 0)
-            {
-                touchScrollSpeed_.x_ = 0;
-            }
-
-            if (horizontalScrollBar_->GetValue() >= horizontalScrollBar_->GetRange() - M_EPSILON)
-            {
-                // Stop movement when we reach end of scroll
-                touchScrollSpeed_.x_ = 0;
-            }
-        }
-        else if (touchScrollSpeed_.x_ < -scrollSnapEpsilon_)
-        {
-            touchScrollSpeed_.x_ += scrollDeceleration_ * timeStep;
-            if (touchScrollSpeed_.x_ > 0)
-            {
-                touchScrollSpeed_.x_ = 0;
-            }
-
-            if (horizontalScrollBar_->GetValue() <= M_EPSILON)
-            {
-                // Stop movement when we reach end of scroll
-                touchScrollSpeed_.x_ = 0;
-            }
-        }
-        else
-            touchScrollSpeed_.x_ = 0;
-
-        if (touchScrollSpeed_.y_ >= scrollSnapEpsilon_)
-        {
-            touchScrollSpeed_.y_ -= scrollDeceleration_ * timeStep;
-            if (touchScrollSpeed_.y_ < 0)
-            {
-                touchScrollSpeed_.y_ = 0;
-            }
-
-            if (verticalScrollBar_->GetValue() >= verticalScrollBar_->GetRange() - M_EPSILON)
-            {
-                // Stop movement when we reach end of scroll
-                touchScrollSpeed_.y_ = 0;
-            }
-        }
-        else if (touchScrollSpeed_.y_ < -scrollSnapEpsilon_)
-        {
-            touchScrollSpeed_.y_ += scrollDeceleration_ * timeStep;
-            if (touchScrollSpeed_.y_ > 0)
-            {
-                touchScrollSpeed_.y_ = 0;
-            }
-
-            if (verticalScrollBar_->GetValue() <= M_EPSILON)
-            {
-                // Stop movement when we reach end of scroll
-                touchScrollSpeed_.y_ = 0;
-            }
-        }
-        else
-            touchScrollSpeed_.y_ = 0;
-    }
 }
 
 }

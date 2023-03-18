@@ -25,8 +25,6 @@ public:
     /// Register object factory.
     static void RegisterObject();
 
-    /// Perform UI element update.
-    void Update(float timeStep) override;
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;
     /// React to mouse wheel.
@@ -58,18 +56,6 @@ public:
     /// Set arrow key page step.
     void SetPageStep(float step);
 
-    /// Set scroll deceleration.
-    void SetScrollDeceleration(float deceleration) { scrollDeceleration_ = deceleration; }
-
-    /// Set scroll snap epsilon.
-    void SetScrollSnapEpsilon(float snap) { scrollSnapEpsilon_ = snap; }
-
-    /// Set whether child elements should be disabled while touch scrolling.
-    void SetAutoDisableChildren(bool disable) { autoDisableChildren_ = disable; };
-
-    /// Set how much touch movement is needed to trigger child element disabling.
-    void SetAutoDisableThreshold(float amount) { autoDisableThreshold_ = amount; };
-
     /// Return view offset from the top-left corner.
     const IntVector2& GetViewPosition() const { return viewPosition_; }
 
@@ -99,18 +85,6 @@ public:
 
     /// Return arrow key page step.
     float GetPageStep() const { return pageStep_; }
-
-    /// Return scroll deceleration.
-    float GetScrollDeceleration() const { return scrollDeceleration_; }
-
-    /// Return scroll snap epsilon.
-    float GetScrollSnapEpsilon() const { return scrollSnapEpsilon_; }
-
-    /// Return whether child element will be disabled while touch scrolling.
-    bool GetAutoDisableChildren() const { return autoDisableChildren_; }
-
-    /// Return how much touch movement is needed to trigger child element disabling.
-    float GetAutoDisableThreshold() const { return autoDisableThreshold_; }
 
     /// Set view position attribute.
     void SetViewPositionAttr(const IntVector2& value);
@@ -143,10 +117,6 @@ protected:
     IntVector2 viewSize_;
     /// View offset attribute.
     IntVector2 viewPositionAttr_;
-    /// Accumulated touch scroll speed.
-    Vector2 touchScrollSpeed_;
-    /// Max touch scroll speed.
-    Vector2 touchScrollSpeedMax_;
     /// Arrow key page step.
     float pageStep_;
     /// Automatically show/hide scrollbars flag.
@@ -155,22 +125,6 @@ protected:
     bool ignoreEvents_;
     /// Resize content widget width to match panel. Internal flag, used by the ListView class.
     bool resizeContentWidth_;
-    /// Scroll deceleration.
-    float scrollDeceleration_;
-    /// Scroll snap epsilon.
-    float scrollSnapEpsilon_;
-    /// Used to trigger scroll smoothing when false.
-    bool scrollTouchDown_;
-    /// Used to prevent touch scroll - scroll bar conflict.
-    bool barScrolling_;
-    /// Used to determine if child elements should be disabled while touch scrolling, to prevent their trigger.
-    bool autoDisableChildren_;
-    /// Used to determine if children have been disabled.
-    bool scrollChildrenDisable_;
-    /// Distance moved with touch scrolling.
-    float touchDistanceSum_;
-    /// Threshold to trigger auto disable children.
-    float autoDisableThreshold_;
 
 private:
     /// Handle scrollbar value changed.
@@ -180,9 +134,6 @@ private:
     /// Handle content element resized.
     void HandleElementResized(StringHash eventType, VariantMap& eventData);
     /// Handle touch move event for scrolling.
-    void HandleTouchMove(StringHash eventType, VariantMap& eventData);
-    /// Handle the scroll smoothing.
-    void ScrollSmooth(float timeStep);
 };
 
 }
