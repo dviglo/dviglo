@@ -60,7 +60,7 @@ void UIDrag::CreateGUI()
 
         // Set the layout mode to make the child text elements aligned vertically
         b->SetLayout(LM_VERTICAL, 20, {40, 40, 40, 40});
-        auto dragInfos = {"Num Touch", "Text", "Event Touch"};
+        auto dragInfos = {"Num Buttons", "Drag Begin", "Drag Move"};
         for (auto name: dragInfos)
             b->CreateChild<Text>(name)->SetStyleAuto();
 
@@ -72,16 +72,6 @@ void UIDrag::CreateGUI()
         SubscribeToEvent(b, E_DRAGBEGIN, DV_HANDLER(UIDrag, HandleDragBegin));
         SubscribeToEvent(b, E_DRAGCANCEL, DV_HANDLER(UIDrag, HandleDragCancel));
     }
-
-    for (int i = 0; i < 10; i++)
-    {
-        auto* t = new Text();
-        root->AddChild(t);
-        t->SetStyleAuto();
-        t->SetName("Touch "+ String(i));
-        t->SetVisible(false);
-        t->SetPriority(100);     // Make sure it has higher priority than the buttons
-    }
 }
 
 void UIDrag::CreateInstructions()
@@ -89,7 +79,6 @@ void UIDrag::CreateInstructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
     instructionText->SetText("Drag on the buttons to move them around.\n"
-                             "Touch input allows also multi-drag.\n"
                              "Press SPACE to show/hide tagged UI elements.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
@@ -127,10 +116,10 @@ void UIDrag::HandleDragBegin(StringHash eventType, VariantMap& eventData)
     int buttons = eventData[P_BUTTONS].GetI32();
     element->SetVar("BUTTONS", buttons);
 
-    auto* t = element->GetChildStaticCast<Text>("Text", false);
+    auto* t = element->GetChildStaticCast<Text>("Drag Begin", false);
     t->SetText("Drag Begin Buttons: " + String(buttons));
 
-    t = element->GetChildStaticCast<Text>("Num Touch", false);
+    t = element->GetChildStaticCast<Text>("Num Buttons", false);
     t->SetText("Number of buttons: " + String(eventData[P_NUMBUTTONS].GetI32()));
 }
 
@@ -144,7 +133,7 @@ void UIDrag::HandleDragMove(StringHash eventType, VariantMap& eventData)
     int Y = eventData[P_Y].GetI32() + d.y_;
     int BUTTONS = element->GetVar("BUTTONS").GetI32();
 
-    auto* t = element->GetChildStaticCast<Text>("Event Touch", false);
+    auto* t = element->GetChildStaticCast<Text>("Drag Move", false);
     t->SetText("Drag Move Buttons: " + String(buttons));
 
     if (buttons == BUTTONS)
@@ -162,26 +151,6 @@ void UIDrag::HandleDragCancel(StringHash eventType, VariantMap& eventData)
 void UIDrag::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
     UIElement* root = DV_UI.GetRoot();
-
-    unsigned n = DV_INPUT.GetNumTouches();
-    for (unsigned i = 0; i < n; i++)
-    {
-        Text* t = (Text*)root->GetChild("Touch " + String(i));
-        TouchState* ts = DV_INPUT.GetTouch(i);
-        t->SetText("Touch " + String(ts->touchID_));
-
-        IntVector2 pos = ts->position_;
-        pos.y_ -= 30;
-
-        t->SetPosition(pos);
-        t->SetVisible(true);
-    }
-
-    for (unsigned i = n; i < 10; i++)
-    {
-        Text* t = (Text*)root->GetChild("Touch " + String(i));
-        t->SetVisible(false);
-    }
 
     if (DV_INPUT.GetKeyPress(KEY_SPACE))
     {
