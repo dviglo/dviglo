@@ -1263,8 +1263,9 @@ void X11_ShowWindow(_THIS, SDL_Window *window)
     Display *display = data->videodata->display;
     XEvent event;
 
-    if (window->driverdata->hidden_by_parent_focus) {
-        return;
+    if (window->parent) {
+        /* Update our position in case our parent moved while we were hidden */
+        X11_UpdateWindowPosition(window);
     }
 
     if (!X11_IsWindowMapped(_this, window)) {

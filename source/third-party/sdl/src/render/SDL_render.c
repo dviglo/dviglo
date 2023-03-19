@@ -85,7 +85,7 @@ this should probably be removed at some point in the future.  --ryan. */
 
 #define SDL_BLENDMODE_MUL_FULL                                                                                    \
     SDL_COMPOSE_BLENDMODE(SDL_BLENDFACTOR_DST_COLOR, SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA, SDL_BLENDOPERATION_ADD, \
-                          SDL_BLENDFACTOR_DST_ALPHA, SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA, SDL_BLENDOPERATION_ADD)
+                          SDL_BLENDFACTOR_ZERO, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_ADD)
 
 #if !SDL_RENDER_DISABLED
 static const SDL_RenderDriver *render_drivers[] = {
@@ -4306,8 +4306,13 @@ int SDL_SetRenderVSync(SDL_Renderer *renderer, int vsync)
     }
 
     if (!renderer->SetVSync ||
-        renderer->SetVSync(renderer, vsync) < 0) {
+        renderer->SetVSync(renderer, vsync) != 0) {
         renderer->simulate_vsync = vsync ? SDL_TRUE : SDL_FALSE;
+        if (renderer->simulate_vsync) {
+            renderer->info.flags |= SDL_RENDERER_PRESENTVSYNC;
+        } else {
+            renderer->info.flags &= ~SDL_RENDERER_PRESENTVSYNC;
+        }
     } else {
         renderer->simulate_vsync = SDL_FALSE;
     }

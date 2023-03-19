@@ -242,12 +242,14 @@ static void ConfigureWindowGeometry(SDL_Window *window)
     SDL_SendWindowEvent(window, SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED, data->drawable_width, data->drawable_height);
 }
 
-static void EnsurePopupIsWithinParent(SDL_Window *window)
+static void EnsurePopupPositionIsValid(SDL_Window *window)
 {
-    /* Per the spec, popup windows *must* overlap the parent window.
-     * Failure to do so on a compositor that enforces this restriction
-     * will result in the window being spuriously closed at best, and
-     * a protocol violation at worst.
+    /* Per the xdg-positioner spec, child popup windows must intersect or at
+     * least be partially adjacent to the parent window.
+     *
+     * Failure to ensure this on a compositor that enforces this restriction
+     * can result in behavior ranging from the window being spuriously closed
+     * to a protocol violation.
      */
     if (window->x + window->w < 0) {
         window->x = -window->w;
@@ -648,8 +650,11 @@ static void handle_configure_xdg_popup(void *data,
     GetPopupPosition(wind->sdlwindow, 0, 0, &offset_x, &offset_y);
     x -= offset_x;
     y -= offset_y;
-    
-    SDL_SendWindowEvent(wind->sdlwindow, SDL_EVENT_WINDOW_RESIZED, width, height);
+
+    wind->requested_window_width = width;
+    wind->requested_window_height = height;
+
+    ConfigureWindowGeometry(wind->sdlwindow);
     SDL_SendWindowEvent(wind->sdlwindow, SDL_EVENT_WINDOW_MOVED, x, y);
 
     if (wind->surface_status == WAYLAND_SURFACE_STATUS_WAITING_FOR_CONFIGURE) {
@@ -1950,7 +1955,7 @@ int Wayland_CreateWindow(_THIS, SDL_Window *window)
     }
 
     if (SDL_WINDOW_IS_POPUP(window)) {
-        EnsurePopupIsWithinParent(window);
+        EnsurePopupPositionIsValid(window);
     }
 
     data->waylandData = c;
@@ -2088,7 +2093,7 @@ void Wayland_SetWindowPosition(_THIS, SDL_Window *window)
         xdg_popup_get_version(wind->shell_surface.xdg.roleobj.popup.popup) >= XDG_POPUP_REPOSITION_SINCE_VERSION) {
         int x, y;
 
-        EnsurePopupIsWithinParent(window);
+        EnsurePopupPositionIsValid(window);
         GetPopupPosition(window, window->x, window->y, &x, &y);
         xdg_positioner_set_offset(wind->shell_surface.xdg.roleobj.popup.positioner, x, y);
         xdg_popup_reposition(wind->shell_surface.xdg.roleobj.popup.popup,
