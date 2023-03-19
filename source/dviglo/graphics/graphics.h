@@ -457,8 +457,10 @@ public:
     IntVector2 GetDesktopResolution(SDL_DisplayID display) const;
     /// Return the number of currently connected monitors.
     int GetMonitorCount() const;
-    /// Returns the index of the display containing the center of the window on success or a negative error code on failure.
-    SDL_DisplayID GetCurrentDisplay() const;
+
+    /// Возвращает ID дисплея, в котором находится центр окна. В случае ошибки возвращает 0
+    SDL_DisplayID get_current_display() const;
+
     /// Returns true if window is maximized or runs in full screen mode.
     bool GetMaximized() const;
 

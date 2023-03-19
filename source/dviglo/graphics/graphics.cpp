@@ -306,9 +306,20 @@ int Graphics::GetMonitorCount() const
     return count;
 }
 
-SDL_DisplayID Graphics::GetCurrentDisplay() const
+SDL_DisplayID Graphics::get_current_display() const
 {
-    return window_ ? SDL_GetDisplayForWindow(window_) : 0;
+    if (!window_)
+    {
+        DV_LOGERROR("Graphics::get_current_display(): !window_");
+        return 0;
+    }
+
+    SDL_DisplayID ret = SDL_GetDisplayForWindow(window_);
+
+    if (!ret)
+        DV_LOGERRORF("Graphics::get_current_display(): \"%s\"", SDL_GetError());
+ 
+    return ret;
 }
 
 bool Graphics::GetMaximized() const
