@@ -120,13 +120,16 @@ void WindowSettingsDemo::InitSettings()
     monitorControl_ = window_->CreateChild<DropDownList>("Monitor");
     monitorControl_->SetMinHeight(24);
     monitorControl_->SetStyleAuto();
-    for (int i = 0; i < DV_GRAPHICS.GetMonitorCount(); ++i)
+    Vector<SDL_DisplayID> displays = DV_GRAPHICS.get_displays();
+
+    for (SDL_DisplayID display : displays)
     {
-        auto text = MakeShared<Text>();
-        text->SetText(ToString("Monitor %d", i));
+        SharedPtr<Text> text = MakeShared<Text>();
+        text->SetText(ToString("Display %u", display));
         text->SetMinWidth(CeilToInt(text->GetRowWidth(0) + 10));
         monitorControl_->AddItem(text);
         text->SetStyleAuto();
+        text->SetVar("display", display);
     }
 
     // Create resolution selector
@@ -222,11 +225,12 @@ void WindowSettingsDemo::InitSettings()
     SubscribeToEvent(applyButton, E_RELEASED,
         [this](StringHash /*eventType*/, const VariantMap& /*eventData*/)
     {
-        const unsigned monitor = monitorControl_->GetSelection();
-        if (monitor == M_MAX_UNSIGNED)
+        const i32 index = monitorControl_->GetSelection();
+        if (index == NINDEX)
             return;
 
-        const auto& resolutions = DV_GRAPHICS.GetResolutions(monitor);
+        SDL_DisplayID display = monitorControl_->GetSelectedItem()->GetVar("display").GetU32();
+        const auto& resolutions = DV_GRAPHICS.GetResolutions(display);
         const i32 selectedResolution = resolutionControl_->GetSelection();
         if (selectedResolution >= resolutions.Size())
             return;
@@ -246,7 +250,7 @@ void WindowSettingsDemo::InitSettings()
         const int width = resolutions[selectedResolution].x_;
         const int height = resolutions[selectedResolution].y_;
         const int refreshRate = resolutions[selectedResolution].z_;
-        DV_GRAPHICS.SetMode(width, height, fullscreen, borderless, resizable, highDPI, vsync, tripleBuffer, multiSample, monitor, refreshRate);
+        DV_GRAPHICS.SetMode(width, height, fullscreen, borderless, resizable, highDPI, vsync, tripleBuffer, multiSample, display, refreshRate);
     });
 }
 
@@ -255,12 +259,22 @@ void WindowSettingsDemo::SynchronizeSettings()
     Graphics& graphics = DV_GRAPHICS;
 
     // Synchronize monitor
-    const SDL_DisplayID currentMonitor = graphics.GetDisplay();
-    monitorControl_->SetSelection(currentMonitor);
+    const SDL_DisplayID current_display = graphics.GetDisplay();
+
+    for (int i = 0; i < monitorControl_->GetNumItems(); ++i)
+    {
+        UIElement* item = monitorControl_->GetItem(i);
+
+        if (item->GetVar("display").GetU32() == current_display)
+        {
+            monitorControl_->SetSelection(i);
+            break;
+        }
+    }
 
     // Synchronize resolution list
     resolutionControl_->RemoveAllItems();
-    const auto& resolutions = graphics.GetResolutions(currentMonitor);
+    const auto& resolutions = graphics.GetResolutions(current_display);
     for (const IntVector3& resolution : resolutions)
     {
         auto resolutionEntry = MakeShared<Text>();
@@ -271,7 +285,7 @@ void WindowSettingsDemo::SynchronizeSettings()
     }
 
     // Synchronize selected resolution
-    const i32 currentResolution = graphics.FindBestResolutionIndex(currentMonitor,
+    const i32 currentResolution = graphics.FindBestResolutionIndex(current_display,
         graphics.GetWidth(), graphics.GetHeight(), graphics.GetRefreshRate());
     resolutionControl_->SetSelection(currentResolution);
 

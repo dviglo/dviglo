@@ -298,12 +298,21 @@ IntVector2 Graphics::GetDesktopResolution(SDL_DisplayID display) const
     return IntVector2(mode->pixel_w, mode->pixel_h);
 }
 
-int Graphics::GetMonitorCount() const
+Vector<SDL_DisplayID> Graphics::get_displays() const
 {
     i32 count = 0;
     SDL_DisplayID* ids = SDL_GetDisplays(&count);
+
+    if (!ids)
+    {
+        DV_LOGERRORF("Graphics::get_displays(): \"%s\"", SDL_GetError());
+        return {};
+    }
+
+    Vector<SDL_DisplayID> ret(ids, count);
     SDL_free(ids);
-    return count;
+
+    return ret;
 }
 
 SDL_DisplayID Graphics::get_current_display() const

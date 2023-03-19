@@ -455,8 +455,9 @@ public:
     Vector<int> GetMultiSampleLevels() const;
     /// Return the desktop resolution.
     IntVector2 GetDesktopResolution(SDL_DisplayID display) const;
-    /// Return the number of currently connected monitors.
-    int GetMonitorCount() const;
+
+    /// Возвращает идентификаторы подключённых дисплеев
+    Vector<SDL_DisplayID> get_displays() const;
 
     /// Возвращает ID дисплея, в котором находится центр окна. В случае ошибки возвращает 0
     SDL_DisplayID get_current_display() const;
