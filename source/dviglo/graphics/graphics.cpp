@@ -327,7 +327,7 @@ SDL_DisplayID Graphics::get_current_display() const
 
     if (!ret)
         DV_LOGERRORF("Graphics::get_current_display(): \"%s\"", SDL_GetError());
- 
+
     return ret;
 }
 
