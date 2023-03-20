@@ -196,9 +196,21 @@ void Log::Write(int level, const String& message)
 
     if (instance.log_file_)
     {
+        // Пишем в файл сообщения, которые были добавлены в лог до открытия файла
+        if (!instance.early_messages_.Empty())
+        {
+            file_write(instance.early_messages_.c_str(), sizeof(char), instance.early_messages_.Length(), instance.log_file_);
+            instance.early_messages_.Clear();
+        }
+
         file_write(formattedMessage.c_str(), sizeof(char), formattedMessage.Length(), instance.log_file_);
         file_write("\n", sizeof(char), 1, instance.log_file_);
         file_flush(instance.log_file_);
+    }
+    else
+    {
+        // Запоминаем сообщение, чтобы вывести его в файл, когда файл будет открыт
+        instance.early_messages_ += formattedMessage + "\n";
     }
 
     instance.inWrite_ = true;
@@ -243,8 +255,20 @@ void Log::WriteRaw(const String& message, bool error)
 
     if (instance.log_file_)
     {
+        // Пишем в файл сообщения, которые были добавлены в лог до открытия файла
+        if (!instance.early_messages_.Empty())
+        {
+            file_write(instance.early_messages_.c_str(), sizeof(char), instance.early_messages_.Length(), instance.log_file_);
+            instance.early_messages_.Clear();
+        }
+
         file_write(message.c_str(), sizeof(char), message.Length(), instance.log_file_);
         file_flush(instance.log_file_);
+    }
+    else
+    {
+        // Запоминаем сообщение, чтобы вывести его в файл, когда файл будет открыт
+        instance.early_messages_ += message + "\n";
     }
 
     instance.inWrite_ = true;

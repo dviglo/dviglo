@@ -111,6 +111,9 @@ private:
     FILE* log_file_ = nullptr;
     String log_file_name_;
 
+    /// Сообщения, которые были добавлены в лог до открытия файла
+    String early_messages_;
+
     /// Last log message.
     String lastMessage_;
     /// Logging level.
