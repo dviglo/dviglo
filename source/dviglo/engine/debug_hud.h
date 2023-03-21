@@ -32,10 +32,18 @@ class DV_API DebugHud : public Object
     DV_OBJECT(DebugHud, Object);
 
 public:
+    static DebugHud& get_instance();
+
+private:
     /// Construct.
     explicit DebugHud();
     /// Destruct.
     ~DebugHud() override;
+
+public:
+    // Запрещаем копирование
+    DebugHud(const DebugHud&) = delete;
+    DebugHud& operator =(const DebugHud&) = delete;
 
     /// Update. Called by HandlePostUpdate().
     void Update();
@@ -115,5 +123,7 @@ private:
     /// Current shown-element mode.
     DebugHudElements mode_;
 };
+
+#define DV_DEBUG_HUD (dviglo::DebugHud::get_instance())
 
 }

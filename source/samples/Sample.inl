@@ -157,9 +157,8 @@ void Sample::CreateConsoleAndDebugHud()
     DV_CONSOLE.SetDefaultStyle(xmlFile);
     DV_CONSOLE.GetBackground()->SetOpacity(0.8f);
 
-    // Create debug HUD.
-    DebugHud* debugHud = DV_ENGINE.CreateDebugHud();
-    debugHud->SetDefaultStyle(xmlFile);
+    // Create debug HUD
+    DV_DEBUG_HUD.SetDefaultStyle(xmlFile);
 }
 
 
@@ -191,7 +190,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 
     // Toggle debug HUD with F2
     else if (key == KEY_F2)
-        GetSubsystem<DebugHud>()->ToggleAll();
+        DV_DEBUG_HUD.ToggleAll();
 
     // Common rendering quality controls, only when UI has no focused element
     else if (!DV_UI.GetFocusElement())

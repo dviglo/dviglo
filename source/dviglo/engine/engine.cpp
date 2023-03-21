@@ -489,22 +489,6 @@ void Engine::RunFrame()
     DV_PROFILE_FRAME();
 }
 
-DebugHud* Engine::CreateDebugHud()
-{
-    if (GParams::is_headless() || !initialized_)
-        return nullptr;
-
-    // Return existing debug HUD if possible
-    auto* debugHud = GetSubsystem<DebugHud>();
-    if (!debugHud)
-    {
-        debugHud = new DebugHud();
-        DV_CONTEXT.RegisterSubsystem(debugHud);
-    }
-
-    return debugHud;
-}
-
 void Engine::SetTimeStepSmoothing(int frames)
 {
     timeStepSmoothing_ = (unsigned)Clamp(frames, 1, 20);

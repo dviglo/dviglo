@@ -10,8 +10,6 @@
 namespace dviglo
 {
 
-class DebugHud;
-
 /// Urho3D engine. Creates the other subsystems.
 class DV_API Engine : public Object
 {
@@ -37,8 +35,7 @@ public:
     bool InitializeResourceCache(const VariantMap& parameters, bool removeOld = true);
     /// Run one frame.
     void RunFrame();
-    /// Create the debug hud.
-    DebugHud* CreateDebugHud();
+
     /// Set minimum frames per second. If FPS goes lower than this, time will appear to slow down.
     void SetMinFps(int fps);
     /// Set maximum frames per second. The engine will sleep if FPS is higher than this.
