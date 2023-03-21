@@ -109,7 +109,6 @@ Context::Context() :
 
 Context::~Context()
 {
-    subsystems_.Clear();
     factories_.Clear();
 
     // Delete allocated event data maps
@@ -149,21 +148,6 @@ void Context::RegisterFactory(ObjectFactory* factory, const char* category)
     RegisterFactory(factory);
     if (String::CStringLength(category))
         objectCategories_[category].Push(factory->GetType());
-}
-
-void Context::RegisterSubsystem(Object* object)
-{
-    if (!object)
-        return;
-
-    subsystems_[object->GetType()] = object;
-}
-
-void Context::RemoveSubsystem(StringHash objectType)
-{
-    HashMap<StringHash, SharedPtr<Object>>::Iterator i = subsystems_.Find(objectType);
-    if (i != subsystems_.End())
-        subsystems_.Erase(i);
 }
 
 AttributeHandle Context::RegisterAttribute(StringHash objectType, const AttributeInfo& attr)
@@ -242,15 +226,6 @@ void Context::CopyBaseAttributes(StringHash baseType, StringHash derivedType)
                 networkAttributes_[derivedType].Push(attr);
         }
     }
-}
-
-Object* Context::GetSubsystem(StringHash type) const
-{
-    HashMap<StringHash, SharedPtr<Object>>::ConstIterator i = subsystems_.Find(type);
-    if (i != subsystems_.End())
-        return i->second_;
-    else
-        return nullptr;
 }
 
 const Variant& Context::GetGlobalVar(StringHash key) const

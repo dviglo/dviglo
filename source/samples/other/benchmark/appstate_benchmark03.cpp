@@ -124,10 +124,10 @@ void AppState_Benchmark03::HandleSceneUpdate(StringHash eventType, VariantMap& e
 
     if (DV_INPUT.GetKeyDown(KEY_ESCAPE))
     {
-        GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
         return;
     }
 
     if (fpsCounter_.GetTotalTime() >= 30.f)
-        GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_RESULTSCREEN);
+        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_RESULTSCREEN);
 }

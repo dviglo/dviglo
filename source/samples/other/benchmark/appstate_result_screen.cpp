@@ -46,7 +46,7 @@ void AppState_ResultScreen::HandleSceneUpdate(StringHash eventType, VariantMap& 
     UpdateCurrentFpsElement();
 
     if (DV_INPUT.GetKeyDown(KEY_ESCAPE) || DV_INPUT.GetKeyDown(KEY_RETURN) || DV_INPUT.GetKeyDown(KEY_KP_ENTER))
-        GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 }
 
 void AppState_ResultScreen::ShowResultWindow()
@@ -62,10 +62,9 @@ void AppState_ResultScreen::ShowResultWindow()
     windowTitle->SetStyleAuto();
     windowTitle->SetText("Result");
 
-    AppStateManager* appStateManager = GetSubsystem<AppStateManager>();
-    AppStateId prevAppStateId = appStateManager->GetPreviousAppStateId();
-    const String& benchmarkName = appStateManager->GetName(prevAppStateId);
-    const FpsCounter& benchmarkResult = appStateManager->GetResult(prevAppStateId);
+    AppStateId prevAppStateId = APP_STATE_MANAGER.GetPreviousAppStateId();
+    const String& benchmarkName = APP_STATE_MANAGER.GetName(prevAppStateId);
+    const FpsCounter& benchmarkResult = APP_STATE_MANAGER.GetResult(prevAppStateId);
 
     Text* resultText = window->CreateChild<Text>();
     resultText->SetStyleAuto();
@@ -93,5 +92,5 @@ void AppState_ResultScreen::DestroyResultWindow()
 
 void AppState_ResultScreen::HandleResultOkButtonPressed(StringHash eventType, VariantMap& eventData)
 {
-    GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+    APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 }

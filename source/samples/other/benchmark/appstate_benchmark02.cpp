@@ -109,7 +109,7 @@ void AppState_Benchmark02::HandleSceneUpdate(StringHash eventType, VariantMap& e
 
     if (DV_INPUT.GetKeyDown(KEY_ESCAPE))
     {
-        GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
         return;
     }
 
@@ -126,5 +126,5 @@ void AppState_Benchmark02::HandleSceneUpdate(StringHash eventType, VariantMap& e
     cameraNode->LookAt(cameraTargetNode->GetPosition());
 
     if (cameraSplinePath->IsFinished())
-        GetSubsystem<AppStateManager>()->SetRequiredAppStateId(APPSTATEID_RESULTSCREEN);
+        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_RESULTSCREEN);
 }

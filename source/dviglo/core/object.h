@@ -128,8 +128,6 @@ public:
     const VariantMap& GetGlobalVars() const;
     /// Set global variable with the respective key and value.
     void SetGlobalVar(StringHash key, const Variant& value);
-    /// Return subsystem by type.
-    Object* GetSubsystem(StringHash type) const;
     /// Return active event sender. Null outside event handling.
     Object* GetEventSender() const;
     /// Return active event handler. Null outside event handling.
@@ -142,8 +140,6 @@ public:
     /// Return whether has subscribed to any event.
     bool HasEventHandlers() const { return !eventHandlers_.Empty(); }
 
-    /// Template version of returning a subsystem.
-    template <class T> T* GetSubsystem() const;
     /// Return object category. Categories are (optionally) registered along with the object factory. Return an empty string if the object category is not registered.
     const String& GetCategory() const;
 
@@ -168,8 +164,6 @@ private:
     /// Block object from sending and receiving any events.
     bool blockEvents_;
 };
-
-template <class T> T* Object::GetSubsystem() const { return static_cast<T*>(GetSubsystem(T::GetTypeStatic())); }
 
 /// Base class for object factories.
 class DV_API ObjectFactory : public RefCounted

@@ -54,9 +54,7 @@ public:
 
     void Start() override
     {
-        DV_CONTEXT.RegisterSubsystem(new AppStateManager());
-        AppStateManager* appStateManager = DV_CONTEXT.GetSubsystem<AppStateManager>();
-        appStateManager->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 
         DV_INPUT.SetToggleFullscreen(false); // Block Alt+Enter
 
@@ -65,7 +63,7 @@ public:
 
     void ApplyAppState(StringHash eventType, VariantMap& eventData)
     {
-        DV_CONTEXT.GetSubsystem<AppStateManager>()->Apply();
+        APP_STATE_MANAGER.Apply();
     }
 };
 

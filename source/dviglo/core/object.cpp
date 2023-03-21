@@ -403,11 +403,6 @@ void Object::SetGlobalVar(StringHash key, const Variant& value)
     DV_CONTEXT.SetGlobalVar(key, value);
 }
 
-Object* Object::GetSubsystem(StringHash type) const
-{
-    return DV_CONTEXT.GetSubsystem(type);
-}
-
 Object* Object::GetEventSender() const
 {
     return DV_CONTEXT.GetEventSender();

@@ -23,14 +23,22 @@ class AppStateManager : public dv::Object
 public:
     DV_OBJECT(AppStateManager, Object);
 
+public:
+    static AppStateManager& get_instance();
+
 private:
     dv::HashMap<AppStateId, dv::SharedPtr<AppState_Base>> appStates_;
     AppStateId currentAppStateId_ = APPSTATEID_NULL;
     AppStateId previousAppStateId_ = APPSTATEID_NULL;
     AppStateId requiredAppStateId_ = APPSTATEID_NULL;
 
-public:
     AppStateManager();
+    ~AppStateManager();
+
+public:
+    // Запрещаем копирование
+    AppStateManager(const AppStateManager&) = delete;
+    AppStateManager& operator =(const AppStateManager&) = delete;
 
     AppStateId GetCurrentAppStateId() const { return currentAppStateId_; }
     AppStateId GetPreviousAppStateId() const { return previousAppStateId_; }
@@ -61,3 +69,5 @@ public:
             pair.second_->ClearResult();
     }
 };
+
+#define APP_STATE_MANAGER (AppStateManager::get_instance())

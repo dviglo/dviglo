@@ -72,10 +72,6 @@ public:
     void RegisterFactory(ObjectFactory* factory);
     /// Register a factory for an object type and specify the object category.
     void RegisterFactory(ObjectFactory* factory, const char* category);
-    /// Register a subsystem.
-    void RegisterSubsystem(Object* object);
-    /// Remove a subsystem.
-    void RemoveSubsystem(StringHash objectType);
     /// Register object attribute.
     AttributeHandle RegisterAttribute(StringHash objectType, const AttributeInfo& attr);
     /// Remove object attribute.
@@ -93,10 +89,6 @@ public:
     template <class T> void RegisterFactory();
     /// Template version of registering an object factory with category.
     template <class T> void RegisterFactory(const char* category);
-    /// Template version of registering subsystem.
-    template <class T> T* RegisterSubsystem();
-    /// Template version of removing a subsystem.
-    template <class T> void RemoveSubsystem();
     /// Template version of registering an object attribute.
     template <class T> AttributeHandle RegisterAttribute(const AttributeInfo& attr);
     /// Template version of removing an object attribute.
@@ -108,9 +100,6 @@ public:
     /// Template version of updating an object attribute's default value.
     template <class T> void UpdateAttributeDefaultValue(const char* name, const Variant& defaultValue);
 
-    /// Return subsystem by type.
-    Object* GetSubsystem(StringHash type) const;
-
     /// Return global variable based on key.
     const Variant& GetGlobalVar(StringHash key) const;
 
@@ -119,9 +108,6 @@ public:
 
     /// Set global variable with the respective key and value.
     void SetGlobalVar(StringHash key, const Variant& value);
-
-    /// Return all subsystems.
-    const HashMap<StringHash, SharedPtr<Object>>& GetSubsystems() const { return subsystems_; }
 
     /// Return all object factories.
     const HashMap<StringHash, SharedPtr<ObjectFactory>>& GetObjectFactories() const { return factories_; }
@@ -139,8 +125,6 @@ public:
     const String& GetTypeName(StringHash objectType) const;
     /// Return a specific attribute description for an object, or null if not found.
     AttributeInfo* GetAttribute(StringHash objectType, const char* name);
-    /// Template version of returning a subsystem.
-    template <class T> T* GetSubsystem() const;
     /// Template version of returning a specific attribute description.
     template <class T> AttributeInfo* GetAttribute(const char* name);
 
@@ -202,8 +186,6 @@ private:
 
     /// Object factories.
     HashMap<StringHash, SharedPtr<ObjectFactory>> factories_;
-    /// Subsystems.
-    HashMap<StringHash, SharedPtr<Object>> subsystems_;
     /// Attribute descriptions per object type.
     HashMap<StringHash, Vector<AttributeInfo>> attributes_;
     /// Network replication attribute descriptions per object type.
@@ -231,15 +213,6 @@ template <class T> void Context::RegisterFactory(const char* category)
     RegisterFactory(new ObjectFactoryImpl<T>(), category);
 }
 
-template <class T> T* Context::RegisterSubsystem()
-{
-    T* subsystem = new T(this);
-    RegisterSubsystem(subsystem);
-    return subsystem;
-}
-
-template <class T> void Context::RemoveSubsystem() { RemoveSubsystem(T::GetTypeStatic()); }
-
 template <class T> AttributeHandle Context::RegisterAttribute(const AttributeInfo& attr) { return RegisterAttribute(T::GetTypeStatic(), attr); }
 
 template <class T> void Context::RemoveAttribute(const char* name) { RemoveAttribute(T::GetTypeStatic(), name); }
@@ -248,8 +221,6 @@ template <class T> void Context::RemoveAllAttributes() { RemoveAllAttributes(T::
 
 template <class T, class U> void Context::CopyBaseAttributes() { CopyBaseAttributes(T::GetTypeStatic(), U::GetTypeStatic()); }
 
-template <class T> T* Context::GetSubsystem() const { return static_cast<T*>(GetSubsystem(T::GetTypeStatic())); }
-
 template <class T> AttributeInfo* Context::GetAttribute(const char* name) { return GetAttribute(T::GetTypeStatic(), name); }
 
 template <class T> void Context::UpdateAttributeDefaultValue(const char* name, const Variant& defaultValue)
@@ -257,6 +228,6 @@ template <class T> void Context::UpdateAttributeDefaultValue(const char* name, c
     UpdateAttributeDefaultValue(T::GetTypeStatic(), name, defaultValue);
 }
 
-}
+} // namespace dviglo
 
 #define DV_CONTEXT (dviglo::Context::get_instance())
