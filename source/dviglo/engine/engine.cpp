@@ -489,22 +489,6 @@ void Engine::RunFrame()
     DV_PROFILE_FRAME();
 }
 
-Console* Engine::CreateConsole()
-{
-    if (GParams::is_headless() || !initialized_)
-        return nullptr;
-
-    // Return existing console if possible
-    auto* console = GetSubsystem<Console>();
-    if (!console)
-    {
-        console = new Console();
-        DV_CONTEXT.RegisterSubsystem(console);
-    }
-
-    return console;
-}
-
 DebugHud* Engine::CreateDebugHud()
 {
     if (GParams::is_headless() || !initialized_)

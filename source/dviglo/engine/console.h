@@ -26,10 +26,18 @@ class DV_API Console : public Object
     DV_OBJECT(Console, Object);
 
 public:
+    static Console& get_instance();
+
+private:
     /// Construct.
     explicit Console();
     /// Destruct.
     ~Console() override;
+
+public:
+    // Запрещаем копирование
+    Console(const Console&) = delete;
+    Console& operator =(const Console&) = delete;
 
     /// Set UI elements' style from an XML file.
     void SetDefaultStyle(XMLFile* style);
@@ -174,5 +182,7 @@ private:
     /// Internal flag whether currently in an autocomplete or history change.
     bool historyOrAutoCompleteChange_;
 };
+
+#define DV_CONSOLE (dviglo::Console::get_instance())
 
 }

@@ -106,7 +106,7 @@ public:
             singlePlayer = false;
 
         InitAudio();
-        InitConsole();
+        CreateConsoleAndDebugHud();
         InitScene();
         InitNetworking();
         CreateCamera();
@@ -155,7 +155,7 @@ public:
         }
     }
 
-    void InitConsole()
+    void CreateConsoleAndDebugHud()
     {
         if (GParams::is_headless())
             return;
@@ -163,9 +163,8 @@ public:
         XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
         DV_UI.GetRoot()->SetDefaultStyle(uiStyle);
 
-        Console* console = DV_ENGINE.CreateConsole();
-        console->SetDefaultStyle(uiStyle);
-        console->GetBackground()->SetOpacity(0.8f);
+        DV_CONSOLE.SetDefaultStyle(uiStyle);
+        DV_CONSOLE.GetBackground()->SetOpacity(0.8f);
 
         DebugHud* debug_hud = DV_ENGINE.CreateDebugHud();
         debug_hud->SetDefaultStyle(uiStyle);
@@ -507,21 +506,20 @@ public:
 
     void HandleKeyDown(StringHash eventType, VariantMap& eventData)
     {
-        Console* console = GetSubsystem<Console>();
         DebugHud* debugHud = GetSubsystem<DebugHud>();
 
         i32 key = eventData["Key"].GetI32();
 
         if (key == KEY_ESCAPE)
         {
-            if (!console->IsVisible())
+            if (!DV_CONSOLE.IsVisible())
                 DV_ENGINE.Exit();
             else
-                console->SetVisible(false);
+                DV_CONSOLE.SetVisible(false);
         }
 
         else if (key == KEY_F1)
-            console->Toggle();
+            DV_CONSOLE.Toggle();
 
         else if (key == KEY_F2)
             debugHud->ToggleAll();
@@ -542,7 +540,7 @@ public:
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
         }
         // Allow pause only in singleplayer
-        if (key == KEY_P && singlePlayer && !console->IsVisible() && gameOn)
+        if (key == KEY_P && singlePlayer && !DV_CONSOLE.IsVisible() && gameOn)
         {
             gameScene->SetUpdateEnabled(!gameScene->IsUpdateEnabled());
             if (!gameScene->IsUpdateEnabled())
@@ -867,7 +865,6 @@ public:
     void UpdateControls()
     {
         Input& input = DV_INPUT;
-        Console* console = GetSubsystem<Console>();
 
         if (singlePlayer || runClient)
         {
@@ -931,7 +928,7 @@ public:
 
             // For the triggered actions (fire & jump) check also for press, in case the FPS is low
             // and the key was already released
-            if (!console || !console->IsVisible())
+            if (!GParams::is_headless() && !DV_CONSOLE.IsVisible())
             {
                 if (input.GetKeyDown(KEY_W))
                     playerControls.Set(CTRL_UP, true);
@@ -1044,10 +1041,9 @@ public:
 
     void UpdateFreelookCamera()
     {
-        Console* console = GetSubsystem<Console>();
         Input& input = DV_INPUT;
 
-        if (!console || !console->IsVisible())
+        if (!DV_CONSOLE.IsVisible())
         {
             float timeStep = DV_TIME.GetTimeStep();
             float speedMultiplier = 1.0f;
