@@ -39,11 +39,11 @@ void AppState_MainScreen::HandleButtonPressed(StringHash eventType, VariantMap& 
 
 void AppState_MainScreen::CreateButton(const String& name, const String& text, Window& parent)
 {
-    Button* button = parent.CreateChild<Button>(name);
+    Button* button = parent.create_child<Button>(name);
     button->SetStyleAuto();
     button->SetFixedHeight(24);
 
-    Text* buttonText = button->CreateChild<Text>();
+    Text* buttonText = button->create_child<Text>();
     buttonText->SetStyleAuto();
     buttonText->SetText(text);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
@@ -55,13 +55,13 @@ void AppState_MainScreen::CreateGui()
 {
     UiElement* root = DV_UI.GetRoot();
 
-    Window* window = root->CreateChild<Window>(MAIN_SCREEN_WINDOW_STR);
+    Window* window = root->create_child<Window>(MAIN_SCREEN_WINDOW_STR);
     window->SetStyleAuto();
     window->SetMinWidth(384);
     window->SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6));
     window->SetPosition(10, 34);
 
-    Text* windowTitle = window->CreateChild<Text>();
+    Text* windowTitle = window->create_child<Text>();
     windowTitle->SetStyleAuto();
     windowTitle->SetText("Benchmark list");
 

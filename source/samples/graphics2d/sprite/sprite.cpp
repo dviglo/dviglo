@@ -60,7 +60,7 @@ void Urho2DSprite::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create camera node
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
@@ -79,7 +79,7 @@ void Urho2DSprite::CreateScene()
 
     for (unsigned i = 0; i < NUM_SPRITES; ++i)
     {
-        SharedPtr<Node> spriteNode(scene_->CreateChild("StaticSprite2D"));
+        SharedPtr<Node> spriteNode(scene_->create_child("StaticSprite2D"));
         spriteNode->SetPosition(Vector3(Random(-halfWidth, halfWidth), Random(-halfHeight, halfHeight), 0.0f));
 
         StaticSprite2D* staticSprite = spriteNode->CreateComponent<StaticSprite2D>();
@@ -104,7 +104,7 @@ void Urho2DSprite::CreateScene()
     if (!animationSet)
         return;
 
-    SharedPtr<Node> spriteNode(scene_->CreateChild("AnimatedSprite2D"));
+    SharedPtr<Node> spriteNode(scene_->create_child("AnimatedSprite2D"));
     spriteNode->SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
     AnimatedSprite2D* animatedSprite = spriteNode->CreateComponent<AnimatedSprite2D>();
@@ -116,7 +116,7 @@ void Urho2DSprite::CreateScene()
 void Urho2DSprite::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    Text* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    Text* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys to move, use PageUp PageDown keys to zoom.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

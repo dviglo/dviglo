@@ -113,7 +113,7 @@ void Sample::CreateLogo()
         return;
 
     // Create logo sprite and add to the UI layout
-    logoSprite_ = DV_UI.GetRoot()->CreateChild<Sprite>();
+    logoSprite_ = DV_UI.GetRoot()->create_child<Sprite>();
 
     // Set logo sprite texture
     logoSprite_->SetTexture(logoTexture);

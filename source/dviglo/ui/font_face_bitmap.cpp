@@ -247,13 +247,13 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
     XmlElement rootElem = xml->CreateRoot("font");
 
     // Information
-    XmlElement childElem = rootElem.CreateChild("info");
+    XmlElement childElem = rootElem.create_child("info");
     String fileName = GetFileName(font_->GetName());
     childElem.SetAttribute("face", fileName);
     childElem.SetAttribute("size", String(pointSize));
 
     // Common
-    childElem = rootElem.CreateChild("common");
+    childElem = rootElem.create_child("common");
     childElem.SetI32("lineHeight", rowHeight_);
     unsigned pages = textures_.Size();
     childElem.SetU32("pages", pages);
@@ -269,10 +269,10 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
         pathName = "Data/" + GetPath(font_->GetName());
 
     // Pages
-    childElem = rootElem.CreateChild("pages");
+    childElem = rootElem.create_child("pages");
     for (unsigned i = 0; i < pages; ++i)
     {
-        XmlElement pageElem = childElem.CreateChild("page");
+        XmlElement pageElem = childElem.create_child("page");
         pageElem.SetI32("id", i);
         String texFileName = fileName + "_" + String(i) + ".png";
         pageElem.SetAttribute("file", texFileName);
@@ -282,14 +282,14 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
     }
 
     // Chars and kernings
-    XmlElement charsElem = rootElem.CreateChild("chars");
+    XmlElement charsElem = rootElem.create_child("chars");
     unsigned numGlyphs = glyphMapping_.Size();
     charsElem.SetI32("count", numGlyphs);
 
     for (HashMap<c32, FontGlyph>::ConstIterator i = glyphMapping_.Begin(); i != glyphMapping_.End(); ++i)
     {
         // Char
-        XmlElement charElem = charsElem.CreateChild("char");
+        XmlElement charElem = charsElem.create_child("char");
         charElem.SetI32("id", i->first_);
 
         const FontGlyph& glyph = i->second_;
@@ -305,10 +305,10 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
 
     if (!kerningMapping_.Empty())
     {
-        XmlElement kerningsElem = rootElem.CreateChild("kernings");
+        XmlElement kerningsElem = rootElem.create_child("kernings");
         for (HashMap<u32, float>::ConstIterator i = kerningMapping_.Begin(); i != kerningMapping_.End(); ++i)
         {
-            XmlElement kerningElem = kerningsElem.CreateChild("kerning");
+            XmlElement kerningElem = kerningsElem.create_child("kerning");
             kerningElem.SetI32("first", i->first_ >> 16u);
             kerningElem.SetI32("second", i->first_ & 0xffffu);
             kerningElem.SetI32("amount", i->second_);

@@ -273,7 +273,7 @@ public:
     /// Mark node and child nodes to need world transform recalculation. Notify listener components.
     void MarkDirty();
     /// Create a child scene node (with specified ID if provided).
-    Node* CreateChild(const String& name = String::EMPTY, CreateMode mode = REPLICATED, NodeId id = 0, bool temporary = false);
+    Node* create_child(const String& name = String::EMPTY, CreateMode mode = REPLICATED, NodeId id = 0, bool temporary = false);
     /// Create a temporary child scene node (with specified ID if provided).
     Node* CreateTemporaryChild(const String& name = String::EMPTY, CreateMode mode = REPLICATED, NodeId id = 0);
 
@@ -605,7 +605,7 @@ public:
     /// Mark node dirty in scene replication states.
     void MarkReplicationDirty();
     /// Create a child node with specific ID.
-    Node* CreateChild(NodeId id, CreateMode mode, bool temporary = false);
+    Node* create_child(NodeId id, CreateMode mode, bool temporary = false);
     /// Add a pre-created component. Using this function from application code is discouraged, as component operation without an owner node may not be well-defined in all cases. Prefer CreateComponent() instead.
     void AddComponent(Component* component, ComponentId id, CreateMode mode);
 

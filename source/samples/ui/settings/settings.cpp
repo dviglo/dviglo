@@ -79,14 +79,14 @@ void WindowSettingsDemo::CreateScene()
     zone->SetAmbientColor(Color::WHITE);
 
     // Create 3D object
-    Node* objectNode = scene_->CreateChild("Object");
+    Node* objectNode = scene_->create_child("Object");
     objectNode->SetRotation(Quaternion(45.0f, 45.0f, 45.0f));
     auto* objectModel = objectNode->CreateComponent<StaticModel>();
     objectModel->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
     objectModel->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
 
     // Create camera
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     cameraNode_->CreateComponent<Camera>();
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -4.0f));
 
@@ -102,7 +102,7 @@ void WindowSettingsDemo::CreateScene()
 void WindowSettingsDemo::InitSettings()
 {
     // Create the Window and add it to the UI's root node
-    window_ = uiRoot_->CreateChild<Window>("Window");
+    window_ = uiRoot_->create_child<Window>("Window");
 
     // Set Window size and layout settings
     window_->SetPosition(128, 128);
@@ -112,12 +112,12 @@ void WindowSettingsDemo::InitSettings()
     window_->SetStyleAuto();
 
     // Create the Window title Text
-    auto* windowTitle = window_->CreateChild<Text>("WindowTitle");
+    auto* windowTitle = window_->create_child<Text>("WindowTitle");
     windowTitle->SetText("Window Settings");
     windowTitle->SetStyleAuto();
 
     // Create monitor selector
-    monitorControl_ = window_->CreateChild<DropDownList>("Monitor");
+    monitorControl_ = window_->create_child<DropDownList>("Monitor");
     monitorControl_->SetMinHeight(24);
     monitorControl_->SetStyleAuto();
     Vector<SDL_DisplayID> displays = DV_GRAPHICS.get_displays();
@@ -133,7 +133,7 @@ void WindowSettingsDemo::InitSettings()
     }
 
     // Create resolution selector
-    resolutionControl_ = window_->CreateChild<DropDownList>("Resolution");
+    resolutionControl_ = window_->create_child<DropDownList>("Resolution");
     resolutionControl_->SetMinHeight(24);
     resolutionControl_->SetStyleAuto();
 
@@ -144,59 +144,59 @@ void WindowSettingsDemo::InitSettings()
     resolutionPlaceholder->SetStyleAuto();
 
     // Create fullscreen controller
-    auto* fullscreenFrame = window_->CreateChild<UiElement>("Fullscreen Frame");
+    auto* fullscreenFrame = window_->create_child<UiElement>("Fullscreen Frame");
     fullscreenFrame->SetMinHeight(24);
     fullscreenFrame->SetLayout(LM_HORIZONTAL, 6);
 
-    fullscreenControl_ = fullscreenFrame->CreateChild<CheckBox>("Fullscreen Control");
+    fullscreenControl_ = fullscreenFrame->create_child<CheckBox>("Fullscreen Control");
     fullscreenControl_->SetStyleAuto();
 
-    auto* fullscreenText = fullscreenFrame->CreateChild<Text>("Fullscreen Label");
+    auto* fullscreenText = fullscreenFrame->create_child<Text>("Fullscreen Label");
     fullscreenText->SetText("Fullscreen");
     fullscreenText->SetMinWidth(CeilToInt(fullscreenText->GetRowWidth(0) + 10));
     fullscreenText->SetStyleAuto();
 
     // Create borderless controller
-    auto* borderlessFrame = window_->CreateChild<UiElement>("Borderless Frame");
+    auto* borderlessFrame = window_->create_child<UiElement>("Borderless Frame");
     borderlessFrame->SetMinHeight(24);
     borderlessFrame->SetLayout(LM_HORIZONTAL, 6);
 
-    borderlessControl_ = borderlessFrame->CreateChild<CheckBox>("Borderless Control");
+    borderlessControl_ = borderlessFrame->create_child<CheckBox>("Borderless Control");
     borderlessControl_->SetStyleAuto();
 
-    auto* borderlessText = borderlessFrame->CreateChild<Text>("Borderless Label");
+    auto* borderlessText = borderlessFrame->create_child<Text>("Borderless Label");
     borderlessText->SetText("Borderless");
     borderlessText->SetMinWidth(CeilToInt(borderlessText->GetRowWidth(0) + 10));
     borderlessText->SetStyleAuto();
 
     // Create resizable controller
-    auto* resizableFrame = window_->CreateChild<UiElement>("Resizable Frame");
+    auto* resizableFrame = window_->create_child<UiElement>("Resizable Frame");
     resizableFrame->SetMinHeight(24);
     resizableFrame->SetLayout(LM_HORIZONTAL, 6);
 
-    resizableControl_ = resizableFrame->CreateChild<CheckBox>("Resizable Control");
+    resizableControl_ = resizableFrame->create_child<CheckBox>("Resizable Control");
     resizableControl_->SetStyleAuto();
 
-    auto* resizableText = resizableFrame->CreateChild<Text>("Resizable Label");
+    auto* resizableText = resizableFrame->create_child<Text>("Resizable Label");
     resizableText->SetText("Resizable");
     resizableText->SetMinWidth(CeilToInt(resizableText->GetRowWidth(0) + 10));
     resizableText->SetStyleAuto();
 
     // Create resizable controller
-    auto* vsyncFrame = window_->CreateChild<UiElement>("V-Sync Frame");
+    auto* vsyncFrame = window_->create_child<UiElement>("V-Sync Frame");
     vsyncFrame->SetMinHeight(24);
     vsyncFrame->SetLayout(LM_HORIZONTAL, 6);
 
-    vsyncControl_ = vsyncFrame->CreateChild<CheckBox>("V-Sync Control");
+    vsyncControl_ = vsyncFrame->create_child<CheckBox>("V-Sync Control");
     vsyncControl_->SetStyleAuto();
 
-    auto* vsyncText = vsyncFrame->CreateChild<Text>("V-Sync Label");
+    auto* vsyncText = vsyncFrame->create_child<Text>("V-Sync Label");
     vsyncText->SetText("V-Sync");
     vsyncText->SetMinWidth(CeilToInt(vsyncText->GetRowWidth(0) + 10));
     vsyncText->SetStyleAuto();
 
     // Create multi-sample controller from 1 (= 2^0) to 16 (= 2^4)
-    multiSampleControl_ = window_->CreateChild<DropDownList>("Multi-Sample Control");
+    multiSampleControl_ = window_->create_child<DropDownList>("Multi-Sample Control");
     multiSampleControl_->SetMinHeight(24);
     multiSampleControl_->SetStyleAuto();
     for (int i = 0; i <= 4; ++i)
@@ -209,11 +209,11 @@ void WindowSettingsDemo::InitSettings()
     }
 
     // Create "Apply" button
-    auto* applyButton = window_->CreateChild<Button>("Apply");
+    auto* applyButton = window_->create_child<Button>("Apply");
     applyButton->SetLayout(LM_HORIZONTAL, 6, IntRect(6, 6, 6, 6));
     applyButton->SetStyleAuto();
 
-    auto* applyButtonText = applyButton->CreateChild<Text>("Apply Text");
+    auto* applyButtonText = applyButton->create_child<Text>("Apply Text");
     applyButtonText->SetAlignment(HA_CENTER, VA_CENTER);
     applyButtonText->SetText("Apply");
     applyButtonText->SetStyleAuto();

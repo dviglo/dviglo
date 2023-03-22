@@ -24,10 +24,10 @@ ProgressBar::ProgressBar() :
     SetEnabled(false);
     SetEditable(false);
     SetFocus(false);
-    knob_ = CreateChild<BorderImage>("S_Knob");
+    knob_ = create_child<BorderImage>("S_Knob");
     knob_->SetInternal(true);
 
-    loadingText_ = CreateChild<Text>("S_Text");
+    loadingText_ = create_child<Text>("S_Text");
     loadingText_->SetInternal(true);
 
     UpdateProgressBar();

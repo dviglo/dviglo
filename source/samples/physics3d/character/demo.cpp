@@ -84,7 +84,7 @@ void CharacterDemo::CreateScene()
     DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -93,7 +93,7 @@ void CharacterDemo::CreateScene()
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
 
     // Create a directional light with cascaded shadow mapping
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.3f, -0.5f, 0.425f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -103,7 +103,7 @@ void CharacterDemo::CreateScene()
     light->SetSpecularIntensity(0.5f);
 
     // Create the floor object
-    Node* floorNode = scene_->CreateChild("Floor");
+    Node* floorNode = scene_->create_child("Floor");
     floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
     auto* object = floorNode->CreateComponent<StaticModel>();
@@ -121,7 +121,7 @@ void CharacterDemo::CreateScene()
     const unsigned NUM_MUSHROOMS = 60;
     for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
     {
-        Node* objectNode = scene_->CreateChild("Mushroom");
+        Node* objectNode = scene_->create_child("Mushroom");
         objectNode->SetPosition(Vector3(Random(180.0f) - 90.0f, 0.0f, Random(180.0f) - 90.0f));
         objectNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         objectNode->SetScale(2.0f + Random(5.0f));
@@ -142,7 +142,7 @@ void CharacterDemo::CreateScene()
     {
         float scale = Random(2.0f) + 0.5f;
 
-        Node* objectNode = scene_->CreateChild("Box");
+        Node* objectNode = scene_->create_child("Box");
         objectNode->SetPosition(Vector3(Random(180.0f) - 90.0f, Random(10.0f) + 10.0f, Random(180.0f) - 90.0f));
         objectNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         objectNode->SetScale(scale);
@@ -162,11 +162,11 @@ void CharacterDemo::CreateScene()
 
 void CharacterDemo::CreateCharacter()
 {
-    Node* objectNode = scene_->CreateChild("Jack");
+    Node* objectNode = scene_->create_child("Jack");
     objectNode->SetPosition(Vector3(0.0f, 1.0f, 0.0f));
 
     // spin node
-    Node* adjustNode = objectNode->CreateChild("AdjNode");
+    Node* adjustNode = objectNode->create_child("AdjNode");
     adjustNode->SetRotation( Quaternion(180, Vector3(0,1,0) ) );
 
     // Create the rendering component + animation controller
@@ -204,7 +204,7 @@ void CharacterDemo::CreateCharacter()
 void CharacterDemo::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "Space to jump, F to toggle 1st/3rd person\n"

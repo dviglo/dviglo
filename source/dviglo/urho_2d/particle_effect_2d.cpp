@@ -212,7 +212,7 @@ bool ParticleEffect2D::Save(Serializer& dest) const
     XmlElement rootElem = xmlFile.CreateRoot("particleEmitterConfig");
 
     String fileName = GetFileNameAndExtension(sprite_->GetName());
-    rootElem.CreateChild("texture").SetAttribute("name", fileName);
+    rootElem.create_child("texture").SetAttribute("name", fileName);
 
     WriteVector2(rootElem, "sourcePosition", Vector2::ZERO);
     WriteVector2(rootElem, "sourcePositionVariance", sourcePositionVariance_);
@@ -520,19 +520,19 @@ Vector2 ParticleEffect2D::ReadVector2(const XmlElement& element, const String& n
 
 void ParticleEffect2D::WriteInt(XmlElement& element, const String& name, int value) const
 {
-    XmlElement child = element.CreateChild(name);
+    XmlElement child = element.create_child(name);
     child.SetI32("value", value);
 }
 
 void ParticleEffect2D::WriteFloat(XmlElement& element, const String& name, float value) const
 {
-    XmlElement child = element.CreateChild(name);
+    XmlElement child = element.create_child(name);
     child.SetFloat("value", value);
 }
 
 void ParticleEffect2D::WriteColor(XmlElement& element, const String& name, const Color& color) const
 {
-    XmlElement child = element.CreateChild(name);
+    XmlElement child = element.create_child(name);
     child.SetFloat("red", color.r_);
     child.SetFloat("green", color.g_);
     child.SetFloat("blue", color.b_);
@@ -541,7 +541,7 @@ void ParticleEffect2D::WriteColor(XmlElement& element, const String& name, const
 
 void ParticleEffect2D::WriteVector2(XmlElement& element, const String& name, const Vector2& value) const
 {
-    XmlElement child = element.CreateChild(name);
+    XmlElement child = element.create_child(name);
     child.SetFloat("x", value.x_);
     child.SetFloat("y", value.y_);
 }

@@ -88,7 +88,7 @@ void Urho2DIsometricDemo::CreateScene()
     physicsWorld->SetGravity(Vector2(0.0f, 0.0f)); // Neutralize gravity as the character will always be grounded
 
     // Create camera
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
@@ -101,7 +101,7 @@ void Urho2DIsometricDemo::CreateScene()
 
     // Create tile map from tmx file
     auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("Urho2D/Tilesets/atrium.tmx");
-    SharedPtr<Node> tileMapNode(scene_->CreateChild("TileMap"));
+    SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
     auto* tileMap = tileMapNode->CreateComponent<TileMap2D>();
     tileMap->SetTmxFile(tmxFile);
     const TileMapInfo2D& info = tileMap->GetInfo();

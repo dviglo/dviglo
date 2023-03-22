@@ -66,14 +66,14 @@ void MultipleViewports::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
-    Node* planeNode = scene_->CreateChild("Plane");
+    Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
@@ -82,7 +82,7 @@ void MultipleViewports::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -95,7 +95,7 @@ void MultipleViewports::CreateScene()
     const unsigned NUM_MUSHROOMS = 240;
     for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
     {
-        Node* mushroomNode = scene_->CreateChild("Mushroom");
+        Node* mushroomNode = scene_->create_child("Mushroom");
         mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
@@ -109,7 +109,7 @@ void MultipleViewports::CreateScene()
     const unsigned NUM_BOXES = 20;
     for (unsigned i = 0; i < NUM_BOXES; ++i)
     {
-        Node* boxNode = scene_->CreateChild("Box");
+        Node* boxNode = scene_->create_child("Box");
         float size = 1.0f + Random(10.0f);
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
@@ -122,13 +122,13 @@ void MultipleViewports::CreateScene()
     }
 
     // Create the cameras. Limit far clip distance to match the fog
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
 
     // Parent the rear camera node to the front camera node and turn it 180 degrees to face backward
     // Here, we use the angle-axis constructor for Quaternion instead of the usual Euler angles
-    rearCameraNode_ = cameraNode_->CreateChild("RearCamera");
+    rearCameraNode_ = cameraNode_->create_child("RearCamera");
     rearCameraNode_->Rotate(Quaternion(180.0f, Vector3::UP));
     auto* rearCamera = rearCameraNode_->CreateComponent<Camera>();
     rearCamera->SetFarClip(300.0f);
@@ -144,7 +144,7 @@ void MultipleViewports::CreateScene()
 void MultipleViewports::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "B to toggle bloom, F to toggle FXAA\n"

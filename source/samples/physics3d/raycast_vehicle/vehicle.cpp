@@ -93,7 +93,7 @@ void Vehicle::Init()
     const Color LtBrown(0.972f, 0.780f, 0.412f);
     for (int id = 0; id < sizeof(connectionPoints_) / sizeof(connectionPoints_[0]); id++)
     {
-        Node* wheelNode = GetScene()->CreateChild();
+        Node* wheelNode = GetScene()->create_child();
         Vector3 connectionPoint = connectionPoints_[id];
         // Front wheels are at front (z > 0)
         // back wheels are at z < 0
@@ -120,7 +120,7 @@ void Vehicle::Init()
 
 void Vehicle::CreateEmitter(Vector3 place)
 {
-    Node* emitter = GetScene()->CreateChild();
+    Node* emitter = GetScene()->create_child();
     emitter->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * place + Vector3(0, -wheelRadius_, 0));
     auto* particleEmitter = emitter->CreateComponent<ParticleEmitter>();
     particleEmitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect>("Particle/Dust.xml"));

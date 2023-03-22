@@ -66,7 +66,7 @@ void DynamicGeometry::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create a Zone for ambient light & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
@@ -74,7 +74,7 @@ void DynamicGeometry::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(-0.6f, -1.0f, -0.8f)); // The direction vector does not need to be normalized
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -129,7 +129,7 @@ void DynamicGeometry::CreateScene()
     {
         for (int x = -1; x <= 1; ++x)
         {
-            Node* node = scene_->CreateChild("Object");
+            Node* node = scene_->create_child("Object");
             node->SetPosition(Vector3(x * 2.0f, 0.0f, y * 2.0f));
             auto* object = node->CreateComponent<StaticModel>();
             SharedPtr<Model> cloneModel = originalModel->Clone();
@@ -235,7 +235,7 @@ void DynamicGeometry::CreateScene()
         fromScratchModel->SetVertexBuffers(vertexBuffers, morphRangeStarts, morphRangeCounts);
         fromScratchModel->SetIndexBuffers(indexBuffers);
 
-        Node* node = scene_->CreateChild("FromScratchObject");
+        Node* node = scene_->create_child("FromScratchObject");
         node->SetPosition(Vector3(0.0f, 3.0f, 0.0f));
         auto* object = node->CreateComponent<StaticModel>();
         object->SetModel(fromScratchModel);
@@ -251,7 +251,7 @@ void DynamicGeometry::CreateScene()
 void DynamicGeometry::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "Space to toggle animation"

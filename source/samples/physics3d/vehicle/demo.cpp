@@ -80,7 +80,7 @@ void VehicleDemo::CreateScene()
     DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -89,7 +89,7 @@ void VehicleDemo::CreateScene()
     zone->SetBoundingBox(BoundingBox(-2000.0f, 2000.0f));
 
     // Create a directional light with cascaded shadow mapping
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.3f, -0.5f, 0.425f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -99,7 +99,7 @@ void VehicleDemo::CreateScene()
     light->SetSpecularIntensity(0.5f);
 
     // Create heightmap terrain with collision
-    Node* terrainNode = scene_->CreateChild("Terrain");
+    Node* terrainNode = scene_->create_child("Terrain");
     terrainNode->SetPosition(Vector3::ZERO);
     auto* terrain = terrainNode->CreateComponent<Terrain>();
     terrain->SetPatchSize(64);
@@ -120,7 +120,7 @@ void VehicleDemo::CreateScene()
     const unsigned NUM_MUSHROOMS = 1000;
     for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
     {
-        Node* objectNode = scene_->CreateChild("Mushroom");
+        Node* objectNode = scene_->create_child("Mushroom");
         Vector3 position(Random(2000.0f) - 1000.0f, 0.0f, Random(2000.0f) - 1000.0f);
         position.y_ = terrain->GetHeight(position) - 0.1f;
         objectNode->SetPosition(position);
@@ -141,7 +141,7 @@ void VehicleDemo::CreateScene()
 
 void VehicleDemo::CreateVehicle()
 {
-    Node* vehicleNode = scene_->CreateChild("Vehicle");
+    Node* vehicleNode = scene_->create_child("Vehicle");
     vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 
     // Create the vehicle logic component
@@ -153,7 +153,7 @@ void VehicleDemo::CreateVehicle()
 void VehicleDemo::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys to drive, mouse to rotate camera\n"
         "F5 to save scene, F7 to load"

@@ -182,7 +182,7 @@ bool Node::save_xml(XmlElement& dest) const
         if (component->IsTemporary())
             continue;
 
-        XmlElement compElem = dest.CreateChild("component");
+        XmlElement compElem = dest.create_child("component");
         if (!component->save_xml(compElem))
             return false;
     }
@@ -193,7 +193,7 @@ bool Node::save_xml(XmlElement& dest) const
         if (node->IsTemporary())
             continue;
 
-        XmlElement childElem = dest.CreateChild("node");
+        XmlElement childElem = dest.create_child("node");
         if (!node->save_xml(childElem))
             return false;
     }
@@ -760,16 +760,16 @@ void Node::MarkDirty()
     }
 }
 
-Node* Node::CreateChild(const String& name, CreateMode mode, NodeId id, bool temporary)
+Node* Node::create_child(const String& name, CreateMode mode, NodeId id, bool temporary)
 {
-    Node* newNode = CreateChild(id, mode, temporary);
+    Node* newNode = create_child(id, mode, temporary);
     newNode->SetName(name);
     return newNode;
 }
 
 Node* Node::CreateTemporaryChild(const String& name, CreateMode mode, NodeId id)
 {
-    return CreateChild(name, mode, id, true);
+    return create_child(name, mode, id, true);
 }
 
 void Node::AddChild(Node* node, i32 index)
@@ -1565,7 +1565,7 @@ bool Node::Load(Deserializer& source, SceneResolver& resolver, bool loadChildren
     for (i32 i = 0; i < numChildren; ++i)
     {
         NodeId nodeID = source.ReadU32();
-        Node* newNode = CreateChild(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
+        Node* newNode = create_child(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
             LOCAL);
         resolver.AddNode(nodeID, newNode);
         if (!newNode->Load(source, resolver, loadChildren, rewriteIDs, mode))
@@ -1608,7 +1608,7 @@ bool Node::load_xml(const XmlElement& source, SceneResolver& resolver, bool load
     while (childElem)
     {
         NodeId nodeID = childElem.GetU32("id");
-        Node* newNode = CreateChild(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
+        Node* newNode = create_child(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
             LOCAL);
         resolver.AddNode(nodeID, newNode);
         if (!newNode->load_xml(childElem, resolver, loadChildren, rewriteIDs, mode))
@@ -1655,7 +1655,7 @@ bool Node::load_json(const JSONValue& source, SceneResolver& resolver, bool load
         const JSONValue& childVal = childrenArray.At(i);
 
         NodeId nodeID = childVal.Get("id").GetU32();
-        Node* newNode = CreateChild(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
+        Node* newNode = create_child(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
             LOCAL);
         resolver.AddNode(nodeID, newNode);
         if (!newNode->load_json(childVal, resolver, loadChildren, rewriteIDs, mode))
@@ -1785,7 +1785,7 @@ void Node::MarkReplicationDirty()
     }
 }
 
-Node* Node::CreateChild(NodeId id, CreateMode mode, bool temporary)
+Node* Node::create_child(NodeId id, CreateMode mode, bool temporary)
 {
     SharedPtr<Node> newNode(new Node());
     newNode->SetTemporary(temporary);
@@ -2164,7 +2164,7 @@ void Node::GetChildrenWithTagRecursive(Vector<Node*>& dest, const String& tag) c
 Node* Node::CloneRecursive(Node* parent, SceneResolver& resolver, CreateMode mode)
 {
     // Create clone node
-    Node* cloneNode = parent->CreateChild(0, (mode == REPLICATED && IsReplicated()) ? REPLICATED : LOCAL);
+    Node* cloneNode = parent->create_child(0, (mode == REPLICATED && IsReplicated()) ? REPLICATED : LOCAL);
     resolver.AddNode(id_, cloneNode);
 
     // Copy attributes

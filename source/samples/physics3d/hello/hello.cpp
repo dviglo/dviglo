@@ -73,7 +73,7 @@ void Physics::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
@@ -82,7 +82,7 @@ void Physics::CreateScene()
     zone->SetFogEnd(500.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -94,7 +94,7 @@ void Physics::CreateScene()
     // Create skybox. The Skybox component is used like StaticModel, but it will be always located at the camera, giving the
     // illusion of the box planes being far away. Use just the ordinary Box model and a suitable material, whose shader will
     // generate the necessary 3D texture coordinates for cube mapping
-    Node* skyNode = scene_->CreateChild("Sky");
+    Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->CreateComponent<Skybox>();
     skybox->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
@@ -102,7 +102,7 @@ void Physics::CreateScene()
 
     {
         // Create a floor object, 1000 x 1000 world units. Adjust position so that the ground is at zero Y
-        Node* floorNode = scene_->CreateChild("Floor");
+        Node* floorNode = scene_->create_child("Floor");
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(1000.0f, 1.0f, 1000.0f));
         auto* floorObject = floorNode->CreateComponent<StaticModel>();
@@ -125,7 +125,7 @@ void Physics::CreateScene()
         {
             for (int x = -y; x <= y; ++x)
             {
-                Node* boxNode = scene_->CreateChild("Box");
+                Node* boxNode = scene_->create_child("Box");
                 boxNode->SetPosition(Vector3((float)x, -(float)y + 8.0f, 0.0f));
                 auto* boxObject = boxNode->CreateComponent<StaticModel>();
                 boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
@@ -157,7 +157,7 @@ void Physics::CreateScene()
 void Physics::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "LMB to spawn physics objects\n"
@@ -248,7 +248,7 @@ void Physics::MoveCamera(float timeStep)
 void Physics::SpawnObject()
 {
     // Create a smaller box at camera position
-    Node* boxNode = scene_->CreateChild("SmallBox");
+    Node* boxNode = scene_->create_child("SmallBox");
     boxNode->SetPosition(cameraNode_->GetPosition());
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);

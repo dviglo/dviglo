@@ -152,7 +152,7 @@ void ResourceWithMetadata::save_metadata_to_xml(XmlElement& destination) const
 {
     for (const String& metadataKey : metadataKeys_)
     {
-        XmlElement elem = destination.CreateChild("metadata");
+        XmlElement elem = destination.create_child("metadata");
         elem.SetString("name", metadataKey);
         elem.SetVariant(GetMetadata(metadataKey));
     }

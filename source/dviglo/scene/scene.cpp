@@ -511,7 +511,7 @@ Node* Scene::Instantiate(Deserializer& source, const Vector3& position, const Qu
     SceneResolver resolver;
     NodeId nodeID = source.ReadU32();
     // Rewrite IDs when instantiating
-    Node* node = CreateChild(0, mode);
+    Node* node = create_child(0, mode);
     resolver.AddNode(nodeID, node);
     if (node->Load(source, resolver, true, true, mode))
     {
@@ -534,7 +534,7 @@ Node* Scene::InstantiateXML(const XmlElement& source, const Vector3& position, c
     SceneResolver resolver;
     NodeId nodeID = source.GetU32("id");
     // Rewrite IDs when instantiating
-    Node* node = CreateChild(0, mode);
+    Node* node = create_child(0, mode);
     resolver.AddNode(nodeID, node);
     if (node->load_xml(source, resolver, true, true, mode))
     {
@@ -557,7 +557,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, c
     SceneResolver resolver;
     NodeId nodeID = source.Get("id").GetU32();
     // Rewrite IDs when instantiating
-    Node* node = CreateChild(0, mode);
+    Node* node = create_child(0, mode);
     resolver.AddNode(nodeID, node);
     if (node->load_json(source, resolver, true, true, mode))
     {
@@ -1188,7 +1188,7 @@ void Scene::UpdateAsyncLoading()
         if (asyncProgress_.xmlFile_)
         {
             NodeId nodeID = asyncProgress_.xmlElement_.GetU32("id");
-            Node* newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
+            Node* newNode = create_child(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
             resolver_.AddNode(nodeID, newNode);
             newNode->load_xml(asyncProgress_.xmlElement_, resolver_);
             asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
@@ -1198,7 +1198,7 @@ void Scene::UpdateAsyncLoading()
             const JSONValue& childValue = asyncProgress_.jsonFile_->GetRoot().Get("children").GetArray().At(asyncProgress_.jsonIndex_);
 
             NodeId nodeID = childValue.Get("id").GetU32();
-            Node* newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
+            Node* newNode = create_child(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
             resolver_.AddNode(nodeID, newNode);
             newNode->load_json(childValue, resolver_);
             ++asyncProgress_.jsonIndex_;
@@ -1206,7 +1206,7 @@ void Scene::UpdateAsyncLoading()
         else // Load from binary
         {
             NodeId nodeID = asyncProgress_.file_->ReadU32();
-            Node* newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
+            Node* newNode = create_child(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
             resolver_.AddNode(nodeID, newNode);
             newNode->Load(*asyncProgress_.file_, resolver_);
         }

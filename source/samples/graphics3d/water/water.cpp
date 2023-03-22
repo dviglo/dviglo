@@ -66,7 +66,7 @@ void Water::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
@@ -75,7 +75,7 @@ void Water::CreateScene()
     zone->SetFogEnd(750.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -89,14 +89,14 @@ void Water::CreateScene()
     // Create skybox. The Skybox component is used like StaticModel, but it will be always located at the camera, giving the
     // illusion of the box planes being far away. Use just the ordinary Box model and a suitable material, whose shader will
     // generate the necessary 3D texture coordinates for cube mapping
-    Node* skyNode = scene_->CreateChild("Sky");
+    Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->CreateComponent<Skybox>();
     skybox->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
     skybox->SetMaterial(cache.GetResource<Material>("Materials/Skybox.xml"));
 
     // Create heightmap terrain
-    Node* terrainNode = scene_->CreateChild("Terrain");
+    Node* terrainNode = scene_->create_child("Terrain");
     terrainNode->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
     auto* terrain = terrainNode->CreateComponent<Terrain>();
     terrain->SetPatchSize(64);
@@ -112,7 +112,7 @@ void Water::CreateScene()
     unsigned NUM_OBJECTS = 1000;
     for (unsigned i = 0; i < NUM_OBJECTS; ++i)
     {
-        Node* objectNode = scene_->CreateChild("Box");
+        Node* objectNode = scene_->create_child("Box");
         Vector3 position(Random(2000.0f) - 1000.0f, 0.0f, Random(2000.0f) - 1000.0f);
         position.y_ = terrain->GetHeight(position) + 2.25f;
         objectNode->SetPosition(position);
@@ -126,7 +126,7 @@ void Water::CreateScene()
     }
 
     // Create a water plane object that is as large as the terrain
-    waterNode_ = scene_->CreateChild("Water");
+    waterNode_ = scene_->create_child("Water");
     waterNode_->SetScale(Vector3(2048.0f, 1.0f, 2048.0f));
     waterNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
     auto* water = waterNode_->CreateComponent<StaticModel>();
@@ -148,7 +148,7 @@ void Water::CreateScene()
 void Water::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
@@ -174,7 +174,7 @@ void Water::SetupViewport()
     // Create camera for water reflection
     // It will have the same farclip and position as the main viewport camera, but uses a reflection plane to modify
     // its position when rendering
-    reflectionCameraNode_ = cameraNode_->CreateChild();
+    reflectionCameraNode_ = cameraNode_->create_child();
     auto* reflectionCamera = reflectionCameraNode_->CreateComponent<Camera>();
     reflectionCamera->SetFarClip(750.0);
     reflectionCamera->SetViewMask(0x7fffffff); // Hide objects with only bit 31 in the viewmask (the water plane)

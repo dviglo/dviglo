@@ -66,7 +66,7 @@ void Billboards::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.1f, 0.1f, 0.1f));
@@ -74,7 +74,7 @@ void Billboards::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light without shadows
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.5f, -1.0f, 0.5f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -86,7 +86,7 @@ void Billboards::CreateScene()
     {
         for (int x = -5; x <= 5; ++x)
         {
-            Node* floorNode = scene_->CreateChild("FloorTile");
+            Node* floorNode = scene_->create_child("FloorTile");
             floorNode->SetPosition(Vector3(x * 20.5f, -0.5f, y * 20.5f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
             auto* floorObject = floorNode->CreateComponent<StaticModel>();
@@ -102,12 +102,12 @@ void Billboards::CreateScene()
     for (unsigned i = 0; i < NUM_MUSHROOMGROUPS; ++i)
     {
         // First create a scene node for the group. The individual mushrooms nodes will be created as children
-        Node* groupNode = scene_->CreateChild("MushroomGroup");
+        Node* groupNode = scene_->create_child("MushroomGroup");
         groupNode->SetPosition(Vector3(Random(190.0f) - 95.0f, 0.0f, Random(190.0f) - 95.0f));
 
         for (unsigned j = 0; j < NUM_MUSHROOMS; ++j)
         {
-            Node* mushroomNode = groupNode->CreateChild("Mushroom");
+            Node* mushroomNode = groupNode->create_child("Mushroom");
             mushroomNode->SetPosition(Vector3(Random(25.0f) - 12.5f, 0.0f, Random(25.0f) - 12.5f));
             mushroomNode->SetRotation(Quaternion(0.0f, Random() * 360.0f, 0.0f));
             mushroomNode->SetScale(1.0f + Random() * 4.0f);
@@ -124,7 +124,7 @@ void Billboards::CreateScene()
 
     for (unsigned i = 0; i < NUM_BILLBOARDNODES; ++i)
     {
-        Node* smokeNode = scene_->CreateChild("Smoke");
+        Node* smokeNode = scene_->create_child("Smoke");
         smokeNode->SetPosition(Vector3(Random(200.0f) - 100.0f, Random(20.0f) + 10.0f, Random(200.0f) - 100.0f));
 
         auto* billboardObject = smokeNode->CreateComponent<BillboardSet>();
@@ -150,7 +150,7 @@ void Billboards::CreateScene()
 
     for (unsigned i = 0; i < NUM_LIGHTS; ++i)
     {
-        Node* lightNode = scene_->CreateChild("SpotLight");
+        Node* lightNode = scene_->create_child("SpotLight");
         auto* light = lightNode->CreateComponent<Light>();
 
         float angle = 0.0f;
@@ -182,7 +182,7 @@ void Billboards::CreateScene()
     }
 
     // Create the camera. Limit far clip distance to match the fog
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
 
@@ -193,7 +193,7 @@ void Billboards::CreateScene()
 void Billboards::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "Space to toggle debug geometry"

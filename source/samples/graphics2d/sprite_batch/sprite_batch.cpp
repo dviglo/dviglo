@@ -71,13 +71,13 @@ public:
         scene_ = new Scene();
         scene_->CreateComponent<Octree>();
 
-        Node* planeNode = scene_->CreateChild("Plane");
+        Node* planeNode = scene_->create_child("Plane");
         planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
         StaticModel* planeObject = planeNode->CreateComponent<StaticModel>();
         planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
         planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
-        Node* lightNode = scene_->CreateChild("DirectionalLight");
+        Node* lightNode = scene_->create_child("DirectionalLight");
         lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
         Light* light = lightNode->CreateComponent<Light>();
         light->SetColor(Color(0.5f, 0.5f, 0.5f));
@@ -87,7 +87,7 @@ public:
         light->SetShadowCascade(CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f));
         //light->SetShadowIntensity(0.5f);
 
-        Node* zoneNode = scene_->CreateChild("Zone");
+        Node* zoneNode = scene_->create_child("Zone");
         Zone* zone = zoneNode->CreateComponent<Zone>();
         zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
         zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
@@ -98,7 +98,7 @@ public:
         constexpr i32 NUM_OBJECTS = 20;
         for (i32 i = 0; i < NUM_OBJECTS; ++i)
         {
-            Node* mushroomNode = scene_->CreateChild("Mushroom");
+            Node* mushroomNode = scene_->create_child("Mushroom");
             mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(0.5f + Random(2.0f));
@@ -108,7 +108,7 @@ public:
             mushroomObject->SetCastShadows(true);
         }
 
-        cameraNode_ = scene_->CreateChild("Camera");
+        cameraNode_ = scene_->create_child("Camera");
         cameraNode_->CreateComponent<Camera>();
         cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -5.0f));
     }

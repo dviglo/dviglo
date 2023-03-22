@@ -100,7 +100,7 @@ void SoundSynthesis::UpdateSound()
 void SoundSynthesis::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    instructionText_ = DV_UI.GetRoot()->CreateChild<Text>();
+    instructionText_ = DV_UI.GetRoot()->create_child<Text>();
     instructionText_->SetText("Use cursor up and down to control sound filtering");
     instructionText_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

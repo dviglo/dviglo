@@ -153,7 +153,7 @@ bool Menu::load_xml(const XmlElement& source, XmlFile* styleFile)
         if (!internalElem)
         {
             if (!popupElem)
-                child = CreateChild(typeName, String::EMPTY, index);
+                child = create_child(typeName, String::EMPTY, index);
             else
             {
                 // Do not add the popup element as a child even temporarily, as that can break layouts
@@ -219,7 +219,7 @@ bool Menu::save_xml(XmlElement& dest) const
     // Save the popup element as a "virtual" child element
     if (popup_)
     {
-        XmlElement childElem = dest.CreateChild("element");
+        XmlElement childElem = dest.create_child("element");
         childElem.SetBool("popup", true);
         if (!popup_->save_xml(childElem))
             return false;

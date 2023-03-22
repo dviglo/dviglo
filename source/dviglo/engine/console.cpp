@@ -70,7 +70,7 @@ Console::Console() :
 
     focusOnShow_ = true;
 
-    background_ = uiRoot->CreateChild<BorderImage>();
+    background_ = uiRoot->create_child<BorderImage>();
     background_->SetBringToBack(false);
     background_->SetClipChildren(true);
     background_->SetEnabled(true);
@@ -79,18 +79,18 @@ Console::Console() :
     background_->SetBringToBack(false);
     background_->SetLayout(LM_VERTICAL);
 
-    rowContainer_ = background_->CreateChild<ListView>();
+    rowContainer_ = background_->create_child<ListView>();
     rowContainer_->SetHighlightMode(HM_ALWAYS);
     rowContainer_->SetMultiselect(true);
 
-    commandLine_ = background_->CreateChild<UiElement>();
+    commandLine_ = background_->create_child<UiElement>();
     commandLine_->SetLayoutMode(LM_HORIZONTAL);
     commandLine_->SetLayoutSpacing(1);
-    interpreters_ = commandLine_->CreateChild<DropDownList>();
-    lineEdit_ = commandLine_->CreateChild<LineEdit>();
+    interpreters_ = commandLine_->create_child<DropDownList>();
+    lineEdit_ = commandLine_->create_child<LineEdit>();
     lineEdit_->SetFocusMode(FM_FOCUSABLE);  // Do not allow defocus with ESC
 
-    closeButton_ = uiRoot->CreateChild<Button>();
+    closeButton_ = uiRoot->create_child<Button>();
     closeButton_->SetVisible(false);
     closeButton_->SetPriority(background_->GetPriority() + 1);  // Show on top of console's background
     closeButton_->SetBringToBack(false);

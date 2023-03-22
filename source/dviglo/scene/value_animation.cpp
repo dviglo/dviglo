@@ -109,17 +109,17 @@ bool ValueAnimation::save_xml(XmlElement& dest) const
 
     for (const VAnimKeyFrame& keyFrame : keyFrames_)
     {
-        XmlElement keyFrameEleme = dest.CreateChild("keyframe");
+        XmlElement keyFrameEleme = dest.create_child("keyframe");
         keyFrameEleme.SetFloat("time", keyFrame.time_);
         keyFrameEleme.SetVariant(keyFrame.value_);
     }
 
     for (const VAnimEventFrame& eventFrame : eventFrames_)
     {
-        XmlElement eventFrameElem = dest.CreateChild("eventframe");
+        XmlElement eventFrameElem = dest.create_child("eventframe");
         eventFrameElem.SetFloat("time", eventFrame.time_);
         eventFrameElem.SetU32("eventtype", eventFrame.eventType_.Value());
-        eventFrameElem.CreateChild("eventdata").SetVariantMap(eventFrame.eventData_);
+        eventFrameElem.create_child("eventdata").SetVariantMap(eventFrame.eventData_);
     }
 
     return true;

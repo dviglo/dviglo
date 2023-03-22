@@ -33,15 +33,15 @@ ScrollView::ScrollView() :
     SetEnabled(true);
     focusMode_ = FM_FOCUSABLE_DEFOCUSABLE;
 
-    horizontalScrollBar_ = CreateChild<ScrollBar>("SV_HorizontalScrollBar");
+    horizontalScrollBar_ = create_child<ScrollBar>("SV_HorizontalScrollBar");
     horizontalScrollBar_->SetInternal(true);
     horizontalScrollBar_->SetAlignment(HA_LEFT, VA_BOTTOM);
     horizontalScrollBar_->SetOrientation(O_HORIZONTAL);
-    verticalScrollBar_ = CreateChild<ScrollBar>("SV_VerticalScrollBar");
+    verticalScrollBar_ = create_child<ScrollBar>("SV_VerticalScrollBar");
     verticalScrollBar_->SetInternal(true);
     verticalScrollBar_->SetAlignment(HA_RIGHT, VA_TOP);
     verticalScrollBar_->SetOrientation(O_VERTICAL);
-    scrollPanel_ = CreateChild<BorderImage>("SV_ScrollPanel");
+    scrollPanel_ = create_child<BorderImage>("SV_ScrollPanel");
     scrollPanel_->SetInternal(true);
     scrollPanel_->SetEnabled(true);
     scrollPanel_->SetClipChildren(true);

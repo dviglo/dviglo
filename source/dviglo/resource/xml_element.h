@@ -47,9 +47,9 @@ public:
     XmlElement& operator =(const XmlElement& rhs);
 
     /// Create a child element.
-    XmlElement CreateChild(const String& name);
+    XmlElement create_child(const String& name);
     /// Create a child element.
-    XmlElement CreateChild(const char* name);
+    XmlElement create_child(const char* name);
     /// Return the first child element with name or create if does not exist.
     XmlElement GetOrCreateChild(const String& name);
     /// Return the first child element with name or create if does not exist.

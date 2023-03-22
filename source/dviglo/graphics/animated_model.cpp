@@ -735,7 +735,7 @@ void AnimatedModel::SetSkeleton(const Skeleton& skeleton, bool createBones)
             for (Vector<Bone>::Iterator i = bones.Begin(); i != bones.End(); ++i)
             {
                 // Create bones as local, as they are never to be directly synchronized over the network
-                Node* boneNode = node_->CreateChild(i->name_, LOCAL);
+                Node* boneNode = node_->create_child(i->name_, LOCAL);
                 boneNode->AddListener(this);
                 boneNode->SetTransform(i->initialPosition_, i->initialRotation_, i->initialScale_);
                 // Copy the model component's temporary status

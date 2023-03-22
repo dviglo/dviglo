@@ -70,14 +70,14 @@ void SkeletalAnimation::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
-    Node* planeNode = scene_->CreateChild("Plane");
+    Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(50.0f, 1.0f, 50.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
@@ -86,7 +86,7 @@ void SkeletalAnimation::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -104,7 +104,7 @@ void SkeletalAnimation::CreateScene()
 
     for (unsigned i = 0; i < NUM_MODELS; ++i)
     {
-        Node* modelNode = scene_->CreateChild("Jill");
+        Node* modelNode = scene_->create_child("Jill");
         modelNode->SetPosition(Vector3(Random(40.0f) - 20.0f, 0.0f, Random(40.0f) - 20.0f));
         modelNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
 
@@ -132,7 +132,7 @@ void SkeletalAnimation::CreateScene()
         auto* mover = modelNode->CreateComponent<Mover>();
         mover->SetParameters(MODEL_MOVE_SPEED, MODEL_ROTATE_SPEED, bounds);
 #ifdef DV_GLES3
-        Node* nLight = modelNode->CreateChild("Light", LOCAL);
+        Node* nLight = modelNode->create_child("Light", LOCAL);
         nLight->SetPosition(Vector3(1.0f, 2.0f, 1.0f));
         nLight->LookAt(Vector3::ZERO, Vector3::UP, TransformSpace::Parent);
         Light* light = nLight->CreateComponent<Light>();
@@ -142,7 +142,7 @@ void SkeletalAnimation::CreateScene()
     }
 
     // Create the camera. Limit far clip distance to match the fog
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
 
@@ -156,7 +156,7 @@ void SkeletalAnimation::CreateScene()
 #ifdef DV_GLES3
 void SkeletalAnimation::CreateLights() {
     for (unsigned i = 0; i < 40; i++) {
-        Node* nLight = scene_->CreateChild("Light", LOCAL);
+        Node* nLight = scene_->create_child("Light", LOCAL);
         Vector3 pos(Random(40.0f) - 20.0f, 1.0f + Random(1.0f), Random(40.0f) - 20.0f);
         nLight->SetPosition(pos);
         pos.y_ = 0;
@@ -174,7 +174,7 @@ void SkeletalAnimation::CreateLights() {
 void SkeletalAnimation::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "Space to toggle debug geometry"

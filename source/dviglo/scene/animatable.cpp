@@ -163,7 +163,7 @@ bool Animatable::save_xml(XmlElement& dest) const
     // Object animation without name
     if (objectAnimation_ && objectAnimation_->GetName().Empty())
     {
-        XmlElement elem = dest.CreateChild("objectanimation");
+        XmlElement elem = dest.create_child("objectanimation");
         if (!objectAnimation_->save_xml(elem))
             return false;
     }
@@ -177,7 +177,7 @@ bool Animatable::save_xml(XmlElement& dest) const
             continue;
 
         const AttributeInfo& attr = i->second_->GetAttributeInfo();
-        XmlElement elem = dest.CreateChild("attributeanimation");
+        XmlElement elem = dest.create_child("attributeanimation");
         elem.SetAttribute("name", attr.name_);
         if (!attributeAnimation->save_xml(elem))
             return false;

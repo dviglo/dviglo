@@ -187,7 +187,7 @@ bool UnknownComponent::save_xml(XmlElement& dest) const
 
     for (unsigned i = 0; i < xmlAttributeInfos_.Size(); ++i)
     {
-        XmlElement attrElem = dest.CreateChild("attribute");
+        XmlElement attrElem = dest.create_child("attribute");
         attrElem.SetAttribute("name", xmlAttributeInfos_[i].name_);
         attrElem.SetAttribute("value", xmlAttributes_[i]);
     }

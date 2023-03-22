@@ -74,12 +74,12 @@ XmlElement& XmlElement::operator =(const XmlElement& rhs)
     return *this;
 }
 
-XmlElement XmlElement::CreateChild(const String& name)
+XmlElement XmlElement::create_child(const String& name)
 {
-    return CreateChild(name.c_str());
+    return create_child(name.c_str());
 }
 
-XmlElement XmlElement::CreateChild(const char* name)
+XmlElement XmlElement::create_child(const char* name)
 {
     if (!file_ || (!node_ && !xpathNode_))
         return XmlElement();
@@ -95,7 +95,7 @@ XmlElement XmlElement::GetOrCreateChild(const String& name)
     if (child.NotNull())
         return child;
     else
-        return CreateChild(name);
+        return create_child(name);
 }
 
 XmlElement XmlElement::GetOrCreateChild(const char* name)
@@ -104,7 +104,7 @@ XmlElement XmlElement::GetOrCreateChild(const char* name)
     if (child.NotNull())
         return child;
     else
-        return CreateChild(name);
+        return create_child(name);
 }
 
 bool XmlElement::AppendChild(XmlElement element, bool asCopy)
@@ -456,7 +456,7 @@ bool XmlElement::SetVariantVector(const VariantVector& value)
 
     for (VariantVector::ConstIterator i = value.Begin(); i != value.End(); ++i)
     {
-        XmlElement variantElem = CreateChild("variant");
+        XmlElement variantElem = create_child("variant");
         if (!variantElem)
             return false;
         variantElem.SetVariant(*i);
@@ -472,7 +472,7 @@ bool XmlElement::SetStringVector(const StringVector& value)
 
     for (StringVector::ConstIterator i = value.Begin(); i != value.End(); ++i)
     {
-        XmlElement stringElem = CreateChild("string");
+        XmlElement stringElem = create_child("string");
         if (!stringElem)
             return false;
         stringElem.SetAttribute("value", *i);
@@ -488,7 +488,7 @@ bool XmlElement::SetVariantMap(const VariantMap& value)
 
     for (VariantMap::ConstIterator i = value.Begin(); i != value.End(); ++i)
     {
-        XmlElement variantElem = CreateChild("variant");
+        XmlElement variantElem = create_child("variant");
         if (!variantElem)
             return false;
         variantElem.SetU32("hash", i->first_.Value());

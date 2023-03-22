@@ -141,7 +141,7 @@ void Hello3DUI::InitWindow()
     window_->AddChild(titleBar);
 
     // Create a list.
-    auto* list = window_->CreateChild<ListView>();
+    auto* list = window_->create_child<ListView>();
     list->SetSelectOnClickEnd(true);
     list->SetHighlightMode(HM_ALWAYS);
     list->SetMinHeight(200);
@@ -179,7 +179,7 @@ void Hello3DUI::InitScene()
     zone->SetFogEnd(300.0f);
 
     // Create a child scene node (at world origin) and a StaticModel component into it.
-    Node* boxNode = scene_->CreateChild("Box");
+    Node* boxNode = scene_->create_child("Box");
     boxNode->SetScale(Vector3(5.0f, 5.0f, 5.0f));
     boxNode->SetRotation(Quaternion(90, Vector3::LEFT));
 
@@ -189,7 +189,7 @@ void Hello3DUI::InitScene()
     boxNode->SetEnabled(false);
 
     // Create a camera.
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     cameraNode_->CreateComponent<Camera>();
 
     // Set an initial position for the camera scene node.

@@ -120,7 +120,7 @@ public:
     void InsertChild(i32 index, UiElement* element)
     {
         // Insert the overlay at the same index position to the overlay container
-        CheckBox* overlay = static_cast<CheckBox*>(overlayContainer_->CreateChild(CheckBox::GetTypeStatic(), String::EMPTY, index));
+        CheckBox* overlay = static_cast<CheckBox*>(overlayContainer_->create_child(CheckBox::GetTypeStatic(), String::EMPTY, index));
         overlay->SetStyle("HierarchyListViewOverlay");
         int baseIndent = listView_->GetBaseIndent();
         int indent = element->GetIndent() - baseIndent - 1;

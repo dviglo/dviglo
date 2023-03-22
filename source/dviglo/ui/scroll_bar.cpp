@@ -29,14 +29,14 @@ ScrollBar::ScrollBar() :
 {
     SetEnabled(true);
 
-    backButton_ = CreateChild<Button>("SB_Back");
+    backButton_ = create_child<Button>("SB_Back");
     backButton_->SetInternal(true);
     backButton_->SetRepeat(DEFAULT_REPEAT_DELAY, DEFAULT_REPEAT_RATE);
     backButton_->SetFocusMode(FM_NOTFOCUSABLE);
-    slider_ = CreateChild<Slider>("SB_Slider");
+    slider_ = create_child<Slider>("SB_Slider");
     slider_->SetInternal(true);
     slider_->SetRepeatRate(DEFAULT_REPEAT_RATE);
-    forwardButton_ = CreateChild<Button>("SB_Forward");
+    forwardButton_ = create_child<Button>("SB_Forward");
     forwardButton_->SetInternal(true);
     forwardButton_->SetRepeat(DEFAULT_REPEAT_DELAY, DEFAULT_REPEAT_RATE);
     forwardButton_->SetFocusMode(FM_NOTFOCUSABLE);

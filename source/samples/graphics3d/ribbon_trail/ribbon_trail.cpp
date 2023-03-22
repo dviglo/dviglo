@@ -64,14 +64,14 @@ void RibbonTrailDemo::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create scene node & StaticModel component for showing a static plane
-    Node* planeNode = scene_->CreateChild("Plane");
+    Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a directional light to the world.
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f)); // The direction vector does not need to be normalized
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -81,7 +81,7 @@ void RibbonTrailDemo::CreateScene()
     light->SetShadowCascade(CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f));
 
     // Create first box for face camera trail demo with 1 column.
-    boxNode1_ = scene_->CreateChild("Box1");
+    boxNode1_ = scene_->create_child("Box1");
     auto* box1 = boxNode1_->CreateComponent<StaticModel>();
     box1->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
     box1->SetCastShadows(true);
@@ -94,7 +94,7 @@ void RibbonTrailDemo::CreateScene()
 
     // Create second box for face camera trail demo with 4 column.
     // This will produce less distortion than first trail.
-    boxNode2_ = scene_->CreateChild("Box2");
+    boxNode2_ = scene_->create_child("Box2");
     auto* box2 = boxNode2_->CreateComponent<StaticModel>();
     box2->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
     box2->SetCastShadows(true);
@@ -107,7 +107,7 @@ void RibbonTrailDemo::CreateScene()
     boxTrail2->SetUpdateInvisible(true);
 
     // Load ninja animated model for bone trail demo.
-    Node* ninjaNode = scene_->CreateChild("Ninja");
+    Node* ninjaNode = scene_->create_child("Ninja");
     ninjaNode->SetPosition(Vector3(5.0f, 0.0f, 0.0f));
     ninjaNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     auto* ninja = ninjaNode->CreateComponent<AnimatedModel>();
@@ -133,26 +133,26 @@ void RibbonTrailDemo::CreateScene()
     swordTrail_->SetUpdateInvisible(true);
 
     // Add floating text for info.
-    Node* boxTextNode1 = scene_->CreateChild("BoxText1");
+    Node* boxTextNode1 = scene_->create_child("BoxText1");
     boxTextNode1->SetPosition(Vector3(-1.0f, 2.0f, 0.0f));
     auto* boxText1 = boxTextNode1->CreateComponent<Text3D>();
     boxText1->SetText(String("Face Camera Trail (4 Column)"));
     boxText1->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
 
-    Node* boxTextNode2 = scene_->CreateChild("BoxText2");
+    Node* boxTextNode2 = scene_->create_child("BoxText2");
     boxTextNode2->SetPosition(Vector3(-6.0f, 2.0f, 0.0f));
     auto* boxText2 = boxTextNode2->CreateComponent<Text3D>();
     boxText2->SetText(String("Face Camera Trail (1 Column)"));
     boxText2->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
 
-    Node* ninjaTextNode2 = scene_->CreateChild("NinjaText");
+    Node* ninjaTextNode2 = scene_->create_child("NinjaText");
     ninjaTextNode2->SetPosition(Vector3(4.0f, 2.5f, 0.0f));
     auto* ninjaText = ninjaTextNode2->CreateComponent<Text3D>();
     ninjaText->SetText(String("Bone Trail (4 Column)"));
     ninjaText->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
 
     // Create the camera.
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     cameraNode_->CreateComponent<Camera>();
 
     // Set an initial position for the camera scene node above the plane
@@ -162,7 +162,7 @@ void RibbonTrailDemo::CreateScene()
 void RibbonTrailDemo::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

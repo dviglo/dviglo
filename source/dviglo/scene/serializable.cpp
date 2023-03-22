@@ -512,7 +512,7 @@ bool Serializable::save_xml(XmlElement& dest) const
         if (value == defaultValue && !SaveDefaultAttributes())
             continue;
 
-        XmlElement attrElem = dest.CreateChild("attribute");
+        XmlElement attrElem = dest.create_child("attribute");
         attrElem.SetAttribute("name", attr.name_);
         // If enums specified, set as an enum string. Otherwise set directly as a Variant
         if (attr.enumNames_)

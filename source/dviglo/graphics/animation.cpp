@@ -253,7 +253,7 @@ bool Animation::Save(Serializer& dest) const
 
             for (const AnimationTriggerPoint& trigger : triggers_)
             {
-                XmlElement triggerElem = rootElem.CreateChild("trigger");
+                XmlElement triggerElem = rootElem.create_child("trigger");
                 triggerElem.SetFloat("time", trigger.time_);
                 triggerElem.SetVariant(trigger.data_);
             }

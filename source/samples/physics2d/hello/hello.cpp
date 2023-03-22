@@ -62,7 +62,7 @@ void Urho2DPhysics::CreateScene()
     scene_->CreateComponent<Octree>();
     scene_->CreateComponent<DebugRenderer>();
     // Create camera node
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
@@ -79,7 +79,7 @@ void Urho2DPhysics::CreateScene()
     auto* ballSprite = DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Ball.png");
 
     // Create ground.
-    Node* groundNode = scene_->CreateChild("Ground");
+    Node* groundNode = scene_->create_child("Ground");
     groundNode->SetPosition(Vector3(0.0f, -3.0f, 0.0f));
     groundNode->SetScale(Vector3(200.0f, 1.0f, 0.0f));
 
@@ -98,7 +98,7 @@ void Urho2DPhysics::CreateScene()
 
     for (unsigned i = 0; i < NUM_OBJECTS; ++i)
     {
-        Node* node  = scene_->CreateChild("RigidBody");
+        Node* node  = scene_->create_child("RigidBody");
         node->SetPosition(Vector3(Random(-0.1f, 0.1f), 5.0f + i * 0.4f, 0.0f));
 
         // Create rigid body
@@ -143,7 +143,7 @@ void Urho2DPhysics::CreateScene()
 void Urho2DPhysics::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys to move, use PageUp PageDown keys to zoom.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

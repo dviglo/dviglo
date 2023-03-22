@@ -93,7 +93,7 @@ bool ObjectAnimation::save_xml(XmlElement& dest) const
     for (HashMap<String, SharedPtr<ValueAnimationInfo>>::ConstIterator i = attributeAnimationInfos_.Begin();
          i != attributeAnimationInfos_.End(); ++i)
     {
-        XmlElement animElem = dest.CreateChild("attributeanimation");
+        XmlElement animElem = dest.create_child("attributeanimation");
         animElem.SetAttribute("name", i->first_);
 
         const ValueAnimationInfo* info = i->second_;

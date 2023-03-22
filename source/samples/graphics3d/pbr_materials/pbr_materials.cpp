@@ -58,7 +58,7 @@ void PBRMaterials::Start()
 void PBRMaterials::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use sliders to change Roughness and Metallic\n"
         "Hold RMB and use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
@@ -87,7 +87,7 @@ void PBRMaterials::CreateScene()
     zone_ = zoneNode->GetComponent<Zone>();
 
     // Create the camera (not included in the scene file)
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     cameraNode_->CreateComponent<Camera>();
 
     cameraNode_->SetPosition(sphereWithDynamicMatNode->GetPosition() + Vector3(2.0f, 2.0f, 2.0f));
@@ -112,22 +112,22 @@ void PBRMaterials::CreateUI()
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
-    roughnessLabel_ = ui.GetRoot()->CreateChild<Text>();
+    roughnessLabel_ = ui.GetRoot()->create_child<Text>();
     roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     roughnessLabel_->SetPosition(370, 50);
     roughnessLabel_->SetTextEffect(TE_SHADOW);
 
-    metallicLabel_ = ui.GetRoot()->CreateChild<Text>();
+    metallicLabel_ = ui.GetRoot()->create_child<Text>();
     metallicLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     metallicLabel_->SetPosition(370, 100);
     metallicLabel_->SetTextEffect(TE_SHADOW);
 
-    ambientLabel_ = ui.GetRoot()->CreateChild<Text>();
+    ambientLabel_ = ui.GetRoot()->create_child<Text>();
     ambientLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     ambientLabel_->SetPosition(370, 150);
     ambientLabel_->SetTextEffect(TE_SHADOW);
 
-    auto* roughnessSlider = ui.GetRoot()->CreateChild<Slider>();
+    auto* roughnessSlider = ui.GetRoot()->create_child<Slider>();
     roughnessSlider->SetStyleAuto();
     roughnessSlider->SetPosition(50, 50);
     roughnessSlider->SetSize(300, 20);
@@ -135,7 +135,7 @@ void PBRMaterials::CreateUI()
     SubscribeToEvent(roughnessSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleRoughnessSliderChanged));
     roughnessSlider->SetValue(0.5f);
 
-    auto* metallicSlider = ui.GetRoot()->CreateChild<Slider>();
+    auto* metallicSlider = ui.GetRoot()->create_child<Slider>();
     metallicSlider->SetStyleAuto();
     metallicSlider->SetPosition(50, 100);
     metallicSlider->SetSize(300, 20);
@@ -143,7 +143,7 @@ void PBRMaterials::CreateUI()
     SubscribeToEvent(metallicSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleMetallicSliderChanged));
     metallicSlider->SetValue(0.5f);
 
-    auto* ambientSlider = ui.GetRoot()->CreateChild<Slider>();
+    auto* ambientSlider = ui.GetRoot()->create_child<Slider>();
     ambientSlider->SetStyleAuto();
     ambientSlider->SetPosition(50, 150);
     ambientSlider->SetSize(300, 20);

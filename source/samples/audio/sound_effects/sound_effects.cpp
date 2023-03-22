@@ -114,12 +114,12 @@ Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const Str
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     // Create the button and center the text onto it
-    auto* button = root->CreateChild<Button>();
+    auto* button = root->create_child<Button>();
     button->SetStyleAuto();
     button->SetPosition(x, y);
     button->SetSize(xSize, ySize);
 
-    auto* buttonText = button->CreateChild<Text>();
+    auto* buttonText = button->create_child<Text>();
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
     buttonText->SetFont(font, 12);
     buttonText->SetText(text);
@@ -133,12 +133,12 @@ Slider* SoundEffects::CreateSlider(int x, int y, int xSize, int ySize, const Str
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
     // Create text and slider below it
-    auto* sliderText = root->CreateChild<Text>();
+    auto* sliderText = root->create_child<Text>();
     sliderText->SetPosition(x, y);
     sliderText->SetFont(font, 12);
     sliderText->SetText(text);
 
-    auto* slider = root->CreateChild<Slider>();
+    auto* slider = root->create_child<Slider>();
     slider->SetStyleAuto();
     slider->SetPosition(x, y + 20);
     slider->SetSize(xSize, ySize);

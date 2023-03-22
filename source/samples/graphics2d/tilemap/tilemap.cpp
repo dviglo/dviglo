@@ -58,7 +58,7 @@ void Urho2DTileMap::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create camera node
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
@@ -73,7 +73,7 @@ void Urho2DTileMap::CreateScene()
     if (!tmxFile)
         return;
 
-    SharedPtr<Node> tileMapNode(scene_->CreateChild("TileMap"));
+    SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
     tileMapNode->SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
     auto* tileMap = tileMapNode->CreateComponent<TileMap2D>();
@@ -90,7 +90,7 @@ void Urho2DTileMap::CreateScene()
 void Urho2DTileMap::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys to move, use PageUp PageDown keys to zoom.\n LMB to remove a tile, RMB to swap grass and water.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

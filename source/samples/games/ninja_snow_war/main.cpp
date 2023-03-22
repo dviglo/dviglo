@@ -430,7 +430,7 @@ public:
             connection->SendRemoteEvent("PlayerSpawned", true, eventData);
 
             // Create name tag (Text3D component) for players in multiplayer
-            Node* textNode = playerNode->CreateChild("NameTag");
+            Node* textNode = playerNode->create_child("NameTag");
             textNode->SetPosition(Vector3(0.f, 1.2f, 0.f));
             Text3D* text3D = textNode->CreateComponent<Text3D>();
             Font* font = DV_RES_CACHE.GetResource<Font>("Fonts/BlueHighway.ttf");

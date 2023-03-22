@@ -89,7 +89,7 @@ void SceneReplication::CreateScene()
 
     // All static scene content and the camera are also created as local, so that they are unaffected by scene replication and are
     // not removed from the client upon connection. Create a Zone component first for ambient lighting & fog control.
-    Node* zoneNode = scene_->CreateChild("Zone", LOCAL);
+    Node* zoneNode = scene_->create_child("Zone", LOCAL);
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.1f, 0.1f, 0.1f));
@@ -97,7 +97,7 @@ void SceneReplication::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light without shadows
-    Node* lightNode = scene_->CreateChild("DirectionalLight", LOCAL);
+    Node* lightNode = scene_->create_child("DirectionalLight", LOCAL);
     lightNode->SetDirection(Vector3(0.5f, -1.0f, 0.5f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -109,7 +109,7 @@ void SceneReplication::CreateScene()
     {
         for (int x = -20; x <= 20; ++x)
         {
-            Node* floorNode = scene_->CreateChild("FloorTile", LOCAL);
+            Node* floorNode = scene_->create_child("FloorTile", LOCAL);
             floorNode->SetPosition(Vector3(x * 20.2f, -0.5f, y * 20.2f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.0f));
             auto* floorObject = floorNode->CreateComponent<StaticModel>();
@@ -128,7 +128,7 @@ void SceneReplication::CreateScene()
     // network messages. Furthermore, because the client removes all replicated scene nodes when connecting to a server scene,
     // the screen would become blank if the camera node was replicated (as only the locally created camera is assigned to a
     // viewport in SetupViewports() below)
-    cameraNode_ = scene_->CreateChild("Camera", LOCAL);
+    cameraNode_ = scene_->create_child("Camera", LOCAL);
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(300.0f);
 
@@ -153,7 +153,7 @@ void SceneReplication::CreateUI()
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Construct the instructions text element
-    instructionsText_ = ui.GetRoot()->CreateChild<Text>();
+    instructionsText_ = ui.GetRoot()->create_child<Text>();
     instructionsText_->SetText(
         "Use WASD keys to move and RMB to rotate view"
     );
@@ -165,26 +165,26 @@ void SceneReplication::CreateUI()
     // Hide until connected
     instructionsText_->SetVisible(false);
 
-    packetsIn_ = ui.GetRoot()->CreateChild<Text>();
+    packetsIn_ = ui.GetRoot()->create_child<Text>();
     packetsIn_->SetText("Packets in : 0");
     packetsIn_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(10, -10);
 
-    packetsOut_ = ui.GetRoot()->CreateChild<Text>();
+    packetsOut_ = ui.GetRoot()->create_child<Text>();
     packetsOut_->SetText("Packets out: 0");
     packetsOut_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     packetsOut_->SetHorizontalAlignment(HA_LEFT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(10, 10);
 
-    buttonContainer_ = root->CreateChild<UiElement>();
+    buttonContainer_ = root->create_child<UiElement>();
     buttonContainer_->SetFixedSize(500, 20);
     buttonContainer_->SetPosition(20, 20);
     buttonContainer_->SetLayoutMode(LM_HORIZONTAL);
 
-    textEdit_ = buttonContainer_->CreateChild<LineEdit>();
+    textEdit_ = buttonContainer_->create_child<LineEdit>();
     textEdit_->SetStyleAuto();
 
     connectButton_ = CreateButton("Connect", 90);
@@ -232,11 +232,11 @@ Button* SceneReplication::CreateButton(const String& text, int width)
 {
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
-    auto* button = buttonContainer_->CreateChild<Button>();
+    auto* button = buttonContainer_->create_child<Button>();
     button->SetStyleAuto();
     button->SetFixedWidth(width);
 
-    auto* buttonText = button->CreateChild<Text>();
+    auto* buttonText = button->create_child<Text>();
     buttonText->SetFont(font, 12);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
     buttonText->SetText(text);
@@ -259,7 +259,7 @@ void SceneReplication::UpdateButtons()
 Node* SceneReplication::CreateControllableObject()
 {
     // Create the scene node & visual representation. This will be a replicated object
-    Node* ballNode = scene_->CreateChild("Ball");
+    Node* ballNode = scene_->create_child("Ball");
     ballNode->SetPosition(Vector3(Random(40.0f) - 20.0f, 5.0f, -Random(40.0f) + 20.0f));
     ballNode->SetScale(0.5f);
     auto* ballObject = ballNode->CreateComponent<StaticModel>();

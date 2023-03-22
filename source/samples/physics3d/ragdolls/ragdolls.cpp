@@ -75,7 +75,7 @@ void Ragdolls::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
@@ -84,7 +84,7 @@ void Ragdolls::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -95,7 +95,7 @@ void Ragdolls::CreateScene()
 
     {
         // Create a floor object, 500 x 500 world units. Adjust position so that the ground is at zero Y
-        Node* floorNode = scene_->CreateChild("Floor");
+        Node* floorNode = scene_->create_child("Floor");
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->CreateComponent<StaticModel>();
@@ -118,7 +118,7 @@ void Ragdolls::CreateScene()
     {
         for (int x = -4; x <= 4; ++x)
         {
-            Node* modelNode = scene_->CreateChild("Jack");
+            Node* modelNode = scene_->create_child("Jack");
             modelNode->SetPosition(Vector3(x * 5.0f, 0.0f, z * 5.0f));
             modelNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
             auto* modelObject = modelNode->CreateComponent<AnimatedModel>();
@@ -158,7 +158,7 @@ void Ragdolls::CreateScene()
 void Ragdolls::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "LMB to spawn physics objects\n"
@@ -237,7 +237,7 @@ void Ragdolls::MoveCamera(float timeStep)
 
 void Ragdolls::SpawnObject()
 {
-    Node* boxNode = scene_->CreateChild("Sphere");
+    Node* boxNode = scene_->create_child("Sphere");
     boxNode->SetPosition(cameraNode_->GetPosition());
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);

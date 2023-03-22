@@ -589,7 +589,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
             if (!node)
             {
                 // Add initially to the root level. May be moved as we receive the parent attribute
-                node = scene_->CreateChild(nodeID, REPLICATED);
+                node = scene_->create_child(nodeID, REPLICATED);
                 // Create smoothed transform component
                 node->CreateComponent<SmoothedTransform>(LOCAL);
             }

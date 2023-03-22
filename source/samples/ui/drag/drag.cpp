@@ -62,7 +62,7 @@ void UIDrag::CreateGUI()
         b->SetLayout(LM_VERTICAL, 20, {40, 40, 40, 40});
         auto dragInfos = {"Num Buttons", "Drag Begin", "Drag Move"};
         for (auto name: dragInfos)
-            b->CreateChild<Text>(name)->SetStyleAuto();
+            b->create_child<Text>(name)->SetStyleAuto();
 
         if (i % 2 == 0)
             b->add_tag("SomeTag");
@@ -77,7 +77,7 @@ void UIDrag::CreateGUI()
 void UIDrag::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Drag on the buttons to move them around.\n"
                              "Press SPACE to show/hide tagged UI elements.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);

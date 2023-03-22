@@ -75,7 +75,7 @@ void ShaderPrecache::StoreShaders(ShaderVariation* vs, ShaderVariation* ps)
         return;
     usedCombinations_.Insert(newCombination);
 
-    XmlElement shaderElem = xmlFile_.GetRoot().CreateChild("shader");
+    XmlElement shaderElem = xmlFile_.GetRoot().create_child("shader");
     shaderElem.SetAttribute("vs", vsName);
     shaderElem.SetAttribute("vsdefines", vsDefines);
     shaderElem.SetAttribute("ps", psName);

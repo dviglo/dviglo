@@ -17,7 +17,7 @@ Node* SpawnObject(Scene* scene, const Vector3& position, const Quaternion& rotat
 
 Node* SpawnParticleEffect(Scene* scene, const Vector3& position, const String& effectName, float duration, CreateMode mode)
 {
-    Node* newNode = scene->CreateChild("Effect", mode);
+    Node* newNode = scene->create_child("Effect", mode);
     newNode->SetPosition(position);
 
     // Create the particle emitter
@@ -34,7 +34,7 @@ Node* SpawnParticleEffect(Scene* scene, const Vector3& position, const String& e
 
 Node* SpawnSound(Scene* scene, const Vector3& position, const String& soundName, float duration)
 {
-    Node* newNode = scene->CreateChild();
+    Node* newNode = scene->create_child();
     newNode->SetPosition(position);
 
     // Create the sound source

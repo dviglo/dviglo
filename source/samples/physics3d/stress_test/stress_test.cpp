@@ -73,7 +73,7 @@ void PhysicsStressTest::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
@@ -82,7 +82,7 @@ void PhysicsStressTest::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -93,7 +93,7 @@ void PhysicsStressTest::CreateScene()
 
     {
         // Create a floor object, 500 x 500 world units. Adjust position so that the ground is at zero Y
-        Node* floorNode = scene_->CreateChild("Floor");
+        Node* floorNode = scene_->create_child("Floor");
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->CreateComponent<StaticModel>();
@@ -111,7 +111,7 @@ void PhysicsStressTest::CreateScene()
         const unsigned NUM_MUSHROOMS = 50;
         for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
         {
-            Node* mushroomNode = scene_->CreateChild("Mushroom");
+            Node* mushroomNode = scene_->create_child("Mushroom");
             mushroomNode->SetPosition(Vector3(Random(400.0f) - 200.0f, 0.0f, Random(400.0f) - 200.0f));
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(5.0f + Random(5.0f));
@@ -132,7 +132,7 @@ void PhysicsStressTest::CreateScene()
         const unsigned NUM_OBJECTS = 1000;
         for (unsigned i = 0; i < NUM_OBJECTS; ++i)
         {
-            Node* boxNode = scene_->CreateChild("Box");
+            Node* boxNode = scene_->create_child("Box");
             boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
             auto* boxObject = boxNode->CreateComponent<StaticModel>();
             boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
@@ -163,7 +163,7 @@ void PhysicsStressTest::CreateScene()
 void PhysicsStressTest::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "LMB to spawn physics objects\n"
@@ -253,7 +253,7 @@ void PhysicsStressTest::MoveCamera(float timeStep)
 void PhysicsStressTest::SpawnObject()
 {
     // Create a smaller box at camera position
-    Node* boxNode = scene_->CreateChild("SmallBox");
+    Node* boxNode = scene_->create_child("SmallBox");
     boxNode->SetPosition(cameraNode_->GetPosition());
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);

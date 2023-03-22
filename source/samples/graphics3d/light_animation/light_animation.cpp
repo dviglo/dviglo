@@ -67,14 +67,14 @@ void LightAnimation::CreateScene()
     // Create a child scene node (at world origin) and a StaticModel component into it. Set the StaticModel to show a simple
     // plane mesh with a "stone" material. Note that naming the scene nodes is optional. Scale the scene node larger
     // (100 x 100 world units)
-    Node* planeNode = scene_->CreateChild("Plane");
+    Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a point light to the world so that we can see something.
-    Node* lightNode = scene_->CreateChild("PointLight");
+    Node* lightNode = scene_->create_child("PointLight");
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_POINT);
     light->SetRange(10.0f);
@@ -138,7 +138,7 @@ void LightAnimation::CreateScene()
     const unsigned NUM_OBJECTS = 200;
     for (unsigned i = 0; i < NUM_OBJECTS; ++i)
     {
-        Node* mushroomNode = scene_->CreateChild("Mushroom");
+        Node* mushroomNode = scene_->create_child("Mushroom");
         mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
@@ -149,7 +149,7 @@ void LightAnimation::CreateScene()
 
     // Create a scene node for the camera, which we will move around
     // The camera will use default settings (1000 far clip distance, 45 degrees FOV, set aspect ratio automatically)
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     cameraNode_->CreateComponent<Camera>();
 
     // Set an initial position for the camera scene node above the plane
@@ -159,7 +159,7 @@ void LightAnimation::CreateScene()
 void LightAnimation::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
     instructionText->SetFont(font, 15);
@@ -170,14 +170,14 @@ void LightAnimation::CreateInstructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 
     // Animating text
-    auto* text = DV_UI.GetRoot()->CreateChild<Text>("animatingText");
+    auto* text = DV_UI.GetRoot()->create_child<Text>("animatingText");
     text->SetFont(font, 15);
     text->SetHorizontalAlignment(HA_CENTER);
     text->SetVerticalAlignment(VA_CENTER);
     text->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4 + 20);
 
     // Animating sprite in the top left corner
-    auto* sprite = DV_UI.GetRoot()->CreateChild<Sprite>("animatingSprite");
+    auto* sprite = DV_UI.GetRoot()->create_child<Sprite>("animatingSprite");
     sprite->SetPosition(8, 8);
     sprite->SetSize(64, 64);
 }

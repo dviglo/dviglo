@@ -30,7 +30,7 @@ Slider::Slider() :
     repeatRate_(0.0f)
 {
     SetEnabled(true);
-    knob_ = CreateChild<BorderImage>("S_Knob");
+    knob_ = create_child<BorderImage>("S_Knob");
     knob_->SetInternal(true);
 
     UpdateSlider();

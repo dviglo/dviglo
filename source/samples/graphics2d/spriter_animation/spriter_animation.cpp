@@ -55,7 +55,7 @@ void Urho2DSpriterAnimation::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create camera node
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
@@ -69,7 +69,7 @@ void Urho2DSpriterAnimation::CreateScene()
     if (!spriterAnimationSet)
         return;
 
-    spriterNode_ = scene_->CreateChild("SpriterAnimation");
+    spriterNode_ = scene_->create_child("SpriterAnimation");
     auto* spriterAnimatedSprite = spriterNode_->CreateComponent<AnimatedSprite2D>();
     spriterAnimatedSprite->SetAnimationSet(spriterAnimationSet);
     spriterAnimatedSprite->SetAnimation(spriterAnimationSet->GetAnimation(spriterAnimationIndex_));
@@ -78,7 +78,7 @@ void Urho2DSpriterAnimation::CreateScene()
 void Urho2DSpriterAnimation::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Mouse click to play next animation, \nUse WASD keys to move, use PageUp PageDown keys to zoom.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other

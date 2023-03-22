@@ -128,7 +128,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
 {
     // Note: do not parent the wheel to the hull scene node. Instead create it on the root level and let the physics
     // constraint keep it together
-    wheelNode = GetScene()->CreateChild(name);
+    wheelNode = GetScene()->create_child(name);
     wheelNode->SetPosition(node_->LocalToWorld(offset));
     wheelNode->SetRotation(node_->GetRotation() * (offset.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
         Quaternion(0.0f, 0.0f, 90.0f)));

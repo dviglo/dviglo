@@ -45,7 +45,7 @@ public:
         UiElement* root = DV_UI.GetRoot();
         root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml"));
 
-        Text* fpsElement = root->CreateChild<Text>(CURRENT_FPS_STR);
+        Text* fpsElement = root->create_child<Text>(CURRENT_FPS_STR);
         fpsElement->SetStyleAuto();
         fpsElement->SetTextEffect(TE_SHADOW);
         fpsElement->SetPosition(10, 10);

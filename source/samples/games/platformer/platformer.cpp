@@ -91,7 +91,7 @@ void Urho2DPlatformer::CreateScene()
     /*PhysicsWorld2D* physicsWorld =*/ scene_->CreateComponent<PhysicsWorld2D>();
 
     // Create camera
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetOrthographic(true);
 
@@ -107,7 +107,7 @@ void Urho2DPlatformer::CreateScene()
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
 
     // Create tile map from tmx file
-    SharedPtr<Node> tileMapNode(scene_->CreateChild("TileMap"));
+    SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
     auto* tileMap = tileMapNode->CreateComponent<TileMap2D>();
     tileMap->SetTmxFile(DV_RES_CACHE.GetResource<TmxFile2D>("Urho2D/Tilesets/Ortho.tmx"));
     const TileMapInfo2D& info = tileMap->GetInfo();

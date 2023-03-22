@@ -165,7 +165,7 @@ void Sample2D::CreatePolyLineShape(Node* node, TileMapObject2D* object)
 
 Node* Sample2D::CreateCharacter(const TileMapInfo2D& info, float friction, const Vector3& position, float scale)
 {
-    Node* spriteNode = scene_->CreateChild("Imp");
+    Node* spriteNode = scene_->create_child("Imp");
     spriteNode->SetPosition(position);
     spriteNode->SetScale(scale);
     auto* animatedSprite = spriteNode->CreateComponent<AnimatedSprite2D>();
@@ -189,7 +189,7 @@ Node* Sample2D::CreateCharacter(const TileMapInfo2D& info, float friction, const
 
 Node* Sample2D::CreateTrigger()
 {
-    Node* node = scene_->CreateChild(); // Clones will be renamed according to object type
+    Node* node = scene_->create_child(); // Clones will be renamed according to object type
     auto* body = node->CreateComponent<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
     auto* shape = node->CreateComponent<CollisionBox2D>(); // Create box shape
@@ -199,7 +199,7 @@ Node* Sample2D::CreateTrigger()
 
 Node* Sample2D::CreateEnemy()
 {
-    Node* node = scene_->CreateChild("Enemy");
+    Node* node = scene_->create_child("Enemy");
     auto* staticSprite = node->CreateComponent<StaticSprite2D>();
     staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Aster.png"));
     auto* body = node->CreateComponent<RigidBody2D>();
@@ -211,7 +211,7 @@ Node* Sample2D::CreateEnemy()
 
 Node* Sample2D::CreateOrc()
 {
-    Node* node = scene_->CreateChild("Orc");
+    Node* node = scene_->create_child("Orc");
     node->SetScale(scene_->GetChild("Imp", true)->GetScale());
     auto* animatedSprite = node->CreateComponent<AnimatedSprite2D>();
     auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/Orc/Orc.scml");
@@ -227,7 +227,7 @@ Node* Sample2D::CreateOrc()
 
 Node* Sample2D::CreateCoin()
 {
-    Node* node = scene_->CreateChild("Coin");
+    Node* node = scene_->create_child("Coin");
     node->SetScale(0.5);
     auto* animatedSprite = node->CreateComponent<AnimatedSprite2D>();
     auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/GoldIcon.scml");
@@ -244,7 +244,7 @@ Node* Sample2D::CreateCoin()
 
 Node* Sample2D::CreateMovingPlatform()
 {
-    Node* node = scene_->CreateChild("MovingPlatform");
+    Node* node = scene_->create_child("MovingPlatform");
     node->SetScale(Vector3(3.0f, 1.0f, 0.0f));
     auto* staticSprite = node->CreateComponent<StaticSprite2D>();
     staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Box.png"));
@@ -388,82 +388,82 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     // We create in-game UIs (coins and lifes) first so that they are hidden by the fullscreen UI (we could also temporary hide them using SetVisible)
 
     // Create the UI for displaying the remaining coins
-    auto* coinsUI = ui.GetRoot()->CreateChild<BorderImage>("Coins");
+    auto* coinsUI = ui.GetRoot()->create_child<BorderImage>("Coins");
     coinsUI->SetTexture(cache.GetResource<Texture2D>("Urho2D/GoldIcon.png"));
     coinsUI->SetSize(50, 50);
     coinsUI->SetImageRect(IntRect(0, 64, 60, 128));
     coinsUI->SetAlignment(HA_LEFT, VA_TOP);
     coinsUI->SetPosition(5, 5);
-    auto* coinsText = coinsUI->CreateChild<Text>("CoinsText");
+    auto* coinsText = coinsUI->create_child<Text>("CoinsText");
     coinsText->SetAlignment(HA_CENTER, VA_CENTER);
     coinsText->SetFont(font, 24);
     coinsText->SetTextEffect(TE_SHADOW);
     coinsText->SetText(String(remainingCoins));
 
     // Create the UI for displaying the remaining lifes
-    auto* lifeUI = ui.GetRoot()->CreateChild<BorderImage>("Life");
+    auto* lifeUI = ui.GetRoot()->create_child<BorderImage>("Life");
     lifeUI->SetTexture(cache.GetResource<Texture2D>("Urho2D/imp/imp_all.png"));
     lifeUI->SetSize(70, 80);
     lifeUI->SetAlignment(HA_RIGHT, VA_TOP);
     lifeUI->SetPosition(-5, 5);
-    auto* lifeText = lifeUI->CreateChild<Text>("LifeText");
+    auto* lifeText = lifeUI->create_child<Text>("LifeText");
     lifeText->SetAlignment(HA_CENTER, VA_CENTER);
     lifeText->SetFont(font, 24);
     lifeText->SetTextEffect(TE_SHADOW);
     lifeText->SetText(String(remainingLifes));
 
     // Create the fullscreen UI for start/end
-    auto* fullUI = ui.GetRoot()->CreateChild<Window>("FullUI");
+    auto* fullUI = ui.GetRoot()->create_child<Window>("FullUI");
     fullUI->SetStyleAuto();
     fullUI->SetSize(ui.GetRoot()->GetWidth(), ui.GetRoot()->GetHeight());
     fullUI->SetEnabled(false); // Do not react to input, only the 'Exit' and 'Play' buttons will
 
     // Create the title
-    auto* title = fullUI->CreateChild<BorderImage>("Title");
+    auto* title = fullUI->create_child<BorderImage>("Title");
     title->SetMinSize(fullUI->GetWidth(), 50);
     title->SetTexture(cache.GetResource<Texture2D>("Textures/HeightMap.png"));
     title->SetFullImageRect();
     title->SetAlignment(HA_CENTER, VA_TOP);
-    auto* titleText = title->CreateChild<Text>("TitleText");
+    auto* titleText = title->create_child<Text>("TitleText");
     titleText->SetAlignment(HA_CENTER, VA_CENTER);
     titleText->SetFont(font, 24);
     titleText->SetText(demoTitle);
 
     // Create the image
-    auto* spriteUI = fullUI->CreateChild<BorderImage>("Sprite");
+    auto* spriteUI = fullUI->create_child<BorderImage>("Sprite");
     spriteUI->SetTexture(cache.GetResource<Texture2D>("Urho2D/imp/imp_all.png"));
     spriteUI->SetSize(238, 271);
     spriteUI->SetAlignment(HA_CENTER, VA_CENTER);
     spriteUI->SetPosition(0, - ui.GetRoot()->GetHeight() / 4);
 
     // Create the 'EXIT' button
-    auto* exitButton = ui.GetRoot()->CreateChild<Button>("ExitButton");
+    auto* exitButton = ui.GetRoot()->create_child<Button>("ExitButton");
     exitButton->SetStyleAuto();
     exitButton->SetFocusMode(FM_RESETFOCUS);
     exitButton->SetSize(100, 50);
     exitButton->SetAlignment(HA_CENTER, VA_CENTER);
     exitButton->SetPosition(-100, 0);
-    auto* exitText = exitButton->CreateChild<Text>("ExitText");
+    auto* exitText = exitButton->create_child<Text>("ExitText");
     exitText->SetAlignment(HA_CENTER, VA_CENTER);
     exitText->SetFont(font, 24);
     exitText->SetText("EXIT");
     SubscribeToEvent(exitButton, E_RELEASED, DV_HANDLER(Sample2D, HandleExitButton));
 
     // Create the 'PLAY' button
-    auto* playButton = ui.GetRoot()->CreateChild<Button>("PlayButton");
+    auto* playButton = ui.GetRoot()->create_child<Button>("PlayButton");
     playButton->SetStyleAuto();
     playButton->SetFocusMode(FM_RESETFOCUS);
     playButton->SetSize(100, 50);
     playButton->SetAlignment(HA_CENTER, VA_CENTER);
     playButton->SetPosition(100, 0);
-    auto* playText = playButton->CreateChild<Text>("PlayText");
+    auto* playText = playButton->create_child<Text>("PlayText");
     playText->SetAlignment(HA_CENTER, VA_CENTER);
     playText->SetFont(font, 24);
     playText->SetText("PLAY");
 //  SubscribeToEvent(playButton, E_RELEASED, HANDLER(Urho2DPlatformer, HandlePlayButton));
 
     // Create the instructions
-    auto* instructionText = ui.GetRoot()->CreateChild<Text>("Instructions");
+    auto* instructionText = ui.GetRoot()->create_child<Text>("Instructions");
     instructionText->SetText("Use WASD keys or Arrows to move\nPageUp/PageDown/MouseWheel to zoom\nF5/F7 to save/reload scene\n'Z' to toggle debug geometry\nSpace to fight");
     instructionText->SetFont(cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
@@ -490,7 +490,7 @@ void Sample2D::SaveScene(bool initial)
 
 void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, const String& texture, bool animate)
 {
-    Node* node = scene_->CreateChild("Background");
+    Node* node = scene_->create_child("Background");
     node->SetPosition(Vector3(info.GetMapWidth(), info.GetMapHeight(), 0) / 2);
     node->SetScale(scale);
     auto* sprite = node->CreateComponent<StaticSprite2D>();
@@ -512,7 +512,7 @@ void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, co
 
 void Sample2D::SpawnEffect(Node* node)
 {
-    Node* particleNode = node->CreateChild("Emitter");
+    Node* particleNode = node->create_child("Emitter");
     particleNode->SetScale(0.5f / node->GetScale().x_);
     auto* particleEmitter = particleNode->CreateComponent<ParticleEmitter2D>();
     particleEmitter->SetLayer(2);

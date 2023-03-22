@@ -83,7 +83,7 @@ void Urho2DConstraints::CreateScene()
     drawDebug_ = true; // Set DrawDebugGeometry() to true
 
     // Create camera
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, 0.0f)); // Note that Z setting is discarded; use camera.zoom instead (see MoveCamera() below for example)
 
@@ -103,7 +103,7 @@ void Urho2DConstraints::CreateScene()
     // Create 4x3 grid
     for (unsigned i = 0; i<5; ++i)
     {
-        Node* edgeNode = scene_->CreateChild("VerticalEdge");
+        Node* edgeNode = scene_->create_child("VerticalEdge");
         auto* edgeBody = edgeNode->CreateComponent<RigidBody2D>();
         if (!dummyBody)
             dummyBody = edgeBody; // Mark first edge as dummy body (used by mouse pick)
@@ -114,7 +114,7 @@ void Urho2DConstraints::CreateScene()
 
     for (unsigned j = 0; j<4; ++j)
     {
-        Node* edgeNode = scene_->CreateChild("HorizontalEdge");
+        Node* edgeNode = scene_->create_child("HorizontalEdge");
         /*RigidBody2D* edgeBody = */edgeNode->CreateComponent<RigidBody2D>();
         auto* edgeShape = edgeNode->CreateComponent<CollisionEdge2D>();
         edgeShape->SetVertices(Vector2(-5.0f, j*2.0f -3.0f), Vector2(5.0f, j*2.0f -3.0f));
@@ -122,7 +122,7 @@ void Urho2DConstraints::CreateScene()
     }
 
     // Create a box (will be cloned later)
-    Node* box  = scene_->CreateChild("Box");
+    Node* box  = scene_->create_child("Box");
     box->SetPosition(Vector3(0.8f, -2.0f, 0.0f));
     auto* boxSprite = box->CreateComponent<StaticSprite2D>();
     boxSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Box.png"));
@@ -137,7 +137,7 @@ void Urho2DConstraints::CreateScene()
     shape->SetRestitution(0.1f); // Set restitution (slight bounce)
 
     // Create a ball (will be cloned later)
-    Node* ball  = scene_->CreateChild("Ball");
+    Node* ball  = scene_->create_child("Ball");
     ball->SetPosition(Vector3(1.8f, -2.0f, 0.0f));
     auto* ballSprite = ball->CreateComponent<StaticSprite2D>();
     ballSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Ball.png"));
@@ -152,7 +152,7 @@ void Urho2DConstraints::CreateScene()
     ballShape->SetRestitution(0.6f); // Set restitution: make it bounce
 
     // Create a polygon
-    Node* polygon = scene_->CreateChild("Polygon");
+    Node* polygon = scene_->create_child("Polygon");
     polygon->SetPosition(Vector3(1.6f, -2.0f, 0.0f));
     polygon->SetScale(0.7f);
     auto* polygonSprite = polygon->CreateComponent<StaticSprite2D>();
@@ -364,7 +364,7 @@ void Urho2DConstraints::CreateScene()
 
 void Urho2DConstraints::CreateFlag(const String& text, float x, float y) // Used to create Tex3D flags
 {
-    Node* flagNode = scene_->CreateChild("Flag");
+    Node* flagNode = scene_->create_child("Flag");
     flagNode->SetPosition(Vector3(x, y, 0.0f));
     auto* flag3D = flagNode->CreateComponent<Text3D>(); // We use Text3D in order to make the text affected by zoom (so that it sticks to 2D)
     flag3D->SetText(text);
@@ -374,7 +374,7 @@ void Urho2DConstraints::CreateFlag(const String& text, float x, float y) // Used
 void Urho2DConstraints::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move, Use PageUp PageDown to zoom.\n Space to toggle debug geometry and joints - F5 to save the scene.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other

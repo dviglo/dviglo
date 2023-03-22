@@ -72,15 +72,15 @@ void Chat::CreateUI()
     root->SetDefaultStyle(uiStyle);
 
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
-    chatHistoryText_ = root->CreateChild<Text>();
+    chatHistoryText_ = root->create_child<Text>();
     chatHistoryText_->SetFont(font, 12);
 
-    buttonContainer_ = root->CreateChild<UiElement>();
+    buttonContainer_ = root->create_child<UiElement>();
     buttonContainer_->SetFixedSize(DV_GRAPHICS.GetWidth(), 20);
     buttonContainer_->SetPosition(0, DV_GRAPHICS.GetHeight() - 20);
     buttonContainer_->SetLayoutMode(LM_HORIZONTAL);
 
-    textEdit_ = buttonContainer_->CreateChild<LineEdit>();
+    textEdit_ = buttonContainer_->create_child<LineEdit>();
     textEdit_->SetStyleAuto();
 
     sendButton_ = CreateButton("Send", 70);
@@ -125,11 +125,11 @@ Button* Chat::CreateButton(const String& text, int width)
 {
     auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
 
-    auto* button = buttonContainer_->CreateChild<Button>();
+    auto* button = buttonContainer_->create_child<Button>();
     button->SetStyleAuto();
     button->SetFixedWidth(width);
 
-    auto* buttonText = button->CreateChild<Text>();
+    auto* buttonText = button->create_child<Text>();
     buttonText->SetFont(font, 12);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
     buttonText->SetText(text);

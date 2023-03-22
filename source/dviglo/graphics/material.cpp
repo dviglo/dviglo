@@ -694,7 +694,7 @@ bool Material::Save(XmlElement& dest) const
         if (!entry.technique_)
             continue;
 
-        XmlElement techniqueElem = dest.CreateChild("technique");
+        XmlElement techniqueElem = dest.create_child("technique");
         techniqueElem.SetString("name", entry.technique_->GetName());
         techniqueElem.SetI32("quality", entry.qualityLevel_);
         techniqueElem.SetFloat("loddistance", entry.lodDistance_);
@@ -706,7 +706,7 @@ bool Material::Save(XmlElement& dest) const
         Texture* texture = GetTexture((TextureUnit)j);
         if (texture)
         {
-            XmlElement textureElem = dest.CreateChild("texture");
+            XmlElement textureElem = dest.create_child("texture");
             textureElem.SetString("unit", textureUnitNames[j]);
             textureElem.SetString("name", texture->GetName());
         }
@@ -715,7 +715,7 @@ bool Material::Save(XmlElement& dest) const
     // Write shader compile defines
     if (!vertexShaderDefines_.Empty() || !pixelShaderDefines_.Empty())
     {
-        XmlElement shaderElem = dest.CreateChild("shader");
+        XmlElement shaderElem = dest.create_child("shader");
         if (!vertexShaderDefines_.Empty())
             shaderElem.SetString("vsdefines", vertexShaderDefines_);
         if (!pixelShaderDefines_.Empty())
@@ -726,7 +726,7 @@ bool Material::Save(XmlElement& dest) const
     for (HashMap<StringHash, MaterialShaderParameter>::ConstIterator j = shaderParameters_.Begin();
          j != shaderParameters_.End(); ++j)
     {
-        XmlElement parameterElem = dest.CreateChild("parameter");
+        XmlElement parameterElem = dest.create_child("parameter");
         parameterElem.SetString("name", j->second_.name_);
         if (j->second_.value_.GetType() != VAR_BUFFER && j->second_.value_.GetType() != VAR_INT && j->second_.value_.GetType() != VAR_BOOL)
             parameterElem.SetVectorVariant("value", j->second_.value_);
@@ -742,7 +742,7 @@ bool Material::Save(XmlElement& dest) const
          j != shaderParameterAnimationInfos_.End(); ++j)
     {
         ShaderParameterAnimationInfo* info = j->second_;
-        XmlElement parameterAnimationElem = dest.CreateChild("parameteranimation");
+        XmlElement parameterAnimationElem = dest.create_child("parameteranimation");
         parameterAnimationElem.SetString("name", info->GetName());
         if (!info->GetAnimation()->save_xml(parameterAnimationElem))
             return false;
@@ -752,35 +752,35 @@ bool Material::Save(XmlElement& dest) const
     }
 
     // Write culling modes
-    XmlElement cullElem = dest.CreateChild("cull");
+    XmlElement cullElem = dest.create_child("cull");
     cullElem.SetString("value", cullModeNames[cullMode_]);
 
-    XmlElement shadowCullElem = dest.CreateChild("shadowcull");
+    XmlElement shadowCullElem = dest.create_child("shadowcull");
     shadowCullElem.SetString("value", cullModeNames[shadowCullMode_]);
 
     // Write fill mode
-    XmlElement fillElem = dest.CreateChild("fill");
+    XmlElement fillElem = dest.create_child("fill");
     fillElem.SetString("value", fillModeNames[fillMode_]);
 
     // Write depth bias
-    XmlElement depthBiasElem = dest.CreateChild("depthbias");
+    XmlElement depthBiasElem = dest.create_child("depthbias");
     depthBiasElem.SetFloat("constant", depthBias_.constantBias_);
     depthBiasElem.SetFloat("slopescaled", depthBias_.slopeScaledBias_);
 
     // Write alpha-to-coverage
-    XmlElement alphaToCoverageElem = dest.CreateChild("alphatocoverage");
+    XmlElement alphaToCoverageElem = dest.create_child("alphatocoverage");
     alphaToCoverageElem.SetBool("enable", alphaToCoverage_);
 
     // Write line anti-alias
-    XmlElement lineAntiAliasElem = dest.CreateChild("lineantialias");
+    XmlElement lineAntiAliasElem = dest.create_child("lineantialias");
     lineAntiAliasElem.SetBool("enable", lineAntiAlias_);
 
     // Write render order
-    XmlElement renderOrderElem = dest.CreateChild("renderorder");
+    XmlElement renderOrderElem = dest.create_child("renderorder");
     renderOrderElem.SetI32("value", renderOrder_);
 
     // Write occlusion
-    XmlElement occlusionElem = dest.CreateChild("occlusion");
+    XmlElement occlusionElem = dest.create_child("occlusion");
     occlusionElem.SetBool("enable", occlusion_);
 
     return true;

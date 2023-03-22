@@ -78,7 +78,7 @@ void AppState_Benchmark02::OnEnter()
     cameraSplinePath->SetSpeed(2.f);
     cameraSplinePath->SetInterpolationMode(InterpolationMode::CATMULL_ROM_FULL_CURVE);
 
-    Node* cameraTargetNode = scene_->CreateChild("CameraTarget");
+    Node* cameraTargetNode = scene_->create_child("CameraTarget");
     Node* cameraTargetPath = scene_->GetChild("CameraTargetPath");
     SplinePath* cameraTargetSplinePath = cameraPath->CreateComponent<SplinePath>();
     cameraTargetSplinePath->SetControlledNode(cameraTargetNode);

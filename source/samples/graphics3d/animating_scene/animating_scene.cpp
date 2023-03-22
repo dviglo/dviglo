@@ -66,7 +66,7 @@ void AnimatingScene::CreateScene()
     // Create a Zone component into a child scene node. The Zone controls ambient lighting and fog settings. Like the Octree,
     // it also defines its volume with a bounding box, but can be rotated (so it does not need to be aligned to the world X, Y
     // and Z axes.) Drawable objects "pick up" the zone they belong to and use it when rendering; several zones can exist
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     // Set same volume as the Octree, set a close bluish fog and some ambient light
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
@@ -79,7 +79,7 @@ void AnimatingScene::CreateScene()
     const unsigned NUM_OBJECTS = 2000;
     for (unsigned i = 0; i < NUM_OBJECTS; ++i)
     {
-        Node* boxNode = scene_->CreateChild("Box");
+        Node* boxNode = scene_->create_child("Box");
         boxNode->SetPosition(Vector3(Random(200.0f) - 100.0f, Random(200.0f) - 100.0f, Random(200.0f) - 100.0f));
         // Orient using random pitch, yaw and roll Euler angles
         boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
@@ -98,7 +98,7 @@ void AnimatingScene::CreateScene()
 
     // Create the camera. Let the starting position be at the world origin. As the fog limits maximum visible distance, we can
     // bring the far clip plane closer for more effective culling of distant objects
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     auto* camera = cameraNode_->CreateComponent<Camera>();
     camera->SetFarClip(100.0f);
 
@@ -111,7 +111,7 @@ void AnimatingScene::CreateScene()
 void AnimatingScene::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

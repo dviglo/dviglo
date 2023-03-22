@@ -64,7 +64,7 @@ void AppState_Benchmark03::OnEnter()
     scene_ = new Scene();
     scene_->CreateComponent<Octree>();
 
-    Node* zoneNode = scene_->CreateChild();
+    Node* zoneNode = scene_->create_child();
     Zone* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.f, 1000.f));
     zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
@@ -72,12 +72,12 @@ void AppState_Benchmark03::OnEnter()
     zone->SetFogStart(10000.f);
     zone->SetFogEnd(10000.f);
 
-    Node* lightNode = scene_->CreateChild();
+    Node* lightNode = scene_->create_child();
     lightNode->SetRotation(Quaternion(45.f, 45.f, 0.f));
     Light* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
 
-    Node* cameraNode = scene_->CreateChild("Camera");
+    Node* cameraNode = scene_->create_child("Camera");
     cameraNode->SetPosition(Vector3(0.f, 0.f, -10.f));
     Camera* camera = cameraNode->CreateComponent<Camera>();
     camera->SetOrthographic(true);
@@ -104,7 +104,7 @@ void AppState_Benchmark03::CreateMolecule(const Vector2& pos, i32 type)
 {
     assert(type >= 0 && type <= 6);
 
-    Node* node = scene_->CreateChild();
+    Node* node = scene_->create_child();
     node->SetPosition2D(pos);
     
     StaticModel* obj = node->CreateComponent<StaticModel>();

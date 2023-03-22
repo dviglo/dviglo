@@ -70,14 +70,14 @@ void CrowdNavigation::CreateScene()
     scene_->CreateComponent<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
-    Node* planeNode = scene_->CreateChild("Plane");
+    Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
@@ -86,7 +86,7 @@ void CrowdNavigation::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light to the world. Enable cascaded shadows on it
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -96,10 +96,10 @@ void CrowdNavigation::CreateScene()
     light->SetShadowCascade(CascadeParameters(10.0f, 50.0f, 200.0f, 0.0f, 0.8f));
 
     // Create randomly sized boxes. If boxes are big enough, make them occluders
-    Node* boxGroup = scene_->CreateChild("Boxes");
+    Node* boxGroup = scene_->create_child("Boxes");
     for (unsigned i = 0; i < 20; ++i)
     {
-        Node* boxNode = boxGroup->CreateChild("Box");
+        Node* boxNode = boxGroup->create_child("Box");
         float size = 1.0f + Random(10.0f);
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
@@ -156,7 +156,7 @@ void CrowdNavigation::CreateScene()
     CreateMovingBarrels(navMesh);
 
     // Create Jack node as crowd agent
-    SpawnJack(Vector3(-5.0f, 0.0f, 20.0f), scene_->CreateChild("Jacks"));
+    SpawnJack(Vector3(-5.0f, 0.0f, 20.0f), scene_->create_child("Jacks"));
 
     // Create the camera. Set far clip to match the fog. Note: now we actually create the camera node outside the scene, because
     // we want it to be unaffected by scene load / save
@@ -184,7 +184,7 @@ void CrowdNavigation::CreateUI()
     cursor->SetPosition(graphics.GetWidth() / 2, graphics.GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
-    instructionText_ = DV_UI.GetRoot()->CreateChild<Text>();
+    instructionText_ = DV_UI.GetRoot()->create_child<Text>();
     instructionText_->SetText(
         "Use WASD keys to move, RMB to rotate view\n"
         "LMB to set destination, SHIFT+LMB to spawn a Jack\n"
@@ -232,7 +232,7 @@ void CrowdNavigation::SubscribeToEvents()
 
 void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
 {
-    SharedPtr<Node> jackNode(jackGroup->CreateChild("Jack"));
+    SharedPtr<Node> jackNode(jackGroup->create_child("Jack"));
     jackNode->SetPosition(pos);
     auto* modelObject = jackNode->CreateComponent<AnimatedModel>();
     modelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Jack.mdl"));
@@ -249,7 +249,7 @@ void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
 
 void CrowdNavigation::CreateMushroom(const Vector3& pos)
 {
-    Node* mushroomNode = scene_->CreateChild("Mushroom");
+    Node* mushroomNode = scene_->create_child("Mushroom");
     mushroomNode->SetPosition(pos);
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
@@ -273,9 +273,9 @@ void CrowdNavigation::CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh
         float boxHalfSize = box->GetScale().x_ / 2;
 
         // Create 2 empty nodes for the start & end points of the connection. Note that order matters only when using one-way/unidirectional connection.
-        Node* connectionStart = box->CreateChild("ConnectionStart");
+        Node* connectionStart = box->create_child("ConnectionStart");
         connectionStart->SetWorldPosition(navMesh->FindNearestPoint(boxPos + Vector3(boxHalfSize, -boxHalfSize, 0))); // Base of box
-        Node* connectionEnd = connectionStart->CreateChild("ConnectionEnd");
+        Node* connectionEnd = connectionStart->create_child("ConnectionEnd");
         connectionEnd->SetWorldPosition(navMesh->FindNearestPoint(boxPos + Vector3(boxHalfSize, boxHalfSize, 0))); // Top of box
 
         // Create the OffMeshConnection component to one node and link the other node
@@ -286,7 +286,7 @@ void CrowdNavigation::CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh
 
 void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
 {
-    Node* barrel = scene_->CreateChild("Barrel");
+    Node* barrel = scene_->create_child("Barrel");
     auto* model = barrel->CreateComponent<StaticModel>();
     model->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
     auto* material = DV_RES_CACHE.GetResource<Material>("Materials/StoneTiled.xml");

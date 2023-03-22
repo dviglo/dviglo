@@ -70,7 +70,7 @@ void HugeObjectCount::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create a Zone for ambient light & fog control
-    Node* zoneNode = scene_->CreateChild("Zone");
+    Node* zoneNode = scene_->create_child("Zone");
     auto* zone = zoneNode->CreateComponent<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
@@ -78,7 +78,7 @@ void HugeObjectCount::CreateScene()
     zone->SetFogEnd(300.0f);
 
     // Create a directional light
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(-0.6f, -1.0f, -0.8f)); // The direction vector does not need to be normalized
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
@@ -92,7 +92,7 @@ void HugeObjectCount::CreateScene()
         {
             for (int x = -125; x < 125; ++x)
             {
-                Node* boxNode = scene_->CreateChild("Box");
+                Node* boxNode = scene_->create_child("Box");
                 boxNode->SetPosition(Vector3(x * 0.3f, 0.0f, y * 0.3f));
                 boxNode->SetScale(0.25f);
                 auto* boxObject = boxNode->CreateComponent<StaticModel>();
@@ -118,12 +118,12 @@ void HugeObjectCount::CreateScene()
                 // does not matter, and it does not render anything if instance nodes are not added to it
                 if (!lastGroup || lastGroup->GetNumInstanceNodes() >= 25 * 25)
                 {
-                    Node* boxGroupNode = scene_->CreateChild("BoxGroup");
+                    Node* boxGroupNode = scene_->create_child("BoxGroup");
                     lastGroup = boxGroupNode->CreateComponent<StaticModelGroup>();
                     lastGroup->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
                 }
 
-                Node* boxNode = scene_->CreateChild("Box");
+                Node* boxNode = scene_->create_child("Box");
                 boxNode->SetPosition(Vector3(x * 0.3f, 0.0f, y * 0.3f));
                 boxNode->SetScale(0.25f);
                 boxNodes_.Push(SharedPtr<Node>(boxNode));
@@ -145,7 +145,7 @@ void HugeObjectCount::CreateScene()
 void HugeObjectCount::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "Space to toggle animation\n"

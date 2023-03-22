@@ -202,7 +202,7 @@ bool UiElement::load_xml(const XmlElement& source, XmlFile* styleFile)
 
         if (!internalElem)
         {
-            child = CreateChild(typeName, String::EMPTY, index);
+            child = create_child(typeName, String::EMPTY, index);
         }
         else
         {
@@ -252,7 +252,7 @@ UiElement* UiElement::LoadChildXML(const XmlElement& childElem, XmlFile* styleFi
     if (typeName.Empty())
         typeName = "UiElement";
     i32 index = childElem.HasAttribute("index") ? childElem.GetU32("index") : ENDPOS;
-    UiElement* child = CreateChild(typeName, String::EMPTY, index);
+    UiElement* child = create_child(typeName, String::EMPTY, index);
 
     if (child)
     {
@@ -306,7 +306,7 @@ bool UiElement::save_xml(XmlElement& dest) const
         if (element->IsTemporary())
             continue;
 
-        XmlElement childElem = dest.CreateChild("element");
+        XmlElement childElem = dest.create_child("element");
         if (!element->save_xml(childElem))
             return false;
     }
@@ -1241,7 +1241,7 @@ void UiElement::BringToFront()
     }
 }
 
-UiElement* UiElement::CreateChild(StringHash type, const String& name, i32 index/* = ENDPOS*/)
+UiElement* UiElement::create_child(StringHash type, const String& name, i32 index/* = ENDPOS*/)
 {
     assert(index == ENDPOS || (index >= 0 && index <= children_.Size()));
 

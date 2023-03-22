@@ -331,7 +331,7 @@ public:
     void BringToFront();
 
     /// Create and add a child element and return it.
-    UiElement* CreateChild(StringHash type, const String& name = String::EMPTY, i32 index = ENDPOS);
+    UiElement* create_child(StringHash type, const String& name = String::EMPTY, i32 index = ENDPOS);
 
     /// Add a child element.
     void AddChild(UiElement* element);
@@ -380,7 +380,7 @@ public:
     void remove_all_tags();
 
     /// Template version of creating a child element.
-    template <class T> T* CreateChild(const String& name = String::EMPTY, i32 index = ENDPOS);
+    template <class T> T* create_child(const String& name = String::EMPTY, i32 index = ENDPOS);
 
     /// Template version of returning child element by index using static cast.
     template <class T> T* GetChildStaticCast(i32 index) const;
@@ -822,10 +822,10 @@ private:
     StringVector tags_;
 };
 
-template <class T> T* UiElement::CreateChild(const String& name, i32 index/* = ENDPOS*/)
+template <class T> T* UiElement::create_child(const String& name, i32 index/* = ENDPOS*/)
 {
     assert(index >= 0 || index == ENDPOS);
-    return static_cast<T*>(CreateChild(T::GetTypeStatic(), name, index));
+    return static_cast<T*>(create_child(T::GetTypeStatic(), name, index));
 }
 
 template <class T> T* UiElement::GetChildStaticCast(i32 index) const

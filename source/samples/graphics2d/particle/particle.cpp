@@ -57,7 +57,7 @@ void Urho2DParticle::CreateScene()
     scene_->CreateComponent<Octree>();
 
     // Create camera node
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
@@ -71,7 +71,7 @@ void Urho2DParticle::CreateScene()
     if (!particleEffect)
         return;
 
-    particleNode_ = scene_->CreateChild("ParticleEmitter2D");
+    particleNode_ = scene_->create_child("ParticleEmitter2D");
     auto* particleEmitter = particleNode_->CreateComponent<ParticleEmitter2D>();
     particleEmitter->SetEffect(particleEffect);
 
@@ -79,7 +79,7 @@ void Urho2DParticle::CreateScene()
     if (!greenSpiralEffect)
         return;
 
-    Node* greenSpiralNode = scene_->CreateChild("GreenSpiral");
+    Node* greenSpiralNode = scene_->create_child("GreenSpiral");
     auto* greenSpiralEmitter = greenSpiralNode->CreateComponent<ParticleEmitter2D>();
     greenSpiralEmitter->SetEffect(greenSpiralEffect);
 }
@@ -87,7 +87,7 @@ void Urho2DParticle::CreateScene()
 void Urho2DParticle::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use mouse to move the particle.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 

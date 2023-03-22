@@ -34,9 +34,9 @@ DropDownList::DropDownList() :
     listView_->SetScrollBarsVisible(false, false);
     popup_->SetLayout(LM_VERTICAL);
     popup_->AddChild(listView_);
-    placeholder_ = CreateChild<UiElement>("DDL_Placeholder");
+    placeholder_ = create_child<UiElement>("DDL_Placeholder");
     placeholder_->SetInternal(true);
-    auto* text = placeholder_->CreateChild<Text>("DDL_Placeholder_Text");
+    auto* text = placeholder_->create_child<Text>("DDL_Placeholder_Text");
     text->SetInternal(true);
     text->SetVisible(false);
 

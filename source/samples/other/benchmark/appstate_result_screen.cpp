@@ -53,12 +53,12 @@ void AppState_ResultScreen::ShowResultWindow()
 {
     UiElement* root = DV_UI.GetRoot();
 
-    Window* window = root->CreateChild<Window>(RESULT_WINDOW_STR);
+    Window* window = root->create_child<Window>(RESULT_WINDOW_STR);
     window->SetStyleAuto();
     window->SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6));
     window->SetAlignment(HA_CENTER, VA_CENTER);
 
-    Text* windowTitle = window->CreateChild<Text>();
+    Text* windowTitle = window->create_child<Text>();
     windowTitle->SetStyleAuto();
     windowTitle->SetText("Result");
 
@@ -66,16 +66,16 @@ void AppState_ResultScreen::ShowResultWindow()
     const String& benchmarkName = APP_STATE_MANAGER.GetName(prevAppStateId);
     const FpsCounter& benchmarkResult = APP_STATE_MANAGER.GetResult(prevAppStateId);
 
-    Text* resultText = window->CreateChild<Text>();
+    Text* resultText = window->create_child<Text>();
     resultText->SetStyleAuto();
     resultText->SetText(benchmarkName + ": " + String(benchmarkResult.GetResultFps()) + " FPS (min: " +
         String(benchmarkResult.GetResultMinFps()) + ", max: " + String(benchmarkResult.GetResultMaxFps()) + ")");
 
-    Button* okButton = window->CreateChild<Button>();
+    Button* okButton = window->create_child<Button>();
     okButton->SetStyleAuto();
     okButton->SetFixedHeight(24);
 
-    Text* buttonText = okButton->CreateChild<Text>();
+    Text* buttonText = okButton->create_child<Text>();
     buttonText->SetStyleAuto();
     buttonText->SetText("Ok");
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);

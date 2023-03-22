@@ -304,7 +304,7 @@ void Run(Vector<String>& arguments)
 
     for (const SharedPtr<PackerInfo>& packerInfo : packerInfos)
     {
-        XmlElement subTexture = root.CreateChild("SubTexture");
+        XmlElement subTexture = root.create_child("SubTexture");
         subTexture.SetString("name", packerInfo->name);
         subTexture.SetI32("x", packerInfo->x + offsetX);
         subTexture.SetI32("y", packerInfo->y + offsetY);

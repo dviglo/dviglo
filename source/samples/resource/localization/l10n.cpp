@@ -98,7 +98,7 @@ void L10n::CreateGUI()
     b->SetStyle("Button");
     b->SetMinHeight(24);
 
-    auto* t = b->CreateChild<Text>("ButtonTextChangeLang");
+    auto* t = b->create_child<Text>("ButtonTextChangeLang");
     // The showing text value will automatically change when language is changed
     t->SetAutoLocalizable(true);
     // The text value used as a string identifier in this mode.
@@ -113,7 +113,7 @@ void L10n::CreateGUI()
     window->AddChild(b);
     b->SetStyle("Button");
     b->SetMinHeight(24);
-    t = b->CreateChild<Text>("ButtonTextQuit");
+    t = b->create_child<Text>("ButtonTextQuit");
     t->SetAlignment(HA_CENTER, VA_CENTER);
     t->SetStyle("Text");
 
@@ -135,23 +135,23 @@ void L10n::CreateScene()
     zone->SetFogStart(1.0f);
     zone->SetFogEnd(100.0f);
 
-    Node* planeNode = scene_->CreateChild("Plane");
+    Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(300.0f, 1.0f, 300.0f));
     auto* planeObject = planeNode->CreateComponent<StaticModel>();
     planeObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneTiled.xml"));
 
-    Node* lightNode = scene_->CreateChild("DirectionalLight");
+    Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
     auto* light = lightNode->CreateComponent<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetColor(Color(0.8f, 0.8f, 0.8f));
 
-    cameraNode_ = scene_->CreateChild("Camera");
+    cameraNode_ = scene_->create_child("Camera");
     cameraNode_->CreateComponent<Camera>();
     cameraNode_->SetPosition(Vector3(0.0f, 10.0f, -30.0f));
 
-    Node* text3DNode = scene_->CreateChild("Text3D");
+    Node* text3DNode = scene_->create_child("Text3D");
     text3DNode->SetPosition(Vector3(0.0f, 0.1f, 30.0f));
     auto* text3D = text3DNode->CreateComponent<Text3D>();
 

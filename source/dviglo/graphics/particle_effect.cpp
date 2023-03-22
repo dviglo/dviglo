@@ -313,86 +313,86 @@ bool ParticleEffect::Save(XmlElement& dest) const
         return false;
     }
 
-    XmlElement childElem = dest.CreateChild("material");
+    XmlElement childElem = dest.create_child("material");
     childElem.SetAttribute("name", GetResourceName(material_));
 
-    childElem = dest.CreateChild("numparticles");
+    childElem = dest.create_child("numparticles");
     childElem.SetI32("value", numParticles_);
 
-    childElem = dest.CreateChild("updateinvisible");
+    childElem = dest.create_child("updateinvisible");
     childElem.SetBool("enable", updateInvisible_);
 
-    childElem = dest.CreateChild("relative");
+    childElem = dest.create_child("relative");
     childElem.SetBool("enable", relative_);
 
-    childElem = dest.CreateChild("scaled");
+    childElem = dest.create_child("scaled");
     childElem.SetBool("enable", scaled_);
 
-    childElem = dest.CreateChild("sorted");
+    childElem = dest.create_child("sorted");
     childElem.SetBool("enable", sorted_);
 
-    childElem = dest.CreateChild("fixedscreensize");
+    childElem = dest.create_child("fixedscreensize");
     childElem.SetBool("enable", fixedScreenSize_);
 
-    childElem = dest.CreateChild("animlodbias");
+    childElem = dest.create_child("animlodbias");
     childElem.SetFloat("value", animationLodBias_);
 
-    childElem = dest.CreateChild("emittertype");
+    childElem = dest.create_child("emittertype");
     childElem.SetAttribute("value", emitterTypeNames[emitterType_]);
 
-    childElem = dest.CreateChild("emittersize");
+    childElem = dest.create_child("emittersize");
     childElem.SetVector3("value", emitterSize_);
 
-    childElem = dest.CreateChild("direction");
+    childElem = dest.create_child("direction");
     childElem.SetVector3("min", directionMin_);
     childElem.SetVector3("max", directionMax_);
 
-    childElem = dest.CreateChild("constantforce");
+    childElem = dest.create_child("constantforce");
     childElem.SetVector3("value", constantForce_);
 
-    childElem = dest.CreateChild("dampingforce");
+    childElem = dest.create_child("dampingforce");
     childElem.SetFloat("value", dampingForce_);
 
-    childElem = dest.CreateChild("activetime");
+    childElem = dest.create_child("activetime");
     childElem.SetFloat("value", activeTime_);
 
-    childElem = dest.CreateChild("inactivetime");
+    childElem = dest.create_child("inactivetime");
     childElem.SetFloat("value", inactiveTime_);
 
-    childElem = dest.CreateChild("emissionrate");
+    childElem = dest.create_child("emissionrate");
     childElem.SetFloat("min", emissionRateMin_);
     childElem.SetFloat("max", emissionRateMax_);
 
-    childElem = dest.CreateChild("particlesize");
+    childElem = dest.create_child("particlesize");
     childElem.SetVector2("min", sizeMin_);
     childElem.SetVector2("max", sizeMax_);
 
-    childElem = dest.CreateChild("timetolive");
+    childElem = dest.create_child("timetolive");
     childElem.SetFloat("min", timeToLiveMin_);
     childElem.SetFloat("max", timeToLiveMax_);
 
-    childElem = dest.CreateChild("velocity");
+    childElem = dest.create_child("velocity");
     childElem.SetFloat("min", velocityMin_);
     childElem.SetFloat("max", velocityMax_);
 
-    childElem = dest.CreateChild("rotation");
+    childElem = dest.create_child("rotation");
     childElem.SetFloat("min", rotationMin_);
     childElem.SetFloat("max", rotationMax_);
 
-    childElem = dest.CreateChild("rotationspeed");
+    childElem = dest.create_child("rotationspeed");
     childElem.SetFloat("min", rotationSpeedMin_);
     childElem.SetFloat("max", rotationSpeedMax_);
 
-    childElem = dest.CreateChild("sizedelta");
+    childElem = dest.create_child("sizedelta");
     childElem.SetFloat("add", sizeAdd_);
     childElem.SetFloat("mul", sizeMul_);
 
-    childElem = dest.CreateChild("faceCameraMode");
+    childElem = dest.create_child("faceCameraMode");
     childElem.SetAttribute("value", faceCameraModeNames[faceCameraMode_]);
 
     if (colorFrames_.Size() == 1)
     {
-        childElem = dest.CreateChild("color");
+        childElem = dest.create_child("color");
         childElem.SetColor("value", colorFrames_[0].color_);
     }
 
@@ -400,7 +400,7 @@ bool ParticleEffect::Save(XmlElement& dest) const
     {
         for (const ColorFrame& colorFrame : colorFrames_)
         {
-            childElem = dest.CreateChild("colorfade");
+            childElem = dest.create_child("colorfade");
             childElem.SetColor("color", colorFrame.color_);
             childElem.SetFloat("time", colorFrame.time_);
         }
@@ -408,7 +408,7 @@ bool ParticleEffect::Save(XmlElement& dest) const
 
     for (const TextureFrame& textureFrame : textureFrames_)
     {
-        childElem = dest.CreateChild("texanim");
+        childElem = dest.create_child("texanim");
         childElem.SetRect("uv", textureFrame.uv_);
         childElem.SetFloat("time", textureFrame.time_);
     }

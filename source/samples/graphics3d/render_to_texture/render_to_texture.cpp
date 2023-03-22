@@ -68,7 +68,7 @@ void RenderToTexture::CreateScene()
         rttScene_->CreateComponent<Octree>();
 
         // Create a Zone for ambient light & fog control
-        Node* zoneNode = rttScene_->CreateChild("Zone");
+        Node* zoneNode = rttScene_->create_child("Zone");
         auto* zone = zoneNode->CreateComponent<Zone>();
         // Set same volume as the Octree, set a close bluish fog and some ambient light
         zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
@@ -81,7 +81,7 @@ void RenderToTexture::CreateScene()
         const unsigned NUM_OBJECTS = 2000;
         for (unsigned i = 0; i < NUM_OBJECTS; ++i)
         {
-            Node* boxNode = rttScene_->CreateChild("Box");
+            Node* boxNode = rttScene_->create_child("Box");
             boxNode->SetPosition(Vector3(Random(200.0f) - 100.0f, Random(200.0f) - 100.0f, Random(200.0f) - 100.0f));
             // Orient using random pitch, yaw and roll Euler angles
             boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
@@ -96,7 +96,7 @@ void RenderToTexture::CreateScene()
         }
 
         // Create a camera for the render-to-texture scene. Simply leave it at the world origin and let it observe the scene
-        rttCameraNode_ = rttScene_->CreateChild("Camera");
+        rttCameraNode_ = rttScene_->create_child("Camera");
         auto* camera = rttCameraNode_->CreateComponent<Camera>();
         camera->SetFarClip(100.0f);
 
@@ -114,7 +114,7 @@ void RenderToTexture::CreateScene()
         scene_->CreateComponent<Octree>();
 
         // Create a Zone component for ambient lighting & fog control
-        Node* zoneNode = scene_->CreateChild("Zone");
+        Node* zoneNode = scene_->create_child("Zone");
         auto* zone = zoneNode->CreateComponent<Zone>();
         zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
         zone->SetAmbientColor(Color(0.1f, 0.1f, 0.1f));
@@ -122,7 +122,7 @@ void RenderToTexture::CreateScene()
         zone->SetFogEnd(300.0f);
 
         // Create a directional light without shadows
-        Node* lightNode = scene_->CreateChild("DirectionalLight");
+        Node* lightNode = scene_->create_child("DirectionalLight");
         lightNode->SetDirection(Vector3(0.5f, -1.0f, 0.5f));
         auto* light = lightNode->CreateComponent<Light>();
         light->SetLightType(LIGHT_DIRECTIONAL);
@@ -134,7 +134,7 @@ void RenderToTexture::CreateScene()
         {
             for (int x = -5; x <= 5; ++x)
             {
-                Node* floorNode = scene_->CreateChild("FloorTile");
+                Node* floorNode = scene_->create_child("FloorTile");
                 floorNode->SetPosition(Vector3(x * 20.5f, -0.5f, y * 20.5f));
                 floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
                 auto* floorObject = floorNode->CreateComponent<StaticModel>();
@@ -146,14 +146,14 @@ void RenderToTexture::CreateScene()
         // Create a "screen" like object for viewing the second scene. Construct it from two StaticModels, a box for the frame
         // and a plane for the actual view
         {
-            Node* boxNode = scene_->CreateChild("ScreenBox");
+            Node* boxNode = scene_->create_child("ScreenBox");
             boxNode->SetPosition(Vector3(0.0f, 10.0f, 0.0f));
             boxNode->SetScale(Vector3(21.0f, 16.0f, 0.5f));
             auto* boxObject = boxNode->CreateComponent<StaticModel>();
             boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
             boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
 
-            Node* screenNode = scene_->CreateChild("Screen");
+            Node* screenNode = scene_->create_child("Screen");
             screenNode->SetPosition(Vector3(0.0f, 10.0f, -0.27f));
             screenNode->SetRotation(Quaternion(-90.0f, 0.0f, 0.0f));
             screenNode->SetScale(Vector3(20.0f, 0.0f, 15.0f));
@@ -185,7 +185,7 @@ void RenderToTexture::CreateScene()
         }
 
         // Create the camera which we will move around. Limit far clip distance to match the fog
-        cameraNode_ = scene_->CreateChild("Camera");
+        cameraNode_ = scene_->create_child("Camera");
         auto* camera = cameraNode_->CreateComponent<Camera>();
         camera->SetFarClip(300.0f);
 
@@ -197,7 +197,7 @@ void RenderToTexture::CreateScene()
 void RenderToTexture::CreateInstructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->CreateChild<Text>();
+    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 
