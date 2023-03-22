@@ -369,7 +369,7 @@ SharedPtr<Animation> Animation::Clone(const String& cloneName) const
     ret->length_ = length_;
     ret->tracks_ = tracks_;
     ret->triggers_ = triggers_;
-    ret->CopyMetadata(*this);
+    ret->copy_metadata(*this);
     ret->SetMemoryUse(GetMemoryUse());
 
     return ret;

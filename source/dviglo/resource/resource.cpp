@@ -158,7 +158,7 @@ void ResourceWithMetadata::save_metadata_to_xml(XmlElement& destination) const
     }
 }
 
-void ResourceWithMetadata::CopyMetadata(const ResourceWithMetadata& source)
+void ResourceWithMetadata::copy_metadata(const ResourceWithMetadata& source)
 {
     metadata_ = source.metadata_;
     metadataKeys_ = source.metadataKeys_;

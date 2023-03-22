@@ -120,7 +120,7 @@ protected:
     /// Save as <metadata> children of XML element.
     void save_metadata_to_xml(XmlElement& destination) const;
     /// Copy metadata from another resource.
-    void CopyMetadata(const ResourceWithMetadata& source);
+    void copy_metadata(const ResourceWithMetadata& source);
 
 private:
     /// Animation metadata variables.
