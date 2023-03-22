@@ -367,7 +367,7 @@ public:
     void SetElementEventSender(bool flag);
 
     /// Set tags. Old tags are overwritten.
-    void SetTags(const StringVector& tags);
+    void set_tags(const StringVector& tags);
     /// Add a tag.
     void add_tag(const String& tag);
     /// Add tags with the specified separator (; by default).

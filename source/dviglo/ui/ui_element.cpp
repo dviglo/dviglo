@@ -1443,7 +1443,7 @@ void UiElement::SetElementEventSender(bool flag)
     elementEventSender_ = flag;
 }
 
-void UiElement::SetTags(const StringVector& tags)
+void UiElement::set_tags(const StringVector& tags)
 {
     remove_all_tags();
     add_tags(tags);

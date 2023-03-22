@@ -57,7 +57,7 @@ void Node::RegisterObject()
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
-    DV_ACCESSOR_ATTRIBUTE("Tags", GetTags, SetTags, Variant::emptyStringVector, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Tags", GetTags, set_tags, Variant::emptyStringVector, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, Vector3::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Scale", GetScale, SetScale, Vector3::ONE, AM_DEFAULT);
@@ -313,7 +313,7 @@ void Node::SetName(const String& name)
     }
 }
 
-void Node::SetTags(const StringVector& tags)
+void Node::set_tags(const StringVector& tags)
 {
     remove_all_tags();
     add_tags(tags);
