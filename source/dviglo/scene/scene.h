@@ -90,7 +90,7 @@ public:
     /// Load from XML data. Removes all existing child nodes and components first. Return true if successful.
     bool load_xml(const XMLElement& source) override;
     /// Load from JSON data. Removes all existing child nodes and components first. Return true if successful.
-    bool LoadJSON(const JSONValue& source) override;
+    bool load_json(const JSONValue& source) override;
     /// Mark for attribute check on the next network update.
     void MarkNetworkUpdate() override;
     /// Add a replication state that is tracking this scene.
@@ -99,7 +99,7 @@ public:
     /// Load from an XML file. Return true if successful.
     bool load_xml(Deserializer& source);
     /// Load from a JSON file. Return true if successful.
-    bool LoadJSON(Deserializer& source);
+    bool load_json(Deserializer& source);
     /// Save to an XML file. Return true if successful.
     bool save_xml(Serializer& dest, const String& indentation = "\t") const;
     /// Save to a JSON file. Return true if successful.

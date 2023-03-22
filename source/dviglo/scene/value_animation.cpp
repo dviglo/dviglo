@@ -125,7 +125,7 @@ bool ValueAnimation::save_xml(XMLElement& dest) const
     return true;
 }
 
-bool ValueAnimation::LoadJSON(const JSONValue& source)
+bool ValueAnimation::load_json(const JSONValue& source)
 {
     valueType_ = VAR_NONE;
     eventFrames_.Clear();

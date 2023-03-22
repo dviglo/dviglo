@@ -117,7 +117,7 @@ bool UnknownComponent::load_xml(const XMLElement& source)
 }
 
 
-bool UnknownComponent::LoadJSON(const JSONValue& source)
+bool UnknownComponent::load_json(const JSONValue& source)
 {
     useXML_ = true;
     xmlAttributes_.Clear();

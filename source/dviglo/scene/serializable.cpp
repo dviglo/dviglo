@@ -397,7 +397,7 @@ bool Serializable::load_xml(const XMLElement& source)
     return true;
 }
 
-bool Serializable::LoadJSON(const JSONValue& source)
+bool Serializable::load_json(const JSONValue& source)
 {
     if (source.IsNull())
     {

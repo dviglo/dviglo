@@ -147,7 +147,7 @@ bool Node::load_xml(const XMLElement& source)
     return success;
 }
 
-bool Node::LoadJSON(const JSONValue& source)
+bool Node::load_json(const JSONValue& source)
 {
     SceneResolver resolver;
 
@@ -156,7 +156,7 @@ bool Node::LoadJSON(const JSONValue& source)
     resolver.AddNode(nodeID, this);
 
     // Read attributes, components and child nodes
-    bool success = LoadJSON(source, resolver);
+    bool success = load_json(source, resolver);
     if (success)
     {
         resolver.Resolve();
@@ -1620,13 +1620,13 @@ bool Node::load_xml(const XMLElement& source, SceneResolver& resolver, bool load
     return true;
 }
 
-bool Node::LoadJSON(const JSONValue& source, SceneResolver& resolver, bool loadChildren, bool rewriteIDs, CreateMode mode)
+bool Node::load_json(const JSONValue& source, SceneResolver& resolver, bool loadChildren, bool rewriteIDs, CreateMode mode)
 {
     // Remove all children and components first in case this is not a fresh load
     RemoveAllChildren();
     RemoveAllComponents();
 
-    if (!Animatable::LoadJSON(source))
+    if (!Animatable::load_json(source))
         return false;
 
     const JSONArray& componentsArray = source.Get("components").GetArray();
@@ -1641,7 +1641,7 @@ bool Node::LoadJSON(const JSONValue& source, SceneResolver& resolver, bool loadC
         if (newComponent)
         {
             resolver.AddComponent(compID, newComponent);
-            if (!newComponent->LoadJSON(compVal))
+            if (!newComponent->load_json(compVal))
                 return false;
         }
     }
@@ -1658,7 +1658,7 @@ bool Node::LoadJSON(const JSONValue& source, SceneResolver& resolver, bool loadC
         Node* newNode = CreateChild(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
             LOCAL);
         resolver.AddNode(nodeID, newNode);
-        if (!newNode->LoadJSON(childVal, resolver, loadChildren, rewriteIDs, mode))
+        if (!newNode->load_json(childVal, resolver, loadChildren, rewriteIDs, mode))
             return false;
     }
 

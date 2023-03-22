@@ -68,7 +68,7 @@ public:
     /// Save as XML data. Return true if successful.
     bool save_xml(XMLElement& dest) const;
     /// Load from JSON data. Return true if successful.
-    bool LoadJSON(const JSONValue& source);
+    bool load_json(const JSONValue& source);
     /// Save as XML data. Return true if successful.
     bool save_json(JSONValue& dest) const;
 

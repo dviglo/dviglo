@@ -158,7 +158,7 @@ bool Scene::load_xml(const XMLElement& source)
         return false;
 }
 
-bool Scene::LoadJSON(const JSONValue& source)
+bool Scene::load_json(const JSONValue& source)
 {
     DV_PROFILE(LoadSceneJSON);
 
@@ -166,7 +166,7 @@ bool Scene::LoadJSON(const JSONValue& source)
 
     // Load the whole scene, then perform post-load if successfully loaded
     // Note: the scene filename and checksum can not be set, as we only used an XML element
-    if (Node::LoadJSON(source))
+    if (Node::load_json(source))
     {
         FinishLoading(nullptr);
         return true;
@@ -216,7 +216,7 @@ bool Scene::load_xml(Deserializer& source)
         return false;
 }
 
-bool Scene::LoadJSON(Deserializer& source)
+bool Scene::load_json(Deserializer& source)
 {
     DV_PROFILE(LoadSceneJSON);
 
@@ -230,7 +230,7 @@ bool Scene::LoadJSON(Deserializer& source)
 
     Clear();
 
-    if (Node::LoadJSON(json->GetRoot()))
+    if (Node::load_json(json->GetRoot()))
     {
         FinishLoading(&source);
         return true;
@@ -471,7 +471,7 @@ bool Scene::LoadAsyncJSON(File* file, LoadMode mode)
         resolver_.AddNode(nodeID, this);
 
         // Load the root level components first
-        if (!Node::LoadJSON(rootVal, resolver_, false))
+        if (!Node::load_json(rootVal, resolver_, false))
             return false;
 
         // Then prepare for loading all root level child nodes in the async update
@@ -559,7 +559,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, c
     // Rewrite IDs when instantiating
     Node* node = CreateChild(0, mode);
     resolver.AddNode(nodeID, node);
-    if (node->LoadJSON(source, resolver, true, true, mode))
+    if (node->load_json(source, resolver, true, true, mode))
     {
         resolver.Resolve();
         node->SetTransform(position, rotation);
@@ -1200,7 +1200,7 @@ void Scene::UpdateAsyncLoading()
             NodeId nodeID = childValue.Get("id").GetU32();
             Node* newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
             resolver_.AddNode(nodeID, newNode);
-            newNode->LoadJSON(childValue, resolver_);
+            newNode->load_json(childValue, resolver_);
             ++asyncProgress_.jsonIndex_;
         }
         else // Load from binary

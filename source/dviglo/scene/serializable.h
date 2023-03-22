@@ -52,7 +52,7 @@ public:
     /// Save as XML data. Return true if successful.
     virtual bool save_xml(XMLElement& dest) const;
     /// Load from JSON data. Return true if successful.
-    virtual bool LoadJSON(const JSONValue& source);
+    virtual bool load_json(const JSONValue& source);
     /// Save as JSON data. Return true if successful.
     virtual bool save_json(JSONValue& dest) const;
 

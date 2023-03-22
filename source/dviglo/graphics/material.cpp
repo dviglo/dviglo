@@ -622,7 +622,7 @@ bool Material::Load(const JSONValue& source)
         JSONValue paramAnimVal = it->second_;
 
         SharedPtr<ValueAnimation> animation(new ValueAnimation());
-        if (!animation->LoadJSON(paramAnimVal))
+        if (!animation->load_json(paramAnimVal))
         {
             DV_LOGERROR("Could not load parameter animation");
             return false;

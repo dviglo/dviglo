@@ -78,7 +78,7 @@ public:
     /// Load from XML data. Return true if successful.
     bool load_xml(const XMLElement& source) override;
     /// Load from JSON data. Return true if successful.
-    bool LoadJSON(const JSONValue& source) override;
+    bool load_json(const JSONValue& source) override;
     /// Save as binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Save as XML data. Return true if successful.
@@ -593,7 +593,7 @@ public:
     bool load_xml(const XMLElement& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
         CreateMode mode = REPLICATED);
     /// Load components from XML data and optionally load child nodes.
-    bool LoadJSON(const JSONValue& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
+    bool load_json(const JSONValue& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
         CreateMode mode = REPLICATED);
     /// Return the depended on nodes to order network updates.
     const Vector<Node*>& GetDependencyNodes() const { return impl_->dependencyNodes_; }

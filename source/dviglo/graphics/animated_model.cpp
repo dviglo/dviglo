@@ -122,10 +122,10 @@ bool AnimatedModel::load_xml(const XMLElement& source)
     return success;
 }
 
-bool AnimatedModel::LoadJSON(const JSONValue& source)
+bool AnimatedModel::load_json(const JSONValue& source)
 {
     loading_ = true;
-    bool success = Component::LoadJSON(source);
+    bool success = Component::load_json(source);
     loading_ = false;
 
     return success;

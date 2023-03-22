@@ -99,9 +99,9 @@ bool Animatable::load_xml(const XMLElement& source)
     return true;
 }
 
-bool Animatable::LoadJSON(const JSONValue& source)
+bool Animatable::load_json(const JSONValue& source)
 {
-    if (!Serializable::LoadJSON(source))
+    if (!Serializable::load_json(source))
         return false;
 
     SetObjectAnimation(nullptr);
@@ -111,7 +111,7 @@ bool Animatable::LoadJSON(const JSONValue& source)
     if (!value.IsNull())
     {
         SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation());
-        if (!objectAnimation->LoadJSON(value))
+        if (!objectAnimation->load_json(value))
             return false;
 
         SetObjectAnimation(objectAnimation);
@@ -134,7 +134,7 @@ bool Animatable::LoadJSON(const JSONValue& source)
         String name = it->first_;
         JSONValue value = it->second_;
         SharedPtr<ValueAnimation> attributeAnimation(new ValueAnimation());
-        if (!attributeAnimation->LoadJSON(it->second_))
+        if (!attributeAnimation->load_json(it->second_))
             return false;
 
         String wrapModeString = value.Get("wrapmode").GetString();

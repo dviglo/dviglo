@@ -107,7 +107,7 @@ bool ObjectAnimation::save_xml(XMLElement& dest) const
     return true;
 }
 
-bool ObjectAnimation::LoadJSON(const JSONValue& source)
+bool ObjectAnimation::load_json(const JSONValue& source)
 {
     attributeAnimationInfos_.Clear();
 
@@ -124,7 +124,7 @@ bool ObjectAnimation::LoadJSON(const JSONValue& source)
         String name = it->first_;
         JSONValue value = it->second_;
         SharedPtr<ValueAnimation> animation(new ValueAnimation());
-        if (!animation->LoadJSON(value))
+        if (!animation->load_json(value))
             return false;
 
         String wrapModeString = value.Get("wrapmode").GetString();

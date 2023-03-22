@@ -59,7 +59,7 @@ public:
     /// Save as XML data. Return true if successful.
     bool save_xml(XMLElement& dest) const override;
     /// Load from JSON data. Return true if successful.
-    bool LoadJSON(const JSONValue& source) override;
+    bool load_json(const JSONValue& source) override;
     /// Save as JSON data. Return true if successful.
     bool save_json(JSONValue& dest) const override;
 

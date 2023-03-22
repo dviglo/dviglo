@@ -34,7 +34,7 @@ public:
     /// Load from XML data. Return true if successful.
     bool load_xml(const XMLElement& source) override;
     /// Load from JSON data. Return true if successful.
-    bool LoadJSON(const JSONValue& source) override;
+    bool load_json(const JSONValue& source) override;
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void ApplyAttributes() override;
     /// Process octree raycast. May be called from a worker thread.
