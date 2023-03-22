@@ -381,10 +381,10 @@ Vector3 CrowdManager::MoveAlongSurface(const Vector3& start, const Vector3& end,
         end;
 }
 
-void CrowdManager::FindPath(Vector<Vector3>& dest, const Vector3& start, const Vector3& end, int queryFilterType)
+void CrowdManager::find_path(Vector<Vector3>& dest, const Vector3& start, const Vector3& end, int queryFilterType)
 {
     if (crowd_ && navigationMesh_)
-        navigationMesh_->FindPath(dest, start, end, Vector3(crowd_->getQueryExtents()), crowd_->getFilter(queryFilterType));
+        navigationMesh_->find_path(dest, start, end, Vector3(crowd_->getQueryExtents()), crowd_->getFilter(queryFilterType));
 }
 
 Vector3 CrowdManager::GetRandomPoint(int queryFilterType, dtPolyRef* randomRef)

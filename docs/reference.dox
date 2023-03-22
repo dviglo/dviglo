@@ -2136,7 +2136,7 @@ The easiest way to make the whole scene participate in navigation mesh generatio
 
 The navigation mesh generation must be triggered manually by calling \ref NavigationMesh::Build "Build()". After the initial build, portions of the mesh can also be rebuilt by specifying a world bounding box for the volume to be rebuilt, but this can not expand the total bounding box size. Once the navigation mesh is built, it will be serialized and deserialized with the scene.
 
-To query for a path between start and end points on the navigation mesh, call \ref NavigationMesh::FindPath "FindPath()".
+To query for a path between start and end points on the navigation mesh, call \ref NavigationMesh::find_path "find_path()".
 
 For a demonstration of the navigation capabilities, check the related sample application (15_Navigation), which features partial navigation mesh rebuilds (objects can be created and deleted) and querying paths.
 

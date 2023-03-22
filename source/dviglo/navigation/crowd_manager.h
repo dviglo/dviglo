@@ -91,7 +91,7 @@ public:
     /// Try to move along the surface from one point to another using the crowd initialized query extent (based on maxAgentRadius) and the specified query filter type.
     Vector3 MoveAlongSurface(const Vector3& start, const Vector3& end, int queryFilterType, int maxVisited = 3);
     /// Find a path between world space points using the crowd initialized query extent (based on maxAgentRadius) and the specified query filter type. Return non-empty list of points if successful.
-    void FindPath(Vector<Vector3>& dest, const Vector3& start, const Vector3& end, int queryFilterType);
+    void find_path(Vector<Vector3>& dest, const Vector3& start, const Vector3& end, int queryFilterType);
     /// Return a random point on the navigation mesh using the crowd initialized query extent (based on maxAgentRadius) and the specified query filter type.
     Vector3 GetRandomPoint(int queryFilterType, dtPolyRef* randomRef = nullptr);
     /// Return a random point on the navigation mesh within a circle using the crowd initialized query extent (based on maxAgentRadius) and the specified query filter type. The circle radius is only a guideline and in practice the returned point may be further away.

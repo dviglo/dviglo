@@ -628,21 +628,21 @@ Vector3 NavigationMesh::MoveAlongSurface(const Vector3& start, const Vector3& en
     return transform * resultPos;
 }
 
-void NavigationMesh::FindPath(Vector<Vector3>& dest, const Vector3& start, const Vector3& end, const Vector3& extents,
+void NavigationMesh::find_path(Vector<Vector3>& dest, const Vector3& start, const Vector3& end, const Vector3& extents,
     const dtQueryFilter* filter)
 {
     Vector<NavigationPathPoint> navPathPoints;
-    FindPath(navPathPoints, start, end, extents, filter);
+    find_path(navPathPoints, start, end, extents, filter);
 
     dest.Clear();
     for (const NavigationPathPoint& navPathPoint : navPathPoints)
         dest.Push(navPathPoint.position_);
 }
 
-void NavigationMesh::FindPath(Vector<NavigationPathPoint>& dest, const Vector3& start, const Vector3& end,
+void NavigationMesh::find_path(Vector<NavigationPathPoint>& dest, const Vector3& start, const Vector3& end,
     const Vector3& extents, const dtQueryFilter* filter)
 {
-    DV_PROFILE(FindPath);
+    DV_PROFILE(find_path);
     dest.Clear();
 
     if (!InitializeQuery())
