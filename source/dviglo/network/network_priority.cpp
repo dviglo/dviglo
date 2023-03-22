@@ -20,7 +20,7 @@ static const float UPDATE_THRESHOLD = 100.0f;
 NetworkPriority::NetworkPriority() :
     basePriority_(DEFAULT_BASE_PRIORITY),
     distanceFactor_(DEFAULT_DISTANCE_FACTOR),
-    minPriority_(DEFAULT_MIN_PRIORITY),
+    min_priority_(DEFAULT_MIN_PRIORITY),
     alwaysUpdateOwner_(true)
 {
 }
@@ -33,7 +33,7 @@ void NetworkPriority::RegisterObject()
 
     DV_ATTRIBUTE("Base Priority", basePriority_, DEFAULT_BASE_PRIORITY, AM_DEFAULT);
     DV_ATTRIBUTE("Distance Factor", distanceFactor_, DEFAULT_DISTANCE_FACTOR, AM_DEFAULT);
-    DV_ATTRIBUTE("Minimum Priority", minPriority_, DEFAULT_MIN_PRIORITY, AM_DEFAULT);
+    DV_ATTRIBUTE("Minimum Priority", min_priority_, DEFAULT_MIN_PRIORITY, AM_DEFAULT);
     DV_ATTRIBUTE("Always Update Owner", alwaysUpdateOwner_, true, AM_DEFAULT);
 }
 
@@ -51,7 +51,7 @@ void NetworkPriority::SetDistanceFactor(float factor)
 
 void NetworkPriority::SetMinPriority(float priority)
 {
-    minPriority_ = Max(priority, 0.0f);
+    min_priority_ = Max(priority, 0.0f);
     MarkNetworkUpdate();
 }
 
@@ -63,7 +63,7 @@ void NetworkPriority::SetAlwaysUpdateOwner(bool enable)
 
 bool NetworkPriority::CheckUpdate(float distance, float& accumulator)
 {
-    float currentPriority = Max(basePriority_ - distanceFactor_ * distance, minPriority_);
+    float currentPriority = Max(basePriority_ - distanceFactor_ * distance, min_priority_);
     accumulator += currentPriority;
     if (accumulator >= UPDATE_THRESHOLD)
     {
