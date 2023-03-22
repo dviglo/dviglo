@@ -17,7 +17,7 @@ extern const char* PHYSICS2D_CATEGORY;
 
 CollisionPolygon2D::CollisionPolygon2D()
 {
-    fixtureDef_.shape = &polygonShape_;
+    fixtureDef_.shape = &polygon_shape_;
 }
 
 CollisionPolygon2D::~CollisionPolygon2D() = default;
@@ -105,7 +105,7 @@ void CollisionPolygon2D::RecreateFixture()
     for (i32 i = 0; i < count; ++i)
         b2Vertices[i] = ToB2Vec2(vertices_[i] * worldScale);
 
-    polygonShape_.Set(&b2Vertices[0], count);
+    polygon_shape_.Set(&b2Vertices[0], count);
 
     CreateFixture();
 }

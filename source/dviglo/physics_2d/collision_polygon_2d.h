@@ -54,7 +54,7 @@ private:
     void RecreateFixture();
 
     /// Polygon shape.
-    b2PolygonShape polygonShape_;
+    b2PolygonShape polygon_shape_;
     /// Vertices.
     Vector<Vector2> vertices_;
 };
