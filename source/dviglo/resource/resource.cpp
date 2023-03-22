@@ -136,7 +136,7 @@ bool ResourceWithMetadata::HasMetadata() const
     return !metadata_.Empty();
 }
 
-void ResourceWithMetadata::LoadMetadataFromXML(const XmlElement& source)
+void ResourceWithMetadata::load_metadata_from_xml(const XmlElement& source)
 {
     for (XmlElement elem = source.GetChild("metadata"); elem; elem = elem.GetNext("metadata"))
         AddMetadata(elem.GetAttribute("name"), elem.GetVariant());

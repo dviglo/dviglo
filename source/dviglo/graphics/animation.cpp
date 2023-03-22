@@ -170,7 +170,7 @@ bool Animation::BeginLoad(Deserializer& source)
                 AddTrigger(triggerElem.GetFloat("time"), false, triggerElem.GetVariant());
         }
 
-        LoadMetadataFromXML(rootElem);
+        load_metadata_from_xml(rootElem);
 
         memoryUse += triggers_.Size() * sizeof(AnimationTriggerPoint);
         SetMemoryUse(memoryUse);

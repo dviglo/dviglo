@@ -291,7 +291,7 @@ bool Model::BeginLoad(Deserializer& source)
     String xmlName = ReplaceExtension(GetName(), ".xml");
     SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
     if (file)
-        LoadMetadataFromXML(file->GetRoot());
+        load_metadata_from_xml(file->GetRoot());
 
     SetMemoryUse(memoryUse);
     return true;

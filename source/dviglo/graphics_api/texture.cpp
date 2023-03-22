@@ -157,7 +157,7 @@ void Texture::SetParameters(XmlFile* file)
 
 void Texture::SetParameters(const XmlElement& element)
 {
-    LoadMetadataFromXML(element);
+    load_metadata_from_xml(element);
     for (XmlElement paramElem = element.GetChild(); paramElem; paramElem = paramElem.GetNext())
     {
         String name = paramElem.GetName();

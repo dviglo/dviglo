@@ -325,7 +325,7 @@ void Sound::LoadParameters()
         return;
 
     XmlElement rootElem = file->GetRoot();
-    LoadMetadataFromXML(rootElem);
+    load_metadata_from_xml(rootElem);
 
     for (XmlElement paramElem = rootElem.GetChild(); paramElem; paramElem = paramElem.GetNext())
     {

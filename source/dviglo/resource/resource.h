@@ -114,7 +114,7 @@ public:
 
 protected:
     /// Load metadata from <metadata> children of XML element.
-    void LoadMetadataFromXML(const XmlElement& source);
+    void load_metadata_from_xml(const XmlElement& source);
     /// Load metadata from JSON array.
     void LoadMetadataFromJSON(const JSONArray& array);
     /// Save as <metadata> children of XML element.
