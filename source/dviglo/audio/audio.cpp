@@ -126,10 +126,10 @@ bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpo
     stereo_ = obtained.channels == 2;
     sampleSize_ = (u32)(stereo_ ? sizeof(i32) : sizeof(i16));
     // Guarantee a fragment size that is low enough so that Vorbis decoding buffers do not wrap
-    fragmentSize_ = Min(NextPowerOfTwo((u32)mixRate >> 6u), (u32)obtained.samples);
+    fragment_size_ = Min(NextPowerOfTwo((u32)mixRate >> 6u), (u32)obtained.samples);
     mixRate_ = obtained.freq;
     interpolation_ = interpolation;
-    clipBuffer_ = new i32[stereo ? fragmentSize_ << 1u : fragmentSize_];
+    clipBuffer_ = new i32[stereo ? fragment_size_ << 1u : fragment_size_];
 
     DV_LOGINFO("Set audio mode " + String(mixRate_) + " Hz " + (stereo_ ? "stereo" : "mono") + (interpolation_ ? " interpolated" : ""));
 
@@ -284,7 +284,7 @@ void Audio::MixOutput(void* dest, u32 samples)
     while (samples)
     {
         // If sample count exceeds the fragment (clip buffer) size, split the work
-        u32 workSamples = Min(samples, fragmentSize_);
+        u32 workSamples = Min(samples, fragment_size_);
         u32 clipSamples = workSamples;
         if (stereo_)
             clipSamples <<= 1;

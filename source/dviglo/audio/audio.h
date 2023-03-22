@@ -125,7 +125,7 @@ private:
     /// Sample size.
     u32 sampleSize_{};
     /// Clip buffer size in samples.
-    u32 fragmentSize_{};
+    u32 fragment_size_{};
     /// Mixing rate.
     i32 mixRate_{};
     /// Mixing interpolation flag.
