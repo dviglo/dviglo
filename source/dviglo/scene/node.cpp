@@ -316,8 +316,8 @@ void Node::SetName(const String& name)
 void Node::SetTags(const StringVector& tags)
 {
     remove_all_tags();
-    AddTags(tags);
-    // MarkNetworkUpdate() already called in remove_all_tags() / AddTags()
+    add_tags(tags);
+    // MarkNetworkUpdate() already called in remove_all_tags() / add_tags()
 }
 
 void Node::AddTag(const String& tag)
@@ -346,13 +346,13 @@ void Node::AddTag(const String& tag)
     MarkNetworkUpdate();
 }
 
-void Node::AddTags(const String& tags, char separator)
+void Node::add_tags(const String& tags, char separator)
 {
     StringVector tagVector = tags.Split(separator);
-    AddTags(tagVector);
+    add_tags(tagVector);
 }
 
-void Node::AddTags(const StringVector& tags)
+void Node::add_tags(const StringVector& tags)
 {
     // This is OK, as MarkNetworkUpdate() early-outs when called multiple times
     for (const String& tag : tags)

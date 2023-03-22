@@ -1446,7 +1446,7 @@ void UiElement::SetElementEventSender(bool flag)
 void UiElement::SetTags(const StringVector& tags)
 {
     remove_all_tags();
-    AddTags(tags);
+    add_tags(tags);
 }
 
 void UiElement::AddTag(const String& tag)
@@ -1457,13 +1457,13 @@ void UiElement::AddTag(const String& tag)
     tags_.Push(tag);
 }
 
-void UiElement::AddTags(const String& tags, char separator)
+void UiElement::add_tags(const String& tags, char separator)
 {
     StringVector tagVector = tags.Split(separator);
-    AddTags(tagVector);
+    add_tags(tagVector);
 }
 
-void UiElement::AddTags(const StringVector& tags)
+void UiElement::add_tags(const StringVector& tags)
 {
     for (const String& tag : tags)
         AddTag(tag);
