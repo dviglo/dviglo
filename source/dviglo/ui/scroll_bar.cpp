@@ -20,7 +20,7 @@ extern const char* orientations[];
 extern const char* UI_CATEGORY;
 
 ScrollBar::ScrollBar() :
-    scrollStep_(DEFAULT_SCROLL_STEP),
+    scroll_step_(DEFAULT_SCROLL_STEP),
     stepFactor_(1.0f),
     leftRect_(IntRect::ZERO),
     rightRect_(IntRect::ZERO),
@@ -159,7 +159,7 @@ void ScrollBar::ChangeValue(float delta)
 
 void ScrollBar::SetScrollStep(float step)
 {
-    scrollStep_ = Max(step, 0.0f);
+    scroll_step_ = Max(step, 0.0f);
 }
 
 void ScrollBar::SetStepFactor(float factor)
@@ -194,7 +194,7 @@ float ScrollBar::GetValue() const
 
 float ScrollBar::GetEffectiveScrollStep() const
 {
-    return scrollStep_ * stepFactor_;
+    return scroll_step_ * stepFactor_;
 }
 
 bool ScrollBar::FilterImplicitAttributes(XmlElement& dest) const

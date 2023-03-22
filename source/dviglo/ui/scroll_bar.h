@@ -57,7 +57,7 @@ public:
     float GetValue() const;
 
     /// Return button scroll step.
-    float GetScrollStep() const { return scrollStep_; }
+    float GetScrollStep() const { return scroll_step_; }
 
     /// Return button step factor.
     float GetStepFactor() const { return stepFactor_; }
@@ -87,7 +87,7 @@ protected:
     /// Slider.
     SharedPtr<Slider> slider_;
     /// Scroll step.
-    float scrollStep_;
+    float scroll_step_;
     /// Step factor.
     float stepFactor_;
     /// Left button image rect.
