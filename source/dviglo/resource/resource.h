@@ -104,7 +104,7 @@ public:
     /// Add new metadata variable or overwrite old value.
     void AddMetadata(const String& name, const Variant& value);
     /// Remove metadata variable.
-    void RemoveMetadata(const String& name);
+    void remove_metadata(const String& name);
     /// Remove all metadata variables.
     void RemoveAllMetadata();
     /// Return metadata variable.

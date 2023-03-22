@@ -113,7 +113,7 @@ void ResourceWithMetadata::AddMetadata(const String& name, const Variant& value)
         metadataKeys_.Push(name);
 }
 
-void ResourceWithMetadata::RemoveMetadata(const String& name)
+void ResourceWithMetadata::remove_metadata(const String& name)
 {
     metadata_.Erase(name);
     metadataKeys_.Remove(name);
