@@ -49,7 +49,7 @@ private:
     void RecreateFixture();
 
     /// Box shape.
-    b2PolygonShape boxShape_;
+    b2PolygonShape box_shape_;
     /// Size.
     Vector2 size_;
     /// Center.
