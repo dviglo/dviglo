@@ -172,7 +172,7 @@ public:
     float GetDefaultToolTipDelay() const { return defaultToolTipDelay_; }
 
     /// Return font texture maximum size.
-    int GetMaxFontTextureSize() const { return maxFontTextureSize_; }
+    i32 GetMaxFontTextureSize() const { return max_font_texture_size_; }
 
     /// Return whether mouse wheel can control also a non-focused element.
     bool IsNonFocusedMouseWheel() const { return nonFocusedMouseWheel_; }
@@ -370,7 +370,7 @@ private:
     /// Qualifier keys held down.
     QualifierFlags qualifiers_;
     /// Font texture maximum size.
-    int maxFontTextureSize_;
+    i32 max_font_texture_size_;
     /// Initialized flag.
     bool initialized_;
     /// Touch used flag.

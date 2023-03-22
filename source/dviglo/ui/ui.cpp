@@ -95,7 +95,7 @@ UI::UI() :
     lastMouseButtons_(0),
     maxDoubleClickDist_(M_LARGE_VALUE),
     qualifiers_(0),
-    maxFontTextureSize_(DEFAULT_FONT_TEXTURE_MAX_SIZE),
+    max_font_texture_size_(DEFAULT_FONT_TEXTURE_MAX_SIZE),
     initialized_(false),
     usingTouchInput_(false),
 #ifdef _WIN32
@@ -664,9 +664,9 @@ void UI::SetMaxFontTextureSize(int size)
 {
     if (IsPowerOfTwo((unsigned)size) && size >= FONT_TEXTURE_MIN_SIZE)
     {
-        if (size != maxFontTextureSize_)
+        if (size != max_font_texture_size_)
         {
-            maxFontTextureSize_ = size;
+            max_font_texture_size_ = size;
             ReleaseFontFaces();
         }
     }
