@@ -426,7 +426,7 @@ void CrowdNavigation::MoveCamera(float timeStep)
     if (input.GetKeyPress(KEY_F5))
     {
         File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CrowdNavigation.xml", FILE_WRITE);
-        scene_->SaveXML(saveFile);
+        scene_->save_xml(saveFile);
     }
     else if (input.GetKeyPress(KEY_F7))
     {

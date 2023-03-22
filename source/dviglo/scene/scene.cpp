@@ -239,13 +239,13 @@ bool Scene::LoadJSON(Deserializer& source)
         return false;
 }
 
-bool Scene::SaveXML(Serializer& dest, const String& indentation) const
+bool Scene::save_xml(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneXML);
 
     SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("scene");
-    if (!SaveXML(rootElem))
+    if (!save_xml(rootElem))
         return false;
 
     auto* ptr = dynamic_cast<Deserializer*>(&dest);

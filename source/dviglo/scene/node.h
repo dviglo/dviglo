@@ -82,7 +82,7 @@ public:
     /// Save as binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Save as XML data. Return true if successful.
-    bool SaveXML(XMLElement& dest) const override;
+    bool save_xml(XMLElement& dest) const override;
     /// Save as JSON data. Return true if successful.
     bool SaveJSON(JSONValue& dest) const override;
     /// Apply attribute changes that can not be applied immediately recursively to child nodes and components.
@@ -97,7 +97,7 @@ public:
     virtual void AddReplicationState(NodeReplicationState* state);
 
     /// Save to an XML file. Return true if successful.
-    bool SaveXML(Serializer& dest, const String& indentation = "\t") const;
+    bool save_xml(Serializer& dest, const String& indentation = "\t") const;
     /// Save to a JSON file. Return true if successful.
     bool SaveJSON(Serializer& dest, const String& indentation = "\t") const;
     /// Set name of the scene node. Names are not required to be unique.

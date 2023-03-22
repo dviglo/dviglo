@@ -485,7 +485,7 @@ void Sample2D::SaveScene(bool initial)
     if (!initial)
         filename += "InGame";
     File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/" + filename + ".xml", FILE_WRITE);
-    scene_->SaveXML(saveFile);
+    scene_->save_xml(saveFile);
 }
 
 void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, const String& texture, bool animate)

@@ -168,7 +168,7 @@ bool UnknownComponent::Save(Serializer& dest) const
         return dest.Write(&binaryAttributes_[0], binaryAttributes_.Size()) == binaryAttributes_.Size();
 }
 
-bool UnknownComponent::SaveXML(XMLElement& dest) const
+bool UnknownComponent::save_xml(XMLElement& dest) const
 {
     if (dest.IsNull())
     {

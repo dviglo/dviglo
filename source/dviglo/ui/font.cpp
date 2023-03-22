@@ -89,7 +89,7 @@ bool Font::BeginLoad(Deserializer& source)
     return true;
 }
 
-bool Font::SaveXML(Serializer& dest, int pointSize, bool usedGlyphs, const String& indentation)
+bool Font::save_xml(Serializer& dest, int pointSize, bool usedGlyphs, const String& indentation)
 {
     FontFace* fontFace = GetFace(pointSize);
     if (!fontFace)

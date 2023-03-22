@@ -625,7 +625,7 @@ bool UI::SaveLayout(Serializer& dest, UiElement* element)
 {
     DV_PROFILE(SaveUILayout);
 
-    return element && element->SaveXML(dest);
+    return element && element->save_xml(dest);
 }
 
 void UI::SetClipboardText(const String& text)

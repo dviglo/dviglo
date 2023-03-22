@@ -744,7 +744,7 @@ bool Material::Save(XMLElement& dest) const
         ShaderParameterAnimationInfo* info = j->second_;
         XMLElement parameterAnimationElem = dest.CreateChild("parameteranimation");
         parameterAnimationElem.SetString("name", info->GetName());
-        if (!info->GetAnimation()->SaveXML(parameterAnimationElem))
+        if (!info->GetAnimation()->save_xml(parameterAnimationElem))
             return false;
 
         parameterAnimationElem.SetAttribute("wrapmode", wrapModeNames[info->GetWrapMode()]);

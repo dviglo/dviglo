@@ -122,7 +122,7 @@ public:
     /// Create a child by loading from XML data with style. Returns the child element if successful, null if otherwise.
     virtual UiElement* LoadChildXML(const XMLElement& childElem, XmlFile* styleFile);
     /// Save as XML data. Return true if successful.
-    bool SaveXML(XMLElement& dest) const override;
+    bool save_xml(XMLElement& dest) const override;
 
     /// Perform UI element update.
     virtual void Update(float timeStep);
@@ -193,7 +193,7 @@ public:
     /// Load from an XML file. Return true if successful.
     bool load_xml(Deserializer& source);
     /// Save to an XML file. Return true if successful.
-    bool SaveXML(Serializer& dest, const String& indentation = "\t") const;
+    bool save_xml(Serializer& dest, const String& indentation = "\t") const;
     /// Filter attributes in serialization process.
     bool FilterAttributes(XMLElement& dest) const;
 

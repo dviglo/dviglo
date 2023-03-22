@@ -268,7 +268,7 @@ UiElement* UiElement::LoadChildXML(const XMLElement& childElem, XmlFile* styleFi
     return child;
 }
 
-bool UiElement::SaveXML(XMLElement& dest) const
+bool UiElement::save_xml(XMLElement& dest) const
 {
     // Write type
     if (GetTypeName() != "UiElement")
@@ -297,7 +297,7 @@ bool UiElement::SaveXML(XMLElement& dest) const
     }
 
     // Write attributes
-    if (!Animatable::SaveXML(dest))
+    if (!Animatable::save_xml(dest))
         return false;
 
     // Write child elements
@@ -307,7 +307,7 @@ bool UiElement::SaveXML(XMLElement& dest) const
             continue;
 
         XMLElement childElem = dest.CreateChild("element");
-        if (!element->SaveXML(childElem))
+        if (!element->save_xml(childElem))
             return false;
     }
 
@@ -454,11 +454,11 @@ bool UiElement::load_xml(Deserializer& source)
     return xml->Load(source) && load_xml(xml->GetRoot());
 }
 
-bool UiElement::SaveXML(Serializer& dest, const String& indentation) const
+bool UiElement::save_xml(Serializer& dest, const String& indentation) const
 {
     SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("element");
-    return SaveXML(rootElem) && xml->Save(dest, indentation);
+    return save_xml(rootElem) && xml->Save(dest, indentation);
 }
 
 bool UiElement::FilterAttributes(XMLElement& dest) const

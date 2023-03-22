@@ -485,7 +485,7 @@ bool Serializable::LoadJSON(const JSONValue& source)
     return true;
 }
 
-bool Serializable::SaveXML(XMLElement& dest) const
+bool Serializable::save_xml(XMLElement& dest) const
 {
     if (dest.IsNull())
     {

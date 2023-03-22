@@ -166,14 +166,14 @@ bool Node::LoadJSON(const JSONValue& source)
     return success;
 }
 
-bool Node::SaveXML(XMLElement& dest) const
+bool Node::save_xml(XMLElement& dest) const
 {
     // Write node ID
     if (!dest.SetU32("id", id_))
         return false;
 
     // Write attributes
-    if (!Animatable::SaveXML(dest))
+    if (!Animatable::save_xml(dest))
         return false;
 
     // Write components
@@ -183,7 +183,7 @@ bool Node::SaveXML(XMLElement& dest) const
             continue;
 
         XMLElement compElem = dest.CreateChild("component");
-        if (!component->SaveXML(compElem))
+        if (!component->save_xml(compElem))
             return false;
     }
 
@@ -194,7 +194,7 @@ bool Node::SaveXML(XMLElement& dest) const
             continue;
 
         XMLElement childElem = dest.CreateChild("node");
-        if (!node->SaveXML(childElem))
+        if (!node->save_xml(childElem))
             return false;
     }
 
@@ -269,11 +269,11 @@ void Node::AddReplicationState(NodeReplicationState* state)
     networkState_->replicationStates_.Push(state);
 }
 
-bool Node::SaveXML(Serializer& dest, const String& indentation) const
+bool Node::save_xml(Serializer& dest, const String& indentation) const
 {
     SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("node");
-    if (!SaveXML(rootElem))
+    if (!save_xml(rootElem))
         return false;
 
     return xml->Save(dest, indentation);

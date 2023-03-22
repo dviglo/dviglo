@@ -50,7 +50,7 @@ public:
     /// Load from XML data. Return true if successful.
     virtual bool load_xml(const XMLElement& source);
     /// Save as XML data. Return true if successful.
-    virtual bool SaveXML(XMLElement& dest) const;
+    virtual bool save_xml(XMLElement& dest) const;
     /// Load from JSON data. Return true if successful.
     virtual bool LoadJSON(const JSONValue& source);
     /// Save as JSON data. Return true if successful.

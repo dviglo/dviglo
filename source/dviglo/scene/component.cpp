@@ -49,7 +49,7 @@ bool Component::Save(Serializer& dest) const
     return Animatable::Save(dest);
 }
 
-bool Component::SaveXML(XMLElement& dest) const
+bool Component::save_xml(XMLElement& dest) const
 {
     // Write type and ID
     if (!dest.SetString("type", GetTypeName()))
@@ -58,7 +58,7 @@ bool Component::SaveXML(XMLElement& dest) const
         return false;
 
     // Write attributes
-    return Animatable::SaveXML(dest);
+    return Animatable::save_xml(dest);
 }
 
 bool Component::SaveJSON(JSONValue& dest) const

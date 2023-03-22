@@ -191,7 +191,7 @@ void RaycastVehicleDemo::HandleUpdate(StringHash eventType,
             {
                 File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/RaycastVehicleDemo.xml",
                               FILE_WRITE);
-                scene_->SaveXML(saveFile);
+                scene_->save_xml(saveFile);
             }
             if (input.GetKeyPress(KEY_F7))
             {

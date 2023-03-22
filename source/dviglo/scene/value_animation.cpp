@@ -59,7 +59,7 @@ bool ValueAnimation::Save(Serializer& dest) const
     XmlFile xmlFile;
 
     XMLElement rootElem = xmlFile.CreateRoot("valueanimation");
-    if (!SaveXML(rootElem))
+    if (!save_xml(rootElem))
         return false;
 
     return xmlFile.Save(dest);
@@ -101,7 +101,7 @@ bool ValueAnimation::load_xml(const XMLElement& source)
     return true;
 }
 
-bool ValueAnimation::SaveXML(XMLElement& dest) const
+bool ValueAnimation::save_xml(XMLElement& dest) const
 {
     dest.SetAttribute("interpolationmethod", interpMethodNames[interpolationMethod_]);
     if (interpolationMethod_ == IM_SPLINE)

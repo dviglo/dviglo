@@ -232,7 +232,7 @@ void Physics::MoveCamera(float timeStep)
     if (input.GetKeyPress(KEY_F5))
     {
         File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/Physics.xml", FILE_WRITE);
-        scene_->SaveXML(saveFile);
+        scene_->save_xml(saveFile);
     }
     if (input.GetKeyPress(KEY_F7))
     {

@@ -211,9 +211,9 @@ bool Menu::load_xml(const XMLElement& source, XmlFile* styleFile)
     return true;
 }
 
-bool Menu::SaveXML(XMLElement& dest) const
+bool Menu::save_xml(XMLElement& dest) const
 {
-    if (!Button::SaveXML(dest))
+    if (!Button::save_xml(dest))
         return false;
 
     // Save the popup element as a "virtual" child element
@@ -221,7 +221,7 @@ bool Menu::SaveXML(XMLElement& dest) const
     {
         XMLElement childElem = dest.CreateChild("element");
         childElem.SetBool("popup", true);
-        if (!popup_->SaveXML(childElem))
+        if (!popup_->save_xml(childElem))
             return false;
 
         // Filter popup implicit attributes

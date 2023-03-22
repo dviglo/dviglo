@@ -37,7 +37,7 @@ public:
     /// Save as binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Save as XML data. Return true if successful.
-    bool SaveXML(XMLElement& dest) const override;
+    bool save_xml(XMLElement& dest) const override;
     /// Save as JSON data. Return true if successful.
     bool SaveJSON(JSONValue& dest) const override;
 

@@ -48,7 +48,7 @@ bool ObjectAnimation::Save(Serializer& dest) const
     XmlFile xmlFile;
 
     XMLElement rootElem = xmlFile.CreateRoot("objectanimation");
-    if (!SaveXML(rootElem))
+    if (!save_xml(rootElem))
         return false;
 
     return xmlFile.Save(dest);
@@ -88,7 +88,7 @@ bool ObjectAnimation::load_xml(const XMLElement& source)
     return true;
 }
 
-bool ObjectAnimation::SaveXML(XMLElement& dest) const
+bool ObjectAnimation::save_xml(XMLElement& dest) const
 {
     for (HashMap<String, SharedPtr<ValueAnimationInfo>>::ConstIterator i = attributeAnimationInfos_.Begin();
          i != attributeAnimationInfos_.End(); ++i)
@@ -97,7 +97,7 @@ bool ObjectAnimation::SaveXML(XMLElement& dest) const
         animElem.SetAttribute("name", i->first_);
 
         const ValueAnimationInfo* info = i->second_;
-        if (!info->GetAnimation()->SaveXML(animElem))
+        if (!info->GetAnimation()->save_xml(animElem))
             return false;
 
         animElem.SetAttribute("wrapmode", wrapModeNames[info->GetWrapMode()]);

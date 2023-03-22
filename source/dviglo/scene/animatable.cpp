@@ -155,16 +155,16 @@ bool Animatable::LoadJSON(const JSONValue& source)
     return true;
 }
 
-bool Animatable::SaveXML(XMLElement& dest) const
+bool Animatable::save_xml(XMLElement& dest) const
 {
-    if (!Serializable::SaveXML(dest))
+    if (!Serializable::save_xml(dest))
         return false;
 
     // Object animation without name
     if (objectAnimation_ && objectAnimation_->GetName().Empty())
     {
         XMLElement elem = dest.CreateChild("objectanimation");
-        if (!objectAnimation_->SaveXML(elem))
+        if (!objectAnimation_->save_xml(elem))
             return false;
     }
 
@@ -179,7 +179,7 @@ bool Animatable::SaveXML(XMLElement& dest) const
         const AttributeInfo& attr = i->second_->GetAttributeInfo();
         XMLElement elem = dest.CreateChild("attributeanimation");
         elem.SetAttribute("name", attr.name_);
-        if (!attributeAnimation->SaveXML(elem))
+        if (!attributeAnimation->save_xml(elem))
             return false;
 
         elem.SetAttribute("wrapmode", wrapModeNames[i->second_->GetWrapMode()]);
