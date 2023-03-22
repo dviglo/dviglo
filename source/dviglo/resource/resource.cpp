@@ -148,7 +148,7 @@ void ResourceWithMetadata::load_metadata_from_json(const JSONArray& array)
         AddMetadata(value.Get("name").GetString(), value.GetVariant());
 }
 
-void ResourceWithMetadata::SaveMetadataToXML(XmlElement& destination) const
+void ResourceWithMetadata::save_metadata_to_xml(XmlElement& destination) const
 {
     for (const String& metadataKey : metadataKeys_)
     {

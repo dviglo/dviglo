@@ -450,7 +450,7 @@ bool Model::Save(Serializer& dest) const
 
             SharedPtr<XmlFile> xml(new XmlFile());
             XmlElement rootElem = xml->CreateRoot("model");
-            SaveMetadataToXML(rootElem);
+            save_metadata_to_xml(rootElem);
 
             File xmlFile(xmlName, FILE_WRITE);
             xml->Save(xmlFile);

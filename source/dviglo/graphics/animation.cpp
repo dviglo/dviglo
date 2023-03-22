@@ -258,7 +258,7 @@ bool Animation::Save(Serializer& dest) const
                 triggerElem.SetVariant(trigger.data_);
             }
 
-            SaveMetadataToXML(rootElem);
+            save_metadata_to_xml(rootElem);
 
             File xmlFile(xmlName, FILE_WRITE);
             xml->Save(xmlFile);
