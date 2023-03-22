@@ -42,7 +42,7 @@ private:
     void RecreateFixture();
 
     /// Edge shape.
-    b2EdgeShape edgeShape_;
+    b2EdgeShape edge_shape_;
     /// Vertex 1.
     Vector2 vertex1_;
     /// Vertex 2.

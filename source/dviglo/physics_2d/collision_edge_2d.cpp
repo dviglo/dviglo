@@ -20,9 +20,9 @@ CollisionEdge2D::CollisionEdge2D() :
     vertex2_(DEFAULT_VERTEX2)
 {
     Vector2 worldScale(cachedWorldScale_.x_, cachedWorldScale_.y_);
-    edgeShape_.SetTwoSided(ToB2Vec2(vertex1_ * worldScale), ToB2Vec2(vertex2_ * worldScale));
+    edge_shape_.SetTwoSided(ToB2Vec2(vertex1_ * worldScale), ToB2Vec2(vertex2_ * worldScale));
 
-    fixtureDef_.shape = &edgeShape_;
+    fixtureDef_.shape = &edge_shape_;
 }
 
 CollisionEdge2D::~CollisionEdge2D() = default;
@@ -69,7 +69,7 @@ void CollisionEdge2D::RecreateFixture()
     ReleaseFixture();
 
     Vector2 worldScale(cachedWorldScale_.x_, cachedWorldScale_.y_);
-    edgeShape_.SetTwoSided(ToB2Vec2(vertex1_ * worldScale), ToB2Vec2(vertex2_ * worldScale));
+    edge_shape_.SetTwoSided(ToB2Vec2(vertex1_ * worldScale), ToB2Vec2(vertex2_ * worldScale));
 
     CreateFixture();
 }
