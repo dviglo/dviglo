@@ -178,7 +178,7 @@ public:
     i32 velocity_iterations() const { return velocity_iterations_; }
 
     /// Return position iterations.
-    int GetPositionIterations() const { return positionIterations_; }
+    i32 GetPositionIterations() const { return position_iterations_; }
 
     /// Return the Box2D physics world.
     b2World* GetWorld() { return world_.get(); }
@@ -208,7 +208,7 @@ protected:
     /// Velocity iterations.
     i32 velocity_iterations_{};
     /// Position iterations.
-    int positionIterations_{};
+    i32 position_iterations_{};
 
     /// Extra weak pointer to scene to allow for cleanup in case the world is destroyed before other components.
     WeakPtr<Scene> scene_;

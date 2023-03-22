@@ -31,7 +31,7 @@ static const int DEFAULT_POSITION_ITERATIONS = 3;
 PhysicsWorld2D::PhysicsWorld2D() :
     gravity_(DEFAULT_GRAVITY),
     velocity_iterations_(DEFAULT_VELOCITY_ITERATIONS),
-    positionIterations_(DEFAULT_POSITION_ITERATIONS)
+    position_iterations_(DEFAULT_POSITION_ITERATIONS)
 {
     // Set default debug draw flags
     m_drawFlags = e_shapeBit;
@@ -271,7 +271,7 @@ void PhysicsWorld2D::Update(float timeStep)
     SendEvent(E_PHYSICSPRESTEP, eventData);
 
     physicsStepping_ = true;
-    world_->Step(timeStep, velocity_iterations_, positionIterations_);
+    world_->Step(timeStep, velocity_iterations_, position_iterations_);
     physicsStepping_ = false;
 
     // Apply world transforms. Unparented transforms first
@@ -407,7 +407,7 @@ void PhysicsWorld2D::SetVelocityIterations(int velocityIterations)
 
 void PhysicsWorld2D::SetPositionIterations(int positionIterations)
 {
-    positionIterations_ = positionIterations;
+    position_iterations_ = positionIterations;
 }
 
 void PhysicsWorld2D::AddRigidBody(RigidBody2D* rigidBody)
