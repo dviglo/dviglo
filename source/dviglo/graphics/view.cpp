@@ -1223,7 +1223,7 @@ void View::GetBaseBatches()
                         // Limit vertex lights. If this is a deferred opaque batch, remove converted per-pixel lights,
                         // as they will be rendered as light volumes in any case, and drawing them also as vertex lights
                         // would result in double lighting
-                        drawable->LimitVertexLights(deferred_ && destBatch.pass_->GetBlendMode() == BLEND_REPLACE);
+                        drawable->LimitVertexLights(deferred_ && destBatch.pass_->blend_mode() == BLEND_REPLACE);
                         vertexLightsProcessed = true;
                     }
 

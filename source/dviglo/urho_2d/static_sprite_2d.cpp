@@ -46,7 +46,7 @@ void StaticSprite2D::RegisterObject()
     DV_COPY_BASE_ATTRIBUTES(Drawable2D);
     DV_ACCESSOR_ATTRIBUTE("Sprite", GetSpriteAttr, SetSpriteAttr, ResourceRef(Sprite2D::GetTypeStatic()),
         AM_DEFAULT);
-    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", blend_mode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Flip X", GetFlipX, SetFlipX, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Flip Y", GetFlipY, SetFlipY, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Color", GetColor, SetColor, Color::WHITE, AM_DEFAULT);

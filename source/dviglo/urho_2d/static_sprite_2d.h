@@ -65,7 +65,7 @@ public:
     const Rect& GetTextureRect() const { return textureRect_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blend_mode_; }
+    BlendMode blend_mode() const { return blend_mode_; }
 
     /// Return flip X.
     bool GetFlipX() const { return flipX_; }

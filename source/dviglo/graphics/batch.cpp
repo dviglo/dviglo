@@ -179,7 +179,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
     // Set pass / material-specific renderstates
     if (pass_ && material_)
     {
-        BlendMode blend = pass_->GetBlendMode();
+        BlendMode blend = pass_->blend_mode();
         // Turn additive blending into subtract if the light is negative
         if (light && light->IsNegative())
         {
@@ -248,7 +248,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
     }
 
     // Set zone-related shader parameters
-    BlendMode blend = graphics.GetBlendMode();
+    BlendMode blend = graphics.blend_mode();
     // If the pass is additive, override fog color to black so that shaders do not need a separate additive path
     bool overrideFogColorToBlack = blend == BLEND_ADD || blend == BLEND_ADDALPHA;
     hash32 zoneHash = (hash32)(size_t)zone_;

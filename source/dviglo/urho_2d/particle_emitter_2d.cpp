@@ -47,7 +47,7 @@ void ParticleEmitter2D::RegisterObject()
         ResourceRef(ParticleEffect2D::GetTypeStatic()), AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Sprite ", GetSpriteAttr, SetSpriteAttr, ResourceRef(Sprite2D::GetTypeStatic()),
         AM_DEFAULT);
-    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", blend_mode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Is Emitting", IsEmitting, SetEmitting, true, AM_DEFAULT);
 }
 
@@ -77,7 +77,7 @@ void ParticleEmitter2D::SetEffect(ParticleEffect2D* effect)
         return;
 
     SetSprite(effect_->GetSprite());
-    SetBlendMode(effect_->GetBlendMode());
+    SetBlendMode(effect_->blend_mode());
     SetMaxParticles((unsigned)effect_->GetMaxParticles());
 
     emitParticleTime_ = 0.0f;

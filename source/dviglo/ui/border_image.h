@@ -73,7 +73,7 @@ public:
     const IntVector2& GetDisabledOffset() const { return disabledOffset_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blend_mode_; }
+    BlendMode blend_mode() const { return blend_mode_; }
 
     /// Return whether is tiled.
     bool IsTiled() const { return tiled_; }

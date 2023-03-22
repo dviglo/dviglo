@@ -206,7 +206,7 @@ public:
     float GetRotatePerSecondVariance() const { return rotatePerSecondVariance_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blend_mode_; }
+    BlendMode blend_mode() const { return blend_mode_; }
 
     /// Return rotation start.
     float GetRotationStart() const { return rotationStart_; }

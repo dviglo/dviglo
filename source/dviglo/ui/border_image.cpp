@@ -41,7 +41,7 @@ void BorderImage::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Hover Image Offset", GetHoverOffset, SetHoverOffset, IntVector2::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Disabled Image Offset", GetDisabledOffset, SetDisabledOffset, IntVector2::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Tiled", IsTiled, SetTiled, false, AM_FILE);
-    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", GetBlendMode, SetBlendMode, blendModeNames, 0, AM_FILE);
+    DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", blend_mode, SetBlendMode, blendModeNames, 0, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),
         AM_FILE);
 }

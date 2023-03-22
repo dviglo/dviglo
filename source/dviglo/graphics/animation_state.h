@@ -117,7 +117,7 @@ public:
     float GetWeight() const { return weight_; }
 
     /// Return blending mode.
-    AnimationBlendMode GetBlendMode() const { return blendingMode_; }
+    AnimationBlendMode blend_mode() const { return blendingMode_; }
 
     /// Return time position.
     float GetTime() const { return time_; }

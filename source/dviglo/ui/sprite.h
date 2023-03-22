@@ -80,7 +80,7 @@ public:
     const IntRect& GetImageRect() const { return imageRect_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blend_mode_; }
+    BlendMode blend_mode() const { return blend_mode_; }
 
     /// Set texture attribute.
     void SetTextureAttr(const ResourceRef& value);

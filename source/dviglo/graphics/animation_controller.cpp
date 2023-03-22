@@ -498,7 +498,7 @@ bool AnimationController::IsLooped(const String& name) const
 AnimationBlendMode AnimationController::GetBlendMode(const String& name) const
 {
     AnimationState* state = GetAnimationState(name);
-    return state ? state->GetBlendMode() : ABM_LERP;
+    return state ? state->blend_mode() : ABM_LERP;
 }
 
 float AnimationController::GetLength(const String& name) const
@@ -761,7 +761,7 @@ const Vector<byte>& AnimationController::GetNetAnimationsAttr() const
         Bone* startBone = state->GetStartBone();
         if (state->IsLooped())
             ctrl |= CTRL_LOOPED;
-        if (state->GetBlendMode() == ABM_ADDITIVE)
+        if (state->blend_mode() == ABM_ADDITIVE)
             ctrl |= CTRL_ADDITIVE;
         if (startBone && model && startBone != model->GetSkeleton().GetRootBone())
             ctrl |= CTRL_STARTBONE;

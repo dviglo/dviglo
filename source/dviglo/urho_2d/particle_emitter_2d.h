@@ -87,7 +87,7 @@ public:
     Sprite2D* GetSprite() const;
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blend_mode_; }
+    BlendMode blend_mode() const { return blend_mode_; }
 
     /// Return max particles.
     unsigned GetMaxParticles() const { return particles_.Size(); }

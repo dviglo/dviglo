@@ -516,7 +516,7 @@ public:
     IntRect GetViewport() const { return viewport_; }
 
     /// Return blending mode.
-    BlendMode GetBlendMode() const { return blend_mode_; }
+    BlendMode blend_mode() const { return blend_mode_; }
 
     /// Return whether alpha-to-coverage is enabled.
     bool GetAlphaToCoverage() const { return alphaToCoverage_; }
