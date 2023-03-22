@@ -84,7 +84,7 @@ void GameObject::HandleNodeCollision(StringHash eventType, VariantMap& eventData
     RigidBody* otherBody = static_cast<RigidBody*>(eventData[P_OTHERBODY].GetPtr());
 
     // If the other collision shape belongs to static geometry, perform world collision
-    if (otherBody->GetCollisionLayer() == 2)
+    if (otherBody->collision_layer() == 2)
         WorldCollision(eventData);
 
     // If the other node is scripted, perform object-to-object collision

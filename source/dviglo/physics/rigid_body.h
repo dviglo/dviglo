@@ -201,7 +201,7 @@ public:
     bool IsActive() const;
 
     /// Return collision layer.
-    unsigned GetCollisionLayer() const { return collisionLayer_; }
+    unsigned collision_layer() const { return collisionLayer_; }
 
     /// Return collision mask.
     unsigned GetCollisionMask() const { return collisionMask_; }
