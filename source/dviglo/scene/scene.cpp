@@ -261,13 +261,13 @@ bool Scene::save_xml(Serializer& dest, const String& indentation) const
         return false;
 }
 
-bool Scene::SaveJSON(Serializer& dest, const String& indentation) const
+bool Scene::save_json(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneJSON);
 
     SharedPtr<JSONFile> json(new JSONFile());
     JSONValue rootVal;
-    if (!SaveJSON(rootVal))
+    if (!save_json(rootVal))
         return false;
 
     auto* ptr = dynamic_cast<Deserializer*>(&dest);

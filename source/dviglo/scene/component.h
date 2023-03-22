@@ -49,7 +49,7 @@ public:
     /// Save as XML data. Return true if successful.
     bool save_xml(XMLElement& dest) const override;
     /// Save as JSON data. Return true if successful.
-    bool SaveJSON(JSONValue& dest) const override;
+    bool save_json(JSONValue& dest) const override;
     /// Mark for attribute check on the next network update.
     void MarkNetworkUpdate() override;
     /// Return the depended on nodes to order network updates.

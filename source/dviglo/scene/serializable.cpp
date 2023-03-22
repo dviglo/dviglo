@@ -527,7 +527,7 @@ bool Serializable::save_xml(XMLElement& dest) const
     return true;
 }
 
-bool Serializable::SaveJSON(JSONValue& dest) const
+bool Serializable::save_json(JSONValue& dest) const
 {
     const Vector<AttributeInfo>* attributes = GetAttributes();
     if (!attributes)

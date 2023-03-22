@@ -39,7 +39,7 @@ public:
     /// Load from JSON data. Return true if successful.
     bool LoadJSON(const JSONValue& source);
     /// Save as JSON data. Return true if successful.
-    bool SaveJSON(JSONValue& dest) const;
+    bool save_json(JSONValue& dest) const;
 
     /// Add attribute animation, attribute name can in following format: "attribute" or "#0/#1/attribute" or ""#0/#1/@component#1/attribute.
     void AddAttributeAnimation

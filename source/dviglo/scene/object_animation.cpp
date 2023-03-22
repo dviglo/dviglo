@@ -145,7 +145,7 @@ bool ObjectAnimation::LoadJSON(const JSONValue& source)
     return true;
 }
 
-bool ObjectAnimation::SaveJSON(JSONValue& dest) const
+bool ObjectAnimation::save_json(JSONValue& dest) const
 {
     JSONValue attributeAnimationsValue;
 
@@ -156,7 +156,7 @@ bool ObjectAnimation::SaveJSON(JSONValue& dest) const
         animValue.Set("name", i->first_);
 
         const ValueAnimationInfo* info = i->second_;
-        if (!info->GetAnimation()->SaveJSON(animValue))
+        if (!info->GetAnimation()->save_json(animValue))
             return false;
 
         animValue.Set("wrapmode", wrapModeNames[info->GetWrapMode()]);

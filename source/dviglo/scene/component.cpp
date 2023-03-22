@@ -61,14 +61,14 @@ bool Component::save_xml(XMLElement& dest) const
     return Animatable::save_xml(dest);
 }
 
-bool Component::SaveJSON(JSONValue& dest) const
+bool Component::save_json(JSONValue& dest) const
 {
     // Write type and ID
     dest.Set("type", GetTypeName());
     dest.Set("id", id_);
 
     // Write attributes
-    return Animatable::SaveJSON(dest);
+    return Animatable::save_json(dest);
 }
 
 void Component::MarkNetworkUpdate()

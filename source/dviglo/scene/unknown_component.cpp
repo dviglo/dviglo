@@ -195,7 +195,7 @@ bool UnknownComponent::save_xml(XMLElement& dest) const
     return true;
 }
 
-bool UnknownComponent::SaveJSON(JSONValue& dest) const
+bool UnknownComponent::save_json(JSONValue& dest) const
 {
     if (!useXML_)
         DV_LOGWARNING("UnknownComponent loaded in binary mode, attributes will be empty for JSON save");

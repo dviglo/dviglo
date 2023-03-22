@@ -70,7 +70,7 @@ public:
     /// Load from JSON data. Return true if successful.
     bool LoadJSON(const JSONValue& source);
     /// Save as XML data. Return true if successful.
-    bool SaveJSON(JSONValue& dest) const;
+    bool save_json(JSONValue& dest) const;
 
     /// Set owner.
     void SetOwner(void* owner);

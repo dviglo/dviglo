@@ -74,7 +74,7 @@ class DV_API Scene : public Node
 public:
     using Node::GetComponent;
     using Node::save_xml;
-    using Node::SaveJSON;
+    using Node::save_json;
 
     /// Construct.
     explicit Scene();
@@ -103,7 +103,7 @@ public:
     /// Save to an XML file. Return true if successful.
     bool save_xml(Serializer& dest, const String& indentation = "\t") const;
     /// Save to a JSON file. Return true if successful.
-    bool SaveJSON(Serializer& dest, const String& indentation = "\t") const;
+    bool save_json(Serializer& dest, const String& indentation = "\t") const;
     /// Load from a binary file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.
     bool LoadAsync(File* file, LoadMode mode = LOAD_SCENE_AND_RESOURCES);
     /// Load from an XML file asynchronously. Return true if started successfully. The LOAD_RESOURCES_ONLY mode can also be used to preload resources from object prefab files.

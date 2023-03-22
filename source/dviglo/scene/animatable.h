@@ -61,7 +61,7 @@ public:
     /// Load from JSON data. Return true if successful.
     bool LoadJSON(const JSONValue& source) override;
     /// Save as JSON data. Return true if successful.
-    bool SaveJSON(JSONValue& dest) const override;
+    bool save_json(JSONValue& dest) const override;
 
     /// Set automatic update of animation, default true.
     void SetAnimationEnabled(bool enable);

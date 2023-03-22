@@ -159,7 +159,7 @@ bool ValueAnimation::LoadJSON(const JSONValue& source)
     return true;
 }
 
-bool ValueAnimation::SaveJSON(JSONValue& dest) const
+bool ValueAnimation::save_json(JSONValue& dest) const
 {
     dest.Set("interpolationmethod", interpMethodNames[interpolationMethod_]);
     if (interpolationMethod_ == IM_SPLINE)

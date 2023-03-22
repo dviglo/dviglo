@@ -849,7 +849,7 @@ bool Material::Save(JSONValue& dest) const
     {
         ShaderParameterAnimationInfo* info = j->second_;
         JSONValue paramAnimationVal;
-        if (!info->GetAnimation()->SaveJSON(paramAnimationVal))
+        if (!info->GetAnimation()->save_json(paramAnimationVal))
             return false;
 
         paramAnimationVal.Set("wrapmode", wrapModeNames[info->GetWrapMode()]);

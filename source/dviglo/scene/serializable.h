@@ -54,7 +54,7 @@ public:
     /// Load from JSON data. Return true if successful.
     virtual bool LoadJSON(const JSONValue& source);
     /// Save as JSON data. Return true if successful.
-    virtual bool SaveJSON(JSONValue& dest) const;
+    virtual bool save_json(JSONValue& dest) const;
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     virtual void ApplyAttributes() { }

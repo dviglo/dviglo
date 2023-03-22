@@ -201,13 +201,13 @@ bool Node::save_xml(XMLElement& dest) const
     return true;
 }
 
-bool Node::SaveJSON(JSONValue& dest) const
+bool Node::save_json(JSONValue& dest) const
 {
     // Write node ID
     dest.Set("id", id_);
 
     // Write attributes
-    if (!Animatable::SaveJSON(dest))
+    if (!Animatable::save_json(dest))
         return false;
 
     // Write components
@@ -219,7 +219,7 @@ bool Node::SaveJSON(JSONValue& dest) const
             continue;
 
         JSONValue compVal;
-        if (!component->SaveJSON(compVal))
+        if (!component->save_json(compVal))
             return false;
         componentsArray.Push(compVal);
     }
@@ -234,7 +234,7 @@ bool Node::SaveJSON(JSONValue& dest) const
             continue;
 
         JSONValue childVal;
-        if (!node->SaveJSON(childVal))
+        if (!node->save_json(childVal))
             return false;
         childrenArray.Push(childVal);
     }
@@ -279,12 +279,12 @@ bool Node::save_xml(Serializer& dest, const String& indentation) const
     return xml->Save(dest, indentation);
 }
 
-bool Node::SaveJSON(Serializer& dest, const String& indentation) const
+bool Node::save_json(Serializer& dest, const String& indentation) const
 {
     SharedPtr<JSONFile> json(new JSONFile());
     JSONValue& rootElem = json->GetRoot();
 
-    if (!SaveJSON(rootElem))
+    if (!save_json(rootElem))
         return false;
 
     return json->Save(dest, indentation);

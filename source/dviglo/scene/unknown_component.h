@@ -39,7 +39,7 @@ public:
     /// Save as XML data. Return true if successful.
     bool save_xml(XMLElement& dest) const override;
     /// Save as JSON data. Return true if successful.
-    bool SaveJSON(JSONValue& dest) const override;
+    bool save_json(JSONValue& dest) const override;
 
     /// Initialize the type name. Called by Node when loading.
     void SetTypeName(const String& typeName);

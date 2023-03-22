@@ -84,7 +84,7 @@ public:
     /// Save as XML data. Return true if successful.
     bool save_xml(XMLElement& dest) const override;
     /// Save as JSON data. Return true if successful.
-    bool SaveJSON(JSONValue& dest) const override;
+    bool save_json(JSONValue& dest) const override;
     /// Apply attribute changes that can not be applied immediately recursively to child nodes and components.
     void ApplyAttributes() override;
 
@@ -99,7 +99,7 @@ public:
     /// Save to an XML file. Return true if successful.
     bool save_xml(Serializer& dest, const String& indentation = "\t") const;
     /// Save to a JSON file. Return true if successful.
-    bool SaveJSON(Serializer& dest, const String& indentation = "\t") const;
+    bool save_json(Serializer& dest, const String& indentation = "\t") const;
     /// Set name of the scene node. Names are not required to be unique.
     void SetName(const String& name);
 
