@@ -14,16 +14,16 @@ namespace dviglo
 
 void ConstantBuffer::Release_OGL()
 {
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
 
 #ifndef GL_ES_VERSION_2_0
         DV_GRAPHICS.SetUBO_OGL(0);
-        glDeleteBuffers(1, &object_.name_);
+        glDeleteBuffers(1, &gpu_object_name_);
 #endif
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
     }
 
     shadowData_.Reset();
@@ -56,9 +56,9 @@ bool ConstantBuffer::SetSize_OGL(unsigned size)
     if (!GParams::is_headless())
     {
 #ifndef GL_ES_VERSION_2_0
-        if (!object_.name_)
-            glGenBuffers(1, &object_.name_);
-        DV_GRAPHICS.SetUBO_OGL(object_.name_);
+        if (!gpu_object_name_)
+            glGenBuffers(1, &gpu_object_name_);
+        DV_GRAPHICS.SetUBO_OGL(gpu_object_name_);
         glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.Get(), GL_DYNAMIC_DRAW);
 #endif
     }
@@ -68,10 +68,10 @@ bool ConstantBuffer::SetSize_OGL(unsigned size)
 
 void ConstantBuffer::Apply_OGL()
 {
-    if (dirty_ && object_.name_)
+    if (dirty_ && gpu_object_name_)
     {
 #ifndef GL_ES_VERSION_2_0
-        DV_GRAPHICS.SetUBO_OGL(object_.name_);
+        DV_GRAPHICS.SetUBO_OGL(gpu_object_name_);
         glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.Get(), GL_DYNAMIC_DRAW);
 #endif
         dirty_ = false;

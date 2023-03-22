@@ -15,15 +15,15 @@ namespace dviglo
 
 void IndexBuffer::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
-        glDeleteBuffers(1, &object_.name_);
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteBuffers(1, &gpu_object_name_);
 
     GPUObject::OnDeviceLost();
 }
 
 void IndexBuffer::OnDeviceReset_OGL()
 {
-    if (!object_.name_)
+    if (!gpu_object_name_)
     {
         Create_OGL();
         dataLost_ = !UpdateToGPU_OGL();
@@ -38,7 +38,7 @@ void IndexBuffer::Release_OGL()
 {
     Unlock_OGL();
 
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
@@ -50,10 +50,10 @@ void IndexBuffer::Release_OGL()
             if (graphics.GetIndexBuffer() == this)
                 graphics.SetIndexBuffer(nullptr);
 
-            glDeleteBuffers(1, &object_.name_);
+            glDeleteBuffers(1, &gpu_object_name_);
         }
 
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
     }
 }
 
@@ -74,7 +74,7 @@ bool IndexBuffer::SetData_OGL(const void* data)
     if (shadowData_ && data != shadowData_.Get())
         memcpy(shadowData_.Get(), data, (size_t)indexCount_ * indexSize_);
 
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (!DV_GRAPHICS.IsDeviceLost())
         {
@@ -124,7 +124,7 @@ bool IndexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool 
     if (shadowData_ && dst != data)
         memcpy(dst, data, (size_t)count * indexSize_);
 
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (!DV_GRAPHICS.IsDeviceLost())
         {
@@ -226,10 +226,10 @@ bool IndexBuffer::Create_OGL()
             return true;
         }
 
-        if (!object_.name_)
-            glGenBuffers(1, &object_.name_);
+        if (!gpu_object_name_)
+            glGenBuffers(1, &gpu_object_name_);
 
-        if (!object_.name_)
+        if (!gpu_object_name_)
         {
             DV_LOGERROR("Failed to create index buffer");
             return false;
@@ -244,7 +244,7 @@ bool IndexBuffer::Create_OGL()
 
 bool IndexBuffer::UpdateToGPU_OGL()
 {
-    if (object_.name_ && shadowData_)
+    if (gpu_object_name_ && shadowData_)
         return SetData_OGL(shadowData_.Get());
     else
         return false;

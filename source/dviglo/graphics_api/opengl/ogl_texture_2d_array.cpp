@@ -25,8 +25,8 @@ namespace dviglo
 
 void Texture2DArray::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
-        glDeleteTextures(1, &object_.name_);
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteTextures(1, &gpu_object_name_);
 
     GPUObject::OnDeviceLost();
 
@@ -36,13 +36,13 @@ void Texture2DArray::OnDeviceLost_OGL()
 
 void Texture2DArray::OnDeviceReset_OGL()
 {
-    if (!object_.name_ || dataPending_)
+    if (!gpu_object_name_ || dataPending_)
     {
         // If has a resource file, reload through the resource cache. Otherwise just recreate.
         if (DV_RES_CACHE.Exists(GetName()))
             dataLost_ = !DV_RES_CACHE.ReloadResource(this);
 
-        if (!object_.name_)
+        if (!gpu_object_name_)
         {
             Create_OGL();
             dataLost_ = true;
@@ -54,7 +54,7 @@ void Texture2DArray::OnDeviceReset_OGL()
 
 void Texture2DArray::Release_OGL()
 {
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
@@ -69,13 +69,13 @@ void Texture2DArray::Release_OGL()
                     graphics.SetTexture(i, nullptr);
             }
 
-            glDeleteTextures(1, &object_.name_);
+            glDeleteTextures(1, &gpu_object_name_);
         }
 
         if (renderSurface_)
             renderSurface_->Release();
 
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
     }
 
     levelsDirty_ = false;
@@ -85,7 +85,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, i
 {
     DV_PROFILE(SetTextureData);
 
-    if (!object_.name_ || GParams::is_headless())
+    if (!gpu_object_name_ || GParams::is_headless())
     {
         DV_LOGERROR("Texture array not created, can not set data");
         return false;
@@ -254,7 +254,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
         }
         else
         {
-            if (!object_.name_)
+            if (!gpu_object_name_)
             {
                 DV_LOGERROR("Texture array layer 0 must be loaded first");
                 return false;
@@ -310,7 +310,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
         }
         else
         {
-            if (!object_.name_)
+            if (!gpu_object_name_)
             {
                 DV_LOGERROR("Texture array layer 0 must be loaded first");
                 return false;
@@ -353,7 +353,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
 bool Texture2DArray::GetData_OGL(unsigned layer, unsigned level, void* dest) const
 {
 #ifndef GL_ES_VERSION_2_0
-    if (!object_.name_ || GParams::is_headless())
+    if (!gpu_object_name_ || GParams::is_headless())
     {
         DV_LOGERROR("Texture array not created, can not get data");
         return false;
@@ -420,7 +420,7 @@ bool Texture2DArray::Create_OGL()
         return true;
     }
 
-    glGenTextures(1, &object_.name_);
+    glGenTextures(1, &gpu_object_name_);
 
     // Ensure that our texture is bound to OpenGL texture unit 0
     graphics.SetTextureForUpdate_OGL(this);

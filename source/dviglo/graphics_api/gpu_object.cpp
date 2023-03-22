@@ -12,11 +12,6 @@ namespace dviglo
 
 GPUObject::GPUObject()
 {
-    if (GParams::get_gapi() == GAPI_OPENGL)
-        object_.name_ = 0;
-    else
-        object_.ptr_ = nullptr;
-
     if (!GParams::is_headless())
         DV_GRAPHICS.AddGPUObject(this);
 }
@@ -29,11 +24,8 @@ GPUObject::~GPUObject()
 
 void GPUObject::OnDeviceLost()
 {
-    if (GParams::get_gapi() == GAPI_OPENGL)
-    {
-        // On OpenGL the object has already been lost at this point; reset object name
-        object_.name_ = 0;
-    }
+    // В OpenGL объект уже потерян, очищаем имя объекта
+    gpu_object_name_ = 0;
 }
 
 void GPUObject::OnDeviceReset()

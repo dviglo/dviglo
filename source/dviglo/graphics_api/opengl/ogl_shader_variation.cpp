@@ -29,8 +29,8 @@ const char* ShaderVariation::elementSemanticNames_OGL[] =
 
 void ShaderVariation::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
-        glDeleteShader(object_.name_);
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteShader(gpu_object_name_);
 
     GPUObject::OnDeviceLost();
 
@@ -39,7 +39,7 @@ void ShaderVariation::OnDeviceLost_OGL()
 
 void ShaderVariation::Release_OGL()
 {
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
@@ -59,10 +59,10 @@ void ShaderVariation::Release_OGL()
                     graphics.SetShaders(nullptr, nullptr);
             }
 
-            glDeleteShader(object_.name_);
+            glDeleteShader(gpu_object_name_);
         }
 
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
         graphics.CleanupShaderPrograms_OGL(this);
     }
 
@@ -79,8 +79,8 @@ bool ShaderVariation::Create_OGL()
         return false;
     }
 
-    object_.name_ = glCreateShader(type_ == VS ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER);
-    if (!object_.name_)
+    gpu_object_name_ = glCreateShader(type_ == VS ? GL_VERTEX_SHADER : GL_FRAGMENT_SHADER);
+    if (!gpu_object_name_)
     {
         compilerOutput_ = "Could not create shader object";
         return false;
@@ -162,24 +162,26 @@ bool ShaderVariation::Create_OGL()
         shaderCode += originalShaderCode;
 
     const char* shaderCStr = shaderCode.c_str();
-    glShaderSource(object_.name_, 1, &shaderCStr, nullptr);
-    glCompileShader(object_.name_);
+    glShaderSource(gpu_object_name_, 1, &shaderCStr, nullptr);
+    glCompileShader(gpu_object_name_);
 
     int compiled, length;
-    glGetShaderiv(object_.name_, GL_COMPILE_STATUS, &compiled);
+    glGetShaderiv(gpu_object_name_, GL_COMPILE_STATUS, &compiled);
     if (!compiled)
     {
-        glGetShaderiv(object_.name_, GL_INFO_LOG_LENGTH, &length);
+        glGetShaderiv(gpu_object_name_, GL_INFO_LOG_LENGTH, &length);
         compilerOutput_.Resize((unsigned)length);
         int outLength;
-        glGetShaderInfoLog(object_.name_, length, &outLength, &compilerOutput_[0]);
-        glDeleteShader(object_.name_);
-        object_.name_ = 0;
+        glGetShaderInfoLog(gpu_object_name_, length, &outLength, &compilerOutput_[0]);
+        glDeleteShader(gpu_object_name_);
+        gpu_object_name_ = 0;
     }
     else
+    {
         compilerOutput_.Clear();
+    }
 
-    return object_.name_ != 0;
+    return gpu_object_name_ != 0;
 }
 
 void ShaderVariation::SetDefines_OGL(const String& defines)

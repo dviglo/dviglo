@@ -42,8 +42,9 @@ void Texture::SetSRGB_OGL(bool enable)
     if (enable != sRGB_)
     {
         sRGB_ = enable;
+
         // If texture had already been created, must recreate it to set the sRGB texture format
-        if (object_.name_)
+        if (gpu_object_name_)
             Create();
 
         // If texture in use in the framebuffer, mark it dirty
@@ -54,7 +55,7 @@ void Texture::SetSRGB_OGL(bool enable)
 
 void Texture::UpdateParameters_OGL()
 {
-    if (!object_.name_ || GParams::is_headless())
+    if (!gpu_object_name_ || GParams::is_headless())
         return;
 
     // If texture is multisampled, do not attempt to set parameters as it's illegal, just return
@@ -356,7 +357,7 @@ unsigned Texture::GetSRGBFormat_OGL(unsigned format)
 
 void Texture::RegenerateLevels_OGL()
 {
-    if (!object_.name_)
+    if (!gpu_object_name_)
         return;
 
     glGenerateMipmap(target_);

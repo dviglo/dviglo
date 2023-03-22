@@ -14,21 +14,23 @@ namespace dviglo
 
 void VertexBuffer::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
-        glDeleteBuffers(1, &object_.name_);
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteBuffers(1, &gpu_object_name_);
 
     GPUObject::OnDeviceLost();
 }
 
 void VertexBuffer::OnDeviceReset_OGL()
 {
-    if (!object_.name_)
+    if (!gpu_object_name_)
     {
         Create_OGL();
         dataLost_ = !UpdateToGPU_OGL();
     }
     else if (dataPending_)
+    {
         dataLost_ = !UpdateToGPU_OGL();
+    }
 
     dataPending_ = false;
 }
@@ -37,7 +39,7 @@ void VertexBuffer::Release_OGL()
 {
     Unlock_OGL();
 
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
@@ -53,10 +55,10 @@ void VertexBuffer::Release_OGL()
             }
 
             graphics.SetVBO_OGL(0);
-            glDeleteBuffers(1, &object_.name_);
+            glDeleteBuffers(1, &gpu_object_name_);
         }
 
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
     }
 }
 
@@ -77,11 +79,11 @@ bool VertexBuffer::SetData_OGL(const void* data)
     if (shadowData_ && data != shadowData_.Get())
         memcpy(shadowData_.Get(), data, (size_t)vertexCount_ * vertexSize_);
 
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (!DV_GRAPHICS.IsDeviceLost())
         {
-            DV_GRAPHICS.SetVBO_OGL(object_.name_);
+            DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
             glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         }
         else
@@ -127,11 +129,11 @@ bool VertexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool
     if (shadowData_ && dst != data)
         memcpy(dst, data, (size_t)count * vertexSize_);
 
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (!DV_GRAPHICS.IsDeviceLost())
         {
-            DV_GRAPHICS.SetVBO_OGL(object_.name_);
+            DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
             if (!discard || start != 0)
                 glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)start * vertexSize_, (GLsizeiptr)count * vertexSize_, data);
             else
@@ -229,15 +231,16 @@ bool VertexBuffer::Create_OGL()
             return true;
         }
 
-        if (!object_.name_)
-            glGenBuffers(1, &object_.name_);
-        if (!object_.name_)
+        if (!gpu_object_name_)
+            glGenBuffers(1, &gpu_object_name_);
+
+        if (!gpu_object_name_)
         {
             DV_LOGERROR("Failed to create vertex buffer");
             return false;
         }
 
-        DV_GRAPHICS.SetVBO_OGL(object_.name_);
+        DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
         glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, nullptr, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     }
 
@@ -246,7 +249,7 @@ bool VertexBuffer::Create_OGL()
 
 bool VertexBuffer::UpdateToGPU_OGL()
 {
-    if (object_.name_ && shadowData_)
+    if (gpu_object_name_ && shadowData_)
         return SetData_OGL(shadowData_.Get());
     else
         return false;

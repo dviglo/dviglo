@@ -9,17 +9,9 @@
 namespace dviglo
 {
 
+using GLuint = unsigned int;
+
 class Graphics;
-
-/// API-specific GPU object representation
-union GPUObjectHandle
-{
-    /// Object pointer (Direct3D)
-    void* ptr_;
-
-    /// Object name (OpenGL)
-    u32 name_;
-};
 
 /// Base class for GPU resources.
 class DV_API GPUObject
@@ -40,18 +32,18 @@ public:
     /// Clear the data lost flag.
     void ClearDataLost();
 
-    /// Return the object pointer. Applicable only on Direct3D.
-    void* GetGPUObject() const { return object_.ptr_; }
-    /// Return the object name. Applicable only on OpenGL.
-    u32 GetGPUObjectName() const { return object_.name_; }
+    /// Возвращает числовой идентификатор, который ассоциирован с объектом OpenGL
+    u32 gpu_object_name() const { return gpu_object_name_; }
+
     /// Return whether data is lost due to context loss.
     bool IsDataLost() const { return dataLost_; }
     /// Return whether has pending data assigned while graphics context was lost.
     bool HasPendingData() const { return dataPending_; }
 
 protected:
-    /// Object pointer or name.
-    GPUObjectHandle object_{};
+    /// Числовой идентификатор, который ассоциирован с объектом OpenGL
+    GLuint gpu_object_name_ = 0;
+
     /// Data lost flag.
     bool dataLost_{};
     /// Data pending flag.

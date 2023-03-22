@@ -53,8 +53,8 @@ ShaderProgram_OGL::~ShaderProgram_OGL()
 
 void ShaderProgram_OGL::OnDeviceLost()
 {
-    if (object_.name_ && !GParams::is_headless() && !DV_GRAPHICS.IsDeviceLost())
-        glDeleteProgram(object_.name_);
+    if (gpu_object_name_ && !GParams::is_headless() && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteProgram(gpu_object_name_);
 
     GPUObject::OnDeviceLost();
 
@@ -66,7 +66,7 @@ void ShaderProgram_OGL::OnDeviceLost()
 
 void ShaderProgram_OGL::Release()
 {
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
@@ -78,10 +78,10 @@ void ShaderProgram_OGL::Release()
             if (graphics.GetShaderProgram_OGL() == this)
                 graphics.SetShaders(nullptr, nullptr);
 
-            glDeleteProgram(object_.name_);
+            glDeleteProgram(gpu_object_name_);
         }
 
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
         linkerOutput_.Clear();
         shaderParameters_.Clear();
         vertexAttributes_.Clear();
@@ -98,35 +98,38 @@ bool ShaderProgram_OGL::Link()
 {
     Release();
 
-    if (!vertexShader_ || !pixelShader_ || !vertexShader_->GetGPUObjectName() || !pixelShader_->GetGPUObjectName())
+    if (!vertexShader_ || !pixelShader_ || !vertexShader_->gpu_object_name() || !pixelShader_->gpu_object_name())
         return false;
 
-    object_.name_ = glCreateProgram();
-    if (!object_.name_)
+    gpu_object_name_ = glCreateProgram();
+    if (!gpu_object_name_)
     {
         linkerOutput_ = "Could not create shader program";
         return false;
     }
 
-    glAttachShader(object_.name_, vertexShader_->GetGPUObjectName());
-    glAttachShader(object_.name_, pixelShader_->GetGPUObjectName());
-    glLinkProgram(object_.name_);
+    glAttachShader(gpu_object_name_, vertexShader_->gpu_object_name());
+    glAttachShader(gpu_object_name_, pixelShader_->gpu_object_name());
+    glLinkProgram(gpu_object_name_);
 
     int linked, length;
-    glGetProgramiv(object_.name_, GL_LINK_STATUS, &linked);
+    glGetProgramiv(gpu_object_name_, GL_LINK_STATUS, &linked);
+
     if (!linked)
     {
-        glGetProgramiv(object_.name_, GL_INFO_LOG_LENGTH, &length);
+        glGetProgramiv(gpu_object_name_, GL_INFO_LOG_LENGTH, &length);
         linkerOutput_.Resize((unsigned)length);
         int outLength;
-        glGetProgramInfoLog(object_.name_, length, &outLength, &linkerOutput_[0]);
-        glDeleteProgram(object_.name_);
-        object_.name_ = 0;
+        glGetProgramInfoLog(gpu_object_name_, length, &outLength, &linkerOutput_[0]);
+        glDeleteProgram(gpu_object_name_);
+        gpu_object_name_ = 0;
     }
     else
+    {
         linkerOutput_.Clear();
+    }
 
-    if (!object_.name_)
+    if (!gpu_object_name_)
         return false;
 
     const int MAX_NAME_LENGTH = 256;
@@ -134,13 +137,13 @@ bool ShaderProgram_OGL::Link()
     int attributeCount, uniformCount, elementCount, nameLength;
     GLenum type;
 
-    glUseProgram(object_.name_);
+    glUseProgram(gpu_object_name_);
 
     // Check for vertex attributes
-    glGetProgramiv(object_.name_, GL_ACTIVE_ATTRIBUTES, &attributeCount);
+    glGetProgramiv(gpu_object_name_, GL_ACTIVE_ATTRIBUTES, &attributeCount);
     for (int i = 0; i < attributeCount; ++i)
     {
-        glGetActiveAttrib(object_.name_, i, (GLsizei)MAX_NAME_LENGTH, &nameLength, &elementCount, &type, nameBuffer);
+        glGetActiveAttrib(gpu_object_name_, i, (GLsizei)MAX_NAME_LENGTH, &nameLength, &elementCount, &type, nameBuffer);
 
         String name = String(nameBuffer, nameLength);
         VertexElementSemantic semantic = MAX_VERTEX_ELEMENT_SEMANTICS;
@@ -166,7 +169,7 @@ bool ShaderProgram_OGL::Link()
             continue;
         }
 
-        int location = glGetAttribLocation(object_.name_, name.c_str());
+        int location = glGetAttribLocation(gpu_object_name_, name.c_str());
         vertexAttributes_[{(i8)semantic, semanticIndex}] = location;
         usedVertexAttributes_ |= (1u << location);
     }
@@ -179,14 +182,14 @@ bool ShaderProgram_OGL::Link()
     {
         int numUniformBlocks = 0;
 
-        glGetProgramiv(object_.name_, GL_ACTIVE_UNIFORM_BLOCKS, &numUniformBlocks);
+        glGetProgramiv(gpu_object_name_, GL_ACTIVE_UNIFORM_BLOCKS, &numUniformBlocks);
         for (int i = 0; i < numUniformBlocks; ++i)
         {
-            glGetActiveUniformBlockName(object_.name_, (GLuint)i, MAX_NAME_LENGTH, &nameLength, nameBuffer);
+            glGetActiveUniformBlockName(gpu_object_name_, (GLuint)i, MAX_NAME_LENGTH, &nameLength, nameBuffer);
 
             String name(nameBuffer, (unsigned)nameLength);
 
-            unsigned blockIndex = glGetUniformBlockIndex(object_.name_, name.c_str());
+            unsigned blockIndex = glGetUniformBlockIndex(gpu_object_name_, name.c_str());
             unsigned group = M_MAX_UNSIGNED;
 
             // Try to recognize the use of the buffer from its name
@@ -212,7 +215,7 @@ bool ShaderProgram_OGL::Link()
 
             // Find total constant buffer data size
             int dataSize;
-            glGetActiveUniformBlockiv(object_.name_, blockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &dataSize);
+            glGetActiveUniformBlockiv(gpu_object_name_, blockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &dataSize);
             if (!dataSize)
                 continue;
 
@@ -226,7 +229,7 @@ bool ShaderProgram_OGL::Link()
                 shaderType = PS;
             }
 
-            glUniformBlockBinding(object_.name_, blockIndex, bindingIndex);
+            glUniformBlockBinding(gpu_object_name_, blockIndex, bindingIndex);
             blockToBinding[blockIndex] = bindingIndex;
 
             constantBuffers_[bindingIndex] = DV_GRAPHICS.GetOrCreateConstantBuffer(shaderType, bindingIndex, (unsigned)dataSize);
@@ -235,11 +238,11 @@ bool ShaderProgram_OGL::Link()
 #endif
 
     // Check for shader parameters and texture units
-    glGetProgramiv(object_.name_, GL_ACTIVE_UNIFORMS, &uniformCount);
+    glGetProgramiv(gpu_object_name_, GL_ACTIVE_UNIFORMS, &uniformCount);
     for (int i = 0; i < uniformCount; ++i)
     {
-        glGetActiveUniform(object_.name_, (GLuint)i, MAX_NAME_LENGTH, nullptr, &elementCount, &type, nameBuffer);
-        int location = glGetUniformLocation(object_.name_, nameBuffer);
+        glGetActiveUniform(gpu_object_name_, (GLuint)i, MAX_NAME_LENGTH, nullptr, &elementCount, &type, nameBuffer);
+        int location = glGetUniformLocation(gpu_object_name_, nameBuffer);
 
         // Check for array index included in the name and strip it
         String name(nameBuffer);
@@ -265,8 +268,8 @@ bool ShaderProgram_OGL::Link()
             if (parameter.location_ < 0)
             {
                 int blockIndex, blockOffset;
-                glGetActiveUniformsiv(object_.name_, 1, (const GLuint*)&i, GL_UNIFORM_BLOCK_INDEX, &blockIndex);
-                glGetActiveUniformsiv(object_.name_, 1, (const GLuint*)&i, GL_UNIFORM_OFFSET, &blockOffset);
+                glGetActiveUniformsiv(gpu_object_name_, 1, (const GLuint*)&i, GL_UNIFORM_BLOCK_INDEX, &blockIndex);
+                glGetActiveUniformsiv(gpu_object_name_, 1, (const GLuint*)&i, GL_UNIFORM_OFFSET, &blockOffset);
                 if (blockIndex >= 0)
                 {
                     parameter.offset_ = blockOffset;

@@ -22,8 +22,8 @@ namespace dviglo
 
 void Texture2D::OnDeviceLost_OGL()
 {
-    if (object_.name_ && !DV_GRAPHICS.IsDeviceLost())
-        glDeleteTextures(1, &object_.name_);
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteTextures(1, &gpu_object_name_);
 
     GPUObject::OnDeviceLost();
 
@@ -33,13 +33,13 @@ void Texture2D::OnDeviceLost_OGL()
 
 void Texture2D::OnDeviceReset_OGL()
 {
-    if (!object_.name_ || dataPending_)
+    if (!gpu_object_name_ || dataPending_)
     {
         // If has a resource file, reload through the resource cache. Otherwise just recreate.
         if (DV_RES_CACHE.Exists(GetName()))
             dataLost_ = !DV_RES_CACHE.ReloadResource(this);
 
-        if (!object_.name_)
+        if (!gpu_object_name_)
         {
             Create_OGL();
             dataLost_ = true;
@@ -51,7 +51,7 @@ void Texture2D::OnDeviceReset_OGL()
 
 void Texture2D::Release_OGL()
 {
-    if (object_.name_)
+    if (gpu_object_name_)
     {
         if (GParams::is_headless())
             return;
@@ -66,13 +66,13 @@ void Texture2D::Release_OGL()
                     graphics.SetTexture(i, nullptr);
             }
 
-            glDeleteTextures(1, &object_.name_);
+            glDeleteTextures(1, &gpu_object_name_);
         }
 
         if (renderSurface_)
             renderSurface_->Release();
 
-        object_.name_ = 0;
+        gpu_object_name_ = 0;
     }
     else
     {
@@ -88,7 +88,7 @@ bool Texture2D::SetData_OGL(unsigned level, int x, int y, int width, int height,
 {
     DV_PROFILE(SetTextureData);
 
-    if (!object_.name_ || GParams::is_headless())
+    if (!gpu_object_name_ || GParams::is_headless())
     {
         DV_LOGERROR("No texture created, can not set data");
         return false;
@@ -220,8 +220,10 @@ bool Texture2D::SetData_OGL(Image* image, bool useAlpha)
         // If image was previously compressed, reset number of requested levels to avoid error if level count is too high for new size
         if (IsCompressed_OGL() && requestedLevels_ > 1)
             requestedLevels_ = 0;
+
         SetSize(levelWidth, levelHeight, format);
-        if (!object_.name_)
+
+        if (!gpu_object_name_)
             return false;
 
         for (unsigned i = 0; i < levels_; ++i)
@@ -288,7 +290,7 @@ bool Texture2D::SetData_OGL(Image* image, bool useAlpha)
 
 bool Texture2D::GetData_OGL(unsigned level, void* dest) const
 {
-    if (!object_.name_ || GParams::is_headless())
+    if (!gpu_object_name_ || GParams::is_headless())
     {
         DV_LOGERROR("No texture created, can not get data");
         return false;
@@ -415,7 +417,7 @@ bool Texture2D::Create_OGL()
         }
     }
 
-    glGenTextures(1, &object_.name_);
+    glGenTextures(1, &gpu_object_name_);
 
     // Ensure that our texture is bound to OpenGL texture unit 0
     graphics.SetTextureForUpdate_OGL(this);

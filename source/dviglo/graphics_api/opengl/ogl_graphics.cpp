@@ -588,7 +588,7 @@ bool Graphics::ResolveToTexture_OGL(Texture2D* texture)
     glBindFramebuffer(GL_READ_FRAMEBUFFER, impl->resolveSrcFBO_);
     glFramebufferRenderbuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, surface->GetRenderBuffer());
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, impl->resolveDestFBO_);
-    glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture->GetGPUObjectName(), 0);
+    glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture->gpu_object_name(), 0);
     glBlitFramebuffer(0, 0, texture->GetWidth(), texture->GetHeight(), 0, 0, texture->GetWidth(), texture->GetHeight(),
         GL_COLOR_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
@@ -632,7 +632,7 @@ bool Graphics::ResolveToTexture_OGL(TextureCube* texture)
         glFramebufferRenderbuffer(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, surface->GetRenderBuffer());
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, impl->resolveDestFBO_);
         glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
-            texture->GetGPUObjectName(), 0);
+            texture->gpu_object_name(), 0);
         glBlitFramebuffer(0, 0, texture->GetWidth(), texture->GetHeight(), 0, 0, texture->GetWidth(), texture->GetHeight(),
             GL_COLOR_BUFFER_BIT, GL_NEAREST);
     }
@@ -668,7 +668,7 @@ void Graphics::Draw_OGL(PrimitiveType type, unsigned vertexStart, unsigned verte
 
 void Graphics::Draw_OGL(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned minVertex, unsigned vertexCount)
 {
-    if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName())
+    if (!indexCount || !indexBuffer_ || !indexBuffer_->gpu_object_name())
         return;
 
     PrepareDraw_OGL();
@@ -689,7 +689,7 @@ void Graphics::Draw_OGL(PrimitiveType type, unsigned indexStart, unsigned indexC
 void Graphics::Draw_OGL(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex, unsigned vertexCount)
 {
 #ifndef GL_ES_VERSION_2_0
-    if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName())
+    if (!indexCount || !indexBuffer_ || !indexBuffer_->gpu_object_name())
         return;
 
     PrepareDraw_OGL();
@@ -712,7 +712,7 @@ void Graphics::DrawInstanced_OGL(PrimitiveType type, unsigned indexStart, unsign
     unsigned instanceCount)
 {
 #if !defined(DV_GLES2) || defined(__EMSCRIPTEN__)
-    if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName() || !instancingSupport_)
+    if (!indexCount || !indexBuffer_ || !indexBuffer_->gpu_object_name() || !instancingSupport_)
         return;
 
     PrepareDraw_OGL();
@@ -739,7 +739,7 @@ void Graphics::DrawInstanced_OGL(PrimitiveType type, unsigned indexStart, unsign
         unsigned vertexCount, unsigned instanceCount)
 {
 #ifndef GL_ES_VERSION_2_0
-    if (!indexCount || !indexBuffer_ || !indexBuffer_->GetGPUObjectName() || !instancingSupport_)
+    if (!indexCount || !indexBuffer_ || !indexBuffer_->gpu_object_name() || !instancingSupport_)
         return;
 
     PrepareDraw_OGL();
@@ -807,7 +807,7 @@ void Graphics::SetIndexBuffer_OGL(IndexBuffer* buffer)
     if (indexBuffer_ == buffer)
         return;
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer ? buffer->GetGPUObjectName() : 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer ? buffer->gpu_object_name() : 0);
     indexBuffer_ = buffer;
 }
 
@@ -817,7 +817,7 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
         return;
 
     // Compile the shaders now if not yet compiled. If already attempted, do not retry
-    if (vs && !vs->GetGPUObjectName())
+    if (vs && !vs->gpu_object_name())
     {
         if (vs->GetCompilerOutput().Empty())
         {
@@ -836,7 +836,7 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
             vs = nullptr;
     }
 
-    if (ps && !ps->GetGPUObjectName())
+    if (ps && !ps->gpu_object_name())
     {
         if (ps->GetCompilerOutput().Empty())
         {
@@ -875,9 +875,9 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
         if (i != impl->shaderPrograms_.End())
         {
             // Use the existing linked program
-            if (i->second_->GetGPUObjectName())
+            if (i->second_->gpu_object_name())
             {
-                glUseProgram(i->second_->GetGPUObjectName());
+                glUseProgram(i->second_->gpu_object_name());
                 impl->shaderProgram_ = i->second_;
             }
             else
@@ -921,7 +921,7 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
             ConstantBuffer* buffer = constantBuffers[i].Get();
             if (buffer != impl->constantBuffers_[i])
             {
-                unsigned object = buffer ? buffer->GetGPUObjectName() : 0;
+                unsigned object = buffer ? buffer->gpu_object_name() : 0;
                 glBindBufferBase(GL_UNIFORM_BUFFER, i, object);
                 // Calling glBindBufferBase also affects the generic buffer binding point
                 impl->boundUBO_ = object;
@@ -1357,7 +1357,7 @@ void Graphics::SetTexture_OGL(unsigned index, Texture* texture)
             // Unbind old texture type if necessary
             if (impl->textureTypes_[index] && impl->textureTypes_[index] != glType)
                 glBindTexture(impl->textureTypes_[index], 0);
-            glBindTexture(glType, texture->GetGPUObjectName());
+            glBindTexture(glType, texture->gpu_object_name());
             impl->textureTypes_[index] = glType;
 
             if (texture->GetParametersDirty())
@@ -1383,7 +1383,7 @@ void Graphics::SetTexture_OGL(unsigned index, Texture* texture)
                 impl->activeTexture_ = index;
             }
 
-            glBindTexture(texture->GetTarget(), texture->GetGPUObjectName());
+            glBindTexture(texture->GetTarget(), texture->gpu_object_name());
             if (texture->GetParametersDirty())
                 texture->UpdateParameters();
             if (texture->GetLevelsDirty())
@@ -1406,7 +1406,7 @@ void Graphics::SetTextureForUpdate_OGL(Texture* texture)
     // Unbind old texture type if necessary
     if (impl->textureTypes_[0] && impl->textureTypes_[0] != glType)
         glBindTexture(impl->textureTypes_[0], 0);
-    glBindTexture(glType, texture->GetGPUObjectName());
+    glBindTexture(glType, texture->gpu_object_name());
     impl->textureTypes_[0] = glType;
     textures_[0] = texture;
 }
@@ -2709,7 +2709,7 @@ void Graphics::PrepareDraw_OGL()
 
                     if (i->second_.colorAttachments_[j] != renderTargets_[j])
                     {
-                        BindColorAttachment_OGL(j, renderTargets_[j]->GetTarget(), texture->GetGPUObjectName(), false);
+                        BindColorAttachment_OGL(j, renderTargets_[j]->GetTarget(), texture->gpu_object_name(), false);
                         i->second_.colorAttachments_[j] = renderTargets_[j];
                     }
                 }
@@ -2754,8 +2754,8 @@ void Graphics::PrepareDraw_OGL()
 
                 if (i->second_.depthAttachment_ != depthStencil_)
                 {
-                    BindDepthAttachment_OGL(texture->GetGPUObjectName(), false);
-                    BindStencilAttachment_OGL(hasStencil ? texture->GetGPUObjectName() : 0, false);
+                    BindDepthAttachment_OGL(texture->gpu_object_name(), false);
+                    BindStencilAttachment_OGL(hasStencil ? texture->gpu_object_name() : 0, false);
                     i->second_.depthAttachment_ = depthStencil_;
                 }
             }
@@ -2807,7 +2807,7 @@ void Graphics::PrepareDraw_OGL()
             VertexBuffer* buffer = vertexBuffers_[i];
             // Beware buffers with missing OpenGL objects, as binding a zero buffer object means accessing CPU memory for vertex data,
             // in which case the pointer will be invalid and cause a crash
-            if (!buffer || !buffer->GetGPUObjectName() || !impl->vertexAttributes_)
+            if (!buffer || !buffer->gpu_object_name() || !impl->vertexAttributes_)
                 continue;
 
             const Vector<VertexElement>& elements = buffer->GetElements();
@@ -2853,7 +2853,7 @@ void Graphics::PrepareDraw_OGL()
                         }
                     }
 
-                    SetVBO_OGL(buffer->GetGPUObjectName());
+                    SetVBO_OGL(buffer->gpu_object_name());
                     glVertexAttribPointer(location, glElementComponents[element.type_], glElementTypes[element.type_],
                         element.type_ == TYPE_UBYTE4_NORM ? GL_TRUE : GL_FALSE, (unsigned)buffer->GetVertexSize(),
                         (const void *)(size_t)dataStart);
