@@ -84,7 +84,7 @@ private:
     /// Layer image files acquired during BeginLoad.
     Vector<SharedPtr<Image>> loadImages_;
     /// Parameter file acquired during BeginLoad.
-    SharedPtr<XMLFile> loadParameters_;
+    SharedPtr<XmlFile> loadParameters_;
 };
 
 }

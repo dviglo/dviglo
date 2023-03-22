@@ -128,7 +128,7 @@ StringHash ParseTextureTypeXml(const String& filename)
     SharedPtr<File> texXmlFile = DV_RES_CACHE.GetFile(filename, false);
     if (texXmlFile.NotNull())
     {
-        SharedPtr<XMLFile> texXml(new XMLFile());
+        SharedPtr<XmlFile> texXml(new XmlFile());
         if (texXml->Load(*texXmlFile))
             type = ParseTextureTypeName(texXml->GetRoot().GetName());
     }
@@ -249,7 +249,7 @@ bool Material::EndLoad()
 bool Material::BeginLoadXML(Deserializer& source)
 {
     ResetToDefaults();
-    loadXMLFile_ = new XMLFile();
+    loadXMLFile_ = new XmlFile();
     if (loadXMLFile_->Load(source))
     {
         // If async loading, scan the XML content beforehand for technique & texture resources
@@ -362,7 +362,7 @@ bool Material::BeginLoadJSON(Deserializer& source)
 
 bool Material::Save(Serializer& dest) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement materialElem = xml->CreateRoot("material");
 
     Save(materialElem);

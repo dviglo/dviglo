@@ -25,7 +25,7 @@ XMLElement::XMLElement() :
 {
 }
 
-XMLElement::XMLElement(XMLFile* file, pugi::xml_node_struct* node) :
+XMLElement::XMLElement(XmlFile* file, pugi::xml_node_struct* node) :
     file_(file),
     node_(node),
     xpathResultSet_(nullptr),
@@ -34,7 +34,7 @@ XMLElement::XMLElement(XMLFile* file, pugi::xml_node_struct* node) :
 {
 }
 
-XMLElement::XMLElement(XMLFile* file, const XPathResultSet* resultSet, const pugi::xpath_node* xpathNode,
+XMLElement::XMLElement(XmlFile* file, const XPathResultSet* resultSet, const pugi::xpath_node* xpathNode,
     i32 xpathResultIndex) :
     file_(file),
     node_(nullptr),
@@ -965,7 +965,7 @@ Matrix4 XMLElement::GetMatrix4(const String& name) const
     return ToMatrix4(GetAttribute(name));
 }
 
-XMLFile* XMLElement::GetFile() const
+XmlFile* XMLElement::GetFile() const
 {
     return file_;
 }
@@ -983,7 +983,7 @@ XPathResultSet::XPathResultSet() :
 {
 }
 
-XPathResultSet::XPathResultSet(XMLFile* file, pugi::xpath_node_set* resultSet) :
+XPathResultSet::XPathResultSet(XmlFile* file, pugi::xpath_node_set* resultSet) :
     file_(file),
     resultSet_(resultSet ? new pugi::xpath_node_set(resultSet->begin(), resultSet->end()) : nullptr)
 {

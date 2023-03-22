@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 class Image;
-class XMLFile;
+class XmlFile;
 
 /// 2D texture resource.
 class DV_API Texture2D : public Texture
@@ -81,7 +81,7 @@ private:
     /// Image file acquired during BeginLoad.
     SharedPtr<Image> loadImage_;
     /// Parameter file acquired during BeginLoad.
-    SharedPtr<XMLFile> loadParameters_;
+    SharedPtr<XmlFile> loadParameters_;
 };
 
 }

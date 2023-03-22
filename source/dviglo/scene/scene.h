@@ -42,7 +42,7 @@ struct AsyncProgress
     /// File for binary mode.
     SharedPtr<File> file_;
     /// XML file for XML mode.
-    SharedPtr<XMLFile> xmlFile_;
+    SharedPtr<XmlFile> xmlFile_;
     /// JSON file for JSON mode.
     SharedPtr<JSONFile> jsonFile_;
 

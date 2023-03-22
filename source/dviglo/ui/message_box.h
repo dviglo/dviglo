@@ -12,7 +12,7 @@ namespace dviglo
 class Button;
 class Text;
 class UiElement;
-class XMLFile;
+class XmlFile;
 
 /// Message box dialog. Manages its lifetime automatically, so the application does not need to hold a reference to it, and shouldn't attempt to destroy it manually.
 class DV_API MessageBox : public Object
@@ -22,7 +22,7 @@ class DV_API MessageBox : public Object
 public:
     /// Construct. If layout file is not given, use the default message box layout. If style file is not given, use the default style file from root UI element.
     explicit MessageBox(const String& messageString = String::EMPTY, const String& titleString = String::EMPTY,
-        XMLFile* layoutFile = nullptr, XMLFile* styleFile = nullptr);
+        XmlFile* layoutFile = nullptr, XmlFile* styleFile = nullptr);
     /// Destruct.
     ~MessageBox() override;
     /// Register object factory.

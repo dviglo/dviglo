@@ -18,7 +18,7 @@ namespace dviglo
 
 class Variant;
 class XMLElement;
-class XMLFile;
+class XmlFile;
 
 /// Rendering path command types.
 enum RenderCommandType
@@ -182,9 +182,9 @@ public:
     /// Clone the rendering path.
     SharedPtr<RenderPath> Clone();
     /// Clear existing data and load from an XML file. Return true if successful.
-    bool Load(XMLFile* file);
+    bool Load(XmlFile* file);
     /// Append data from an XML file. Return true if successful.
-    bool Append(XMLFile* file);
+    bool Append(XmlFile* file);
     /// Enable/disable commands and rendertargets by tag.
     void SetEnabled(const String& tag, bool active);
     /// Return true of any of render targets or commands with specified tag are enabled.

@@ -271,7 +271,7 @@ void Node::AddReplicationState(NodeReplicationState* state)
 
 bool Node::SaveXML(Serializer& dest, const String& indentation) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("node");
     if (!SaveXML(rootElem))
         return false;

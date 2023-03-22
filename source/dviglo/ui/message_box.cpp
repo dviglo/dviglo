@@ -16,8 +16,8 @@
 namespace dviglo
 {
 
-MessageBox::MessageBox(const String& messageString, const String& titleString, XMLFile* layoutFile,
-    XMLFile* styleFile) :
+MessageBox::MessageBox(const String& messageString, const String& titleString, XmlFile* layoutFile,
+    XmlFile* styleFile) :
     window_(nullptr),
     titleText_(nullptr),
     messageText_(nullptr),
@@ -26,7 +26,7 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
     // If layout file is not given, use the default message box layout
     if (!layoutFile)
     {
-        layoutFile = DV_RES_CACHE.GetResource<XMLFile>("UI/MessageBox.xml");
+        layoutFile = DV_RES_CACHE.GetResource<XmlFile>("UI/MessageBox.xml");
         if (!layoutFile)    // Error is already logged
             return;         // Note: windowless MessageBox should not be used!
     }

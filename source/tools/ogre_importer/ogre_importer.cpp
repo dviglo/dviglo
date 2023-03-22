@@ -18,8 +18,8 @@
 
 static const int VERTEX_CACHE_SIZE = 32;
 
-SharedPtr<XMLFile> meshFile_(new XMLFile());
-SharedPtr<XMLFile> skelFile_(new XMLFile());
+SharedPtr<XmlFile> meshFile_(new XmlFile());
+SharedPtr<XmlFile> skelFile_(new XmlFile());
 Vector<ModelIndexBuffer> indexBuffers_;
 Vector<ModelVertexBuffer> vertexBuffers_;
 Vector<Vector<ModelSubGeometryLodLevel>> subGeometries_;

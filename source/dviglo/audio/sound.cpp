@@ -320,7 +320,7 @@ void Sound::LoadParameters()
 {
     String xmlName = ReplaceExtension(GetName(), ".xml");
 
-    SharedPtr<XMLFile> file(DV_RES_CACHE.GetTempResource<XMLFile>(xmlName, false));
+    SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
     if (!file)
         return;
 

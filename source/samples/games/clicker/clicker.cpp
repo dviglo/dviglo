@@ -30,7 +30,7 @@ void Clicker::Start()
 
 void Clicker::CreateUI()
 {
-    XMLFile* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+    XmlFile* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
     UiElement* uiRoot = DV_UI.GetRoot();
     uiRoot->SetDefaultStyle(style);
 

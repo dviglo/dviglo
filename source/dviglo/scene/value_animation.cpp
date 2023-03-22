@@ -47,7 +47,7 @@ void ValueAnimation::RegisterObject()
 
 bool ValueAnimation::BeginLoad(Deserializer& source)
 {
-    XMLFile xmlFile;
+    XmlFile xmlFile;
     if (!xmlFile.Load(source))
         return false;
 
@@ -56,7 +56,7 @@ bool ValueAnimation::BeginLoad(Deserializer& source)
 
 bool ValueAnimation::Save(Serializer& dest) const
 {
-    XMLFile xmlFile;
+    XmlFile xmlFile;
 
     XMLElement rootElem = xmlFile.CreateRoot("valueanimation");
     if (!SaveXML(rootElem))

@@ -14,7 +14,7 @@ class Sprite2D;
 class Texture2D;
 class TmxFile2D;
 class XMLElement;
-class XMLFile;
+class XmlFile;
 
 /// Tmx layer.
 class TmxLayer2D : public RefCounted
@@ -188,14 +188,14 @@ public:
 
 private:
     /// Load TSX file.
-    SharedPtr<XMLFile> LoadTSXFile(const String& source);
+    SharedPtr<XmlFile> LoadTSXFile(const String& source);
     /// Load tile set.
     bool LoadTileSet(const XMLElement& element);
 
     /// XML file used during loading.
-    SharedPtr<XMLFile> loadXMLFile_;
+    SharedPtr<XmlFile> loadXMLFile_;
     /// TSX name to XML file mapping.
-    HashMap<String, SharedPtr<XMLFile>> tsxXMLFiles_;
+    HashMap<String, SharedPtr<XmlFile>> tsxXMLFiles_;
     /// Tile map information.
     TileMapInfo2D info_{};
     /// Gid to tile sprite mapping.

@@ -298,7 +298,7 @@ void Run(Vector<String>& arguments)
     // zero out image
     spriteSheetImage.SetData(nullptr);
 
-    XMLFile xml;
+    XmlFile xml;
     XMLElement root = xml.CreateRoot("TextureAtlas");
     root.SetAttribute("imagePath", GetFileNameAndExtension(outputFile));
 

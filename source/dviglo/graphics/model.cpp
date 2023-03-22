@@ -289,7 +289,7 @@ bool Model::BeginLoad(Deserializer& source)
 
     // Read metadata
     String xmlName = ReplaceExtension(GetName(), ".xml");
-    SharedPtr<XMLFile> file(DV_RES_CACHE.GetTempResource<XMLFile>(xmlName, false));
+    SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
     if (file)
         LoadMetadataFromXML(file->GetRoot());
 
@@ -448,7 +448,7 @@ bool Model::Save(Serializer& dest) const
         {
             String xmlName = ReplaceExtension(destFile->GetName(), ".xml");
 
-            SharedPtr<XMLFile> xml(new XMLFile());
+            SharedPtr<XmlFile> xml(new XmlFile());
             XMLElement rootElem = xml->CreateRoot("model");
             SaveMetadataToXML(rootElem);
 

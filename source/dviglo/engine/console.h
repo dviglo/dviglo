@@ -18,7 +18,7 @@ class LineEdit;
 class ListView;
 class Text;
 class UiElement;
-class XMLFile;
+class XmlFile;
 
 /// %Console window with log history and command line prompt.
 class DV_API Console : public Object
@@ -40,7 +40,7 @@ public:
     Console& operator =(const Console&) = delete;
 
     /// Set UI elements' style from an XML file.
-    void SetDefaultStyle(XMLFile* style);
+    void SetDefaultStyle(XmlFile* style);
     /// Show or hide.
     void SetVisible(bool enable);
     /// Toggle visibility.
@@ -68,7 +68,7 @@ public:
     void UpdateElements();
 
     /// Return the UI style file.
-    XMLFile* GetDefaultStyle() const;
+    XmlFile* GetDefaultStyle() const;
 
     /// Return the background element.
     BorderImage* GetBackground() const { return background_; }

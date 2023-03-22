@@ -569,16 +569,16 @@ void UI::DebugDraw(UiElement* element)
     }
 }
 
-SharedPtr<UiElement> UI::LoadLayout(Deserializer& source, XMLFile* styleFile)
+SharedPtr<UiElement> UI::LoadLayout(Deserializer& source, XmlFile* styleFile)
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     if (!xml->Load(source))
         return SharedPtr<UiElement>();
     else
         return LoadLayout(xml, styleFile);
 }
 
-SharedPtr<UiElement> UI::LoadLayout(XMLFile* file, XMLFile* styleFile)
+SharedPtr<UiElement> UI::LoadLayout(XmlFile* file, XmlFile* styleFile)
 {
     DV_PROFILE(LoadUILayout);
 

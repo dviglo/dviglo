@@ -86,7 +86,7 @@ void ShaderPrecache::LoadShaders(Graphics* graphics, Deserializer& source)
 {
     DV_LOGDEBUG("Begin precaching shaders");
 
-    XMLFile xmlFile;
+    XmlFile xmlFile;
     xmlFile.Load(source);
 
     XMLElement shader = xmlFile.GetRoot().GetChild("shader");

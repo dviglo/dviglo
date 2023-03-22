@@ -118,9 +118,9 @@ public:
     /// Load from XML data. Return true if successful.
     bool LoadXML(const XMLElement& source) override;
     /// Load from XML data with style. Return true if successful.
-    virtual bool LoadXML(const XMLElement& source, XMLFile* styleFile);
+    virtual bool LoadXML(const XMLElement& source, XmlFile* styleFile);
     /// Create a child by loading from XML data with style. Returns the child element if successful, null if otherwise.
-    virtual UiElement* LoadChildXML(const XMLElement& childElem, XMLFile* styleFile);
+    virtual UiElement* LoadChildXML(const XMLElement& childElem, XmlFile* styleFile);
     /// Save as XML data. Return true if successful.
     bool SaveXML(XMLElement& dest) const override;
 
@@ -300,13 +300,13 @@ public:
     /// Set drag and drop flags.
     void SetDragDropMode(DragAndDropModeFlags mode);
     /// Set style from an XML file. Find the style element by name. If the style file is not explicitly provided, use the default style from parental chain. Return true if the style is applied successfully. See also \ref UI_Programmatic.
-    bool SetStyle(const String& styleName, XMLFile* file = nullptr);
+    bool SetStyle(const String& styleName, XmlFile* file = nullptr);
     /// Set style from an XML element. Return true if the style is applied successfully.
     bool SetStyle(const XMLElement& element);
     /// Set style from an XML file. Find the style element automatically by using the element's typename. If the style file is not explicitly provided, use the default style from parental chain. Return true if the style is applied successfully. See also \ref UI_Programmatic.
-    bool SetStyleAuto(XMLFile* file = nullptr);
+    bool SetStyleAuto(XmlFile* file = nullptr);
     /// Set default style file for later use by children elements.
-    void SetDefaultStyle(XMLFile* style);
+    void SetDefaultStyle(XmlFile* style);
     /// Set layout parameters.
     void SetLayout(LayoutMode mode, int spacing = 0, const IntRect& border = IntRect::ZERO);
     /// Set layout mode only.
@@ -541,7 +541,7 @@ public:
     /// Return applied style name. Return an empty string when the applied style is an 'auto' style (i.e. style derived from instance's type).
     const String& GetAppliedStyle() const;
     /// Return default style.
-    XMLFile* GetDefaultStyle(bool recursiveUp = true) const;
+    XmlFile* GetDefaultStyle(bool recursiveUp = true) const;
 
     /// Return layout mode.
     LayoutMode GetLayoutMode() const { return layoutMode_; }
@@ -809,9 +809,9 @@ private:
     /// Has color gradient flag.
     bool colorGradient_{};
     /// Default style file.
-    SharedPtr<XMLFile> defaultStyle_;
+    SharedPtr<XmlFile> defaultStyle_;
     /// Last applied style file.
-    WeakPtr<XMLFile> appliedStyleFile_;
+    WeakPtr<XmlFile> appliedStyleFile_;
     /// Traversal mode for rendering.
     TraversalMode traversalMode_{TM_BREADTH_FIRST};
     /// Flag whether node should send child added / removed events by itself.

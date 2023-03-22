@@ -15,7 +15,7 @@ namespace dviglo
 static const int MAX_TEXTURE_QUALITY_LEVELS = 3;
 
 class XMLElement;
-class XMLFile;
+class XmlFile;
 
 /// Base class for texture resources.
 class DV_API Texture : public ResourceWithMetadata, public GpuObject
@@ -127,7 +127,7 @@ public:
     bool GetParametersDirty() const;
 
     /// Set additional parameters from an XML file.
-    void SetParameters(XMLFile* file);
+    void SetParameters(XmlFile* file);
     /// Set additional parameters from an XML element.
     void SetParameters(const XMLElement& element);
     /// Mark parameters dirty. Called by Graphics.

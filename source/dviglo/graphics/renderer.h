@@ -181,7 +181,7 @@ public:
     /// Set default renderpath.
     void SetDefaultRenderPath(RenderPath* renderPath);
     /// Set default renderpath from an XML file.
-    void SetDefaultRenderPath(XMLFile* xmlFile);
+    void SetDefaultRenderPath(XmlFile* xmlFile);
     /// Set default non-textured material technique.
     void SetDefaultTechnique(Technique* technique);
     /// Set HDR rendering on/off.

@@ -304,7 +304,7 @@ private:
     /// Flag to suppress parameter hash and memory use recalculation when setting multiple shader parameters (loading or resetting the material).
     bool batchedParameterUpdate_{};
     /// XML file used while loading.
-    SharedPtr<XMLFile> loadXMLFile_;
+    SharedPtr<XmlFile> loadXMLFile_;
     /// JSON file used while loading.
     SharedPtr<JSONFile> loadJSONFile_;
     /// Associated scene for shader parameter animation updates.

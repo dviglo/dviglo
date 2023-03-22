@@ -47,19 +47,19 @@ public:
     bool success_;
 };
 
-XMLFile::XMLFile() :
+XmlFile::XmlFile() :
     document_(new pugi::xml_document())
 {
 }
 
-XMLFile::~XMLFile() = default;
+XmlFile::~XmlFile() = default;
 
-void XMLFile::RegisterObject()
+void XmlFile::RegisterObject()
 {
-    DV_CONTEXT.RegisterFactory<XMLFile>();
+    DV_CONTEXT.RegisterFactory<XmlFile>();
 }
 
-bool XMLFile::BeginLoad(Deserializer& source)
+bool XmlFile::BeginLoad(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
     if (!dataSize && !source.GetName().Empty())
@@ -85,15 +85,15 @@ bool XMLFile::BeginLoad(Deserializer& source)
     {
         // The existence of this attribute indicates this is an RFC 5261 patch file
         // If being async loaded, GetResource() is not safe, so use GetTempResource() instead
-        XMLFile* inheritedXMLFile = GetAsyncLoadState() == ASYNC_DONE ? DV_RES_CACHE.GetResource<XMLFile>(inherit) :
-            DV_RES_CACHE.GetTempResource<XMLFile>(inherit);
+        XmlFile* inheritedXMLFile = GetAsyncLoadState() == ASYNC_DONE ? DV_RES_CACHE.GetResource<XmlFile>(inherit) :
+            DV_RES_CACHE.GetTempResource<XmlFile>(inherit);
         if (!inheritedXMLFile)
         {
             DV_LOGERRORF("Could not find inherited XML file: %s", inherit.c_str());
             return false;
         }
 
-        // Patch this XMLFile and leave the original inherited XMLFile as it is
+        // Patch this XmlFile and leave the original inherited XmlFile as it is
         std::unique_ptr<pugi::xml_document> patchDocument = move(document_);
         document_ = make_unique<pugi::xml_document>();
         document_->reset(*inheritedXMLFile->document_);
@@ -111,37 +111,37 @@ bool XMLFile::BeginLoad(Deserializer& source)
     return true;
 }
 
-bool XMLFile::Save(Serializer& dest) const
+bool XmlFile::Save(Serializer& dest) const
 {
     return Save(dest, "\t");
 }
 
-bool XMLFile::Save(Serializer& dest, const String& indentation) const
+bool XmlFile::Save(Serializer& dest, const String& indentation) const
 {
     XMLWriter writer(dest);
     document_->save(writer, indentation.c_str());
     return writer.success_;
 }
 
-XMLElement XMLFile::CreateRoot(const String& name)
+XMLElement XmlFile::CreateRoot(const String& name)
 {
     document_->reset();
     pugi::xml_node root = document_->append_child(name.c_str());
     return XMLElement(this, root.internal_object());
 }
 
-XMLElement XMLFile::GetOrCreateRoot(const String& name)
+XMLElement XmlFile::GetOrCreateRoot(const String& name)
 {
     XMLElement root = GetRoot(name);
     if (root.NotNull())
         return root;
     root = GetRoot();
     if (root.NotNull())
-        DV_LOGWARNING("XMLFile already has root " + root.GetName() + ", deleting it and creating root " + name);
+        DV_LOGWARNING("XmlFile already has root " + root.GetName() + ", deleting it and creating root " + name);
     return CreateRoot(name);
 }
 
-bool XMLFile::FromString(const String& source)
+bool XmlFile::FromString(const String& source)
 {
     if (source.Empty())
         return false;
@@ -150,7 +150,7 @@ bool XMLFile::FromString(const String& source)
     return Load(buffer);
 }
 
-XMLElement XMLFile::GetRoot(const String& name)
+XMLElement XmlFile::GetRoot(const String& name)
 {
     pugi::xml_node root = document_->first_child();
     if (root.empty())
@@ -162,7 +162,7 @@ XMLElement XMLFile::GetRoot(const String& name)
         return XMLElement(this, root.internal_object());
 }
 
-String XMLFile::ToString(const String& indentation) const
+String XmlFile::ToString(const String& indentation) const
 {
     VectorBuffer dest;
     XMLWriter writer(dest);
@@ -170,12 +170,12 @@ String XMLFile::ToString(const String& indentation) const
     return String((const char*)dest.GetData(), dest.GetSize());
 }
 
-void XMLFile::Patch(XMLFile* patchFile)
+void XmlFile::Patch(XmlFile* patchFile)
 {
     Patch(patchFile->GetRoot());
 }
 
-void XMLFile::Patch(const XMLElement& patchElement)
+void XmlFile::Patch(const XMLElement& patchElement)
 {
     pugi::xml_node root = pugi::xml_node(patchElement.GetNode());
 
@@ -207,7 +207,7 @@ void XMLFile::Patch(const XMLElement& patchElement)
     }
 }
 
-void XMLFile::PatchAdd(const pugi::xml_node& patch, pugi::xpath_node& original) const
+void XmlFile::PatchAdd(const pugi::xml_node& patch, pugi::xpath_node& original) const
 {
     // If not a node, log an error
     if (original.attribute())
@@ -225,7 +225,7 @@ void XMLFile::PatchAdd(const pugi::xml_node& patch, pugi::xpath_node& original) 
         AddAttribute(patch, original);
 }
 
-void XMLFile::PatchReplace(const pugi::xml_node& patch, pugi::xpath_node& original) const
+void XmlFile::PatchReplace(const pugi::xml_node& patch, pugi::xpath_node& original) const
 {
     // If no attribute but node then its a node, otherwise its an attribute or null
     if (!original.attribute() && original.node())
@@ -241,7 +241,7 @@ void XMLFile::PatchReplace(const pugi::xml_node& patch, pugi::xpath_node& origin
     }
 }
 
-void XMLFile::PatchRemove(const pugi::xpath_node& original) const
+void XmlFile::PatchRemove(const pugi::xpath_node& original) const
 {
     // If no attribute but node then its a node, otherwise its an attribute or null
     if (!original.attribute() && original.node())
@@ -256,7 +256,7 @@ void XMLFile::PatchRemove(const pugi::xpath_node& original) const
     }
 }
 
-void XMLFile::AddNode(const pugi::xml_node& patch, const pugi::xpath_node& original) const
+void XmlFile::AddNode(const pugi::xml_node& patch, const pugi::xpath_node& original) const
 {
     // If pos is null, append or prepend add as a child, otherwise add before or after, the default is to append as a child
     pugi::xml_attribute pos = patch.attribute("pos");
@@ -326,7 +326,7 @@ void XMLFile::AddNode(const pugi::xml_node& patch, const pugi::xpath_node& origi
     }
 }
 
-void XMLFile::AddAttribute(const pugi::xml_node& patch, const pugi::xpath_node& original) const
+void XmlFile::AddAttribute(const pugi::xml_node& patch, const pugi::xpath_node& original) const
 {
     pugi::xml_attribute attribute = patch.attribute("type");
 
@@ -343,7 +343,7 @@ void XMLFile::AddAttribute(const pugi::xml_node& patch, const pugi::xpath_node& 
     newAttribute.set_value(patch.child_value());
 }
 
-bool XMLFile::CombineText(const pugi::xml_node& patch, const pugi::xml_node& original, bool prepend) const
+bool XmlFile::CombineText(const pugi::xml_node& patch, const pugi::xml_node& original, bool prepend) const
 {
     if (!patch || !original)
         return false;

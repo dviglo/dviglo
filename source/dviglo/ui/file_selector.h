@@ -18,7 +18,7 @@ class ResourceCache;
 class Text;
 class UiElement;
 class Window;
-class XMLFile;
+class XmlFile;
 
 /// %File selector's list entry (file or directory).
 struct FileSelectorEntry
@@ -43,7 +43,7 @@ public:
     static void RegisterObject();
 
     /// Set fileselector UI style.
-    void SetDefaultStyle(XMLFile* style);
+    void SetDefaultStyle(XmlFile* style);
     /// Set title text.
     void SetTitle(const String& text);
     /// Set button texts.
@@ -60,7 +60,7 @@ public:
     void UpdateElements();
 
     /// Return the UI style file.
-    XMLFile* GetDefaultStyle() const;
+    XmlFile* GetDefaultStyle() const;
 
     /// Return fileselector window.
     Window* GetWindow() const { return window_; }

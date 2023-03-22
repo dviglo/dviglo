@@ -160,7 +160,7 @@ public:
         if (GParams::is_headless())
             return;
 
-        XMLFile* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+        XmlFile* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
         DV_UI.GetRoot()->SetDefaultStyle(uiStyle);
 
         DV_CONSOLE.SetDefaultStyle(uiStyle);

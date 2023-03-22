@@ -372,7 +372,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
     if (GetName().Empty())
         SetName(source.GetName());
 
-    loadXMLFile_ = new XMLFile();
+    loadXMLFile_ = new XmlFile();
     if (!loadXMLFile_->Load(source))
     {
         DV_LOGERROR("Load XML failed " + source.GetName());
@@ -397,7 +397,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
             if (tileSetElem.HasAttribute("source"))
             {
                 String source = tileSetElem.GetAttribute("source");
-                SharedPtr<XMLFile> tsxXMLFile = LoadTSXFile(source);
+                SharedPtr<XmlFile> tsxXMLFile = LoadTSXFile(source);
                 if (!tsxXMLFile)
                     return false;
 
@@ -571,15 +571,15 @@ void TmxFile2D::SetSpriteTextureEdgeOffset(float offset)
         i.second_->SetTextureEdgeOffset(offset);
 }
 
-SharedPtr<XMLFile> TmxFile2D::LoadTSXFile(const String& source)
+SharedPtr<XmlFile> TmxFile2D::LoadTSXFile(const String& source)
 {
     String tsxFilePath = get_parent(GetName()) + source;
     SharedPtr<File> tsxFile = DV_RES_CACHE.GetFile(tsxFilePath);
-    SharedPtr<XMLFile> tsxXMLFile(new XMLFile());
+    SharedPtr<XmlFile> tsxXMLFile(new XmlFile());
     if (!tsxFile || !tsxXMLFile->Load(*tsxFile))
     {
         DV_LOGERROR("Load TSX file failed " + tsxFilePath);
-        return SharedPtr<XMLFile>();
+        return SharedPtr<XmlFile>();
     }
 
     return tsxXMLFile;
@@ -602,10 +602,10 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
     if (element.HasAttribute("source"))
     {
         String source = element.GetAttribute("source");
-        HashMap<String, SharedPtr<XMLFile>>::Iterator i = tsxXMLFiles_.Find(source);
+        HashMap<String, SharedPtr<XmlFile>>::Iterator i = tsxXMLFiles_.Find(source);
         if (i == tsxXMLFiles_.End())
         {
-            SharedPtr<XMLFile> tsxXMLFile = LoadTSXFile(source);
+            SharedPtr<XmlFile> tsxXMLFile = LoadTSXFile(source);
             if (!tsxXMLFile)
                 return false;
 

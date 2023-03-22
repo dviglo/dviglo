@@ -25,7 +25,7 @@ class xpath_variable_set;
 namespace dviglo
 {
 
-class XMLFile;
+class XmlFile;
 class XPathQuery;
 class XPathResultSet;
 
@@ -36,9 +36,9 @@ public:
     /// Construct null element.
     XMLElement();
     /// Construct with document and node pointers.
-    XMLElement(XMLFile* file, pugi::xml_node_struct* node);
+    XMLElement(XmlFile* file, pugi::xml_node_struct* node);
     /// Construct from xpath query result set.
-    XMLElement(XMLFile* file, const XPathResultSet* resultSet, const pugi::xpath_node* xpathNode, i32 xpathResultIndex);
+    XMLElement(XmlFile* file, const XPathResultSet* resultSet, const pugi::xpath_node* xpathNode, i32 xpathResultIndex);
     /// Copy-construct from another element.
     XMLElement(const XMLElement& rhs);
     /// Destruct.
@@ -266,7 +266,7 @@ public:
     /// Return a Matrix4 attribute, or zero matrix if missing.
     Matrix4 GetMatrix4(const String& name) const;
     /// Return XML file.
-    XMLFile* GetFile() const;
+    XmlFile* GetFile() const;
 
     /// Return pugixml xml_node_struct.
     pugi::xml_node_struct* GetNode() const { return node_; }
@@ -288,7 +288,7 @@ public:
 
 private:
     /// XML file.
-    WeakPtr<XMLFile> file_;
+    WeakPtr<XmlFile> file_;
     /// Pugixml node.
     pugi::xml_node_struct* node_;
     /// XPath query result set.
@@ -306,7 +306,7 @@ public:
     /// Construct empty result set.
     XPathResultSet();
     /// Construct with result set from XPath query.
-    XPathResultSet(XMLFile* file, pugi::xpath_node_set* resultSet);
+    XPathResultSet(XmlFile* file, pugi::xpath_node_set* resultSet);
     /// Copy-construct.
     XPathResultSet(const XPathResultSet& rhs);
     /// Destruct.
@@ -329,7 +329,7 @@ public:
 
 private:
     /// XML file.
-    WeakPtr<XMLFile> file_;
+    WeakPtr<XmlFile> file_;
     /// Pugixml xpath_node_set.
     pugi::xpath_node_set* resultSet_;
 };

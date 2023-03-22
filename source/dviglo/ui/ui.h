@@ -33,7 +33,7 @@ class Timer;
 class UIBatch;
 class UiElement;
 class XMLElement;
-class XMLFile;
+class XmlFile;
 class RenderSurface;
 class UIComponent;
 
@@ -74,9 +74,9 @@ public:
     /// Debug draw a UI element.
     void DebugDraw(UiElement* element);
     /// Load a UI layout from an XML file. Optionally specify another XML file for element style. Return the root element.
-    SharedPtr<UiElement> LoadLayout(Deserializer& source, XMLFile* styleFile = nullptr);
+    SharedPtr<UiElement> LoadLayout(Deserializer& source, XmlFile* styleFile = nullptr);
     /// Load a UI layout from an XML file. Optionally specify another XML file for element style. Return the root element.
-    SharedPtr<UiElement> LoadLayout(XMLFile* file, XMLFile* styleFile = nullptr);
+    SharedPtr<UiElement> LoadLayout(XmlFile* file, XmlFile* styleFile = nullptr);
     /// Save a UI layout to an XML file. Return true if successful.
     bool SaveLayout(Serializer& dest, UiElement* element);
     /// Set clipboard text.

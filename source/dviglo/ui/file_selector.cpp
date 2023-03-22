@@ -119,7 +119,7 @@ void FileSelector::RegisterObject()
     DV_CONTEXT.RegisterFactory<FileSelector>();
 }
 
-void FileSelector::SetDefaultStyle(XMLFile* style)
+void FileSelector::SetDefaultStyle(XmlFile* style)
 {
     if (!style)
         return;
@@ -226,7 +226,7 @@ void FileSelector::UpdateElements()
     buttonLayout_->SetFixedHeight(Max(okButton_->GetHeight(), cancelButton_->GetHeight()));
 }
 
-XMLFile* FileSelector::GetDefaultStyle() const
+XmlFile* FileSelector::GetDefaultStyle() const
 {
     return window_->GetDefaultStyle(false);
 }

@@ -1151,7 +1151,7 @@ void RegisterResourceLibrary()
     Image::RegisterObject();
     JSONFile::RegisterObject();
     PListFile::RegisterObject();
-    XMLFile::RegisterObject();
+    XmlFile::RegisterObject();
 }
 
 }

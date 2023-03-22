@@ -14,7 +14,7 @@ namespace dviglo
 class Engine;
 class Font;
 class Text;
-class XMLFile;
+class XmlFile;
 
 enum class DebugHudElements
 {
@@ -48,7 +48,7 @@ public:
     /// Update. Called by HandlePostUpdate().
     void Update();
     /// Set UI elements' style from an XML file.
-    void SetDefaultStyle(XMLFile* style);
+    void SetDefaultStyle(XmlFile* style);
 
     /// Set elements to show.
     void SetMode(DebugHudElements mode);
@@ -67,7 +67,7 @@ public:
     void ToggleAll();
 
     /// Return the UI style file.
-    XMLFile* GetDefaultStyle() const;
+    XmlFile* GetDefaultStyle() const;
 
     /// Return rendering stats text.
     Text* GetStatsText() const { return statsText_; }

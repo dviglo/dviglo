@@ -83,7 +83,7 @@ struct TextureFrame
 static const unsigned DEFAULT_NUM_PARTICLES = 10;
 
 class Material;
-class XMLFile;
+class XmlFile;
 class XMLElement;
 
 /// %Particle effect definition.

@@ -22,15 +22,15 @@ namespace dviglo
 {
 
 /// XML document resource.
-class DV_API XMLFile : public Resource
+class DV_API XmlFile : public Resource
 {
-    DV_OBJECT(XMLFile, Resource);
+    DV_OBJECT(XmlFile, Resource);
 
 public:
     /// Construct.
-    explicit XMLFile();
+    explicit XmlFile();
     /// Destruct.
-    ~XMLFile() override;
+    ~XmlFile() override;
     /// Register object factory.
     static void RegisterObject();
 
@@ -57,9 +57,9 @@ public:
     /// Serialize the XML content to a string.
     String ToString(const String& indentation = "\t") const;
 
-    /// Patch the XMLFile with another XMLFile. Based on RFC 5261.
-    void Patch(XMLFile* patchFile);
-    /// Patch the XMLFile with another XMLElement. Based on RFC 5261.
+    /// Patch the XmlFile with another XmlFile. Based on RFC 5261.
+    void Patch(XmlFile* patchFile);
+    /// Patch the XmlFile with another XMLElement. Based on RFC 5261.
     void Patch(const XMLElement& patchElement);
 
 private:

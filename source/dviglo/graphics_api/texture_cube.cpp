@@ -82,7 +82,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
     String texPath, texName, texExt;
     SplitPath(GetName(), texPath, texName, texExt);
 
-    loadParameters_ = (new XMLFile());
+    loadParameters_ = (new XmlFile());
     if (!loadParameters_->Load(source))
     {
         loadParameters_.Reset();

@@ -151,7 +151,7 @@ bool UiElement::LoadXML(const XMLElement& source)
     return LoadXML(source, nullptr);
 }
 
-bool UiElement::LoadXML(const XMLElement& source, XMLFile* styleFile)
+bool UiElement::LoadXML(const XMLElement& source, XmlFile* styleFile)
 {
     // Get style override if defined
     String styleName = source.GetAttribute("style");
@@ -239,7 +239,7 @@ bool UiElement::LoadXML(const XMLElement& source, XMLFile* styleFile)
     return true;
 }
 
-UiElement* UiElement::LoadChildXML(const XMLElement& childElem, XMLFile* styleFile)
+UiElement* UiElement::LoadChildXML(const XMLElement& childElem, XmlFile* styleFile)
 {
     bool internalElem = childElem.GetBool("internal");
     if (internalElem)
@@ -450,13 +450,13 @@ IntVector2 UiElement::ElementToScreen(const IntVector2& position)
 
 bool UiElement::LoadXML(Deserializer& source)
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     return xml->Load(source) && LoadXML(xml->GetRoot());
 }
 
 bool UiElement::SaveXML(Serializer& dest, const String& indentation) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("element");
     return SaveXML(rootElem) && xml->Save(dest, indentation);
 }
@@ -464,7 +464,7 @@ bool UiElement::SaveXML(Serializer& dest, const String& indentation) const
 bool UiElement::FilterAttributes(XMLElement& dest) const
 {
     // Filter UI styling attributes
-    XMLFile* styleFile = GetDefaultStyle();
+    XmlFile* styleFile = GetDefaultStyle();
     if (styleFile)
     {
         String style = dest.GetAttribute("style");
@@ -960,7 +960,7 @@ void UiElement::SetDragDropMode(DragAndDropModeFlags mode)
     dragDropMode_ = mode;
 }
 
-bool UiElement::SetStyle(const String& styleName, XMLFile* file)
+bool UiElement::SetStyle(const String& styleName, XmlFile* file)
 {
     // If empty style was requested, replace with type name
     String actualStyleName = !styleName.Empty() ? styleName : GetTypeName();
@@ -1000,12 +1000,12 @@ bool UiElement::SetStyle(const XMLElement& element)
     return success;
 }
 
-bool UiElement::SetStyleAuto(XMLFile* file)
+bool UiElement::SetStyleAuto(XmlFile* file)
 {
     return SetStyle(String::EMPTY, file);
 }
 
-void UiElement::SetDefaultStyle(XMLFile* style)
+void UiElement::SetDefaultStyle(XmlFile* style)
 {
     defaultStyle_ = style;
 }
@@ -1562,7 +1562,7 @@ const String& UiElement::GetAppliedStyle() const
     return appliedStyle_ == GetTypeName() ? String::EMPTY : appliedStyle_;
 }
 
-XMLFile* UiElement::GetDefaultStyle(bool recursiveUp) const
+XmlFile* UiElement::GetDefaultStyle(bool recursiveUp) const
 {
     if (recursiveUp)
     {

@@ -43,7 +43,7 @@ void UIDrag::CreateGUI()
 {
     UiElement* root = DV_UI.GetRoot();
     // Load the style sheet from xml
-    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
+    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml"));
 
     for (int i=0; i < 10; i++)
     {

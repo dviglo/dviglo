@@ -199,7 +199,7 @@ bool Scene::LoadXML(Deserializer& source)
 
     StopAsyncLoading();
 
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     if (!xml->Load(source))
         return false;
 
@@ -243,7 +243,7 @@ bool Scene::SaveXML(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneXML);
 
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("scene");
     if (!SaveXML(rootElem))
         return false;
@@ -368,7 +368,7 @@ bool Scene::LoadAsyncXML(File* file, LoadMode mode)
 
     StopAsyncLoading();
 
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     if (!xml->Load(*file))
         return false;
 
@@ -575,7 +575,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, c
 
 Node* Scene::InstantiateXML(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     if (!xml->Load(source))
         return nullptr;
 

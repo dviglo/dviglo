@@ -29,7 +29,7 @@ enum MouseMode
 class Deserializer;
 class Serializer;
 class UiElement;
-class XMLFile;
+class XmlFile;
 
 inline const IntVector2 MOUSE_POSITION_OFFSCREEN = IntVector2(M_MIN_INT, M_MIN_INT);
 

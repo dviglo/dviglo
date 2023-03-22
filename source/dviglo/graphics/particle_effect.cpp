@@ -81,7 +81,7 @@ bool ParticleEffect::BeginLoad(Deserializer& source)
 {
     loadMaterialName_.Clear();
 
-    XMLFile file;
+    XmlFile file;
     if (!file.Load(source))
     {
         DV_LOGERROR("Load particle effect file failed");
@@ -298,7 +298,7 @@ bool ParticleEffect::Load(const XMLElement& source)
 
 bool ParticleEffect::Save(Serializer& dest) const
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement materialElem = xml->CreateRoot("particleeffect");
 
     Save(materialElem);

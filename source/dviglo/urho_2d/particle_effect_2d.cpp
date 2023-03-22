@@ -98,7 +98,7 @@ bool ParticleEffect2D::BeginLoad(Deserializer& source)
 
     loadSpriteName_.Clear();
 
-    XMLFile xmlFile;
+    XmlFile xmlFile;
     if (!xmlFile.Load(source))
         return false;
 
@@ -208,7 +208,7 @@ bool ParticleEffect2D::Save(Serializer& dest) const
     if (!sprite_)
         return false;
 
-    XMLFile xmlFile;
+    XmlFile xmlFile;
     XMLElement rootElem = xmlFile.CreateRoot("particleEmitterConfig");
 
     String fileName = GetFileNameAndExtension(sprite_->GetName());

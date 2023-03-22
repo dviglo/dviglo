@@ -246,7 +246,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         if (HasParameter(parameters, EP_DUMP_SHADERS))
             graphics.BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))
-            renderer.SetDefaultRenderPath(DV_RES_CACHE.GetResource<XMLFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
+            renderer.SetDefaultRenderPath(DV_RES_CACHE.GetResource<XmlFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
 
         renderer.SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
         if (renderer.GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())

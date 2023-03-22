@@ -43,7 +43,7 @@ void WindowSettingsDemo::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
 
     uiRoot_ = DV_UI.GetRoot();
 

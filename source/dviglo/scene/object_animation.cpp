@@ -36,7 +36,7 @@ void ObjectAnimation::RegisterObject()
 
 bool ObjectAnimation::BeginLoad(Deserializer& source)
 {
-    XMLFile xmlFile;
+    XmlFile xmlFile;
     if (!xmlFile.Load(source))
         return false;
 
@@ -45,7 +45,7 @@ bool ObjectAnimation::BeginLoad(Deserializer& source)
 
 bool ObjectAnimation::Save(Serializer& dest) const
 {
-    XMLFile xmlFile;
+    XmlFile xmlFile;
 
     XMLElement rootElem = xmlFile.CreateRoot("objectanimation");
     if (!SaveXML(rootElem))

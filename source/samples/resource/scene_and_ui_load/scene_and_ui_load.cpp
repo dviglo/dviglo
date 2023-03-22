@@ -64,7 +64,7 @@ void SceneAndUILoad::CreateScene()
 void SceneAndUILoad::CreateUI()
 {
     // Set up global UI style into the root UI element
-    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
     DV_UI.GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
@@ -76,7 +76,7 @@ void SceneAndUILoad::CreateUI()
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Load UI content prepared in the editor and add to the UI hierarchy
-    SharedPtr<UiElement> layoutRoot = DV_UI.LoadLayout(DV_RES_CACHE.GetResource<XMLFile>("UI/UILoadExample.xml"));
+    SharedPtr<UiElement> layoutRoot = DV_UI.LoadLayout(DV_RES_CACHE.GetResource<XmlFile>("UI/UILoadExample.xml"));
     DV_UI.GetRoot()->AddChild(layoutRoot);
 
     // Subscribe to button actions (toggle scene lights when pressed then released)

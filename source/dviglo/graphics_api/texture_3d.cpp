@@ -58,7 +58,7 @@ bool Texture3D::BeginLoad(Deserializer& source)
 
     DV_RES_CACHE.ResetDependencies(this);
 
-    loadParameters_ = new XMLFile();
+    loadParameters_ = new XmlFile();
     if (!loadParameters_->Load(source))
     {
         loadParameters_.Reset();

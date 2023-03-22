@@ -175,7 +175,7 @@ bool SpriteSheet2D::EndLoadFromPListFile()
 
 bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
 {
-    loadXMLFile_ = new XMLFile();
+    loadXMLFile_ = new XmlFile();
     if (!loadXMLFile_->Load(source))
     {
         DV_LOGERROR("Could not load sprite sheet");

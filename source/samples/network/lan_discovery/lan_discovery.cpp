@@ -61,7 +61,7 @@ void LANDiscovery::CreateUI()
     SetLogoVisible(true); // We need the full rendering window
 
     UiElement* root = DV_UI.GetRoot();
-    auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 

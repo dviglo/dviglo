@@ -121,7 +121,7 @@ Console::~Console()
 #endif
 }
 
-void Console::SetDefaultStyle(XMLFile* style)
+void Console::SetDefaultStyle(XmlFile* style)
 {
     if (!style)
         return;
@@ -291,7 +291,7 @@ void Console::UpdateElements()
     background_->SetHeight(background_->GetMinHeight());
 }
 
-XMLFile* Console::GetDefaultStyle() const
+XmlFile* Console::GetDefaultStyle() const
 {
     return background_->GetDefaultStyle(false);
 }

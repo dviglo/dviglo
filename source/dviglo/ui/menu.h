@@ -26,7 +26,7 @@ public:
     using UiElement::SaveXML;
 
     /// Load from XML data with style. Return true if successful.
-    bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
+    bool LoadXML(const XMLElement& source, XmlFile* styleFile) override;
     /// Save as XML data. Return true if successful.
     bool SaveXML(XMLElement& dest) const override;
 

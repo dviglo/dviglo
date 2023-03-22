@@ -101,7 +101,7 @@ void PBRMaterials::CreateUI()
     UI& ui = DV_UI;
 
     // Set up global UI style into the root UI element
-    auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
     ui.GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
@@ -184,10 +184,10 @@ void PBRMaterials::SetupViewport()
 
     // Add post-processing effects appropriate with the example scene
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/FXAA2.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/GammaCorrection.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/Tonemap.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XMLFile>("PostProcess/AutoExposure.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/FXAA2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/GammaCorrection.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/Tonemap.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/AutoExposure.xml"));
 
     viewport->SetRenderPath(effectRenderPath);
 }

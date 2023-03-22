@@ -300,7 +300,7 @@ SharedPtr<RenderPath> RenderPath::Clone()
     return newRenderPath;
 }
 
-bool RenderPath::Load(XMLFile* file)
+bool RenderPath::Load(XmlFile* file)
 {
     renderTargets_.Clear();
     commands_.Clear();
@@ -308,7 +308,7 @@ bool RenderPath::Load(XMLFile* file)
     return Append(file);
 }
 
-bool RenderPath::Append(XMLFile* file)
+bool RenderPath::Append(XmlFile* file)
 {
     if (!file)
         return false;

@@ -12,7 +12,7 @@ namespace dviglo
 class PListFile;
 class Sprite2D;
 class Texture2D;
-class XMLFile;
+class XmlFile;
 class JSONFile;
 
 /// Sprite sheet.
@@ -69,7 +69,7 @@ private:
     /// PList file used while loading.
     SharedPtr<PListFile> loadPListFile_;
     /// XML file used while loading.
-    SharedPtr<XMLFile> loadXMLFile_;
+    SharedPtr<XmlFile> loadXMLFile_;
     /// JSON file used while loading.
     SharedPtr<JSONFile> loadJSONFile_;
     /// Texture name used while loading.

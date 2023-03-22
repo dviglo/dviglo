@@ -64,7 +64,7 @@ private:
     /// Image file acquired during BeginLoad.
     SharedPtr<Image> loadImage_;
     /// Parameter file acquired during BeginLoad.
-    SharedPtr<XMLFile> loadParameters_;
+    SharedPtr<XmlFile> loadParameters_;
 };
 
 }

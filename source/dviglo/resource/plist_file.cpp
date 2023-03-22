@@ -292,7 +292,7 @@ bool PListFile::BeginLoad(Deserializer& source)
     if (GetName().Empty())
         SetName(source.GetName());
 
-    XMLFile xmlFile;
+    XmlFile xmlFile;
     if (!xmlFile.Load(source))
     {
         DV_LOGERROR("Could not load property list");

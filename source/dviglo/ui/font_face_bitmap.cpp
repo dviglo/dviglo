@@ -30,7 +30,7 @@ FontFaceBitmap::~FontFaceBitmap() = default;
 
 bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
 {
-    SharedPtr<XMLFile> xmlReader(new XMLFile());
+    SharedPtr<XmlFile> xmlReader(new XmlFile());
     MemoryBuffer memoryBuffer(fontData, fontDataSize);
     if (!xmlReader->Load(memoryBuffer))
     {
@@ -243,7 +243,7 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
 
 bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indentation)
 {
-    SharedPtr<XMLFile> xml(new XMLFile());
+    SharedPtr<XmlFile> xml(new XmlFile());
     XMLElement rootElem = xml->CreateRoot("font");
 
     // Information

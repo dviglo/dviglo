@@ -146,7 +146,7 @@ unsigned Texture::GetComponents() const
         return GetRowDataSize(width_) / width_;
 }
 
-void Texture::SetParameters(XMLFile* file)
+void Texture::SetParameters(XmlFile* file)
 {
     if (!file)
         return;

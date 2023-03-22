@@ -103,7 +103,7 @@ void Menu::OnShowPopup()
 {
 }
 
-bool Menu::LoadXML(const XMLElement& source, XMLFile* styleFile)
+bool Menu::LoadXML(const XMLElement& source, XmlFile* styleFile)
 {
     // Get style override if defined
     String styleName = source.GetAttribute("style");

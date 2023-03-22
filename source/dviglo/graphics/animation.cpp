@@ -158,7 +158,7 @@ bool Animation::BeginLoad(Deserializer& source)
     // Optionally read triggers from an XML file
     String xmlName = ReplaceExtension(GetName(), ".xml");
 
-    SharedPtr<XMLFile> file(DV_RES_CACHE.GetTempResource<XMLFile>(xmlName, false));
+    SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
     if (file)
     {
         XMLElement rootElem = file->GetRoot();
@@ -248,7 +248,7 @@ bool Animation::Save(Serializer& dest) const
         {
             String xmlName = ReplaceExtension(destFile->GetName(), ".xml");
 
-            SharedPtr<XMLFile> xml(new XMLFile());
+            SharedPtr<XmlFile> xml(new XmlFile());
             XMLElement rootElem = xml->CreateRoot("animation");
 
             for (const AnimationTriggerPoint& trigger : triggers_)

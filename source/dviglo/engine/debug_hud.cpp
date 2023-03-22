@@ -174,7 +174,7 @@ void DebugHud::Update()
         memoryText_->SetText(DV_RES_CACHE.PrintMemoryUsage());
 }
 
-void DebugHud::SetDefaultStyle(XMLFile* style)
+void DebugHud::SetDefaultStyle(XmlFile* style)
 {
     if (!style)
         return;
@@ -223,7 +223,7 @@ void DebugHud::ToggleAll()
     Toggle(DebugHudElements::All);
 }
 
-XMLFile* DebugHud::GetDefaultStyle() const
+XmlFile* DebugHud::GetDefaultStyle() const
 {
     return statsText_->GetDefaultStyle(false);
 }
