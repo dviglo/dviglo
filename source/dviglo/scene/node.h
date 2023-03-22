@@ -114,7 +114,7 @@ public:
     /// Remove tag. Return true if existed.
     bool RemoveTag(const String& tag);
     /// Remove all tags.
-    void RemoveAllTags();
+    void remove_all_tags();
 
     /// Set position in parent space. If the scene node is on the root level (is child of the scene itself), this is same as world space.
     void SetPosition(const Vector3& position);

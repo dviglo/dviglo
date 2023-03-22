@@ -1445,7 +1445,7 @@ void UiElement::SetElementEventSender(bool flag)
 
 void UiElement::SetTags(const StringVector& tags)
 {
-    RemoveAllTags();
+    remove_all_tags();
     AddTags(tags);
 }
 
@@ -1474,7 +1474,7 @@ bool UiElement::RemoveTag(const String& tag)
     return tags_.Remove(tag);
 }
 
-void UiElement::RemoveAllTags()
+void UiElement::remove_all_tags()
 {
     tags_.Clear();
 }

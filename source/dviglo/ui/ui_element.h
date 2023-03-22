@@ -377,7 +377,7 @@ public:
     /// Remove specific tag. Return true if existed.
     bool RemoveTag(const String& tag);
     /// Remove all tags.
-    void RemoveAllTags();
+    void remove_all_tags();
 
     /// Template version of creating a child element.
     template <class T> T* CreateChild(const String& name = String::EMPTY, i32 index = ENDPOS);

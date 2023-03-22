@@ -315,9 +315,9 @@ void Node::SetName(const String& name)
 
 void Node::SetTags(const StringVector& tags)
 {
-    RemoveAllTags();
+    remove_all_tags();
     AddTags(tags);
-    // MarkNetworkUpdate() already called in RemoveAllTags() / AddTags()
+    // MarkNetworkUpdate() already called in remove_all_tags() / AddTags()
 }
 
 void Node::AddTag(const String& tag)
@@ -385,7 +385,7 @@ bool Node::RemoveTag(const String& tag)
     return true;
 }
 
-void Node::RemoveAllTags()
+void Node::remove_all_tags()
 {
     // Clear old scene cache
     if (scene_)
