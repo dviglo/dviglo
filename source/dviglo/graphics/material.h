@@ -107,9 +107,9 @@ public:
     using Resource::Load;
 
     /// Load from an XML element. Return true if successful.
-    bool Load(const XMLElement& source);
+    bool Load(const XmlElement& source);
     /// Save to an XML element. Return true if successful.
-    bool Save(XMLElement& dest) const;
+    bool Save(XmlElement& dest) const;
 
     /// Load from a JSON value. Return true if successful.
     bool Load(const JSONValue& source);

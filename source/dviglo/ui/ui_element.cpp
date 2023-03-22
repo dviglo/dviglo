@@ -146,12 +146,12 @@ void UiElement::ApplyAttributes()
     }
 }
 
-bool UiElement::load_xml(const XMLElement& source)
+bool UiElement::load_xml(const XmlElement& source)
 {
     return load_xml(source, nullptr);
 }
 
-bool UiElement::load_xml(const XMLElement& source, XmlFile* styleFile)
+bool UiElement::load_xml(const XmlElement& source, XmlFile* styleFile)
 {
     // Get style override if defined
     String styleName = source.GetAttribute("style");
@@ -190,7 +190,7 @@ bool UiElement::load_xml(const XMLElement& source, XmlFile* styleFile)
     i32 nextInternalChild = 0;
 
     // Load child elements. Internal elements are not to be created as they already exist
-    XMLElement childElem = source.GetChild("element");
+    XmlElement childElem = source.GetChild("element");
     while (childElem)
     {
         bool internalElem = childElem.GetBool("internal");
@@ -239,7 +239,7 @@ bool UiElement::load_xml(const XMLElement& source, XmlFile* styleFile)
     return true;
 }
 
-UiElement* UiElement::LoadChildXML(const XMLElement& childElem, XmlFile* styleFile)
+UiElement* UiElement::LoadChildXML(const XmlElement& childElem, XmlFile* styleFile)
 {
     bool internalElem = childElem.GetBool("internal");
     if (internalElem)
@@ -268,7 +268,7 @@ UiElement* UiElement::LoadChildXML(const XMLElement& childElem, XmlFile* styleFi
     return child;
 }
 
-bool UiElement::save_xml(XMLElement& dest) const
+bool UiElement::save_xml(XmlElement& dest) const
 {
     // Write type
     if (GetTypeName() != "UiElement")
@@ -306,7 +306,7 @@ bool UiElement::save_xml(XMLElement& dest) const
         if (element->IsTemporary())
             continue;
 
-        XMLElement childElem = dest.CreateChild("element");
+        XmlElement childElem = dest.CreateChild("element");
         if (!element->save_xml(childElem))
             return false;
     }
@@ -457,11 +457,11 @@ bool UiElement::load_xml(Deserializer& source)
 bool UiElement::save_xml(Serializer& dest, const String& indentation) const
 {
     SharedPtr<XmlFile> xml(new XmlFile());
-    XMLElement rootElem = xml->CreateRoot("element");
+    XmlElement rootElem = xml->CreateRoot("element");
     return save_xml(rootElem) && xml->Save(dest, indentation);
 }
 
-bool UiElement::FilterAttributes(XMLElement& dest) const
+bool UiElement::FilterAttributes(XmlElement& dest) const
 {
     // Filter UI styling attributes
     XmlFile* styleFile = GetDefaultStyle();
@@ -472,7 +472,7 @@ bool UiElement::FilterAttributes(XMLElement& dest) const
         {
             if (styleXPathQuery_.SetVariable("typeName", style))
             {
-                XMLElement styleElem = GetDefaultStyle()->GetRoot().SelectSinglePrepared(styleXPathQuery_);
+                XmlElement styleElem = GetDefaultStyle()->GetRoot().SelectSinglePrepared(styleXPathQuery_);
                 if (styleElem && !FilterUIStyleAttributes(dest, styleElem))
                     return false;
             }
@@ -985,11 +985,11 @@ bool UiElement::SetStyle(const String& styleName, XmlFile* file)
     appliedStyleFile_ = file;
 
     styleXPathQuery_.SetVariable("typeName", actualStyleName);
-    XMLElement styleElem = file->GetRoot().SelectSinglePrepared(styleXPathQuery_);
+    XmlElement styleElem = file->GetRoot().SelectSinglePrepared(styleXPathQuery_);
     return styleElem && SetStyle(styleElem);
 }
 
-bool UiElement::SetStyle(const XMLElement& element)
+bool UiElement::SetStyle(const XmlElement& element)
 {
     appliedStyle_ = element.GetAttribute("type");
 
@@ -1931,18 +1931,18 @@ void UiElement::MarkDirty()
         (*i)->MarkDirty();
 }
 
-bool UiElement::RemoveChildXML(XMLElement& parent, const String& name) const
+bool UiElement::RemoveChildXML(XmlElement& parent, const String& name) const
 {
     static XPathQuery matchXPathQuery("./attribute[@name=$attributeName]", "attributeName:String");
 
     if (!matchXPathQuery.SetVariable("attributeName", name))
         return false;
 
-    XMLElement removeElem = parent.SelectSinglePrepared(matchXPathQuery);
+    XmlElement removeElem = parent.SelectSinglePrepared(matchXPathQuery);
     return !removeElem || parent.RemoveChild(removeElem);
 }
 
-bool UiElement::RemoveChildXML(XMLElement& parent, const String& name, const String& value) const
+bool UiElement::RemoveChildXML(XmlElement& parent, const String& name, const String& value) const
 {
     static XPathQuery matchXPathQuery
         ("./attribute[@name=$attributeName and @value=$attributeValue]", "attributeName:String, attributeValue:String");
@@ -1952,11 +1952,11 @@ bool UiElement::RemoveChildXML(XMLElement& parent, const String& name, const Str
     if (!matchXPathQuery.SetVariable("attributeValue", value))
         return false;
 
-    XMLElement removeElem = parent.SelectSinglePrepared(matchXPathQuery);
+    XmlElement removeElem = parent.SelectSinglePrepared(matchXPathQuery);
     return !removeElem || parent.RemoveChild(removeElem);
 }
 
-bool UiElement::FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styleElem) const
+bool UiElement::FilterUIStyleAttributes(XmlElement& dest, const XmlElement& styleElem) const
 {
     // Remove style attribute only when its value is identical to the value stored in style file
     String style = styleElem.GetAttribute("style");
@@ -1973,8 +1973,8 @@ bool UiElement::FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styl
     }
 
     // Perform the same action recursively for internal child elements stored in style file
-    XMLElement childDest = dest.GetChild("element");
-    XMLElement childElem = styleElem.GetChild("element");
+    XmlElement childDest = dest.GetChild("element");
+    XmlElement childElem = styleElem.GetChild("element");
     while (childDest && childElem)
     {
         if (!childElem.GetBool("internal"))
@@ -2007,7 +2007,7 @@ bool UiElement::FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styl
     return true;
 }
 
-bool UiElement::FilterImplicitAttributes(XMLElement& dest) const
+bool UiElement::FilterImplicitAttributes(XmlElement& dest) const
 {
     // Remove positioning and sizing attributes when they are under the influence of layout mode
     if (layoutMode_ != LM_FREE && !IsFixedWidth() && !IsFixedHeight())

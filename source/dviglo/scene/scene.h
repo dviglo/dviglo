@@ -47,7 +47,7 @@ struct AsyncProgress
     SharedPtr<JSONFile> jsonFile_;
 
     /// Current XML element for XML mode.
-    XMLElement xmlElement_;
+    XmlElement xmlElement_;
 
     /// Current JSON child array and for JSON mode.
     i32 jsonIndex_;
@@ -88,7 +88,7 @@ public:
     /// Save to binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Load from XML data. Removes all existing child nodes and components first. Return true if successful.
-    bool load_xml(const XMLElement& source) override;
+    bool load_xml(const XmlElement& source) override;
     /// Load from JSON data. Removes all existing child nodes and components first. Return true if successful.
     bool load_json(const JSONValue& source) override;
     /// Mark for attribute check on the next network update.
@@ -116,7 +116,7 @@ public:
     Node* Instantiate(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
     Node* InstantiateXML
-        (const XMLElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
+        (const XmlElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from XML data. Return root node if successful.
     Node* InstantiateXML(Deserializer& source, const Vector3& position, const Quaternion& rotation, CreateMode mode = REPLICATED);
     /// Instantiate scene content from JSON data. Return root node if successful.
@@ -259,7 +259,7 @@ private:
     /// Preload resources from a binary scene or object prefab file.
     void PreloadResources(File* file, bool isSceneFile);
     /// Preload resources from an XML scene or object prefab file.
-    void PreloadResourcesXML(const XMLElement& element);
+    void PreloadResourcesXML(const XmlElement& element);
     /// Preload resources from a JSON scene or object prefab file.
     void PreloadResourcesJSON(const JSONValue& value);
 

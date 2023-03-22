@@ -55,9 +55,9 @@ public:
     static void RegisterObject();
 
     /// Load from XML data. Return true if successful.
-    bool load_xml(const XMLElement& source) override;
+    bool load_xml(const XmlElement& source) override;
     /// Save as XML data. Return true if successful.
-    bool save_xml(XMLElement& dest) const override;
+    bool save_xml(XmlElement& dest) const override;
     /// Load from JSON data. Return true if successful.
     bool load_json(const JSONValue& source) override;
     /// Save as JSON data. Return true if successful.

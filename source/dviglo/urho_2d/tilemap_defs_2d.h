@@ -12,7 +12,7 @@
 namespace dviglo
 {
 
-class XMLElement;
+class XmlElement;
 
 /// Orientation.
 enum Orientation2D
@@ -91,7 +91,7 @@ public:
     ~PropertySet2D() override;
 
     /// Load from XML element.
-    void Load(const XMLElement& element);
+    void Load(const XmlElement& element);
     /// Return has property.
     bool HasProperty(const String& name) const;
     /// Return property value.

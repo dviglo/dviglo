@@ -26,9 +26,9 @@ public:
     using UiElement::save_xml;
 
     /// Load from XML data with style. Return true if successful.
-    bool load_xml(const XMLElement& source, XmlFile* styleFile) override;
+    bool load_xml(const XmlElement& source, XmlFile* styleFile) override;
     /// Save as XML data. Return true if successful.
-    bool save_xml(XMLElement& dest) const override;
+    bool save_xml(XmlElement& dest) const override;
 
     /// Perform UI element update.
     void Update(float timeStep) override;
@@ -68,7 +68,7 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    virtual bool FilterPopupImplicitAttributes(XMLElement& dest) const;
+    virtual bool FilterPopupImplicitAttributes(XmlElement& dest) const;
     /// Popup element.
     SharedPtr<UiElement> popup_;
     /// Popup element offset.

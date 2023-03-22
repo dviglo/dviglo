@@ -74,7 +74,7 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Update slider knob position & size.
     void UpdateSlider();
     /// Send slider page event.

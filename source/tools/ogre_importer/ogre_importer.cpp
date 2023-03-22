@@ -128,7 +128,7 @@ void Run(const Vector<String>& arguments)
 void LoadSkeleton(const String& skeletonFileName)
 {
     // Process skeleton first (if found)
-    XMLElement skeletonRoot;
+    XmlElement skeletonRoot;
     File skeletonFileSource;
     skeletonFileSource.Open(skeletonFileName);
     if (!skelFile_->Load(skeletonFileSource))
@@ -137,8 +137,8 @@ void LoadSkeleton(const String& skeletonFileName)
 
     if (skeletonRoot)
     {
-        XMLElement bonesRoot = skeletonRoot.GetChild("bones");
-        XMLElement bone = bonesRoot.GetChild("bone");
+        XmlElement bonesRoot = skeletonRoot.GetChild("bones");
+        XmlElement bone = bonesRoot.GetChild("bone");
         while (bone)
         {
             unsigned index = bone.GetI32("id");
@@ -147,14 +147,14 @@ void LoadSkeleton(const String& skeletonFileName)
                 bones_.Resize(index + 1);
 
             // Convert from right- to left-handed
-            XMLElement position = bone.GetChild("position");
+            XmlElement position = bone.GetChild("position");
             float x = position.GetFloat("x");
             float y = position.GetFloat("y");
             float z = position.GetFloat("z");
             Vector3 pos(x, y, -z);
 
-            XMLElement rotation = bone.GetChild("rotation");
-            XMLElement axis = rotation.GetChild("axis");
+            XmlElement rotation = bone.GetChild("rotation");
+            XmlElement axis = rotation.GetChild("axis");
             float angle = -rotation.GetFloat("angle") * M_RADTODEG;
             x = axis.GetFloat("x");
             y = axis.GetFloat("y");
@@ -174,8 +174,8 @@ void LoadSkeleton(const String& skeletonFileName)
         }
 
         // Go through the bone hierarchy
-        XMLElement boneHierarchy = skeletonRoot.GetChild("bonehierarchy");
-        XMLElement boneParent = boneHierarchy.GetChild("boneparent");
+        XmlElement boneHierarchy = skeletonRoot.GetChild("bonehierarchy");
+        XmlElement boneParent = boneHierarchy.GetChild("boneparent");
         while (boneParent)
         {
             String bone = boneParent.GetAttribute("bone");
@@ -231,9 +231,9 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
     if (!meshFile_->Load(meshFileSource))
         ErrorExit("Could not load input file " + inputFileName);
 
-    XMLElement root = meshFile_->GetRoot("mesh");
-    XMLElement subMeshes = root.GetChild("submeshes");
-    XMLElement skeletonLink = root.GetChild("skeletonlink");
+    XmlElement root = meshFile_->GetRoot("mesh");
+    XmlElement subMeshes = root.GetChild("submeshes");
+    XmlElement skeletonLink = root.GetChild("skeletonlink");
     if (root.IsNull())
         ErrorExit("Could not load input file " + inputFileName);
 
@@ -242,13 +242,13 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
         LoadSkeleton(GetPath(inputFileName) + GetFileName(skeletonName) + ".skeleton.xml");
 
     // Check whether there's benefit of avoiding 32bit indices by splitting each submesh into own buffer
-    XMLElement subMesh = subMeshes.GetChild("submesh");
+    XmlElement subMesh = subMeshes.GetChild("submesh");
     unsigned totalVertices = 0;
     unsigned maxSubMeshVertices = 0;
     while (subMesh)
     {
         materialNames_.Push(subMesh.GetAttribute("material"));
-        XMLElement geometry = subMesh.GetChild("geometry");
+        XmlElement geometry = subMesh.GetChild("geometry");
         if (geometry)
         {
             unsigned vertices = geometry.GetI32("vertexcount");
@@ -261,7 +261,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
         subMesh = subMesh.GetNext("submesh");
     }
 
-    XMLElement sharedGeometry = root.GetChild("sharedgeometry");
+    XmlElement sharedGeometry = root.GetChild("sharedgeometry");
     if (sharedGeometry)
     {
         unsigned vertices = sharedGeometry.GetI32("vertexcount");
@@ -292,8 +292,8 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
 
     while (subMesh)
     {
-        XMLElement geometry = subMesh.GetChild("geometry");
-        XMLElement faces = subMesh.GetChild("faces");
+        XmlElement geometry = subMesh.GetChild("geometry");
+        XmlElement faces = subMesh.GetChild("faces");
 
         // If no submesh vertexbuffer, process the shared geometry, but do it only once
         unsigned vertices = 0;
@@ -338,7 +338,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
         vertexStarts[subMeshIndex] = vertexStart;
 
         // Ogre may have multiple buffers in one submesh. These will be merged into one
-        XMLElement bufferDef;
+        XmlElement bufferDef;
         if (geometry)
             bufferDef = geometry.GetChild("vertexbuffer");
 
@@ -358,10 +358,10 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
             unsigned vertexNum = vertexStart;
             if (vertices)
             {
-                XMLElement vertex = bufferDef.GetChild("vertex");
+                XmlElement vertex = bufferDef.GetChild("vertex");
                 while (vertex)
                 {
-                    XMLElement position = vertex.GetChild("position");
+                    XmlElement position = vertex.GetChild("position");
                     if (position)
                     {
                         // Convert from right- to left-handed
@@ -373,7 +373,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                         vBuf->vertices_[vertexNum].position_ = vec;
                         boundingBox_.Merge(vec);
                     }
-                    XMLElement normal = vertex.GetChild("normal");
+                    XmlElement normal = vertex.GetChild("normal");
                     if (normal)
                     {
                         // Convert from right- to left-handed
@@ -384,7 +384,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
 
                         vBuf->vertices_[vertexNum].normal_ = vec;
                     }
-                    XMLElement uv = vertex.GetChild("texcoord");
+                    XmlElement uv = vertex.GetChild("texcoord");
                     if (uv)
                     {
                         float x = uv.GetFloat("u");
@@ -418,7 +418,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
         unsigned triangles = faces.GetI32("count");
         unsigned indices = triangles * 3;
 
-        XMLElement triangle = faces.GetChild("face");
+        XmlElement triangle = faces.GetChild("face");
         while (triangle)
         {
             unsigned v1 = triangle.GetI32("v1");
@@ -435,12 +435,12 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
         if (vertexStart + vertices > 65535)
             iBuf->indexSize_ = sizeof(unsigned);
 
-        XMLElement boneAssignments = subMesh.GetChild("boneassignments");
+        XmlElement boneAssignments = subMesh.GetChild("boneassignments");
         if (bones_.Size())
         {
             if (boneAssignments)
             {
-                XMLElement boneAssignment = boneAssignments.GetChild("vertexboneassignment");
+                XmlElement boneAssignment = boneAssignments.GetChild("vertexboneassignment");
                 while (boneAssignment)
                 {
                     unsigned vertex = boneAssignment.GetI32("vertexindex") + vertexStart;
@@ -579,13 +579,13 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
     }
 
     // Process LOD levels, if any
-    XMLElement lods = root.GetChild("levelofdetail");
+    XmlElement lods = root.GetChild("levelofdetail");
     if (lods)
     {
         try
         {
             // For now, support only generated LODs, where the vertices are the same
-            XMLElement lod = lods.GetChild("lodgenerated");
+            XmlElement lod = lods.GetChild("lodgenerated");
             while (lod)
             {
                 float distance = M_EPSILON;
@@ -593,7 +593,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                     distance = sqrtf(lod.GetFloat("fromdepthsquared"));
                 if (lod.HasAttribute("value"))
                     distance = lod.GetFloat("value");
-                XMLElement lodSubMesh = lod.GetChild("lodfacelist");
+                XmlElement lodSubMesh = lod.GetChild("lodfacelist");
                 while (lodSubMesh)
                 {
                     unsigned subMeshIndex = lodSubMesh.GetI32("submeshindex");
@@ -628,7 +628,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                     newLodLevel.indexCount_ = indexCount;
 
                     // Append indices to the original index buffer
-                    XMLElement triangle = lodSubMesh.GetChild("face");
+                    XmlElement triangle = lodSubMesh.GetChild("face");
                     while (triangle)
                     {
                         unsigned v1 = triangle.GetI32("v1");
@@ -659,11 +659,11 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
     {
         try
         {
-            Vector<XMLElement> poses;
-            XMLElement posesRoot = root.GetChild("poses");
+            Vector<XmlElement> poses;
+            XmlElement posesRoot = root.GetChild("poses");
             if (posesRoot)
             {
-                XMLElement pose = posesRoot.GetChild("pose");
+                XmlElement pose = posesRoot.GetChild("pose");
                 while (pose)
                 {
                     poses.Push(pose);
@@ -672,29 +672,29 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
             }
 
             // Then process animations using the poses
-            XMLElement animsRoot = root.GetChild("animations");
+            XmlElement animsRoot = root.GetChild("animations");
             if (animsRoot)
             {
-                XMLElement anim = animsRoot.GetChild("animation");
+                XmlElement anim = animsRoot.GetChild("animation");
                 while (anim)
                 {
                     String name = anim.GetAttribute("name");
                     float length = anim.GetFloat("length");
                     HashSet<unsigned> usedPoses;
-                    XMLElement tracks = anim.GetChild("tracks");
+                    XmlElement tracks = anim.GetChild("tracks");
                     if (tracks)
                     {
-                        XMLElement track = tracks.GetChild("track");
+                        XmlElement track = tracks.GetChild("track");
                         while (track)
                         {
-                            XMLElement keyframes = track.GetChild("keyframes");
+                            XmlElement keyframes = track.GetChild("keyframes");
                             if (keyframes)
                             {
-                                XMLElement keyframe = keyframes.GetChild("keyframe");
+                                XmlElement keyframe = keyframes.GetChild("keyframe");
                                 while (keyframe)
                                 {
                                     float time = keyframe.GetFloat("time");
-                                    XMLElement poseref = keyframe.GetChild("poseref");
+                                    XmlElement poseref = keyframe.GetChild("poseref");
                                     // Get only the end pose
                                     if (poseref && time == length)
                                         usedPoses.Insert(poseref.GetI32("poseindex"));
@@ -720,9 +720,9 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
 
                         for (HashSet<unsigned>::Iterator i = usedPoses.Begin(); i != usedPoses.End(); ++i)
                         {
-                            XMLElement pose = poses[*i];
+                            XmlElement pose = poses[*i];
                             unsigned targetSubMesh = pose.GetI32("index");
-                            XMLElement poseOffset = pose.GetChild("poseoffset");
+                            XmlElement poseOffset = pose.GetChild("poseoffset");
 
                             if (useOneBuffer_)
                                 newMorph.buffers_[bufIndex].vertexBuffer_ = 0;
@@ -917,22 +917,22 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
             PrintLine("Warning: could not write material list file " + materialListName);
     }
 
-    XMLElement skeletonRoot = skelFile_->GetRoot("skeleton");
+    XmlElement skeletonRoot = skelFile_->GetRoot("skeleton");
     if (skeletonRoot && exportAnimations)
     {
         // Go through animations
-        XMLElement animationsRoot = skeletonRoot.GetChild("animations");
+        XmlElement animationsRoot = skeletonRoot.GetChild("animations");
         if (animationsRoot)
         {
-            XMLElement animation = animationsRoot.GetChild("animation");
+            XmlElement animation = animationsRoot.GetChild("animation");
             while (animation)
             {
                 ModelAnimation newAnimation;
                 newAnimation.name_ = animation.GetAttribute("name");
                 newAnimation.length_ = animation.GetFloat("length");
 
-                XMLElement tracksRoot = animation.GetChild("tracks");
-                XMLElement track = tracksRoot.GetChild("track");
+                XmlElement tracksRoot = animation.GetChild("tracks");
+                XmlElement track = tracksRoot.GetChild("track");
                 while (track)
                 {
                     String trackName = track.GetAttribute("bone");
@@ -955,21 +955,21 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
                     else
                         newAnimationTrack.channelMask_ = AnimationChannels::Rotation;
 
-                    XMLElement keyFramesRoot = track.GetChild("keyframes");
-                    XMLElement keyFrame = keyFramesRoot.GetChild("keyframe");
+                    XmlElement keyFramesRoot = track.GetChild("keyframes");
+                    XmlElement keyFrame = keyFramesRoot.GetChild("keyframe");
                     while (keyFrame)
                     {
                         AnimationKeyFrame newKeyFrame;
 
                         // Convert from right- to left-handed
-                        XMLElement position = keyFrame.GetChild("translate");
+                        XmlElement position = keyFrame.GetChild("translate");
                         float x = position.GetFloat("x");
                         float y = position.GetFloat("y");
                         float z = position.GetFloat("z");
                         Vector3 pos(x, y, -z);
 
-                        XMLElement rotation = keyFrame.GetChild("rotate");
-                        XMLElement axis = rotation.GetChild("axis");
+                        XmlElement rotation = keyFrame.GetChild("rotate");
+                        XmlElement axis = rotation.GetChild("axis");
                         float angle = -rotation.GetFloat("angle") * M_RADTODEG;
                         x = axis.GetFloat("x");
                         y = axis.GetFloat("y");

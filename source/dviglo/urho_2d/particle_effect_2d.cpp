@@ -102,7 +102,7 @@ bool ParticleEffect2D::BeginLoad(Deserializer& source)
     if (!xmlFile.Load(source))
         return false;
 
-    XMLElement rootElem = xmlFile.GetRoot("particleEmitterConfig");
+    XmlElement rootElem = xmlFile.GetRoot("particleEmitterConfig");
     if (!rootElem)
         return false;
 
@@ -209,7 +209,7 @@ bool ParticleEffect2D::Save(Serializer& dest) const
         return false;
 
     XmlFile xmlFile;
-    XMLElement rootElem = xmlFile.CreateRoot("particleEmitterConfig");
+    XmlElement rootElem = xmlFile.CreateRoot("particleEmitterConfig");
 
     String fileName = GetFileNameAndExtension(sprite_->GetName());
     rootElem.CreateChild("texture").SetAttribute("name", fileName);
@@ -496,52 +496,52 @@ SharedPtr<ParticleEffect2D> ParticleEffect2D::Clone(const String& cloneName) con
     return ret;
 }
 
-int ParticleEffect2D::ReadInt(const XMLElement& element, const String& name) const
+int ParticleEffect2D::ReadInt(const XmlElement& element, const String& name) const
 {
     return element.GetChild(name).GetI32("value");
 }
 
-float ParticleEffect2D::ReadFloat(const XMLElement& element, const String& name) const
+float ParticleEffect2D::ReadFloat(const XmlElement& element, const String& name) const
 {
     return element.GetChild(name).GetFloat("value");
 }
 
-Color ParticleEffect2D::ReadColor(const XMLElement& element, const String& name) const
+Color ParticleEffect2D::ReadColor(const XmlElement& element, const String& name) const
 {
-    XMLElement child = element.GetChild(name);
+    XmlElement child = element.GetChild(name);
     return Color(child.GetFloat("red"), child.GetFloat("green"), child.GetFloat("blue"), child.GetFloat("alpha"));
 }
 
-Vector2 ParticleEffect2D::ReadVector2(const XMLElement& element, const String& name) const
+Vector2 ParticleEffect2D::ReadVector2(const XmlElement& element, const String& name) const
 {
-    XMLElement child = element.GetChild(name);
+    XmlElement child = element.GetChild(name);
     return Vector2(child.GetFloat("x"), child.GetFloat("y"));
 }
 
-void ParticleEffect2D::WriteInt(XMLElement& element, const String& name, int value) const
+void ParticleEffect2D::WriteInt(XmlElement& element, const String& name, int value) const
 {
-    XMLElement child = element.CreateChild(name);
+    XmlElement child = element.CreateChild(name);
     child.SetI32("value", value);
 }
 
-void ParticleEffect2D::WriteFloat(XMLElement& element, const String& name, float value) const
+void ParticleEffect2D::WriteFloat(XmlElement& element, const String& name, float value) const
 {
-    XMLElement child = element.CreateChild(name);
+    XmlElement child = element.CreateChild(name);
     child.SetFloat("value", value);
 }
 
-void ParticleEffect2D::WriteColor(XMLElement& element, const String& name, const Color& color) const
+void ParticleEffect2D::WriteColor(XmlElement& element, const String& name, const Color& color) const
 {
-    XMLElement child = element.CreateChild(name);
+    XmlElement child = element.CreateChild(name);
     child.SetFloat("red", color.r_);
     child.SetFloat("green", color.g_);
     child.SetFloat("blue", color.b_);
     child.SetFloat("alpha", color.a_);
 }
 
-void ParticleEffect2D::WriteVector2(XMLElement& element, const String& name, const Vector2& value) const
+void ParticleEffect2D::WriteVector2(XmlElement& element, const String& name, const Vector2& value) const
 {
-    XMLElement child = element.CreateChild(name);
+    XmlElement child = element.CreateChild(name);
     child.SetFloat("x", value.x_);
     child.SetFloat("y", value.y_);
 }

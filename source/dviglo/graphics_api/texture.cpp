@@ -151,14 +151,14 @@ void Texture::SetParameters(XmlFile* file)
     if (!file)
         return;
 
-    XMLElement rootElem = file->GetRoot();
+    XmlElement rootElem = file->GetRoot();
     SetParameters(rootElem);
 }
 
-void Texture::SetParameters(const XMLElement& element)
+void Texture::SetParameters(const XmlElement& element)
 {
     LoadMetadataFromXML(element);
-    for (XMLElement paramElem = element.GetChild(); paramElem; paramElem = paramElem.GetNext())
+    for (XmlElement paramElem = element.GetChild(); paramElem; paramElem = paramElem.GetNext())
     {
         String name = paramElem.GetName();
 

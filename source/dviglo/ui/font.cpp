@@ -173,9 +173,9 @@ void Font::LoadParameters()
     if (!xml)
         return;
 
-    XMLElement rootElem = xml->GetRoot();
+    XmlElement rootElem = xml->GetRoot();
 
-    XMLElement absoluteElem = rootElem.GetChild("absoluteoffset");
+    XmlElement absoluteElem = rootElem.GetChild("absoluteoffset");
     if (!absoluteElem)
         absoluteElem = rootElem.GetChild("absolute");
 
@@ -185,7 +185,7 @@ void Font::LoadParameters()
         absoluteOffset_.y_ = absoluteElem.GetI32("y");
     }
 
-    XMLElement scaledElem = rootElem.GetChild("scaledoffset");
+    XmlElement scaledElem = rootElem.GetChild("scaledoffset");
     if (!scaledElem)
         scaledElem = rootElem.GetChild("scaled");
 

@@ -299,7 +299,7 @@ bool PListFile::BeginLoad(Deserializer& source)
         return false;
     }
 
-    XMLElement plistElem = xmlFile.GetRoot("plist");
+    XmlElement plistElem = xmlFile.GetRoot("plist");
     if (!plistElem)
     {
         DV_LOGERROR("Invalid property list file");
@@ -308,7 +308,7 @@ bool PListFile::BeginLoad(Deserializer& source)
 
     root_.Clear();
 
-    XMLElement dictElem = plistElem.GetChild("dict");
+    XmlElement dictElem = plistElem.GetChild("dict");
     if (!LoadDict(root_, dictElem))
         return false;
 
@@ -317,13 +317,13 @@ bool PListFile::BeginLoad(Deserializer& source)
     return true;
 }
 
-bool PListFile::LoadDict(PListValueMap& dict, const XMLElement& dictElem)
+bool PListFile::LoadDict(PListValueMap& dict, const XmlElement& dictElem)
 {
     if (!dictElem)
         return false;
 
-    XMLElement keyElem = dictElem.GetChild("key");
-    XMLElement valueElem = keyElem.GetNext();
+    XmlElement keyElem = dictElem.GetChild("key");
+    XmlElement valueElem = keyElem.GetNext();
     while (keyElem && valueElem)
     {
         String key = keyElem.GetValue();
@@ -342,12 +342,12 @@ bool PListFile::LoadDict(PListValueMap& dict, const XMLElement& dictElem)
     return true;
 }
 
-bool PListFile::LoadArray(PListValueVector& array, const XMLElement& arrayElem)
+bool PListFile::LoadArray(PListValueVector& array, const XmlElement& arrayElem)
 {
     if (!arrayElem)
         return false;
 
-    for (XMLElement valueElem = arrayElem.GetChild(); valueElem; valueElem = valueElem.GetNext())
+    for (XmlElement valueElem = arrayElem.GetChild(); valueElem; valueElem = valueElem.GetNext())
     {
         PListValue value;
 
@@ -360,7 +360,7 @@ bool PListFile::LoadArray(PListValueVector& array, const XMLElement& arrayElem)
     return true;
 }
 
-bool PListFile::LoadValue(PListValue& value, const XMLElement& valueElem)
+bool PListFile::LoadValue(PListValue& value, const XmlElement& valueElem)
 {
     String valueType = valueElem.GetName();
 

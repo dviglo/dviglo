@@ -76,13 +76,13 @@ public:
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;
     /// Load from XML data. Return true if successful.
-    bool load_xml(const XMLElement& source) override;
+    bool load_xml(const XmlElement& source) override;
     /// Load from JSON data. Return true if successful.
     bool load_json(const JSONValue& source) override;
     /// Save as binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Save as XML data. Return true if successful.
-    bool save_xml(XMLElement& dest) const override;
+    bool save_xml(XmlElement& dest) const override;
     /// Save as JSON data. Return true if successful.
     bool save_json(JSONValue& dest) const override;
     /// Apply attribute changes that can not be applied immediately recursively to child nodes and components.
@@ -590,7 +590,7 @@ public:
     bool Load(Deserializer& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
         CreateMode mode = REPLICATED);
     /// Load components from XML data and optionally load child nodes.
-    bool load_xml(const XMLElement& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
+    bool load_xml(const XmlElement& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
         CreateMode mode = REPLICATED);
     /// Load components from XML data and optionally load child nodes.
     bool load_json(const JSONValue& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,

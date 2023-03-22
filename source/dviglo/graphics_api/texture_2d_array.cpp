@@ -73,8 +73,8 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
 
     loadImages_.Clear();
 
-    XMLElement textureElem = loadParameters_->GetRoot();
-    XMLElement layerElem = textureElem.GetChild("layer");
+    XmlElement textureElem = loadParameters_->GetRoot();
+    XmlElement layerElem = textureElem.GetChild("layer");
     while (layerElem)
     {
         String name = layerElem.GetAttribute("name");

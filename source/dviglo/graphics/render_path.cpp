@@ -37,7 +37,7 @@ extern const char* blendModeNames[];
 
 TextureUnit ParseTextureUnitName(String name);
 
-void RenderTargetInfo::Load(const XMLElement& element)
+void RenderTargetInfo::Load(const XmlElement& element)
 {
     name_ = element.GetAttribute("name");
     tag_ = element.GetAttribute("tag");
@@ -89,7 +89,7 @@ void RenderTargetInfo::Load(const XMLElement& element)
         autoResolve_ = element.GetBool("autoresolve");
 }
 
-void RenderPathCommand::Load(const XMLElement& element)
+void RenderPathCommand::Load(const XmlElement& element)
 {
     type_ = (RenderCommandType)GetStringListIndex(element.GetAttributeLower("type").c_str(), commandTypeNames, CMD_NONE);
     tag_ = element.GetAttribute("tag");
@@ -167,7 +167,7 @@ void RenderPathCommand::Load(const XMLElement& element)
     if (element.HasAttribute("depthstencil"))
         depthStencilName_ = element.GetAttribute("depthstencil");
     // Check for defining multiple outputs
-    XMLElement outputElem = element.GetChild("output");
+    XmlElement outputElem = element.GetChild("output");
     while (outputElem)
     {
         unsigned index = (unsigned)outputElem.GetI32("index");
@@ -184,7 +184,7 @@ void RenderPathCommand::Load(const XMLElement& element)
     // Shader compile flags & parameters
     vertexShaderDefines_ = element.GetAttribute("vsdefines");
     pixelShaderDefines_ = element.GetAttribute("psdefines");
-    XMLElement parameterElem = element.GetChild("parameter");
+    XmlElement parameterElem = element.GetChild("parameter");
     while (parameterElem)
     {
         String name = parameterElem.GetAttribute("name");
@@ -193,7 +193,7 @@ void RenderPathCommand::Load(const XMLElement& element)
     }
 
     // Texture bindings
-    XMLElement textureElem = element.GetChild("texture");
+    XmlElement textureElem = element.GetChild("texture");
     while (textureElem)
     {
         TextureUnit unit = TU_DIFFUSE;
@@ -313,11 +313,11 @@ bool RenderPath::Append(XmlFile* file)
     if (!file)
         return false;
 
-    XMLElement rootElem = file->GetRoot();
+    XmlElement rootElem = file->GetRoot();
     if (!rootElem)
         return false;
 
-    XMLElement rtElem = rootElem.GetChild("rendertarget");
+    XmlElement rtElem = rootElem.GetChild("rendertarget");
     while (rtElem)
     {
         RenderTargetInfo info;
@@ -328,7 +328,7 @@ bool RenderPath::Append(XmlFile* file)
         rtElem = rtElem.GetNext("rendertarget");
     }
 
-    XMLElement cmdElem = rootElem.GetChild("command");
+    XmlElement cmdElem = rootElem.GetChild("command");
     while (cmdElem)
     {
         RenderPathCommand cmd;

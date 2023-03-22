@@ -100,7 +100,7 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Update displayed text.
     void UpdateText();
     /// Update cursor position and restart cursor blinking.

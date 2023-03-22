@@ -88,7 +88,7 @@ bool ParticleEffect::BeginLoad(Deserializer& source)
         return false;
     }
 
-    XMLElement rootElem = file.GetRoot();
+    XmlElement rootElem = file.GetRoot();
 
     bool success = Load(rootElem);
     if (success)
@@ -108,7 +108,7 @@ bool ParticleEffect::EndLoad()
     return true;
 }
 
-bool ParticleEffect::Load(const XMLElement& source)
+bool ParticleEffect::Load(const XmlElement& source)
 {
     // Reset to defaults first so that missing parameters in case of a live reload behave as expected
     material_.Reset();
@@ -253,7 +253,7 @@ bool ParticleEffect::Load(const XMLElement& source)
 
     if (source.HasChild("sizedelta"))
     {
-        XMLElement deltaElem = source.GetChild("sizedelta");
+        XmlElement deltaElem = source.GetChild("sizedelta");
         if (deltaElem.HasAttribute("add"))
             sizeAdd_ = deltaElem.GetFloat("add");
         if (deltaElem.HasAttribute("mul"))
@@ -269,7 +269,7 @@ bool ParticleEffect::Load(const XMLElement& source)
     if (source.HasChild("colorfade"))
     {
         Vector<ColorFrame> fades;
-        for (XMLElement colorFadeElem = source.GetChild("colorfade"); colorFadeElem;
+        for (XmlElement colorFadeElem = source.GetChild("colorfade"); colorFadeElem;
              colorFadeElem = colorFadeElem.GetNext("colorfade"))
             fades.Push(ColorFrame(colorFadeElem.GetColor("color"), colorFadeElem.GetFloat("time")));
 
@@ -282,7 +282,7 @@ bool ParticleEffect::Load(const XMLElement& source)
     if (source.HasChild("texanim"))
     {
         Vector<TextureFrame> animations;
-        for (XMLElement animElem = source.GetChild("texanim"); animElem; animElem = animElem.GetNext("texanim"))
+        for (XmlElement animElem = source.GetChild("texanim"); animElem; animElem = animElem.GetNext("texanim"))
         {
             TextureFrame animation;
             animation.uv_ = animElem.GetRect("uv");
@@ -299,13 +299,13 @@ bool ParticleEffect::Load(const XMLElement& source)
 bool ParticleEffect::Save(Serializer& dest) const
 {
     SharedPtr<XmlFile> xml(new XmlFile());
-    XMLElement materialElem = xml->CreateRoot("particleeffect");
+    XmlElement materialElem = xml->CreateRoot("particleeffect");
 
     Save(materialElem);
     return xml->Save(dest);
 }
 
-bool ParticleEffect::Save(XMLElement& dest) const
+bool ParticleEffect::Save(XmlElement& dest) const
 {
     if (dest.IsNull())
     {
@@ -313,7 +313,7 @@ bool ParticleEffect::Save(XMLElement& dest) const
         return false;
     }
 
-    XMLElement childElem = dest.CreateChild("material");
+    XmlElement childElem = dest.CreateChild("material");
     childElem.SetAttribute("name", GetResourceName(material_));
 
     childElem = dest.CreateChild("numparticles");
@@ -797,7 +797,7 @@ float ParticleEffect::GetRandomRotation() const
     return Lerp(rotationMin_, rotationMax_, Random(1.0f));
 }
 
-void ParticleEffect::GetFloatMinMax(const XMLElement& element, float& minValue, float& maxValue)
+void ParticleEffect::GetFloatMinMax(const XmlElement& element, float& minValue, float& maxValue)
 {
     if (element.IsNull())
         return;
@@ -812,7 +812,7 @@ void ParticleEffect::GetFloatMinMax(const XMLElement& element, float& minValue, 
     }
 }
 
-void ParticleEffect::GetVector2MinMax(const XMLElement& element, Vector2& minValue, Vector2& maxValue)
+void ParticleEffect::GetVector2MinMax(const XmlElement& element, Vector2& minValue, Vector2& maxValue)
 {
     if (element.IsNull())
         return;
@@ -827,7 +827,7 @@ void ParticleEffect::GetVector2MinMax(const XMLElement& element, Vector2& minVal
     }
 }
 
-void ParticleEffect::GetVector3MinMax(const XMLElement& element, Vector3& minValue, Vector3& maxValue)
+void ParticleEffect::GetVector3MinMax(const XmlElement& element, Vector3& minValue, Vector3& maxValue)
 {
     if (element.IsNull())
         return;

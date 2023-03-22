@@ -185,12 +185,12 @@ void Slider::SetRepeatRate(float rate)
     repeatRate_ = Max(rate, 0.0f);
 }
 
-bool Slider::FilterImplicitAttributes(XMLElement& dest) const
+bool Slider::FilterImplicitAttributes(XmlElement& dest) const
 {
     if (!BorderImage::FilterImplicitAttributes(dest))
         return false;
 
-    XMLElement childElem = dest.GetChild("element");
+    XmlElement childElem = dest.GetChild("element");
     if (!childElem)
         return false;
     if (!RemoveChildXML(childElem, "Name", "S_Knob"))

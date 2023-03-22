@@ -15,7 +15,7 @@ namespace dviglo
 
 class Deserializer;
 class Serializer;
-class XMLElement;
+class XmlElement;
 
 /// Asynchronous loading state of a resource.
 enum AsyncLoadState
@@ -114,11 +114,11 @@ public:
 
 protected:
     /// Load metadata from <metadata> children of XML element.
-    void LoadMetadataFromXML(const XMLElement& source);
+    void LoadMetadataFromXML(const XmlElement& source);
     /// Load metadata from JSON array.
     void LoadMetadataFromJSON(const JSONArray& array);
     /// Save as <metadata> children of XML element.
-    void SaveMetadataToXML(XMLElement& destination) const;
+    void SaveMetadataToXML(XmlElement& destination) const;
     /// Copy metadata from another resource.
     void CopyMetadata(const ResourceWithMetadata& source);
 

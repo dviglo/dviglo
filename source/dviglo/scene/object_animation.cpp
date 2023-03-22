@@ -47,18 +47,18 @@ bool ObjectAnimation::Save(Serializer& dest) const
 {
     XmlFile xmlFile;
 
-    XMLElement rootElem = xmlFile.CreateRoot("objectanimation");
+    XmlElement rootElem = xmlFile.CreateRoot("objectanimation");
     if (!save_xml(rootElem))
         return false;
 
     return xmlFile.Save(dest);
 }
 
-bool ObjectAnimation::load_xml(const XMLElement& source)
+bool ObjectAnimation::load_xml(const XmlElement& source)
 {
     attributeAnimationInfos_.Clear();
 
-    XMLElement animElem;
+    XmlElement animElem;
     animElem = source.GetChild("attributeanimation");
     while (animElem)
     {
@@ -88,12 +88,12 @@ bool ObjectAnimation::load_xml(const XMLElement& source)
     return true;
 }
 
-bool ObjectAnimation::save_xml(XMLElement& dest) const
+bool ObjectAnimation::save_xml(XmlElement& dest) const
 {
     for (HashMap<String, SharedPtr<ValueAnimationInfo>>::ConstIterator i = attributeAnimationInfos_.Begin();
          i != attributeAnimationInfos_.End(); ++i)
     {
-        XMLElement animElem = dest.CreateChild("attributeanimation");
+        XmlElement animElem = dest.CreateChild("attributeanimation");
         animElem.SetAttribute("name", i->first_);
 
         const ValueAnimationInfo* info = i->second_;

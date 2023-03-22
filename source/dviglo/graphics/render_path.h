@@ -17,7 +17,7 @@ namespace dviglo
 {
 
 class Variant;
-class XMLElement;
+class XmlElement;
 class XmlFile;
 
 /// Rendering path command types.
@@ -52,7 +52,7 @@ enum RenderTargetSizeMode
 struct DV_API RenderTargetInfo
 {
     /// Read from an XML element.
-    void Load(const XMLElement& element);
+    void Load(const XmlElement& element);
 
     /// Name.
     String name_;
@@ -84,7 +84,7 @@ struct DV_API RenderTargetInfo
 struct DV_API RenderPathCommand
 {
     /// Read from an XML element.
-    void Load(const XMLElement& element);
+    void Load(const XmlElement& element);
     /// Set a texture resource name. Can also refer to a rendertarget defined in the rendering path.
     void SetTextureName(TextureUnit unit, const String& name);
     /// Set a shader parameter.

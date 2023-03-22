@@ -79,7 +79,7 @@ bool XmlFile::BeginLoad(Deserializer& source)
         return false;
     }
 
-    XMLElement rootElem = GetRoot();
+    XmlElement rootElem = GetRoot();
     String inherit = rootElem.GetAttribute("inherit");
     if (!inherit.Empty())
     {
@@ -123,16 +123,16 @@ bool XmlFile::Save(Serializer& dest, const String& indentation) const
     return writer.success_;
 }
 
-XMLElement XmlFile::CreateRoot(const String& name)
+XmlElement XmlFile::CreateRoot(const String& name)
 {
     document_->reset();
     pugi::xml_node root = document_->append_child(name.c_str());
-    return XMLElement(this, root.internal_object());
+    return XmlElement(this, root.internal_object());
 }
 
-XMLElement XmlFile::GetOrCreateRoot(const String& name)
+XmlElement XmlFile::GetOrCreateRoot(const String& name)
 {
-    XMLElement root = GetRoot(name);
+    XmlElement root = GetRoot(name);
     if (root.NotNull())
         return root;
     root = GetRoot();
@@ -150,16 +150,16 @@ bool XmlFile::FromString(const String& source)
     return Load(buffer);
 }
 
-XMLElement XmlFile::GetRoot(const String& name)
+XmlElement XmlFile::GetRoot(const String& name)
 {
     pugi::xml_node root = document_->first_child();
     if (root.empty())
-        return XMLElement();
+        return XmlElement();
 
     if (!name.Empty() && name != root.name())
-        return XMLElement();
+        return XmlElement();
     else
-        return XMLElement(this, root.internal_object());
+        return XmlElement(this, root.internal_object());
 }
 
 String XmlFile::ToString(const String& indentation) const
@@ -175,7 +175,7 @@ void XmlFile::Patch(XmlFile* patchFile)
     Patch(patchFile->GetRoot());
 }
 
-void XmlFile::Patch(const XMLElement& patchElement)
+void XmlFile::Patch(const XmlElement& patchElement)
 {
     pugi::xml_node root = pugi::xml_node(patchElement.GetNode());
 

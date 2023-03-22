@@ -91,8 +91,8 @@ bool TextureCube::BeginLoad(Deserializer& source)
 
     loadImages_.Clear();
 
-    XMLElement textureElem = loadParameters_->GetRoot();
-    XMLElement imageElem = textureElem.GetChild("image");
+    XmlElement textureElem = loadParameters_->GetRoot();
+    XmlElement imageElem = textureElem.GetChild("image");
     // Single image and multiple faces with layout
     if (imageElem)
     {
@@ -186,7 +186,7 @@ bool TextureCube::BeginLoad(Deserializer& source)
     // Face per image
     else
     {
-        XMLElement faceElem = textureElem.GetChild("face");
+        XmlElement faceElem = textureElem.GetChild("face");
         while (faceElem)
         {
             String name = faceElem.GetAttribute("name");

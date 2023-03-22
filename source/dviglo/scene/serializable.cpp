@@ -322,7 +322,7 @@ bool Serializable::Save(Serializer& dest) const
     return true;
 }
 
-bool Serializable::load_xml(const XMLElement& source)
+bool Serializable::load_xml(const XmlElement& source)
 {
     if (source.IsNull())
     {
@@ -334,7 +334,7 @@ bool Serializable::load_xml(const XMLElement& source)
     if (!attributes)
         return true;
 
-    XMLElement attrElem = source.GetChild("attribute");
+    XmlElement attrElem = source.GetChild("attribute");
     unsigned startIndex = 0;
 
     while (attrElem)
@@ -485,7 +485,7 @@ bool Serializable::load_json(const JSONValue& source)
     return true;
 }
 
-bool Serializable::save_xml(XMLElement& dest) const
+bool Serializable::save_xml(XmlElement& dest) const
 {
     if (dest.IsNull())
     {
@@ -512,7 +512,7 @@ bool Serializable::save_xml(XMLElement& dest) const
         if (value == defaultValue && !SaveDefaultAttributes())
             continue;
 
-        XMLElement attrElem = dest.CreateChild("attribute");
+        XmlElement attrElem = dest.CreateChild("attribute");
         attrElem.SetAttribute("name", attr.name_);
         // If enums specified, set as an enum string. Otherwise set directly as a Variant
         if (attr.enumNames_)

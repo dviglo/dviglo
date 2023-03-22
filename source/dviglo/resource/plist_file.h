@@ -11,7 +11,7 @@
 namespace dviglo
 {
 
-class XMLElement;
+class XmlElement;
 
 /// PList value types.
 enum PListValueType
@@ -141,11 +141,11 @@ public:
 
 private:
     /// Load dictionary.
-    bool LoadDict(PListValueMap& dict, const XMLElement& dictElem);
+    bool LoadDict(PListValueMap& dict, const XmlElement& dictElem);
     /// Load array.
-    bool LoadArray(PListValueVector& array, const XMLElement& arrayElem);
+    bool LoadArray(PListValueVector& array, const XmlElement& arrayElem);
     /// Load value.
-    bool LoadValue(PListValue& value, const XMLElement& valueElem);
+    bool LoadValue(PListValue& value, const XmlElement& valueElem);
 
     /// Root dictionary.
     PListValueMap root_;

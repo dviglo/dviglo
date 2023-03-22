@@ -113,7 +113,7 @@ bool AnimatedModel::Load(Deserializer& source)
     return success;
 }
 
-bool AnimatedModel::load_xml(const XMLElement& source)
+bool AnimatedModel::load_xml(const XmlElement& source)
 {
     loading_ = true;
     bool success = Component::load_xml(source);

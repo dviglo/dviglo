@@ -147,7 +147,7 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Update selection effect when selection or focus changes.
     void UpdateSelectionEffect();
 

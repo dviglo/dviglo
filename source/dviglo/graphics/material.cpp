@@ -231,7 +231,7 @@ bool Material::EndLoad()
     if (loadXMLFile_)
     {
         // If async loading, get the techniques / textures which should be ready now
-        XMLElement rootElem = loadXMLFile_->GetRoot();
+        XmlElement rootElem = loadXMLFile_->GetRoot();
         success = Load(rootElem);
     }
 
@@ -257,15 +257,15 @@ bool Material::begin_load_xml(Deserializer& source)
         if (GetAsyncLoadState() == ASYNC_LOADING)
         {
             ResourceCache& cache = DV_RES_CACHE;
-            XMLElement rootElem = loadXMLFile_->GetRoot();
-            XMLElement techniqueElem = rootElem.GetChild("technique");
+            XmlElement rootElem = loadXMLFile_->GetRoot();
+            XmlElement techniqueElem = rootElem.GetChild("technique");
             while (techniqueElem)
             {
                 cache.BackgroundLoadResource<Technique>(techniqueElem.GetAttribute("name"), true, this);
                 techniqueElem = techniqueElem.GetNext("technique");
             }
 
-            XMLElement textureElem = rootElem.GetChild("texture");
+            XmlElement textureElem = rootElem.GetChild("texture");
             while (textureElem)
             {
                 String name = textureElem.GetAttribute("name");
@@ -363,13 +363,13 @@ bool Material::begin_load_json(Deserializer& source)
 bool Material::Save(Serializer& dest) const
 {
     SharedPtr<XmlFile> xml(new XmlFile());
-    XMLElement materialElem = xml->CreateRoot("material");
+    XmlElement materialElem = xml->CreateRoot("material");
 
     Save(materialElem);
     return xml->Save(dest);
 }
 
-bool Material::Load(const XMLElement& source)
+bool Material::Load(const XmlElement& source)
 {
     ResetToDefaults();
 
@@ -381,14 +381,14 @@ bool Material::Load(const XMLElement& source)
 
     ResourceCache& cache = DV_RES_CACHE;
 
-    XMLElement shaderElem = source.GetChild("shader");
+    XmlElement shaderElem = source.GetChild("shader");
     if (shaderElem)
     {
         vertexShaderDefines_ = shaderElem.GetAttribute("vsdefines");
         pixelShaderDefines_ = shaderElem.GetAttribute("psdefines");
     }
 
-    XMLElement techniqueElem = source.GetChild("technique");
+    XmlElement techniqueElem = source.GetChild("technique");
     techniques_.Clear();
 
     while (techniqueElem)
@@ -411,7 +411,7 @@ bool Material::Load(const XMLElement& source)
     SortTechniques();
     ApplyShaderDefines();
 
-    XMLElement textureElem = source.GetChild("texture");
+    XmlElement textureElem = source.GetChild("texture");
     while (textureElem)
     {
         TextureUnit unit = TU_DIFFUSE;
@@ -443,7 +443,7 @@ bool Material::Load(const XMLElement& source)
     }
 
     batchedParameterUpdate_ = true;
-    XMLElement parameterElem = source.GetChild("parameter");
+    XmlElement parameterElem = source.GetChild("parameter");
     while (parameterElem)
     {
         String name = parameterElem.GetAttribute("name");
@@ -455,7 +455,7 @@ bool Material::Load(const XMLElement& source)
     }
     batchedParameterUpdate_ = false;
 
-    XMLElement parameterAnimationElem = source.GetChild("parameteranimation");
+    XmlElement parameterAnimationElem = source.GetChild("parameteranimation");
     while (parameterAnimationElem)
     {
         String name = parameterAnimationElem.GetAttribute("name");
@@ -483,35 +483,35 @@ bool Material::Load(const XMLElement& source)
         parameterAnimationElem = parameterAnimationElem.GetNext("parameteranimation");
     }
 
-    XMLElement cullElem = source.GetChild("cull");
+    XmlElement cullElem = source.GetChild("cull");
     if (cullElem)
         SetCullMode((CullMode)GetStringListIndex(cullElem.GetAttribute("value").c_str(), cullModeNames, CULL_CCW));
 
-    XMLElement shadowCullElem = source.GetChild("shadowcull");
+    XmlElement shadowCullElem = source.GetChild("shadowcull");
     if (shadowCullElem)
         SetShadowCullMode((CullMode)GetStringListIndex(shadowCullElem.GetAttribute("value").c_str(), cullModeNames, CULL_CCW));
 
-    XMLElement fillElem = source.GetChild("fill");
+    XmlElement fillElem = source.GetChild("fill");
     if (fillElem)
         SetFillMode((FillMode)GetStringListIndex(fillElem.GetAttribute("value").c_str(), fillModeNames, FILL_SOLID));
 
-    XMLElement depthBiasElem = source.GetChild("depthbias");
+    XmlElement depthBiasElem = source.GetChild("depthbias");
     if (depthBiasElem)
         SetDepthBias(BiasParameters(depthBiasElem.GetFloat("constant"), depthBiasElem.GetFloat("slopescaled")));
 
-    XMLElement alphaToCoverageElem = source.GetChild("alphatocoverage");
+    XmlElement alphaToCoverageElem = source.GetChild("alphatocoverage");
     if (alphaToCoverageElem)
         SetAlphaToCoverage(alphaToCoverageElem.GetBool("enable"));
 
-    XMLElement lineAntiAliasElem = source.GetChild("lineantialias");
+    XmlElement lineAntiAliasElem = source.GetChild("lineantialias");
     if (lineAntiAliasElem)
         SetLineAntiAlias(lineAntiAliasElem.GetBool("enable"));
 
-    XMLElement renderOrderElem = source.GetChild("renderorder");
+    XmlElement renderOrderElem = source.GetChild("renderorder");
     if (renderOrderElem)
         SetRenderOrder((i8)renderOrderElem.GetI32("value"));
 
-    XMLElement occlusionElem = source.GetChild("occlusion");
+    XmlElement occlusionElem = source.GetChild("occlusion");
     if (occlusionElem)
         SetOcclusion(occlusionElem.GetBool("enable"));
 
@@ -680,7 +680,7 @@ bool Material::Load(const JSONValue& source)
     return true;
 }
 
-bool Material::Save(XMLElement& dest) const
+bool Material::Save(XmlElement& dest) const
 {
     if (dest.IsNull())
     {
@@ -694,7 +694,7 @@ bool Material::Save(XMLElement& dest) const
         if (!entry.technique_)
             continue;
 
-        XMLElement techniqueElem = dest.CreateChild("technique");
+        XmlElement techniqueElem = dest.CreateChild("technique");
         techniqueElem.SetString("name", entry.technique_->GetName());
         techniqueElem.SetI32("quality", entry.qualityLevel_);
         techniqueElem.SetFloat("loddistance", entry.lodDistance_);
@@ -706,7 +706,7 @@ bool Material::Save(XMLElement& dest) const
         Texture* texture = GetTexture((TextureUnit)j);
         if (texture)
         {
-            XMLElement textureElem = dest.CreateChild("texture");
+            XmlElement textureElem = dest.CreateChild("texture");
             textureElem.SetString("unit", textureUnitNames[j]);
             textureElem.SetString("name", texture->GetName());
         }
@@ -715,7 +715,7 @@ bool Material::Save(XMLElement& dest) const
     // Write shader compile defines
     if (!vertexShaderDefines_.Empty() || !pixelShaderDefines_.Empty())
     {
-        XMLElement shaderElem = dest.CreateChild("shader");
+        XmlElement shaderElem = dest.CreateChild("shader");
         if (!vertexShaderDefines_.Empty())
             shaderElem.SetString("vsdefines", vertexShaderDefines_);
         if (!pixelShaderDefines_.Empty())
@@ -726,7 +726,7 @@ bool Material::Save(XMLElement& dest) const
     for (HashMap<StringHash, MaterialShaderParameter>::ConstIterator j = shaderParameters_.Begin();
          j != shaderParameters_.End(); ++j)
     {
-        XMLElement parameterElem = dest.CreateChild("parameter");
+        XmlElement parameterElem = dest.CreateChild("parameter");
         parameterElem.SetString("name", j->second_.name_);
         if (j->second_.value_.GetType() != VAR_BUFFER && j->second_.value_.GetType() != VAR_INT && j->second_.value_.GetType() != VAR_BOOL)
             parameterElem.SetVectorVariant("value", j->second_.value_);
@@ -742,7 +742,7 @@ bool Material::Save(XMLElement& dest) const
          j != shaderParameterAnimationInfos_.End(); ++j)
     {
         ShaderParameterAnimationInfo* info = j->second_;
-        XMLElement parameterAnimationElem = dest.CreateChild("parameteranimation");
+        XmlElement parameterAnimationElem = dest.CreateChild("parameteranimation");
         parameterAnimationElem.SetString("name", info->GetName());
         if (!info->GetAnimation()->save_xml(parameterAnimationElem))
             return false;
@@ -752,35 +752,35 @@ bool Material::Save(XMLElement& dest) const
     }
 
     // Write culling modes
-    XMLElement cullElem = dest.CreateChild("cull");
+    XmlElement cullElem = dest.CreateChild("cull");
     cullElem.SetString("value", cullModeNames[cullMode_]);
 
-    XMLElement shadowCullElem = dest.CreateChild("shadowcull");
+    XmlElement shadowCullElem = dest.CreateChild("shadowcull");
     shadowCullElem.SetString("value", cullModeNames[shadowCullMode_]);
 
     // Write fill mode
-    XMLElement fillElem = dest.CreateChild("fill");
+    XmlElement fillElem = dest.CreateChild("fill");
     fillElem.SetString("value", fillModeNames[fillMode_]);
 
     // Write depth bias
-    XMLElement depthBiasElem = dest.CreateChild("depthbias");
+    XmlElement depthBiasElem = dest.CreateChild("depthbias");
     depthBiasElem.SetFloat("constant", depthBias_.constantBias_);
     depthBiasElem.SetFloat("slopescaled", depthBias_.slopeScaledBias_);
 
     // Write alpha-to-coverage
-    XMLElement alphaToCoverageElem = dest.CreateChild("alphatocoverage");
+    XmlElement alphaToCoverageElem = dest.CreateChild("alphatocoverage");
     alphaToCoverageElem.SetBool("enable", alphaToCoverage_);
 
     // Write line anti-alias
-    XMLElement lineAntiAliasElem = dest.CreateChild("lineantialias");
+    XmlElement lineAntiAliasElem = dest.CreateChild("lineantialias");
     lineAntiAliasElem.SetBool("enable", lineAntiAlias_);
 
     // Write render order
-    XMLElement renderOrderElem = dest.CreateChild("renderorder");
+    XmlElement renderOrderElem = dest.CreateChild("renderorder");
     renderOrderElem.SetI32("value", renderOrder_);
 
     // Write occlusion
-    XMLElement occlusionElem = dest.CreateChild("occlusion");
+    XmlElement occlusionElem = dest.CreateChild("occlusion");
     occlusionElem.SetBool("enable", occlusion_);
 
     return true;

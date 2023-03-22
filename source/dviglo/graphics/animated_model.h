@@ -32,7 +32,7 @@ public:
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;
     /// Load from XML data. Return true if successful.
-    bool load_xml(const XMLElement& source) override;
+    bool load_xml(const XmlElement& source) override;
     /// Load from JSON data. Return true if successful.
     bool load_json(const JSONValue& source) override;
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.

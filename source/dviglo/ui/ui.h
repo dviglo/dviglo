@@ -32,7 +32,7 @@ class ResourceCache;
 class Timer;
 class UIBatch;
 class UiElement;
-class XMLElement;
+class XmlElement;
 class XmlFile;
 class RenderSurface;
 class UIComponent;

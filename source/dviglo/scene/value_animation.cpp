@@ -58,14 +58,14 @@ bool ValueAnimation::Save(Serializer& dest) const
 {
     XmlFile xmlFile;
 
-    XMLElement rootElem = xmlFile.CreateRoot("valueanimation");
+    XmlElement rootElem = xmlFile.CreateRoot("valueanimation");
     if (!save_xml(rootElem))
         return false;
 
     return xmlFile.Save(dest);
 }
 
-bool ValueAnimation::load_xml(const XMLElement& source)
+bool ValueAnimation::load_xml(const XmlElement& source)
 {
     valueType_ = VAR_NONE;
     eventFrames_.Clear();
@@ -77,7 +77,7 @@ bool ValueAnimation::load_xml(const XMLElement& source)
     if (interpolationMethod_ == IM_SPLINE)
         splineTension_ = source.GetFloat("splinetension");
 
-    XMLElement keyFrameElem = source.GetChild("keyframe");
+    XmlElement keyFrameElem = source.GetChild("keyframe");
     while (keyFrameElem)
     {
         float time = keyFrameElem.GetFloat("time");
@@ -87,7 +87,7 @@ bool ValueAnimation::load_xml(const XMLElement& source)
         keyFrameElem = keyFrameElem.GetNext("keyframe");
     }
 
-    XMLElement eventFrameElem = source.GetChild("eventframe");
+    XmlElement eventFrameElem = source.GetChild("eventframe");
     while (eventFrameElem)
     {
         float time = eventFrameElem.GetFloat("time");
@@ -101,7 +101,7 @@ bool ValueAnimation::load_xml(const XMLElement& source)
     return true;
 }
 
-bool ValueAnimation::save_xml(XMLElement& dest) const
+bool ValueAnimation::save_xml(XmlElement& dest) const
 {
     dest.SetAttribute("interpolationmethod", interpMethodNames[interpolationMethod_]);
     if (interpolationMethod_ == IM_SPLINE)
@@ -109,14 +109,14 @@ bool ValueAnimation::save_xml(XMLElement& dest) const
 
     for (const VAnimKeyFrame& keyFrame : keyFrames_)
     {
-        XMLElement keyFrameEleme = dest.CreateChild("keyframe");
+        XmlElement keyFrameEleme = dest.CreateChild("keyframe");
         keyFrameEleme.SetFloat("time", keyFrame.time_);
         keyFrameEleme.SetVariant(keyFrame.value_);
     }
 
     for (const VAnimEventFrame& eventFrame : eventFrames_)
     {
-        XMLElement eventFrameElem = dest.CreateChild("eventframe");
+        XmlElement eventFrameElem = dest.CreateChild("eventframe");
         eventFrameElem.SetFloat("time", eventFrame.time_);
         eventFrameElem.SetU32("eventtype", eventFrame.eventType_.Value());
         eventFrameElem.CreateChild("eventdata").SetVariantMap(eventFrame.eventData_);

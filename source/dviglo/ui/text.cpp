@@ -441,7 +441,7 @@ String Text::GetTextAttr() const
         return text_;
 }
 
-bool Text::FilterImplicitAttributes(XMLElement& dest) const
+bool Text::FilterImplicitAttributes(XmlElement& dest) const
 {
     if (!UISelectable::FilterImplicitAttributes(dest))
         return false;

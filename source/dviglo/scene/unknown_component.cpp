@@ -83,14 +83,14 @@ bool UnknownComponent::Load(Deserializer& source)
     return dataSize ? source.Read(&binaryAttributes_[0], dataSize) == dataSize : true;
 }
 
-bool UnknownComponent::load_xml(const XMLElement& source)
+bool UnknownComponent::load_xml(const XmlElement& source)
 {
     useXML_ = true;
     xmlAttributes_.Clear();
     xmlAttributeInfos_.Clear();
     binaryAttributes_.Clear();
 
-    XMLElement attrElem = source.GetChild("attribute");
+    XmlElement attrElem = source.GetChild("attribute");
     while (attrElem)
     {
         AttributeInfo attr;
@@ -168,7 +168,7 @@ bool UnknownComponent::Save(Serializer& dest) const
         return dest.Write(&binaryAttributes_[0], binaryAttributes_.Size()) == binaryAttributes_.Size();
 }
 
-bool UnknownComponent::save_xml(XMLElement& dest) const
+bool UnknownComponent::save_xml(XmlElement& dest) const
 {
     if (dest.IsNull())
     {
@@ -187,7 +187,7 @@ bool UnknownComponent::save_xml(XMLElement& dest) const
 
     for (unsigned i = 0; i < xmlAttributeInfos_.Size(); ++i)
     {
-        XMLElement attrElem = dest.CreateChild("attribute");
+        XmlElement attrElem = dest.CreateChild("attribute");
         attrElem.SetAttribute("name", xmlAttributeInfos_[i].name_);
         attrElem.SetAttribute("value", xmlAttributes_[i]);
     }

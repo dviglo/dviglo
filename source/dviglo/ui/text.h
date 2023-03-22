@@ -186,7 +186,7 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Update text when text, font or spacing changed.
     void UpdateText(bool onResize = false);
     /// Update cached character locations after text update, or when text alignment or indent has changed.

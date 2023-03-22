@@ -141,7 +141,7 @@ bool Scene::Save(Serializer& dest) const
         return false;
 }
 
-bool Scene::load_xml(const XMLElement& source)
+bool Scene::load_xml(const XmlElement& source)
 {
     DV_PROFILE(LoadSceneXML);
 
@@ -244,7 +244,7 @@ bool Scene::save_xml(Serializer& dest, const String& indentation) const
     DV_PROFILE(SaveSceneXML);
 
     SharedPtr<XmlFile> xml(new XmlFile());
-    XMLElement rootElem = xml->CreateRoot("scene");
+    XmlElement rootElem = xml->CreateRoot("scene");
     if (!save_xml(rootElem))
         return false;
 
@@ -387,7 +387,7 @@ bool Scene::LoadAsyncXML(File* file, LoadMode mode)
 
     if (mode > LOAD_RESOURCES_ONLY)
     {
-        XMLElement rootElement = xml->GetRoot();
+        XmlElement rootElement = xml->GetRoot();
 
         // Preload resources if appropriate
         if (mode != LOAD_SCENE)
@@ -406,7 +406,7 @@ bool Scene::LoadAsyncXML(File* file, LoadMode mode)
             return false;
 
         // Then prepare for loading all root level child nodes in the async update
-        XMLElement childNodeElement = rootElement.GetChild("node");
+        XmlElement childNodeElement = rootElement.GetChild("node");
         asyncProgress_.xmlElement_ = childNodeElement;
 
         // Count the amount of child nodes
@@ -498,7 +498,7 @@ void Scene::StopAsyncLoading()
     asyncProgress_.file_.Reset();
     asyncProgress_.xmlFile_.Reset();
     asyncProgress_.jsonFile_.Reset();
-    asyncProgress_.xmlElement_ = XMLElement::EMPTY;
+    asyncProgress_.xmlElement_ = XmlElement::EMPTY;
     asyncProgress_.jsonIndex_ = 0;
     asyncProgress_.resources_.Clear();
     resolver_.Reset();
@@ -527,7 +527,7 @@ Node* Scene::Instantiate(Deserializer& source, const Vector3& position, const Qu
     }
 }
 
-Node* Scene::InstantiateXML(const XMLElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
+Node* Scene::InstantiateXML(const XmlElement& source, const Vector3& position, const Quaternion& rotation, CreateMode mode)
 {
     DV_PROFILE(InstantiateXML);
 
@@ -1343,21 +1343,21 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
 #endif
 }
 
-void Scene::PreloadResourcesXML(const XMLElement& element)
+void Scene::PreloadResourcesXML(const XmlElement& element)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
     ResourceCache& cache = DV_RES_CACHE;
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
-    XMLElement compElem = element.GetChild("component");
+    XmlElement compElem = element.GetChild("component");
     while (compElem)
     {
         String typeName = compElem.GetAttribute("type");
         const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(StringHash(typeName));
         if (attributes)
         {
-            XMLElement attrElem = compElem.GetChild("attribute");
+            XmlElement attrElem = compElem.GetChild("attribute");
             unsigned startIndex = 0;
 
             while (attrElem)
@@ -1414,7 +1414,7 @@ void Scene::PreloadResourcesXML(const XMLElement& element)
         compElem = compElem.GetNext("component");
     }
 
-    XMLElement childElem = element.GetChild("node");
+    XmlElement childElem = element.GetChild("node");
     while (childElem)
     {
         PreloadResourcesXML(childElem);

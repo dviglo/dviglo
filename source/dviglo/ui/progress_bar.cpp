@@ -96,12 +96,12 @@ void ProgressBar::SetShowPercentText(bool enable)
     loadingText_->SetVisible(showPercentText_);
 }
 
-bool ProgressBar::FilterImplicitAttributes(XMLElement &dest) const
+bool ProgressBar::FilterImplicitAttributes(XmlElement &dest) const
 {
     if (!BorderImage::FilterImplicitAttributes(dest))
         return false;
 
-    XMLElement childElem = dest.GetChild("element");
+    XmlElement childElem = dest.GetChild("element");
     if (!childElem)
         return false;
     if (!RemoveChildXML(childElem, "Name", "S_Knob"))

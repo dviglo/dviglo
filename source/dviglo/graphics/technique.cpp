@@ -246,7 +246,7 @@ bool Technique::BeginLoad(Deserializer& source)
     if (!xml->Load(source))
         return false;
 
-    XMLElement rootElem = xml->GetRoot();
+    XmlElement rootElem = xml->GetRoot();
     if (rootElem.HasAttribute("desktop"))
         isDesktop_ = rootElem.GetBool("desktop");
 
@@ -260,7 +260,7 @@ bool Technique::BeginLoad(Deserializer& source)
     if (!globalPSDefines.Empty())
         globalPSDefines += ' ';
 
-    XMLElement passElem = rootElem.GetChild("pass");
+    XmlElement passElem = rootElem.GetChild("pass");
     while (passElem)
     {
         if (passElem.HasAttribute("name"))

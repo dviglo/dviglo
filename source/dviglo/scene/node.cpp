@@ -128,7 +128,7 @@ bool Node::Save(Serializer& dest) const
     return true;
 }
 
-bool Node::load_xml(const XMLElement& source)
+bool Node::load_xml(const XmlElement& source)
 {
     SceneResolver resolver;
 
@@ -166,7 +166,7 @@ bool Node::load_json(const JSONValue& source)
     return success;
 }
 
-bool Node::save_xml(XMLElement& dest) const
+bool Node::save_xml(XmlElement& dest) const
 {
     // Write node ID
     if (!dest.SetU32("id", id_))
@@ -182,7 +182,7 @@ bool Node::save_xml(XMLElement& dest) const
         if (component->IsTemporary())
             continue;
 
-        XMLElement compElem = dest.CreateChild("component");
+        XmlElement compElem = dest.CreateChild("component");
         if (!component->save_xml(compElem))
             return false;
     }
@@ -193,7 +193,7 @@ bool Node::save_xml(XMLElement& dest) const
         if (node->IsTemporary())
             continue;
 
-        XMLElement childElem = dest.CreateChild("node");
+        XmlElement childElem = dest.CreateChild("node");
         if (!node->save_xml(childElem))
             return false;
     }
@@ -272,7 +272,7 @@ void Node::AddReplicationState(NodeReplicationState* state)
 bool Node::save_xml(Serializer& dest, const String& indentation) const
 {
     SharedPtr<XmlFile> xml(new XmlFile());
-    XMLElement rootElem = xml->CreateRoot("node");
+    XmlElement rootElem = xml->CreateRoot("node");
     if (!save_xml(rootElem))
         return false;
 
@@ -1575,7 +1575,7 @@ bool Node::Load(Deserializer& source, SceneResolver& resolver, bool loadChildren
     return true;
 }
 
-bool Node::load_xml(const XMLElement& source, SceneResolver& resolver, bool loadChildren, bool rewriteIDs, CreateMode mode)
+bool Node::load_xml(const XmlElement& source, SceneResolver& resolver, bool loadChildren, bool rewriteIDs, CreateMode mode)
 {
     // Remove all children and components first in case this is not a fresh load
     RemoveAllChildren();
@@ -1584,7 +1584,7 @@ bool Node::load_xml(const XMLElement& source, SceneResolver& resolver, bool load
     if (!Animatable::load_xml(source))
         return false;
 
-    XMLElement compElem = source.GetChild("component");
+    XmlElement compElem = source.GetChild("component");
     while (compElem)
     {
         String typeName = compElem.GetAttribute("type");
@@ -1604,7 +1604,7 @@ bool Node::load_xml(const XMLElement& source, SceneResolver& resolver, bool load
     if (!loadChildren)
         return true;
 
-    XMLElement childElem = source.GetChild("node");
+    XmlElement childElem = source.GetChild("node");
     while (childElem)
     {
         NodeId nodeID = childElem.GetU32("id");

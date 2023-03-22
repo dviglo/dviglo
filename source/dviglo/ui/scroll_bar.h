@@ -76,9 +76,9 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Filter implicit attributes in serialization process for internal button.
-    bool FilterButtonImplicitAttributes(XMLElement& dest, const String& name) const;
+    bool FilterButtonImplicitAttributes(XmlElement& dest, const String& name) const;
 
     /// Back button.
     SharedPtr<Button> backButton_;

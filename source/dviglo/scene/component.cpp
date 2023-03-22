@@ -49,7 +49,7 @@ bool Component::Save(Serializer& dest) const
     return Animatable::Save(dest);
 }
 
-bool Component::save_xml(XMLElement& dest) const
+bool Component::save_xml(XmlElement& dest) const
 {
     // Write type and ID
     if (!dest.SetString("type", GetTypeName()))

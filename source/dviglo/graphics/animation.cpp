@@ -161,8 +161,8 @@ bool Animation::BeginLoad(Deserializer& source)
     SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
     if (file)
     {
-        XMLElement rootElem = file->GetRoot();
-        for (XMLElement triggerElem = rootElem.GetChild("trigger"); triggerElem; triggerElem = triggerElem.GetNext("trigger"))
+        XmlElement rootElem = file->GetRoot();
+        for (XmlElement triggerElem = rootElem.GetChild("trigger"); triggerElem; triggerElem = triggerElem.GetNext("trigger"))
         {
             if (triggerElem.HasAttribute("normalizedtime"))
                 AddTrigger(triggerElem.GetFloat("normalizedtime"), true, triggerElem.GetVariant());
@@ -249,11 +249,11 @@ bool Animation::Save(Serializer& dest) const
             String xmlName = ReplaceExtension(destFile->GetName(), ".xml");
 
             SharedPtr<XmlFile> xml(new XmlFile());
-            XMLElement rootElem = xml->CreateRoot("animation");
+            XmlElement rootElem = xml->CreateRoot("animation");
 
             for (const AnimationTriggerPoint& trigger : triggers_)
             {
-                XMLElement triggerElem = rootElem.CreateChild("trigger");
+                XmlElement triggerElem = rootElem.CreateChild("trigger");
                 triggerElem.SetFloat("time", trigger.time_);
                 triggerElem.SetVariant(trigger.data_);
             }

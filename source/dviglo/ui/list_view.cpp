@@ -936,12 +936,12 @@ bool ListView::IsExpanded(i32 index) const
     return GetItemExpanded(contentElement_->GetChild(index));
 }
 
-bool ListView::FilterImplicitAttributes(XMLElement& dest) const
+bool ListView::FilterImplicitAttributes(XmlElement& dest) const
 {
     if (!ScrollView::FilterImplicitAttributes(dest))
         return false;
 
-    XMLElement childElem = dest.GetChild("element");    // Horizontal scroll bar
+    XmlElement childElem = dest.GetChild("element");    // Horizontal scroll bar
     if (!childElem)
         return false;
     childElem = childElem.GetNext("element");           // Vertical scroll bar
@@ -951,7 +951,7 @@ bool ListView::FilterImplicitAttributes(XMLElement& dest) const
     if (!childElem)
         return false;
 
-    XMLElement containerElem = childElem.GetChild("element");   // Item container
+    XmlElement containerElem = childElem.GetChild("element");   // Item container
     if (!containerElem)
         return false;
     if (!RemoveChildXML(containerElem, "Name", "LV_ItemContainer"))

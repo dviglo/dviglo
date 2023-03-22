@@ -185,7 +185,7 @@ bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
 
     SetMemoryUse(source.GetSize());
 
-    XMLElement rootElem = loadXMLFile_->GetRoot("TextureAtlas");
+    XmlElement rootElem = loadXMLFile_->GetRoot("TextureAtlas");
     if (!rootElem)
     {
         DV_LOGERROR("Invalid sprite sheet");
@@ -212,8 +212,8 @@ bool SpriteSheet2D::EndLoadFromXMLFile()
         return false;
     }
 
-    XMLElement rootElem = loadXMLFile_->GetRoot("TextureAtlas");
-    XMLElement subTextureElem = rootElem.GetChild("SubTexture");
+    XmlElement rootElem = loadXMLFile_->GetRoot("TextureAtlas");
+    XmlElement subTextureElem = rootElem.GetChild("SubTexture");
     while (subTextureElem)
     {
         String name = subTextureElem.GetAttribute("name");

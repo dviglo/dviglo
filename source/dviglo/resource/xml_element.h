@@ -30,36 +30,36 @@ class XPathQuery;
 class XPathResultSet;
 
 /// Element in an XML file.
-class DV_API XMLElement
+class DV_API XmlElement
 {
 public:
     /// Construct null element.
-    XMLElement();
+    XmlElement();
     /// Construct with document and node pointers.
-    XMLElement(XmlFile* file, pugi::xml_node_struct* node);
+    XmlElement(XmlFile* file, pugi::xml_node_struct* node);
     /// Construct from xpath query result set.
-    XMLElement(XmlFile* file, const XPathResultSet* resultSet, const pugi::xpath_node* xpathNode, i32 xpathResultIndex);
+    XmlElement(XmlFile* file, const XPathResultSet* resultSet, const pugi::xpath_node* xpathNode, i32 xpathResultIndex);
     /// Copy-construct from another element.
-    XMLElement(const XMLElement& rhs);
+    XmlElement(const XmlElement& rhs);
     /// Destruct.
-    ~XMLElement();
+    ~XmlElement();
     /// Assignment operator.
-    XMLElement& operator =(const XMLElement& rhs);
+    XmlElement& operator =(const XmlElement& rhs);
 
     /// Create a child element.
-    XMLElement CreateChild(const String& name);
+    XmlElement CreateChild(const String& name);
     /// Create a child element.
-    XMLElement CreateChild(const char* name);
+    XmlElement CreateChild(const char* name);
     /// Return the first child element with name or create if does not exist.
-    XMLElement GetOrCreateChild(const String& name);
+    XmlElement GetOrCreateChild(const String& name);
     /// Return the first child element with name or create if does not exist.
-    XMLElement GetOrCreateChild(const char* name);
+    XmlElement GetOrCreateChild(const char* name);
     /// Append element. If asCopy is set to true then original element is copied and appended, otherwise specified element is appended.
-    bool AppendChild(XMLElement element, bool asCopy = false);
+    bool AppendChild(XmlElement element, bool asCopy = false);
     /// Remove element from its parent.
     bool Remove();
     /// Remove a child element. Return true if successful.
-    bool RemoveChild(const XMLElement& element);
+    bool RemoveChild(const XmlElement& element);
     /// Remove a child element by name. Return true if successful.
     bool RemoveChild(const String& name);
     /// Remove a child element by name. Return true if successful.
@@ -74,9 +74,9 @@ public:
     bool RemoveAttribute(const char* name);
 
     /// Select an element/attribute using XPath query.
-    XMLElement SelectSingle(const String& query, pugi::xpath_variable_set* variables = nullptr) const;
+    XmlElement SelectSingle(const String& query, pugi::xpath_variable_set* variables = nullptr) const;
     /// Select an element/attribute using XPath query.
-    XMLElement SelectSinglePrepared(const XPathQuery& query) const;
+    XmlElement SelectSinglePrepared(const XPathQuery& query) const;
     /// Select elements/attributes using XPath query.
     XPathResultSet Select(const String& query, pugi::xpath_variable_set* variables = nullptr) const;
     /// Select elements/attributes using XPath query.
@@ -170,15 +170,15 @@ public:
     /// Return whether has a child element.
     bool HasChild(const char* name) const;
     /// Return child element, or null if missing.
-    XMLElement GetChild(const String& name = String::EMPTY) const;
+    XmlElement GetChild(const String& name = String::EMPTY) const;
     /// Return child element, or null if missing.
-    XMLElement GetChild(const char* name) const;
+    XmlElement GetChild(const char* name) const;
     /// Return next sibling element.
-    XMLElement GetNext(const String& name = String::EMPTY) const;
+    XmlElement GetNext(const String& name = String::EMPTY) const;
     /// Return next sibling element.
-    XMLElement GetNext(const char* name) const;
+    XmlElement GetNext(const char* name) const;
     /// Return parent element.
-    XMLElement GetParent() const;
+    XmlElement GetParent() const;
     /// Return number of attributes.
     i32 GetNumAttributes() const;
     /// Return whether has an attribute.
@@ -280,11 +280,11 @@ public:
     /// Return current result index.
     i32 GetXPathResultIndex() const { return xpathResultIndex_; }
 
-    /// Return next XPath query result. Only valid when this instance of XMLElement is itself one of the query result in the result set.
-    XMLElement NextResult() const;
+    /// Return next XPath query result. Only valid when this instance of XmlElement is itself one of the query result in the result set.
+    XmlElement NextResult() const;
 
-    /// Empty XMLElement.
-    static const XMLElement EMPTY;
+    /// Empty XmlElement.
+    static const XmlElement EMPTY;
 
 private:
     /// XML file.
@@ -313,12 +313,12 @@ public:
     ~XPathResultSet();
     /// Assignment operator.
     XPathResultSet& operator =(const XPathResultSet& rhs);
-    /// Return the n-th result in the set. Call XMLElement::GetNextResult() to get the subsequent result in the set.
-    /// Note: The XPathResultSet return value must be stored in a lhs variable to ensure the underlying xpath_node_set* is still valid while performing XPathResultSet::FirstResult(), XPathResultSet::operator [], and XMLElement::NextResult().
-    XMLElement operator [](i32 index) const;
-    /// Return the first result in the set. Call XMLElement::GetNextResult() to get the subsequent result in the set.
-    /// Note: The XPathResultSet return value must be stored in a lhs variable to ensure the underlying xpath_node_set* is still valid while performing XPathResultSet::FirstResult(), XPathResultSet::operator [], and XMLElement::NextResult().
-    XMLElement FirstResult();
+    /// Return the n-th result in the set. Call XmlElement::GetNextResult() to get the subsequent result in the set.
+    /// Note: The XPathResultSet return value must be stored in a lhs variable to ensure the underlying xpath_node_set* is still valid while performing XPathResultSet::FirstResult(), XPathResultSet::operator [], and XmlElement::NextResult().
+    XmlElement operator [](i32 index) const;
+    /// Return the first result in the set. Call XmlElement::GetNextResult() to get the subsequent result in the set.
+    /// Note: The XPathResultSet return value must be stored in a lhs variable to ensure the underlying xpath_node_set* is still valid while performing XPathResultSet::FirstResult(), XPathResultSet::operator [], and XmlElement::NextResult().
+    XmlElement FirstResult();
     /// Return size of result set.
     i32 Size() const;
     /// Return whether result set is empty.
@@ -361,14 +361,14 @@ public:
     /// Clear by removing all variables and XPath query object.
     void Clear();
     /// Evaluate XPath query and expecting a boolean return value.
-    bool EvaluateToBool(const XMLElement& element) const;
+    bool EvaluateToBool(const XmlElement& element) const;
     /// Evaluate XPath query and expecting a float return value.
-    float EvaluateToFloat(const XMLElement& element) const;
+    float EvaluateToFloat(const XmlElement& element) const;
     /// Evaluate XPath query and expecting a string return value.
-    String EvaluateToString(const XMLElement& element) const;
+    String EvaluateToString(const XmlElement& element) const;
     /// Evaluate XPath query and expecting an XPath query result set as return value.
-    /// Note: The XPathResultSet return value must be stored in a lhs variable to ensure the underlying xpath_node_set* is still valid while performing XPathResultSet::FirstResult(), XPathResultSet::operator [], and XMLElement::NextResult().
-    XPathResultSet Evaluate(const XMLElement& element) const;
+    /// Note: The XPathResultSet return value must be stored in a lhs variable to ensure the underlying xpath_node_set* is still valid while performing XPathResultSet::FirstResult(), XPathResultSet::operator [], and XmlElement::NextResult().
+    XPathResultSet Evaluate(const XmlElement& element) const;
 
     /// Return query string.
     String GetQuery() const { return queryString_; }

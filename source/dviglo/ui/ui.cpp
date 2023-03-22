@@ -592,7 +592,7 @@ SharedPtr<UiElement> UI::LoadLayout(XmlFile* file, XmlFile* styleFile)
 
     DV_LOGDEBUG("Loading UI layout " + file->GetName());
 
-    XMLElement rootElem = file->GetRoot("element");
+    XmlElement rootElem = file->GetRoot("element");
     if (!rootElem)
     {
         DV_LOGERROR("No root UI element in " + file->GetName());

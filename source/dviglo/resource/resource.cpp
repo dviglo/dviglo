@@ -136,9 +136,9 @@ bool ResourceWithMetadata::HasMetadata() const
     return !metadata_.Empty();
 }
 
-void ResourceWithMetadata::LoadMetadataFromXML(const XMLElement& source)
+void ResourceWithMetadata::LoadMetadataFromXML(const XmlElement& source)
 {
-    for (XMLElement elem = source.GetChild("metadata"); elem; elem = elem.GetNext("metadata"))
+    for (XmlElement elem = source.GetChild("metadata"); elem; elem = elem.GetNext("metadata"))
         AddMetadata(elem.GetAttribute("name"), elem.GetVariant());
 }
 
@@ -148,11 +148,11 @@ void ResourceWithMetadata::LoadMetadataFromJSON(const JSONArray& array)
         AddMetadata(value.Get("name").GetString(), value.GetVariant());
 }
 
-void ResourceWithMetadata::SaveMetadataToXML(XMLElement& destination) const
+void ResourceWithMetadata::SaveMetadataToXML(XmlElement& destination) const
 {
     for (const String& metadataKey : metadataKeys_)
     {
-        XMLElement elem = destination.CreateChild("metadata");
+        XmlElement elem = destination.CreateChild("metadata");
         elem.SetString("name", metadataKey);
         elem.SetVariant(GetMetadata(metadataKey));
     }

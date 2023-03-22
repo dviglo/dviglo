@@ -24,7 +24,7 @@ ShaderPrecache::ShaderPrecache(const String& fileName) :
         File source(fileName);
         xmlFile_.Load(source);
 
-        XMLElement shader = xmlFile_.GetRoot().GetChild("shader");
+        XmlElement shader = xmlFile_.GetRoot().GetChild("shader");
         while (shader)
         {
             String oldCombination = shader.GetAttribute("vs") + " " + shader.GetAttribute("vsdefines") + " " +
@@ -75,7 +75,7 @@ void ShaderPrecache::StoreShaders(ShaderVariation* vs, ShaderVariation* ps)
         return;
     usedCombinations_.Insert(newCombination);
 
-    XMLElement shaderElem = xmlFile_.GetRoot().CreateChild("shader");
+    XmlElement shaderElem = xmlFile_.GetRoot().CreateChild("shader");
     shaderElem.SetAttribute("vs", vsName);
     shaderElem.SetAttribute("vsdefines", vsDefines);
     shaderElem.SetAttribute("ps", psName);
@@ -89,7 +89,7 @@ void ShaderPrecache::LoadShaders(Graphics* graphics, Deserializer& source)
     XmlFile xmlFile;
     xmlFile.Load(source);
 
-    XMLElement shader = xmlFile.GetRoot().GetChild("shader");
+    XmlElement shader = xmlFile.GetRoot().GetChild("shader");
     while (shader)
     {
         String vsDefines = shader.GetAttribute("vsdefines");

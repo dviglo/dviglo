@@ -91,9 +91,9 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Filter implicit attributes in serialization process for internal scroll bar.
-    bool FilterScrollBarImplicitAttributes(XMLElement& dest, const String& name) const;
+    bool FilterScrollBarImplicitAttributes(XmlElement& dest, const String& name) const;
     /// Resize panel based on scrollbar visibility.
     void UpdatePanelSize();
     /// Recalculate view size, validate view position and update scrollbars.

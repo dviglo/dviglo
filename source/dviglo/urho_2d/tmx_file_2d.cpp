@@ -45,7 +45,7 @@ const String& TmxLayer2D::GetProperty(const String& name) const
     return propertySet_->GetProperty(name);
 }
 
-void TmxLayer2D::LoadInfo(const XMLElement& element)
+void TmxLayer2D::LoadInfo(const XmlElement& element)
 {
     name_ = element.GetAttribute("name");
     width_ = element.GetI32("width");
@@ -56,7 +56,7 @@ void TmxLayer2D::LoadInfo(const XMLElement& element)
         visible_ = true;
 }
 
-void TmxLayer2D::LoadPropertySet(const XMLElement& element)
+void TmxLayer2D::LoadPropertySet(const XmlElement& element)
 {
     propertySet_ = new PropertySet2D();
     propertySet_->Load(element);
@@ -73,11 +73,11 @@ enum LayerEncoding {
     Base64,
 };
 
-bool TmxTileLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
+bool TmxTileLayer2D::Load(const XmlElement& element, const TileMapInfo2D& info)
 {
     LoadInfo(element);
 
-    XMLElement dataElem = element.GetChild("data");
+    XmlElement dataElem = element.GetChild("data");
     if (!dataElem)
     {
         DV_LOGERROR("Could not find data in layer");
@@ -112,7 +112,7 @@ bool TmxTileLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
     tiles_.Resize((unsigned)(width_ * height_));
     if (encoding == XML)
     {
-        XMLElement tileElem = dataElem.GetChild("tile");
+        XmlElement tileElem = dataElem.GetChild("tile");
 
         for (int y = 0; y < height_; ++y)
         {
@@ -208,11 +208,11 @@ TmxObjectGroup2D::TmxObjectGroup2D(TmxFile2D* tmxFile) :
 {
 }
 
-bool TmxObjectGroup2D::Load(const XMLElement& element, const TileMapInfo2D& info)
+bool TmxObjectGroup2D::Load(const XmlElement& element, const TileMapInfo2D& info)
 {
     LoadInfo(element);
 
-    for (XMLElement objectElem = element.GetChild("object"); objectElem; objectElem = objectElem.GetNext("object"))
+    for (XmlElement objectElem = element.GetChild("object"); objectElem; objectElem = objectElem.GetNext("object"))
     {
         SharedPtr<TileMapObject2D> object(new TileMapObject2D());
         StoreObject(objectElem, object, info);
@@ -225,7 +225,7 @@ bool TmxObjectGroup2D::Load(const XMLElement& element, const TileMapInfo2D& info
     return true;
 }
 
-void TmxObjectGroup2D::StoreObject(const XMLElement& objectElem, const SharedPtr<TileMapObject2D>& object, const TileMapInfo2D& info, bool isTile)
+void TmxObjectGroup2D::StoreObject(const XmlElement& objectElem, const SharedPtr<TileMapObject2D>& object, const TileMapInfo2D& info, bool isTile)
 {
         if (objectElem.HasAttribute("name"))
             object->name_ = objectElem.GetAttribute("name");
@@ -276,7 +276,7 @@ void TmxObjectGroup2D::StoreObject(const XMLElement& objectElem, const SharedPtr
                 Vector<String> points;
 
                 const char* name = object->objectType_ == OT_POLYGON ? "polygon" : "polyline";
-                XMLElement polygonElem = objectElem.GetChild(name);
+                XmlElement polygonElem = objectElem.GetChild(name);
                 points = polygonElem.GetAttribute("points").Split(' ');
 
                 if (points.Size() <= 1)
@@ -316,11 +316,11 @@ TmxImageLayer2D::TmxImageLayer2D(TmxFile2D* tmxFile) :
 {
 }
 
-bool TmxImageLayer2D::Load(const XMLElement& element, const TileMapInfo2D& info)
+bool TmxImageLayer2D::Load(const XmlElement& element, const TileMapInfo2D& info)
 {
     LoadInfo(element);
 
-    XMLElement imageElem = element.GetChild("image");
+    XmlElement imageElem = element.GetChild("image");
     if (!imageElem)
         return false;
 
@@ -380,7 +380,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
         return false;
     }
 
-    XMLElement rootElem = loadXMLFile_->GetRoot("map");
+    XmlElement rootElem = loadXMLFile_->GetRoot("map");
     if (!rootElem)
     {
         DV_LOGERROR("Invalid tmx file " + source.GetName());
@@ -391,7 +391,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
     // If we're async loading, request the texture now. Finish during EndLoad().
     if (GetAsyncLoadState() == ASYNC_LOADING)
     {
-        for (XMLElement tileSetElem = rootElem.GetChild("tileset"); tileSetElem; tileSetElem = tileSetElem.GetNext("tileset"))
+        for (XmlElement tileSetElem = rootElem.GetChild("tileset"); tileSetElem; tileSetElem = tileSetElem.GetNext("tileset"))
         {
             // Tile set defined in TSX file
             if (tileSetElem.HasAttribute("source"))
@@ -414,7 +414,7 @@ bool TmxFile2D::BeginLoad(Deserializer& source)
             }
         }
 
-        for (XMLElement imageLayerElem = rootElem.GetChild("imagelayer"); imageLayerElem;
+        for (XmlElement imageLayerElem = rootElem.GetChild("imagelayer"); imageLayerElem;
              imageLayerElem = imageLayerElem.GetNext("imagelayer"))
         {
             String textureFilePath = get_parent(GetName()) + imageLayerElem.GetChild("image").GetAttribute("source");
@@ -430,7 +430,7 @@ bool TmxFile2D::EndLoad()
     if (!loadXMLFile_)
         return false;
 
-    XMLElement rootElem = loadXMLFile_->GetRoot("map");
+    XmlElement rootElem = loadXMLFile_->GetRoot("map");
     String version = rootElem.GetAttribute("version");
     if (!version.StartsWith("1."))
     {
@@ -462,7 +462,7 @@ bool TmxFile2D::EndLoad()
         delete layer;
     layers_.Clear();
 
-    for (XMLElement childElement = rootElem.GetChild(); childElement; childElement = childElement.GetNext())
+    for (XmlElement childElement = rootElem.GetChild(); childElement; childElement = childElement.GetNext())
     {
         bool ret = true;
         String name = childElement.GetName();
@@ -594,11 +594,11 @@ struct TileImageInfo {
     int y;
 };
 
-bool TmxFile2D::LoadTileSet(const XMLElement& element)
+bool TmxFile2D::LoadTileSet(const XmlElement& element)
 {
     unsigned firstgid = element.GetU32("firstgid");
 
-    XMLElement tileSetElem;
+    XmlElement tileSetElem;
     if (element.HasAttribute("source"))
     {
         String source = element.GetAttribute("source");
@@ -631,7 +631,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
     ResourceCache& cache = DV_RES_CACHE;
 
     {
-        XMLElement imageElem = tileSetElem.GetChild("image");
+        XmlElement imageElem = tileSetElem.GetChild("image");
         // Tileset based on single tileset image
         if (imageElem.NotNull()) {
             isSingleTileSet = true;
@@ -647,7 +647,7 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
             Vector2 hotSpot(0.0f, 0.0f);
             if (tileSetElem.HasChild("tileoffset"))
             {
-                XMLElement offsetElem = tileSetElem.GetChild("tileoffset");
+                XmlElement offsetElem = tileSetElem.GetChild("tileoffset");
                 hotSpot.x_ += offsetElem.GetFloat("x") / (float)tileWidth;
                 hotSpot.y_ += offsetElem.GetFloat("y") / (float)tileHeight;
             }
@@ -672,13 +672,13 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
     }
 
     Vector<TileImageInfo> tileImageInfos;
-    for (XMLElement tileElem = tileSetElem.GetChild("tile"); tileElem; tileElem = tileElem.GetNext("tile"))
+    for (XmlElement tileElem = tileSetElem.GetChild("tile"); tileElem; tileElem = tileElem.GetNext("tile"))
     {
         unsigned gid = firstgid + tileElem.GetU32("id");
         // Tileset based on collection of images
         if (!isSingleTileSet)
         {
-            XMLElement imageElem = tileElem.GetChild("image");
+            XmlElement imageElem = tileElem.GetChild("image");
             if (imageElem.NotNull()) {
                 String textureFilePath = get_parent(GetName()) + imageElem.GetAttribute("source");
                 SharedPtr<Image> image(cache.GetResource<Image>(textureFilePath));
@@ -695,10 +695,10 @@ bool TmxFile2D::LoadTileSet(const XMLElement& element)
         }
         // Tile collision shape(s)
         TmxObjectGroup2D objectGroup(this);
-        for (XMLElement collisionElem = tileElem.GetChild("objectgroup"); collisionElem; collisionElem = collisionElem.GetNext("objectgroup"))
+        for (XmlElement collisionElem = tileElem.GetChild("objectgroup"); collisionElem; collisionElem = collisionElem.GetNext("objectgroup"))
         {
             Vector<SharedPtr<TileMapObject2D>> objects;
-            for (XMLElement objectElem = collisionElem.GetChild("object"); objectElem; objectElem = objectElem.GetNext("object"))
+            for (XmlElement objectElem = collisionElem.GetChild("object"); objectElem; objectElem = objectElem.GetNext("object"))
             {
                 SharedPtr<TileMapObject2D> object(new TileMapObject2D());
 

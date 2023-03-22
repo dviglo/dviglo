@@ -118,10 +118,10 @@ PropertySet2D::PropertySet2D() = default;
 
 PropertySet2D::~PropertySet2D() = default;
 
-void PropertySet2D::Load(const XMLElement& element)
+void PropertySet2D::Load(const XmlElement& element)
 {
     assert(element.GetName() == "properties");
-    for (XMLElement propertyElem = element.GetChild("property"); propertyElem; propertyElem = propertyElem.GetNext("property"))
+    for (XmlElement propertyElem = element.GetChild("property"); propertyElem; propertyElem = propertyElem.GetNext("property"))
         nameToValueMapping_[propertyElem.GetAttribute("name")] = propertyElem.GetAttribute("value");
 }
 

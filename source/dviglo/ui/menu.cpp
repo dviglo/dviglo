@@ -103,7 +103,7 @@ void Menu::OnShowPopup()
 {
 }
 
-bool Menu::load_xml(const XMLElement& source, XmlFile* styleFile)
+bool Menu::load_xml(const XmlElement& source, XmlFile* styleFile)
 {
     // Get style override if defined
     String styleName = source.GetAttribute("style");
@@ -139,7 +139,7 @@ bool Menu::load_xml(const XMLElement& source, XmlFile* styleFile)
     i32 nextInternalChild = 0;
 
     // Load child elements. Internal elements are not to be created as they already exist
-    XMLElement childElem = source.GetChild("element");
+    XmlElement childElem = source.GetChild("element");
     while (childElem)
     {
         bool internalElem = childElem.GetBool("internal");
@@ -211,7 +211,7 @@ bool Menu::load_xml(const XMLElement& source, XmlFile* styleFile)
     return true;
 }
 
-bool Menu::save_xml(XMLElement& dest) const
+bool Menu::save_xml(XmlElement& dest) const
 {
     if (!Button::save_xml(dest))
         return false;
@@ -219,7 +219,7 @@ bool Menu::save_xml(XMLElement& dest) const
     // Save the popup element as a "virtual" child element
     if (popup_)
     {
-        XMLElement childElem = dest.CreateChild("element");
+        XmlElement childElem = dest.CreateChild("element");
         childElem.SetBool("popup", true);
         if (!popup_->save_xml(childElem))
             return false;
@@ -322,7 +322,7 @@ void Menu::SetAccelerator(int key, int qualifiers)
         UnsubscribeFromEvent(E_KEYDOWN);
 }
 
-bool Menu::FilterPopupImplicitAttributes(XMLElement& dest) const
+bool Menu::FilterPopupImplicitAttributes(XmlElement& dest) const
 {
     if (!RemoveChildXML(dest, "Position"))
         return false;

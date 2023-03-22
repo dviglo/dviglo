@@ -299,12 +299,12 @@ void Run(Vector<String>& arguments)
     spriteSheetImage.SetData(nullptr);
 
     XmlFile xml;
-    XMLElement root = xml.CreateRoot("TextureAtlas");
+    XmlElement root = xml.CreateRoot("TextureAtlas");
     root.SetAttribute("imagePath", GetFileNameAndExtension(outputFile));
 
     for (const SharedPtr<PackerInfo>& packerInfo : packerInfos)
     {
-        XMLElement subTexture = root.CreateChild("SubTexture");
+        XmlElement subTexture = root.CreateChild("SubTexture");
         subTexture.SetString("name", packerInfo->name);
         subTexture.SetI32("x", packerInfo->x + offsetX);
         subTexture.SetI32("y", packerInfo->y + offsetY);

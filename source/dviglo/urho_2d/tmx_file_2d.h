@@ -13,7 +13,7 @@ namespace dviglo
 class Sprite2D;
 class Texture2D;
 class TmxFile2D;
-class XMLElement;
+class XmlElement;
 class XmlFile;
 
 /// Tmx layer.
@@ -49,9 +49,9 @@ public:
 
 protected:
     /// Load layer info.
-    void LoadInfo(const XMLElement& element);
+    void LoadInfo(const XmlElement& element);
     /// Load property set.
-    void LoadPropertySet(const XMLElement& element);
+    void LoadPropertySet(const XmlElement& element);
 
     /// Tmx file.
     WeakPtr<TmxFile2D> tmxFile_;
@@ -76,7 +76,7 @@ public:
     explicit TmxTileLayer2D(TmxFile2D* tmxFile);
 
     /// Load from XML element.
-    bool Load(const XMLElement& element, const TileMapInfo2D& info);
+    bool Load(const XmlElement& element, const TileMapInfo2D& info);
     /// Return tile.
     Tile2D* GetTile(int x, int y) const;
 
@@ -92,10 +92,10 @@ public:
     explicit TmxObjectGroup2D(TmxFile2D* tmxFile);
 
     /// Load from XML element.
-    bool Load(const XMLElement& element, const TileMapInfo2D& info);
+    bool Load(const XmlElement& element, const TileMapInfo2D& info);
 
     /// Store object.
-    void StoreObject(const XMLElement& objectElem, const SharedPtr<TileMapObject2D>& object, const TileMapInfo2D& info, bool isTile = false);
+    void StoreObject(const XmlElement& objectElem, const SharedPtr<TileMapObject2D>& object, const TileMapInfo2D& info, bool isTile = false);
 
     /// Return number of objects.
     unsigned GetNumObjects() const { return objects_.Size(); }
@@ -115,7 +115,7 @@ public:
     explicit TmxImageLayer2D(TmxFile2D* tmxFile);
 
     /// Load from XML element.
-    bool Load(const XMLElement& element, const TileMapInfo2D& info);
+    bool Load(const XmlElement& element, const TileMapInfo2D& info);
 
     /// Return position.
     const Vector2& GetPosition() const { return position_; }
@@ -190,7 +190,7 @@ private:
     /// Load TSX file.
     SharedPtr<XmlFile> LoadTSXFile(const String& source);
     /// Load tile set.
-    bool LoadTileSet(const XMLElement& element);
+    bool LoadTileSet(const XmlElement& element);
 
     /// XML file used during loading.
     SharedPtr<XmlFile> loadXMLFile_;

@@ -217,7 +217,7 @@ void DropDownList::SetSelectionAttr(i32 index)
     SetSelection(index);
 }
 
-bool DropDownList::FilterImplicitAttributes(XMLElement& dest) const
+bool DropDownList::FilterImplicitAttributes(XmlElement& dest) const
 {
     if (!Menu::FilterImplicitAttributes(dest))
         return false;
@@ -225,7 +225,7 @@ bool DropDownList::FilterImplicitAttributes(XMLElement& dest) const
     if (!RemoveChildXML(dest, "Popup Offset"))
         return false;
 
-    XMLElement childElem = dest.GetChild("element");
+    XmlElement childElem = dest.GetChild("element");
     if (!childElem)
         return false;
     if (!RemoveChildXML(childElem, "Name", "DDL_Placeholder"))
@@ -244,7 +244,7 @@ bool DropDownList::FilterImplicitAttributes(XMLElement& dest) const
     return true;
 }
 
-bool DropDownList::FilterPopupImplicitAttributes(XMLElement& dest) const
+bool DropDownList::FilterPopupImplicitAttributes(XmlElement& dest) const
 {
     if (!Menu::FilterPopupImplicitAttributes(dest))
         return false;
@@ -258,7 +258,7 @@ bool DropDownList::FilterPopupImplicitAttributes(XMLElement& dest) const
         return false;
 
     // ListView
-    XMLElement childElem = dest.GetChild("element");
+    XmlElement childElem = dest.GetChild("element");
     if (!childElem)
         return false;
     if (!listView_->FilterAttributes(childElem))
@@ -271,11 +271,11 @@ bool DropDownList::FilterPopupImplicitAttributes(XMLElement& dest) const
         return false;
 
     // Horizontal scroll bar
-    XMLElement hScrollElem = childElem.GetChild("element");
+    XmlElement hScrollElem = childElem.GetChild("element");
     // Vertical scroll bar
-    XMLElement vScrollElem = hScrollElem.GetNext("element");
+    XmlElement vScrollElem = hScrollElem.GetNext("element");
     // Scroll panel
-    XMLElement panelElem = vScrollElem.GetNext("element");
+    XmlElement panelElem = vScrollElem.GetNext("element");
 
     if (hScrollElem && !hScrollElem.GetParent().RemoveChild(hScrollElem))
         return false;
@@ -287,7 +287,7 @@ bool DropDownList::FilterPopupImplicitAttributes(XMLElement& dest) const
         if (panelElem.GetAttribute("style").Empty() && !panelElem.SetAttribute("style", "none"))
             return false;
         // Item container
-        XMLElement containerElem = panelElem.GetChild("element");
+        XmlElement containerElem = panelElem.GetChild("element");
         if (containerElem)
         {
             if (containerElem.GetAttribute("style").Empty() && !containerElem.SetAttribute("style", "none"))

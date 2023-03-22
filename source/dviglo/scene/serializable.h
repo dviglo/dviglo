@@ -17,7 +17,7 @@ namespace dviglo
 class Connection;
 class Deserializer;
 class Serializer;
-class XMLElement;
+class XmlElement;
 class JSONValue;
 
 struct DirtyBits;
@@ -48,9 +48,9 @@ public:
     /// Save as binary data. Return true if successful.
     virtual bool Save(Serializer& dest) const;
     /// Load from XML data. Return true if successful.
-    virtual bool load_xml(const XMLElement& source);
+    virtual bool load_xml(const XmlElement& source);
     /// Save as XML data. Return true if successful.
-    virtual bool save_xml(XMLElement& dest) const;
+    virtual bool save_xml(XmlElement& dest) const;
     /// Load from JSON data. Return true if successful.
     virtual bool load_json(const JSONValue& source);
     /// Save as JSON data. Return true if successful.

@@ -12,7 +12,7 @@
 namespace dviglo
 {
 
-class XMLElement;
+class XmlElement;
 class JSONValue;
 
 /// Interpolation method.
@@ -64,9 +64,9 @@ public:
     /// Save resource. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Load from XML data. Return true if successful.
-    bool load_xml(const XMLElement& source);
+    bool load_xml(const XmlElement& source);
     /// Save as XML data. Return true if successful.
-    bool save_xml(XMLElement& dest) const;
+    bool save_xml(XmlElement& dest) const;
     /// Load from JSON data. Return true if successful.
     bool load_json(const JSONValue& source);
     /// Save as XML data. Return true if successful.

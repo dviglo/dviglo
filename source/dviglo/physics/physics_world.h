@@ -36,7 +36,7 @@ class Ray;
 class RigidBody;
 class Scene;
 class Serializer;
-class XMLElement;
+class XmlElement;
 
 struct CollisionGeometryData;
 

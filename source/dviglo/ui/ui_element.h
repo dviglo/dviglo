@@ -116,13 +116,13 @@ public:
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;
     /// Load from XML data. Return true if successful.
-    bool load_xml(const XMLElement& source) override;
+    bool load_xml(const XmlElement& source) override;
     /// Load from XML data with style. Return true if successful.
-    virtual bool load_xml(const XMLElement& source, XmlFile* styleFile);
+    virtual bool load_xml(const XmlElement& source, XmlFile* styleFile);
     /// Create a child by loading from XML data with style. Returns the child element if successful, null if otherwise.
-    virtual UiElement* LoadChildXML(const XMLElement& childElem, XmlFile* styleFile);
+    virtual UiElement* LoadChildXML(const XmlElement& childElem, XmlFile* styleFile);
     /// Save as XML data. Return true if successful.
-    bool save_xml(XMLElement& dest) const override;
+    bool save_xml(XmlElement& dest) const override;
 
     /// Perform UI element update.
     virtual void Update(float timeStep);
@@ -195,7 +195,7 @@ public:
     /// Save to an XML file. Return true if successful.
     bool save_xml(Serializer& dest, const String& indentation = "\t") const;
     /// Filter attributes in serialization process.
-    bool FilterAttributes(XMLElement& dest) const;
+    bool FilterAttributes(XmlElement& dest) const;
 
     /// Set name.
     void SetName(const String& name);
@@ -302,7 +302,7 @@ public:
     /// Set style from an XML file. Find the style element by name. If the style file is not explicitly provided, use the default style from parental chain. Return true if the style is applied successfully. See also \ref UI_Programmatic.
     bool SetStyle(const String& styleName, XmlFile* file = nullptr);
     /// Set style from an XML element. Return true if the style is applied successfully.
-    bool SetStyle(const XMLElement& element);
+    bool SetStyle(const XmlElement& element);
     /// Set style from an XML file. Find the style element automatically by using the element's typename. If the style file is not explicitly provided, use the default style from parental chain. Return true if the style is applied successfully. See also \ref UI_Programmatic.
     bool SetStyleAuto(XmlFile* file = nullptr);
     /// Set default style file for later use by children elements.
@@ -665,13 +665,13 @@ protected:
     /// Mark screen position as needing an update.
     void MarkDirty();
     /// Remove child XML element by matching attribute name.
-    bool RemoveChildXML(XMLElement& parent, const String& name) const;
+    bool RemoveChildXML(XmlElement& parent, const String& name) const;
     /// Remove child XML element by matching attribute name and value.
-    bool RemoveChildXML(XMLElement& parent, const String& name, const String& value) const;
+    bool RemoveChildXML(XmlElement& parent, const String& name, const String& value) const;
     /// Filter UI-style attributes in serialization process.
-    bool FilterUIStyleAttributes(XMLElement& dest, const XMLElement& styleElem) const;
+    bool FilterUIStyleAttributes(XmlElement& dest, const XmlElement& styleElem) const;
     /// Filter implicit attributes in serialization process.
-    virtual bool FilterImplicitAttributes(XMLElement& dest) const;
+    virtual bool FilterImplicitAttributes(XmlElement& dest) const;
     /// Update anchored size & position. Only called when anchoring is enabled.
     void UpdateAnchoring();
 

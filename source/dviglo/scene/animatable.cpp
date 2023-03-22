@@ -53,7 +53,7 @@ void Animatable::RegisterObject()
         ResourceRef(ObjectAnimation::GetTypeStatic()), AM_DEFAULT);
 }
 
-bool Animatable::load_xml(const XMLElement& source)
+bool Animatable::load_xml(const XmlElement& source)
 {
     if (!Serializable::load_xml(source))
         return false;
@@ -61,7 +61,7 @@ bool Animatable::load_xml(const XMLElement& source)
     SetObjectAnimation(nullptr);
     attributeAnimationInfos_.Clear();
 
-    XMLElement elem = source.GetChild("objectanimation");
+    XmlElement elem = source.GetChild("objectanimation");
     if (elem)
     {
         SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation());
@@ -155,7 +155,7 @@ bool Animatable::load_json(const JSONValue& source)
     return true;
 }
 
-bool Animatable::save_xml(XMLElement& dest) const
+bool Animatable::save_xml(XmlElement& dest) const
 {
     if (!Serializable::save_xml(dest))
         return false;
@@ -163,7 +163,7 @@ bool Animatable::save_xml(XMLElement& dest) const
     // Object animation without name
     if (objectAnimation_ && objectAnimation_->GetName().Empty())
     {
-        XMLElement elem = dest.CreateChild("objectanimation");
+        XmlElement elem = dest.CreateChild("objectanimation");
         if (!objectAnimation_->save_xml(elem))
             return false;
     }
@@ -177,7 +177,7 @@ bool Animatable::save_xml(XMLElement& dest) const
             continue;
 
         const AttributeInfo& attr = i->second_->GetAttributeInfo();
-        XMLElement elem = dest.CreateChild("attributeanimation");
+        XmlElement elem = dest.CreateChild("attributeanimation");
         elem.SetAttribute("name", attr.name_);
         if (!attributeAnimation->save_xml(elem))
             return false;

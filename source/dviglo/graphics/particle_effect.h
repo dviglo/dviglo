@@ -84,7 +84,7 @@ static const unsigned DEFAULT_NUM_PARTICLES = 10;
 
 class Material;
 class XmlFile;
-class XMLElement;
+class XmlElement;
 
 /// %Particle effect definition.
 class DV_API ParticleEffect : public Resource
@@ -108,10 +108,10 @@ public:
 
     using Resource::Load;
 
-    /// Save resource to XMLElement. Return true if successful.
-    bool Save(XMLElement& dest) const;
-    /// Load resource from XMLElement synchronously. Return true if successful.
-    bool Load(const XMLElement& source);
+    /// Save resource to XmlElement. Return true if successful.
+    bool Save(XmlElement& dest) const;
+    /// Load resource from XmlElement synchronously. Return true if successful.
+    bool Load(const XmlElement& source);
     /// Set material.
     void SetMaterial(Material* material);
     /// Set maximum number of particles.
@@ -333,11 +333,11 @@ public:
 
 private:
     /// Read a float range from an XML element.
-    void GetFloatMinMax(const XMLElement& element, float& minValue, float& maxValue);
+    void GetFloatMinMax(const XmlElement& element, float& minValue, float& maxValue);
     /// Read a Vector2 range from an XML element.
-    void GetVector2MinMax(const XMLElement& element, Vector2& minValue, Vector2& maxValue);
+    void GetVector2MinMax(const XmlElement& element, Vector2& minValue, Vector2& maxValue);
     /// Read a Vector3 from an XML element.
-    void GetVector3MinMax(const XMLElement& element, Vector3& minValue, Vector3& maxValue);
+    void GetVector3MinMax(const XmlElement& element, Vector3& minValue, Vector3& maxValue);
 
     /// Material.
     SharedPtr<Material> material_;

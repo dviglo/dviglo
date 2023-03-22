@@ -12,7 +12,7 @@ namespace dviglo
 
 class ValueAnimation;
 class ValueAnimationInfo;
-class XMLElement;
+class XmlElement;
 class JSONValue;
 
 /// Object animation class, an object animation include one or more attribute animations and theirs wrap mode and speed for an Animatable object.
@@ -33,9 +33,9 @@ public:
     /// Save resource. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Load from XML data. Return true if successful.
-    bool load_xml(const XMLElement& source);
+    bool load_xml(const XmlElement& source);
     /// Save as XML data. Return true if successful.
-    bool save_xml(XMLElement& dest) const;
+    bool save_xml(XmlElement& dest) const;
     /// Load from JSON data. Return true if successful.
     bool load_json(const JSONValue& source);
     /// Save as JSON data. Return true if successful.

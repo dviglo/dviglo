@@ -38,25 +38,25 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
         return false;
     }
 
-    XMLElement root = xmlReader->GetRoot("font");
+    XmlElement root = xmlReader->GetRoot("font");
     if (root.IsNull())
     {
         DV_LOGERROR("Could not find Font element");
         return false;
     }
 
-    XMLElement pagesElem = root.GetChild("pages");
+    XmlElement pagesElem = root.GetChild("pages");
     if (pagesElem.IsNull())
     {
         DV_LOGERROR("Could not find Pages element");
         return false;
     }
 
-    XMLElement infoElem = root.GetChild("info");
+    XmlElement infoElem = root.GetChild("info");
     if (!infoElem.IsNull())
         pointSize_ = infoElem.GetI32("size");
 
-    XMLElement commonElem = root.GetChild("common");
+    XmlElement commonElem = root.GetChild("common");
     rowHeight_ = commonElem.GetI32("lineHeight");
     unsigned pages = commonElem.GetU32("pages");
     textures_.Reserve(pages);
@@ -65,7 +65,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
     String fontPath = GetPath(font_->GetName());
     unsigned totalTextureSize = 0;
 
-    XMLElement pageElem = pagesElem.GetChild("page");
+    XmlElement pageElem = pagesElem.GetChild("page");
     for (unsigned i = 0; i < pages; ++i)
     {
         if (pageElem.IsNull())
@@ -100,10 +100,10 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
         pageElem = pageElem.GetNext("page");
     }
 
-    XMLElement charsElem = root.GetChild("chars");
+    XmlElement charsElem = root.GetChild("chars");
     int count = charsElem.GetI32("count");
 
-    XMLElement charElem = charsElem.GetChild("char");
+    XmlElement charElem = charsElem.GetChild("char");
     while (!charElem.IsNull())
     {
         int id = charElem.GetI32("id");
@@ -124,10 +124,10 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
         charElem = charElem.GetNext("char");
     }
 
-    XMLElement kerningsElem = root.GetChild("kernings");
+    XmlElement kerningsElem = root.GetChild("kernings");
     if (kerningsElem.NotNull())
     {
-        XMLElement kerningElem = kerningsElem.GetChild("kerning");
+        XmlElement kerningElem = kerningsElem.GetChild("kerning");
         while (!kerningElem.IsNull())
         {
             unsigned first = kerningElem.GetI32("first");
@@ -244,10 +244,10 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
 bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indentation)
 {
     SharedPtr<XmlFile> xml(new XmlFile());
-    XMLElement rootElem = xml->CreateRoot("font");
+    XmlElement rootElem = xml->CreateRoot("font");
 
     // Information
-    XMLElement childElem = rootElem.CreateChild("info");
+    XmlElement childElem = rootElem.CreateChild("info");
     String fileName = GetFileName(font_->GetName());
     childElem.SetAttribute("face", fileName);
     childElem.SetAttribute("size", String(pointSize));
@@ -272,7 +272,7 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
     childElem = rootElem.CreateChild("pages");
     for (unsigned i = 0; i < pages; ++i)
     {
-        XMLElement pageElem = childElem.CreateChild("page");
+        XmlElement pageElem = childElem.CreateChild("page");
         pageElem.SetI32("id", i);
         String texFileName = fileName + "_" + String(i) + ".png";
         pageElem.SetAttribute("file", texFileName);
@@ -282,14 +282,14 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
     }
 
     // Chars and kernings
-    XMLElement charsElem = rootElem.CreateChild("chars");
+    XmlElement charsElem = rootElem.CreateChild("chars");
     unsigned numGlyphs = glyphMapping_.Size();
     charsElem.SetI32("count", numGlyphs);
 
     for (HashMap<c32, FontGlyph>::ConstIterator i = glyphMapping_.Begin(); i != glyphMapping_.End(); ++i)
     {
         // Char
-        XMLElement charElem = charsElem.CreateChild("char");
+        XmlElement charElem = charsElem.CreateChild("char");
         charElem.SetI32("id", i->first_);
 
         const FontGlyph& glyph = i->second_;
@@ -305,10 +305,10 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
 
     if (!kerningMapping_.Empty())
     {
-        XMLElement kerningsElem = rootElem.CreateChild("kernings");
+        XmlElement kerningsElem = rootElem.CreateChild("kernings");
         for (HashMap<u32, float>::ConstIterator i = kerningMapping_.Begin(); i != kerningMapping_.End(); ++i)
         {
-            XMLElement kerningElem = kerningsElem.CreateChild("kerning");
+            XmlElement kerningElem = kerningsElem.CreateChild("kerning");
             kerningElem.SetI32("first", i->first_ >> 16u);
             kerningElem.SetI32("second", i->first_ & 0xffffu);
             kerningElem.SetI32("amount", i->second_);

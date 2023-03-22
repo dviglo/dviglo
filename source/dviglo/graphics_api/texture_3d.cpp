@@ -65,9 +65,9 @@ bool Texture3D::BeginLoad(Deserializer& source)
         return false;
     }
 
-    XMLElement textureElem = loadParameters_->GetRoot();
-    XMLElement volumeElem = textureElem.GetChild("volume");
-    XMLElement colorlutElem = textureElem.GetChild("colorlut");
+    XmlElement textureElem = loadParameters_->GetRoot();
+    XmlElement volumeElem = textureElem.GetChild("volume");
+    XmlElement colorlutElem = textureElem.GetChild("colorlut");
 
     if (volumeElem)
     {

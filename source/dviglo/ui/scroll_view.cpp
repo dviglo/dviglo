@@ -276,12 +276,12 @@ void ScrollView::SetViewPositionAttr(const IntVector2& value)
     SetViewPosition(value);
 }
 
-bool ScrollView::FilterImplicitAttributes(XMLElement& dest) const
+bool ScrollView::FilterImplicitAttributes(XmlElement& dest) const
 {
     if (!UiElement::FilterImplicitAttributes(dest))
         return false;
 
-    XMLElement childElem = dest.GetChild("element");
+    XmlElement childElem = dest.GetChild("element");
     if (!FilterScrollBarImplicitAttributes(childElem, "SV_HorizontalScrollBar"))
         return false;
     if (!RemoveChildXML(childElem, "Vert Alignment", "Bottom"))
@@ -308,7 +308,7 @@ bool ScrollView::FilterImplicitAttributes(XMLElement& dest) const
     return true;
 }
 
-bool ScrollView::FilterScrollBarImplicitAttributes(XMLElement& dest, const String& name) const
+bool ScrollView::FilterScrollBarImplicitAttributes(XmlElement& dest, const String& name) const
 {
     if (!dest)
         return false;

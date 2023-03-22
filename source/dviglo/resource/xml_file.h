@@ -44,12 +44,12 @@ public:
     /// Deserialize from a string. Return true if successful.
     bool FromString(const String& source);
     /// Clear the document and create a root element.
-    XMLElement CreateRoot(const String& name);
+    XmlElement CreateRoot(const String& name);
     /// Get the root element if it has matching name, otherwise create it and clear the document.
-    XMLElement GetOrCreateRoot(const String& name);
+    XmlElement GetOrCreateRoot(const String& name);
 
     /// Return the root element, with optionally specified name. Return null element if not found.
-    XMLElement GetRoot(const String& name = String::EMPTY);
+    XmlElement GetRoot(const String& name = String::EMPTY);
 
     /// Return the pugixml document.
     pugi::xml_document* GetDocument() const { return document_.get(); }
@@ -59,8 +59,8 @@ public:
 
     /// Patch the XmlFile with another XmlFile. Based on RFC 5261.
     void Patch(XmlFile* patchFile);
-    /// Patch the XmlFile with another XMLElement. Based on RFC 5261.
-    void Patch(const XMLElement& patchElement);
+    /// Patch the XmlFile with another XmlElement. Based on RFC 5261.
+    void Patch(const XmlElement& patchElement);
 
 private:
     /// Add an node in the Patch.

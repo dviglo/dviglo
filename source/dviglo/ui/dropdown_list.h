@@ -80,9 +80,9 @@ public:
 
 protected:
     /// Filter implicit attributes in serialization process.
-    bool FilterImplicitAttributes(XMLElement& dest) const override;
+    bool FilterImplicitAttributes(XmlElement& dest) const override;
     /// Filter implicit attributes in serialization process.
-    bool FilterPopupImplicitAttributes(XMLElement& dest) const override;
+    bool FilterPopupImplicitAttributes(XmlElement& dest) const override;
 
     /// Listview element.
     SharedPtr<ListView> listView_;

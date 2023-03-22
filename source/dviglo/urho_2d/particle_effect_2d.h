@@ -12,7 +12,7 @@
 namespace dviglo
 {
 
-class XMLElement;
+class XmlElement;
 class Sprite2D;
 
 /// 2D particle emitter types.
@@ -222,21 +222,21 @@ public:
 
 private:
     /// Read integer.
-    int ReadInt(const XMLElement& element, const String& name) const;
+    int ReadInt(const XmlElement& element, const String& name) const;
     /// Read float.
-    float ReadFloat(const XMLElement& element, const String& name) const;
+    float ReadFloat(const XmlElement& element, const String& name) const;
     /// Read Color.
-    Color ReadColor(const XMLElement& element, const String& name) const;
+    Color ReadColor(const XmlElement& element, const String& name) const;
     /// Read Vector2.
-    Vector2 ReadVector2(const XMLElement& element, const String& name) const;
+    Vector2 ReadVector2(const XmlElement& element, const String& name) const;
     /// Write integer.
-    void WriteInt(XMLElement& element, const String& name, int value) const;
+    void WriteInt(XmlElement& element, const String& name, int value) const;
     /// Write float.
-    void WriteFloat(XMLElement& element, const String& name, float value) const;
+    void WriteFloat(XmlElement& element, const String& name, float value) const;
     /// Write Color.
-    void WriteColor(XMLElement& element, const String& name, const Color& color) const;
+    void WriteColor(XmlElement& element, const String& name, const Color& color) const;
     /// Write Vector2.
-    void WriteVector2(XMLElement& element, const String& name, const Vector2& value) const;
+    void WriteVector2(XmlElement& element, const String& name, const Vector2& value) const;
 
     /// Sprite.
     SharedPtr<Sprite2D> sprite_;

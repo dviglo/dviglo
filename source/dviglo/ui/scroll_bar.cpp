@@ -197,7 +197,7 @@ float ScrollBar::GetEffectiveScrollStep() const
     return scrollStep_ * stepFactor_;
 }
 
-bool ScrollBar::FilterImplicitAttributes(XMLElement& dest) const
+bool ScrollBar::FilterImplicitAttributes(XmlElement& dest) const
 {
     if (!BorderImage::FilterImplicitAttributes(dest))
         return false;
@@ -205,7 +205,7 @@ bool ScrollBar::FilterImplicitAttributes(XMLElement& dest) const
     if (!RemoveChildXML(dest, "Layout Mode"))
         return false;
 
-    XMLElement childElem = dest.GetChild("element");
+    XmlElement childElem = dest.GetChild("element");
     if (!FilterButtonImplicitAttributes(childElem, "SB_Back"))
         return false;
 
@@ -228,7 +228,7 @@ bool ScrollBar::FilterImplicitAttributes(XMLElement& dest) const
 
 }
 
-bool ScrollBar::FilterButtonImplicitAttributes(XMLElement& dest, const String& name) const
+bool ScrollBar::FilterButtonImplicitAttributes(XmlElement& dest, const String& name) const
 {
     if (!dest)
         return false;
