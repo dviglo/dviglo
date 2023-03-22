@@ -22,11 +22,11 @@ public:
     /// Register object factory.
     static void RegisterObject();
 
-    using UiElement::LoadXML;
+    using UiElement::load_xml;
     using UiElement::SaveXML;
 
     /// Load from XML data with style. Return true if successful.
-    bool LoadXML(const XMLElement& source, XmlFile* styleFile) override;
+    bool load_xml(const XMLElement& source, XmlFile* styleFile) override;
     /// Save as XML data. Return true if successful.
     bool SaveXML(XMLElement& dest) const override;
 

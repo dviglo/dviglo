@@ -48,7 +48,7 @@ public:
     /// Save as binary data. Return true if successful.
     virtual bool Save(Serializer& dest) const;
     /// Load from XML data. Return true if successful.
-    virtual bool LoadXML(const XMLElement& source);
+    virtual bool load_xml(const XMLElement& source);
     /// Save as XML data. Return true if successful.
     virtual bool SaveXML(XMLElement& dest) const;
     /// Load from JSON data. Return true if successful.

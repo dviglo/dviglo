@@ -141,7 +141,7 @@ bool Scene::Save(Serializer& dest) const
         return false;
 }
 
-bool Scene::LoadXML(const XMLElement& source)
+bool Scene::load_xml(const XMLElement& source)
 {
     DV_PROFILE(LoadSceneXML);
 
@@ -149,7 +149,7 @@ bool Scene::LoadXML(const XMLElement& source)
 
     // Load the whole scene, then perform post-load if successfully loaded
     // Note: the scene filename and checksum can not be set, as we only used an XML element
-    if (Node::LoadXML(source))
+    if (Node::load_xml(source))
     {
         FinishLoading(nullptr);
         return true;
@@ -193,7 +193,7 @@ void Scene::AddReplicationState(NodeReplicationState* state)
         state->sceneState_->dirtyNodes_.Insert(i->first_);
 }
 
-bool Scene::LoadXML(Deserializer& source)
+bool Scene::load_xml(Deserializer& source)
 {
     DV_PROFILE(LoadSceneXML);
 
@@ -207,7 +207,7 @@ bool Scene::LoadXML(Deserializer& source)
 
     Clear();
 
-    if (Node::LoadXML(xml->GetRoot()))
+    if (Node::load_xml(xml->GetRoot()))
     {
         FinishLoading(&source);
         return true;
@@ -402,7 +402,7 @@ bool Scene::LoadAsyncXML(File* file, LoadMode mode)
         resolver_.AddNode(nodeID, this);
 
         // Load the root level components first
-        if (!Node::LoadXML(rootElement, resolver_, false))
+        if (!Node::load_xml(rootElement, resolver_, false))
             return false;
 
         // Then prepare for loading all root level child nodes in the async update
@@ -536,7 +536,7 @@ Node* Scene::InstantiateXML(const XMLElement& source, const Vector3& position, c
     // Rewrite IDs when instantiating
     Node* node = CreateChild(0, mode);
     resolver.AddNode(nodeID, node);
-    if (node->LoadXML(source, resolver, true, true, mode))
+    if (node->load_xml(source, resolver, true, true, mode))
     {
         resolver.Resolve();
         node->SetTransform(position, rotation);
@@ -1190,7 +1190,7 @@ void Scene::UpdateAsyncLoading()
             NodeId nodeID = asyncProgress_.xmlElement_.GetU32("id");
             Node* newNode = CreateChild(nodeID, IsReplicatedID(nodeID) ? REPLICATED : LOCAL);
             resolver_.AddNode(nodeID, newNode);
-            newNode->LoadXML(asyncProgress_.xmlElement_, resolver_);
+            newNode->load_xml(asyncProgress_.xmlElement_, resolver_);
             asyncProgress_.xmlElement_ = asyncProgress_.xmlElement_.GetNext("node");
         }
         else if (asyncProgress_.jsonFile_) // Load from JSON

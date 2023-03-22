@@ -212,7 +212,7 @@ void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             if (input.GetKeyPress(KEY_F7))
             {
                 File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/VehicleDemo.xml", FILE_READ);
-                scene_->LoadXML(loadFile);
+                scene_->load_xml(loadFile);
                 // After loading we have to reacquire the weak pointer to the Vehicle component, as it has been recreated
                 // Simply find the vehicle's scene node by name as there's only one of them
                 Node* vehicleNode = scene_->GetChild("Vehicle", true);

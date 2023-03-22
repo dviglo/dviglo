@@ -51,7 +51,7 @@ bool ValueAnimation::BeginLoad(Deserializer& source)
     if (!xmlFile.Load(source))
         return false;
 
-    return LoadXML(xmlFile.GetRoot());
+    return load_xml(xmlFile.GetRoot());
 }
 
 bool ValueAnimation::Save(Serializer& dest) const
@@ -65,7 +65,7 @@ bool ValueAnimation::Save(Serializer& dest) const
     return xmlFile.Save(dest);
 }
 
-bool ValueAnimation::LoadXML(const XMLElement& source)
+bool ValueAnimation::load_xml(const XMLElement& source)
 {
     valueType_ = VAR_NONE;
     eventFrames_.Clear();

@@ -460,7 +460,7 @@ bool Material::Load(const XMLElement& source)
     {
         String name = parameterAnimationElem.GetAttribute("name");
         SharedPtr<ValueAnimation> animation(new ValueAnimation());
-        if (!animation->LoadXML(parameterAnimationElem))
+        if (!animation->load_xml(parameterAnimationElem))
         {
             DV_LOGERROR("Could not load parameter animation");
             return false;

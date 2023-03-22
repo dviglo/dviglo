@@ -33,7 +33,7 @@ public:
     /// Save resource. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Load from XML data. Return true if successful.
-    bool LoadXML(const XMLElement& source);
+    bool load_xml(const XMLElement& source);
     /// Save as XML data. Return true if successful.
     bool SaveXML(XMLElement& dest) const;
     /// Load from JSON data. Return true if successful.

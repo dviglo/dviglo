@@ -19,7 +19,7 @@ void AppState_Base::LoadSceneXml(const String& path)
     assert(!scene_);
     scene_ = MakeShared<Scene>();
     SharedPtr<File> file = DV_RES_CACHE.GetFile(path);
-    scene_->LoadXML(*file);
+    scene_->load_xml(*file);
 
 #ifndef NDEBUG
     Node* cameraNode = scene_->GetChild("Camera");

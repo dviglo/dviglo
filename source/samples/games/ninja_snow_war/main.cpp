@@ -178,7 +178,7 @@ public:
         if (runClient)
             return;
 
-        gameScene->LoadXML(*DV_RES_CACHE.GetFile("Scenes/NinjaSnowWar.xml"));
+        gameScene->load_xml(*DV_RES_CACHE.GetFile("Scenes/NinjaSnowWar.xml"));
 
         // On mobile devices render the shadowmap first for better performance, adjust the cascaded shadows
         String platform = GetPlatform();

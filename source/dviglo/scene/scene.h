@@ -88,7 +88,7 @@ public:
     /// Save to binary data. Return true if successful.
     bool Save(Serializer& dest) const override;
     /// Load from XML data. Removes all existing child nodes and components first. Return true if successful.
-    bool LoadXML(const XMLElement& source) override;
+    bool load_xml(const XMLElement& source) override;
     /// Load from JSON data. Removes all existing child nodes and components first. Return true if successful.
     bool LoadJSON(const JSONValue& source) override;
     /// Mark for attribute check on the next network update.
@@ -97,7 +97,7 @@ public:
     void AddReplicationState(NodeReplicationState* state) override;
 
     /// Load from an XML file. Return true if successful.
-    bool LoadXML(Deserializer& source);
+    bool load_xml(Deserializer& source);
     /// Load from a JSON file. Return true if successful.
     bool LoadJSON(Deserializer& source);
     /// Save to an XML file. Return true if successful.

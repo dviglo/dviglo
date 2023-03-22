@@ -40,7 +40,7 @@ bool ObjectAnimation::BeginLoad(Deserializer& source)
     if (!xmlFile.Load(source))
         return false;
 
-    return LoadXML(xmlFile.GetRoot());
+    return load_xml(xmlFile.GetRoot());
 }
 
 bool ObjectAnimation::Save(Serializer& dest) const
@@ -54,7 +54,7 @@ bool ObjectAnimation::Save(Serializer& dest) const
     return xmlFile.Save(dest);
 }
 
-bool ObjectAnimation::LoadXML(const XMLElement& source)
+bool ObjectAnimation::load_xml(const XMLElement& source)
 {
     attributeAnimationInfos_.Clear();
 
@@ -65,7 +65,7 @@ bool ObjectAnimation::LoadXML(const XMLElement& source)
         String name = animElem.GetAttribute("name");
 
         SharedPtr<ValueAnimation> animation(new ValueAnimation());
-        if (!animation->LoadXML(animElem))
+        if (!animation->load_xml(animElem))
             return false;
 
         String wrapModeString = animElem.GetAttribute("wrapmode");

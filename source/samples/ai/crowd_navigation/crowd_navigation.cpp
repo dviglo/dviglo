@@ -431,7 +431,7 @@ void CrowdNavigation::MoveCamera(float timeStep)
     else if (input.GetKeyPress(KEY_F7))
     {
         File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CrowdNavigation.xml", FILE_READ);
-        scene_->LoadXML(loadFile);
+        scene_->load_xml(loadFile);
     }
 
     // Toggle debug geometry with space

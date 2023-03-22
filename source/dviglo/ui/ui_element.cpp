@@ -146,12 +146,12 @@ void UiElement::ApplyAttributes()
     }
 }
 
-bool UiElement::LoadXML(const XMLElement& source)
+bool UiElement::load_xml(const XMLElement& source)
 {
-    return LoadXML(source, nullptr);
+    return load_xml(source, nullptr);
 }
 
-bool UiElement::LoadXML(const XMLElement& source, XmlFile* styleFile)
+bool UiElement::load_xml(const XMLElement& source, XmlFile* styleFile)
 {
     // Get style override if defined
     String styleName = source.GetAttribute("style");
@@ -184,7 +184,7 @@ bool UiElement::LoadXML(const XMLElement& source, XmlFile* styleFile)
     DisableLayoutUpdate();
 
     // Then load rest of the attributes from the source
-    if (!Animatable::LoadXML(source))
+    if (!Animatable::load_xml(source))
         return false;
 
     i32 nextInternalChild = 0;
@@ -224,7 +224,7 @@ bool UiElement::LoadXML(const XMLElement& source, XmlFile* styleFile)
         {
             if (!styleFile)
                 styleFile = GetDefaultStyle();
-            if (!child->LoadXML(childElem, styleFile))
+            if (!child->load_xml(childElem, styleFile))
                 return false;
         }
 
@@ -258,7 +258,7 @@ UiElement* UiElement::LoadChildXML(const XMLElement& childElem, XmlFile* styleFi
     {
         if (!styleFile)
             styleFile = GetDefaultStyle();
-        if (!child->LoadXML(childElem, styleFile))
+        if (!child->load_xml(childElem, styleFile))
         {
             RemoveChild(child, index);
             return nullptr;
@@ -448,10 +448,10 @@ IntVector2 UiElement::ElementToScreen(const IntVector2& position)
     return position + GetScreenPosition();
 }
 
-bool UiElement::LoadXML(Deserializer& source)
+bool UiElement::load_xml(Deserializer& source)
 {
     SharedPtr<XmlFile> xml(new XmlFile());
-    return xml->Load(source) && LoadXML(xml->GetRoot());
+    return xml->Load(source) && load_xml(xml->GetRoot());
 }
 
 bool UiElement::SaveXML(Serializer& dest, const String& indentation) const
@@ -995,7 +995,7 @@ bool UiElement::SetStyle(const XMLElement& element)
 
     // Consider style attribute values as instance-level attribute default values
     SetInstanceDefault(true);
-    bool success = LoadXML(element);
+    bool success = load_xml(element);
     SetInstanceDefault(false);
     return success;
 }

@@ -242,7 +242,7 @@ void PhysicsStressTest::MoveCamera(float timeStep)
     if (input.GetKeyPress(KEY_F7))
     {
         File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/PhysicsStressTest.xml", FILE_READ);
-        scene_->LoadXML(loadFile);
+        scene_->load_xml(loadFile);
     }
 
     // Toggle physics debug geometry with space

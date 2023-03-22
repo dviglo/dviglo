@@ -53,9 +53,9 @@ void Animatable::RegisterObject()
         ResourceRef(ObjectAnimation::GetTypeStatic()), AM_DEFAULT);
 }
 
-bool Animatable::LoadXML(const XMLElement& source)
+bool Animatable::load_xml(const XMLElement& source)
 {
-    if (!Serializable::LoadXML(source))
+    if (!Serializable::load_xml(source))
         return false;
 
     SetObjectAnimation(nullptr);
@@ -65,7 +65,7 @@ bool Animatable::LoadXML(const XMLElement& source)
     if (elem)
     {
         SharedPtr<ObjectAnimation> objectAnimation(new ObjectAnimation());
-        if (!objectAnimation->LoadXML(elem))
+        if (!objectAnimation->load_xml(elem))
             return false;
 
         SetObjectAnimation(objectAnimation);
@@ -76,7 +76,7 @@ bool Animatable::LoadXML(const XMLElement& source)
     {
         String name = elem.GetAttribute("name");
         SharedPtr<ValueAnimation> attributeAnimation(new ValueAnimation());
-        if (!attributeAnimation->LoadXML(elem))
+        if (!attributeAnimation->load_xml(elem))
             return false;
 
         String wrapModeString = source.GetAttribute("wrapmode");

@@ -322,7 +322,7 @@ bool Serializable::Save(Serializer& dest) const
     return true;
 }
 
-bool Serializable::LoadXML(const XMLElement& source)
+bool Serializable::load_xml(const XMLElement& source)
 {
     if (source.IsNull())
     {

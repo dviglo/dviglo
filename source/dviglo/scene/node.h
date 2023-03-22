@@ -76,7 +76,7 @@ public:
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;
     /// Load from XML data. Return true if successful.
-    bool LoadXML(const XMLElement& source) override;
+    bool load_xml(const XMLElement& source) override;
     /// Load from JSON data. Return true if successful.
     bool LoadJSON(const JSONValue& source) override;
     /// Save as binary data. Return true if successful.
@@ -590,7 +590,7 @@ public:
     bool Load(Deserializer& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
         CreateMode mode = REPLICATED);
     /// Load components from XML data and optionally load child nodes.
-    bool LoadXML(const XMLElement& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
+    bool load_xml(const XMLElement& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,
         CreateMode mode = REPLICATED);
     /// Load components from XML data and optionally load child nodes.
     bool LoadJSON(const JSONValue& source, SceneResolver& resolver, bool loadChildren = true, bool rewriteIDs = false,

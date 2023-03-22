@@ -75,9 +75,9 @@ void PBRMaterials::CreateScene()
     scene_ = new Scene();
 
     // Load scene content prepared in the editor (XML format). GetFile() returns an open file from the resource system
-    // which scene.LoadXML() will read
+    // which scene.load_xml() will read
     SharedPtr<File> file = DV_RES_CACHE.GetFile("Scenes/PBRExample.xml");
-    scene_->LoadXML(*file);
+    scene_->load_xml(*file);
 
     Node* sphereWithDynamicMatNode = scene_->GetChild("SphereWithDynamicMat");
     auto* staticModel = sphereWithDynamicMatNode->GetComponent<StaticModel>();

@@ -617,7 +617,7 @@ SharedPtr<UiElement> UI::LoadLayout(XmlFile* file, XmlFile* styleFile)
     if (styleFile)
         root->SetDefaultStyle(styleFile);
 
-    root->LoadXML(rootElem, styleFile);
+    root->load_xml(rootElem, styleFile);
     return root;
 }
 

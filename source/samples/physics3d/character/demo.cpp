@@ -273,7 +273,7 @@ void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
             if (input.GetKeyPress(KEY_F7))
             {
                 File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/CharacterDemo.xml", FILE_READ);
-                scene_->LoadXML(loadFile);
+                scene_->load_xml(loadFile);
                 // After loading we have to reacquire the weak pointer to the Character component, as it has been recreated
                 // Simply find the character's scene node by name as there's only one of them
                 Node* characterNode = scene_->GetChild("Jack", true);

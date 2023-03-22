@@ -128,7 +128,7 @@ bool Node::Save(Serializer& dest) const
     return true;
 }
 
-bool Node::LoadXML(const XMLElement& source)
+bool Node::load_xml(const XMLElement& source)
 {
     SceneResolver resolver;
 
@@ -137,7 +137,7 @@ bool Node::LoadXML(const XMLElement& source)
     resolver.AddNode(nodeID, this);
 
     // Read attributes, components and child nodes
-    bool success = LoadXML(source, resolver);
+    bool success = load_xml(source, resolver);
     if (success)
     {
         resolver.Resolve();
@@ -1575,13 +1575,13 @@ bool Node::Load(Deserializer& source, SceneResolver& resolver, bool loadChildren
     return true;
 }
 
-bool Node::LoadXML(const XMLElement& source, SceneResolver& resolver, bool loadChildren, bool rewriteIDs, CreateMode mode)
+bool Node::load_xml(const XMLElement& source, SceneResolver& resolver, bool loadChildren, bool rewriteIDs, CreateMode mode)
 {
     // Remove all children and components first in case this is not a fresh load
     RemoveAllChildren();
     RemoveAllComponents();
 
-    if (!Animatable::LoadXML(source))
+    if (!Animatable::load_xml(source))
         return false;
 
     XMLElement compElem = source.GetChild("component");
@@ -1594,7 +1594,7 @@ bool Node::LoadXML(const XMLElement& source, SceneResolver& resolver, bool loadC
         if (newComponent)
         {
             resolver.AddComponent(compID, newComponent);
-            if (!newComponent->LoadXML(compElem))
+            if (!newComponent->load_xml(compElem))
                 return false;
         }
 
@@ -1611,7 +1611,7 @@ bool Node::LoadXML(const XMLElement& source, SceneResolver& resolver, bool loadC
         Node* newNode = CreateChild(rewriteIDs ? 0 : nodeID, (mode == REPLICATED && Scene::IsReplicatedID(nodeID)) ? REPLICATED :
             LOCAL);
         resolver.AddNode(nodeID, newNode);
-        if (!newNode->LoadXML(childElem, resolver, loadChildren, rewriteIDs, mode))
+        if (!newNode->load_xml(childElem, resolver, loadChildren, rewriteIDs, mode))
             return false;
 
         childElem = childElem.GetNext("node");

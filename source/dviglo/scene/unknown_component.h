@@ -31,7 +31,7 @@ public:
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;
     /// Load from XML data. Return true if successful.
-    bool LoadXML(const XMLElement& source) override;
+    bool load_xml(const XMLElement& source) override;
     /// Load from JSON data. Return true if successful.
     bool LoadJSON(const JSONValue& source) override;
     /// Save as binary data. Return true if successful.

@@ -83,7 +83,7 @@ bool UnknownComponent::Load(Deserializer& source)
     return dataSize ? source.Read(&binaryAttributes_[0], dataSize) == dataSize : true;
 }
 
-bool UnknownComponent::LoadXML(const XMLElement& source)
+bool UnknownComponent::load_xml(const XMLElement& source)
 {
     useXML_ = true;
     xmlAttributes_.Clear();

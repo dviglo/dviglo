@@ -49,9 +49,9 @@ void SceneAndUILoad::CreateScene()
     scene_ = new Scene();
 
     // Load scene content prepared in the editor (XML format). GetFile() returns an open file from the resource system
-    // which scene.LoadXML() will read
+    // which scene.load_xml() will read
     SharedPtr<File> file = DV_RES_CACHE.GetFile("Scenes/SceneLoadExample.xml");
-    scene_->LoadXML(*file);
+    scene_->load_xml(*file);
 
     // Create the camera (not included in the scene file)
     cameraNode_ = scene_->CreateChild("Camera");

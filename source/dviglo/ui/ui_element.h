@@ -116,9 +116,9 @@ public:
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;
     /// Load from XML data. Return true if successful.
-    bool LoadXML(const XMLElement& source) override;
+    bool load_xml(const XMLElement& source) override;
     /// Load from XML data with style. Return true if successful.
-    virtual bool LoadXML(const XMLElement& source, XmlFile* styleFile);
+    virtual bool load_xml(const XMLElement& source, XmlFile* styleFile);
     /// Create a child by loading from XML data with style. Returns the child element if successful, null if otherwise.
     virtual UiElement* LoadChildXML(const XMLElement& childElem, XmlFile* styleFile);
     /// Save as XML data. Return true if successful.
@@ -191,7 +191,7 @@ public:
     virtual bool IsWheelHandler() const { return false; }
 
     /// Load from an XML file. Return true if successful.
-    bool LoadXML(Deserializer& source);
+    bool load_xml(Deserializer& source);
     /// Save to an XML file. Return true if successful.
     bool SaveXML(Serializer& dest, const String& indentation = "\t") const;
     /// Filter attributes in serialization process.
