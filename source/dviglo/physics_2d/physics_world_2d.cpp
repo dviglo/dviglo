@@ -30,7 +30,7 @@ static const int DEFAULT_POSITION_ITERATIONS = 3;
 
 PhysicsWorld2D::PhysicsWorld2D() :
     gravity_(DEFAULT_GRAVITY),
-    velocityIterations_(DEFAULT_VELOCITY_ITERATIONS),
+    velocity_iterations_(DEFAULT_VELOCITY_ITERATIONS),
     positionIterations_(DEFAULT_POSITION_ITERATIONS)
 {
     // Set default debug draw flags
@@ -271,7 +271,7 @@ void PhysicsWorld2D::Update(float timeStep)
     SendEvent(E_PHYSICSPRESTEP, eventData);
 
     physicsStepping_ = true;
-    world_->Step(timeStep, velocityIterations_, positionIterations_);
+    world_->Step(timeStep, velocity_iterations_, positionIterations_);
     physicsStepping_ = false;
 
     // Apply world transforms. Unparented transforms first
@@ -402,7 +402,7 @@ void PhysicsWorld2D::SetAutoClearForces(bool enable)
 
 void PhysicsWorld2D::SetVelocityIterations(int velocityIterations)
 {
-    velocityIterations_ = velocityIterations;
+    velocity_iterations_ = velocityIterations;
 }
 
 void PhysicsWorld2D::SetPositionIterations(int positionIterations)
