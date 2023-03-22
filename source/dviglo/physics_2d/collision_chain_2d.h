@@ -65,7 +65,7 @@ private:
     void RecreateFixture();
 
     /// Chain shape.
-    b2ChainShape chainShape_;
+    b2ChainShape chain_shape_;
 
     /// Loop.
     bool loop_;

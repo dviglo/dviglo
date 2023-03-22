@@ -18,7 +18,7 @@ extern const char* PHYSICS2D_CATEGORY;
 CollisionChain2D::CollisionChain2D() :
     loop_(false)
 {
-    fixtureDef_.shape = &chainShape_;
+    fixtureDef_.shape = &chain_shape_;
 }
 
 CollisionChain2D::~CollisionChain2D() = default;
@@ -115,21 +115,21 @@ void CollisionChain2D::RecreateFixture()
     for (i32 i = 0; i < count; ++i)
         b2Vertices[i] = ToB2Vec2(vertices_[i] * worldScale);
 
-    chainShape_.Clear();
+    chain_shape_.Clear();
 
     if (loop_)
     {
         if (count < 2)
             return;
 
-        chainShape_.CreateLoop(&b2Vertices[0], count);
+        chain_shape_.CreateLoop(&b2Vertices[0], count);
     }
     else
     {
         if (count < 4)
             return;
 
-        chainShape_.CreateChain(&b2Vertices[1], count - 2, b2Vertices[0], b2Vertices[count - 1]);
+        chain_shape_.CreateChain(&b2Vertices[1], count - 2, b2Vertices[0], b2Vertices[count - 1]);
     }
 
     CreateFixture();
