@@ -112,7 +112,7 @@ public:
     /// Add tags.
     void AddTags(const StringVector& tags);
     /// Remove tag. Return true if existed.
-    bool RemoveTag(const String& tag);
+    bool remove_tag(const String& tag);
     /// Remove all tags.
     void remove_all_tags();
 

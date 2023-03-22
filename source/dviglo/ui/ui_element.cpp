@@ -1469,7 +1469,7 @@ void UiElement::AddTags(const StringVector& tags)
         AddTag(tag);
 }
 
-bool UiElement::RemoveTag(const String& tag)
+bool UiElement::remove_tag(const String& tag)
 {
     return tags_.Remove(tag);
 }

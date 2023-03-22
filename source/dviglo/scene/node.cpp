@@ -359,7 +359,7 @@ void Node::AddTags(const StringVector& tags)
         AddTag(tag);
 }
 
-bool Node::RemoveTag(const String& tag)
+bool Node::remove_tag(const String& tag)
 {
     bool removed = impl_->tags_.Remove(tag);
 
