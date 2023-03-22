@@ -116,7 +116,7 @@ public:
     ViewOverrideFlags GetViewOverrideFlags() const { return viewOverrideFlags_; }
 
     /// Return fill mode.
-    FillMode GetFillMode() const { return fill_mode_; }
+    FillMode fill_mode() const { return fill_mode_; }
 
     /// Return orthographic flag.
     bool IsOrthographic() const { return orthographic_; }

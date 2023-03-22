@@ -205,7 +205,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         }
 
         // Use the "least filled" fill mode combined from camera & material
-        graphics.SetFillMode((FillMode)(Max(camera->GetFillMode(), material_->GetFillMode())));
+        graphics.SetFillMode((FillMode)(Max(camera->fill_mode(), material_->fill_mode())));
         graphics.SetDepthTest(pass_->GetDepthTestMode());
         graphics.SetDepthWrite(pass_->GetDepthWrite() && allowDepthWrite);
     }

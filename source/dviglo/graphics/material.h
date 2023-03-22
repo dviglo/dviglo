@@ -210,7 +210,7 @@ public:
     CullMode GetShadowCullMode() const { return shadowCullMode_; }
 
     /// Return polygon fill mode.
-    FillMode GetFillMode() const { return fill_mode_; }
+    FillMode fill_mode() const { return fill_mode_; }
 
     /// Return depth bias.
     const BiasParameters& GetDepthBias() const { return depthBias_; }
