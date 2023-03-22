@@ -192,7 +192,7 @@ Network& Network::get_instance()
 
 Network::Network() :
     updateFps_(DEFAULT_UPDATE_FPS),
-    simulatedLatency_(0),
+    simulated_latency_(0),
     simulatedPacketLoss_(0.0f),
     update_interval_(1.0f / (float)DEFAULT_UPDATE_FPS),
     updateAcc_(0.0f),
@@ -310,7 +310,7 @@ void Network::NewConnectionEstablished(const SLNet::AddressOrGUID& connection)
 {
     // Create a new client connection corresponding to this MessageConnection
     SharedPtr<Connection> newConnection(new Connection(true, connection, rakPeer_));
-    newConnection->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
+    newConnection->ConfigureNetworkSimulator(simulated_latency_, simulatedPacketLoss_);
     clientConnections_[connection] = newConnection;
     DV_LOGINFO("Client " + newConnection->ToString() + " connected");
 
@@ -387,7 +387,7 @@ bool Network::Connect(const String& address, unsigned short port, Scene* scene, 
         serverConnection_->SetScene(scene);
         serverConnection_->SetIdentity(identity);
         serverConnection_->SetConnectPending(true);
-        serverConnection_->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
+        serverConnection_->ConfigureNetworkSimulator(simulated_latency_, simulatedPacketLoss_);
 
         DV_LOGINFO("Connecting to server " + address + ":" + String(port) + ", Client: " + serverConnection_->ToString());
         return true;
@@ -580,7 +580,7 @@ void Network::SetUpdateFps(int fps)
 
 void Network::SetSimulatedLatency(int ms)
 {
-    simulatedLatency_ = Max(ms, 0);
+    simulated_latency_ = Max(ms, 0);
     ConfigureNetworkSimulator();
 }
 
@@ -1026,11 +1026,11 @@ void Network::OnServerDisconnected(const SLNet::AddressOrGUID& address)
 void Network::ConfigureNetworkSimulator()
 {
     if (serverConnection_)
-        serverConnection_->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
+        serverConnection_->ConfigureNetworkSimulator(simulated_latency_, simulatedPacketLoss_);
 
     for (HashMap<SLNet::AddressOrGUID, SharedPtr<Connection>>::Iterator i = clientConnections_.Begin();
          i != clientConnections_.End(); ++i)
-        i->second_->ConfigureNetworkSimulator(simulatedLatency_, simulatedPacketLoss_);
+        i->second_->ConfigureNetworkSimulator(simulated_latency_, simulatedPacketLoss_);
 }
 
 void RegisterNetworkLibrary()

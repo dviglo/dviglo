@@ -98,7 +98,7 @@ public:
     int GetUpdateFps() const { return updateFps_; }
 
     /// Return simulated latency in milliseconds.
-    int GetSimulatedLatency() const { return simulatedLatency_; }
+    int GetSimulatedLatency() const { return simulated_latency_; }
 
     /// Return simulated packet loss probability.
     float GetSimulatedPacketLoss() const { return simulatedPacketLoss_; }
@@ -153,7 +153,7 @@ private:
     /// Update FPS.
     int updateFps_;
     /// Simulated latency (send delay) in milliseconds.
-    int simulatedLatency_;
+    int simulated_latency_;
     /// Simulated packet loss probability between 0.0 - 1.0.
     float simulatedPacketLoss_;
     /// Update time interval.
