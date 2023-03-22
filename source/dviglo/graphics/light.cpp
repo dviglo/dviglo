@@ -198,7 +198,7 @@ void Light::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>&
     results.Push(result);
 }
 
-void Light::UpdateBatches(const FrameInfo& frame)
+void Light::update_batches(const FrameInfo& frame)
 {
     switch (lightType_)
     {

@@ -91,7 +91,7 @@ void Text3D::ApplyAttributes()
     UpdateTextMaterials();
 }
 
-void Text3D::UpdateBatches(const FrameInfo& frame)
+void Text3D::update_batches(const FrameInfo& frame)
 {
     distance_ = frame.camera_->GetDistance(GetWorldBoundingBox().Center());
 

@@ -94,7 +94,7 @@ void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryRes
         std::sort(results.Begin() + resultSize, results.End(), CompareRayQueryResults);
 }
 
-void Renderer2D::UpdateBatches(const FrameInfo& frame)
+void Renderer2D::update_batches(const FrameInfo& frame)
 {
     unsigned count = batches_.Size();
 

@@ -106,7 +106,7 @@ void Drawable::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResul
     }
 }
 
-void Drawable::UpdateBatches(const FrameInfo& frame)
+void Drawable::update_batches(const FrameInfo& frame)
 {
     const BoundingBox& worldBoundingBox = GetWorldBoundingBox();
     const Matrix3x4& worldTransform = node_->GetWorldTransform();

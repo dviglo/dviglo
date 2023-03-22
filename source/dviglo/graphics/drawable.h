@@ -117,7 +117,7 @@ public:
     /// Update before octree reinsertion. Is called from a worker thread.
     virtual void Update(const FrameInfo& frame) { }
     /// Calculate distance and prepare batches for rendering. May be called from worker thread(s), possibly re-entrantly.
-    virtual void UpdateBatches(const FrameInfo& frame);
+    virtual void update_batches(const FrameInfo& frame);
     /// Prepare geometry for rendering.
     virtual void UpdateGeometry(const FrameInfo& frame) { }
 

@@ -235,7 +235,7 @@ void AnimatedModel::Update(const FrameInfo& frame)
         UpdateBoneBoundingBox();
 }
 
-void AnimatedModel::UpdateBatches(const FrameInfo& frame)
+void AnimatedModel::update_batches(const FrameInfo& frame)
 {
     const Matrix3x4& worldTransform = node_->GetWorldTransform();
     const BoundingBox& worldBoundingBox = GetWorldBoundingBox();

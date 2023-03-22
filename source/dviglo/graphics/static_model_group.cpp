@@ -145,7 +145,7 @@ void StaticModelGroup::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQu
     }
 }
 
-void StaticModelGroup::UpdateBatches(const FrameInfo& frame)
+void StaticModelGroup::update_batches(const FrameInfo& frame)
 {
     // Getting the world bounding box ensures the transforms are updated
     const BoundingBox& worldBoundingBox = GetWorldBoundingBox();

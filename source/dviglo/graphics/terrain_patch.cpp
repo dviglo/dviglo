@@ -95,7 +95,7 @@ void TerrainPatch::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryR
     }
 }
 
-void TerrainPatch::UpdateBatches(const FrameInfo& frame)
+void TerrainPatch::update_batches(const FrameInfo& frame)
 {
     const Matrix3x4& worldTransform = node_->GetWorldTransform();
     distance_ = frame.camera_->GetDistance(GetWorldBoundingBox().Center());

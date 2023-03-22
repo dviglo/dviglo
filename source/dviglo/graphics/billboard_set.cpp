@@ -158,7 +158,7 @@ void BillboardSet::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryR
     }
 }
 
-void BillboardSet::UpdateBatches(const FrameInfo& frame)
+void BillboardSet::update_batches(const FrameInfo& frame)
 {
     // If beginning a new frame, assume no sorting first
     if (frame.frameNumber_ != sortFrameNumber_)

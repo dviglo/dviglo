@@ -191,7 +191,7 @@ void DecalSet::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResul
     // Do not return raycast hits
 }
 
-void DecalSet::UpdateBatches(const FrameInfo& frame)
+void DecalSet::update_batches(const FrameInfo& frame)
 {
     const BoundingBox& worldBoundingBox = GetWorldBoundingBox();
     const Matrix3x4& worldTransform = node_->GetWorldTransform();

@@ -157,7 +157,7 @@ void CheckVisibilityWork(const WorkItem* item, i32 threadIndex)
 
         if (!buffer || !drawable->IsOccludee() || buffer->IsVisible(drawable->GetWorldBoundingBox()))
         {
-            drawable->UpdateBatches(view->frame_);
+            drawable->update_batches(view->frame_);
             // If draw distance non-zero, update and check it
             float maxDistance = drawable->GetDrawDistance();
             if (maxDistance > 0.0f)
@@ -2167,7 +2167,7 @@ void View::UpdateOccluders(Vector<Drawable*>& occluders, Camera* camera)
         bool erase = false;
 
         if (!occluder->IsInView(frame_, true))
-            occluder->UpdateBatches(frame_);
+            occluder->update_batches(frame_);
 
         // Check occluder's draw distance (in main camera view)
         float maxDistance = occluder->GetDrawDistance();
@@ -2416,10 +2416,10 @@ void View::ProcessShadowCasters(LightQueryResult& query, const Vector<Drawable*>
             continue;
 
         // Check shadow distance
-        // Note: as lights are processed threaded, it is possible a drawable's UpdateBatches() function is called several
+        // Note: as lights are processed threaded, it is possible a drawable's update_batches() function is called several
         // times. However, this should not cause problems as no scene modification happens at this point.
         if (!drawable->IsInView(frame_, true))
-            drawable->UpdateBatches(frame_);
+            drawable->update_batches(frame_);
         float maxShadowDistance = drawable->GetShadowDistance();
         float drawDistance = drawable->GetDrawDistance();
         if (drawDistance > 0.0f && (maxShadowDistance <= 0.0f || drawDistance < maxShadowDistance))

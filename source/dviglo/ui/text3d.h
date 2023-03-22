@@ -30,7 +30,7 @@ public:
     /// Apply attribute changes that can not be applied immediately.
     void ApplyAttributes() override;
     /// Calculate distance and prepare batches for rendering. May be called from worker thread(s), possibly re-entrantly.
-    void UpdateBatches(const FrameInfo& frame) override;
+    void update_batches(const FrameInfo& frame) override;
     /// Prepare geometry for rendering. Called from a worker thread if possible (no GPU update).
     void UpdateGeometry(const FrameInfo& frame) override;
     /// Return whether a geometry update is necessary, and if it can happen in a worker thread.

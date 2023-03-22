@@ -34,7 +34,7 @@ void Skybox::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>
     // Do not record a raycast result for a skybox, as it would block all other results
 }
 
-void Skybox::UpdateBatches(const FrameInfo& frame)
+void Skybox::update_batches(const FrameInfo& frame)
 {
     distance_ = 0.0f;
 

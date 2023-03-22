@@ -351,7 +351,7 @@ void RibbonTrail::SetTailColumn(unsigned tailColumn)
     MarkNetworkUpdate();
 }
 
-void RibbonTrail::UpdateBatches(const FrameInfo& frame)
+void RibbonTrail::update_batches(const FrameInfo& frame)
 {
     // Update information for renderer about this drawable
     distance_ = frame.camera_->GetDistance(GetWorldBoundingBox().Center());

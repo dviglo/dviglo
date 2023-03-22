@@ -109,7 +109,7 @@ void StaticModel::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryRe
     }
 }
 
-void StaticModel::UpdateBatches(const FrameInfo& frame)
+void StaticModel::update_batches(const FrameInfo& frame)
 {
     const BoundingBox& worldBoundingBox = GetWorldBoundingBox();
     distance_ = frame.camera_->GetDistance(worldBoundingBox.Center());

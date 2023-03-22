@@ -36,7 +36,7 @@ public:
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;
     /// Calculate distance and prepare batches for rendering. May be called from worker thread(s), possibly re-entrantly.
-    void UpdateBatches(const FrameInfo& frame) override;
+    void update_batches(const FrameInfo& frame) override;
     /// Return the geometry for a specific LOD level.
     Geometry* GetLodGeometry(i32 batchIndex, i32 level) override;
     /// Return number of occlusion geometry triangles.

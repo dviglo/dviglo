@@ -62,7 +62,7 @@ public:
     /// Update before octree reinsertion. Is called from a main thread.
     void Update(const FrameInfo &frame) override;
     /// Calculate distance and prepare batches for rendering. May be called from worker thread(s), possibly re-entrantly.
-    void UpdateBatches(const FrameInfo& frame) override;
+    void update_batches(const FrameInfo& frame) override;
     /// Prepare geometry for rendering. Called from a worker thread if possible (no GPU update).
     void UpdateGeometry(const FrameInfo& frame) override;
     /// Return whether a geometry update is necessary, and if it can happen in a worker thread.
@@ -179,7 +179,7 @@ private:
     void UpdateBufferSize();
     /// Rewrite RibbonTrail vertex buffer.
     void UpdateVertexBuffer(const FrameInfo& frame);
-    /// Update/Rebuild tail mesh only if position changed (called by UpdateBatches()).
+    /// Update/Rebuild tail mesh only if position changed (called by update_batches()).
     void UpdateTail(float timeStep);
     /// Geometry.
     SharedPtr<Geometry> geometry_;
