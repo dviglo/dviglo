@@ -45,7 +45,7 @@ Scene::Scene() :
     timeScale_(1.0f),
     elapsedTime_(0),
     smoothingConstant_(DEFAULT_SMOOTHING_CONSTANT),
-    snapThreshold_(DEFAULT_SNAP_THRESHOLD),
+    snap_threshold_(DEFAULT_SNAP_THRESHOLD),
     updateEnabled_(true),
     asyncLoading_(false),
     threadedUpdate_(false)
@@ -639,7 +639,7 @@ void Scene::SetSmoothingConstant(float constant)
 
 void Scene::SetSnapThreshold(float threshold)
 {
-    snapThreshold_ = Max(threshold, 0.0f);
+    snap_threshold_ = Max(threshold, 0.0f);
     Node::MarkNetworkUpdate();
 }
 
@@ -770,7 +770,7 @@ void Scene::Update(float timeStep)
         DV_PROFILE(UpdateSmoothing);
 
         float constant = 1.0f - Clamp(powf(2.0f, -timeStep * smoothingConstant_), 0.0f, 1.0f);
-        float squaredSnapThreshold = snapThreshold_ * snapThreshold_;
+        float squaredSnapThreshold = snap_threshold_ * snap_threshold_;
 
         using namespace UpdateSmoothing;
 
