@@ -45,7 +45,7 @@ Camera::Camera() :
     lodBias_(1.0f),
     viewMask_(DEFAULT_VIEWMASK),
     viewOverrideFlags_(VO_NONE),
-    fillMode_(FILL_SOLID),
+    fill_mode_(FILL_SOLID),
     projectionOffset_(Vector2::ZERO),
     reflectionPlane_(Plane::UP),
     clipPlane_(Plane::UP),
@@ -69,7 +69,7 @@ void Camera::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Far Clip", GetFarClip, SetFarClip, DEFAULT_FARCLIP, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("FOV", GetFov, SetFov, DEFAULT_CAMERA_FOV, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Aspect Ratio", GetAspectRatio, SetAspectRatioInternal, 1.0f, AM_DEFAULT);
-    DV_ENUM_ATTRIBUTE("Fill Mode", fillMode_, fillModeNames, FILL_SOLID, AM_DEFAULT);
+    DV_ENUM_ATTRIBUTE("Fill Mode", fill_mode_, fillModeNames, FILL_SOLID, AM_DEFAULT);
     DV_ATTRIBUTE("Auto Aspect Ratio", autoAspectRatio_, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Orthographic", IsOrthographic, SetOrthographic, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Orthographic Size", GetOrthoSize, SetOrthoSizeAttr, DEFAULT_ORTHOSIZE, AM_DEFAULT);
@@ -168,7 +168,7 @@ void Camera::SetViewOverrideFlags(ViewOverrideFlags flags)
 
 void Camera::SetFillMode(FillMode mode)
 {
-    fillMode_ = mode;
+    fill_mode_ = mode;
     MarkNetworkUpdate();
 }
 

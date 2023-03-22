@@ -210,7 +210,7 @@ public:
     CullMode GetShadowCullMode() const { return shadowCullMode_; }
 
     /// Return polygon fill mode.
-    FillMode GetFillMode() const { return fillMode_; }
+    FillMode GetFillMode() const { return fill_mode_; }
 
     /// Return depth bias.
     const BiasParameters& GetDepthBias() const { return depthBias_; }
@@ -282,7 +282,7 @@ private:
     /// Culling mode for shadow rendering.
     CullMode shadowCullMode_{};
     /// Polygon fill mode.
-    FillMode fillMode_{};
+    FillMode fill_mode_{};
     /// Depth bias parameters.
     BiasParameters depthBias_{};
     /// Render order value.

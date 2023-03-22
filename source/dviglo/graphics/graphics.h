@@ -540,7 +540,7 @@ public:
     bool GetDepthWrite() const { return depthWrite_; }
 
     /// Return polygon fill mode.
-    FillMode GetFillMode() const { return fillMode_; }
+    FillMode GetFillMode() const { return fill_mode_; }
 
     /// Return whether line antialiasing is enabled.
     bool GetLineAntiAlias() const { return lineAntiAlias_; }
@@ -942,7 +942,7 @@ private:
     /// Line antialiasing enable flag.
     bool lineAntiAlias_{};
     /// Polygon fill mode.
-    FillMode fillMode_{};
+    FillMode fill_mode_{};
     /// Scissor test enable flag.
     bool scissorTest_{};
     /// Scissor test rectangle.

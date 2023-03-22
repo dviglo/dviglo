@@ -760,7 +760,7 @@ bool Material::Save(XmlElement& dest) const
 
     // Write fill mode
     XmlElement fillElem = dest.create_child("fill");
-    fillElem.SetString("value", fillModeNames[fillMode_]);
+    fillElem.SetString("value", fillModeNames[fill_mode_]);
 
     // Write depth bias
     XmlElement depthBiasElem = dest.create_child("depthbias");
@@ -863,7 +863,7 @@ bool Material::Save(JSONValue& dest) const
     dest.Set("shadowcull", cullModeNames[shadowCullMode_]);
 
     // Write fill mode
-    dest.Set("fill", fillModeNames[fillMode_]);
+    dest.Set("fill", fillModeNames[fill_mode_]);
 
     // Write depth bias
     JSONValue depthBiasValue;
@@ -1059,7 +1059,7 @@ void Material::SetShadowCullMode(CullMode mode)
 
 void Material::SetFillMode(FillMode mode)
 {
-    fillMode_ = mode;
+    fill_mode_ = mode;
 }
 
 void Material::SetDepthBias(const BiasParameters& parameters)
@@ -1137,7 +1137,7 @@ SharedPtr<Material> Material::Clone(const String& cloneName) const
     ret->specular_ = specular_;
     ret->cullMode_ = cullMode_;
     ret->shadowCullMode_ = shadowCullMode_;
-    ret->fillMode_ = fillMode_;
+    ret->fill_mode_ = fill_mode_;
     ret->renderOrder_ = renderOrder_;
     ret->RefreshMemoryUse();
 
@@ -1253,7 +1253,7 @@ void Material::ResetToDefaults()
 
     cullMode_ = CULL_CCW;
     shadowCullMode_ = CULL_CCW;
-    fillMode_ = FILL_SOLID;
+    fill_mode_ = FILL_SOLID;
     depthBias_ = BiasParameters(0.0f, 0.0f);
     renderOrder_ = DEFAULT_RENDER_ORDER;
     occlusion_ = true;

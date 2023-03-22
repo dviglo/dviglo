@@ -116,7 +116,7 @@ public:
     ViewOverrideFlags GetViewOverrideFlags() const { return viewOverrideFlags_; }
 
     /// Return fill mode.
-    FillMode GetFillMode() const { return fillMode_; }
+    FillMode GetFillMode() const { return fill_mode_; }
 
     /// Return orthographic flag.
     bool IsOrthographic() const { return orthographic_; }
@@ -245,7 +245,7 @@ private:
     /// View override flags.
     ViewOverrideFlags viewOverrideFlags_;
     /// Fill mode.
-    FillMode fillMode_;
+    FillMode fill_mode_;
     /// Projection offset.
     Vector2 projectionOffset_;
     /// Reflection plane.

@@ -1678,10 +1678,10 @@ void Graphics::SetDepthWrite_OGL(bool enable)
 void Graphics::SetFillMode_OGL(FillMode mode)
 {
 #ifndef GL_ES_VERSION_2_0
-    if (mode != fillMode_)
+    if (mode != fill_mode_)
     {
         glPolygonMode(GL_FRONT_AND_BACK, glFillMode[mode]);
-        fillMode_ = mode;
+        fill_mode_ = mode;
     }
 #endif
 }
@@ -2937,7 +2937,7 @@ void Graphics::ResetCachedState_OGL()
     depthTestMode_ = CMP_ALWAYS;
     depthWrite_ = false;
     lineAntiAlias_ = false;
-    fillMode_ = FILL_SOLID;
+    fill_mode_ = FILL_SOLID;
     scissorTest_ = false;
     scissorRect_ = IntRect::ZERO;
     stencilTest_ = false;
