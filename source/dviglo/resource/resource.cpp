@@ -142,7 +142,7 @@ void ResourceWithMetadata::load_metadata_from_xml(const XmlElement& source)
         AddMetadata(elem.GetAttribute("name"), elem.GetVariant());
 }
 
-void ResourceWithMetadata::LoadMetadataFromJSON(const JSONArray& array)
+void ResourceWithMetadata::load_metadata_from_json(const JSONArray& array)
 {
     for (const JSONValue& value : array)
         AddMetadata(value.Get("name").GetString(), value.GetVariant());

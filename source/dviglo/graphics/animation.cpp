@@ -200,7 +200,7 @@ bool Animation::BeginLoad(Deserializer& source)
         }
 
         const JSONArray& metadataArray = rootVal.Get("metadata").GetArray();
-        LoadMetadataFromJSON(metadataArray);
+        load_metadata_from_json(metadataArray);
 
         memoryUse += triggers_.Size() * sizeof(AnimationTriggerPoint);
         SetMemoryUse(memoryUse);

@@ -116,7 +116,7 @@ protected:
     /// Load metadata from <metadata> children of XML element.
     void load_metadata_from_xml(const XmlElement& source);
     /// Load metadata from JSON array.
-    void LoadMetadataFromJSON(const JSONArray& array);
+    void load_metadata_from_json(const JSONArray& array);
     /// Save as <metadata> children of XML element.
     void SaveMetadataToXML(XmlElement& destination) const;
     /// Copy metadata from another resource.
