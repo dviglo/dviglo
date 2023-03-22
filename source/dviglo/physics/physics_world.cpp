@@ -645,7 +645,7 @@ void PhysicsWorld::GetRigidBodies(Vector<RigidBody*>& result, const RigidBody* b
     if (!body || !body->GetBody())
         return;
 
-    PhysicsQueryCallback callback(result, body->GetCollisionMask());
+    PhysicsQueryCallback callback(result, body->collision_mask());
     world_->contactTest(body->GetBody(), callback);
 
     // Remove the body itself from the returned list

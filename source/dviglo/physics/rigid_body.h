@@ -204,7 +204,7 @@ public:
     unsigned collision_layer() const { return collisionLayer_; }
 
     /// Return collision mask.
-    unsigned GetCollisionMask() const { return collisionMask_; }
+    unsigned collision_mask() const { return collisionMask_; }
 
     /// Return collision event signaling mode.
     CollisionEventMode GetCollisionEventMode() const { return collisionEventMode_; }
