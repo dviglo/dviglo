@@ -36,7 +36,7 @@ public:
     StringHash(const char* str) noexcept;        // NOLINT(google-explicit-constructor)
 #else
     constexpr StringHash(const char* str) noexcept
-        : value_(Calculate(str))
+        : value_(calculate(str))
     {
     }
 #endif
@@ -90,7 +90,7 @@ public:
     hash32 ToHash() const { return value_; }
 
     /// Calculate hash value from a C string.
-    static constexpr hash32 Calculate(const char* str, hash32 hash = 0)
+    static constexpr hash32 calculate(const char* str, hash32 hash = 0)
     {
         if (!str)
             return hash;
@@ -114,7 +114,7 @@ private:
 
 constexpr StringHash operator ""_hash(const char* str, size_t)
 {
-    return StringHash(StringHash::Calculate(str));
+    return StringHash(StringHash::calculate(str));
 }
 
 }

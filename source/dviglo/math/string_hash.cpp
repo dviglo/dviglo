@@ -33,14 +33,14 @@ const StringHash StringHash::ZERO;
 
 #ifdef DV_HASH_DEBUG
 StringHash::StringHash(const char* str) noexcept :
-    value_(Calculate(str))
+    value_(calculate(str))
 {
     dviglo::GetGlobalStringHashRegister().RegisterString(*this, str);
 }
 #endif
 
 StringHash::StringHash(const String& str) noexcept :
-    value_(Calculate(str.c_str()))
+    value_(calculate(str.c_str()))
 {
 #ifdef DV_HASH_DEBUG
     dviglo::GetGlobalStringHashRegister().RegisterString(*this, str.c_str());
