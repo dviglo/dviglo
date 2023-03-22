@@ -84,7 +84,7 @@ public:
     float GetScrollStep() const;
 
     /// Return arrow key page step.
-    float GetPageStep() const { return pageStep_; }
+    float GetPageStep() const { return page_step_; }
 
     /// Set view position attribute.
     void SetViewPositionAttr(const IntVector2& value);
@@ -118,7 +118,7 @@ protected:
     /// View offset attribute.
     IntVector2 viewPositionAttr_;
     /// Arrow key page step.
-    float pageStep_;
+    float page_step_;
     /// Automatically show/hide scrollbars flag.
     bool scrollBarsAutoVisible_;
     /// Ignore scrollbar events flag. Used to prevent possible endless loop when resizing.

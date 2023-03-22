@@ -238,7 +238,7 @@ void ListView::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
                 // Convert page step to pixels and see how many items have to be skipped to reach that many pixels
                 if (selection == NINDEX)
                     selection = 0;      // Assume as if first item is selected
-                int stepPixels = ((int)(pageStep_ * scrollPanel_->GetHeight())) - contentElement_->GetChild(selection)->GetHeight();
+                int stepPixels = ((int)(page_step_ * scrollPanel_->GetHeight())) - contentElement_->GetChild(selection)->GetHeight();
                 i32 newSelection = selection;
                 i32 okSelection = selection;
                 i32 invisible = 0;

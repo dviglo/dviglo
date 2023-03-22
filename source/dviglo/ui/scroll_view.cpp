@@ -24,7 +24,7 @@ ScrollView::ScrollView() :
     viewPosition_(IntVector2::ZERO),
     viewSize_(IntVector2::ZERO),
     viewPositionAttr_(IntVector2::ZERO),
-    pageStep_(1.0f),
+    page_step_(1.0f),
     scrollBarsAutoVisible_(true),
     ignoreEvents_(false),
     resizeContentWidth_(false)
@@ -148,12 +148,12 @@ void ScrollView::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifi
 
     case KEY_PAGEUP:
         if (verticalScrollBar_->IsVisible())
-            verticalScrollBar_->ChangeValue(-pageStep_);
+            verticalScrollBar_->ChangeValue(-page_step_);
         break;
 
     case KEY_PAGEDOWN:
         if (verticalScrollBar_->IsVisible())
-            verticalScrollBar_->ChangeValue(pageStep_);
+            verticalScrollBar_->ChangeValue(page_step_);
         break;
 
     default: break;
@@ -252,7 +252,7 @@ void ScrollView::SetScrollStep(float step)
 
 void ScrollView::SetPageStep(float step)
 {
-    pageStep_ = Max(step, 0.0f);
+    page_step_ = Max(step, 0.0f);
 }
 
 bool ScrollView::GetHorizontalScrollBarVisible() const
