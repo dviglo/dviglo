@@ -84,7 +84,7 @@ public:
     float GetScrollStep() const;
 
     /// Return arrow key page step.
-    float GetPageStep() const { return page_step_; }
+    float page_step() const { return page_step_; }
 
     /// Set view position attribute.
     void SetViewPositionAttr(const IntVector2& value);

@@ -64,7 +64,7 @@ void ScrollView::RegisterObject()
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);
     DV_ACCESSOR_ATTRIBUTE("View Position", GetViewPosition, SetViewPositionAttr, IntVector2::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Scroll Step", GetScrollStep, SetScrollStep, 0.1f, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Page Step", GetPageStep, SetPageStep, 1.0f, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Page Step", page_step, SetPageStep, 1.0f, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Auto Show/Hide Scrollbars", GetScrollBarsAutoVisible, SetScrollBarsAutoVisible, true, AM_FILE);
 }
 
