@@ -78,7 +78,7 @@ void Scene::RegisterObject()
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Time Scale", GetTimeScale, SetTimeScale, 1.0f, AM_DEFAULT);
-    DV_ACCESSOR_ATTRIBUTE("Smoothing Constant", GetSmoothingConstant, SetSmoothingConstant, DEFAULT_SMOOTHING_CONSTANT,
+    DV_ACCESSOR_ATTRIBUTE("Smoothing Constant", smoothing_constant, SetSmoothingConstant, DEFAULT_SMOOTHING_CONSTANT,
         AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Snap Threshold", snap_threshold, SetSnapThreshold, DEFAULT_SNAP_THRESHOLD, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Elapsed Time", GetElapsedTime, SetElapsedTime, 0.0f, AM_FILE);

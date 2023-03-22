@@ -182,7 +182,7 @@ public:
     float GetElapsedTime() const { return elapsedTime_; }
 
     /// Return motion smoothing constant.
-    float GetSmoothingConstant() const { return smoothing_constant_; }
+    float smoothing_constant() const { return smoothing_constant_; }
 
     /// Return motion smoothing snap threshold.
     float snap_threshold() const { return snap_threshold_; }
