@@ -105,7 +105,7 @@ unsigned Resource::GetUseTimer()
         return useTimer_.GetMSec(false);
 }
 
-void ResourceWithMetadata::AddMetadata(const String& name, const Variant& value)
+void ResourceWithMetadata::add_metadata(const String& name, const Variant& value)
 {
     bool exists;
     metadata_.Insert(MakePair(StringHash(name), value), exists);
@@ -139,13 +139,13 @@ bool ResourceWithMetadata::HasMetadata() const
 void ResourceWithMetadata::load_metadata_from_xml(const XmlElement& source)
 {
     for (XmlElement elem = source.GetChild("metadata"); elem; elem = elem.GetNext("metadata"))
-        AddMetadata(elem.GetAttribute("name"), elem.GetVariant());
+        add_metadata(elem.GetAttribute("name"), elem.GetVariant());
 }
 
 void ResourceWithMetadata::load_metadata_from_json(const JSONArray& array)
 {
     for (const JSONValue& value : array)
-        AddMetadata(value.Get("name").GetString(), value.GetVariant());
+        add_metadata(value.Get("name").GetString(), value.GetVariant());
 }
 
 void ResourceWithMetadata::save_metadata_to_xml(XmlElement& destination) const

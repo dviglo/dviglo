@@ -102,7 +102,7 @@ public:
     explicit ResourceWithMetadata() { }
 
     /// Add new metadata variable or overwrite old value.
-    void AddMetadata(const String& name, const Variant& value);
+    void add_metadata(const String& name, const Variant& value);
     /// Remove metadata variable.
     void remove_metadata(const String& name);
     /// Remove all metadata variables.
