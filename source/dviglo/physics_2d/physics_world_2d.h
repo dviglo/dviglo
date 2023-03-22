@@ -178,7 +178,7 @@ public:
     i32 velocity_iterations() const { return velocity_iterations_; }
 
     /// Return position iterations.
-    i32 GetPositionIterations() const { return position_iterations_; }
+    i32 position_iterations() const { return position_iterations_; }
 
     /// Return the Box2D physics world.
     b2World* GetWorld() { return world_.get(); }
