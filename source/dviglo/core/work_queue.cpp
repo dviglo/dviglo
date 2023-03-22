@@ -70,7 +70,7 @@ WorkQueue::WorkQueue() :
     paused_(false),
     completing_(false),
     tolerance_(10),
-    lastSize_(0),
+    last_size_(0),
     maxNonThreadedWorkMs_(5)
 {
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(WorkQueue, HandleBeginFrame));
@@ -385,13 +385,13 @@ void WorkQueue::PurgeCompleted(i32 priority)
 void WorkQueue::PurgePool()
 {
     i32 currentSize = poolItems_.Size();
-    i32 difference = lastSize_ - currentSize;
+    i32 difference = last_size_ - currentSize;
 
     // Difference tolerance, should be fairly significant to reduce the pool size.
     for (i32 i = 0; poolItems_.Size() > 0 && difference > tolerance_ && i < difference; i++)
         poolItems_.PopFront();
 
-    lastSize_ = currentSize;
+    last_size_ = currentSize;
 }
 
 void WorkQueue::ReturnToPool(SharedPtr<WorkItem>& item)

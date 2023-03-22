@@ -139,7 +139,7 @@ private:
     /// Tolerance for the shared pool before it begins to deallocate.
     int tolerance_;
     /// Last size of the shared pool.
-    i32 lastSize_;
+    i32 last_size_;
     /// Maximum milliseconds per frame to spend on low-priority work, when there are no worker threads.
     int maxNonThreadedWorkMs_;
 };
