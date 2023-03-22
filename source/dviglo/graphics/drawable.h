@@ -294,7 +294,7 @@ public:
     }
 
     /// Add a per-vertex light affecting the object this frame.
-    void AddVertexLight(Light* light)
+    void add_vertex_light(Light* light)
     {
         vertexLights_.Push(light);
     }

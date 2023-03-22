@@ -1140,7 +1140,7 @@ void View::GetLightBatches()
                 for (Vector<Drawable*>::ConstIterator j = query.litGeometries_.Begin(); j != query.litGeometries_.End(); ++j)
                 {
                     Drawable* drawable = *j;
-                    drawable->AddVertexLight(light);
+                    drawable->add_vertex_light(light);
                 }
             }
         }
