@@ -119,7 +119,7 @@ void ResourceWithMetadata::remove_metadata(const String& name)
     metadataKeys_.Remove(name);
 }
 
-void ResourceWithMetadata::RemoveAllMetadata()
+void ResourceWithMetadata::remove_all_metadata()
 {
     metadata_.Clear();
     metadataKeys_.Clear();

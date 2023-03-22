@@ -106,7 +106,7 @@ public:
     /// Remove metadata variable.
     void remove_metadata(const String& name);
     /// Remove all metadata variables.
-    void RemoveAllMetadata();
+    void remove_all_metadata();
     /// Return metadata variable.
     const Variant& GetMetadata(const String& name) const;
     /// Return whether the resource has metadata.
