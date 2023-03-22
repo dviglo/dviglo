@@ -42,7 +42,7 @@ private:
     void RecreateFixture();
 
     /// Circle shape.
-    b2CircleShape circleShape_;
+    b2CircleShape circle_shape_;
     /// Radius.
     float radius_;
     /// Center.

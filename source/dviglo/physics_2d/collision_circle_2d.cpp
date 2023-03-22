@@ -18,8 +18,8 @@ CollisionCircle2D::CollisionCircle2D() :
     radius_(DEFAULT_CLRCLE_RADIUS),
     center_(Vector2::ZERO)
 {
-    circleShape_.m_radius = DEFAULT_CLRCLE_RADIUS * cachedWorldScale_.x_;
-    fixtureDef_.shape = &circleShape_;
+    circle_shape_.m_radius = DEFAULT_CLRCLE_RADIUS * cachedWorldScale_.x_;
+    fixtureDef_.shape = &circle_shape_;
 }
 
 CollisionCircle2D::~CollisionCircle2D() = default;
@@ -72,8 +72,8 @@ void CollisionCircle2D::RecreateFixture()
 
     // Only use scale in x axis for circle
     float worldScale = cachedWorldScale_.x_;
-    circleShape_.m_radius = radius_ * worldScale;
-    circleShape_.m_p = ToB2Vec2(center_ * worldScale);
+    circle_shape_.m_radius = radius_ * worldScale;
+    circle_shape_.m_p = ToB2Vec2(center_ * worldScale);
 
     CreateFixture();
 }
