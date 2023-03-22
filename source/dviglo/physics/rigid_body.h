@@ -273,9 +273,9 @@ private:
     /// Attribute buffer for network replication.
     mutable VectorBuffer attrBuffer_;
     /// Collision layer.
-    unsigned collisionLayer_;
+    unsigned collisionLayer_; // TODO: поменять тип на mask?
     /// Collision mask.
-    unsigned collisionMask_;
+    unsigned collisionMask_; // TODO: поменять тип на mask?
     /// Collision event signaling mode.
     CollisionEventMode collisionEventMode_;
     /// Last interpolated position from the simulation.

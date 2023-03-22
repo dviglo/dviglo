@@ -111,7 +111,7 @@ struct PhysicsQueryCallback : public btCollisionWorld::ContactResultCallback
         const btCollisionObjectWrapper* colObj1Wrap, int, int) override
     {
         auto* body = reinterpret_cast<RigidBody*>(colObj0Wrap->getCollisionObject()->getUserPointer());
-        if (body && !result_.Contains(body) && (body->collision_layer() & collisionMask_))
+        if (body && !result_.Contains(body) && (body->collision_layer() & collisionMask_)) // TODO: У тела есть маска, но проверяется со слоем
             result_.Push(body);
         body = reinterpret_cast<RigidBody*>(colObj1Wrap->getCollisionObject()->getUserPointer());
         if (body && !result_.Contains(body) && (body->collision_layer() & collisionMask_))
