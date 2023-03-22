@@ -33,7 +33,7 @@ public:
     void ClearDataLost();
 
     /// Возвращает числовой идентификатор, который ассоциирован с объектом OpenGL
-    u32 gpu_object_name() const { return gpu_object_name_; }
+    GLuint gpu_object_name() const { return gpu_object_name_; }
 
     /// Return whether data is lost due to context loss.
     bool IsDataLost() const { return dataLost_; }
