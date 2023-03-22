@@ -200,14 +200,14 @@ bool Material::BeginLoad(Deserializer& source)
     {
         success = BeginLoadXML(source);
         if (!success)
-            success = BeginLoadJSON(source);
+            success = begin_load_json(source);
 
         if (success)
             return true;
     }
     else // Load JSON file
     {
-        success = BeginLoadJSON(source);
+        success = begin_load_json(source);
         if (!success)
             success = BeginLoadXML(source);
 
@@ -301,7 +301,7 @@ bool Material::BeginLoadXML(Deserializer& source)
     return false;
 }
 
-bool Material::BeginLoadJSON(Deserializer& source)
+bool Material::begin_load_json(Deserializer& source)
 {
     // Attempt to load a JSON file
     ResetToDefaults();

@@ -246,7 +246,7 @@ public:
 
 private:
     /// Helper function for loading JSON files.
-    bool BeginLoadJSON(Deserializer& source);
+    bool begin_load_json(Deserializer& source);
     /// Helper function for loading XML files.
     bool BeginLoadXML(Deserializer& source);
 
