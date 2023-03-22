@@ -98,7 +98,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
     FreeTypeLibrary& freeType = FreeTypeLibrary::get_instance();
 
     UI& ui = DV_UI;
-    const int maxTextureSize = ui.GetMaxFontTextureSize();
+    const int maxTextureSize = ui.max_font_texture_size();
     const FontHintLevel hintLevel = ui.GetFontHintLevel();
     const float subpixelThreshold = ui.GetFontSubpixelThreshold();
 
