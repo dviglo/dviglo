@@ -38,7 +38,7 @@ public:
     float GetDistanceFactor() const { return distanceFactor_; }
 
     /// Return minimum priority.
-    float GetMinPriority() const { return min_priority_; }
+    float min_priority() const { return min_priority_; }
 
     /// Return whether updates to owner should be sent always at full rate.
     bool GetAlwaysUpdateOwner() const { return alwaysUpdateOwner_; }
