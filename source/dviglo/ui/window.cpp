@@ -67,7 +67,7 @@ void Window::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
         // Modal shade
         if (modalShadeColor_ != Color::TRANSPARENT_BLACK)
         {
-            UIElement* rootElement = GetRoot();
+            UiElement* rootElement = GetRoot();
             const IntVector2& rootSize = rootElement->GetSize();
             UIBatch batch(rootElement, BLEND_ALPHA, IntRect(0, 0, rootSize.x_, rootSize.y_), nullptr, &vertexData);
             batch.SetColor(modalShadeColor_);
@@ -94,7 +94,7 @@ void Window::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
 
 void Window::OnHover(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor)
 {
-    UIElement::OnHover(position, screenPosition, buttons, qualifiers, cursor);
+    UiElement::OnHover(position, screenPosition, buttons, qualifiers, cursor);
 
     if (dragMode_ == DRAG_NONE)
     {
@@ -107,7 +107,7 @@ void Window::OnHover(const IntVector2& position, const IntVector2& screenPositio
 
 void Window::OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor)
 {
-    UIElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
+    UiElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
 
     if (buttons != MOUSEB_LEFT || !CheckAlignment())
     {
@@ -210,7 +210,7 @@ void Window::OnDragMove(const IntVector2& /*position*/, const IntVector2& screen
 
 void Window::OnDragEnd(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags dragButtons, MouseButtonFlags releaseButtons, Cursor* cursor)
 {
-    UIElement::OnDragEnd(position, screenPosition, dragButtons, releaseButtons, cursor);
+    UiElement::OnDragEnd(position, screenPosition, dragButtons, releaseButtons, cursor);
 
     dragMode_ = DRAG_NONE;
 }
@@ -218,7 +218,7 @@ void Window::OnDragEnd(const IntVector2& position, const IntVector2& screenPosit
 void Window::OnDragCancel(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags dragButtons, MouseButtonFlags cancelButtons,
     Cursor* cursor)
 {
-    UIElement::OnDragCancel(position, screenPosition, dragButtons, cancelButtons, cursor);
+    UiElement::OnDragCancel(position, screenPosition, dragButtons, cancelButtons, cursor);
 
     if (dragButtons == MOUSEB_LEFT && dragMode_ != DRAG_NONE)
     {

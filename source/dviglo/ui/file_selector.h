@@ -16,7 +16,7 @@ class LineEdit;
 class ListView;
 class ResourceCache;
 class Text;
-class UIElement;
+class UiElement;
 class Window;
 class XMLFile;
 
@@ -130,7 +130,7 @@ private:
     /// Fileselector window.
     SharedPtr<Window> window_;
     /// Title layout.
-    UIElement* titleLayout;
+    UiElement* titleLayout;
     /// Window title text.
     Text* titleText_;
     /// File list.
@@ -152,11 +152,11 @@ private:
     /// Close button.
     Button* closeButton_;
     /// Filename and filter layout.
-    UIElement* fileNameLayout_;
+    UiElement* fileNameLayout_;
     /// Separator layout.
-    UIElement* separatorLayout_;
+    UiElement* separatorLayout_;
     /// Button layout.
-    UIElement* buttonLayout_;
+    UiElement* buttonLayout_;
     /// Current directory.
     String path_;
     /// Filters.

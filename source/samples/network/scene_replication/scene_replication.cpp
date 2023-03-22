@@ -139,7 +139,7 @@ void SceneReplication::CreateScene()
 void SceneReplication::CreateUI()
 {
     UI& ui = DV_UI;
-    UIElement* root = ui.GetRoot();
+    UiElement* root = ui.GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
@@ -179,7 +179,7 @@ void SceneReplication::CreateUI()
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(10, 10);
 
-    buttonContainer_ = root->CreateChild<UIElement>();
+    buttonContainer_ = root->CreateChild<UiElement>();
     buttonContainer_->SetFixedSize(500, 20);
     buttonContainer_->SetPosition(20, 20);
     buttonContainer_->SetLayoutMode(LM_HORIZONTAL);

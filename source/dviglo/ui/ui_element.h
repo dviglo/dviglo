@@ -101,15 +101,15 @@ class ResourceCache;
 class Texture2D;
 
 /// Base class for %UI elements.
-class DV_API UIElement : public Animatable
+class DV_API UiElement : public Animatable
 {
-    DV_OBJECT(UIElement, Animatable);
+    DV_OBJECT(UiElement, Animatable);
 
 public:
     /// Construct.
-    explicit UIElement();
+    explicit UiElement();
     /// Destruct.
-    ~UIElement() override;
+    ~UiElement() override;
     /// Register object factory.
     static void RegisterObject();
 
@@ -120,7 +120,7 @@ public:
     /// Load from XML data with style. Return true if successful.
     virtual bool LoadXML(const XMLElement& source, XMLFile* styleFile);
     /// Create a child by loading from XML data with style. Returns the child element if successful, null if otherwise.
-    virtual UIElement* LoadChildXML(const XMLElement& childElem, XMLFile* styleFile);
+    virtual UiElement* LoadChildXML(const XMLElement& childElem, XMLFile* styleFile);
     /// Save as XML data. Return true if successful.
     bool SaveXML(XMLElement& dest) const override;
 
@@ -142,7 +142,7 @@ public:
     /// React to mouse click end.
     virtual void OnClickEnd
         (const IntVector2& position, const IntVector2& screenPosition, MouseButton button, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor,
-            UIElement* beginElement) { }
+            UiElement* beginElement) { }
     /// React to double mouse click.
     virtual void OnDoubleClick
         (const IntVector2& position, const IntVector2& screenPosition, MouseButton button, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor) { }
@@ -160,9 +160,9 @@ public:
     virtual void OnDragCancel
         (const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags dragButtons, MouseButtonFlags cancelButtons, Cursor* cursor);
     /// React to drag and drop test. Return true to signal that the drop is acceptable.
-    virtual bool OnDragDropTest(UIElement* source);
+    virtual bool OnDragDropTest(UiElement* source);
     /// React to drag and drop finish. Return true to signal that the drop was accepted.
-    virtual bool OnDragDropFinish(UIElement* source);
+    virtual bool OnDragDropFinish(UiElement* source);
     /// React to mouse wheel.
     virtual void OnWheel(int delta, MouseButtonFlags buttons, QualifierFlags qualifiers) { }
     /// React to a key press.
@@ -331,16 +331,16 @@ public:
     void BringToFront();
 
     /// Create and add a child element and return it.
-    UIElement* CreateChild(StringHash type, const String& name = String::EMPTY, i32 index = ENDPOS);
+    UiElement* CreateChild(StringHash type, const String& name = String::EMPTY, i32 index = ENDPOS);
 
     /// Add a child element.
-    void AddChild(UIElement* element);
+    void AddChild(UiElement* element);
 
     /// Insert a child element into a specific position in the child list. index can be ENDPOS.
-    void InsertChild(i32 index, UIElement* element);
+    void InsertChild(i32 index, UiElement* element);
 
     /// Remove a child element. Starting search at specified index if provided.
-    void RemoveChild(UIElement* element, i32 index = 0);
+    void RemoveChild(UiElement* element, i32 index = 0);
 
     /// Remove a child element at index.
     void RemoveChildAtIndex(i32 index);
@@ -352,10 +352,10 @@ public:
     void Remove();
 
     /// Find child index. Return NINDEX if not found.
-    i32 FindChild(UIElement* element) const;
+    i32 FindChild(UiElement* element) const;
 
     /// Set parent element. Same as parent->InsertChild(index, this).
-    void SetParent(UIElement* parent, i32 index = ENDPOS);
+    void SetParent(UiElement* parent, i32 index = ENDPOS);
 
     /// Set a user variable.
     void SetVar(StringHash key, const Variant& value);
@@ -363,7 +363,7 @@ public:
     void SetInternal(bool enable);
     /// Set traversal mode for rendering. The default traversal mode is TM_BREADTH_FIRST for non-root element. Root element should be set to TM_DEPTH_FIRST to avoid artifacts during rendering.
     void SetTraversalMode(TraversalMode traversalMode);
-    /// Set element event sender flag. When child element is added or deleted, the event would be sent using UIElement found in the parental chain having this flag set. If not set, the event is sent using UI's root as per normal.
+    /// Set element event sender flag. When child element is added or deleted, the event would be sent using UiElement found in the parental chain having this flag set. If not set, the event is sent using UI's root as per normal.
     void SetElementEventSender(bool flag);
 
     /// Set tags. Old tags are overwritten.
@@ -503,7 +503,7 @@ public:
     bool HasFocus() const;
 
     /// Return whether is a direct or indirect child of specified element.
-    bool IsChildOf(UIElement* element) const;
+    bool IsChildOf(UiElement* element) const;
 
     /// Return whether reacts to input.
     bool IsEnabled() const { return enabled_; }
@@ -559,28 +559,28 @@ public:
     i32 GetNumChildren(bool recursive = false) const;
 
     /// Return child element by index.
-    UIElement* GetChild(i32 index) const;
+    UiElement* GetChild(i32 index) const;
 
     /// Return child element by name.
-    UIElement* GetChild(const String& name, bool recursive = false) const;
+    UiElement* GetChild(const String& name, bool recursive = false) const;
 
     /// Return child element by variable. If only key is provided, return the first child having the matching variable key. If value is also provided then the actual variable value would also be checked against.
-    UIElement* GetChild(const StringHash& key, const Variant& value = Variant::EMPTY, bool recursive = false) const;
+    UiElement* GetChild(const StringHash& key, const Variant& value = Variant::EMPTY, bool recursive = false) const;
 
     /// Return immediate child elements.
-    const Vector<SharedPtr<UIElement>>& GetChildren() const { return children_; }
+    const Vector<SharedPtr<UiElement>>& GetChildren() const { return children_; }
 
     /// Return child elements either recursively or non-recursively.
-    void GetChildren(Vector<UIElement*>& dest, bool recursive = false) const;
+    void GetChildren(Vector<UiElement*>& dest, bool recursive = false) const;
 
     /// Return child elements, optionally recursive.
-    Vector<UIElement*> GetChildren(bool recursive) const;
+    Vector<UiElement*> GetChildren(bool recursive) const;
 
     /// Return parent element.
-    UIElement* GetParent() const { return parent_; }
+    UiElement* GetParent() const { return parent_; }
 
     /// Return root element.
-    UIElement* GetRoot() const;
+    UiElement* GetRoot() const;
     /// Return derived color. Only valid when no gradient.
     const Color& GetDerivedColor() const;
     /// Return a user variable.
@@ -596,10 +596,10 @@ public:
     const StringVector& GetTags() const { return tags_; }
 
     /// Return child elements with a specific tag either recursively or non-recursively.
-    void GetChildrenWithTag(Vector<UIElement*>& dest, const String& tag, bool recursive = false) const;
+    void GetChildrenWithTag(Vector<UiElement*>& dest, const String& tag, bool recursive = false) const;
 
     /// Return child elements with a specific tag either recursively or non-recursively.
-    Vector<UIElement*> GetChildrenWithTag(const String& tag, bool recursive = false) const;
+    Vector<UiElement*> GetChildrenWithTag(const String& tag, bool recursive = false) const;
 
     /// Return the drag button combo if this element is being dragged.
     MouseButtonFlags GetDragButtonCombo() const { return dragButtonCombo_; }
@@ -647,7 +647,7 @@ public:
     bool IsElementEventSender() const { return elementEventSender_; }
 
     /// Get element which should send child added / removed events.
-    UIElement* GetElementEventSender() const;
+    UiElement* GetElementEventSender() const;
 
     /// Return effective minimum size, also considering layout. Used internally.
     IntVector2 GetEffectiveMinSize() const;
@@ -678,9 +678,9 @@ protected:
     /// Name.
     String name_;
     /// Child elements.
-    Vector<SharedPtr<UIElement>> children_;
+    Vector<SharedPtr<UiElement>> children_;
     /// Parent element.
-    UIElement* parent_{};
+    UiElement* parent_{};
     /// Child element clipping border.
     IntRect clipBorder_;
     /// Colors.
@@ -750,11 +750,11 @@ protected:
 
 private:
     /// Return child elements recursively.
-    void GetChildrenRecursive(Vector<UIElement*>& dest) const;
+    void GetChildrenRecursive(Vector<UiElement*>& dest) const;
     /// Return child elements with a specific tag recursively.
-    void GetChildrenWithTagRecursive(Vector<UIElement*>& dest, const String& tag) const;
+    void GetChildrenWithTagRecursive(Vector<UiElement*>& dest, const String& tag) const;
     /// Recursively apply style to a child element hierarchy when adding to an element.
-    void ApplyStyleRecursive(UIElement* element);
+    void ApplyStyleRecursive(UiElement* element);
     /// Calculate layout width for resizing the parent element.
     int CalculateLayoutParentSize(const Vector<int>& sizes, int begin, int end, int spacing);
     /// Calculate child widths/positions in the layout.
@@ -762,7 +762,7 @@ private:
         (Vector<int>& positions, Vector<int>& sizes, const Vector<int>& minSizes, const Vector<int>& maxSizes,
             const Vector<float>& flexScales, int targetSize, int begin, int end, int spacing);
     /// Get child element constant position in a layout.
-    IntVector2 GetLayoutChildPosition(UIElement* child);
+    IntVector2 GetLayoutChildPosition(UiElement* child);
     /// Detach from parent.
     void Detach();
     /// Verify that child elements have proper alignment for layout mode.
@@ -822,40 +822,40 @@ private:
     StringVector tags_;
 };
 
-template <class T> T* UIElement::CreateChild(const String& name, i32 index/* = ENDPOS*/)
+template <class T> T* UiElement::CreateChild(const String& name, i32 index/* = ENDPOS*/)
 {
     assert(index >= 0 || index == ENDPOS);
     return static_cast<T*>(CreateChild(T::GetTypeStatic(), name, index));
 }
 
-template <class T> T* UIElement::GetChildStaticCast(i32 index) const
+template <class T> T* UiElement::GetChildStaticCast(i32 index) const
 {
     assert(index >= 0);
     return static_cast<T*>(GetChild(index));
 }
 
-template <class T> T* UIElement::GetChildStaticCast(const String& name, bool recursive) const
+template <class T> T* UiElement::GetChildStaticCast(const String& name, bool recursive) const
 {
     return static_cast<T*>(GetChild(name, recursive));
 }
 
-template <class T> T* UIElement::GetChildStaticCast(const StringHash& key, const Variant& value, bool recursive) const
+template <class T> T* UiElement::GetChildStaticCast(const StringHash& key, const Variant& value, bool recursive) const
 {
     return static_cast<T*>(GetChild(key, value, recursive));
 }
 
-template <class T> T* UIElement::GetChildDynamicCast(i32 index) const
+template <class T> T* UiElement::GetChildDynamicCast(i32 index) const
 {
     assert(index >= 0);
     return dynamic_cast<T*>(GetChild(index));
 }
 
-template <class T> T* UIElement::GetChildDynamicCast(const String& name, bool recursive) const
+template <class T> T* UiElement::GetChildDynamicCast(const String& name, bool recursive) const
 {
     return dynamic_cast<T*>(GetChild(name, recursive));
 }
 
-template <class T> T* UIElement::GetChildDynamicCast(const StringHash& key, const Variant& value, bool recursive) const
+template <class T> T* UiElement::GetChildDynamicCast(const StringHash& key, const Variant& value, bool recursive) const
 {
     return dynamic_cast<T*>(GetChild(key, value, recursive));
 }

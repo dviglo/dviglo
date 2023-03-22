@@ -34,7 +34,7 @@ DropDownList::DropDownList() :
     listView_->SetScrollBarsVisible(false, false);
     popup_->SetLayout(LM_VERTICAL);
     popup_->AddChild(listView_);
-    placeholder_ = CreateChild<UIElement>("DDL_Placeholder");
+    placeholder_ = CreateChild<UiElement>("DDL_Placeholder");
     placeholder_->SetInternal(true);
     auto* text = placeholder_->CreateChild<Text>("DDL_Placeholder_Text");
     text->SetInternal(true);
@@ -70,7 +70,7 @@ void DropDownList::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexDat
     if (!placeholder_->IsVisible())
         return;
 
-    UIElement* selectedItem = GetSelectedItem();
+    UiElement* selectedItem = GetSelectedItem();
     if (selectedItem)
     {
         // Can not easily copy the selected item. However, it can be re-rendered on the placeholder's position
@@ -92,7 +92,7 @@ void DropDownList::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexDat
 void DropDownList::OnShowPopup()
 {
     // Resize the popup to match the size of the list content, and optionally match the button width
-    UIElement* content = listView_->GetContentElement();
+    UiElement* content = listView_->GetContentElement();
     content->UpdateLayout();
     const IntVector2& contentSize = content->GetSize();
     const IntRect& border = popup_->GetLayoutBorder();
@@ -101,7 +101,7 @@ void DropDownList::OnShowPopup()
 
     // Check if popup fits below the button. If not, show above instead
     bool showAbove = false;
-    UIElement* root = GetRoot();
+    UiElement* root = GetRoot();
     if (root)
     {
         const IntVector2& screenPos = GetScreenPosition();
@@ -130,12 +130,12 @@ void DropDownList::OnSetEditable()
     listView_->SetEditable(editable_);
 }
 
-void DropDownList::AddItem(UIElement* item)
+void DropDownList::AddItem(UiElement* item)
 {
     InsertItem(ENDPOS, item);
 }
 
-void DropDownList::InsertItem(i32 index, UIElement* item)
+void DropDownList::InsertItem(i32 index, UiElement* item)
 {
     assert(index >= 0 || index == ENDPOS);
     listView_->InsertItem(index, item);
@@ -145,7 +145,7 @@ void DropDownList::InsertItem(i32 index, UIElement* item)
         SetSelection(0);
 }
 
-void DropDownList::RemoveItem(UIElement* item)
+void DropDownList::RemoveItem(UiElement* item)
 {
     listView_->RemoveItem(item);
 }
@@ -182,13 +182,13 @@ i32 DropDownList::GetNumItems() const
     return listView_->GetNumItems();
 }
 
-UIElement* DropDownList::GetItem(i32 index) const
+UiElement* DropDownList::GetItem(i32 index) const
 {
     assert(index >= 0);
     return listView_->GetItem(index);
 }
 
-Vector<UIElement*> DropDownList::GetItems() const
+Vector<UiElement*> DropDownList::GetItems() const
 {
     return listView_->GetItems();
 }
@@ -198,7 +198,7 @@ i32 DropDownList::GetSelection() const
     return listView_->GetSelection();
 }
 
-UIElement* DropDownList::GetSelectedItem() const
+UiElement* DropDownList::GetSelectedItem() const
 {
     return listView_->GetSelectedItem();
 }
@@ -301,7 +301,7 @@ bool DropDownList::FilterPopupImplicitAttributes(XMLElement& dest) const
 void DropDownList::HandleItemClicked(StringHash eventType, VariantMap& eventData)
 {
     // Resize the selection placeholder to match the selected item
-    UIElement* selectedItem = GetSelectedItem();
+    UiElement* selectedItem = GetSelectedItem();
     if (selectedItem)
         placeholder_->SetSize(selectedItem->GetSize());
 

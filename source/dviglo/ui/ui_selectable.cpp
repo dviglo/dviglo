@@ -14,7 +14,7 @@ void UISelectable::RegisterObject()
 {
     DV_CONTEXT.RegisterFactory<UISelectable>(UI_CATEGORY);
 
-    DV_COPY_BASE_ATTRIBUTES(UIElement);
+    DV_COPY_BASE_ATTRIBUTES(UiElement);
     DV_ATTRIBUTE("Selection Color", selectionColor_, Color::TRANSPARENT_BLACK, AM_FILE);
     DV_ATTRIBUTE("Hover Color", hoverColor_, Color::TRANSPARENT_BLACK, AM_FILE);
 }

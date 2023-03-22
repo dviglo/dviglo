@@ -43,9 +43,9 @@ public:
         (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, MouseButtonFlags buttons, QualifierFlags qualifiers,
             Cursor* cursor) override;
     /// React to drag and drop test. Return true to signal that the drop is acceptable.
-    bool OnDragDropTest(UIElement* source) override;
+    bool OnDragDropTest(UiElement* source) override;
     /// React to drag and drop finish. Return true to signal that the drop was accepted.
-    bool OnDragDropFinish(UIElement* source) override;
+    bool OnDragDropFinish(UiElement* source) override;
     /// React to a key press.
     void OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifiers) override;
     /// React to text input event.

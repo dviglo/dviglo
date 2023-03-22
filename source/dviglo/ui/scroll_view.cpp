@@ -58,7 +58,7 @@ void ScrollView::RegisterObject()
 {
     DV_CONTEXT.RegisterFactory<ScrollView>(UI_CATEGORY);
 
-    DV_COPY_BASE_ATTRIBUTES(UIElement);
+    DV_COPY_BASE_ATTRIBUTES(UiElement);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);
@@ -70,7 +70,7 @@ void ScrollView::RegisterObject()
 
 void ScrollView::ApplyAttributes()
 {
-    UIElement::ApplyAttributes();
+    UiElement::ApplyAttributes();
 
     // Set the scrollbar orientations again and perform size update now that the style is known
     horizontalScrollBar_->SetOrientation(O_HORIZONTAL);
@@ -178,7 +178,7 @@ void ScrollView::OnResize(const IntVector2& newSize, const IntVector2& delta)
     }
 }
 
-void ScrollView::SetContentElement(UIElement* element)
+void ScrollView::SetContentElement(UiElement* element)
 {
     if (element == contentElement_)
         return;
@@ -278,7 +278,7 @@ void ScrollView::SetViewPositionAttr(const IntVector2& value)
 
 bool ScrollView::FilterImplicitAttributes(XMLElement& dest) const
 {
-    if (!UIElement::FilterImplicitAttributes(dest))
+    if (!UiElement::FilterImplicitAttributes(dest))
         return false;
 
     XMLElement childElem = dest.GetChild("element");

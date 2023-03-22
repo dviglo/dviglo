@@ -37,8 +37,8 @@ private:
 
     /// The Window.
     Window* window_{};
-    /// The UI's root UIElement.
-    UIElement* uiRoot_{};
+    /// The UI's root UiElement.
+    UiElement* uiRoot_{};
 
     /// Monitor control.
     DropDownList* monitorControl_{};

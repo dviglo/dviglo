@@ -36,11 +36,11 @@ public:
     void OnSetEditable() override;
 
     /// Add item to the end of the list.
-    void AddItem(UIElement* item);
+    void AddItem(UiElement* item);
     /// Insert item to a specific position. index can be ENDPOS.
-    void InsertItem(i32 index, UIElement* item);
+    void InsertItem(i32 index, UiElement* item);
     /// Remove specific item.
-    void RemoveItem(UIElement* item);
+    void RemoveItem(UiElement* item);
     /// Remove item at index.
     void RemoveItem(i32 index);
     /// Remove all items.
@@ -55,19 +55,19 @@ public:
     /// Return number of items.
     i32 GetNumItems() const;
     /// Return item at index.
-    UIElement* GetItem(i32 index) const;
+    UiElement* GetItem(i32 index) const;
     /// Return all items.
-    Vector<UIElement*> GetItems() const;
+    Vector<UiElement*> GetItems() const;
     /// Return selection index, or NINDEX if none selected.
     i32 GetSelection() const;
     /// Return selected item, or null if none selected.
-    UIElement* GetSelectedItem() const;
+    UiElement* GetSelectedItem() const;
 
     /// Return listview element.
     ListView* GetListView() const { return listView_; }
 
     /// Return selected item placeholder element.
-    UIElement* GetPlaceholder() const { return placeholder_; }
+    UiElement* GetPlaceholder() const { return placeholder_; }
 
     /// Return place holder text.
     const String& GetPlaceholderText() const;
@@ -87,7 +87,7 @@ protected:
     /// Listview element.
     SharedPtr<ListView> listView_;
     /// Selected item placeholder element.
-    SharedPtr<UIElement> placeholder_;
+    SharedPtr<UiElement> placeholder_;
     /// Resize popup flag.
     bool resizePopup_;
 

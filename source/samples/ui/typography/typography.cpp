@@ -43,12 +43,12 @@ void Typography::Start()
     auto* style = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
 
     // Set the loaded style as default style
-    UIElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI.GetRoot();
     root->SetDefaultStyle(style);
 
-    // Create a UIElement to hold all our content
+    // Create a UiElement to hold all our content
     // (Don't modify the root directly, as the base Sample class uses it)
-    uielement_ = new UIElement();
+    uielement_ = new UiElement();
     uielement_->SetAlignment(HA_CENTER, VA_CENTER);
     uielement_->SetLayout(LM_VERTICAL, 10, IntRect(20, 40, 20, 40));
     root->AddChild(uielement_);
@@ -117,7 +117,7 @@ void Typography::Start()
 
 void Typography::CreateText()
 {
-    SharedPtr<UIElement> container(new UIElement());
+    SharedPtr<UiElement> container(new UiElement());
     container->SetAlignment(HA_LEFT, VA_TOP);
     container->SetLayout(LM_VERTICAL);
     uielement_->AddChild(container);
@@ -137,7 +137,7 @@ void Typography::CreateText()
 
 SharedPtr<CheckBox> Typography::CreateCheckbox(const String& label, EventHandler* handler)
 {
-    SharedPtr<UIElement> container(new UIElement());
+    SharedPtr<UiElement> container(new UiElement());
     container->SetAlignment(HA_LEFT, VA_TOP);
     container->SetLayout(LM_HORIZONTAL, 8);
     uielement_->AddChild(container);
@@ -158,7 +158,7 @@ SharedPtr<CheckBox> Typography::CreateCheckbox(const String& label, EventHandler
 
 SharedPtr<DropDownList> Typography::CreateMenu(const String& label, const char** items, EventHandler* handler)
 {
-    SharedPtr<UIElement> container(new UIElement());
+    SharedPtr<UiElement> container(new UiElement());
     container->SetAlignment(HA_LEFT, VA_TOP);
     container->SetLayout(LM_HORIZONTAL, 8);
     uielement_->AddChild(container);
@@ -200,7 +200,7 @@ void Typography::HandleWhiteBackground(StringHash eventType, VariantMap& eventDa
     Zone* zone = DV_RENDERER.GetDefaultZone();
     zone->SetFogColor(bg);
 
-    Vector<UIElement*> text = uielement_->GetChildrenWithTag(TEXT_TAG, true);
+    Vector<UiElement*> text = uielement_->GetChildrenWithTag(TEXT_TAG, true);
     for (int i = 0; i < text.Size(); i++)
         text[i]->SetColor(fg);
 }

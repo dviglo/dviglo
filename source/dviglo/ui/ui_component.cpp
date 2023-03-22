@@ -30,9 +30,9 @@ static int const UICOMPONENT_DEFAULT_TEXTURE_SIZE = 512;
 static int const UICOMPONENT_MIN_TEXTURE_SIZE = 64;
 static int const UICOMPONENT_MAX_TEXTURE_SIZE = 4096;
 
-class UIElement3D : public UIElement
+class UIElement3D : public UiElement
 {
-    DV_OBJECT(UIElement3D, UIElement);
+    DV_OBJECT(UIElement3D, UiElement);
 public:
     /// Construct.
     explicit UIElement3D() { }
@@ -166,7 +166,7 @@ void UIComponent::RegisterObject()
     DV_CONTEXT.RegisterFactory<UIElement3D>();
 }
 
-UIElement* UIComponent::GetRoot() const
+UiElement* UIComponent::GetRoot() const
 {
     return rootElement_;
 }

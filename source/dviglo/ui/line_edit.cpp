@@ -118,7 +118,7 @@ void LineEdit::OnDoubleClick(const IntVector2& position, const IntVector2& scree
 void LineEdit::OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags buttons, QualifierFlags qualifiers,
     Cursor* cursor)
 {
-    UIElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
+    UiElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
 
     dragBeginCursor_ = GetCharIndex(position);
 }
@@ -141,7 +141,7 @@ void LineEdit::OnDragMove(const IntVector2& position, const IntVector2& screenPo
     }
 }
 
-bool LineEdit::OnDragDropTest(UIElement* source)
+bool LineEdit::OnDragDropTest(UiElement* source)
 {
     if (source && editable_)
     {
@@ -154,7 +154,7 @@ bool LineEdit::OnDragDropTest(UIElement* source)
     return false;
 }
 
-bool LineEdit::OnDragDropFinish(UIElement* source)
+bool LineEdit::OnDragDropFinish(UiElement* source)
 {
     if (source && editable_)
     {

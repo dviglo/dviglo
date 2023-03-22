@@ -57,7 +57,7 @@ void Menu::Update(float timeStep)
 
     if (popup_ && showPopup_)
     {
-        const Vector<SharedPtr<UIElement>>& children = popup_->GetChildren();
+        const Vector<SharedPtr<UiElement>>& children = popup_->GetChildren();
         for (i32 i = 0; i < children.Size(); ++i)
         {
             Menu* menu = dynamic_cast<Menu*>(children[i].Get());
@@ -146,9 +146,9 @@ bool Menu::LoadXML(const XMLElement& source, XMLFile* styleFile)
         bool popupElem = childElem.GetBool("popup");
         String typeName = childElem.GetAttribute("type");
         if (typeName.Empty())
-            typeName = "UIElement";
+            typeName = "UiElement";
         i32 index = childElem.HasAttribute("index") ? childElem.GetI32("index") : ENDPOS;
-        UIElement* child = nullptr;
+        UiElement* child = nullptr;
 
         if (!internalElem)
         {
@@ -157,7 +157,7 @@ bool Menu::LoadXML(const XMLElement& source, XMLFile* styleFile)
             else
             {
                 // Do not add the popup element as a child even temporarily, as that can break layouts
-                SharedPtr<UIElement> popup = DynamicCast<UIElement>(DV_CONTEXT.CreateObject(typeName));
+                SharedPtr<UiElement> popup = DynamicCast<UiElement>(DV_CONTEXT.CreateObject(typeName));
                 if (!popup)
                     DV_LOGERROR("Could not create popup element type " + typeName);
                 else
@@ -235,7 +235,7 @@ bool Menu::SaveXML(XMLElement& dest) const
     return true;
 }
 
-void Menu::SetPopup(UIElement* popup)
+void Menu::SetPopup(UiElement* popup)
 {
     if (popup == this)
         return;
@@ -290,9 +290,9 @@ void Menu::ShowPopup(bool enable)
         OnHidePopup();
 
         // If the popup has child menus, hide their popups as well
-        Vector<UIElement*> children;
+        Vector<UiElement*> children;
         popup_->GetChildren(children, true);
-        for (Vector<UIElement*>::ConstIterator i = children.Begin(); i != children.End(); ++i)
+        for (Vector<UiElement*>::ConstIterator i = children.Begin(); i != children.End(); ++i)
         {
             auto* menu = dynamic_cast<Menu*>(*i);
             if (menu)
@@ -369,11 +369,11 @@ void Menu::HandleFocusChanged(StringHash eventType, VariantMap& eventData)
 
     using namespace FocusChanged;
 
-    auto* element = static_cast<UIElement*>(eventData[P_ELEMENT].GetPtr());
-    UIElement* root = GetRoot();
+    auto* element = static_cast<UiElement*>(eventData[P_ELEMENT].GetPtr());
+    UiElement* root = GetRoot();
 
     // If another element was focused due to the menu button being clicked, do not hide the popup
-    if (eventType == E_FOCUSCHANGED && static_cast<UIElement*>(eventData[P_CLICKEDELEMENT].GetPtr()))
+    if (eventType == E_FOCUSCHANGED && static_cast<UiElement*>(eventData[P_CLICKEDELEMENT].GetPtr()))
         return;
 
     // If clicked emptiness or defocused, hide the popup
@@ -390,7 +390,7 @@ void Menu::HandleFocusChanged(StringHash eventType, VariantMap& eventData)
         if (element == this || element == popup_)
             return;
         if (element->GetParent() == root)
-            element = static_cast<UIElement*>(element->GetVar(VAR_ORIGIN).GetPtr());
+            element = static_cast<UiElement*>(element->GetVar(VAR_ORIGIN).GetPtr());
         else
             element = element->GetParent();
     }
@@ -411,7 +411,7 @@ void Menu::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         eventData[P_REPEAT].GetBool() == false)
     {
         // Ignore if UI has modal element or focused LineEdit
-        UIElement* focusElement = DV_UI.GetFocusElement();
+        UiElement* focusElement = DV_UI.GetFocusElement();
         if (DV_UI.HasModalElement() || (focusElement && focusElement->GetType() == LineEdit::GetTypeStatic()))
             return;
 

@@ -54,12 +54,12 @@ private:
     SharedPtr<Scene> scene_;
     /// The Window.
     SharedPtr<Window> window_;
-    /// The UI's root UIElement.
-    SharedPtr<UIElement> uiRoot_;
+    /// The UI's root UiElement.
+    SharedPtr<UiElement> uiRoot_;
     /// Remembered drag begin position.
     IntVector2 dragBeginPosition_;
     /// Root UI element of texture.
-    SharedPtr<UIElement> textureRoot_;
+    SharedPtr<UiElement> textureRoot_;
     /// UI element with instructions.
     SharedPtr<Text> instructions_;
     /// Enable or disable cube rotation.
@@ -69,7 +69,7 @@ private:
     /// Draw debug information of last clicked element.
     bool drawDebug_;
     /// Last clicked UI element.
-    WeakPtr<UIElement> current_;
+    WeakPtr<UiElement> current_;
 };
 
 

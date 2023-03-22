@@ -82,7 +82,7 @@ void Slider::OnClickBegin(const IntVector2& position, const IntVector2& screenPo
 }
 
 void Slider::OnClickEnd(const IntVector2& position, const IntVector2& screenPosition, MouseButton button, MouseButtonFlags buttons, QualifierFlags qualifiers,
-    Cursor* cursor, UIElement* beginElement)
+    Cursor* cursor, UiElement* beginElement)
 {
     hovering_ = knob_->IsInside(screenPosition, true);
     if (!hovering_ && button == MOUSEB_LEFT)
@@ -91,7 +91,7 @@ void Slider::OnClickEnd(const IntVector2& position, const IntVector2& screenPosi
 
 void Slider::OnDragBegin(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor)
 {
-    UIElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
+    UiElement::OnDragBegin(position, screenPosition, buttons, qualifiers, cursor);
 
     if (buttons == MOUSEB_LEFT)
     {
@@ -128,7 +128,7 @@ void Slider::OnDragMove(const IntVector2& position, const IntVector2& screenPosi
 
 void Slider::OnDragEnd(const IntVector2& position, const IntVector2& screenPosition, MouseButtonFlags dragButtons, MouseButtonFlags releaseButtons, Cursor* cursor)
 {
-    UIElement::OnDragEnd(position, screenPosition, dragButtons, releaseButtons, cursor);
+    UiElement::OnDragEnd(position, screenPosition, dragButtons, releaseButtons, cursor);
 
     if (dragButtons == MOUSEB_LEFT)
     {

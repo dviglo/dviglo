@@ -38,7 +38,7 @@ FileSelector::FileSelector() :
     window_ = new Window();
     window_->SetLayout(LM_VERTICAL);
 
-    titleLayout = new UIElement();
+    titleLayout = new UiElement();
     titleLayout->SetLayout(LM_HORIZONTAL);
     window_->AddChild(titleLayout);
 
@@ -54,7 +54,7 @@ FileSelector::FileSelector() :
     fileList_ = new ListView();
     window_->AddChild(fileList_);
 
-    fileNameLayout_ = new UIElement();
+    fileNameLayout_ = new UiElement();
     fileNameLayout_->SetLayout(LM_HORIZONTAL);
 
     fileNameEdit_ = new LineEdit();
@@ -65,13 +65,13 @@ FileSelector::FileSelector() :
 
     window_->AddChild(fileNameLayout_);
 
-    separatorLayout_ = new UIElement();
+    separatorLayout_ = new UiElement();
     window_->AddChild(separatorLayout_);
 
-    buttonLayout_ = new UIElement();
+    buttonLayout_ = new UiElement();
     buttonLayout_->SetLayout(LM_HORIZONTAL);
 
-    buttonLayout_->AddChild(new UIElement()); // Add spacer
+    buttonLayout_->AddChild(new UiElement()); // Add spacer
 
     cancelButton_ = new Button();
     cancelButtonText_ = new Text();
@@ -147,11 +147,11 @@ void FileSelector::SetDefaultStyle(XMLFile* style)
     okButton_->SetStyle("FileSelectorButton");
     cancelButton_->SetStyle("FileSelectorButton");
 
-    const Vector<SharedPtr<UIElement>>& filterTexts = filterList_->GetListView()->GetContentElement()->GetChildren();
+    const Vector<SharedPtr<UiElement>>& filterTexts = filterList_->GetListView()->GetContentElement()->GetChildren();
     for (unsigned i = 0; i < filterTexts.Size(); ++i)
         filterTexts[i]->SetStyle("FileSelectorFilterText");
 
-    const Vector<SharedPtr<UIElement>>& listTexts = fileList_->GetContentElement()->GetChildren();
+    const Vector<SharedPtr<UiElement>>& listTexts = fileList_->GetContentElement()->GetChildren();
     for (unsigned i = 0; i < listTexts.Size(); ++i)
         listTexts[i]->SetStyle("FileSelectorListText");
 
@@ -295,7 +295,7 @@ void FileSelector::RefreshFiles()
     // Sort and add to the list view
     // While items are being added, disable layout update for performance optimization
     std::sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
-    UIElement* listContent = fileList_->GetContentElement();
+    UiElement* listContent = fileList_->GetContentElement();
     listContent->DisableLayoutUpdate();
     for (unsigned i = 0; i < fileEntries_.Size(); ++i)
     {

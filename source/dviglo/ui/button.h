@@ -32,7 +32,7 @@ public:
     /// React to mouse click end.
     void OnClickEnd
         (const IntVector2& position, const IntVector2& screenPosition, MouseButton button, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor,
-            UIElement* beginElement) override;
+            UiElement* beginElement) override;
     /// React to mouse drag motion.
     void OnDragMove
         (const IntVector2& position, const IntVector2& screenPosition, const IntVector2& deltaPos, MouseButtonFlags buttons, QualifierFlags qualifiers,

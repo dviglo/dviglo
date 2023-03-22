@@ -13,7 +13,7 @@ class Button;
 class Connection;
 class Scene;
 class Text;
-class UIElement;
+class UiElement;
 
 }
 
@@ -73,7 +73,7 @@ private:
     /// Mapping from client connections to controllable objects.
     HashMap<Connection*, WeakPtr<Node>> serverObjects_;
     /// Button container element.
-    SharedPtr<UIElement> buttonContainer_;
+    SharedPtr<UiElement> buttonContainer_;
     /// Server address line editor element.
     SharedPtr<LineEdit> textEdit_;
     /// Connect button.

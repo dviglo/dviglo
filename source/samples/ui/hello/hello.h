@@ -53,8 +53,8 @@ private:
 
     /// The Window.
     SharedPtr<Window> window_;
-    /// The UI's root UIElement.
-    SharedPtr<UIElement> uiRoot_;
+    /// The UI's root UiElement.
+    SharedPtr<UiElement> uiRoot_;
     /// Remembered drag begin position.
     IntVector2 dragBeginPosition_;
 };

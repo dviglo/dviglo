@@ -11,9 +11,9 @@ namespace dviglo
 {
 
 /// %UI element which allows sub-pixel positioning and size, as well as rotation. Only other Sprites should be added as child elements.
-class DV_API Sprite : public UIElement
+class DV_API Sprite : public UiElement
 {
-    DV_OBJECT(Sprite, UIElement);
+    DV_OBJECT(Sprite, UiElement);
 
 public:
     /// Construct.

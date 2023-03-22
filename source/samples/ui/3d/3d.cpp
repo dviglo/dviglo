@@ -119,7 +119,7 @@ void Hello3DUI::InitWindow()
     window_->SetName("Window");
 
     // Create Window 'titlebar' container
-    auto* titleBar = new UIElement();
+    auto* titleBar = new UiElement();
     titleBar->SetMinSize(0, 24);
     titleBar->SetVerticalAlignment(VA_TOP);
     titleBar->SetLayoutMode(LM_HORIZONTAL);
@@ -235,14 +235,14 @@ void Hello3DUI::CreateDraggableFish()
 
 void Hello3DUI::HandleDragBegin(StringHash eventType, VariantMap& eventData)
 {
-    // Get UIElement relative position where click occurred (top-left = IntVector2(0,0))
+    // Get UiElement relative position where click occurred (top-left = IntVector2(0,0))
     dragBeginPosition_ = IntVector2(eventData["ElementX"].GetI32(), eventData["ElementY"].GetI32());
 }
 
 void Hello3DUI::HandleDragMove(StringHash eventType, VariantMap& eventData)
 {
     IntVector2 dragCurrentPosition = IntVector2(eventData["X"].GetI32(), eventData["Y"].GetI32());
-    UIElement* draggedElement = static_cast<UIElement*>(eventData["Element"].GetPtr());
+    UiElement* draggedElement = static_cast<UiElement*>(eventData["Element"].GetPtr());
     draggedElement->SetPosition(dragCurrentPosition - dragBeginPosition_);
 }
 
@@ -261,7 +261,7 @@ void Hello3DUI::HandleControlClicked(StringHash eventType, VariantMap& eventData
     auto* windowTitle = window_->GetChildStaticCast<Text>("WindowTitle", true);
 
     // Get control that was clicked
-    auto* clicked = static_cast<UIElement*>(eventData[UIMouseClick::P_ELEMENT].GetPtr());
+    auto* clicked = static_cast<UiElement*>(eventData[UIMouseClick::P_ELEMENT].GetPtr());
 
     String name = "...?";
     if (clicked)

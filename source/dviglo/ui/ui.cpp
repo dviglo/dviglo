@@ -85,8 +85,8 @@ UI& UI::get_instance()
 }
 
 UI::UI() :
-    rootElement_(new UIElement()),
-    rootModalElement_(new UIElement()),
+    rootElement_(new UiElement()),
+    rootModalElement_(new UiElement()),
     doubleClickInterval_(DEFAULT_DOUBLECLICK_INTERVAL),
     dragBeginInterval_(DEFAULT_DRAGBEGIN_INTERVAL),
     defaultToolTipDelay_(DEFAULT_TOOLTIP_DELAY),
@@ -173,11 +173,11 @@ void UI::SetCursor(Cursor* cursor)
     }
 }
 
-void UI::SetFocusElement(UIElement* element, bool byKey)
+void UI::SetFocusElement(UiElement* element, bool byKey)
 {
     using namespace FocusChanged;
 
-    UIElement* originalElement = element;
+    UiElement* originalElement = element;
 
     if (element)
     {
@@ -188,7 +188,7 @@ void UI::SetFocusElement(UIElement* element, bool byKey)
         // Only allow child elements of the modal element to receive focus
         if (HasModalElement())
         {
-            UIElement* topLevel = element->GetParent();
+            UiElement* topLevel = element->GetParent();
             while (topLevel && topLevel->GetParent() != rootElement_)
                 topLevel = topLevel->GetParent();
             if (topLevel)   // If parented to non-modal root then ignore
@@ -204,7 +204,7 @@ void UI::SetFocusElement(UIElement* element, bool byKey)
     // Remove focus from the old element
     if (focusElement_)
     {
-        UIElement* oldFocusElement = focusElement_;
+        UiElement* oldFocusElement = focusElement_;
         focusElement_.Reset();
 
         VariantMap& focusEventData = GetEventDataMap();
@@ -229,7 +229,7 @@ void UI::SetFocusElement(UIElement* element, bool byKey)
     SendEvent(E_FOCUSCHANGED, eventData);
 }
 
-bool UI::SetModalElement(UIElement* modalElement, bool enable)
+bool UI::SetModalElement(UiElement* modalElement, bool enable)
 {
     if (!modalElement)
         return false;
@@ -239,7 +239,7 @@ bool UI::SetModalElement(UIElement* modalElement, bool enable)
         return false;
 
     assert(rootModalElement_);
-    UIElement* currParent = modalElement->GetParent();
+    UiElement* currParent = modalElement->GetParent();
     if (enable)
     {
         // Make sure it is not already the child of the root modal element
@@ -252,16 +252,16 @@ bool UI::SetModalElement(UIElement* modalElement, bool enable)
         modalElement->SetParent(rootModalElement_);
 
         // If it is a popup element, bring along its top-level parent
-        auto* originElement = static_cast<UIElement*>(modalElement->GetVar(VAR_ORIGIN).GetPtr());
+        auto* originElement = static_cast<UiElement*>(modalElement->GetVar(VAR_ORIGIN).GetPtr());
         if (originElement)
         {
-            UIElement* element = originElement;
+            UiElement* element = originElement;
             while (element && element->GetParent() != rootElement_)
                 element = element->GetParent();
             if (element)
             {
                 originElement->SetVar(VAR_PARENT_CHANGED, element);
-                UIElement* oriParent = element->GetParent();
+                UiElement* oriParent = element->GetParent();
                 element->SetVar(VAR_ORIGINAL_PARENT, oriParent);
                 element->SetVar(VAR_ORIGINAL_CHILD_INDEX, oriParent ? oriParent->FindChild(element) : M_MAX_UNSIGNED);
                 element->SetParent(rootModalElement_);
@@ -277,21 +277,21 @@ bool UI::SetModalElement(UIElement* modalElement, bool enable)
             return false;
 
         // Revert back to original parent
-        modalElement->SetParent(static_cast<UIElement*>(modalElement->GetVar(VAR_ORIGINAL_PARENT).GetPtr()),
+        modalElement->SetParent(static_cast<UiElement*>(modalElement->GetVar(VAR_ORIGINAL_PARENT).GetPtr()),
             modalElement->GetVar(VAR_ORIGINAL_CHILD_INDEX).GetU32());
         auto& vars = const_cast<VariantMap&>(modalElement->GetVars());
         vars.Erase(VAR_ORIGINAL_PARENT);
         vars.Erase(VAR_ORIGINAL_CHILD_INDEX);
 
         // If it is a popup element, revert back its top-level parent
-        auto* originElement = static_cast<UIElement*>(modalElement->GetVar(VAR_ORIGIN).GetPtr());
+        auto* originElement = static_cast<UiElement*>(modalElement->GetVar(VAR_ORIGIN).GetPtr());
         if (originElement)
         {
-            auto* element = static_cast<UIElement*>(originElement->GetVar(VAR_PARENT_CHANGED).GetPtr());
+            auto* element = static_cast<UiElement*>(originElement->GetVar(VAR_PARENT_CHANGED).GetPtr());
             if (element)
             {
                 const_cast<VariantMap&>(originElement->GetVars()).Erase(VAR_PARENT_CHANGED);
-                element->SetParent(static_cast<UIElement*>(element->GetVar(VAR_ORIGINAL_PARENT).GetPtr()),
+                element->SetParent(static_cast<UiElement*>(element->GetVar(VAR_ORIGINAL_PARENT).GetPtr()),
                     element->GetVar(VAR_ORIGINAL_CHILD_INDEX).GetU32());
                 vars = const_cast<VariantMap&>(element->GetVars());
                 vars.Erase(VAR_ORIGINAL_PARENT);
@@ -318,7 +318,7 @@ void UI::Update(float timeStep)
     DV_PROFILE(UpdateUI);
 
     // Expire hovers
-    for (HashMap<WeakPtr<UIElement>, bool>::Iterator i = hoveredElements_.Begin(); i != hoveredElements_.End(); ++i)
+    for (HashMap<WeakPtr<UiElement>, bool>::Iterator i = hoveredElements_.Begin(); i != hoveredElements_.End(); ++i)
         i->second_ = false;
 
     Input& input = DV_INPUT;
@@ -331,9 +331,9 @@ void UI::Update(float timeStep)
     // Drag begin based on time
     if (dragElementsCount_ > 0 && !mouseGrabbed)
     {
-        for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
+        for (HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
         {
-            WeakPtr<UIElement> dragElement = i->first_;
+            WeakPtr<UiElement> dragElement = i->first_;
             UI::DragData* dragData = i->second_;
 
             if (!dragElement)
@@ -384,11 +384,11 @@ void UI::Update(float timeStep)
     }
 
     // End hovers that expired without refreshing
-    for (HashMap<WeakPtr<UIElement>, bool>::Iterator i = hoveredElements_.Begin(); i != hoveredElements_.End();)
+    for (HashMap<WeakPtr<UiElement>, bool>::Iterator i = hoveredElements_.Begin(); i != hoveredElements_.End();)
     {
         if (i->first_.Expired() || !i->second_)
         {
-            UIElement* element = i->first_;
+            UiElement* element = i->first_;
             if (element)
             {
                 using namespace HoverEnd;
@@ -457,14 +457,14 @@ void UI::RenderUpdate()
         {
             data.batches_.Clear();
             data.vertexData_.Clear();
-            UIElement* element = data.rootElement_;
+            UiElement* element = data.rootElement_;
             const IntVector2& size = element->GetSize();
             const IntVector2& pos = element->GetPosition();
             // Note: the scissors operate on unscaled coordinates. Scissor scaling is only performed during render
             IntRect scissor = IntRect(pos.x_, pos.y_, pos.x_ + size.x_, pos.y_ + size.y_);
             GetBatches(data.batches_, data.vertexData_, element, scissor);
 
-            // UIElement does not have anything to show. Insert dummy batch that will clear the texture.
+            // UiElement does not have anything to show. Insert dummy batch that will clear the texture.
             if (data.batches_.Empty())
             {
                 UIBatch batch(element, BLEND_REPLACE, scissor, nullptr, &data.vertexData_);
@@ -542,11 +542,11 @@ void UI::Render(bool renderUICommand)
     uiRendered_ = true;
 }
 
-void UI::DebugDraw(UIElement* element)
+void UI::DebugDraw(UiElement* element)
 {
     if (element)
     {
-        UIElement* root = element->GetRoot();
+        UiElement* root = element->GetRoot();
         if (!root)
             root = element;
         const IntVector2& rootSize = root->GetSize();
@@ -569,20 +569,20 @@ void UI::DebugDraw(UIElement* element)
     }
 }
 
-SharedPtr<UIElement> UI::LoadLayout(Deserializer& source, XMLFile* styleFile)
+SharedPtr<UiElement> UI::LoadLayout(Deserializer& source, XMLFile* styleFile)
 {
     SharedPtr<XMLFile> xml(new XMLFile());
     if (!xml->Load(source))
-        return SharedPtr<UIElement>();
+        return SharedPtr<UiElement>();
     else
         return LoadLayout(xml, styleFile);
 }
 
-SharedPtr<UIElement> UI::LoadLayout(XMLFile* file, XMLFile* styleFile)
+SharedPtr<UiElement> UI::LoadLayout(XMLFile* file, XMLFile* styleFile)
 {
     DV_PROFILE(LoadUILayout);
 
-    SharedPtr<UIElement> root;
+    SharedPtr<UiElement> root;
 
     if (!file)
     {
@@ -601,9 +601,9 @@ SharedPtr<UIElement> UI::LoadLayout(XMLFile* file, XMLFile* styleFile)
 
     String typeName = rootElem.GetAttribute("type");
     if (typeName.Empty())
-        typeName = "UIElement";
+        typeName = "UiElement";
 
-    root = DynamicCast<UIElement>(DV_CONTEXT.CreateObject(typeName));
+    root = DynamicCast<UiElement>(DV_CONTEXT.CreateObject(typeName));
     if (!root)
     {
         DV_LOGERROR("Could not create unknown UI element " + typeName);
@@ -621,7 +621,7 @@ SharedPtr<UIElement> UI::LoadLayout(XMLFile* file, XMLFile* styleFile)
     return root;
 }
 
-bool UI::SaveLayout(Serializer& dest, UIElement* element)
+bool UI::SaveLayout(Serializer& dest, UiElement* element)
 {
     DV_PROFILE(SaveUILayout);
 
@@ -768,9 +768,9 @@ IntVector2 UI::GetCursorPosition() const
     return ConvertSystemToUI(DV_INPUT.GetMousePosition());
 }
 
-UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVector2* elementScreenPosition)
+UiElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVector2* elementScreenPosition)
 {
-    UIElement* result = nullptr;
+    UiElement* result = nullptr;
 
     if (HasModalElement())
         result = GetElementAt(rootModalElement_, position, enabledOnly);
@@ -806,12 +806,12 @@ UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVec
     return result;
 }
 
-UIElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly)
+UiElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly)
 {
     return GetElementAt(position, enabledOnly, nullptr);
 }
 
-UIElement* UI::GetElementAt(UIElement* root, const IntVector2& position, bool enabledOnly)
+UiElement* UI::GetElementAt(UiElement* root, const IntVector2& position, bool enabledOnly)
 {
     IntVector2 positionCopy(position);
     const IntVector2& rootSize = root->GetSize();
@@ -833,12 +833,12 @@ UIElement* UI::GetElementAt(UIElement* root, const IntVector2& position, bool en
             positionCopy.y_ = rootPos.y_ + ((positionCopy.y_ - rootPos.y_) % rootSize.y_);
     }
 
-    UIElement* result = nullptr;
+    UiElement* result = nullptr;
     GetElementAt(result, root, positionCopy, enabledOnly);
     return result;
 }
 
-UIElement* UI::GetElementAt(int x, int y, bool enabledOnly)
+UiElement* UI::GetElementAt(int x, int y, bool enabledOnly)
 {
     return GetElementAt(IntVector2(x, y), enabledOnly);
 }
@@ -853,13 +853,13 @@ IntVector2 UI::ConvertUIToSystem(const IntVector2& uiPos) const
     return VectorFloorToInt(static_cast<Vector2>(uiPos) * GetScale());
 }
 
-UIElement* UI::GetFrontElement() const
+UiElement* UI::GetFrontElement() const
 {
-    const Vector<SharedPtr<UIElement>>& rootChildren = rootElement_->GetChildren();
+    const Vector<SharedPtr<UiElement>>& rootChildren = rootElement_->GetChildren();
     int maxPriority = M_MIN_INT;
-    UIElement* front = nullptr;
+    UiElement* front = nullptr;
 
-    for (const SharedPtr<UIElement>& rootChild : rootChildren)
+    for (const SharedPtr<UiElement>& rootChild : rootChildren)
     {
         // Do not take into account input-disabled elements, hidden elements or those that are always in the front
         if (!rootChild->IsEnabled() || !rootChild->IsVisible() || !rootChild->GetBringToBack())
@@ -876,15 +876,15 @@ UIElement* UI::GetFrontElement() const
     return front;
 }
 
-const Vector<UIElement*> UI::GetDragElements()
+const Vector<UiElement*> UI::GetDragElements()
 {
     // Do not return the element until drag begin event has actually been posted
     if (!dragElementsConfirmed_.Empty())
         return dragElementsConfirmed_;
 
-    for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
+    for (HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
     {
-        WeakPtr<UIElement> dragElement = i->first_;
+        WeakPtr<UiElement> dragElement = i->first_;
         UI::DragData* dragData = i->second_;
 
         if (!dragElement)
@@ -902,7 +902,7 @@ const Vector<UIElement*> UI::GetDragElements()
     return dragElementsConfirmed_;
 }
 
-UIElement* UI::GetDragElement(unsigned index)
+UiElement* UI::GetDragElement(unsigned index)
 {
     GetDragElements();
     if (index >= dragElementsConfirmed_.Size())
@@ -951,16 +951,16 @@ void UI::Initialize()
     DV_LOGINFO("Initialized user interface");
 }
 
-void UI::Update(float timeStep, UIElement* element)
+void UI::Update(float timeStep, UiElement* element)
 {
     // Keep a weak pointer to the element in case it destroys itself on update
-    WeakPtr<UIElement> elementWeak(element);
+    WeakPtr<UiElement> elementWeak(element);
 
     element->Update(timeStep);
     if (elementWeak.Expired())
         return;
 
-    const Vector<SharedPtr<UIElement>>& children = element->GetChildren();
+    const Vector<SharedPtr<UiElement>>& children = element->GetChildren();
     // Update of an element may modify its child vector. Use just index-based iteration to be safe
     for (i32 i = 0; i < children.Size(); ++i)
         Update(timeStep, children[i]);
@@ -1153,7 +1153,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     }
 }
 
-void UI::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, UIElement* element, IntRect currentScissor)
+void UI::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, UiElement* element, IntRect currentScissor)
 {
     // Set clipping scissor for child elements. No need to draw if zero size
     element->AdjustScissor(currentScissor);
@@ -1161,16 +1161,16 @@ void UI::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, UIEleme
         return;
 
     element->SortChildren();
-    const Vector<SharedPtr<UIElement>>& children = element->GetChildren();
+    const Vector<SharedPtr<UiElement>>& children = element->GetChildren();
     if (children.Empty())
         return;
 
     // For non-root elements draw all children of same priority before recursing into their children: assumption is that they have
     // same renderstate
-    Vector<SharedPtr<UIElement>>::ConstIterator i = children.Begin();
+    Vector<SharedPtr<UiElement>>::ConstIterator i = children.Begin();
     if (element->GetTraversalMode() == TM_BREADTH_FIRST)
     {
-        Vector<SharedPtr<UIElement>>::ConstIterator j = i;
+        Vector<SharedPtr<UiElement>>::ConstIterator j = i;
         while (i != children.End())
         {
             int currentPriority = (*i)->GetPriority();
@@ -1206,18 +1206,18 @@ void UI::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, UIEleme
     }
 }
 
-void UI::GetElementAt(UIElement*& result, UIElement* current, const IntVector2& position, bool enabledOnly)
+void UI::GetElementAt(UiElement*& result, UiElement* current, const IntVector2& position, bool enabledOnly)
 {
     if (!current)
         return;
 
     current->SortChildren();
-    const Vector<SharedPtr<UIElement>>& children = current->GetChildren();
+    const Vector<SharedPtr<UiElement>>& children = current->GetChildren();
     LayoutMode parentLayoutMode = current->GetLayoutMode();
 
     for (unsigned i = 0; i < children.Size(); ++i)
     {
-        UIElement* element = children[i];
+        UiElement* element = children[i];
         bool hasChildren = element->GetNumChildren() > 0;
 
         if (element != cursor_.Get() && element->IsVisible())
@@ -1279,7 +1279,7 @@ void UI::GetElementAt(UIElement*& result, UIElement* current, const IntVector2& 
     }
 }
 
-UIElement* UI::GetFocusableElement(UIElement* element)
+UiElement* UI::GetFocusableElement(UiElement* element)
 {
     while (element)
     {
@@ -1338,11 +1338,11 @@ void UI::ReleaseFontFaces()
 void UI::ProcessHover(const IntVector2& windowCursorPos, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor)
 {
     IntVector2 cursorPos;
-    WeakPtr<UIElement> element(GetElementAt(windowCursorPos, true, &cursorPos));
+    WeakPtr<UiElement> element(GetElementAt(windowCursorPos, true, &cursorPos));
 
-    for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
+    for (HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
     {
-        WeakPtr<UIElement> dragElement = i->first_;
+        WeakPtr<UiElement> dragElement = i->first_;
         UI::DragData* dragData = i->second_;
 
         if (!dragElement)
@@ -1429,7 +1429,7 @@ void UI::ProcessClickBegin(const IntVector2& windowCursorPos, MouseButton button
     if (cursorVisible)
     {
         IntVector2 cursorPos;
-        WeakPtr<UIElement> element(GetElementAt(windowCursorPos, true, &cursorPos));
+        WeakPtr<UiElement> element(GetElementAt(windowCursorPos, true, &cursorPos));
 
         bool newButton;
         if (usingTouchInput_)
@@ -1508,15 +1508,15 @@ void UI::ProcessClickBegin(const IntVector2& windowCursorPos, MouseButton button
 
 void UI::ProcessClickEnd(const IntVector2& windowCursorPos, MouseButton button, MouseButtonFlags buttons, QualifierFlags qualifiers, Cursor* cursor, bool cursorVisible)
 {
-    WeakPtr<UIElement> element;
+    WeakPtr<UiElement> element;
     IntVector2 cursorPos = windowCursorPos;
     if (cursorVisible)
         element = GetElementAt(cursorPos, true, &cursorPos);
 
     // Handle end of drag
-    for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
+    for (HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
     {
-        WeakPtr<UIElement> dragElement = i->first_;
+        WeakPtr<UiElement> dragElement = i->first_;
         UI::DragData* dragData = i->second_;
 
         if (!dragElement || !cursorVisible)
@@ -1581,9 +1581,9 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
         GetElementAt(windowCursorPos, true, &cursorPos);
 
         bool mouseGrabbed = DV_INPUT.IsMouseGrabbed();
-        for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
+        for (HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
         {
-            WeakPtr<UIElement> dragElement = i->first_;
+            WeakPtr<UiElement> dragElement = i->first_;
             UI::DragData* dragData = i->second_;
 
             if (!dragElement)
@@ -1652,7 +1652,7 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
     }
 }
 
-void UI::SendDragOrHoverEvent(StringHash eventType, UIElement* element, const IntVector2& screenPos, const IntVector2& deltaPos,
+void UI::SendDragOrHoverEvent(StringHash eventType, UiElement* element, const IntVector2& screenPos, const IntVector2& deltaPos,
     UI::DragData* dragData)
 {
     if (!element)
@@ -1684,7 +1684,7 @@ void UI::SendDragOrHoverEvent(StringHash eventType, UIElement* element, const In
     element->SendEvent(eventType, eventData);
 }
 
-void UI::SendClickEvent(StringHash eventType, UIElement* beginElement, UIElement* endElement, const IntVector2& pos, MouseButton button,
+void UI::SendClickEvent(StringHash eventType, UiElement* beginElement, UiElement* endElement, const IntVector2& pos, MouseButton button,
     MouseButtonFlags buttons, QualifierFlags qualifiers)
 {
     VariantMap& eventData = GetEventDataMap();
@@ -1712,7 +1712,7 @@ void UI::SendClickEvent(StringHash eventType, UIElement* beginElement, UIElement
     SendEvent(eventType, eventData);
 }
 
-void UI::SendDoubleClickEvent(UIElement* beginElement, UIElement* endElement, const IntVector2& firstPos, const IntVector2& secondPos, MouseButton button,
+void UI::SendDoubleClickEvent(UiElement* beginElement, UiElement* endElement, const IntVector2& firstPos, const IntVector2& secondPos, MouseButton button,
     MouseButtonFlags buttons, QualifierFlags qualifiers)
 {
     VariantMap& eventData = GetEventDataMap();
@@ -1847,7 +1847,7 @@ void UI::HandleMouseWheel(StringHash eventType, VariantMap& eventData)
         // If no element has actual focus or in non-focused mode, get the element at cursor
         if (cursorVisible)
         {
-            UIElement* element = GetElementAt(cursorPos);
+            UiElement* element = GetElementAt(cursorPos);
             if (nonFocusedMouseWheel_)
             {
                 // Going up the hierarchy chain to find element that could handle mouse wheel
@@ -1879,7 +1879,7 @@ void UI::HandleTouchBegin(StringHash eventType, VariantMap& eventData)
     usingTouchInput_ = true;
 
     const MouseButton touchId = MakeTouchIDMask(eventData[P_TOUCHID].GetI32());
-    WeakPtr<UIElement> element(GetElementAt(pos));
+    WeakPtr<UiElement> element(GetElementAt(pos));
 
     if (element)
     {
@@ -1901,7 +1901,7 @@ void UI::HandleTouchEnd(StringHash eventType, VariantMap& eventData)
     const MouseButton touchId = MakeTouchIDMask(eventData[P_TOUCHID].GetI32());
 
     // Transmit hover end to the position where the finger was lifted
-    WeakPtr<UIElement> element(GetElementAt(pos));
+    WeakPtr<UiElement> element(GetElementAt(pos));
 
     // Clear any drag events that were using the touch id
     for (auto i = touchDragElements_.Begin(); i != touchDragElements_.End();)
@@ -1953,7 +1953,7 @@ void UI::HandleKeyDown(StringHash eventType, VariantMap& eventData)
     // Dismiss modal element if any when ESC key is pressed
     if (key == KEY_ESCAPE && HasModalElement())
     {
-        UIElement* element = rootModalElement_->GetChild(rootModalElement_->GetNumChildren() - 1);
+        UiElement* element = rootModalElement_->GetChild(rootModalElement_->GetNumChildren() - 1);
         if (element->GetVars().Contains(VAR_ORIGIN))
             // If it is a popup, dismiss by defocusing it
             SetFocusElement(nullptr);
@@ -1968,19 +1968,19 @@ void UI::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         return;
     }
 
-    UIElement* element = focusElement_;
+    UiElement* element = focusElement_;
     if (element)
     {
         // Switch focus between focusable elements in the same top level window
         if (key == KEY_TAB)
         {
-            UIElement* topLevel = element->GetParent();
+            UiElement* topLevel = element->GetParent();
             while (topLevel && topLevel->GetParent() != rootElement_ && topLevel->GetParent() != rootModalElement_)
                 topLevel = topLevel->GetParent();
             if (topLevel)
             {
                 topLevel->GetChildren(tempElements_, true);
-                for (Vector<UIElement*>::Iterator i = tempElements_.Begin(); i != tempElements_.End();)
+                for (Vector<UiElement*>::Iterator i = tempElements_.Begin(); i != tempElements_.End();)
                 {
                     if ((*i)->GetFocusMode() < FM_FOCUSABLE)
                         i = tempElements_.Erase(i);
@@ -1993,7 +1993,7 @@ void UI::HandleKeyDown(StringHash eventType, VariantMap& eventData)
                     {
                         int dir = (qualifiers_ & QUAL_SHIFT) ? -1 : 1;
                         unsigned nextIndex = (tempElements_.Size() + i + dir) % tempElements_.Size();
-                        UIElement* next = tempElements_[nextIndex];
+                        UiElement* next = tempElements_[nextIndex];
                         SetFocusElement(next, true);
                         return;
                     }
@@ -2013,7 +2013,7 @@ void UI::HandleTextInput(StringHash eventType, VariantMap& eventData)
 {
     using namespace TextInput;
 
-    UIElement* element = focusElement_;
+    UiElement* element = focusElement_;
     if (element)
         element->OnTextInput(eventData[P_TEXT].GetString());
 }
@@ -2046,7 +2046,7 @@ void UI::HandleDropFile(StringHash eventType, VariantMap& eventData)
         IntVector2 screenPos = DV_INPUT.GetMousePosition();
         screenPos = ConvertSystemToUI(screenPos);
 
-        UIElement* element = GetElementAt(screenPos);
+        UiElement* element = GetElementAt(screenPos);
 
         using namespace UIDropFile;
 
@@ -2067,7 +2067,7 @@ void UI::HandleDropFile(StringHash eventType, VariantMap& eventData)
     }
 }
 
-HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator UI::DragElementErase(HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i)
+HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator UI::DragElementErase(HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i)
 {
     // If running the engine frame in response to an event (re-entering UI frame logic) the dragElements_ may already be empty
     if (dragElements_.Empty())
@@ -2096,9 +2096,9 @@ void UI::ProcessDragCancel()
     bool cursorVisible;
     GetCursorPositionAndVisible(cursorPos, cursorVisible);
 
-    for (HashMap<WeakPtr<UIElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
+    for (HashMap<WeakPtr<UiElement>, UI::DragData*>::Iterator i = dragElements_.Begin(); i != dragElements_.End();)
     {
-        WeakPtr<UIElement> dragElement = i->first_;
+        WeakPtr<UiElement> dragElement = i->first_;
         UI::DragData* dragData = i->second_;
 
         if (dragElement && dragElement->IsEnabled() && dragElement->IsVisible() && !dragData->dragBeginPending)
@@ -2162,7 +2162,7 @@ IntVector2 UI::GetEffectiveRootElementSize(bool applyScale) const
     return size;
 }
 
-void UI::SetElementRenderTexture(UIElement* element, Texture2D* texture)
+void UI::SetElementRenderTexture(UiElement* element, Texture2D* texture)
 {
     if (element == nullptr)
     {
@@ -2193,7 +2193,7 @@ void RegisterUILibrary()
 {
     Font::RegisterObject();
 
-    UIElement::RegisterObject();
+    UiElement::RegisterObject();
     UISelectable::RegisterObject();
     BorderImage::RegisterObject();
     Sprite::RegisterObject();

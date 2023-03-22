@@ -76,7 +76,7 @@ void SceneAndUILoad::CreateUI()
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Load UI content prepared in the editor and add to the UI hierarchy
-    SharedPtr<UIElement> layoutRoot = DV_UI.LoadLayout(DV_RES_CACHE.GetResource<XMLFile>("UI/UILoadExample.xml"));
+    SharedPtr<UiElement> layoutRoot = DV_UI.LoadLayout(DV_RES_CACHE.GetResource<XMLFile>("UI/UILoadExample.xml"));
     DV_UI.GetRoot()->AddChild(layoutRoot);
 
     // Subscribe to button actions (toggle scene lights when pressed then released)

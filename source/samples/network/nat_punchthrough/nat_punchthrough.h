@@ -12,7 +12,7 @@ namespace dviglo
 class Button;
 class LineEdit;
 class Text;
-class UIElement;
+class UiElement;
 
 }
 

@@ -16,7 +16,7 @@ class PixelShader;
 class Graphics;
 class Matrix3x4;
 class Texture;
-class UIElement;
+class UiElement;
 
 inline constexpr i32 UI_VERTEX_SIZE = 6;
 
@@ -27,7 +27,7 @@ public:
     /// Construct with defaults.
     UIBatch();
     /// Construct.
-    UIBatch(UIElement* element, BlendMode blendMode, const IntRect& scissor, Texture* texture, Vector<float>* vertexData);
+    UIBatch(UiElement* element, BlendMode blendMode, const IntRect& scissor, Texture* texture, Vector<float>* vertexData);
 
     /// Set new color for the batch. Overrides gradient.
     void SetColor(const Color& color, bool overrideAlpha = false);
@@ -72,7 +72,7 @@ public:
     static void AddOrMerge(const UIBatch& batch, Vector<UIBatch>& batches);
 
     /// Element this batch represents.
-    UIElement* element_{};
+    UiElement* element_{};
     /// Blending mode.
     BlendMode blendMode_{BLEND_REPLACE};
     /// Scissor rectangle.

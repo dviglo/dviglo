@@ -247,7 +247,7 @@
         <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
         <attribute name="Image Rect" value="0 32 14 46" />
     </element>
-    <element type="UIElement">
+    <element type="UiElement">
         <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
         <attribute name="Image Rect" value="16 32 30 46" />
     </element>

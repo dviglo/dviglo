@@ -32,7 +32,7 @@ void BorderImage::RegisterObject()
 {
     DV_CONTEXT.RegisterFactory<BorderImage>(UI_CATEGORY);
 
-    DV_COPY_BASE_ATTRIBUTES(UIElement);
+    DV_COPY_BASE_ATTRIBUTES(UiElement);
     DV_ACCESSOR_ATTRIBUTE("Texture", GetTextureAttr, SetTextureAttr, ResourceRef(Texture2D::GetTypeStatic()),
         AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Image Rect", GetImageRect, SetImageRect, IntRect::ZERO, AM_FILE);

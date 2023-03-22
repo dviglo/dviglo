@@ -66,7 +66,7 @@ Console::Console() :
 {
     assert(!GParams::is_headless());
 
-    UIElement* uiRoot = DV_UI.GetRoot();
+    UiElement* uiRoot = DV_UI.GetRoot();
 
     focusOnShow_ = true;
 
@@ -83,7 +83,7 @@ Console::Console() :
     rowContainer_->SetHighlightMode(HM_ALWAYS);
     rowContainer_->SetMultiselect(true);
 
-    commandLine_ = background_->CreateChild<UIElement>();
+    commandLine_ = background_->CreateChild<UiElement>();
     commandLine_->SetLayoutMode(LM_HORIZONTAL);
     commandLine_->SetLayoutSpacing(1);
     interpreters_ = commandLine_->CreateChild<DropDownList>();
@@ -560,7 +560,7 @@ void Console::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     // Ensure UI-elements are not detached
     if (!background_->GetParent())
     {
-        UIElement* uiRoot = DV_UI.GetRoot();
+        UiElement* uiRoot = DV_UI.GetRoot();
         uiRoot->AddChild(background_);
         uiRoot->AddChild(closeButton_);
     }

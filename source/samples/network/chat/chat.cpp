@@ -66,7 +66,7 @@ void Chat::CreateUI()
 {
     SetLogoVisible(false); // We need the full rendering window
 
-    UIElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI.GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
@@ -75,7 +75,7 @@ void Chat::CreateUI()
     chatHistoryText_ = root->CreateChild<Text>();
     chatHistoryText_->SetFont(font, 12);
 
-    buttonContainer_ = root->CreateChild<UIElement>();
+    buttonContainer_ = root->CreateChild<UiElement>();
     buttonContainer_->SetFixedSize(DV_GRAPHICS.GetWidth(), 20);
     buttonContainer_->SetPosition(0, DV_GRAPHICS.GetHeight() - 20);
     buttonContainer_->SetLayoutMode(LM_HORIZONTAL);

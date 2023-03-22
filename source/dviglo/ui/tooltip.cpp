@@ -24,7 +24,7 @@ void ToolTip::RegisterObject()
 {
     DV_CONTEXT.RegisterFactory<ToolTip>(UI_CATEGORY);
 
-    DV_COPY_BASE_ATTRIBUTES(UIElement);
+    DV_COPY_BASE_ATTRIBUTES(UiElement);
     DV_ACCESSOR_ATTRIBUTE("Delay", GetDelay, SetDelay, 0.0f, AM_FILE);
 }
 
@@ -32,7 +32,7 @@ void ToolTip::Update(float timeStep)
 {
     // Track the element we are parented to for hovering. When we display, we move ourself to the root element
     // to ensure displaying on top
-    UIElement* root = GetRoot();
+    UiElement* root = GetRoot();
     if (!root)
         return;
     if (parent_ != root)
@@ -50,7 +50,7 @@ void ToolTip::Update(float timeStep)
     {
         for (auto it = altTargets_.Begin(); it != altTargets_.End();)
         {
-            SharedPtr<UIElement> target = it->Lock();
+            SharedPtr<UiElement> target = it->Lock();
             if (!target)
                 it = altTargets_.Erase(it);
             else
@@ -104,9 +104,9 @@ void ToolTip::Reset()
     displayAt_.Reset();
 }
 
-void ToolTip::AddAltTarget(UIElement* target)
+void ToolTip::AddAltTarget(UiElement* target)
 {
-    altTargets_.Push(WeakPtr<UIElement>(target));
+    altTargets_.Push(WeakPtr<UiElement>(target));
 }
 
 void ToolTip::SetDelay(float delay)

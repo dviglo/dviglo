@@ -49,17 +49,17 @@ public:
     void EnableInternalLayoutUpdate();
 
     /// Add item to the end of the list.
-    void AddItem(UIElement* item);
+    void AddItem(UiElement* item);
 
     /// \brief Insert item at a specific index. In hierarchy mode, the optional parameter will be used to determine the child's indent level in respect to its parent.
     /// If index is greater than the total items then the new item is inserted at the end of the list.
     /// In hierarchy mode, if index is greater than the index of last children of the specified parent item then the new item is inserted next to the last children.
     /// And if the index is lesser than the index of the parent item itself then the new item is inserted before the first child item.
     /// index can be ENDPOS.
-    void InsertItem(i32 index, UIElement* item, UIElement* parentItem = nullptr);
+    void InsertItem(i32 index, UiElement* item, UiElement* parentItem = nullptr);
 
     /// Remove specific item, starting search at the specified index if provided. In hierarchy mode will also remove any children.
-    void RemoveItem(UIElement* item, i32 index = 0);
+    void RemoveItem(UiElement* item, i32 index = 0);
     /// Remove item at index. In hierarchy mode will also remove any children.
     void RemoveItem(i32 index);
     /// Remove all items.
@@ -100,11 +100,11 @@ public:
     /// Return number of items.
     i32 GetNumItems() const;
     /// Return item at index.
-    UIElement* GetItem(i32 index) const;
+    UiElement* GetItem(i32 index) const;
     /// Return all items.
-    Vector<UIElement*> GetItems() const;
+    Vector<UiElement*> GetItems() const;
     /// Return index of item, or NINDEX If not found.
-    i32 FindItem(UIElement* item) const;
+    i32 FindItem(UiElement* item) const;
     /// Return first selected index, or NINDEX if none selected.
     i32 GetSelection() const;
 
@@ -114,9 +114,9 @@ public:
     /// Copy selected items to system clipboard. Currently only applicable to Text items.
     void CopySelectedItemsToClipboard() const;
     /// Return first selected item, or null if none selected.
-    UIElement* GetSelectedItem() const;
+    UiElement* GetSelectedItem() const;
     /// Return all selected items.
-    Vector<UIElement*> GetSelectedItems() const;
+    Vector<UiElement*> GetSelectedItems() const;
     /// Return whether an item at index is selected.
     bool IsSelected(i32 index) const;
     /// Return whether an item at index has its children expanded (in hierarchy mode only).
@@ -143,7 +143,7 @@ public:
     /// Ensure full visibility of the item.
     void EnsureItemVisibility(i32 index);
     /// Ensure full visibility of the item.
-    void EnsureItemVisibility(UIElement* item);
+    void EnsureItemVisibility(UiElement* item);
 
 protected:
     /// Filter implicit attributes in serialization process.
@@ -162,7 +162,7 @@ protected:
     /// Base indent, used in hierarchy mode only.
     int baseIndent_;
     /// Overlay container, used in hierarchy mode only.
-    SharedPtr<UIElement> overlayContainer_;
+    SharedPtr<UiElement> overlayContainer_;
     /// Clear selection on defocus flag.
     bool clearSelectionOnDefocus_;
     /// React to click end instead of click start flag.

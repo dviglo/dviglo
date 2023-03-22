@@ -22,8 +22,8 @@ public:
     /// Register object factory.
     static void RegisterObject();
 
-    using UIElement::LoadXML;
-    using UIElement::SaveXML;
+    using UiElement::LoadXML;
+    using UiElement::SaveXML;
 
     /// Load from XML data with style. Return true if successful.
     bool LoadXML(const XMLElement& source, XMLFile* styleFile) override;
@@ -41,7 +41,7 @@ public:
     virtual void OnHidePopup() { }
 
     /// Set popup element to show on selection.
-    void SetPopup(UIElement* popup);
+    void SetPopup(UiElement* popup);
     /// Set popup element offset.
     void SetPopupOffset(const IntVector2& offset);
     /// Set popup element offset.
@@ -52,7 +52,7 @@ public:
     void SetAccelerator(int key, int qualifiers);
 
     /// Return popup element.
-    UIElement* GetPopup() const { return popup_; }
+    UiElement* GetPopup() const { return popup_; }
 
     /// Return popup element offset.
     const IntVector2& GetPopupOffset() const { return popupOffset_; }
@@ -70,7 +70,7 @@ protected:
     /// Filter implicit attributes in serialization process.
     virtual bool FilterPopupImplicitAttributes(XMLElement& dest) const;
     /// Popup element.
-    SharedPtr<UIElement> popup_;
+    SharedPtr<UiElement> popup_;
     /// Popup element offset.
     IntVector2 popupOffset_;
     /// Show popup flag.

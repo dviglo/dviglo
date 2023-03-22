@@ -62,7 +62,7 @@ DebugHud::DebugHud() :
 {
     assert(!GParams::is_headless());
 
-    UIElement* uiRoot = DV_UI.GetRoot();
+    UiElement* uiRoot = DV_UI.GetRoot();
 
     statsText_ = new Text();
     statsText_->SetAlignment(HA_LEFT, VA_TOP);
@@ -111,7 +111,7 @@ void DebugHud::Update()
     // Ensure UI-elements are not detached
     if (!statsText_->GetParent())
     {
-        UIElement* uiRoot = DV_UI.GetRoot();
+        UiElement* uiRoot = DV_UI.GetRoot();
         uiRoot->AddChild(statsText_);
         uiRoot->AddChild(modeText_);
     }

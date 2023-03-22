@@ -13,9 +13,9 @@ class BorderImage;
 class ScrollBar;
 
 /// Scrollable %UI element for showing a (possibly large) child element.
-class DV_API ScrollView : public UIElement
+class DV_API ScrollView : public UiElement
 {
-    DV_OBJECT(ScrollView, UIElement);
+    DV_OBJECT(ScrollView, UiElement);
 
 public:
     /// Construct.
@@ -38,7 +38,7 @@ public:
     bool IsWheelHandler() const override { return true; }
 
     /// Set content element.
-    void SetContentElement(UIElement* element);
+    void SetContentElement(UiElement* element);
     /// Set view offset from the top-left corner.
     void SetViewPosition(const IntVector2& position);
     /// Set view offset from the top-left corner.
@@ -60,7 +60,7 @@ public:
     const IntVector2& GetViewPosition() const { return viewPosition_; }
 
     /// Return content element.
-    UIElement* GetContentElement() const { return contentElement_; }
+    UiElement* GetContentElement() const { return contentElement_; }
 
     /// Return horizontal scroll bar.
     ScrollBar* GetHorizontalScrollBar() const { return horizontalScrollBar_; }
@@ -104,7 +104,7 @@ protected:
     void UpdateView(const IntVector2& position);
 
     /// Content element.
-    SharedPtr<UIElement> contentElement_;
+    SharedPtr<UiElement> contentElement_;
     /// Horizontal scroll bar.
     SharedPtr<ScrollBar> horizontalScrollBar_;
     /// Vertical scroll bar.

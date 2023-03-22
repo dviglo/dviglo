@@ -100,7 +100,7 @@ void Button::OnClickBegin(const IntVector2& position, const IntVector2& screenPo
 }
 
 void Button::OnClickEnd(const IntVector2& position, const IntVector2& screenPosition, MouseButton button, MouseButtonFlags buttons, QualifierFlags qualifiers,
-    Cursor* cursor, UIElement* beginElement)
+    Cursor* cursor, UiElement* beginElement)
 {
     if (pressed_ && button == MOUSEB_LEFT)
     {

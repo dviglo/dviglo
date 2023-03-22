@@ -20,7 +20,7 @@ public:
     void Start() override;
 
 private:
-    SharedPtr<UIElement> uielement_;
+    SharedPtr<UiElement> uielement_;
 
     void CreateText();
     SharedPtr<CheckBox> CreateCheckbox(const String& label, EventHandler* handler);

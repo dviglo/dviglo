@@ -17,7 +17,7 @@ class Font;
 class LineEdit;
 class ListView;
 class Text;
-class UIElement;
+class UiElement;
 class XMLFile;
 
 /// %Console window with log history and command line prompt.
@@ -136,7 +136,7 @@ private:
     /// Container for text rows.
     ListView* rowContainer_;
     /// Container for the command line.
-    UIElement* commandLine_;
+    UiElement* commandLine_;
     /// Interpreter drop down list.
     DropDownList* interpreters_;
     /// Line edit.

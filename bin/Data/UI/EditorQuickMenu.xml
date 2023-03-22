@@ -7,7 +7,7 @@
 	<attribute name="Layout Spacing" value="4" />
 	<attribute name="Layout Border" value="6 6 6 6" />
 	<attribute name="Is Movable" value="true" />
-	<element style="UIElement">
+	<element style="UiElement">
 		<attribute name="Position" value="6 6" />
 		<attribute name="Size" value="208 16" />
 		<attribute name="Min Size" value="112 16" />
@@ -25,7 +25,7 @@
 		</element>
 	</element>
 	<element type="BorderImage" style="EditorDivider" />
-	<element style="UIElement">
+	<element style="UiElement">
 		<attribute name="Name" value="SearchBar" />
 		<attribute name="Position" value="6 41" />
 		<attribute name="Size" value="208 16" />

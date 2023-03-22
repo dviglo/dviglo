@@ -10,13 +10,13 @@
 namespace dviglo
 {
 
-class DV_API UISelectable : public UIElement
+class DV_API UISelectable : public UiElement
 {
 public:
-    DV_OBJECT(UISelectable, UIElement);
+    DV_OBJECT(UISelectable, UiElement);
 
     /// Construct.
-    using UIElement::UIElement;
+    using UiElement::UiElement;
     /// Destruct.
     ~UISelectable() override = default;
 

@@ -41,7 +41,7 @@ void UIDrag::Start()
 
 void UIDrag::CreateGUI()
 {
-    UIElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI.GetRoot();
     // Load the style sheet from xml
     root->SetDefaultStyle(DV_RES_CACHE.GetResource<XMLFile>("UI/DefaultStyle.xml"));
 
@@ -150,15 +150,15 @@ void UIDrag::HandleDragCancel(StringHash eventType, VariantMap& eventData)
 
 void UIDrag::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
-    UIElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI.GetRoot();
 
     if (DV_INPUT.GetKeyPress(KEY_SPACE))
     {
-        Vector<UIElement*> elements;
+        Vector<UiElement*> elements;
         root->GetChildrenWithTag(elements, "SomeTag");
-        for (Vector<UIElement*>::ConstIterator i = elements.Begin(); i != elements.End(); ++i)
+        for (Vector<UiElement*>::ConstIterator i = elements.Begin(); i != elements.End(); ++i)
         {
-            UIElement* element = *i;
+            UiElement* element = *i;
             element->SetVisible(!element->IsVisible());
         }
     }

@@ -645,7 +645,7 @@ void Text::UpdateText(bool onResize)
     // update is a response to resize, as that could cause infinite recursion
     if (wordWrap_ && !onResize)
     {
-        UIElement* parent = GetParent();
+        UiElement* parent = GetParent();
         if (parent && parent->GetLayoutMode() != LM_FREE)
             parent->UpdateLayout();
     }

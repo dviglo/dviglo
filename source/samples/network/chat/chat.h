@@ -12,7 +12,7 @@ namespace dviglo
 class Button;
 class LineEdit;
 class Text;
-class UIElement;
+class UiElement;
 
 }
 
@@ -61,7 +61,7 @@ private:
     /// Chat text element.
     SharedPtr<Text> chatHistoryText_;
     /// Button container element.
-    SharedPtr<UIElement> buttonContainer_;
+    SharedPtr<UiElement> buttonContainer_;
     /// Server address / chat message line editor element.
     SharedPtr<LineEdit> textEdit_;
     /// Send button.

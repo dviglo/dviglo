@@ -31,10 +31,10 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
             return;         // Note: windowless MessageBox should not be used!
     }
 
-    UIElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI.GetRoot();
 
     {
-        SharedPtr<UIElement> holder = DV_UI.LoadLayout(layoutFile, styleFile);
+        SharedPtr<UiElement> holder = DV_UI.LoadLayout(layoutFile, styleFile);
         if (!holder)    // Error is already logged
             return;
         window_ = holder;

@@ -144,7 +144,7 @@ void WindowSettingsDemo::InitSettings()
     resolutionPlaceholder->SetStyleAuto();
 
     // Create fullscreen controller
-    auto* fullscreenFrame = window_->CreateChild<UIElement>("Fullscreen Frame");
+    auto* fullscreenFrame = window_->CreateChild<UiElement>("Fullscreen Frame");
     fullscreenFrame->SetMinHeight(24);
     fullscreenFrame->SetLayout(LM_HORIZONTAL, 6);
 
@@ -157,7 +157,7 @@ void WindowSettingsDemo::InitSettings()
     fullscreenText->SetStyleAuto();
 
     // Create borderless controller
-    auto* borderlessFrame = window_->CreateChild<UIElement>("Borderless Frame");
+    auto* borderlessFrame = window_->CreateChild<UiElement>("Borderless Frame");
     borderlessFrame->SetMinHeight(24);
     borderlessFrame->SetLayout(LM_HORIZONTAL, 6);
 
@@ -170,7 +170,7 @@ void WindowSettingsDemo::InitSettings()
     borderlessText->SetStyleAuto();
 
     // Create resizable controller
-    auto* resizableFrame = window_->CreateChild<UIElement>("Resizable Frame");
+    auto* resizableFrame = window_->CreateChild<UiElement>("Resizable Frame");
     resizableFrame->SetMinHeight(24);
     resizableFrame->SetLayout(LM_HORIZONTAL, 6);
 
@@ -183,7 +183,7 @@ void WindowSettingsDemo::InitSettings()
     resizableText->SetStyleAuto();
 
     // Create resizable controller
-    auto* vsyncFrame = window_->CreateChild<UIElement>("V-Sync Frame");
+    auto* vsyncFrame = window_->CreateChild<UiElement>("V-Sync Frame");
     vsyncFrame->SetMinHeight(24);
     vsyncFrame->SetLayout(LM_HORIZONTAL, 6);
 
@@ -263,7 +263,7 @@ void WindowSettingsDemo::SynchronizeSettings()
 
     for (int i = 0; i < monitorControl_->GetNumItems(); ++i)
     {
-        UIElement* item = monitorControl_->GetItem(i);
+        UiElement* item = monitorControl_->GetItem(i);
 
         if (item->GetVar("display").GetU32() == current_display)
         {

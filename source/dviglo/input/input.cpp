@@ -51,7 +51,7 @@ Key ConvertSDLKeyCode(int keySym, int scanCode)
         return (Key)SDL_tolower(keySym);
 }
 
-UIElement* TouchState::GetTouchedElement()
+UiElement* TouchState::GetTouchedElement()
 {
     return touchedElement_.Get();
 }

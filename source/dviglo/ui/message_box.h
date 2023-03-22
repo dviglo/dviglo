@@ -11,7 +11,7 @@ namespace dviglo
 
 class Button;
 class Text;
-class UIElement;
+class UiElement;
 class XMLFile;
 
 /// Message box dialog. Manages its lifetime automatically, so the application does not need to hold a reference to it, and shouldn't attempt to destroy it manually.
@@ -39,14 +39,14 @@ public:
     const String& GetMessage() const;
 
     /// Return dialog window.
-    UIElement* GetWindow() const { return window_; }
+    UiElement* GetWindow() const { return window_; }
 
 private:
     /// Handle events that dismiss the message box.
     void HandleMessageAcknowledged(StringHash eventType, VariantMap& eventData);
 
     /// UI element containing the whole UI layout. Typically it is a Window element type.
-    UIElement* window_;
+    UiElement* window_;
     /// Title text element.
     Text* titleText_;
     /// Message text element.
