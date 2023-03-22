@@ -282,7 +282,7 @@ public:
     float GetMaxZ() const { return maxZ_; }
 
     /// Add a per-pixel light affecting the object this frame.
-    void AddLight(Light* light)
+    void add_light(Light* light)
     {
         if (!firstLight_)
             firstLight_ = light;

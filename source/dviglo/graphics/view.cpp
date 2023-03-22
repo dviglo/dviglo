@@ -1104,7 +1104,7 @@ void View::GetLightBatches()
                 for (Vector<Drawable*>::ConstIterator j = query.litGeometries_.Begin(); j != query.litGeometries_.End(); ++j)
                 {
                     Drawable* drawable = *j;
-                    drawable->AddLight(light);
+                    drawable->add_light(light);
 
                     // If drawable limits maximum lights, only record the light, and check maximum count / build batches later
                     if (!drawable->GetMaxLights())
