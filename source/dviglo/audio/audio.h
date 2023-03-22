@@ -19,6 +19,8 @@ class Sound;
 class SoundListener;
 class SoundSource;
 
+using SDL_AudioDeviceID = u32;
+
 /// %Audio subsystem.
 class DV_API Audio : public Object
 {
@@ -75,7 +77,7 @@ public:
     bool IsPlaying() const { return playing_; }
 
     /// Return whether an audio stream has been reserved.
-    bool IsInitialized() const { return deviceID_ != 0; }
+    bool IsInitialized() const { return device_id_ != 0; }
 
     /// Return master gain for a specific sound source type. Unknown sound types will return full gain (1).
     float GetMasterGain(const String& type) const;
@@ -119,7 +121,7 @@ private:
     /// Audio thread mutex.
     std::mutex audioMutex_;
     /// SDL audio device ID.
-    u32 deviceID_{};
+    SDL_AudioDeviceID device_id_{};
     /// Sample size.
     u32 sampleSize_{};
     /// Clip buffer size in samples.

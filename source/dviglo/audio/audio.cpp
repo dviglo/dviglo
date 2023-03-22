@@ -99,16 +99,16 @@ bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpo
     if (stereo)
     {
         desired.channels = 2;
-        deviceID_ = SDL_OpenAudioDevice(nullptr, SDL_FALSE, &desired, &obtained, allowedChanges);
+        device_id_ = SDL_OpenAudioDevice(nullptr, SDL_FALSE, &desired, &obtained, allowedChanges);
     }
 
     // If stereo requested but not available then fall back into mono
-    if (!stereo || !deviceID_)
+    if (!stereo || !device_id_)
     {
         desired.channels = 1;
-        deviceID_ = SDL_OpenAudioDevice(nullptr, SDL_FALSE, &desired, &obtained, allowedChanges);
+        device_id_ = SDL_OpenAudioDevice(nullptr, SDL_FALSE, &desired, &obtained, allowedChanges);
 
-        if (!deviceID_)
+        if (!device_id_)
         {
             DV_LOGERROR("Could not initialize audio output");
             return false;
@@ -118,8 +118,8 @@ bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpo
     if (obtained.format != AUDIO_S16)
     {
         DV_LOGERROR("Could not initialize audio output, 16-bit buffer format not supported");
-        SDL_CloseAudioDevice(deviceID_);
-        deviceID_ = 0;
+        SDL_CloseAudioDevice(device_id_);
+        device_id_ = 0;
         return false;
     }
 
@@ -149,13 +149,13 @@ bool Audio::Play()
     if (playing_)
         return true;
 
-    if (!deviceID_)
+    if (!device_id_)
     {
         DV_LOGERROR("No audio mode set, can not start playback");
         return false;
     }
 
-    SDL_PlayAudioDevice(deviceID_);
+    SDL_PlayAudioDevice(device_id_);
 
     // Update sound sources before resuming playback to make sure 3D positions are up to date
     UpdateInternal(0.0f);
@@ -327,10 +327,10 @@ void Audio::Release()
 {
     Stop();
 
-    if (deviceID_)
+    if (device_id_)
     {
-        SDL_CloseAudioDevice(deviceID_);
-        deviceID_ = 0;
+        SDL_CloseAudioDevice(device_id_);
+        device_id_ = 0;
         clipBuffer_.Reset();
     }
 }
