@@ -267,7 +267,7 @@ bool ScrollView::GetVerticalScrollBarVisible() const
 
 float ScrollView::GetScrollStep() const
 {
-    return horizontalScrollBar_->GetScrollStep();
+    return horizontalScrollBar_->scroll_step();
 }
 
 void ScrollView::SetViewPositionAttr(const IntVector2& value)

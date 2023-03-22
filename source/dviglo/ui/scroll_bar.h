@@ -57,7 +57,7 @@ public:
     float GetValue() const;
 
     /// Return button scroll step.
-    float GetScrollStep() const { return scroll_step_; }
+    float scroll_step() const { return scroll_step_; }
 
     /// Return button step factor.
     float GetStepFactor() const { return stepFactor_; }

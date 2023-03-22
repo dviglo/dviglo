@@ -64,7 +64,7 @@ void ScrollBar::RegisterObject()
     DV_ENUM_ACCESSOR_ATTRIBUTE("Orientation", GetOrientation, SetOrientation, orientations, O_HORIZONTAL, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Range", GetRange, SetRange, 1.0f, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Value", GetValue, SetValue, 0.0f, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Scroll Step", GetScrollStep, SetScrollStep, DEFAULT_SCROLL_STEP, AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Scroll Step", scroll_step, SetScrollStep, DEFAULT_SCROLL_STEP, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Step Factor", GetStepFactor, SetStepFactor, 1.0f, AM_FILE);
     DV_ATTRIBUTE("Left Image Rect", leftRect_, IntRect::ZERO, AM_FILE);
     DV_ATTRIBUTE("Right Image Rect", rightRect_, IntRect::ZERO, AM_FILE);
