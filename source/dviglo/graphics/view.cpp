@@ -1107,7 +1107,7 @@ void View::GetLightBatches()
                     drawable->add_light(light);
 
                     // If drawable limits maximum lights, only record the light, and check maximum count / build batches later
-                    if (!drawable->GetMaxLights())
+                    if (!drawable->max_lights())
                         GetLitBatches(drawable, lightQueue, alphaQueue);
                     else
                         maxLightsDrawables_.Insert(drawable);

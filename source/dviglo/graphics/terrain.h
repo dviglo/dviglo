@@ -160,7 +160,7 @@ public:
     unsigned GetZoneMask() const { return zoneMask_; }
 
     /// Return maximum number of per-pixel lights.
-    unsigned GetMaxLights() const { return max_lights_; }
+    unsigned max_lights() const { return max_lights_; }
 
     /// Return visible flag.
     bool IsVisible() const { return visible_; }

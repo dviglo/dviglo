@@ -191,7 +191,7 @@ public:
     mask32 GetZoneMask() const { return zoneMask_; }
 
     /// Return maximum number of per-pixel lights.
-    i32 GetMaxLights() const { return max_lights_; }
+    i32 max_lights() const { return max_lights_; }
 
     /// Return shadowcaster flag.
     bool GetCastShadows() const { return castShadows_; }

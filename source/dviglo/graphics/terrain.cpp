@@ -119,7 +119,7 @@ void Terrain::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Draw Distance", GetDrawDistance, SetDrawDistance, 0.0f, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Shadow Distance", GetShadowDistance, SetShadowDistance, 0.0f, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("LOD Bias", GetLodBias, SetLodBias, 1.0f, AM_DEFAULT);
-    DV_ACCESSOR_ATTRIBUTE("Max Lights", GetMaxLights, SetMaxLights, 0, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Max Lights", max_lights, SetMaxLights, 0, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("View Mask", GetViewMask, SetViewMask, DEFAULT_VIEWMASK, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Light Mask", GetLightMask, SetLightMask, DEFAULT_LIGHTMASK, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Shadow Mask", GetShadowMask, SetShadowMask, DEFAULT_SHADOWMASK, AM_DEFAULT);
