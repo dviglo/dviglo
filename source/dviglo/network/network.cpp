@@ -194,7 +194,7 @@ Network::Network() :
     updateFps_(DEFAULT_UPDATE_FPS),
     simulatedLatency_(0),
     simulatedPacketLoss_(0.0f),
-    updateInterval_(1.0f / (float)DEFAULT_UPDATE_FPS),
+    update_interval_(1.0f / (float)DEFAULT_UPDATE_FPS),
     updateAcc_(0.0f),
     isServer_(false),
     scene_(nullptr),
@@ -574,7 +574,7 @@ void Network::BroadcastRemoteEvent(Node* node, StringHash eventType, bool inOrde
 void Network::SetUpdateFps(int fps)
 {
     updateFps_ = Max(fps, 1);
-    updateInterval_ = 1.0f / (float)updateFps_;
+    update_interval_ = 1.0f / (float)updateFps_;
     updateAcc_ = 0.0f;
 }
 
@@ -918,12 +918,12 @@ void Network::PostUpdate(float timeStep)
 
     // Check if periodic update should happen now
     updateAcc_ += timeStep;
-    bool updateNow = updateAcc_ >= updateInterval_;
+    bool updateNow = updateAcc_ >= update_interval_;
     if (updateNow)
     {
         // Notify of the impending update to allow for example updated client controls to be set
         SendEvent(E_NETWORKUPDATE);
-        updateAcc_ = fmodf(updateAcc_, updateInterval_);
+        updateAcc_ = fmodf(updateAcc_, update_interval_);
 
         if (IsServerRunning())
         {

@@ -157,7 +157,7 @@ private:
     /// Simulated packet loss probability between 0.0 - 1.0.
     float simulatedPacketLoss_;
     /// Update time interval.
-    float updateInterval_;
+    float update_interval_;
     /// Update time accumulator.
     float updateAcc_;
     /// Package cache directory.
