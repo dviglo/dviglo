@@ -182,7 +182,7 @@ public:
     float GetElapsedTime() const { return elapsedTime_; }
 
     /// Return motion smoothing constant.
-    float GetSmoothingConstant() const { return smoothingConstant_; }
+    float GetSmoothingConstant() const { return smoothing_constant_; }
 
     /// Return motion smoothing snap threshold.
     float snap_threshold() const { return snap_threshold_; }
@@ -310,7 +310,7 @@ private:
     /// Elapsed time accumulator.
     float elapsedTime_;
     /// Motion smoothing constant.
-    float smoothingConstant_;
+    float smoothing_constant_;
     /// Motion smoothing snap threshold.
     float snap_threshold_;
     /// Update enabled flag.
