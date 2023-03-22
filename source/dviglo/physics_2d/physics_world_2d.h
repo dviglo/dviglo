@@ -175,7 +175,7 @@ public:
     const Vector2& GetGravity() const { return gravity_; }
 
     /// Return velocity iterations.
-    i32 GetVelocityIterations() const { return velocity_iterations_; }
+    i32 velocity_iterations() const { return velocity_iterations_; }
 
     /// Return position iterations.
     int GetPositionIterations() const { return positionIterations_; }

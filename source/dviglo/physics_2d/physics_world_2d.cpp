@@ -68,7 +68,7 @@ void PhysicsWorld2D::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Sub Stepping", GetSubStepping, SetSubStepping, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Gravity", GetGravity, SetGravity, DEFAULT_GRAVITY, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Auto Clear Forces", GetAutoClearForces, SetAutoClearForces, false, AM_DEFAULT);
-    DV_ACCESSOR_ATTRIBUTE("Velocity Iterations", GetVelocityIterations, SetVelocityIterations, DEFAULT_VELOCITY_ITERATIONS,
+    DV_ACCESSOR_ATTRIBUTE("Velocity Iterations", velocity_iterations, SetVelocityIterations, DEFAULT_VELOCITY_ITERATIONS,
         AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Position Iterations", GetPositionIterations, SetPositionIterations, DEFAULT_POSITION_ITERATIONS,
         AM_DEFAULT);
