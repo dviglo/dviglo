@@ -80,7 +80,7 @@ void Scene::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Time Scale", GetTimeScale, SetTimeScale, 1.0f, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Smoothing Constant", GetSmoothingConstant, SetSmoothingConstant, DEFAULT_SMOOTHING_CONSTANT,
         AM_DEFAULT);
-    DV_ACCESSOR_ATTRIBUTE("Snap Threshold", GetSnapThreshold, SetSnapThreshold, DEFAULT_SNAP_THRESHOLD, AM_DEFAULT);
+    DV_ACCESSOR_ATTRIBUTE("Snap Threshold", snap_threshold, SetSnapThreshold, DEFAULT_SNAP_THRESHOLD, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Elapsed Time", GetElapsedTime, SetElapsedTime, 0.0f, AM_FILE);
     DV_ATTRIBUTE("Next Replicated Node ID", replicatedNodeID_, FIRST_REPLICATED_ID, AM_FILE | AM_NOEDIT);
     DV_ATTRIBUTE("Next Replicated Component ID", replicatedComponentID_, FIRST_REPLICATED_ID, AM_FILE | AM_NOEDIT);

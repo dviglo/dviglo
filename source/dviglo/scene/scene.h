@@ -185,7 +185,7 @@ public:
     float GetSmoothingConstant() const { return smoothingConstant_; }
 
     /// Return motion smoothing snap threshold.
-    float GetSnapThreshold() const { return snap_threshold_; }
+    float snap_threshold() const { return snap_threshold_; }
 
     /// Return maximum milliseconds per frame to spend on async loading.
     int GetAsyncLoadingMs() const { return asyncLoadingMs_; }
