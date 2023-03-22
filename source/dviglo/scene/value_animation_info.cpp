@@ -13,7 +13,7 @@ namespace dviglo
 
 ValueAnimationInfo::ValueAnimationInfo(ValueAnimation* animation, WrapMode wrapMode, float speed) :
     animation_(animation),
-    wrapMode_(wrapMode),
+    wrap_mode_(wrapMode),
     speed_(speed),
     currentTime_(0.0f),
     lastScaledTime_(0.0f)
@@ -24,7 +24,7 @@ ValueAnimationInfo::ValueAnimationInfo(ValueAnimation* animation, WrapMode wrapM
 ValueAnimationInfo::ValueAnimationInfo(Object* target, ValueAnimation* animation, WrapMode wrapMode, float speed) :
     target_(target),
     animation_(animation),
-    wrapMode_(wrapMode),
+    wrap_mode_(wrapMode),
     speed_(speed),
     currentTime_(0.0f),
     lastScaledTime_(0.0f)
@@ -35,7 +35,7 @@ ValueAnimationInfo::ValueAnimationInfo(Object* target, ValueAnimation* animation
 ValueAnimationInfo::ValueAnimationInfo(const ValueAnimationInfo& other) :
     target_(other.target_),
     animation_(other.animation_),
-    wrapMode_(other.wrapMode_),
+    wrap_mode_(other.wrap_mode_),
     speed_(other.speed_),
     currentTime_(0.0f),
     lastScaledTime_(0.0f)
@@ -110,7 +110,7 @@ float ValueAnimationInfo::CalculateScaledTime(float currentTime, bool& finished)
     float beginTime = animation_->GetBeginTime();
     float endTime = animation_->GetEndTime();
 
-    switch (wrapMode_)
+    switch (wrap_mode_)
     {
     case WM_LOOP:
         {
@@ -136,7 +136,7 @@ float ValueAnimationInfo::CalculateScaledTime(float currentTime, bool& finished)
 
 void ValueAnimationInfo::GetEventFrames(float beginTime, float endTime, Vector<const VAnimEventFrame*>& eventFrames)
 {
-    switch (wrapMode_)
+    switch (wrap_mode_)
     {
     case WM_LOOP:
         /// \todo This can miss an event if the deltatime is exactly the animation's length

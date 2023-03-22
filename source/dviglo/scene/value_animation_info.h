@@ -36,7 +36,7 @@ public:
     bool SetTime(float time);
 
     /// Set wrap mode.
-    void SetWrapMode(WrapMode wrapMode) { wrapMode_ = wrapMode; }
+    void SetWrapMode(WrapMode wrapMode) { wrap_mode_ = wrapMode; }
 
     /// Set speed.
     void SetSpeed(float speed) { speed_ = speed; }
@@ -48,7 +48,7 @@ public:
     ValueAnimation* GetAnimation() const { return animation_; }
 
     /// Return wrap mode.
-    WrapMode GetWrapMode() const { return wrapMode_; }
+    WrapMode GetWrapMode() const { return wrap_mode_; }
 
     /// Return time position.
     float GetTime() const { return currentTime_; }
@@ -69,7 +69,7 @@ protected:
     /// Attribute animation.
     SharedPtr<ValueAnimation> animation_;
     /// Wrap mode.
-    WrapMode wrapMode_;
+    WrapMode wrap_mode_;
     /// Animation speed.
     float speed_;
     /// Current time.
