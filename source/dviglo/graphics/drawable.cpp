@@ -58,7 +58,7 @@ Drawable::Drawable(DrawableTypes drawableType) :
     lodBias_(1.0f),
     basePassFlags_(0),
     maxLights_(0),
-    firstLight_(nullptr)
+    first_light_(nullptr)
 {
     if (drawableType == DrawableTypes::Undefined)
         DV_LOGERROR("Drawable with undefined drawableType");
@@ -288,7 +288,7 @@ void Drawable::MarkInView(const FrameInfo& frame)
         viewCameras_.Push(frame.camera_);
 
     basePassFlags_ = 0;
-    firstLight_ = nullptr;
+    first_light_ = nullptr;
     lights_.Clear();
     vertexLights_.Clear();
 }

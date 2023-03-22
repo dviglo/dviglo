@@ -273,7 +273,7 @@ public:
     const Vector<Light*>& GetVertexLights() const { return vertexLights_; }
 
     /// Return the first added per-pixel light.
-    Light* first_light() const { return firstLight_; }
+    Light* first_light() const { return first_light_; }
 
     /// Return the minimum view-space depth.
     float GetMinZ() const { return minZ_; }
@@ -284,8 +284,8 @@ public:
     /// Add a per-pixel light affecting the object this frame.
     void add_light(Light* light)
     {
-        if (!firstLight_)
-            firstLight_ = light;
+        if (!first_light_)
+            first_light_ = light;
 
         // Need to store into the light list only if the per-pixel lights are being limited
         // Otherwise recording the first light is enough
@@ -377,7 +377,7 @@ protected:
     /// List of cameras from which is seen on the current frame.
     Vector<Camera*> viewCameras_;
     /// First per-pixel light added this frame.
-    Light* firstLight_;
+    Light* first_light_;
     /// Per-pixel lights affecting this drawable.
     Vector<Light*> lights_;
     /// Per-vertex lights affecting this drawable.
