@@ -65,7 +65,7 @@ void UIDrag::CreateGUI()
             b->CreateChild<Text>(name)->SetStyleAuto();
 
         if (i % 2 == 0)
-            b->AddTag("SomeTag");
+            b->add_tag("SomeTag");
 
         SubscribeToEvent(b, E_CLICK, DV_HANDLER(UIDrag, HandleClick));
         SubscribeToEvent(b, E_DRAGMOVE, DV_HANDLER(UIDrag, HandleDragMove));

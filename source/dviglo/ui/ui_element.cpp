@@ -1449,7 +1449,7 @@ void UiElement::SetTags(const StringVector& tags)
     add_tags(tags);
 }
 
-void UiElement::AddTag(const String& tag)
+void UiElement::add_tag(const String& tag)
 {
     if (tag.Empty() || HasTag(tag))
         return;
@@ -1466,7 +1466,7 @@ void UiElement::add_tags(const String& tags, char separator)
 void UiElement::add_tags(const StringVector& tags)
 {
     for (const String& tag : tags)
-        AddTag(tag);
+        add_tag(tag);
 }
 
 bool UiElement::remove_tag(const String& tag)

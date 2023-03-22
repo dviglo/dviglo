@@ -320,7 +320,7 @@ void Node::SetTags(const StringVector& tags)
     // MarkNetworkUpdate() already called in remove_all_tags() / add_tags()
 }
 
-void Node::AddTag(const String& tag)
+void Node::add_tag(const String& tag)
 {
     // Check if tag empty or already added
     if (tag.Empty() || HasTag(tag))
@@ -356,7 +356,7 @@ void Node::add_tags(const StringVector& tags)
 {
     // This is OK, as MarkNetworkUpdate() early-outs when called multiple times
     for (const String& tag : tags)
-        AddTag(tag);
+        add_tag(tag);
 }
 
 bool Node::remove_tag(const String& tag)

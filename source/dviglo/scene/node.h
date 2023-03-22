@@ -106,7 +106,7 @@ public:
     /// Set tags. Old tags are overwritten.
     void SetTags(const StringVector& tags);
     /// Add a tag.
-    void AddTag(const String& tag);
+    void add_tag(const String& tag);
     /// Add tags with the specified separator (; by default).
     void add_tags(const String& tags, char separator = ';');
     /// Add tags.

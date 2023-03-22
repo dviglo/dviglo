@@ -130,7 +130,7 @@ void Typography::CreateText()
         SharedPtr<Text> text(new Text());
         text->SetText(String("The quick brown fox jumps over the lazy dog (") + String(size) + String("pt)"));
         text->SetFont(font, size);
-        text->AddTag(TEXT_TAG);
+        text->add_tag(TEXT_TAG);
         container->AddChild(text);
     }
 }
@@ -150,7 +150,7 @@ SharedPtr<CheckBox> Typography::CreateCheckbox(const String& label, EventHandler
     container->AddChild(text);
     text->SetText(label);
     text->SetStyleAuto();
-    text->AddTag(TEXT_TAG);
+    text->add_tag(TEXT_TAG);
 
     SubscribeToEvent(box, E_TOGGLED, handler);
     return box;
@@ -167,7 +167,7 @@ SharedPtr<DropDownList> Typography::CreateMenu(const String& label, const char**
     container->AddChild(text);
     text->SetText(label);
     text->SetStyleAuto();
-    text->AddTag(TEXT_TAG);
+    text->add_tag(TEXT_TAG);
 
     SharedPtr<DropDownList> list(new DropDownList());
     container->AddChild(list);
@@ -180,7 +180,7 @@ SharedPtr<DropDownList> Typography::CreateMenu(const String& label, const char**
         item->SetText(items[i]);
         item->SetStyleAuto();
         item->SetMinWidth(item->GetRowWidth(0) + 10);
-        item->AddTag(TEXT_TAG);
+        item->add_tag(TEXT_TAG);
     }
 
     text->SetMaxWidth(text->GetRowWidth(0));
