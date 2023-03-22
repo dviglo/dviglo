@@ -88,7 +88,7 @@ void PBRMaterials::CreateScene()
 
     // Create the camera (not included in the scene file)
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
 
     cameraNode_->SetPosition(sphereWithDynamicMatNode->GetPosition() + Vector3(2.0f, 2.0f, 2.0f));
     cameraNode_->LookAt(sphereWithDynamicMatNode->GetPosition());

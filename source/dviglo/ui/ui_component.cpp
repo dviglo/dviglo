@@ -189,7 +189,7 @@ void UIComponent::OnNodeSet(Node* node)
         auto* model = node->GetComponent<StaticModel>();
         rootElement_->SetViewport(DV_RENDERER.GetViewportForScene(GetScene(), viewportIndex_));
         if (model == nullptr)
-            model_ = model = node->CreateComponent<StaticModel>();
+            model_ = model = node->create_component<StaticModel>();
         model->SetMaterial(material_);
         rootElement_->SetRenderTexture(texture_);
     }

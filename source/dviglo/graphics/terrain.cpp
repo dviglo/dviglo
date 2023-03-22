@@ -1042,7 +1042,7 @@ void Terrain::CreateGeometry()
                     auto* patch = patchNode->GetComponent<TerrainPatch>();
                     if (!patch)
                     {
-                        patch = patchNode->CreateComponent<TerrainPatch>();
+                        patch = patchNode->create_component<TerrainPatch>();
                         patch->SetOwner(this);
                         patch->SetCoordinates(IntVector2(x, z));
 

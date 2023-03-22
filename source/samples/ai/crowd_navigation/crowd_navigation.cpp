@@ -66,19 +66,19 @@ void CrowdNavigation::CreateScene()
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -88,7 +88,7 @@ void CrowdNavigation::CreateScene()
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -103,7 +103,7 @@ void CrowdNavigation::CreateScene()
         float size = 1.0f + Random(10.0f);
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
-        auto* boxObject = boxNode->CreateComponent<StaticModel>();
+        auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         boxObject->SetCastShadows(true);
@@ -112,7 +112,7 @@ void CrowdNavigation::CreateScene()
     }
 
     // Create a DynamicNavigationMesh component to the scene root
-    auto* navMesh = scene_->CreateComponent<DynamicNavigationMesh>();
+    auto* navMesh = scene_->create_component<DynamicNavigationMesh>();
     // Set small tiles to show navigation mesh streaming
     navMesh->SetTileSize(32);
     // Enable drawing debug geometry for obstacles and off-mesh connections
@@ -124,7 +124,7 @@ void CrowdNavigation::CreateScene()
     navMesh->SetCellHeight(0.05f);
     // Create a Navigable component to the scene root. This tags all of the geometry in the scene as being part of the
     // navigation mesh. By default this is recursive, but the recursion could be turned off from Navigable
-    scene_->CreateComponent<Navigable>();
+    scene_->create_component<Navigable>();
     // Add padding to the navigation mesh in Y-direction so that we can add objects on top of the tallest boxes
     // in the scene and still update the mesh correctly
     navMesh->SetPadding(Vector3(0.0f, 10.0f, 0.0f));
@@ -143,7 +143,7 @@ void CrowdNavigation::CreateScene()
         CreateMushroom(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
 
     // Create a CrowdManager component to the scene root
-    auto* crowdManager = scene_->CreateComponent<CrowdManager>();
+    auto* crowdManager = scene_->create_component<CrowdManager>();
     CrowdObstacleAvoidanceParams params = crowdManager->GetObstacleAvoidanceParams(0);
     // Set the params to "High (66)" setting
     params.velBias = 0.5f;
@@ -161,7 +161,7 @@ void CrowdNavigation::CreateScene()
     // Create the camera. Set far clip to match the fog. Note: now we actually create the camera node outside the scene, because
     // we want it to be unaffected by scene load / save
     cameraNode_ = new Node();
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the plane and looking down
@@ -234,14 +234,14 @@ void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
 {
     SharedPtr<Node> jackNode(jackGroup->create_child("Jack"));
     jackNode->SetPosition(pos);
-    auto* modelObject = jackNode->CreateComponent<AnimatedModel>();
+    auto* modelObject = jackNode->create_component<AnimatedModel>();
     modelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Jack.mdl"));
     modelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Jack.xml"));
     modelObject->SetCastShadows(true);
-    jackNode->CreateComponent<AnimationController>();
+    jackNode->create_component<AnimationController>();
 
     // Create a CrowdAgent component and set its height and realistic max speed/acceleration. Use default radius
-    auto* agent = jackNode->CreateComponent<CrowdAgent>();
+    auto* agent = jackNode->create_component<CrowdAgent>();
     agent->SetHeight(2.0f);
     agent->SetMaxSpeed(3.0f);
     agent->SetMaxAccel(5.0f);
@@ -253,13 +253,13 @@ void CrowdNavigation::CreateMushroom(const Vector3& pos)
     mushroomNode->SetPosition(pos);
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
-    auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+    auto* mushroomObject = mushroomNode->create_component<StaticModel>();
     mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mushroom.mdl"));
     mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
     // Create the navigation Obstacle component and set its height & radius proportional to scale
-    auto* obstacle = mushroomNode->CreateComponent<Obstacle>();
+    auto* obstacle = mushroomNode->create_component<Obstacle>();
     obstacle->SetRadius(mushroomNode->GetScale().x_);
     obstacle->SetHeight(mushroomNode->GetScale().y_);
 }
@@ -279,7 +279,7 @@ void CrowdNavigation::CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh
         connectionEnd->SetWorldPosition(navMesh->FindNearestPoint(boxPos + Vector3(boxHalfSize, boxHalfSize, 0))); // Top of box
 
         // Create the OffMeshConnection component to one node and link the other node
-        auto* connection = connectionStart->CreateComponent<OffMeshConnection>();
+        auto* connection = connectionStart->create_component<OffMeshConnection>();
         connection->SetEndPoint(connectionEnd);
     }
 }
@@ -287,7 +287,7 @@ void CrowdNavigation::CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh
 void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
 {
     Node* barrel = scene_->create_child("Barrel");
-    auto* model = barrel->CreateComponent<StaticModel>();
+    auto* model = barrel->create_component<StaticModel>();
     model->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
     auto* material = DV_RES_CACHE.GetResource<Material>("Materials/StoneTiled.xml");
     model->SetMaterial(material);
@@ -299,7 +299,7 @@ void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
         float size = 0.5f + Random(1.0f);
         clone->SetScale(Vector3(size / 1.5f, size * 2.0f, size / 1.5f));
         clone->SetPosition(navMesh->FindNearestPoint(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f)));
-        auto* agent = clone->CreateComponent<CrowdAgent>();
+        auto* agent = clone->create_component<CrowdAgent>();
         agent->SetRadius(clone->GetScale().x_ * 0.5f);
         agent->SetHeight(size);
         agent->SetNavigationQuality(NAVIGATIONQUALITY_LOW);

@@ -61,13 +61,13 @@ void AnimatingScene::CreateScene()
 
     // Create the Octree component to the scene so that drawable objects can be rendered. Use default volume
     // (-1000, -1000, -1000) to (1000, 1000, 1000)
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create a Zone component into a child scene node. The Zone controls ambient lighting and fog settings. Like the Octree,
     // it also defines its volume with a bounding box, but can be rotated (so it does not need to be aligned to the world X, Y
     // and Z axes.) Drawable objects "pick up" the zone they belong to and use it when rendering; several zones can exist
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     // Set same volume as the Octree, set a close bluish fog and some ambient light
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.05f, 0.1f, 0.15f));
@@ -83,7 +83,7 @@ void AnimatingScene::CreateScene()
         boxNode->SetPosition(Vector3(Random(200.0f) - 100.0f, Random(200.0f) - 100.0f, Random(200.0f) - 100.0f));
         // Orient using random pitch, yaw and roll Euler angles
         boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
-        auto* boxObject = boxNode->CreateComponent<StaticModel>();
+        auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
 
@@ -92,18 +92,18 @@ void AnimatingScene::CreateScene()
         // to the various update events, and forward them to virtual functions that can be implemented by subclasses. This way
         // writing logic/update components in C++ becomes similar to scripting.
         // Now we simply set same rotation speed for all objects
-        auto* rotator = boxNode->CreateComponent<Rotator>();
+        auto* rotator = boxNode->create_component<Rotator>();
         rotator->SetRotationSpeed(Vector3(10.0f, 20.0f, 30.0f));
     }
 
     // Create the camera. Let the starting position be at the world origin. As the fog limits maximum visible distance, we can
     // bring the far clip plane closer for more effective culling of distant objects
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(100.0f);
 
     // Create a point light to the camera scene node
-    auto* light = cameraNode_->CreateComponent<Light>();
+    auto* light = cameraNode_->create_component<Light>();
     light->SetLightType(LIGHT_POINT);
     light->SetRange(30.0f);
 }

@@ -56,7 +56,7 @@ Vehicle::~Vehicle() = default;
 
 void Vehicle::Init()
 {
-    auto* vehicle = node_->CreateComponent<RaycastVehicle>();
+    auto* vehicle = node_->create_component<RaycastVehicle>();
     vehicle->Init();
     auto* hullBody = node_->GetComponent<RigidBody>();
     hullBody->SetMass(800.0f);
@@ -65,9 +65,9 @@ void Vehicle::Init()
     hullBody->SetCollisionLayer(1);
     // This function is called only from the main program when initially creating the vehicle, not on scene load
     ResourceCache& cache = DV_RES_CACHE;
-    auto* hullObject = node_->CreateComponent<StaticModel>();
+    auto* hullObject = node_->create_component<StaticModel>();
     // Setting-up collision shape
-    auto* hullColShape = node_->CreateComponent<CollisionShape>();
+    auto* hullColShape = node_->create_component<CollisionShape>();
     Vector3 v3BoxExtents = Vector3::ONE;
     hullColShape->SetBox(v3BoxExtents);
     node_->SetScale(Vector3(2.3f, 1.0f, 4.0f));
@@ -108,7 +108,7 @@ void Vehicle::Init()
         vehicle->SetWheelFrictionSlip(id, wheelFriction_);
         vehicle->SetWheelRollInfluence(id, rollInfluence_);
         wheelNode->SetScale(Vector3(1.0f, 0.65f, 1.0f));
-        auto* pWheel = wheelNode->CreateComponent<StaticModel>();
+        auto* pWheel = wheelNode->create_component<StaticModel>();
         pWheel->SetModel(cache.GetResource<Model>("Models/Cylinder.mdl"));
         pWheel->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         pWheel->SetCastShadows(true);
@@ -122,7 +122,7 @@ void Vehicle::CreateEmitter(Vector3 place)
 {
     Node* emitter = GetScene()->create_child();
     emitter->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * place + Vector3(0, -wheelRadius_, 0));
-    auto* particleEmitter = emitter->CreateComponent<ParticleEmitter>();
+    auto* particleEmitter = emitter->create_component<ParticleEmitter>();
     particleEmitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect>("Particle/Dust.xml"));
     particleEmitter->SetEmitting(false);
     particleEmitterNodeList_.Push(emitter);

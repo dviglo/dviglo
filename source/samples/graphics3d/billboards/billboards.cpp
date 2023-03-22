@@ -62,12 +62,12 @@ void Billboards::CreateScene()
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.1f, 0.1f, 0.1f));
     zone->SetFogStart(100.0f);
@@ -76,7 +76,7 @@ void Billboards::CreateScene()
     // Create a directional light without shadows
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.5f, -1.0f, 0.5f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetColor(Color(0.2f, 0.2f, 0.2f));
     light->SetSpecularIntensity(1.0f);
@@ -89,7 +89,7 @@ void Billboards::CreateScene()
             Node* floorNode = scene_->create_child("FloorTile");
             floorNode->SetPosition(Vector3(x * 20.5f, -0.5f, y * 20.5f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
-            auto* floorObject = floorNode->CreateComponent<StaticModel>();
+            auto* floorObject = floorNode->create_component<StaticModel>();
             floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
             floorObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         }
@@ -111,7 +111,7 @@ void Billboards::CreateScene()
             mushroomNode->SetPosition(Vector3(Random(25.0f) - 12.5f, 0.0f, Random(25.0f) - 12.5f));
             mushroomNode->SetRotation(Quaternion(0.0f, Random() * 360.0f, 0.0f));
             mushroomNode->SetScale(1.0f + Random() * 4.0f);
-            auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+            auto* mushroomObject = mushroomNode->create_component<StaticModel>();
             mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
             mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
@@ -127,7 +127,7 @@ void Billboards::CreateScene()
         Node* smokeNode = scene_->create_child("Smoke");
         smokeNode->SetPosition(Vector3(Random(200.0f) - 100.0f, Random(20.0f) + 10.0f, Random(200.0f) - 100.0f));
 
-        auto* billboardObject = smokeNode->CreateComponent<BillboardSet>();
+        auto* billboardObject = smokeNode->create_component<BillboardSet>();
         billboardObject->SetNumBillboards(NUM_BILLBOARDS);
         billboardObject->SetMaterial(cache.GetResource<Material>("Materials/LitSmoke.xml"));
         billboardObject->SetSorted(true);
@@ -151,7 +151,7 @@ void Billboards::CreateScene()
     for (unsigned i = 0; i < NUM_LIGHTS; ++i)
     {
         Node* lightNode = scene_->create_child("SpotLight");
-        auto* light = lightNode->CreateComponent<Light>();
+        auto* light = lightNode->create_component<Light>();
 
         float angle = 0.0f;
 
@@ -183,7 +183,7 @@ void Billboards::CreateScene()
 
     // Create the camera. Limit far clip distance to match the fog
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the plane

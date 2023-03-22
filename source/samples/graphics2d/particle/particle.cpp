@@ -54,14 +54,14 @@ void Urho2DParticle::Start()
 void Urho2DParticle::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create camera node
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
@@ -72,7 +72,7 @@ void Urho2DParticle::CreateScene()
         return;
 
     particleNode_ = scene_->create_child("ParticleEmitter2D");
-    auto* particleEmitter = particleNode_->CreateComponent<ParticleEmitter2D>();
+    auto* particleEmitter = particleNode_->create_component<ParticleEmitter2D>();
     particleEmitter->SetEffect(particleEffect);
 
     auto* greenSpiralEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("Urho2D/greenspiral.pex");
@@ -80,7 +80,7 @@ void Urho2DParticle::CreateScene()
         return;
 
     Node* greenSpiralNode = scene_->create_child("GreenSpiral");
-    auto* greenSpiralEmitter = greenSpiralNode->CreateComponent<ParticleEmitter2D>();
+    auto* greenSpiralEmitter = greenSpiralNode->create_component<ParticleEmitter2D>();
     greenSpiralEmitter->SetEffect(greenSpiralEffect);
 }
 

@@ -66,19 +66,19 @@ void SkeletalAnimation::CreateScene()
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(50.0f, 1.0f, 50.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
     zone->SetFogColor(Color(0.4f, 0.5f, 0.8f));
@@ -88,7 +88,7 @@ void SkeletalAnimation::CreateScene()
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetColor(Color(0.5f, 0.5f, 0.5f));
@@ -108,7 +108,7 @@ void SkeletalAnimation::CreateScene()
         modelNode->SetPosition(Vector3(Random(40.0f) - 20.0f, 0.0f, Random(40.0f) - 20.0f));
         modelNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
 
-        auto* modelObject = modelNode->CreateComponent<AnimatedModel>();
+        auto* modelObject = modelNode->create_component<AnimatedModel>();
         modelObject->SetModel(cache.GetResource<Model>("Models/Kachujin/Kachujin.mdl"));
         modelObject->SetMaterial(cache.GetResource<Material>("Models/Kachujin/Materials/Kachujin.xml"));
         modelObject->SetCastShadows(true);
@@ -129,13 +129,13 @@ void SkeletalAnimation::CreateScene()
         }
 
         // Create our custom Mover component that will move & animate the model during each frame's update
-        auto* mover = modelNode->CreateComponent<Mover>();
+        auto* mover = modelNode->create_component<Mover>();
         mover->SetParameters(MODEL_MOVE_SPEED, MODEL_ROTATE_SPEED, bounds);
 #ifdef DV_GLES3
         Node* nLight = modelNode->create_child("Light", LOCAL);
         nLight->SetPosition(Vector3(1.0f, 2.0f, 1.0f));
         nLight->LookAt(Vector3::ZERO, Vector3::UP, TransformSpace::Parent);
-        Light* light = nLight->CreateComponent<Light>();
+        Light* light = nLight->create_component<Light>();
         light->SetLightType(LIGHT_SPOT);
         light->SetColor(Color(0.5f + Random(0.5f), 0.5f + Random(0.5f), 0.5f + Random(0.5f)));
 #endif
@@ -143,7 +143,7 @@ void SkeletalAnimation::CreateScene()
 
     // Create the camera. Limit far clip distance to match the fog
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the plane
@@ -164,7 +164,7 @@ void SkeletalAnimation::CreateLights() {
         pos.z_ += Random(2.0f) - 1.0f;
         nLight->LookAt(pos);
 
-        Light* light = nLight->CreateComponent<Light>();
+        Light* light = nLight->create_component<Light>();
         light->SetLightType(LIGHT_SPOT);
         light->SetColor(Color(0.5f + Random(0.5f), 0.5f + Random(0.5f), 0.5f + Random(0.5f)));
     }

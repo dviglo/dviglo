@@ -57,14 +57,14 @@ void Urho2DSprite::Start()
 void Urho2DSprite::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create camera node
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
-    Camera* camera = cameraNode_->CreateComponent<Camera>();
+    Camera* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
@@ -82,7 +82,7 @@ void Urho2DSprite::CreateScene()
         SharedPtr<Node> spriteNode(scene_->create_child("StaticSprite2D"));
         spriteNode->SetPosition(Vector3(Random(-halfWidth, halfWidth), Random(-halfHeight, halfHeight), 0.0f));
 
-        StaticSprite2D* staticSprite = spriteNode->CreateComponent<StaticSprite2D>();
+        StaticSprite2D* staticSprite = spriteNode->create_component<StaticSprite2D>();
         // Set random color
         staticSprite->SetColor(Color(Random(1.0f), Random(1.0f), Random(1.0f), 1.0f));
         // Set blend mode
@@ -107,7 +107,7 @@ void Urho2DSprite::CreateScene()
     SharedPtr<Node> spriteNode(scene_->create_child("AnimatedSprite2D"));
     spriteNode->SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
-    AnimatedSprite2D* animatedSprite = spriteNode->CreateComponent<AnimatedSprite2D>();
+    AnimatedSprite2D* animatedSprite = spriteNode->create_component<AnimatedSprite2D>();
     // Set animation
     animatedSprite->SetAnimationSet(animationSet);
     animatedSprite->SetAnimation("idle");

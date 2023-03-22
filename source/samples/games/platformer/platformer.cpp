@@ -46,9 +46,9 @@ DV_DEFINE_APPLICATION_MAIN(Urho2DPlatformer)
 
 Urho2DPlatformer::Urho2DPlatformer()
 {
-    // Register factory for the Character2D component so it can be created via CreateComponent
+    // Register factory for the Character2D component so it can be created via create_component
     Character2D::RegisterObject();
-    // Register factory and attributes for the Mover component so it can be created via CreateComponent, and loaded / saved
+    // Register factory and attributes for the Mover component so it can be created via create_component, and loaded / saved
     Mover::RegisterObject();
 }
 
@@ -86,13 +86,13 @@ void Urho2DPlatformer::CreateScene()
     sample2D_->scene_ = scene_;
 
     // Create the Octree, DebugRenderer and PhysicsWorld2D components to the scene
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
-    /*PhysicsWorld2D* physicsWorld =*/ scene_->CreateComponent<PhysicsWorld2D>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
+    /*PhysicsWorld2D* physicsWorld =*/ scene_->create_component<PhysicsWorld2D>();
 
     // Create camera
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
@@ -108,13 +108,13 @@ void Urho2DPlatformer::CreateScene()
 
     // Create tile map from tmx file
     SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
-    auto* tileMap = tileMapNode->CreateComponent<TileMap2D>();
+    auto* tileMap = tileMapNode->create_component<TileMap2D>();
     tileMap->SetTmxFile(DV_RES_CACHE.GetResource<TmxFile2D>("Urho2D/Tilesets/Ortho.tmx"));
     const TileMapInfo2D& info = tileMap->GetInfo();
 
     // Create Spriter Imp character (from sample 33_SpriterAnimation)
     Node* spriteNode = sample2D_->CreateCharacter(info, 0.8f, Vector3(1.0f, 8.0f, 0.0f), 0.2f);
-    character2D_ = spriteNode->CreateComponent<Character2D>(); // Create a logic component to handle character behavior
+    character2D_ = spriteNode->create_component<Character2D>(); // Create a logic component to handle character behavior
 
     // Generate physics collision shapes from the tmx file's objects located in "Physics" (top) layer
     TileMapLayer2D* tileMapLayer = tileMap->GetLayer(tileMap->GetNumLayers() - 1);

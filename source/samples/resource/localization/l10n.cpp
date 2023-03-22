@@ -126,9 +126,9 @@ void L10n::CreateGUI()
 void L10n::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
-    auto* zone = scene_->CreateComponent<Zone>();
+    auto* zone = scene_->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
     zone->SetFogColor(Color(0.4f, 0.5f, 0.8f));
@@ -137,23 +137,23 @@ void L10n::CreateScene()
 
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(300.0f, 1.0f, 300.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneTiled.xml"));
 
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetColor(Color(0.8f, 0.8f, 0.8f));
 
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
     cameraNode_->SetPosition(Vector3(0.0f, 10.0f, -30.0f));
 
     Node* text3DNode = scene_->create_child("Text3D");
     text3DNode->SetPosition(Vector3(0.0f, 0.1f, 30.0f));
-    auto* text3D = text3DNode->CreateComponent<Text3D>();
+    auto* text3D = text3DNode->create_component<Text3D>();
 
     // Manually set text in the current language.
     text3D->SetText(DV_LOCALIZATION.Get("lang"));

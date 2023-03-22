@@ -70,13 +70,13 @@ void Ragdolls::CreateScene()
     // Create a physics simulation world with default parameters, which will update at 60fps. Like the Octree must
     // exist before creating drawable components, the PhysicsWorld must exist before creating physics components.
     // Finally, create a DebugRenderer component so that we can draw physics debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<PhysicsWorld>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<PhysicsWorld>();
+    scene_->create_component<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -86,7 +86,7 @@ void Ragdolls::CreateScene()
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -98,16 +98,16 @@ void Ragdolls::CreateScene()
         Node* floorNode = scene_->create_child("Floor");
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
-        auto* floorObject = floorNode->CreateComponent<StaticModel>();
+        auto* floorObject = floorNode->create_component<StaticModel>();
         floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         floorObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components
-        auto* body = floorNode->CreateComponent<RigidBody>();
+        auto* body = floorNode->create_component<RigidBody>();
         // We will be spawning spherical objects in this sample. The ground also needs non-zero rolling friction so that
         // the spheres will eventually come to rest
         body->SetRollingFriction(0.15f);
-        auto* shape = floorNode->CreateComponent<CollisionShape>();
+        auto* shape = floorNode->create_component<CollisionShape>();
         // Set a box shape of size 1 x 1 x 1 for collision. The shape will be scaled with the scene node scale, so the
         // rendering and physics representation sizes should match (the box model is also 1 x 1 x 1.)
         shape->SetBox(Vector3::ONE);
@@ -121,7 +121,7 @@ void Ragdolls::CreateScene()
             Node* modelNode = scene_->create_child("Jack");
             modelNode->SetPosition(Vector3(x * 5.0f, 0.0f, z * 5.0f));
             modelNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
-            auto* modelObject = modelNode->CreateComponent<AnimatedModel>();
+            auto* modelObject = modelNode->create_component<AnimatedModel>();
             modelObject->SetModel(cache.GetResource<Model>("Models/Jack.mdl"));
             modelObject->SetMaterial(cache.GetResource<Material>("Materials/Jack.xml"));
             modelObject->SetCastShadows(true);
@@ -131,24 +131,24 @@ void Ragdolls::CreateScene()
 
             // Create a rigid body and a collision shape. These will act as a trigger for transforming the
             // model into a ragdoll when hit by a moving object
-            auto* body = modelNode->CreateComponent<RigidBody>();
+            auto* body = modelNode->create_component<RigidBody>();
             // The Trigger mode makes the rigid body only detect collisions, but impart no forces on the
             // colliding objects
             body->SetTrigger(true);
-            auto* shape = modelNode->CreateComponent<CollisionShape>();
+            auto* shape = modelNode->create_component<CollisionShape>();
             // Create the capsule shape with an offset so that it is correctly aligned with the model, which
             // has its origin at the feet
             shape->SetCapsule(0.7f, 2.0f, Vector3(0.0f, 1.0f, 0.0f));
 
             // Create a custom component that reacts to collisions and creates the ragdoll
-            modelNode->CreateComponent<CreateRagdoll>();
+            modelNode->create_component<CreateRagdoll>();
         }
     }
 
     // Create the camera. Limit far clip distance to match the fog. Note: now we actually create the camera node outside
     // the scene, because we want it to be unaffected by scene load / save
     cameraNode_ = new Node();
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the floor
@@ -241,15 +241,15 @@ void Ragdolls::SpawnObject()
     boxNode->SetPosition(cameraNode_->GetPosition());
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
-    auto* boxObject = boxNode->CreateComponent<StaticModel>();
+    auto* boxObject = boxNode->create_component<StaticModel>();
     boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
     boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneSmall.xml"));
     boxObject->SetCastShadows(true);
 
-    auto* body = boxNode->CreateComponent<RigidBody>();
+    auto* body = boxNode->create_component<RigidBody>();
     body->SetMass(1.0f);
     body->SetRollingFriction(0.15f);
-    auto* shape = boxNode->CreateComponent<CollisionShape>();
+    auto* shape = boxNode->create_component<CollisionShape>();
     shape->SetSphere(1.0f);
 
     const float OBJECT_VELOCITY = 10.0f;

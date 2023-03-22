@@ -55,14 +55,14 @@ void Urho2DTileMap::Start()
 void Urho2DTileMap::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create camera node
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
@@ -76,7 +76,7 @@ void Urho2DTileMap::CreateScene()
     SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
     tileMapNode->SetPosition(Vector3(0.0f, 0.0f, -1.0f));
 
-    auto* tileMap = tileMapNode->CreateComponent<TileMap2D>();
+    auto* tileMap = tileMapNode->create_component<TileMap2D>();
     // Set animation
     tileMap->SetTmxFile(tmxFile);
 

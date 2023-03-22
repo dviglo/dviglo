@@ -21,12 +21,12 @@ Node* SpawnParticleEffect(Scene* scene, const Vector3& position, const String& e
     newNode->SetPosition(position);
 
     // Create the particle emitter
-    ParticleEmitter* emitter = newNode->CreateComponent<ParticleEmitter>();
+    ParticleEmitter* emitter = newNode->create_component<ParticleEmitter>();
     emitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect>(effectName));
 
     // Create a GameObject for managing the effect lifetime. This is always local, so for server-controlled effects it
     // exists only on the server
-    GameObject* object = newNode->CreateComponent<GameObject>(LOCAL);
+    GameObject* object = newNode->create_component<GameObject>(LOCAL);
     object->duration = duration;
 
     return newNode;
@@ -38,13 +38,13 @@ Node* SpawnSound(Scene* scene, const Vector3& position, const String& soundName,
     newNode->SetPosition(position);
 
     // Create the sound source
-    SoundSource3D* source = newNode->CreateComponent<SoundSource3D>();
+    SoundSource3D* source = newNode->create_component<SoundSource3D>();
     Sound* sound = DV_RES_CACHE.GetResource<Sound>(soundName);
     source->SetDistanceAttenuation(200.0f, 5000.0f, 1.0f);
     source->Play(sound);
 
     // Create a GameObject for managing the sound lifetime
-    GameObject* object = newNode->CreateComponent<GameObject>(LOCAL);
+    GameObject* object = newNode->create_component<GameObject>(LOCAL);
     object->duration = duration;
 
     return newNode;

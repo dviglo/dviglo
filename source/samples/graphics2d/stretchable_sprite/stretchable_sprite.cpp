@@ -51,14 +51,14 @@ void Urho2DStretchableSprite::Start()
 void Urho2DStretchableSprite::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create camera node
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
@@ -69,9 +69,9 @@ void Urho2DStretchableSprite::CreateScene()
     auto* sprite = DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Stretchable.png");
     if (sprite)
     {
-        refSpriteNode_->CreateComponent<StaticSprite2D>()->SetSprite(sprite);
+        refSpriteNode_->create_component<StaticSprite2D>()->SetSprite(sprite);
 
-        auto stretchSprite = stretchSpriteNode_->CreateComponent<StretchableSprite2D>();
+        auto stretchSprite = stretchSpriteNode_->create_component<StretchableSprite2D>();
         stretchSprite->SetSprite(sprite);
         stretchSprite->SetBorder({25, 25, 25, 25});
 

@@ -59,21 +59,21 @@ void Urho2DPhysics::Start()
 void Urho2DPhysics::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
     // Create camera node
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
 
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
     camera->SetZoom(1.2f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
     // Create 2D physics world component
-    /*PhysicsWorld2D* physicsWorld = */scene_->CreateComponent<PhysicsWorld2D>();
+    /*PhysicsWorld2D* physicsWorld = */scene_->create_component<PhysicsWorld2D>();
 
     auto* boxSprite = DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Box.png");
     auto* ballSprite = DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Ball.png");
@@ -84,13 +84,13 @@ void Urho2DPhysics::CreateScene()
     groundNode->SetScale(Vector3(200.0f, 1.0f, 0.0f));
 
     // Create 2D rigid body for gound
-    /*RigidBody2D* groundBody = */groundNode->CreateComponent<RigidBody2D>();
+    /*RigidBody2D* groundBody = */groundNode->create_component<RigidBody2D>();
 
-    auto* groundSprite = groundNode->CreateComponent<StaticSprite2D>();
+    auto* groundSprite = groundNode->create_component<StaticSprite2D>();
     groundSprite->SetSprite(boxSprite);
 
     // Create box collider for ground
-    auto* groundShape = groundNode->CreateComponent<CollisionBox2D>();
+    auto* groundShape = groundNode->create_component<CollisionBox2D>();
     // Set box size
     groundShape->SetSize(Vector2(0.32f, 0.32f));
     // Set friction
@@ -102,17 +102,17 @@ void Urho2DPhysics::CreateScene()
         node->SetPosition(Vector3(Random(-0.1f, 0.1f), 5.0f + i * 0.4f, 0.0f));
 
         // Create rigid body
-        auto* body = node->CreateComponent<RigidBody2D>();
+        auto* body = node->create_component<RigidBody2D>();
         body->SetBodyType(BT_DYNAMIC);
 
-        auto* staticSprite = node->CreateComponent<StaticSprite2D>();
+        auto* staticSprite = node->create_component<StaticSprite2D>();
 
         if (i % 2 == 0)
         {
             staticSprite->SetSprite(boxSprite);
 
             // Create box
-            auto* box = node->CreateComponent<CollisionBox2D>();
+            auto* box = node->create_component<CollisionBox2D>();
             // Set size
             box->SetSize(Vector2(0.32f, 0.32f));
             // Set density
@@ -127,7 +127,7 @@ void Urho2DPhysics::CreateScene()
             staticSprite->SetSprite(ballSprite);
 
             // Create circle
-            auto* circle = node->CreateComponent<CollisionCircle2D>();
+            auto* circle = node->create_component<CollisionCircle2D>();
             // Set radius
             circle->SetRadius(0.16f);
             // Set density

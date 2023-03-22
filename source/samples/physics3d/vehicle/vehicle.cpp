@@ -102,9 +102,9 @@ void Vehicle::FixedUpdate(float timeStep)
 void Vehicle::Init()
 {
     // This function is called only from the main program when initially creating the vehicle, not on scene load
-    auto* hullObject = node_->CreateComponent<StaticModel>();
-    hullBody_ = node_->CreateComponent<RigidBody>();
-    auto* hullShape = node_->CreateComponent<CollisionShape>();
+    auto* hullObject = node_->create_component<StaticModel>();
+    hullBody_ = node_->create_component<RigidBody>();
+    auto* hullShape = node_->create_component<CollisionShape>();
 
     node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
     hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
@@ -136,10 +136,10 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     // Remember the ID for serialization
     wheelNodeID = wheelNode->GetID();
 
-    auto* wheelObject = wheelNode->CreateComponent<StaticModel>();
-    auto* wheelBody = wheelNode->CreateComponent<RigidBody>();
-    auto* wheelShape = wheelNode->CreateComponent<CollisionShape>();
-    auto* wheelConstraint = wheelNode->CreateComponent<Constraint>();
+    auto* wheelObject = wheelNode->create_component<StaticModel>();
+    auto* wheelBody = wheelNode->create_component<RigidBody>();
+    auto* wheelShape = wheelNode->create_component<CollisionShape>();
+    auto* wheelConstraint = wheelNode->create_component<Constraint>();
 
     wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
     wheelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));

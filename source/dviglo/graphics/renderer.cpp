@@ -1157,7 +1157,7 @@ Camera* Renderer::GetShadowCamera()
     if (numShadowCameras_ == shadowCameraNodes_.Size())
     {
         SharedPtr<Node> newNode(new Node());
-        newNode->CreateComponent<Camera>();
+        newNode->create_component<Camera>();
         shadowCameraNodes_.Push(newNode);
     }
 

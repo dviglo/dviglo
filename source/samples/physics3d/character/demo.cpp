@@ -39,7 +39,7 @@ DV_DEFINE_APPLICATION_MAIN(CharacterDemo)
 CharacterDemo::CharacterDemo() :
     firstPerson_(false)
 {
-    // Register factory and attributes for the Character component so it can be created via CreateComponent, and loaded / saved
+    // Register factory and attributes for the Character component so it can be created via create_component, and loaded / saved
     Character::RegisterObject();
 }
 
@@ -73,19 +73,19 @@ void CharacterDemo::CreateScene()
     scene_ = new Scene();
 
     // Create scene subsystem components
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<PhysicsWorld>();
+    scene_->create_component<Octree>();
+    scene_->create_component<PhysicsWorld>();
 
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
     cameraNode_ = new Node();
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
     DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
     zone->SetFogStart(100.0f);
@@ -95,7 +95,7 @@ void CharacterDemo::CreateScene()
     // Create a directional light with cascaded shadow mapping
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.3f, -0.5f, 0.425f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -106,15 +106,15 @@ void CharacterDemo::CreateScene()
     Node* floorNode = scene_->create_child("Floor");
     floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
-    auto* object = floorNode->CreateComponent<StaticModel>();
+    auto* object = floorNode->create_component<StaticModel>();
     object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
     object->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
 
-    auto* body = floorNode->CreateComponent<RigidBody>();
+    auto* body = floorNode->create_component<RigidBody>();
     // Use collision layer bit 2 to mark world scenery. This is what we will raycast against to prevent camera from going
     // inside geometry
     body->SetCollisionLayer(2);
-    auto* shape = floorNode->CreateComponent<CollisionShape>();
+    auto* shape = floorNode->create_component<CollisionShape>();
     shape->SetBox(Vector3::ONE);
 
     // Create mushrooms of varying sizes
@@ -125,14 +125,14 @@ void CharacterDemo::CreateScene()
         objectNode->SetPosition(Vector3(Random(180.0f) - 90.0f, 0.0f, Random(180.0f) - 90.0f));
         objectNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         objectNode->SetScale(2.0f + Random(5.0f));
-        auto* object = objectNode->CreateComponent<StaticModel>();
+        auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
         object->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
-        auto* body = objectNode->CreateComponent<RigidBody>();
+        auto* body = objectNode->create_component<RigidBody>();
         body->SetCollisionLayer(2);
-        auto* shape = objectNode->CreateComponent<CollisionShape>();
+        auto* shape = objectNode->create_component<CollisionShape>();
         shape->SetTriangleMesh(object->GetModel(), 0);
     }
 
@@ -146,16 +146,16 @@ void CharacterDemo::CreateScene()
         objectNode->SetPosition(Vector3(Random(180.0f) - 90.0f, Random(10.0f) + 10.0f, Random(180.0f) - 90.0f));
         objectNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         objectNode->SetScale(scale);
-        auto* object = objectNode->CreateComponent<StaticModel>();
+        auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         object->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         object->SetCastShadows(true);
 
-        auto* body = objectNode->CreateComponent<RigidBody>();
+        auto* body = objectNode->create_component<RigidBody>();
         body->SetCollisionLayer(2);
         // Bigger boxes will be heavier and harder to move
         body->SetMass(scale * 2.0f);
-        auto* shape = objectNode->CreateComponent<CollisionShape>();
+        auto* shape = objectNode->create_component<CollisionShape>();
         shape->SetBox(Vector3::ONE);
     }
 }
@@ -170,17 +170,17 @@ void CharacterDemo::CreateCharacter()
     adjustNode->SetRotation( Quaternion(180, Vector3(0,1,0) ) );
 
     // Create the rendering component + animation controller
-    auto* object = adjustNode->CreateComponent<AnimatedModel>();
+    auto* object = adjustNode->create_component<AnimatedModel>();
     object->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mutant/Mutant.mdl"));
     object->SetMaterial(DV_RES_CACHE.GetResource<Material>("Models/Mutant/Materials/mutant_M.xml"));
     object->SetCastShadows(true);
-    adjustNode->CreateComponent<AnimationController>();
+    adjustNode->create_component<AnimationController>();
 
     // Set the head bone for manual control
     object->GetSkeleton().GetBone("Mutant:Head")->animated_ = false;
 
     // Create rigidbody, and set non-zero mass so that the body becomes dynamic
-    auto* body = objectNode->CreateComponent<RigidBody>();
+    auto* body = objectNode->create_component<RigidBody>();
     body->SetCollisionLayer(1);
     body->SetMass(1.0f);
 
@@ -192,13 +192,13 @@ void CharacterDemo::CreateCharacter()
     body->SetCollisionEventMode(COLLISION_ALWAYS);
 
     // Set a capsule shape for collision
-    auto* shape = objectNode->CreateComponent<CollisionShape>();
+    auto* shape = objectNode->create_component<CollisionShape>();
     shape->SetCapsule(0.7f, 1.8f, Vector3(0.0f, 0.9f, 0.0f));
 
     // Create the character logic component, which takes care of steering the rigidbody
     // Remember it so that we can set the controls. Use a WeakPtr because the scene hierarchy already owns it
     // and keeps it alive as long as it's not removed from the hierarchy
-    character_ = objectNode->CreateComponent<Character>();
+    character_ = objectNode->create_component<Character>();
 }
 
 void CharacterDemo::CreateInstructions()

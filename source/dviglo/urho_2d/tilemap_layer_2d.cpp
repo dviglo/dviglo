@@ -334,7 +334,7 @@ void TileMapLayer2D::SetTileLayer(const TmxTileLayer2D* tileLayer)
             SharedPtr<Node> tileNode(GetNode()->CreateTemporaryChild("Tile"));
             tileNode->SetPosition(Vector3(info.TileIndexToPosition(x, y)));
 
-            auto* staticSprite = tileNode->CreateComponent<StaticSprite2D>();
+            auto* staticSprite = tileNode->create_component<StaticSprite2D>();
             staticSprite->SetSprite(tile->GetSprite());
             staticSprite->SetFlip(tile->GetFlipX(), tile->GetFlipY(), tile->GetSwapXY());
             staticSprite->SetLayer(drawOrder_);
@@ -363,7 +363,7 @@ void TileMapLayer2D::SetObjectGroup(const TmxObjectGroup2D* objectGroup)
         // If object is tile, create static sprite component
         if (object->GetObjectType() == OT_TILE && object->GetTileGid() && object->GetTileSprite())
         {
-            auto* staticSprite = objectNode->CreateComponent<StaticSprite2D>();
+            auto* staticSprite = objectNode->create_component<StaticSprite2D>();
             staticSprite->SetSprite(object->GetTileSprite());
             staticSprite->SetFlip(object->GetTileFlipX(), object->GetTileFlipY(), object->GetTileSwapXY());
             staticSprite->SetLayer(drawOrder_);
@@ -390,7 +390,7 @@ void TileMapLayer2D::SetImageLayer(const TmxImageLayer2D* imageLayer)
     SharedPtr<Node> imageNode(GetNode()->CreateTemporaryChild("Tile"));
     imageNode->SetPosition(Vector3(imageLayer->GetPosition()));
 
-    auto* staticSprite = imageNode->CreateComponent<StaticSprite2D>();
+    auto* staticSprite = imageNode->create_component<StaticSprite2D>();
     staticSprite->SetSprite(imageLayer->GetSprite());
     staticSprite->SetOrderInLayer(0);
 

@@ -73,21 +73,21 @@ void WindowSettingsDemo::Start()
 void WindowSettingsDemo::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
-    auto* zone = scene_->CreateComponent<Zone>();
+    auto* zone = scene_->create_component<Zone>();
     zone->SetAmbientColor(Color::WHITE);
 
     // Create 3D object
     Node* objectNode = scene_->create_child("Object");
     objectNode->SetRotation(Quaternion(45.0f, 45.0f, 45.0f));
-    auto* objectModel = objectNode->CreateComponent<StaticModel>();
+    auto* objectModel = objectNode->create_component<StaticModel>();
     objectModel->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
     objectModel->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
 
     // Create camera
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -4.0f));
 
     // Rotate object

@@ -104,7 +104,7 @@ void CreateRagdoll::CreateRagdollBone(const String& boneName, ShapeType type, co
         return;
     }
 
-    auto* body = boneNode->CreateComponent<RigidBody>();
+    auto* body = boneNode->create_component<RigidBody>();
     // Set mass to make movable
     body->SetMass(1.0f);
     // Set damping parameters to smooth out the motion
@@ -114,7 +114,7 @@ void CreateRagdoll::CreateRagdollBone(const String& boneName, ShapeType type, co
     body->SetLinearRestThreshold(1.5f);
     body->SetAngularRestThreshold(2.5f);
 
-    auto* shape = boneNode->CreateComponent<CollisionShape>();
+    auto* shape = boneNode->create_component<CollisionShape>();
     // We use either a box or a capsule shape for all of the bones
     if (type == SHAPE_BOX)
         shape->SetBox(size, position, rotation);
@@ -139,7 +139,7 @@ void CreateRagdoll::CreateRagdollConstraint(const String& boneName, const String
         return;
     }
 
-    auto* constraint = boneNode->CreateComponent<Constraint>();
+    auto* constraint = boneNode->create_component<Constraint>();
     constraint->SetConstraintType(type);
     // Most of the constraints in the ragdoll will work better when the connected bodies don't collide against each other
     constraint->SetDisableCollision(disableCollision);

@@ -63,11 +63,11 @@ void DynamicGeometry::CreateScene()
 
     // Create the Octree component to the scene so that drawable objects can be rendered. Use default volume
     // (-1000, -1000, -1000) to (1000, 1000, 1000)
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create a Zone for ambient light & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
     zone->SetFogStart(200.0f);
@@ -76,7 +76,7 @@ void DynamicGeometry::CreateScene()
     // Create a directional light
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(-0.6f, -1.0f, -0.8f)); // The direction vector does not need to be normalized
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetColor(Color(0.4f, 1.0f, 0.4f));
     light->SetSpecularIntensity(1.5f);
@@ -131,7 +131,7 @@ void DynamicGeometry::CreateScene()
         {
             Node* node = scene_->create_child("Object");
             node->SetPosition(Vector3(x * 2.0f, 0.0f, y * 2.0f));
-            auto* object = node->CreateComponent<StaticModel>();
+            auto* object = node->create_component<StaticModel>();
             SharedPtr<Model> cloneModel = originalModel->Clone();
             object->SetModel(cloneModel);
             // Store the cloned vertex buffer that we will modify when animating
@@ -237,14 +237,14 @@ void DynamicGeometry::CreateScene()
 
         Node* node = scene_->create_child("FromScratchObject");
         node->SetPosition(Vector3(0.0f, 3.0f, 0.0f));
-        auto* object = node->CreateComponent<StaticModel>();
+        auto* object = node->create_component<StaticModel>();
         object->SetModel(fromScratchModel);
     }
 
     // Create the camera
     cameraNode_ = new Node();
     cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -20.0f));
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 }
 

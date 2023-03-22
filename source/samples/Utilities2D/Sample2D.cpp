@@ -48,7 +48,7 @@ Sample2D::Sample2D()
 void Sample2D::CreateCollisionShapesFromTMXObjects(Node* tileMapNode, TileMapLayer2D* tileMapLayer, const TileMapInfo2D& info)
 {
     // Create rigid body to the root node
-    auto* body = tileMapNode->CreateComponent<RigidBody2D>();
+    auto* body = tileMapNode->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
 
     // Generate physics collision shapes and rigid bodies from the tmx file's objects located in "Physics" layer
@@ -88,7 +88,7 @@ void Sample2D::CreateCollisionShapesFromTMXObjects(Node* tileMapNode, TileMapLay
 
 CollisionBox2D* Sample2D::CreateRectangleShape(Node* node, TileMapObject2D* object, const Vector2& size, const TileMapInfo2D& info)
 {
-    auto* shape = node->CreateComponent<CollisionBox2D>();
+    auto* shape = node->create_component<CollisionBox2D>();
     shape->SetSize(size);
     if (info.orientation_ == O_ORTHOGONAL)
         shape->SetCenter(object->GetPosition() + size / 2);
@@ -105,7 +105,7 @@ CollisionBox2D* Sample2D::CreateRectangleShape(Node* node, TileMapObject2D* obje
 
 CollisionCircle2D* Sample2D::CreateCircleShape(Node* node, TileMapObject2D* object, float radius, const TileMapInfo2D& info)
 {
-    auto* shape = node->CreateComponent<CollisionCircle2D>();
+    auto* shape = node->create_component<CollisionCircle2D>();
     Vector2 size = object->GetSize();
     if (info.orientation_ == O_ORTHOGONAL)
         shape->SetCenter(object->GetPosition() + size / 2);
@@ -123,7 +123,7 @@ CollisionCircle2D* Sample2D::CreateCircleShape(Node* node, TileMapObject2D* obje
 
 CollisionPolygon2D* Sample2D::CreatePolygonShape(Node* node, TileMapObject2D* object)
 {
-    auto* shape = node->CreateComponent<CollisionPolygon2D>();
+    auto* shape = node->create_component<CollisionPolygon2D>();
     int numVertices = object->GetNumPoints();
     shape->SetVertexCount(numVertices);
     for (int i = 0; i < numVertices; ++i)
@@ -137,7 +137,7 @@ CollisionPolygon2D* Sample2D::CreatePolygonShape(Node* node, TileMapObject2D* ob
 void Sample2D::CreatePolyLineShape(Node* node, TileMapObject2D* object)
 {
     /*
-    auto* shape = node->CreateComponent<CollisionChain2D>();
+    auto* shape = node->create_component<CollisionChain2D>();
     int numVertices = object->GetNumPoints();
     shape->SetVertexCount(numVertices);
     for (int i = 0; i < numVertices; ++i)
@@ -155,7 +155,7 @@ void Sample2D::CreatePolyLineShape(Node* node, TileMapObject2D* object)
 
     for (u32 i = 1; i < numVertices; ++i)
     {
-        CollisionEdge2D* shape = node->CreateComponent<CollisionEdge2D>();
+        CollisionEdge2D* shape = node->create_component<CollisionEdge2D>();
         shape->SetVertices(object->GetPoint(i - 1), object->GetPoint(i));
         shape->SetFriction(0.8f);
         if (object->HasProperty("Friction"))
@@ -168,17 +168,17 @@ Node* Sample2D::CreateCharacter(const TileMapInfo2D& info, float friction, const
     Node* spriteNode = scene_->create_child("Imp");
     spriteNode->SetPosition(position);
     spriteNode->SetScale(scale);
-    auto* animatedSprite = spriteNode->CreateComponent<AnimatedSprite2D>();
+    auto* animatedSprite = spriteNode->create_component<AnimatedSprite2D>();
     // Get scml file and Play "idle" anim
     auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/imp/imp.scml");
     animatedSprite->SetAnimationSet(animationSet);
     animatedSprite->SetAnimation("idle");
     animatedSprite->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
-    auto* impBody = spriteNode->CreateComponent<RigidBody2D>();
+    auto* impBody = spriteNode->create_component<RigidBody2D>();
     impBody->SetBodyType(BT_DYNAMIC);
     impBody->SetAllowSleep(false);
     impBody->SetFixedRotation(true);
-    auto* shape = spriteNode->CreateComponent<CollisionCircle2D>();
+    auto* shape = spriteNode->create_component<CollisionCircle2D>();
     shape->SetRadius(1.1f); // Set shape size
     shape->SetFriction(friction); // Set friction
     shape->SetRestitution(0.1f); // Bounce
@@ -190,9 +190,9 @@ Node* Sample2D::CreateCharacter(const TileMapInfo2D& info, float friction, const
 Node* Sample2D::CreateTrigger()
 {
     Node* node = scene_->create_child(); // Clones will be renamed according to object type
-    auto* body = node->CreateComponent<RigidBody2D>();
+    auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
-    auto* shape = node->CreateComponent<CollisionBox2D>(); // Create box shape
+    auto* shape = node->create_component<CollisionBox2D>(); // Create box shape
     shape->SetTrigger(true);
     return node;
 }
@@ -200,11 +200,11 @@ Node* Sample2D::CreateTrigger()
 Node* Sample2D::CreateEnemy()
 {
     Node* node = scene_->create_child("Enemy");
-    auto* staticSprite = node->CreateComponent<StaticSprite2D>();
+    auto* staticSprite = node->create_component<StaticSprite2D>();
     staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Aster.png"));
-    auto* body = node->CreateComponent<RigidBody2D>();
+    auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
-    auto* shape = node->CreateComponent<CollisionCircle2D>(); // Create circle shape
+    auto* shape = node->create_component<CollisionCircle2D>(); // Create circle shape
     shape->SetRadius(0.25f); // Set radius
     return node;
 }
@@ -213,13 +213,13 @@ Node* Sample2D::CreateOrc()
 {
     Node* node = scene_->create_child("Orc");
     node->SetScale(scene_->GetChild("Imp", true)->GetScale());
-    auto* animatedSprite = node->CreateComponent<AnimatedSprite2D>();
+    auto* animatedSprite = node->create_component<AnimatedSprite2D>();
     auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/Orc/Orc.scml");
     animatedSprite->SetAnimationSet(animationSet);
     animatedSprite->SetAnimation("run"); // Get scml file and Play "run" anim
     animatedSprite->SetLayer(2); // Make orc always visible
-    auto* body = node->CreateComponent<RigidBody2D>();
-    auto* shape = node->CreateComponent<CollisionCircle2D>();
+    auto* body = node->create_component<RigidBody2D>();
+    auto* shape = node->create_component<CollisionCircle2D>();
     shape->SetRadius(1.3f); // Set shape size
     shape->SetTrigger(true);
     return node;
@@ -229,14 +229,14 @@ Node* Sample2D::CreateCoin()
 {
     Node* node = scene_->create_child("Coin");
     node->SetScale(0.5);
-    auto* animatedSprite = node->CreateComponent<AnimatedSprite2D>();
+    auto* animatedSprite = node->create_component<AnimatedSprite2D>();
     auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/GoldIcon.scml");
     animatedSprite->SetAnimationSet(animationSet); // Get scml file and Play "idle" anim
     animatedSprite->SetAnimation("idle");
     animatedSprite->SetLayer(4);
-    auto* body = node->CreateComponent<RigidBody2D>();
+    auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
-    auto* shape = node->CreateComponent<CollisionCircle2D>(); // Create circle shape
+    auto* shape = node->create_component<CollisionCircle2D>(); // Create circle shape
     shape->SetRadius(0.32f); // Set radius
     shape->SetTrigger(true);
     return node;
@@ -246,11 +246,11 @@ Node* Sample2D::CreateMovingPlatform()
 {
     Node* node = scene_->create_child("MovingPlatform");
     node->SetScale(Vector3(3.0f, 1.0f, 0.0f));
-    auto* staticSprite = node->CreateComponent<StaticSprite2D>();
+    auto* staticSprite = node->create_component<StaticSprite2D>();
     staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Box.png"));
-    auto* body = node->CreateComponent<RigidBody2D>();
+    auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
-    auto* shape = node->CreateComponent<CollisionBox2D>(); // Create box shape
+    auto* shape = node->create_component<CollisionBox2D>(); // Create box shape
     shape->SetSize(Vector2(0.32f, 0.32f)); // Set box size
     shape->SetFriction(0.8f); // Set friction
     return node;
@@ -287,7 +287,7 @@ void Sample2D::PopulateMovingEntities(TileMapLayer2D* movingEntitiesLayer)
             movingClone->SetPosition2D(movingObject->GetPoint(0) + offset);
 
             // Create script object that handles entity translation along its path
-            auto* mover = movingClone->CreateComponent<Mover>();
+            auto* mover = movingClone->create_component<Mover>();
 
             // Set path from points
             Vector<Vector2> path = CreatePathFromPoints(movingObject, offset);
@@ -493,7 +493,7 @@ void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, co
     Node* node = scene_->create_child("Background");
     node->SetPosition(Vector3(info.GetMapWidth(), info.GetMapHeight(), 0) / 2);
     node->SetScale(scale);
-    auto* sprite = node->CreateComponent<StaticSprite2D>();
+    auto* sprite = node->create_component<StaticSprite2D>();
     sprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>(texture));
     SetRandomSeed(Time::GetSystemTime()); // Randomize from system clock
     sprite->SetColor(Color(Random(0.0f, 1.0f), Random(0.0f, 1.0f), Random(0.0f, 1.0f), 1.0f));
@@ -514,14 +514,14 @@ void Sample2D::SpawnEffect(Node* node)
 {
     Node* particleNode = node->create_child("Emitter");
     particleNode->SetScale(0.5f / node->GetScale().x_);
-    auto* particleEmitter = particleNode->CreateComponent<ParticleEmitter2D>();
+    auto* particleEmitter = particleNode->create_component<ParticleEmitter2D>();
     particleEmitter->SetLayer(2);
     particleEmitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect2D>("Urho2D/sun.pex"));
 }
 
 void Sample2D::PlaySoundEffect(const String& soundName)
 {
-    auto* source = scene_->CreateComponent<SoundSource>();
+    auto* source = scene_->create_component<SoundSource>();
     auto* sound = DV_RES_CACHE.GetResource<Sound>("Sounds/" + soundName);
 
     if (sound)

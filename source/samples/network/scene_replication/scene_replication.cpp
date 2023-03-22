@@ -84,13 +84,13 @@ void SceneReplication::CreateScene()
 
     // Create octree and physics world with default settings. Create them as local so that they are not needlessly replicated
     // when a client connects
-    scene_->CreateComponent<Octree>(LOCAL);
-    scene_->CreateComponent<PhysicsWorld>(LOCAL);
+    scene_->create_component<Octree>(LOCAL);
+    scene_->create_component<PhysicsWorld>(LOCAL);
 
     // All static scene content and the camera are also created as local, so that they are unaffected by scene replication and are
     // not removed from the client upon connection. Create a Zone component first for ambient lighting & fog control.
     Node* zoneNode = scene_->create_child("Zone", LOCAL);
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.1f, 0.1f, 0.1f));
     zone->SetFogStart(100.0f);
@@ -99,7 +99,7 @@ void SceneReplication::CreateScene()
     // Create a directional light without shadows
     Node* lightNode = scene_->create_child("DirectionalLight", LOCAL);
     lightNode->SetDirection(Vector3(0.5f, -1.0f, 0.5f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetColor(Color(0.2f, 0.2f, 0.2f));
     light->SetSpecularIntensity(1.0f);
@@ -112,13 +112,13 @@ void SceneReplication::CreateScene()
             Node* floorNode = scene_->create_child("FloorTile", LOCAL);
             floorNode->SetPosition(Vector3(x * 20.2f, -0.5f, y * 20.2f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.0f));
-            auto* floorObject = floorNode->CreateComponent<StaticModel>();
+            auto* floorObject = floorNode->create_component<StaticModel>();
             floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
             floorObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
 
-            auto* body = floorNode->CreateComponent<RigidBody>();
+            auto* body = floorNode->create_component<RigidBody>();
             body->SetFriction(1.0f);
-            auto* shape = floorNode->CreateComponent<CollisionShape>();
+            auto* shape = floorNode->create_component<CollisionShape>();
             shape->SetBox(Vector3::ONE);
         }
     }
@@ -129,7 +129,7 @@ void SceneReplication::CreateScene()
     // the screen would become blank if the camera node was replicated (as only the locally created camera is assigned to a
     // viewport in SetupViewports() below)
     cameraNode_ = scene_->create_child("Camera", LOCAL);
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the plane
@@ -262,22 +262,22 @@ Node* SceneReplication::CreateControllableObject()
     Node* ballNode = scene_->create_child("Ball");
     ballNode->SetPosition(Vector3(Random(40.0f) - 20.0f, 5.0f, -Random(40.0f) + 20.0f));
     ballNode->SetScale(0.5f);
-    auto* ballObject = ballNode->CreateComponent<StaticModel>();
+    auto* ballObject = ballNode->create_component<StaticModel>();
     ballObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
     ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneSmall.xml"));
 
     // Create the physics components
-    auto* body = ballNode->CreateComponent<RigidBody>();
+    auto* body = ballNode->create_component<RigidBody>();
     body->SetMass(1.0f);
     body->SetFriction(1.0f);
     // In addition to friction, use motion damping so that the ball can not accelerate limitlessly
     body->SetLinearDamping(0.5f);
     body->SetAngularDamping(0.5f);
-    auto* shape = ballNode->CreateComponent<CollisionShape>();
+    auto* shape = ballNode->create_component<CollisionShape>();
     shape->SetSphere(1.0f);
 
     // Create a random colored point light at the ball so that can see better where is going
-    auto* light = ballNode->CreateComponent<Light>();
+    auto* light = ballNode->create_component<Light>();
     light->SetRange(3.0f);
     light->SetColor(
         Color(0.5f + ((unsigned)Rand() & 1u) * 0.5f, 0.5f + ((unsigned)Rand() & 1u) * 0.5f, 0.5f + ((unsigned)Rand() & 1u) * 0.5f));

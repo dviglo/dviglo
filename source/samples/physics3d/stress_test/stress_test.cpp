@@ -68,13 +68,13 @@ void PhysicsStressTest::CreateScene()
     // Create a physics simulation world with default parameters, which will update at 60fps. Like the Octree must
     // exist before creating drawable components, the PhysicsWorld must exist before creating physics components.
     // Finally, create a DebugRenderer component so that we can draw physics debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<PhysicsWorld>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<PhysicsWorld>();
+    scene_->create_component<DebugRenderer>();
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -84,7 +84,7 @@ void PhysicsStressTest::CreateScene()
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -96,13 +96,13 @@ void PhysicsStressTest::CreateScene()
         Node* floorNode = scene_->create_child("Floor");
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
-        auto* floorObject = floorNode->CreateComponent<StaticModel>();
+        auto* floorObject = floorNode->create_component<StaticModel>();
         floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         floorObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components
-        /*RigidBody* body = */floorNode->CreateComponent<RigidBody>();
-        auto* shape = floorNode->CreateComponent<CollisionShape>();
+        /*RigidBody* body = */floorNode->create_component<RigidBody>();
+        auto* shape = floorNode->create_component<CollisionShape>();
         shape->SetBox(Vector3::ONE);
     }
 
@@ -115,13 +115,13 @@ void PhysicsStressTest::CreateScene()
             mushroomNode->SetPosition(Vector3(Random(400.0f) - 200.0f, 0.0f, Random(400.0f) - 200.0f));
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(5.0f + Random(5.0f));
-            auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+            auto* mushroomObject = mushroomNode->create_component<StaticModel>();
             mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
             mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
 
-            /*RigidBody* body = */mushroomNode->CreateComponent<RigidBody>();
-            auto* shape = mushroomNode->CreateComponent<CollisionShape>();
+            /*RigidBody* body = */mushroomNode->create_component<RigidBody>();
+            auto* shape = mushroomNode->create_component<CollisionShape>();
             // By default the highest LOD level will be used, the LOD level can be passed as an optional parameter
             shape->SetTriangleMesh(mushroomObject->GetModel());
         }
@@ -134,18 +134,18 @@ void PhysicsStressTest::CreateScene()
         {
             Node* boxNode = scene_->create_child("Box");
             boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
-            auto* boxObject = boxNode->CreateComponent<StaticModel>();
+            auto* boxObject = boxNode->create_component<StaticModel>();
             boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
             boxObject->SetMaterial(cache.GetResource<Material>("Materials/StoneSmall.xml"));
             boxObject->SetCastShadows(true);
 
             // Give the RigidBody mass to make it movable and also adjust friction
-            auto* body = boxNode->CreateComponent<RigidBody>();
+            auto* body = boxNode->create_component<RigidBody>();
             body->SetMass(1.0f);
             body->SetFriction(1.0f);
             // Disable collision event signaling to reduce CPU load of the physics simulation
             body->SetCollisionEventMode(COLLISION_NEVER);
-            auto* shape = boxNode->CreateComponent<CollisionShape>();
+            auto* shape = boxNode->create_component<CollisionShape>();
             shape->SetBox(Vector3::ONE);
         }
     }
@@ -153,7 +153,7 @@ void PhysicsStressTest::CreateScene()
     // Create the camera. Limit far clip distance to match the fog. Note: now we actually create the camera node outside
     // the scene, because we want it to be unaffected by scene load / save
     cameraNode_ = new Node();
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the floor
@@ -257,16 +257,16 @@ void PhysicsStressTest::SpawnObject()
     boxNode->SetPosition(cameraNode_->GetPosition());
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
-    auto* boxObject = boxNode->CreateComponent<StaticModel>();
+    auto* boxObject = boxNode->create_component<StaticModel>();
     boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
     boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneSmall.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also
-    auto* body = boxNode->CreateComponent<RigidBody>();
+    auto* body = boxNode->create_component<RigidBody>();
     body->SetMass(0.25f);
     body->SetFriction(0.75f);
-    auto* shape = boxNode->CreateComponent<CollisionShape>();
+    auto* shape = boxNode->create_component<CollisionShape>();
     shape->SetBox(Vector3::ONE);
 
     const float OBJECT_VELOCITY = 10.0f;

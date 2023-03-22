@@ -591,7 +591,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
                 // Add initially to the root level. May be moved as we receive the parent attribute
                 node = scene_->create_child(nodeID, REPLICATED);
                 // Create smoothed transform component
-                node->CreateComponent<SmoothedTransform>(LOCAL);
+                node->create_component<SmoothedTransform>(LOCAL);
             }
 
             // Read initial attributes, then snap the motion smoothing immediately to the end
@@ -624,7 +624,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
                 {
                     if (component)
                         component->Remove();
-                    component = node->CreateComponent(type, REPLICATED, componentID);
+                    component = node->create_component(type, REPLICATED, componentID);
                 }
 
                 // If was unable to create the component, would desync the message and therefore have to abort
@@ -708,13 +708,13 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
                 {
                     if (component)
                         component->Remove();
-                    component = node->CreateComponent(type, REPLICATED, componentID);
+                    component = node->create_component(type, REPLICATED, componentID);
                 }
 
                 // If was unable to create the component, would desync the message and therefore have to abort
                 if (!component)
                 {
-                    DV_LOGERROR("CreateComponent message parsing aborted due to unknown component");
+                    DV_LOGERROR("create_component message parsing aborted due to unknown component");
                     return;
                 }
 
@@ -723,7 +723,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
                 component->ApplyAttributes();
             }
             else
-                DV_LOGWARNING("CreateComponent message received for missing node " + String(nodeID));
+                DV_LOGWARNING("create_component message received for missing node " + String(nodeID));
         }
         break;
 

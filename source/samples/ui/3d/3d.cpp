@@ -171,8 +171,8 @@ void Hello3DUI::InitWindow()
 void Hello3DUI::InitScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
-    auto* zone = scene_->CreateComponent<Zone>();
+    scene_->create_component<Octree>();
+    auto* zone = scene_->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetFogColor(Color::GRAY);
     zone->SetFogStart(100.0f);
@@ -184,13 +184,13 @@ void Hello3DUI::InitScene()
     boxNode->SetRotation(Quaternion(90, Vector3::LEFT));
 
     // Create a box model and hide it initially.
-    auto* boxModel = boxNode->CreateComponent<StaticModel>();
+    auto* boxModel = boxNode->create_component<StaticModel>();
     boxModel->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
     boxNode->SetEnabled(false);
 
     // Create a camera.
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
 
     // Set an initial position for the camera scene node.
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -10.0f));
@@ -279,7 +279,7 @@ void Hello3DUI::Init3DUI()
     // Node that will get UI rendered on it.
     Node* boxNode = scene_->GetChild("Box");
     // Create a component that sets up UI rendering. It sets material to StaticModel of the node.
-    auto* component = boxNode->CreateComponent<UIComponent>();
+    auto* component = boxNode->create_component<UIComponent>();
     // Optionally modify material. Technique is changed so object is visible without any lights.
     component->GetMaterial()->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("Techniques/DiffUnlit.xml"));
     // Save root element of texture UI for later use.

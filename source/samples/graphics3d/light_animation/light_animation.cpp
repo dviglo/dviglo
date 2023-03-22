@@ -62,20 +62,20 @@ void LightAnimation::CreateScene()
     // show up. The default octree volume will be from (-1000, -1000, -1000) to (1000, 1000, 1000) in world coordinates; it
     // is also legal to place objects outside the volume but their visibility can then not be checked in a hierarchically
     // optimizing manner
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create a child scene node (at world origin) and a StaticModel component into it. Set the StaticModel to show a simple
     // plane mesh with a "stone" material. Note that naming the scene nodes is optional. Scale the scene node larger
     // (100 x 100 world units)
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a point light to the world so that we can see something.
     Node* lightNode = scene_->create_child("PointLight");
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_POINT);
     light->SetRange(10.0f);
 
@@ -142,7 +142,7 @@ void LightAnimation::CreateScene()
         mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
-        auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+        auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
         mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
     }
@@ -150,7 +150,7 @@ void LightAnimation::CreateScene()
     // Create a scene node for the camera, which we will move around
     // The camera will use default settings (1000 far clip distance, 45 degrees FOV, set aspect ratio automatically)
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
 
     // Set an initial position for the camera scene node above the plane
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));

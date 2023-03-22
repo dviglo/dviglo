@@ -40,7 +40,7 @@ void AppState_Benchmark02::OnEnter()
     scene_->GetChildrenWithTag(womans, "woman");
     for (Node* woman : womans)
     {
-        Benchmark02_WomanMover* mover = woman->CreateComponent<Benchmark02_WomanMover>();
+        Benchmark02_WomanMover* mover = woman->create_component<Benchmark02_WomanMover>();
         mover->SetParameters(2.f, 100.f, castleTop);
 
         AnimatedModel* modelObject = woman->GetComponent<AnimatedModel>();
@@ -58,20 +58,20 @@ void AppState_Benchmark02::OnEnter()
     scene_->GetChildrenWithTag(mutants, "mutant");
     for (Node* mutant : mutants)
     {
-        AnimationController* animCtrl = mutant->CreateComponent<AnimationController>();
+        AnimationController* animCtrl = mutant->create_component<AnimationController>();
         animCtrl->PlayExclusive("Models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
         animCtrl->SetTime("Models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("Models/Mutant/Mutant_Idle0.ani")));
     }
 
     Node* mutantGeneral = scene_->GetChild("MutantGeneral");
-    AnimationController* generalAnimCtrl = mutantGeneral->CreateComponent<AnimationController>();
+    AnimationController* generalAnimCtrl = mutantGeneral->create_component<AnimationController>();
     generalAnimCtrl->PlayExclusive("Models/Mutant/Mutant_Idle1.ani", 0, true, 0.f);
     generalAnimCtrl->SetTime("Models/Mutant/Mutant_Idle1.ani", Random(generalAnimCtrl->GetLength("Models/Mutant/Mutant_Idle1.ani")));
 
     Node* cameraNode = scene_->GetChild("Camera");
     
     Node* cameraPath = scene_->GetChild("CameraPath");
-    SplinePath* cameraSplinePath = cameraPath->CreateComponent<SplinePath>();
+    SplinePath* cameraSplinePath = cameraPath->create_component<SplinePath>();
     cameraSplinePath->SetControlledNode(cameraNode);
     for (Node* child : cameraPath->GetChildren())
         cameraSplinePath->AddControlPoint(child);
@@ -80,7 +80,7 @@ void AppState_Benchmark02::OnEnter()
 
     Node* cameraTargetNode = scene_->create_child("CameraTarget");
     Node* cameraTargetPath = scene_->GetChild("CameraTargetPath");
-    SplinePath* cameraTargetSplinePath = cameraPath->CreateComponent<SplinePath>();
+    SplinePath* cameraTargetSplinePath = cameraPath->create_component<SplinePath>();
     cameraTargetSplinePath->SetControlledNode(cameraTargetNode);
     for (Node* child : cameraPath->GetChildren())
         cameraTargetSplinePath->AddControlPoint(child);

@@ -60,14 +60,14 @@ void SignedDistanceFieldText::CreateScene()
     // show up. The default octree volume will be from (-1000, -1000, -1000) to (1000, 1000, 1000) in world coordinates; it
     // is also legal to place objects outside the volume but their visibility can then not be checked in a hierarchically
     // optimizing manner
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create a child scene node (at world origin) and a StaticModel component into it. Set the StaticModel to show a simple
     // plane mesh with a "stone" material. Note that naming the scene nodes is optional. Scale the scene node larger
     // (100 x 100 world units)
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
@@ -76,7 +76,7 @@ void SignedDistanceFieldText::CreateScene()
     // The light will use default settings (white light, no shadows)
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f)); // The direction vector does not need to be normalized
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
 
     // Create more StaticModel objects to the scene, randomly positioned, rotated and scaled. For rotation, we construct a
@@ -91,13 +91,13 @@ void SignedDistanceFieldText::CreateScene()
         Node* mushroomNode = scene_->create_child("Mushroom");
         mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
-        auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+        auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
         mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
 
         Node* mushroomTitleNode = mushroomNode->create_child("MushroomTitle");
         mushroomTitleNode->SetPosition(Vector3(0.0f, 1.2f, 0.0f));
-        auto* mushroomTitleText = mushroomTitleNode->CreateComponent<Text3D>();
+        auto* mushroomTitleText = mushroomTitleNode->create_component<Text3D>();
         mushroomTitleText->SetText("Mushroom " + String(i));
         mushroomTitleText->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
 
@@ -122,7 +122,7 @@ void SignedDistanceFieldText::CreateScene()
     // Create a scene node for the camera, which we will move around
     // The camera will use default settings (1000 far clip distance, 45 degrees FOV, set aspect ratio automatically)
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
 
     // Set an initial position for the camera scene node above the plane
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));

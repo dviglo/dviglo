@@ -69,17 +69,17 @@ public:
         ResourceCache& cache = DV_RES_CACHE;
 
         scene_ = new Scene();
-        scene_->CreateComponent<Octree>();
+        scene_->create_component<Octree>();
 
         Node* planeNode = scene_->create_child("Plane");
         planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
-        StaticModel* planeObject = planeNode->CreateComponent<StaticModel>();
+        StaticModel* planeObject = planeNode->create_component<StaticModel>();
         planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
         planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
         Node* lightNode = scene_->create_child("DirectionalLight");
         lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-        Light* light = lightNode->CreateComponent<Light>();
+        Light* light = lightNode->create_component<Light>();
         light->SetColor(Color(0.5f, 0.5f, 0.5f));
         light->SetLightType(LIGHT_DIRECTIONAL);
         light->SetCastShadows(true);
@@ -88,7 +88,7 @@ public:
         //light->SetShadowIntensity(0.5f);
 
         Node* zoneNode = scene_->create_child("Zone");
-        Zone* zone = zoneNode->CreateComponent<Zone>();
+        Zone* zone = zoneNode->create_component<Zone>();
         zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
         zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
         zone->SetFogColor(Color(0.4f, 0.5f, 0.8f));
@@ -102,14 +102,14 @@ public:
             mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(0.5f + Random(2.0f));
-            StaticModel* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+            StaticModel* mushroomObject = mushroomNode->create_component<StaticModel>();
             mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
             mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
 
         cameraNode_ = scene_->create_child("Camera");
-        cameraNode_->CreateComponent<Camera>();
+        cameraNode_->create_component<Camera>();
         cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -5.0f));
     }
 

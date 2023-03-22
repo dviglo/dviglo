@@ -287,7 +287,7 @@ public:
     /// Remove child scene nodes that match criteria.
     void RemoveChildren(bool removeReplicated, bool removeLocal, bool recursive);
     /// Create a component to this node (with specified ID if provided).
-    Component* CreateComponent(StringHash type, CreateMode mode = REPLICATED, ComponentId id = 0);
+    Component* create_component(StringHash type, CreateMode mode = REPLICATED, ComponentId id = 0);
     /// Create a component to this node if it does not exist already.
     Component* GetOrCreateComponent(StringHash type, CreateMode mode = REPLICATED, ComponentId id = 0);
     /// Clone a component from another node using its create mode. Return the clone if successful or null on failure.
@@ -321,7 +321,7 @@ public:
     /// Remove listener component.
     void RemoveListener(Component* component);
     /// Template version of creating a component.
-    template <class T> T* CreateComponent(CreateMode mode = REPLICATED, ComponentId id = 0);
+    template <class T> T* create_component(CreateMode mode = REPLICATED, ComponentId id = 0);
     /// Template version of getting or creating a component.
     template <class T> T* GetOrCreateComponent(CreateMode mode = REPLICATED, ComponentId id = 0);
     /// Template version of removing a component.
@@ -606,7 +606,7 @@ public:
     void MarkReplicationDirty();
     /// Create a child node with specific ID.
     Node* create_child(NodeId id, CreateMode mode, bool temporary = false);
-    /// Add a pre-created component. Using this function from application code is discouraged, as component operation without an owner node may not be well-defined in all cases. Prefer CreateComponent() instead.
+    /// Add a pre-created component. Using this function from application code is discouraged, as component operation without an owner node may not be well-defined in all cases. Prefer create_component() instead.
     void AddComponent(Component* component, ComponentId id, CreateMode mode);
 
     /// Calculate number of non-temporary child nodes.
@@ -702,9 +702,9 @@ protected:
     VariantMap vars_;
 };
 
-template <class T> T* Node::CreateComponent(CreateMode mode, ComponentId id)
+template <class T> T* Node::create_component(CreateMode mode, ComponentId id)
 {
-    return static_cast<T*>(CreateComponent(T::GetTypeStatic(), mode, id));
+    return static_cast<T*>(create_component(T::GetTypeStatic(), mode, id));
 }
 
 template <class T> T* Node::GetOrCreateComponent(CreateMode mode, ComponentId id)

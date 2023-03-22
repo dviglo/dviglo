@@ -62,10 +62,10 @@ void AppState_Benchmark03::OnEnter()
 {
     assert(!scene_);
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     Node* zoneNode = scene_->create_child();
-    Zone* zone = zoneNode->CreateComponent<Zone>();
+    Zone* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.f, 1000.f));
     zone->SetAmbientColor(Color(0.5f, 0.5f, 0.5f));
     zone->SetFogColor(Color(0.3f, 0.6f, 0.9f));
@@ -74,12 +74,12 @@ void AppState_Benchmark03::OnEnter()
 
     Node* lightNode = scene_->create_child();
     lightNode->SetRotation(Quaternion(45.f, 45.f, 0.f));
-    Light* light = lightNode->CreateComponent<Light>();
+    Light* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
 
     Node* cameraNode = scene_->create_child("Camera");
     cameraNode->SetPosition(Vector3(0.f, 0.f, -10.f));
-    Camera* camera = cameraNode->CreateComponent<Camera>();
+    Camera* camera = cameraNode->create_component<Camera>();
     camera->SetOrthographic(true);
 
     constexpr int NUM_MOLECULES = 280;
@@ -107,11 +107,11 @@ void AppState_Benchmark03::CreateMolecule(const Vector2& pos, i32 type)
     Node* node = scene_->create_child();
     node->SetPosition2D(pos);
     
-    StaticModel* obj = node->CreateComponent<StaticModel>();
+    StaticModel* obj = node->create_component<StaticModel>();
     obj->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
     obj->SetMaterial(DV_RES_CACHE.GetResource<Material>("Molecule" + String(type)));
 
-    Benchmark03_MoleculeLogic* logic = node->CreateComponent<Benchmark03_MoleculeLogic>();
+    Benchmark03_MoleculeLogic* logic = node->create_component<Benchmark03_MoleculeLogic>();
     logic->SetParameters(type);
 }
 

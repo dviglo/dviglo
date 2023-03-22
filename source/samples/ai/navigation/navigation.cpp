@@ -64,19 +64,19 @@ void Navigation::CreateScene()
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -86,7 +86,7 @@ void Navigation::CreateScene()
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -106,7 +106,7 @@ void Navigation::CreateScene()
         float size = 1.0f + Random(10.0f);
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
-        auto* boxObject = boxNode->CreateComponent<StaticModel>();
+        auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         boxObject->SetCastShadows(true);
@@ -117,18 +117,18 @@ void Navigation::CreateScene()
     // Create Jack node that will follow the path
     jackNode_ = scene_->create_child("Jack");
     jackNode_->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
-    auto* modelObject = jackNode_->CreateComponent<AnimatedModel>();
+    auto* modelObject = jackNode_->create_component<AnimatedModel>();
     modelObject->SetModel(cache.GetResource<Model>("Models/Jack.mdl"));
     modelObject->SetMaterial(cache.GetResource<Material>("Materials/Jack.xml"));
     modelObject->SetCastShadows(true);
 
     // Create a NavigationMesh component to the scene root
-    auto* navMesh = scene_->CreateComponent<NavigationMesh>();
+    auto* navMesh = scene_->create_component<NavigationMesh>();
     // Set small tiles to show navigation mesh streaming
     navMesh->SetTileSize(32);
     // Create a Navigable component to the scene root. This tags all of the geometry in the scene as being part of the
     // navigation mesh. By default this is recursive, but the recursion could be turned off from Navigable
-    scene_->CreateComponent<Navigable>();
+    scene_->create_component<Navigable>();
     // Add padding to the navigation mesh in Y-direction so that we can add objects on top of the tallest boxes
     // in the scene and still update the mesh correctly
     navMesh->SetPadding(Vector3(0.0f, 10.0f, 0.0f));
@@ -139,7 +139,7 @@ void Navigation::CreateScene()
 
     // Create the camera. Limit far clip distance to match the fog
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the plane and looking down
@@ -310,7 +310,7 @@ Node* Navigation::CreateMushroom(const Vector3& pos)
     mushroomNode->SetPosition(pos);
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
-    auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+    auto* mushroomObject = mushroomNode->create_component<StaticModel>();
     mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mushroom.mdl"));
     mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);

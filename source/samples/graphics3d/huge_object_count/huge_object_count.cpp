@@ -67,11 +67,11 @@ void HugeObjectCount::CreateScene()
 
     // Create the Octree component to the scene so that drawable objects can be rendered. Use default volume
     // (-1000, -1000, -1000) to (1000, 1000, 1000)
-    scene_->CreateComponent<Octree>();
+    scene_->create_component<Octree>();
 
     // Create a Zone for ambient light & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
     zone->SetFogStart(200.0f);
@@ -80,7 +80,7 @@ void HugeObjectCount::CreateScene()
     // Create a directional light
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(-0.6f, -1.0f, -0.8f)); // The direction vector does not need to be normalized
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
 
     if (!useGroups_)
@@ -95,7 +95,7 @@ void HugeObjectCount::CreateScene()
                 Node* boxNode = scene_->create_child("Box");
                 boxNode->SetPosition(Vector3(x * 0.3f, 0.0f, y * 0.3f));
                 boxNode->SetScale(0.25f);
-                auto* boxObject = boxNode->CreateComponent<StaticModel>();
+                auto* boxObject = boxNode->create_component<StaticModel>();
                 boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
                 boxNodes_.Push(SharedPtr<Node>(boxNode));
             }
@@ -119,7 +119,7 @@ void HugeObjectCount::CreateScene()
                 if (!lastGroup || lastGroup->GetNumInstanceNodes() >= 25 * 25)
                 {
                     Node* boxGroupNode = scene_->create_child("BoxGroup");
-                    lastGroup = boxGroupNode->CreateComponent<StaticModelGroup>();
+                    lastGroup = boxGroupNode->create_component<StaticModelGroup>();
                     lastGroup->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
                 }
 
@@ -137,7 +137,7 @@ void HugeObjectCount::CreateScene()
     {
         cameraNode_ = new Node();
         cameraNode_->SetPosition(Vector3(0.0f, 10.0f, -100.0f));
-        auto* camera = cameraNode_->CreateComponent<Camera>();
+        auto* camera = cameraNode_->create_component<Camera>();
         camera->SetFarClip(300.0f);
     }
 }

@@ -121,7 +121,7 @@ void TileMap2D::SetTmxFile(TmxFile2D* tmxFile)
 
         Node* layerNode(rootNode_->CreateTemporaryChild(tmxLayer->GetName(), LOCAL));
 
-        auto* layer = layerNode->CreateComponent<TileMapLayer2D>();
+        auto* layer = layerNode->create_component<TileMapLayer2D>();
         layer->Initialize(this, tmxLayer);
         layer->SetDrawOrder(i * 10);
 

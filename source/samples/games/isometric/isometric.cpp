@@ -42,9 +42,9 @@ Urho2DIsometricDemo::Urho2DIsometricDemo() :
     zoom_(2.0f),
     drawDebug_(false)
 {
-    // Register factory for the Character2D component so it can be created via CreateComponent
+    // Register factory for the Character2D component so it can be created via create_component
     Character2D::RegisterObject();
-    // Register factory and attributes for the Mover component so it can be created via CreateComponent, and loaded / saved
+    // Register factory and attributes for the Mover component so it can be created via create_component, and loaded / saved
     Mover::RegisterObject();
 }
 
@@ -82,14 +82,14 @@ void Urho2DIsometricDemo::CreateScene()
     sample2D_->scene_ = scene_;
 
     // Create the Octree, DebugRenderer and PhysicsWorld2D components to the scene
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
-    auto* physicsWorld = scene_->CreateComponent<PhysicsWorld2D>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
+    auto* physicsWorld = scene_->create_component<PhysicsWorld2D>();
     physicsWorld->SetGravity(Vector2(0.0f, 0.0f)); // Neutralize gravity as the character will always be grounded
 
     // Create camera
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
@@ -102,13 +102,13 @@ void Urho2DIsometricDemo::CreateScene()
     // Create tile map from tmx file
     auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("Urho2D/Tilesets/atrium.tmx");
     SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
-    auto* tileMap = tileMapNode->CreateComponent<TileMap2D>();
+    auto* tileMap = tileMapNode->create_component<TileMap2D>();
     tileMap->SetTmxFile(tmxFile);
     const TileMapInfo2D& info = tileMap->GetInfo();
 
     // Create Spriter Imp character (from sample 33_SpriterAnimation)
     Node* spriteNode = sample2D_->CreateCharacter(info, 0.0f, Vector3(-5.0f, 11.0f, 0.0f), 0.15f);
-    character2D_ = spriteNode->CreateComponent<Character2D>(); // Create a logic component to handle character behavior
+    character2D_ = spriteNode->create_component<Character2D>(); // Create a logic component to handle character behavior
     // Scale character's speed on the Y axis according to tiles' aspect ratio
     character2D_->moveSpeedScale_ = info.tileHeight_ / info.tileWidth_;
     character2D_->zoom_ = camera->GetZoom();

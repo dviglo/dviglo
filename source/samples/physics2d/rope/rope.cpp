@@ -56,29 +56,29 @@ void Urho2DPhysicsRope::Start()
 void Urho2DPhysicsRope::CreateScene()
 {
     scene_ = new Scene();
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
     // Create camera node
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, -10.0f));
 
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * 0.05f);
     camera->SetZoom(1.5f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.5) is set for full visibility at 1280x800 resolution)
 
     // Create 2D physics world component
-    auto* physicsWorld = scene_->CreateComponent<PhysicsWorld2D>();
+    auto* physicsWorld = scene_->create_component<PhysicsWorld2D>();
     physicsWorld->SetDrawJoint(true);
 
     // Create ground
     Node* groundNode = scene_->create_child("Ground");
     // Create 2D rigid body for gound
-    auto* groundBody = groundNode->CreateComponent<RigidBody2D>();
+    auto* groundBody = groundNode->create_component<RigidBody2D>();
     // Create edge collider for ground
-    auto* groundShape = groundNode->CreateComponent<CollisionEdge2D>();
+    auto* groundShape = groundNode->create_component<CollisionEdge2D>();
     groundShape->SetVertices(Vector2(-40.0f, 0.0f), Vector2(40.0f, 0.0f));
 
     const float y = 15.0f;
@@ -89,11 +89,11 @@ void Urho2DPhysicsRope::CreateScene()
         Node* node  = scene_->create_child("RigidBody");
 
         // Create rigid body
-        auto* body = node->CreateComponent<RigidBody2D>();
+        auto* body = node->create_component<RigidBody2D>();
         body->SetBodyType(BT_DYNAMIC);
 
         // Create box
-        auto* box = node->CreateComponent<CollisionBox2D>();
+        auto* box = node->create_component<CollisionBox2D>();
         // Set friction
         box->SetFriction(0.2f);
         // Set mask bits.
@@ -115,7 +115,7 @@ void Urho2DPhysicsRope::CreateScene()
             box->SetCategoryBits(0x0001);
         }
 
-        auto* joint = node->CreateComponent<ConstraintRevolute2D>();
+        auto* joint = node->create_component<ConstraintRevolute2D>();
         joint->SetOtherBody(prevBody);
         joint->SetAnchor(Vector2(float(i), y));
         joint->SetCollideConnected(false);

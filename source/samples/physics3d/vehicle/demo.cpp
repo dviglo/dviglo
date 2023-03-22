@@ -37,7 +37,7 @@ DV_DEFINE_APPLICATION_MAIN(VehicleDemo)
 
 VehicleDemo::VehicleDemo()
 {
-    // Register factory and attributes for the Vehicle component so it can be created via CreateComponent, and loaded / saved
+    // Register factory and attributes for the Vehicle component so it can be created via create_component, and loaded / saved
     Vehicle::RegisterObject();
 }
 
@@ -69,19 +69,19 @@ void VehicleDemo::CreateScene()
     scene_ = new Scene();
 
     // Create scene subsystem components
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<PhysicsWorld>();
+    scene_->create_component<Octree>();
+    scene_->create_component<PhysicsWorld>();
 
     // Create camera and define viewport. We will be doing load / save, so it's convenient to create the camera outside the scene,
     // so that it won't be destroyed and recreated, and we don't have to redefine the viewport on load
     cameraNode_ = new Node();
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(500.0f);
     DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
     zone->SetFogStart(300.0f);
@@ -91,7 +91,7 @@ void VehicleDemo::CreateScene()
     // Create a directional light with cascaded shadow mapping
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.3f, -0.5f, 0.425f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -101,7 +101,7 @@ void VehicleDemo::CreateScene()
     // Create heightmap terrain with collision
     Node* terrainNode = scene_->create_child("Terrain");
     terrainNode->SetPosition(Vector3::ZERO);
-    auto* terrain = terrainNode->CreateComponent<Terrain>();
+    auto* terrain = terrainNode->create_component<Terrain>();
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
@@ -111,9 +111,9 @@ void VehicleDemo::CreateScene()
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
 
-    auto* body = terrainNode->CreateComponent<RigidBody>();
+    auto* body = terrainNode->create_component<RigidBody>();
     body->SetCollisionLayer(2); // Use layer bitmask 2 for static geometry
-    auto* shape = terrainNode->CreateComponent<CollisionShape>();
+    auto* shape = terrainNode->create_component<CollisionShape>();
     shape->SetTerrain();
 
     // Create 1000 mushrooms in the terrain. Always face outward along the terrain normal
@@ -127,14 +127,14 @@ void VehicleDemo::CreateScene()
         // Create a rotation quaternion from up vector to terrain normal
         objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));
         objectNode->SetScale(3.0f);
-        auto* object = objectNode->CreateComponent<StaticModel>();
+        auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
         object->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
-        auto* body = objectNode->CreateComponent<RigidBody>();
+        auto* body = objectNode->create_component<RigidBody>();
         body->SetCollisionLayer(2);
-        auto* shape = objectNode->CreateComponent<CollisionShape>();
+        auto* shape = objectNode->create_component<CollisionShape>();
         shape->SetTriangleMesh(object->GetModel(), 0);
     }
 }
@@ -145,7 +145,7 @@ void VehicleDemo::CreateVehicle()
     vehicleNode->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 
     // Create the vehicle logic component
-    vehicle_ = vehicleNode->CreateComponent<Vehicle>();
+    vehicle_ = vehicleNode->create_component<Vehicle>();
     // Create the rendering and physics components
     vehicle_->Init();
 }

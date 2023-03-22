@@ -61,7 +61,7 @@ bool GameObject::Heal(i32 amount)
 
 void GameObject::PlaySound(const String& soundName)
 {
-    SoundSource3D* source = node_->CreateComponent<SoundSource3D>();
+    SoundSource3D* source = node_->create_component<SoundSource3D>();
     Sound* sound = DV_RES_CACHE.GetResource<Sound>(soundName);
     // Subscribe to sound finished for cleaning up the source
     SubscribeToEvent(node_, E_SOUNDFINISHED, DV_HANDLER(GameObject, HandleSoundFinished));

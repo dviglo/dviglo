@@ -884,7 +884,7 @@ void Node::RemoveChildren(bool removeReplicated, bool removeLocal, bool recursiv
         MarkReplicationDirty();
 }
 
-Component* Node::CreateComponent(StringHash type, CreateMode mode, ComponentId id)
+Component* Node::create_component(StringHash type, CreateMode mode, ComponentId id)
 {
     // Do not attempt to create replicated components to local nodes, as that may lead to component ID overwrite
     // as replicated components are synced over
@@ -909,7 +909,7 @@ Component* Node::GetOrCreateComponent(StringHash type, CreateMode mode, Componen
     if (oldComponent)
         return oldComponent;
     else
-        return CreateComponent(type, mode, id);
+        return create_component(type, mode, id);
 }
 
 Component* Node::CloneComponent(Component* component, ComponentId id)
@@ -2051,7 +2051,7 @@ Component* Node::SafeCreateComponent(const String& typeName, StringHash type, Cr
 
     // First check if factory for type exists
     if (!DV_CONTEXT.GetTypeName(type).Empty())
-        return CreateComponent(type, mode, id);
+        return create_component(type, mode, id);
     else
     {
         DV_LOGWARNING("Component type " + type.ToString() + " not known, creating UnknownComponent as placeholder");

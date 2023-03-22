@@ -149,7 +149,7 @@ public:
             // Note: the non-positional sound source component need to be attached to a node to become effective
             // Due to networked mode clearing the scene on connect, do not attach to the scene itself
             musicNode = new Node();
-            musicSource = musicNode->CreateComponent<SoundSource>();
+            musicSource = musicNode->create_component<SoundSource>();
             musicSource->SetSoundType(SOUND_MUSIC);
             musicSource->Play(musicFile);
         }
@@ -243,7 +243,7 @@ public:
         gameCameraNode = new Node();
         gameCameraNode->SetPosition(Vector3(0.f, 2.f, -10.f));
 
-        gameCamera = gameCameraNode->CreateComponent<Camera>();
+        gameCamera = gameCameraNode->create_component<Camera>();
         gameCamera->SetNearClip(0.5f);
         gameCamera->SetFarClip(160.f);
 
@@ -251,7 +251,7 @@ public:
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
             DV_RENDERER.SetViewport(0, viewport);
-            DV_AUDIO.SetListener(gameCameraNode->CreateComponent<SoundListener>());
+            DV_AUDIO.SetListener(gameCameraNode->create_component<SoundListener>());
         }
     }
 
@@ -432,7 +432,7 @@ public:
             // Create name tag (Text3D component) for players in multiplayer
             Node* textNode = playerNode->create_child("NameTag");
             textNode->SetPosition(Vector3(0.f, 1.2f, 0.f));
-            Text3D* text3D = textNode->CreateComponent<Text3D>();
+            Text3D* text3D = textNode->create_component<Text3D>();
             Font* font = DV_RES_CACHE.GetResource<Font>("Fonts/BlueHighway.ttf");
             text3D->SetFont(font, 19.f);
             text3D->SetColor(Color(1.f, 1.f, 0.f));

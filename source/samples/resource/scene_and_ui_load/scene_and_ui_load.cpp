@@ -55,7 +55,7 @@ void SceneAndUILoad::CreateScene()
 
     // Create the camera (not included in the scene file)
     cameraNode_ = scene_->create_child("Camera");
-    cameraNode_->CreateComponent<Camera>();
+    cameraNode_->create_component<Camera>();
 
     // Set an initial position for the camera scene node above the plane
     cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -10.0f));

@@ -61,7 +61,7 @@ void SoundEffects::Start()
     scene_ = new Scene();
 
     // Create music sound source
-    musicSource_ = scene_->CreateComponent<SoundSource>();
+    musicSource_ = scene_->create_component<SoundSource>();
     // Set the sound type to music so that master volume control works correctly
     musicSource_->SetSoundType(SOUND_MUSIC);
 
@@ -161,7 +161,7 @@ void SoundEffects::HandlePlaySound(StringHash eventType, VariantMap& eventData)
         // Create a SoundSource component for playing the sound. The SoundSource component plays
         // non-positional audio, so its 3D position in the scene does not matter. For positional sounds the
         // SoundSource3D component would be used instead
-        auto* soundSource = scene_->CreateComponent<SoundSource>();
+        auto* soundSource = scene_->create_component<SoundSource>();
         // Component will automatically remove itself when the sound finished playing
         soundSource->SetAutoRemoveMode(REMOVE_COMPONENT);
         soundSource->Play(sound);

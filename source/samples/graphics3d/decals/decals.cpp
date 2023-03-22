@@ -64,19 +64,19 @@ void Decals::CreateScene()
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
     // Also create a DebugRenderer component so that we can draw debug geometry
-    scene_->CreateComponent<Octree>();
-    scene_->CreateComponent<DebugRenderer>();
+    scene_->create_component<Octree>();
+    scene_->create_component<DebugRenderer>();
 
     // Create scene node & StaticModel component for showing a static plane
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
-    auto* planeObject = planeNode->CreateComponent<StaticModel>();
+    auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
-    auto* zone = zoneNode->CreateComponent<Zone>();
+    auto* zone = zoneNode->create_component<Zone>();
     zone->SetBoundingBox(BoundingBox(-1000.0f, 1000.0f));
     zone->SetAmbientColor(Color(0.15f, 0.15f, 0.15f));
     zone->SetFogColor(Color(0.5f, 0.5f, 0.7f));
@@ -86,7 +86,7 @@ void Decals::CreateScene()
     // Create a directional light to the world. Enable cascaded shadows on it
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
-    auto* light = lightNode->CreateComponent<Light>();
+    auto* light = lightNode->create_component<Light>();
     light->SetLightType(LIGHT_DIRECTIONAL);
     light->SetCastShadows(true);
     light->SetShadowBias(BiasParameters(0.00025f, 0.5f));
@@ -101,7 +101,7 @@ void Decals::CreateScene()
         mushroomNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
-        auto* mushroomObject = mushroomNode->CreateComponent<StaticModel>();
+        auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
         mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
         mushroomObject->SetCastShadows(true);
@@ -116,7 +116,7 @@ void Decals::CreateScene()
         float size = 1.0f + Random(10.0f);
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
-        auto* boxObject = boxNode->CreateComponent<StaticModel>();
+        auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
         boxObject->SetCastShadows(true);
@@ -132,18 +132,18 @@ void Decals::CreateScene()
         mutantNode->SetPosition(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
         mutantNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mutantNode->SetScale(0.5f + Random(2.0f));
-        AnimatedModel* mutantObject = mutantNode->CreateComponent<AnimatedModel>();
+        AnimatedModel* mutantObject = mutantNode->create_component<AnimatedModel>();
         mutantObject->SetModel(cache.GetResource<Model>("Models/Mutant/Mutant.mdl"));
         mutantObject->SetMaterial(cache.GetResource<Material>("Models/Mutant/Materials/mutant_M.xml"));
         mutantObject->SetCastShadows(true);
-        AnimationController* animCtrl = mutantNode->CreateComponent<AnimationController>();
+        AnimationController* animCtrl = mutantNode->create_component<AnimationController>();
         animCtrl->PlayExclusive("Models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
         animCtrl->SetTime("Models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("Models/Mutant/Mutant_Idle0.ani")));
     }
 
     // Create the camera. Limit far clip distance to match the fog
     cameraNode_ = scene_->create_child("Camera");
-    auto* camera = cameraNode_->CreateComponent<Camera>();
+    auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(300.0f);
 
     // Set an initial position for the camera scene node above the plane
@@ -255,7 +255,7 @@ void Decals::PaintDecal()
         auto* decal = targetNode->GetComponent<DecalSet>();
         if (!decal)
         {
-            decal = targetNode->CreateComponent<DecalSet>();
+            decal = targetNode->create_component<DecalSet>();
             decal->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/UrhoDecal.xml"));
         }
         // Add a square decal to the decal set using the geometry of the drawable that was hit, orient it to face the camera,
