@@ -98,7 +98,7 @@ public:
     int GetUpdateFps() const { return updateFps_; }
 
     /// Return simulated latency in milliseconds.
-    int GetSimulatedLatency() const { return simulated_latency_; }
+    int simulated_latency() const { return simulated_latency_; }
 
     /// Return simulated packet loss probability.
     float GetSimulatedPacketLoss() const { return simulatedPacketLoss_; }
