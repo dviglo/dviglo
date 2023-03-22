@@ -21,7 +21,7 @@ extern const char* UI_CATEGORY;
 
 ScrollBar::ScrollBar() :
     scroll_step_(DEFAULT_SCROLL_STEP),
-    stepFactor_(1.0f),
+    step_factor_(1.0f),
     leftRect_(IntRect::ZERO),
     rightRect_(IntRect::ZERO),
     upRect_(IntRect::ZERO),
@@ -164,7 +164,7 @@ void ScrollBar::SetScrollStep(float step)
 
 void ScrollBar::SetStepFactor(float factor)
 {
-    stepFactor_ = Max(factor, M_EPSILON);
+    step_factor_ = Max(factor, M_EPSILON);
 }
 
 void ScrollBar::StepBack()
@@ -194,7 +194,7 @@ float ScrollBar::GetValue() const
 
 float ScrollBar::GetEffectiveScrollStep() const
 {
-    return scroll_step_ * stepFactor_;
+    return scroll_step_ * step_factor_;
 }
 
 bool ScrollBar::FilterImplicitAttributes(XmlElement& dest) const

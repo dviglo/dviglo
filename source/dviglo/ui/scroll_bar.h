@@ -60,7 +60,7 @@ public:
     float scroll_step() const { return scroll_step_; }
 
     /// Return button step factor.
-    float GetStepFactor() const { return stepFactor_; }
+    float GetStepFactor() const { return step_factor_; }
 
     /// Return scroll step multiplied by factor.
     float GetEffectiveScrollStep() const;
@@ -89,7 +89,7 @@ protected:
     /// Scroll step.
     float scroll_step_;
     /// Step factor.
-    float stepFactor_;
+    float step_factor_;
     /// Left button image rect.
     IntRect leftRect_;
     /// Right button image rect.
