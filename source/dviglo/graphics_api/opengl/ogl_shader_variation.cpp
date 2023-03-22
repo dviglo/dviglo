@@ -32,7 +32,7 @@ void ShaderVariation::OnDeviceLost_OGL()
     if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteShader(gpu_object_name_);
 
-    GPUObject::OnDeviceLost();
+    GpuObject::OnDeviceLost();
 
     compilerOutput_.Clear();
 }

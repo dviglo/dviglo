@@ -28,7 +28,7 @@ void TextureCube::OnDeviceLost_OGL()
     if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteTextures(1, &gpu_object_name_);
 
-    GPUObject::OnDeviceLost();
+    GpuObject::OnDeviceLost();
 
     for (auto& renderSurface : renderSurfaces_)
     {

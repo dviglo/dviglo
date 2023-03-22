@@ -384,14 +384,14 @@ void Graphics::SetShaderCacheDir(const String& path)
         shaderCacheDir_ = AddTrailingSlash(trimmedPath);
 }
 
-void Graphics::AddGPUObject(GPUObject* object)
+void Graphics::AddGPUObject(GpuObject* object)
 {
     std::scoped_lock lock(gpuObjectMutex_);
 
     gpuObjects_.Push(object);
 }
 
-void Graphics::RemoveGPUObject(GPUObject* object)
+void Graphics::RemoveGPUObject(GpuObject* object)
 {
     std::scoped_lock lock(gpuObjectMutex_);
 

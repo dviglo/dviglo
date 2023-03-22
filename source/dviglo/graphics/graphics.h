@@ -25,7 +25,7 @@ class ConstantBuffer;
 class File;
 class Image;
 class IndexBuffer;
-class GPUObject;
+class GpuObject;
 class RenderSurface;
 class Shader;
 class ShaderPrecache;
@@ -619,10 +619,10 @@ public:
     void Minimize();
     /// Raises window if it was minimized.
     void Raise() const;
-    /// Add a GPU object to keep track of. Called by GPUObject.
-    void AddGPUObject(GPUObject* object);
-    /// Remove a GPU object. Called by GPUObject.
-    void RemoveGPUObject(GPUObject* object);
+    /// Add a GPU object to keep track of. Called by GpuObject.
+    void AddGPUObject(GpuObject* object);
+    /// Remove a GPU object. Called by GpuObject.
+    void RemoveGPUObject(GpuObject* object);
     /// Reserve a CPU-side scratch buffer.
     void* ReserveScratchBuffer(i32 size);
     /// Free a CPU-side scratch buffer.
@@ -888,7 +888,7 @@ private:
     /// Largest scratch buffer request this frame.
     i32 maxScratchBufferRequest_{};
     /// GPU objects.
-    Vector<GPUObject*> gpuObjects_;
+    Vector<GpuObject*> gpuObjects_;
     /// Scratch buffers.
     Vector<ScratchBuffer> scratchBuffers_;
     /// Shadow map dummy color texture format.

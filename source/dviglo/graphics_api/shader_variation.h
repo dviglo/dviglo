@@ -60,7 +60,7 @@ struct ShaderParameter
 };
 
 /// Vertex or pixel shader on the GPU.
-class DV_API ShaderVariation : public RefCounted, public GPUObject
+class DV_API ShaderVariation : public RefCounted, public GpuObject
 {
 public:
     /// Construct.

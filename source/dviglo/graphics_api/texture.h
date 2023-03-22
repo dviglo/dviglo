@@ -18,7 +18,7 @@ class XMLElement;
 class XMLFile;
 
 /// Base class for texture resources.
-class DV_API Texture : public ResourceWithMetadata, public GPUObject
+class DV_API Texture : public ResourceWithMetadata, public GpuObject
 {
     DV_OBJECT(Texture, ResourceWithMetadata);
 

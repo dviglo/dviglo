@@ -17,7 +17,7 @@ void VertexBuffer::OnDeviceLost_OGL()
     if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteBuffers(1, &gpu_object_name_);
 
-    GPUObject::OnDeviceLost();
+    GpuObject::OnDeviceLost();
 }
 
 void VertexBuffer::OnDeviceReset_OGL()

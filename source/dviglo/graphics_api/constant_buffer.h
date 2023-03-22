@@ -13,7 +13,7 @@ namespace dviglo
 {
 
 /// Hardware constant buffer.
-class DV_API ConstantBuffer : public Object, public GPUObject
+class DV_API ConstantBuffer : public Object, public GpuObject
 {
     DV_OBJECT(ConstantBuffer, Object);
 

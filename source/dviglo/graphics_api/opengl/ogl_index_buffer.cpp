@@ -18,7 +18,7 @@ void IndexBuffer::OnDeviceLost_OGL()
     if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteBuffers(1, &gpu_object_name_);
 
-    GPUObject::OnDeviceLost();
+    GpuObject::OnDeviceLost();
 }
 
 void IndexBuffer::OnDeviceReset_OGL()

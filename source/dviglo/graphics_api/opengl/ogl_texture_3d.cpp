@@ -24,7 +24,7 @@ void Texture3D::OnDeviceLost_OGL()
     if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
         glDeleteTextures(1, &gpu_object_name_);
 
-    GPUObject::OnDeviceLost();
+    GpuObject::OnDeviceLost();
 }
 
 void Texture3D::OnDeviceReset_OGL()

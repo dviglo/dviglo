@@ -56,7 +56,7 @@ void ShaderProgram_OGL::OnDeviceLost()
     if (gpu_object_name_ && !GParams::is_headless() && !DV_GRAPHICS.IsDeviceLost())
         glDeleteProgram(gpu_object_name_);
 
-    GPUObject::OnDeviceLost();
+    GpuObject::OnDeviceLost();
 
     if (!GParams::is_headless() && DV_GRAPHICS.GetShaderProgram_OGL() == this)
         DV_GRAPHICS.SetShaders(nullptr, nullptr);

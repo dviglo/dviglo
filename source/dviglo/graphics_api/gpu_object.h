@@ -14,13 +14,13 @@ using GLuint = unsigned int;
 class Graphics;
 
 /// Base class for GPU resources.
-class DV_API GPUObject
+class DV_API GpuObject
 {
 public:
     /// Construct with graphics subsystem pointer.
-    explicit GPUObject();
+    explicit GpuObject();
     /// Destruct. Remove from the Graphics.
-    virtual ~GPUObject();
+    virtual ~GpuObject();
 
     /// Mark the GPU resource destroyed on graphics context destruction.
     virtual void OnDeviceLost();

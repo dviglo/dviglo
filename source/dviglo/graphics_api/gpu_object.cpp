@@ -10,33 +10,33 @@
 namespace dviglo
 {
 
-GPUObject::GPUObject()
+GpuObject::GpuObject()
 {
     if (!GParams::is_headless())
         DV_GRAPHICS.AddGPUObject(this);
 }
 
-GPUObject::~GPUObject()
+GpuObject::~GpuObject()
 {
     if (!GParams::is_headless() && !Graphics::is_destructed())
         DV_GRAPHICS.RemoveGPUObject(this);
 }
 
-void GPUObject::OnDeviceLost()
+void GpuObject::OnDeviceLost()
 {
     // В OpenGL объект уже потерян, очищаем имя объекта
     gpu_object_name_ = 0;
 }
 
-void GPUObject::OnDeviceReset()
+void GpuObject::OnDeviceReset()
 {
 }
 
-void GPUObject::Release()
+void GpuObject::Release()
 {
 }
 
-void GPUObject::ClearDataLost()
+void GpuObject::ClearDataLost()
 {
     dataLost_ = false;
 }

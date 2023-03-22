@@ -17,7 +17,7 @@ class ConstantBuffer;
 class Graphics;
 
 /// Linked shader program on the GPU.
-class DV_API ShaderProgram_OGL : public RefCounted, public GPUObject
+class DV_API ShaderProgram_OGL : public RefCounted, public GpuObject
 {
 public:
     /// Construct.
