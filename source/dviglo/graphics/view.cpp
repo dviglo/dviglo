@@ -162,7 +162,7 @@ void CheckVisibilityWork(const WorkItem* item, i32 threadIndex)
             float maxDistance = drawable->GetDrawDistance();
             if (maxDistance > 0.0f)
             {
-                if (drawable->GetDistance() > maxDistance)
+                if (drawable->distance() > maxDistance)
                     continue;
             }
 
@@ -1123,7 +1123,7 @@ void View::GetLightBatches()
                     volumeBatch.worldTransform_ = &light->GetVolumeTransform(cullCamera_);
                     volumeBatch.numWorldTransforms_ = 1;
                     volumeBatch.lightQueue_ = &lightQueue;
-                    volumeBatch.distance_ = light->GetDistance();
+                    volumeBatch.distance_ = light->distance();
                     volumeBatch.material_ = nullptr;
                     volumeBatch.pass_ = nullptr;
                     volumeBatch.zone_ = nullptr;
@@ -2171,7 +2171,7 @@ void View::UpdateOccluders(Vector<Drawable*>& occluders, Camera* camera)
 
         // Check occluder's draw distance (in main camera view)
         float maxDistance = occluder->GetDrawDistance();
-        if (maxDistance <= 0.0f || occluder->GetDistance() <= maxDistance)
+        if (maxDistance <= 0.0f || occluder->distance() <= maxDistance)
         {
             // Check that occluder is big enough on the screen
             const BoundingBox& box = occluder->GetWorldBoundingBox();
@@ -2180,8 +2180,8 @@ void View::UpdateOccluders(Vector<Drawable*>& occluders, Camera* camera)
             if (!camera->IsOrthographic())
             {
                 // Occluders which are near the camera are more useful then occluders at the end of the camera's draw distance
-                float cameraMaxDistanceFraction = occluder->GetDistance() / camera->GetFarClip();
-                compare = diagonal * halfViewSize / (occluder->GetDistance() * cameraMaxDistanceFraction);
+                float cameraMaxDistanceFraction = occluder->distance() / camera->GetFarClip();
+                compare = diagonal * halfViewSize / (occluder->distance() * cameraMaxDistanceFraction);
 
                 // Give higher priority to occluders which the camera is inside their AABB
                 const Vector3& cameraPos = camera->GetNode() ? camera->GetNode()->GetWorldPosition() : Vector3::ZERO;
@@ -2272,7 +2272,7 @@ void View::ProcessLight(LightQueryResult& query, i32 threadIndex)
     // Check if light should be shadowed
     bool isShadowed = drawShadows_ && light->GetCastShadows() && !light->GetPerVertex() && light->GetShadowIntensity() < 1.0f;
     // If shadow distance non-zero, check it
-    if (isShadowed && light->GetShadowDistance() > 0.0f && light->GetDistance() > light->GetShadowDistance())
+    if (isShadowed && light->GetShadowDistance() > 0.0f && light->distance() > light->GetShadowDistance())
         isShadowed = false;
     // OpenGL ES can not support point light shadows
 #if defined(DV_GLES2)
@@ -2424,7 +2424,7 @@ void View::ProcessShadowCasters(LightQueryResult& query, const Vector<Drawable*>
         float drawDistance = drawable->GetDrawDistance();
         if (drawDistance > 0.0f && (maxShadowDistance <= 0.0f || drawDistance < maxShadowDistance))
             maxShadowDistance = drawDistance;
-        if (maxShadowDistance > 0.0f && drawable->GetDistance() > maxShadowDistance)
+        if (maxShadowDistance > 0.0f && drawable->distance() > maxShadowDistance)
             continue;
 
         // Project shadow caster bounding box to light view space for visibility check

@@ -354,7 +354,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
 
             // Do fade calculation for light if both fade & draw distance defined
             if (light->GetLightType() != LIGHT_DIRECTIONAL && fadeEnd > 0.0f && fadeStart > 0.0f && fadeStart < fadeEnd)
-                fade = Min(1.0f - (light->GetDistance() - fadeStart) / (fadeEnd - fadeStart), 1.0f);
+                fade = Min(1.0f - (light->distance() - fadeStart) / (fadeEnd - fadeStart), 1.0f);
 
             // Negative lights will use subtract blending, so write absolute RGB values to the shader parameter
             graphics.SetShaderParameter(PSP_LIGHTCOLOR, Color(light->GetEffectiveColor().Abs(),
@@ -467,7 +467,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     float fadeEnd = light->GetShadowDistance();
                     if (fadeStart > 0.0f && fadeEnd > 0.0f && fadeEnd > fadeStart)
                         intensity =
-                            Lerp(intensity, 1.0f, Clamp((light->GetDistance() - fadeStart) / (fadeEnd - fadeStart), 0.0f, 1.0f));
+                            Lerp(intensity, 1.0f, Clamp((light->distance() - fadeStart) / (fadeEnd - fadeStart), 0.0f, 1.0f));
                     float pcfValues = (1.0f - intensity);
                     float samples = 1.0f;
                     if (renderer.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
@@ -558,7 +558,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
 
                 // Do fade calculation for light if both fade & draw distance defined
                 if (vertexLight->GetLightType() != LIGHT_DIRECTIONAL && fadeEnd > 0.0f && fadeStart > 0.0f && fadeStart < fadeEnd)
-                    fade = Min(1.0f - (vertexLight->GetDistance() - fadeStart) / (fadeEnd - fadeStart), 1.0f);
+                    fade = Min(1.0f - (vertexLight->distance() - fadeStart) / (fadeEnd - fadeStart), 1.0f);
 
                 Color color = vertexLight->GetEffectiveColor() * fade;
                 vertexLights[i * 3] = Vector4(color.r_, color.g_, color.b_, invRange);

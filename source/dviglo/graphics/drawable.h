@@ -248,7 +248,7 @@ public:
     bool IsZoneDirty() const { return zoneDirty_; }
 
     /// Return distance from camera.
-    float GetDistance() const { return distance_; }
+    float distance() const { return distance_; }
 
     /// Return LOD scaled distance from camera.
     float GetLodDistance() const { return lodDistance_; }
