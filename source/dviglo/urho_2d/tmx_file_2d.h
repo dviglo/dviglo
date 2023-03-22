@@ -184,7 +184,7 @@ public:
     void SetSpriteTextureEdgeOffset(float offset);
 
     /// Return texture edge offset, in pixels.
-    float GetSpriteTextureEdgeOffset() const { return edgeOffset_; }
+    float GetSpriteTextureEdgeOffset() const { return edge_offset_; }
 
 private:
     /// Load TSX file.
@@ -207,7 +207,7 @@ private:
     /// Layers.
     Vector<TmxLayer2D*> layers_;
     /// Texture edge offset.
-    float edgeOffset_;
+    float edge_offset_;
 };
 
 }

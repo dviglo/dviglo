@@ -18,7 +18,7 @@ namespace dviglo
 Sprite2D::Sprite2D()
     : hotSpot_(0.5f, 0.5f)
     , offset_(0, 0)
-    , edgeOffset_(M_LARGE_EPSILON)
+    , edge_offset_(M_LARGE_EPSILON)
 {
 }
 
@@ -110,7 +110,7 @@ void Sprite2D::SetOffset(const IntVector2& offset)
 
 void Sprite2D::SetTextureEdgeOffset(float offset)
 {
-    edgeOffset_ = offset;
+    edge_offset_ = offset;
 }
 
 void Sprite2D::SetSpriteSheet(SpriteSheet2D* spriteSheet)
@@ -150,11 +150,11 @@ bool Sprite2D::GetTextureRectangle(Rect& rect, bool flipX, bool flipY) const
     float invWidth = 1.0f / (float)texture_->GetWidth();
     float invHeight = 1.0f / (float)texture_->GetHeight();
 
-    rect.min_.x_ = ((float)rectangle_.left_ + edgeOffset_) * invWidth;
-    rect.max_.x_ = ((float)rectangle_.right_ - edgeOffset_) * invWidth;
+    rect.min_.x_ = ((float)rectangle_.left_ + edge_offset_) * invWidth;
+    rect.max_.x_ = ((float)rectangle_.right_ - edge_offset_) * invWidth;
 
-    rect.min_.y_ = ((float)rectangle_.bottom_ - edgeOffset_) * invHeight;
-    rect.max_.y_ = ((float)rectangle_.top_ + edgeOffset_) * invHeight;
+    rect.min_.y_ = ((float)rectangle_.bottom_ - edge_offset_) * invHeight;
+    rect.max_.y_ = ((float)rectangle_.top_ + edge_offset_) * invHeight;
 
     if (flipX)
         std::swap(rect.min_.x_, rect.max_.x_);

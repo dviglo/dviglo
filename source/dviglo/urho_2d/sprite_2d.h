@@ -57,7 +57,7 @@ public:
     const IntVector2& GetOffset() const { return offset_; }
 
     /// Return texture edge offset.
-    float GetTextureEdgeOffset() const { return edgeOffset_; }
+    float GetTextureEdgeOffset() const { return edge_offset_; }
 
     /// Return sprite sheet.
     SpriteSheet2D* GetSpriteSheet() const { return spriteSheet_; }
@@ -89,7 +89,7 @@ private:
     /// Texture used while loading.
     SharedPtr<Texture2D> loadTexture_;
     /// Offset to fix texture edge bleeding.
-    float edgeOffset_;
+    float edge_offset_;
 };
 
 }
