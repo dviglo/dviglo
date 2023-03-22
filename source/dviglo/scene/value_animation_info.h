@@ -48,7 +48,7 @@ public:
     ValueAnimation* GetAnimation() const { return animation_; }
 
     /// Return wrap mode.
-    WrapMode GetWrapMode() const { return wrap_mode_; }
+    WrapMode wrap_mode() const { return wrap_mode_; }
 
     /// Return time position.
     float GetTime() const { return currentTime_; }

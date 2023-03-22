@@ -747,7 +747,7 @@ bool Material::Save(XmlElement& dest) const
         if (!info->GetAnimation()->save_xml(parameterAnimationElem))
             return false;
 
-        parameterAnimationElem.SetAttribute("wrapmode", wrapModeNames[info->GetWrapMode()]);
+        parameterAnimationElem.SetAttribute("wrapmode", wrapModeNames[info->wrap_mode()]);
         parameterAnimationElem.SetFloat("speed", info->GetSpeed());
     }
 
@@ -852,7 +852,7 @@ bool Material::Save(JSONValue& dest) const
         if (!info->GetAnimation()->save_json(paramAnimationVal))
             return false;
 
-        paramAnimationVal.Set("wrapmode", wrapModeNames[info->GetWrapMode()]);
+        paramAnimationVal.Set("wrapmode", wrapModeNames[info->wrap_mode()]);
         paramAnimationVal.Set("speed", info->GetSpeed());
         shaderParamAnimationsVal.Set(info->GetName(), paramAnimationVal);
     }
@@ -1195,7 +1195,7 @@ ValueAnimation* Material::GetShaderParameterAnimation(const String& name) const
 WrapMode Material::GetShaderParameterAnimationWrapMode(const String& name) const
 {
     ShaderParameterAnimationInfo* info = GetShaderParameterAnimationInfo(name);
-    return info == nullptr ? WM_LOOP : info->GetWrapMode();
+    return info == nullptr ? WM_LOOP : info->wrap_mode();
 }
 
 float Material::GetShaderParameterAnimationSpeed(const String& name) const

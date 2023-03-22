@@ -100,7 +100,7 @@ bool ObjectAnimation::save_xml(XmlElement& dest) const
         if (!info->GetAnimation()->save_xml(animElem))
             return false;
 
-        animElem.SetAttribute("wrapmode", wrapModeNames[info->GetWrapMode()]);
+        animElem.SetAttribute("wrapmode", wrapModeNames[info->wrap_mode()]);
         animElem.SetFloat("speed", info->GetSpeed());
     }
 
@@ -159,7 +159,7 @@ bool ObjectAnimation::save_json(JSONValue& dest) const
         if (!info->GetAnimation()->save_json(animValue))
             return false;
 
-        animValue.Set("wrapmode", wrapModeNames[info->GetWrapMode()]);
+        animValue.Set("wrapmode", wrapModeNames[info->wrap_mode()]);
         animValue.Set("speed", (float) info->GetSpeed());
 
         attributeAnimationsValue.Set(i->first_, animValue);
@@ -220,7 +220,7 @@ ValueAnimation* ObjectAnimation::GetAttributeAnimation(const String& name) const
 WrapMode ObjectAnimation::GetAttributeAnimationWrapMode(const String& name) const
 {
     ValueAnimationInfo* info = GetAttributeAnimationInfo(name);
-    return info ? info->GetWrapMode() : WM_LOOP;
+    return info ? info->wrap_mode() : WM_LOOP;
 }
 
 float ObjectAnimation::GetAttributeAnimationSpeed(const String& name) const

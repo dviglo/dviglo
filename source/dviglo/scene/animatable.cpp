@@ -182,7 +182,7 @@ bool Animatable::save_xml(XmlElement& dest) const
         if (!attributeAnimation->save_xml(elem))
             return false;
 
-        elem.SetAttribute("wrapmode", wrapModeNames[i->second_->GetWrapMode()]);
+        elem.SetAttribute("wrapmode", wrapModeNames[i->second_->wrap_mode()]);
         elem.SetFloat("speed", i->second_->GetSpeed());
     }
 
@@ -218,7 +218,7 @@ bool Animatable::save_json(JSONValue& dest) const
         if (!attributeAnimation->save_json(attributeValue))
             return false;
 
-        attributeValue.Set("wrapmode", wrapModeNames[i->second_->GetWrapMode()]);
+        attributeValue.Set("wrapmode", wrapModeNames[i->second_->wrap_mode()]);
         attributeValue.Set("speed", (float) i->second_->GetSpeed());
 
         attributeAnimationValue.Set(attr.name_, attributeValue);
@@ -413,7 +413,7 @@ ValueAnimation* Animatable::GetAttributeAnimation(const String& name) const
 WrapMode Animatable::GetAttributeAnimationWrapMode(const String& name) const
 {
     const AttributeAnimationInfo* info = GetAttributeAnimationInfo(name);
-    return info ? info->GetWrapMode() : WM_LOOP;
+    return info ? info->wrap_mode() : WM_LOOP;
 }
 
 float Animatable::GetAttributeAnimationSpeed(const String& name) const
@@ -466,7 +466,7 @@ void Animatable::OnObjectAnimationAdded(ObjectAnimation* objectAnimation)
     {
         const String& name = i->first_;
         ValueAnimationInfo* info = i->second_;
-        SetObjectAttributeAnimation(name, info->GetAnimation(), info->GetWrapMode(), info->GetSpeed());
+        SetObjectAttributeAnimation(name, info->GetAnimation(), info->wrap_mode(), info->GetSpeed());
     }
 }
 
@@ -532,7 +532,7 @@ void Animatable::HandleAttributeAnimationAdded(StringHash eventType, VariantMap&
     if (!info)
         return;
 
-    SetObjectAttributeAnimation(name, info->GetAnimation(), info->GetWrapMode(), info->GetSpeed());
+    SetObjectAttributeAnimation(name, info->GetAnimation(), info->wrap_mode(), info->GetSpeed());
 }
 
 void Animatable::HandleAttributeAnimationRemoved(StringHash eventType, VariantMap& eventData)
