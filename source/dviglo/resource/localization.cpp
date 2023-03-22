@@ -153,7 +153,7 @@ void Localization::Reset()
     strings_.Clear();
 }
 
-void Localization::LoadJSONFile(const String& name, const String& language)
+void Localization::load_json_file(const String& name, const String& language)
 {
     auto* jsonFile = DV_RES_CACHE.GetResource<JSONFile>(name);
     if (jsonFile)
