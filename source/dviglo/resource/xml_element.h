@@ -371,7 +371,7 @@ public:
     XPathResultSet Evaluate(const XmlElement& element) const;
 
     /// Return query string.
-    String GetQuery() const { return queryString_; }
+    String GetQuery() const { return query_string_; }
 
     /// Return pugixml xpath_query.
     pugi::xpath_query* GetXPathQuery() const { return query_.get(); }
@@ -381,7 +381,7 @@ public:
 
 private:
     /// XPath query string.
-    String queryString_;
+    String query_string_;
 
     /// Pugixml xpath_query.
     std::unique_ptr<pugi::xpath_query> query_;

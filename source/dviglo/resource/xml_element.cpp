@@ -1050,7 +1050,7 @@ XPathQuery::~XPathQuery() = default;
 void XPathQuery::Bind()
 {
     // Delete previous query object and create a new one binding it with variable set
-    query_ = make_unique<pugi::xpath_query>(queryString_.c_str(), variables_.get());
+    query_ = make_unique<pugi::xpath_query>(query_string_.c_str(), variables_.get());
 }
 
 bool XPathQuery::SetVariable(const String& name, bool value)
@@ -1126,7 +1126,7 @@ bool XPathQuery::SetQuery(const String& queryString, const String& variableStrin
         }
     }
 
-    queryString_ = queryString;
+    query_string_ = queryString;
 
     if (bind)
         Bind();
@@ -1136,7 +1136,7 @@ bool XPathQuery::SetQuery(const String& queryString, const String& variableStrin
 
 void XPathQuery::Clear()
 {
-    queryString_.Clear();
+    query_string_.Clear();
 
     variables_.reset();
     query_.reset();
