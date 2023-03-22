@@ -18,17 +18,17 @@ const char* interpolationModeNames[] =
 };
 
 Spline::Spline() :
-    interpolationMode_(BEZIER_CURVE)
+    interpolation_mode_(BEZIER_CURVE)
 {
 }
 
 Spline::Spline(InterpolationMode mode) :
-    interpolationMode_(mode)
+    interpolation_mode_(mode)
 {
 }
 
 Spline::Spline(const Vector<Variant>& knots, InterpolationMode mode) :
-    interpolationMode_(mode),
+    interpolation_mode_(mode),
     knots_(knots)
 {
 }
@@ -43,7 +43,7 @@ Variant Spline::GetPoint(float f) const
     else if (f < 0.f)
         f = 0.f;
 
-    switch (interpolationMode_)
+    switch (interpolation_mode_)
     {
     case BEZIER_CURVE:
         return BezierInterpolation(knots_, f);

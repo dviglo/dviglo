@@ -46,7 +46,7 @@ public:
     /// Equality operator.
     bool operator ==(const Spline& rhs) const
     {
-        return (knots_ == rhs.knots_ && interpolationMode_ == rhs.interpolationMode_);
+        return (knots_ == rhs.knots_ && interpolation_mode_ == rhs.interpolation_mode_);
     }
 
     /// Inequality operator.
@@ -56,7 +56,7 @@ public:
     }
 
     /// Return the interpolation mode.
-    InterpolationMode GetInterpolationMode() const { return interpolationMode_; }
+    InterpolationMode GetInterpolationMode() const { return interpolation_mode_; }
 
     /// Return the knots of the spline.
     const VariantVector& GetKnots() const { return knots_; }
@@ -68,7 +68,7 @@ public:
     Variant GetPoint(float f) const;
 
     /// Set the interpolation mode.
-    void SetInterpolationMode(InterpolationMode interpolationMode) { interpolationMode_ = interpolationMode; }
+    void SetInterpolationMode(InterpolationMode interpolationMode) { interpolation_mode_ = interpolationMode; }
 
     /// Set the knots of the spline.
     void SetKnots(const Vector<Variant>& knots) { knots_ = knots; }
@@ -100,7 +100,7 @@ private:
     Variant LinearInterpolation(const Variant& lhs, const Variant& rhs, float t) const;
 
     /// Interpolation mode.
-    InterpolationMode interpolationMode_;
+    InterpolationMode interpolation_mode_;
     /// Knots on the spline.
     VariantVector knots_;
 };
