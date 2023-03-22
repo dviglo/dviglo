@@ -10,9 +10,8 @@ namespace dviglo
 {
 
 /// Four-dimensional vector.
-class DV_API Vector4
+struct DV_API Vector4
 {
-public:
     /// Construct a zero vector.
     Vector4() noexcept :
         x_(0.0f),

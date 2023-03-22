@@ -11,9 +11,8 @@ namespace dviglo
 {
 
 /// Two-dimensional vector with integer values.
-class DV_API IntVector2
+struct DV_API IntVector2
 {
-public:
     /// Construct a zero vector.
     IntVector2() noexcept :
         x_(0),
@@ -154,9 +153,8 @@ public:
 };
 
 /// Two-dimensional vector.
-class DV_API Vector2
+struct DV_API Vector2
 {
-public:
     /// Construct a zero vector.
     Vector2() noexcept :
         x_(0.0f),

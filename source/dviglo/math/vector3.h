@@ -11,9 +11,8 @@ namespace dviglo
 {
 
 /// Three-dimensional vector with integer values.
-class DV_API IntVector3
+struct DV_API IntVector3
 {
-public:
     /// Construct a zero vector.
     IntVector3() noexcept :
         x_(0),
@@ -163,9 +162,8 @@ public:
 };
 
 /// Three-dimensional vector.
-class DV_API Vector3
+struct DV_API Vector3
 {
-public:
     /// Construct a zero vector.
     Vector3() noexcept :
         x_(0.0f),
