@@ -273,7 +273,7 @@ public:
     const Vector<Light*>& GetVertexLights() const { return vertexLights_; }
 
     /// Return the first added per-pixel light.
-    Light* GetFirstLight() const { return firstLight_; }
+    Light* first_light() const { return firstLight_; }
 
     /// Return the minimum view-space depth.
     float GetMinZ() const { return minZ_; }

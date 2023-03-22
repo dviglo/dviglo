@@ -1361,7 +1361,7 @@ void View::GetLitBatches(Drawable* drawable, LightBatchQueue& lightQueue, BatchQ
     const Vector<SourceBatch>& batches = drawable->GetBatches();
 
     bool allowLitBase =
-        useLitBase_ && !lightQueue.negative_ && light == drawable->GetFirstLight() && drawable->GetVertexLights().Empty() &&
+        useLitBase_ && !lightQueue.negative_ && light == drawable->first_light() && drawable->GetVertexLights().Empty() &&
         !zone->GetAmbientGradient();
 
     for (i32 i = 0; i < batches.Size(); ++i)
