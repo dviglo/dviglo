@@ -145,7 +145,7 @@ void RenderPathCommand::Load(const XmlElement& element)
         if (type_ == CMD_QUAD && element.HasAttribute("blend"))
         {
             String blend = element.GetAttributeLower("blend");
-            blendMode_ = ((BlendMode)GetStringListIndex(blend.c_str(), blendModeNames, BLEND_REPLACE));
+            blend_mode_ = ((BlendMode)GetStringListIndex(blend.c_str(), blendModeNames, BLEND_REPLACE));
         }
         break;
 

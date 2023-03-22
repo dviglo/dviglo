@@ -65,7 +65,7 @@ public:
     const Rect& GetTextureRect() const { return textureRect_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blendMode_; }
+    BlendMode GetBlendMode() const { return blend_mode_; }
 
     /// Return flip X.
     bool GetFlipX() const { return flipX_; }
@@ -125,7 +125,7 @@ protected:
     /// Sprite.
     SharedPtr<Sprite2D> sprite_;
     /// Blend mode.
-    BlendMode blendMode_;
+    BlendMode blend_mode_;
     /// Flip X.
     bool flipX_;
     /// Flip Y.

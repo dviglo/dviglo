@@ -1061,7 +1061,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
 
                 if (batch.texture_->GetFormat() == alphaFormat)
                     ps = alphaTexturePS;
-                else if (batch.blendMode_ != BLEND_ALPHA && batch.blendMode_ != BLEND_ADDALPHA && batch.blendMode_ != BLEND_PREMULALPHA)
+                else if (batch.blend_mode_ != BLEND_ALPHA && batch.blend_mode_ != BLEND_ADDALPHA && batch.blend_mode_ != BLEND_PREMULALPHA)
                     ps = diffMaskTexturePS;
                 else
                     ps = diffTexturePS;
@@ -1115,7 +1115,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
             scissor.bottom_ = viewSize.y_ - top;
         }
 
-        graphics.SetBlendMode(batch.blendMode_);
+        graphics.SetBlendMode(batch.blend_mode_);
         graphics.SetScissorTest(true, scissor);
         if (!batch.customMaterial_)
         {

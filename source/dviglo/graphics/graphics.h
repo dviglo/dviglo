@@ -516,7 +516,7 @@ public:
     IntRect GetViewport() const { return viewport_; }
 
     /// Return blending mode.
-    BlendMode GetBlendMode() const { return blendMode_; }
+    BlendMode GetBlendMode() const { return blend_mode_; }
 
     /// Return whether alpha-to-coverage is enabled.
     bool GetAlphaToCoverage() const { return alphaToCoverage_; }
@@ -924,7 +924,7 @@ private:
     /// Default texture max. anisotropy level.
     unsigned defaultTextureAnisotropy_{4};
     /// Blending mode.
-    BlendMode blendMode_{};
+    BlendMode blend_mode_{};
     /// Alpha-to-coverage enable.
     bool alphaToCoverage_{};
     /// Color write enable.

@@ -73,7 +73,7 @@ public:
     const IntVector2& GetDisabledOffset() const { return disabledOffset_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blendMode_; }
+    BlendMode GetBlendMode() const { return blend_mode_; }
 
     /// Return whether is tiled.
     bool IsTiled() const { return tiled_; }
@@ -108,7 +108,7 @@ protected:
     /// Offset to image rectangle when disabled.
     IntVector2 disabledOffset_;
     /// Blend mode flag.
-    BlendMode blendMode_;
+    BlendMode blend_mode_;
     /// Tiled flag.
     bool tiled_;
     /// Material used for custom rendering.

@@ -18,7 +18,7 @@ UIBatch::UIBatch()
 
 UIBatch::UIBatch(UiElement* element, BlendMode blendMode, const IntRect& scissor, Texture* texture, Vector<float>* vertexData) :     // NOLINT(modernize-pass-by-value)
     element_(element),
-    blendMode_(blendMode),
+    blend_mode_(blendMode),
     scissor_(scissor),
     texture_(texture),
     invTextureSize_(texture ? Vector2(1.0f / (float)texture->GetWidth(), 1.0f / (float)texture->GetHeight()) : Vector2::ONE),
@@ -382,7 +382,7 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const Int
 
 bool UIBatch::Merge(const UIBatch& batch)
 {
-    if (batch.blendMode_ != blendMode_ ||
+    if (batch.blend_mode_ != blend_mode_ ||
         batch.scissor_ != scissor_ ||
         batch.texture_ != texture_ ||
         batch.vertexData_ != vertexData_ ||

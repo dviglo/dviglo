@@ -23,7 +23,7 @@ Sprite::Sprite() :
     scale_(Vector2::ONE),
     rotation_(0.0f),
     imageRect_(IntRect::ZERO),
-    blendMode_(BLEND_REPLACE)
+    blend_mode_(BLEND_REPLACE)
 {
 }
 
@@ -95,7 +95,7 @@ void Sprite::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
 
     const IntVector2& size = GetSize();
     UIBatch
-        batch(this, blendMode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blendMode_, currentScissor, texture_, &vertexData);
+        batch(this, blend_mode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blend_mode_, currentScissor, texture_, &vertexData);
 
     batch.AddQuad(GetTransform(), 0, 0, size.x_, size.y_, imageRect_.left_, imageRect_.top_, imageRect_.right_ - imageRect_.left_,
         imageRect_.bottom_ - imageRect_.top_);
@@ -191,7 +191,7 @@ void Sprite::SetFullImageRect()
 
 void Sprite::SetBlendMode(BlendMode mode)
 {
-    blendMode_ = mode;
+    blend_mode_ = mode;
 }
 
 const Matrix3x4& Sprite::GetTransform() const

@@ -80,7 +80,7 @@ public:
     const IntRect& GetImageRect() const { return imageRect_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blendMode_; }
+    BlendMode GetBlendMode() const { return blend_mode_; }
 
     /// Set texture attribute.
     void SetTextureAttr(const ResourceRef& value);
@@ -103,7 +103,7 @@ protected:
     /// Image rectangle.
     IntRect imageRect_;
     /// Blend mode flag.
-    BlendMode blendMode_;
+    BlendMode blend_mode_;
     /// Transform matrix.
     mutable Matrix3x4 transform_;
 };

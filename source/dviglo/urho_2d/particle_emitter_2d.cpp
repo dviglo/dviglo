@@ -23,7 +23,7 @@ extern const char* URHO2D_CATEGORY;
 extern const char* blendModeNames[];
 
 ParticleEmitter2D::ParticleEmitter2D() :
-    blendMode_(BLEND_ADDALPHA),
+    blend_mode_(BLEND_ADDALPHA),
     numParticles_(0),
     emissionTime_(0.0f),
     emitParticleTime_(0.0f),
@@ -97,10 +97,10 @@ void ParticleEmitter2D::SetSprite(Sprite2D* sprite)
 
 void ParticleEmitter2D::SetBlendMode(BlendMode blendMode)
 {
-    if (blendMode == blendMode_)
+    if (blendMode == blend_mode_)
         return;
 
-    blendMode_ = blendMode;
+    blend_mode_ = blendMode;
     UpdateMaterial();
 
     MarkNetworkUpdate();
@@ -247,7 +247,7 @@ void ParticleEmitter2D::UpdateSourceBatches()
 void ParticleEmitter2D::UpdateMaterial()
 {
     if (sprite_ && renderer_)
-        sourceBatches_[0].material_ = renderer_->GetMaterial(sprite_->GetTexture(), blendMode_);
+        sourceBatches_[0].material_ = renderer_->GetMaterial(sprite_->GetTexture(), blend_mode_);
     else
         sourceBatches_[0].material_ = nullptr;
 }

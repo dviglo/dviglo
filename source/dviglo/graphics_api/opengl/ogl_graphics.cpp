@@ -1580,7 +1580,7 @@ void Graphics::SetViewport_OGL(const IntRect& rect)
 
 void Graphics::SetBlendMode_OGL(BlendMode mode, bool alphaToCoverage)
 {
-    if (mode != blendMode_)
+    if (mode != blend_mode_)
     {
         if (mode == BLEND_REPLACE)
             glDisable(GL_BLEND);
@@ -1591,7 +1591,7 @@ void Graphics::SetBlendMode_OGL(BlendMode mode, bool alphaToCoverage)
             glBlendEquation(glBlendOp[mode]);
         }
 
-        blendMode_ = mode;
+        blend_mode_ = mode;
     }
 
     if (alphaToCoverage != alphaToCoverage_)
@@ -2928,7 +2928,7 @@ void Graphics::ResetCachedState_OGL()
     indexBuffer_ = nullptr;
     vertexShader_ = nullptr;
     pixelShader_ = nullptr;
-    blendMode_ = BLEND_REPLACE;
+    blend_mode_ = BLEND_REPLACE;
     alphaToCoverage_ = false;
     colorWrite_ = true;
     cullMode_ = CULL_NONE;

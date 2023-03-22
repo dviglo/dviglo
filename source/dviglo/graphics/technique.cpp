@@ -54,7 +54,7 @@ static const char* lightingModeNames[] =
 };
 
 Pass::Pass(const String& name) :
-    blendMode_(BLEND_REPLACE),
+    blend_mode_(BLEND_REPLACE),
     cullMode_(MAX_CULLMODES),
     depthTestMode_(CMP_LESSEQUAL),
     lightingMode_(LIGHTING_UNLIT),
@@ -78,7 +78,7 @@ Pass::~Pass() = default;
 
 void Pass::SetBlendMode(BlendMode mode)
 {
-    blendMode_ = mode;
+    blend_mode_ = mode;
 }
 
 void Pass::SetCullMode(CullMode mode)

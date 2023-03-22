@@ -74,7 +74,7 @@ public:
     /// Element this batch represents.
     UiElement* element_{};
     /// Blending mode.
-    BlendMode blendMode_{BLEND_REPLACE};
+    BlendMode blend_mode_{BLEND_REPLACE};
     /// Scissor rectangle.
     IntRect scissor_;
     /// Texture.

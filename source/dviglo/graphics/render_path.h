@@ -155,7 +155,7 @@ struct DV_API RenderPathCommand
     /// Clear stencil value. Affects clear command only.
     unsigned clearStencil_{};
     /// Blend mode. Affects quad command only.
-    BlendMode blendMode_{BLEND_REPLACE};
+    BlendMode blend_mode_{BLEND_REPLACE};
     /// Enabled flag.
     bool enabled_{true};
     /// Use fog color for clearing.

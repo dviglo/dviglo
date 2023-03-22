@@ -191,7 +191,7 @@ void SpriteBatchBase::Flush()
         graphics.SetScissorTest(false);
         graphics.SetColorWrite(true);
         graphics.SetDepthTest(compareMode_);
-        graphics.SetBlendMode(blendMode_);
+        graphics.SetBlendMode(blend_mode_);
         graphics.SetViewport(GetViewportRect());
 
         graphics.SetIndexBuffer(nullptr);
@@ -227,7 +227,7 @@ void SpriteBatchBase::Flush()
         graphics.SetScissorTest(false);
         graphics.SetColorWrite(true);
         graphics.SetDepthTest(compareMode_);
-        graphics.SetBlendMode(blendMode_);
+        graphics.SetBlendMode(blend_mode_);
         graphics.SetViewport(GetViewportRect());
 
         graphics.SetIndexBuffer(qIndexBuffer_);

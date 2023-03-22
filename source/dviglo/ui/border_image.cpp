@@ -21,7 +21,7 @@ BorderImage::BorderImage() :
     imageBorder_(IntRect::ZERO),
     hoverOffset_(IntVector2::ZERO),
     disabledOffset_(IntVector2::ZERO),
-    blendMode_(BLEND_REPLACE),
+    blend_mode_(BLEND_REPLACE),
     tiled_(false)
 {
 }
@@ -111,7 +111,7 @@ void BorderImage::SetDisabledOffset(int x, int y)
 
 void BorderImage::SetBlendMode(BlendMode mode)
 {
-    blendMode_ = mode;
+    blend_mode_ = mode;
 }
 
 void BorderImage::SetTiled(bool enable)
@@ -128,7 +128,7 @@ void BorderImage::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData
         allOpaque = false;
 
     UIBatch
-        batch(this, blendMode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blendMode_, currentScissor, texture_, &vertexData);
+        batch(this, blend_mode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blend_mode_, currentScissor, texture_, &vertexData);
 
     if (material_)
         batch.customMaterial_ = material_;

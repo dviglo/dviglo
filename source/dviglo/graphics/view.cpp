@@ -1865,7 +1865,7 @@ void View::RenderQuad(RenderPathCommand& command)
     // Set command's shader parameters last to allow them to override any of the above
     SetCommandShaderParameters(command);
 
-    graphics.SetBlendMode(command.blendMode_);
+    graphics.SetBlendMode(command.blend_mode_);
     graphics.SetDepthTest(CMP_ALWAYS);
     graphics.SetDepthWrite(false);
     graphics.SetFillMode(FILL_SOLID);

@@ -20,7 +20,7 @@ extern const char* URHO2D_CATEGORY;
 extern const char* blendModeNames[];
 
 StaticSprite2D::StaticSprite2D() :
-    blendMode_(BLEND_ALPHA),
+    blend_mode_(BLEND_ALPHA),
     flipX_(false),
     flipY_(false),
     swapXY_(false),
@@ -96,10 +96,10 @@ void StaticSprite2D::SetTextureRect(const Rect& rect)
 
 void StaticSprite2D::SetBlendMode(BlendMode blendMode)
 {
-    if (blendMode == blendMode_)
+    if (blendMode == blend_mode_)
         return;
 
-    blendMode_ = blendMode;
+    blend_mode_ = blendMode;
 
     UpdateMaterial();
     MarkNetworkUpdate();
@@ -330,7 +330,7 @@ void StaticSprite2D::UpdateMaterial()
     else
     {
         if (sprite_ && renderer_)
-            sourceBatches_[0].material_ = renderer_->GetMaterial(sprite_->GetTexture(), blendMode_);
+            sourceBatches_[0].material_ = renderer_->GetMaterial(sprite_->GetTexture(), blend_mode_);
         else
             sourceBatches_[0].material_ = nullptr;
     }

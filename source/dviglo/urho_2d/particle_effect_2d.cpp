@@ -76,7 +76,7 @@ ParticleEffect2D::ParticleEffect2D() :
     minRadiusVariance_(0.0f),
     rotatePerSecond_(0.0f),
     rotatePerSecondVariance_(0.0f),
-    blendMode_(BLEND_ALPHA),
+    blend_mode_(BLEND_ALPHA),
     rotationStart_(0.0f),
     rotationStartVariance_(0.0f),
     rotationEnd_(0.0f),
@@ -167,12 +167,12 @@ bool ParticleEffect2D::BeginLoad(Deserializer& source)
 
     int blendFuncSource = ReadInt(rootElem, "blendFuncSource");
     int blendFuncDestination = ReadInt(rootElem, "blendFuncDestination");
-    blendMode_ = BLEND_ALPHA;
+    blend_mode_ = BLEND_ALPHA;
     for (int i = 0; i < MAX_BLENDMODES; ++i)
     {
         if (blendFuncSource == srcBlendFuncs[i] && blendFuncDestination == destBlendFuncs[i])
         {
-            blendMode_ = (BlendMode)i;
+            blend_mode_ = (BlendMode)i;
             break;
         }
     }
@@ -263,8 +263,8 @@ bool ParticleEffect2D::Save(Serializer& dest) const
     WriteFloat(rootElem, "rotatePerSecond", rotatePerSecond_);
     WriteFloat(rootElem, "rotatePerSecondVariance", rotatePerSecondVariance_);
 
-    WriteInt(rootElem, "blendFuncSource", srcBlendFuncs[blendMode_]);
-    WriteInt(rootElem, "blendFuncDestination", destBlendFuncs[blendMode_]);
+    WriteInt(rootElem, "blendFuncSource", srcBlendFuncs[blend_mode_]);
+    WriteInt(rootElem, "blendFuncDestination", destBlendFuncs[blend_mode_]);
 
     WriteFloat(rootElem, "rotationStart", rotationStart_);
     WriteFloat(rootElem, "rotationStartVariance", rotationStartVariance_);
@@ -427,7 +427,7 @@ void ParticleEffect2D::SetRotatePerSecondVariance(float rotatePerSecondVariance)
 
 void ParticleEffect2D::SetBlendMode(BlendMode blendMode)
 {
-    blendMode_ = blendMode;
+    blend_mode_ = blendMode;
 }
 
 void ParticleEffect2D::SetRotationStart(float rotationStart)
@@ -485,7 +485,7 @@ SharedPtr<ParticleEffect2D> ParticleEffect2D::Clone(const String& cloneName) con
     ret->minRadiusVariance_ = minRadiusVariance_;
     ret->rotatePerSecond_ = rotatePerSecond_;
     ret->rotatePerSecondVariance_ = rotatePerSecondVariance_;
-    ret->blendMode_ = blendMode_;
+    ret->blend_mode_ = blend_mode_;
     ret->rotationStart_ = rotationStart_;
     ret->rotationStartVariance_ = rotationStartVariance_;
     ret->rotationEnd_ = rotationEnd_;

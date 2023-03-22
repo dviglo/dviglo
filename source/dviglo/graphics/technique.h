@@ -69,7 +69,7 @@ public:
     i32 GetIndex() const { return index_; }
 
     /// Return blend mode.
-    BlendMode GetBlendMode() const { return blendMode_; }
+    BlendMode GetBlendMode() const { return blend_mode_; }
 
     /// Return culling mode override. If pass is not overriding culling mode (default), the illegal mode MAX_CULLMODES is returned.
     CullMode GetCullMode() const { return cullMode_; }
@@ -129,7 +129,7 @@ private:
     /// Pass index.
     i32 index_;
     /// Blend mode.
-    BlendMode blendMode_;
+    BlendMode blend_mode_;
     /// Culling mode.
     CullMode cullMode_;
     /// Depth compare mode.
