@@ -60,7 +60,7 @@ public:
     float scroll_step() const { return scroll_step_; }
 
     /// Return button step factor.
-    float GetStepFactor() const { return step_factor_; }
+    float step_factor() const { return step_factor_; }
 
     /// Return scroll step multiplied by factor.
     float GetEffectiveScrollStep() const;
