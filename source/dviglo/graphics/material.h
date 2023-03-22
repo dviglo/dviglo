@@ -248,7 +248,7 @@ private:
     /// Helper function for loading JSON files.
     bool begin_load_json(Deserializer& source);
     /// Helper function for loading XML files.
-    bool BeginLoadXML(Deserializer& source);
+    bool begin_load_xml(Deserializer& source);
 
     /// Reset to defaults.
     void ResetToDefaults();

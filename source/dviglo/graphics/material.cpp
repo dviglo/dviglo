@@ -198,7 +198,7 @@ bool Material::BeginLoad(Deserializer& source)
     bool success = false;
     if (extension == ".xml")
     {
-        success = BeginLoadXML(source);
+        success = begin_load_xml(source);
         if (!success)
             success = begin_load_json(source);
 
@@ -209,7 +209,7 @@ bool Material::BeginLoad(Deserializer& source)
     {
         success = begin_load_json(source);
         if (!success)
-            success = BeginLoadXML(source);
+            success = begin_load_xml(source);
 
         if (success)
             return true;
@@ -246,7 +246,7 @@ bool Material::EndLoad()
     return success;
 }
 
-bool Material::BeginLoadXML(Deserializer& source)
+bool Material::begin_load_xml(Deserializer& source)
 {
     ResetToDefaults();
     loadXMLFile_ = new XmlFile();
