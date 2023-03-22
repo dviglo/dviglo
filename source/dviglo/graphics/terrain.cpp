@@ -83,7 +83,7 @@ Terrain::Terrain() :
     drawDistance_(0.0f),
     shadowDistance_(0.0f),
     lodBias_(1.0f),
-    maxLights_(0),
+    max_lights_(0),
     northID_(0),
     southID_(0),
     westID_(0),
@@ -452,7 +452,7 @@ void Terrain::SetZoneMask(unsigned mask)
 
 void Terrain::SetMaxLights(unsigned num)
 {
-    maxLights_ = num;
+    max_lights_ = num;
 
     for (const WeakPtr<TerrainPatch>& patch : patches_)
     {
@@ -1056,7 +1056,7 @@ void Terrain::CreateGeometry()
                         patch->SetLightMask(lightMask_);
                         patch->SetShadowMask(shadowMask_);
                         patch->SetZoneMask(zoneMask_);
-                        patch->SetMaxLights(maxLights_);
+                        patch->SetMaxLights(max_lights_);
                         patch->SetCastShadows(castShadows_);
                         patch->SetOccluder(occluder_);
                         patch->SetOccludee(occludee_);

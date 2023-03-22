@@ -191,7 +191,7 @@ public:
     mask32 GetZoneMask() const { return zoneMask_; }
 
     /// Return maximum number of per-pixel lights.
-    i32 GetMaxLights() const { return maxLights_; }
+    i32 GetMaxLights() const { return max_lights_; }
 
     /// Return shadowcaster flag.
     bool GetCastShadows() const { return castShadows_; }
@@ -289,7 +289,7 @@ public:
 
         // Need to store into the light list only if the per-pixel lights are being limited
         // Otherwise recording the first light is enough
-        if (maxLights_)
+        if (max_lights_)
             lights_.Push(light);
     }
 
@@ -373,7 +373,7 @@ protected:
     /// Base pass flags, bit per batch.
     flagset32 basePassFlags_;
     /// Maximum per-pixel lights.
-    i32 maxLights_;
+    i32 max_lights_;
     /// List of cameras from which is seen on the current frame.
     Vector<Camera*> viewCameras_;
     /// First per-pixel light added this frame.

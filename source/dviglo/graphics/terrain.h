@@ -160,7 +160,7 @@ public:
     unsigned GetZoneMask() const { return zoneMask_; }
 
     /// Return maximum number of per-pixel lights.
-    unsigned GetMaxLights() const { return maxLights_; }
+    unsigned GetMaxLights() const { return max_lights_; }
 
     /// Return visible flag.
     bool IsVisible() const { return visible_; }
@@ -294,7 +294,7 @@ private:
     /// LOD bias.
     float lodBias_;
     /// Maximum lights.
-    unsigned maxLights_;
+    unsigned max_lights_;
     /// Node ID of north neighbor.
     unsigned northID_;
     /// Node ID of south neighbor.

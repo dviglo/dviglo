@@ -57,7 +57,7 @@ Drawable::Drawable(DrawableTypes drawableType) :
     maxZ_(0.0f),
     lodBias_(1.0f),
     basePassFlags_(0),
-    maxLights_(0),
+    max_lights_(0),
     first_light_(nullptr)
 {
     if (drawableType == DrawableTypes::Undefined)
@@ -73,7 +73,7 @@ Drawable::~Drawable()
 
 void Drawable::RegisterObject()
 {
-    DV_ATTRIBUTE("Max Lights", maxLights_, 0, AM_DEFAULT);
+    DV_ATTRIBUTE("Max Lights", max_lights_, 0, AM_DEFAULT);
     DV_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);
     DV_ATTRIBUTE("Light Mask", lightMask_, DEFAULT_LIGHTMASK, AM_DEFAULT);
     DV_ATTRIBUTE("Shadow Mask", shadowMask_, DEFAULT_SHADOWMASK, AM_DEFAULT);
@@ -195,7 +195,7 @@ void Drawable::SetZoneMask(mask32 mask)
 void Drawable::SetMaxLights(i32 num)
 {
     assert(num >= 0);
-    maxLights_ = num;
+    max_lights_ = num;
     MarkNetworkUpdate();
 }
 
@@ -307,7 +307,7 @@ void Drawable::MarkInView(i32 frameNumber)
 void Drawable::LimitLights()
 {
     // Maximum lights value 0 means unlimited
-    if (!maxLights_ || lights_.Size() <= maxLights_)
+    if (!max_lights_ || lights_.Size() <= max_lights_)
         return;
 
     // If more lights than allowed, move to vertex lights and cut the list
@@ -316,8 +316,8 @@ void Drawable::LimitLights()
         lights_[i]->SetIntensitySortValue(box);
 
     std::sort(lights_.Begin(), lights_.End(), CompareDrawables);
-    vertexLights_.Insert(vertexLights_.End(), lights_.Begin() + maxLights_, lights_.End());
-    lights_.Resize(maxLights_);
+    vertexLights_.Insert(vertexLights_.End(), lights_.Begin() + max_lights_, lights_.End());
+    lights_.Resize(max_lights_);
 }
 
 void Drawable::LimitVertexLights(bool removeConvertedLights)
