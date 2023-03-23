@@ -152,7 +152,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
 
     // Store resource dependencies for includes so that we know to reload if any of them changes
     if (source.GetName() != GetName())
-        cache.StoreResourceDependency(this, source.GetName());
+        cache.store_resource_dependency(this, source.GetName());
 
     while (!source.IsEof())
     {

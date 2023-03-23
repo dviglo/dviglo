@@ -895,7 +895,7 @@ String ResourceCache::SanitateResourceDirName(const String& name) const
     return fixedPath.Trimmed();
 }
 
-void ResourceCache::StoreResourceDependency(Resource* resource, const String& dependency)
+void ResourceCache::store_resource_dependency(Resource* resource, const String& dependency)
 {
     if (!resource)
         return;

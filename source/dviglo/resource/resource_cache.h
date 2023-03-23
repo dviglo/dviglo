@@ -231,7 +231,7 @@ public:
     String SanitateResourceDirName(const String& name) const;
 
     /// Store a dependency for a resource. If a dependency file changes, the resource will be reloaded.
-    void StoreResourceDependency(Resource* resource, const String& dependency);
+    void store_resource_dependency(Resource* resource, const String& dependency);
 
     /// Reset dependencies for a resource.
     void reset_dependencies(Resource* resource);

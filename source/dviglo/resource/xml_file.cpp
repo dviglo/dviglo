@@ -100,7 +100,7 @@ bool XmlFile::BeginLoad(Deserializer& source)
         Patch(rootElem);
 
         // Store resource dependencies so we know when to reload/repatch when the inherited resource changes
-        DV_RES_CACHE.StoreResourceDependency(this, inherit);
+        DV_RES_CACHE.store_resource_dependency(this, inherit);
 
         // Approximate patched data size
         dataSize += inheritedXMLFile->GetMemoryUse();
