@@ -105,21 +105,27 @@ private:
 #define DV_FILE_SYSTEM (dviglo::FileSystem::get_instance())
 
 /// Split a full path to path, filename and extension. The extension will be converted to lowercase by default.
-DV_API void
-    split_path(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension = true);
+DV_API void split_path(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension = true);
+
 /// Return the path from a full path.
 DV_API String GetPath(const String& fullPath);
+
 /// Return the filename from a full path.
 DV_API String GetFileName(const String& fullPath);
+
 /// Return the extension from a full path, converted to lowercase by default.
 DV_API String GetExtension(const String& fullPath, bool lowercaseExtension = true);
+
 /// Return the filename and extension from a full path. The case of the extension is preserved by default, so that the file can be opened in case-sensitive operating systems.
 DV_API String GetFileNameAndExtension(const String& fileName, bool lowercaseExtension = false);
+
 /// Replace the extension of a file name with another.
 DV_API String replace_extension(const String& fullPath, const String& newExtension);
+
 /// Add a slash at the end of the path if missing and convert to internal format (use slashes).
 DV_API String AddTrailingSlash(const String& pathName);
+
 /// Return whether a path is absolute.
 DV_API bool IsAbsolutePath(const String& pathName);
 
-}
+} // namespace dviglo
