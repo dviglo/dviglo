@@ -27,7 +27,7 @@ unsigned CompressData(void* dest, const void* src, unsigned srcSize)
         return (unsigned)LZ4_compress_HC((const char*)src, (char*)dest, srcSize, LZ4_compressBound(srcSize), 0);
 }
 
-unsigned DecompressData(void* dest, const void* src, unsigned destSize)
+unsigned decompress_data(void* dest, const void* src, unsigned destSize)
 {
     if (!dest || !src || !destSize)
         return 0;
