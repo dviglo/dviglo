@@ -50,7 +50,7 @@ private:
     /// Pending changes. These will be returned and removed from the list when their timer has exceeded the delay.
     HashMap<String, Timer> changes_;
     /// Mutex for the change buffer.
-    std::mutex changesMutex_;
+    std::mutex changes_mutex_;
     /// Delay in seconds for notifying changes.
     float delay_;
     /// Watch subdirectories flag.
