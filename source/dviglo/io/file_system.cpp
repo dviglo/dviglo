@@ -640,7 +640,7 @@ void FileSystem::HandleConsoleCommand(StringHash eventType, VariantMap& eventDat
         system_command(eventData[P_COMMAND].GetString(), true);
 }
 
-void SplitPath(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension)
+void split_path(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension)
 {
     String fullPathCopy = to_internal(fullPath);
 
@@ -673,35 +673,35 @@ void SplitPath(const String& fullPath, String& pathName, String& fileName, Strin
 String GetPath(const String& fullPath)
 {
     String path, file, extension;
-    SplitPath(fullPath, path, file, extension);
+    split_path(fullPath, path, file, extension);
     return path;
 }
 
 String GetFileName(const String& fullPath)
 {
     String path, file, extension;
-    SplitPath(fullPath, path, file, extension);
+    split_path(fullPath, path, file, extension);
     return file;
 }
 
 String GetExtension(const String& fullPath, bool lowercaseExtension)
 {
     String path, file, extension;
-    SplitPath(fullPath, path, file, extension, lowercaseExtension);
+    split_path(fullPath, path, file, extension, lowercaseExtension);
     return extension;
 }
 
 String GetFileNameAndExtension(const String& fileName, bool lowercaseExtension)
 {
     String path, file, extension;
-    SplitPath(fileName, path, file, extension, lowercaseExtension);
+    split_path(fileName, path, file, extension, lowercaseExtension);
     return file + extension;
 }
 
 String replace_extension(const String& fullPath, const String& newExtension)
 {
     String path, file, extension;
-    SplitPath(fullPath, path, file, extension);
+    split_path(fullPath, path, file, extension);
     return path + file + newExtension;
 }
 

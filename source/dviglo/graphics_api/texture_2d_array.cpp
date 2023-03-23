@@ -62,7 +62,7 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
     cache.ResetDependencies(this);
 
     String texPath, texName, texExt;
-    SplitPath(GetName(), texPath, texName, texExt);
+    split_path(GetName(), texPath, texName, texExt);
 
     loadParameters_ = (new XmlFile());
     if (!loadParameters_->Load(source))

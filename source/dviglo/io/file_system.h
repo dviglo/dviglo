@@ -106,7 +106,7 @@ private:
 
 /// Split a full path to path, filename and extension. The extension will be converted to lowercase by default.
 DV_API void
-    SplitPath(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension = true);
+    split_path(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension = true);
 /// Return the path from a full path.
 DV_API String GetPath(const String& fullPath);
 /// Return the filename from a full path.
