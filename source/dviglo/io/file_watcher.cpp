@@ -46,7 +46,7 @@ FileWatcher::FileWatcher() :
 
 FileWatcher::~FileWatcher()
 {
-    StopWatching();
+    stop_watching();
 #ifdef DV_FILEWATCHER
 #ifdef __linux__
     close(watchHandle_);
@@ -57,7 +57,7 @@ FileWatcher::~FileWatcher()
 bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
 {
     // Stop any previous watching
-    StopWatching();
+    stop_watching();
 
 #if defined(DV_FILEWATCHER) && defined(DV_THREADING)
 #ifdef _WIN32
@@ -162,7 +162,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
 #endif
 }
 
-void FileWatcher::StopWatching()
+void FileWatcher::stop_watching()
 {
     if (handle_)
     {

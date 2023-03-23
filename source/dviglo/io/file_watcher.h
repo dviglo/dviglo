@@ -30,7 +30,7 @@ public:
     /// Start watching a directory. Return true if successful.
     bool start_watching(const String& pathName, bool watchSubDirs);
     /// Stop watching the directory.
-    void StopWatching();
+    void stop_watching();
     /// Set the delay in seconds before file changes are notified. This (hopefully) avoids notifying when a file save is still in progress. Default 1 second.
     void SetDelay(float interval);
     /// Add a file change into the changes queue.
