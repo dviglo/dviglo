@@ -202,7 +202,7 @@ void Graphics::Constructor_OGL()
     DV_SDL_HELPER.require(SDL_INIT_VIDEO);
 
     // Register Graphics library object factories
-    RegisterGraphicsLibrary();
+    register_graphics_library();
 }
 
 void Graphics::Destructor_OGL()

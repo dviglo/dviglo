@@ -171,7 +171,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     else
     {
         // Register graphics library objects explicitly in headless mode to allow them to work without using actual GPU resources
-        RegisterGraphicsLibrary();
+        register_graphics_library();
     }
 
     Input::get_instance();

@@ -985,7 +985,7 @@ private:
 };
 
 /// Register Graphics library objects.
-void DV_API RegisterGraphicsLibrary();
+void DV_API register_graphics_library();
 
 #define DV_GRAPHICS (dviglo::Graphics::get_instance())
 

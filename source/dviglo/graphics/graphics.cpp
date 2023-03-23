@@ -1646,7 +1646,7 @@ unsigned Graphics::GetFormat(const String& formatName)
     return {}; // Prevent warning
 }
 
-void RegisterGraphicsLibrary()
+void register_graphics_library()
 {
     Animation::register_object();
     Material::register_object();
