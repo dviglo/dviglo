@@ -111,7 +111,7 @@ bool ResourceCache::add_resource_dir(const String& pathName, i32 priority)
     }
 
     // Convert path to absolute
-    String fixedPath = SanitateResourceDirName(pathName);
+    String fixedPath = sanitate_resource_dir_name(pathName);
 
     // Check that the same path does not already exist
     for (const String& resourceDir : resourceDirs_)
@@ -191,7 +191,7 @@ void ResourceCache::remove_resource_dir(const String& pathName)
 {
     std::scoped_lock lock(resourceMutex_);
 
-    String fixedPath = SanitateResourceDirName(pathName);
+    String fixedPath = sanitate_resource_dir_name(pathName);
 
     for (unsigned i = 0; i < resourceDirs_.Size(); ++i)
     {
@@ -883,7 +883,7 @@ String ResourceCache::SanitateResourceName(const String& name) const
     return sanitatedName.Trimmed();
 }
 
-String ResourceCache::SanitateResourceDirName(const String& name) const
+String ResourceCache::sanitate_resource_dir_name(const String& name) const
 {
     String fixedPath = add_trailing_slash(name);
     if (!IsAbsolutePath(fixedPath))

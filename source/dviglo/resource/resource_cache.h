@@ -228,7 +228,7 @@ public:
     String SanitateResourceName(const String& name) const;
 
     /// Remove unnecessary constructs from a resource directory name and ensure it to be an absolute path.
-    String SanitateResourceDirName(const String& name) const;
+    String sanitate_resource_dir_name(const String& name) const;
 
     /// Store a dependency for a resource. If a dependency file changes, the resource will be reloaded.
     void store_resource_dependency(Resource* resource, const String& dependency);
