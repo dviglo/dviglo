@@ -24,8 +24,8 @@ DV_API bool CompressStream(Serializer& dest, Deserializer& src);
 /// Decompress a compressed source stream produced using CompressStream() to the destination stream. Return true on success.
 DV_API bool DecompressStream(Serializer& dest, Deserializer& src);
 /// Compress a VectorBuffer using the LZ4 algorithm and return the compressed result buffer.
-DV_API VectorBuffer CompressVectorBuffer(VectorBuffer& src);
-/// Decompress a VectorBuffer produced using CompressVectorBuffer().
+DV_API VectorBuffer compress_vector_buffer(VectorBuffer& src);
+/// Decompress a VectorBuffer produced using compress_vector_buffer().
 DV_API VectorBuffer decompress_vector_buffer(VectorBuffer& src);
 
 }

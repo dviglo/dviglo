@@ -84,7 +84,7 @@ bool DecompressStream(Serializer& dest, Deserializer& src)
     return dest.Write(destBuffer, destSize) == destSize;
 }
 
-VectorBuffer CompressVectorBuffer(VectorBuffer& src)
+VectorBuffer compress_vector_buffer(VectorBuffer& src)
 {
     VectorBuffer ret;
     src.Seek(0);
