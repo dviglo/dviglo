@@ -53,7 +53,7 @@ ShaderPrecache::~ShaderPrecache()
     xmlFile_.Save(dest);
 }
 
-void ShaderPrecache::StoreShaders(ShaderVariation* vs, ShaderVariation* ps)
+void ShaderPrecache::store_shaders(ShaderVariation* vs, ShaderVariation* ps)
 {
     if (!vs || !ps)
         return;

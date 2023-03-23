@@ -941,7 +941,7 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
 
     // Store shader combination if shader dumping in progress
     if (shaderPrecache_)
-        shaderPrecache_->StoreShaders(vertexShader_, pixelShader_);
+        shaderPrecache_->store_shaders(vertexShader_, pixelShader_);
 
     if (impl->shaderProgram_)
     {
