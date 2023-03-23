@@ -46,7 +46,7 @@ int Application::Run()
             return exitCode_;
 
         while (!DV_ENGINE.IsExiting())
-            DV_ENGINE.RunFrame();
+            DV_ENGINE.run_frame();
 
         Stop();
 

@@ -442,7 +442,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     return true;
 }
 
-void Engine::RunFrame()
+void Engine::run_frame()
 {
     assert(initialized_);
 

@@ -70,7 +70,7 @@ int Win32_ResizingEventWatcher(void* data, SDL_Event* event)
                 if (DV_GRAPHICS.IsInitialized())
                 {
                     DV_GRAPHICS.OnWindowResized();
-                    DV_ENGINE.RunFrame();
+                    DV_ENGINE.run_frame();
                 }
             }
         }

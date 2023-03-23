@@ -34,7 +34,7 @@ public:
     /// Reinitialize resource cache subsystem using parameters given. Implicitly called by Initialize. Return true if successful.
     bool InitializeResourceCache(const VariantMap& parameters, bool removeOld = true);
     /// Run one frame.
-    void RunFrame();
+    void run_frame();
 
     /// Set minimum frames per second. If FPS goes lower than this, time will appear to slow down.
     void SetMinFps(int fps);
@@ -48,7 +48,7 @@ public:
     void SetPauseMinimized(bool enable);
     /// Set whether to exit automatically on exit request (window close button).
     void SetAutoExit(bool enable);
-    /// Override timestep of the next frame. Should be called in between RunFrame() calls.
+    /// Override timestep of the next frame. Should be called in between run_frame() calls.
     void SetNextTimeStep(float seconds);
     /// Close the graphics window and set the exit flag. No-op on iOS/tvOS, as an iOS/tvOS application can not legally exit.
     void Exit();
