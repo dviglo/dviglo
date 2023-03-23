@@ -326,7 +326,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             for (; j < resourcePrefixPaths.Size(); ++j)
             {
                 String packageName = resourcePrefixPaths[j] + resourcePaths[i] + ".pak";
-                if (fileSystem.FileExists(packageName))
+                if (fileSystem.file_exists(packageName))
                 {
                     if (cache.AddPackageFile(packageName))
                         break;
@@ -366,7 +366,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         for (; j < resourcePrefixPaths.Size(); ++j)
         {
             String packageName = resourcePrefixPaths[j] + resourcePackages[i];
-            if (fileSystem.FileExists(packageName))
+            if (fileSystem.file_exists(packageName))
             {
                 if (cache.AddPackageFile(packageName))
                     break;

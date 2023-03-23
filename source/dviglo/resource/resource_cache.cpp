@@ -770,12 +770,12 @@ bool ResourceCache::Exists(const String& name) const
 
     for (const String& resourceDir : resourceDirs_)
     {
-        if (fileSystem.FileExists(resourceDir + sanitatedName))
+        if (fileSystem.file_exists(resourceDir + sanitatedName))
             return true;
     }
 
     // Fallback using absolute path
-    return fileSystem.FileExists(sanitatedName);
+    return fileSystem.file_exists(sanitatedName);
 }
 
 unsigned long long ResourceCache::GetMemoryBudget(StringHash type) const
@@ -804,11 +804,11 @@ String ResourceCache::GetResourceFileName(const String& name) const
 
     for (const String& resourceDir : resourceDirs_)
     {
-        if (fileSystem.FileExists(resourceDir + name))
+        if (fileSystem.file_exists(resourceDir + name))
             return resourceDir + name;
     }
 
-    if (IsAbsolutePath(name) && fileSystem.FileExists(name))
+    if (IsAbsolutePath(name) && fileSystem.file_exists(name))
         return name;
     else
         return String();
@@ -1118,7 +1118,7 @@ File* ResourceCache::SearchResourceDirs(const String& name)
 
     for (const String& resourceDir : resourceDirs_)
     {
-        if (fileSystem.FileExists(resourceDir + name))
+        if (fileSystem.file_exists(resourceDir + name))
         {
             // Construct the file first with full path, then rename it to not contain the resource path,
             // so that the file's sanitatedName can be used in further GetFile() calls (for example over the network)
@@ -1129,7 +1129,7 @@ File* ResourceCache::SearchResourceDirs(const String& name)
     }
 
     // Fallback using absolute path
-    if (fileSystem.FileExists(name))
+    if (fileSystem.file_exists(name))
         return new File(name);
 
     return nullptr;

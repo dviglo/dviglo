@@ -75,7 +75,7 @@ public:
     /// Returns the file's last modified time as seconds since 1.1.1970, or 0 if can not be accessed.
     unsigned GetLastModifiedTime(const String& fileName) const;
     /// Check if a file exists.
-    bool FileExists(const String& fileName) const;
+    bool file_exists(const String& fileName) const;
     /// Scan a directory for specified files.
     void ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const;
     /// Return the program's directory.

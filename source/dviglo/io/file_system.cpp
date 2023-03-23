@@ -359,7 +359,7 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
 
 bool FileSystem::SystemOpen(const String& fileName, const String& mode)
 {
-    if (!FileExists(fileName) && !dir_exists(fileName))
+    if (!file_exists(fileName) && !dir_exists(fileName))
     {
         DV_LOGERROR("File or directory " + fileName + " not found");
         return false;
@@ -449,7 +449,7 @@ unsigned FileSystem::GetLastModifiedTime(const String& fileName) const
 #endif
 }
 
-bool FileSystem::FileExists(const String& fileName) const
+bool FileSystem::file_exists(const String& fileName) const
 {
     String fixedName = to_native(trim_end_slash(fileName));
 
