@@ -67,7 +67,7 @@ bool Sound::BeginLoad(Deserializer& source)
     if (GetExtension(source.GetName()) == ".ogg")
         success = LoadOggVorbis(source);
     else if (GetExtension(source.GetName()) == ".wav")
-        success = LoadWav(source);
+        success = load_wav(source);
     else
         success = load_raw(source);
 
@@ -109,7 +109,7 @@ bool Sound::LoadOggVorbis(Deserializer& source)
     return true;
 }
 
-bool Sound::LoadWav(Deserializer& source)
+bool Sound::load_wav(Deserializer& source)
 {
     WavHeader header{};
 

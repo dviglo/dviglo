@@ -31,7 +31,7 @@ public:
     /// Load raw sound data.
     bool load_raw(Deserializer& source);
     /// Load WAV format sound data.
-    bool LoadWav(Deserializer& source);
+    bool load_wav(Deserializer& source);
     /// Load Ogg Vorbis format sound data. Does not decode at load, but will rather be decoded while playing.
     bool LoadOggVorbis(Deserializer& source);
     /// Set sound size in bytes. Also resets the sound to be uncompressed and one-shot.
