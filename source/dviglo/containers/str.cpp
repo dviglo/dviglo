@@ -1077,7 +1077,7 @@ c32 String::decode_utf8(const char*& src)
 }
 
 #ifdef _WIN32
-void String::EncodeUTF16(wchar_t*& dest, c32 unicodeChar)
+void String::encode_utf16(wchar_t*& dest, c32 unicodeChar)
 {
     if (unicodeChar < 0x10000)
         *dest++ = (wchar_t)unicodeChar;
@@ -1360,7 +1360,7 @@ WString::WString(const String& str) :
     while (byteOffset < str.Length())
     {
         wchar_t* dest = temp;
-        String::EncodeUTF16(dest, str.NextUTF8Char(byteOffset));
+        String::encode_utf16(dest, str.NextUTF8Char(byteOffset));
         neededSize += (i32)(dest - temp);
     }
 
@@ -1369,7 +1369,7 @@ WString::WString(const String& str) :
     byteOffset = 0;
     wchar_t* dest = buffer_;
     while (byteOffset < str.Length())
-        String::EncodeUTF16(dest, str.NextUTF8Char(byteOffset));
+        String::encode_utf16(dest, str.NextUTF8Char(byteOffset));
 #else
     Resize(str.LengthUTF8());
 

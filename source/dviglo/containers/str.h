@@ -473,7 +473,7 @@ public:
     static c32 decode_utf8(const char*& src);
 #ifdef _WIN32
     /// Encode Unicode character to UTF16. Pointer will be incremented.
-    static void EncodeUTF16(wchar_t*& dest, c32 unicodeChar);
+    static void encode_utf16(wchar_t*& dest, c32 unicodeChar);
     /// Decode Unicode character from UTF16. Pointer will be incremented.
     static c32 decode_utf16(const wchar_t*& src);
 #endif
