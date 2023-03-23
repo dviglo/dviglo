@@ -305,7 +305,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         for (unsigned i = 0; i < resourceDirs.Size(); ++i)
             cache.remove_resource_dir(resourceDirs[i]);
         for (unsigned i = 0; i < packageFiles.Size(); ++i)
-            cache.RemovePackageFile(packageFiles[i]);
+            cache.remove_package_file(packageFiles[i]);
     }
 
     // Add resource paths

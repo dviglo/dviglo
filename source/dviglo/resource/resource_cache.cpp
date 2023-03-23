@@ -213,7 +213,7 @@ void ResourceCache::remove_resource_dir(const String& pathName)
     }
 }
 
-void ResourceCache::RemovePackageFile(PackageFile* package, bool releaseResources, bool forceRelease)
+void ResourceCache::remove_package_file(PackageFile* package, bool releaseResources, bool forceRelease)
 {
     std::scoped_lock lock(resourceMutex_);
 
@@ -230,7 +230,7 @@ void ResourceCache::RemovePackageFile(PackageFile* package, bool releaseResource
     }
 }
 
-void ResourceCache::RemovePackageFile(const String& fileName, bool releaseResources, bool forceRelease)
+void ResourceCache::remove_package_file(const String& fileName, bool releaseResources, bool forceRelease)
 {
     std::scoped_lock lock(resourceMutex_);
 

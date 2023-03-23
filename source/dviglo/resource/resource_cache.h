@@ -91,9 +91,9 @@ public:
     /// Remove a resource load directory.
     void remove_resource_dir(const String& pathName);
     /// Remove a package file. Optionally release the resources loaded from it.
-    void RemovePackageFile(PackageFile* package, bool releaseResources = true, bool forceRelease = false);
+    void remove_package_file(PackageFile* package, bool releaseResources = true, bool forceRelease = false);
     /// Remove a package file by name. Optionally release the resources loaded from it.
-    void RemovePackageFile(const String& fileName, bool releaseResources = true, bool forceRelease = false);
+    void remove_package_file(const String& fileName, bool releaseResources = true, bool forceRelease = false);
     /// Release a resource by name.
     void ReleaseResource(StringHash type, const String& name, bool force = false);
     /// Release all resources of a specific type.

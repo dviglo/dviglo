@@ -538,7 +538,7 @@ void Connection::ProcessLoadScene(int msgID, MemoryBuffer& msg)
     {
         PackageFile* package = packages[i];
         if (!package->GetName().Find(packageCacheDir))
-            cache.RemovePackageFile(package, true);
+            cache.remove_package_file(package, true);
     }
 
     // Now check which packages we have in the resource cache or in the download cache, and which we need to download
