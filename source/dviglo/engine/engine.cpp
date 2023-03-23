@@ -123,7 +123,7 @@ Engine::Engine() :
     Audio::get_instance();
 
     // Register object factories for libraries which are not automatically registered along with subsystem creation
-    RegisterSceneLibrary();
+    register_scene_library();
 
 #ifdef DV_BULLET
     register_physics_library();

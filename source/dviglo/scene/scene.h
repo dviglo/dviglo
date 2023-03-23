@@ -322,6 +322,6 @@ private:
 };
 
 /// Register Scene library objects.
-void DV_API RegisterSceneLibrary();
+void DV_API register_scene_library();
 
 }

@@ -1504,7 +1504,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
 #endif
 }
 
-void RegisterSceneLibrary()
+void register_scene_library()
 {
     ValueAnimation::register_object();
     ObjectAnimation::register_object();
