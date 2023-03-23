@@ -71,7 +71,7 @@ public:
     /// Return ray corresponding to normalized screen coordinates.
     Ray GetScreenRay(int x, int y) const;
     /// Convert a world space point to normalized screen coordinates.
-    IntVector2 WorldToScreenPoint(const Vector3& worldPos) const;
+    IntVector2 world_to_screen_point(const Vector3& worldPos) const;
     /// Convert screen coordinates and depth to a world space point.
     Vector3 ScreenToWorldPoint(int x, int y, float depth) const;
 

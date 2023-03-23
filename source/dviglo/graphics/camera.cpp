@@ -387,7 +387,7 @@ Ray Camera::GetScreenRay(float x, float y) const
     return ret;
 }
 
-Vector2 Camera::WorldToScreenPoint(const Vector3& worldPos) const
+Vector2 Camera::world_to_screen_point(const Vector3& worldPos) const
 {
     Vector3 eyeSpacePos = GetView() * worldPos;
     Vector2 ret;

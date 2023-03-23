@@ -138,12 +138,12 @@ Ray Viewport::GetScreenRay(int x, int y) const
     return camera_->GetScreenRay(screenX, screenY);
 }
 
-IntVector2 Viewport::WorldToScreenPoint(const Vector3& worldPos) const
+IntVector2 Viewport::world_to_screen_point(const Vector3& worldPos) const
 {
     if (!camera_)
         return IntVector2::ZERO;
 
-    Vector2 screenPoint = camera_->WorldToScreenPoint(worldPos);
+    Vector2 screenPoint = camera_->world_to_screen_point(worldPos);
 
     int x;
     int y;

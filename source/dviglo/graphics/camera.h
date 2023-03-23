@@ -145,7 +145,7 @@ public:
     /// Return ray corresponding to normalized screen coordinates (0 - 1), with origin on the near clip plane.
     Ray GetScreenRay(float x, float y) const;
     /// Convert a world space point to normalized screen coordinates (0 - 1).
-    Vector2 WorldToScreenPoint(const Vector3& worldPos) const;
+    Vector2 world_to_screen_point(const Vector3& worldPos) const;
     /// Convert normalized screen coordinates (0 - 1) and distance along view Z axis (in Z coordinate) to a world space point. The distance can not be closer than the near clip plane.
     /** Note that a HitDistance() from the camera screen ray is not the same as distance along the view Z axis, as under a perspective projection the ray is likely to not be Z-aligned.
      */
