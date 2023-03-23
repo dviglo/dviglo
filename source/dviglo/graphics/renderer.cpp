@@ -1520,7 +1520,7 @@ void Renderer::UpdateQueuedViewport(i32 index)
 
     // (Re)allocate the view structure if necessary
     if (!viewport->GetView() || resetViews_)
-        viewport->AllocateView();
+        viewport->allocate_view();
 
     View* view = viewport->GetView();
     assert(view);

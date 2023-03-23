@@ -76,7 +76,7 @@ public:
     Vector3 screen_to_world_point(int x, int y, float depth) const;
 
     /// Allocate the view structure. Called by Renderer.
-    void AllocateView();
+    void allocate_view();
 
 private:
     /// Scene pointer.

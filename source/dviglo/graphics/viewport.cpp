@@ -187,7 +187,7 @@ Vector3 Viewport::screen_to_world_point(int x, int y, float depth) const
     return camera_->screen_to_world_point(Vector3(screenX, screenY, depth));
 }
 
-void Viewport::AllocateView()
+void Viewport::allocate_view()
 {
     view_ = new View();
 }
