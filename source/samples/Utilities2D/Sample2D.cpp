@@ -495,7 +495,7 @@ void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, co
     node->SetScale(scale);
     auto* sprite = node->create_component<StaticSprite2D>();
     sprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>(texture));
-    SetRandomSeed(Time::GetSystemTime()); // Randomize from system clock
+    set_random_seed(Time::GetSystemTime()); // Randomize from system clock
     sprite->SetColor(Color(Random(0.0f, 1.0f), Random(0.0f, 1.0f), Random(0.0f, 1.0f), 1.0f));
     sprite->SetLayer(-99);
 

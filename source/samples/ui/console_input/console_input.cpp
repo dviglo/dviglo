@@ -84,7 +84,7 @@ void ConsoleInput::Start()
     StartGame();
 
     // Randomize from system clock
-    SetRandomSeed(Time::GetSystemTime());
+    set_random_seed(Time::GetSystemTime());
 }
 
 void ConsoleInput::HandleConsoleCommand(StringHash eventType, VariantMap& eventData)

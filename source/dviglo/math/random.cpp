@@ -11,7 +11,7 @@ namespace dviglo
 
 static unsigned randomSeed = 1;
 
-void SetRandomSeed(unsigned seed)
+void set_random_seed(unsigned seed)
 {
     randomSeed = seed;
 }

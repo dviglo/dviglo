@@ -12,7 +12,7 @@ namespace dviglo
 {
 
 /// Set the random seed. The default seed is 1.
-DV_API void SetRandomSeed(unsigned seed);
+DV_API void set_random_seed(unsigned seed);
 /// Return the current random seed.
 DV_API unsigned GetRandomSeed();
 /// Return a random number between 0-32767. Should operate similarly to MSVC rand().
