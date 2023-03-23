@@ -30,7 +30,7 @@ namespace dviglo
 
 const char* PHYSICS2D_CATEGORY = "Physics2D";
 
-void RegisterPhysics2DLibrary()
+void register_physics_2d_library()
 {
     PhysicsWorld2D::register_object();
     RigidBody2D::register_object();

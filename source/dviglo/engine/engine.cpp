@@ -130,7 +130,7 @@ Engine::Engine() :
 #endif
 
 #ifdef DV_BOX2D
-    RegisterPhysics2DLibrary();
+    register_physics_2d_library();
 #endif
 
 #ifdef DV_NAVIGATION

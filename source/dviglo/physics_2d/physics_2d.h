@@ -8,6 +8,6 @@ namespace dviglo
 {
 
 /// Register Physics2D library objects.
-void DV_API RegisterPhysics2DLibrary();
+void DV_API register_physics_2d_library();
 
 }
