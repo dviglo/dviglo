@@ -474,7 +474,7 @@ unsigned GetNumLogicalCPUs()
 
 void SetMiniDumpDir(const String& pathName)
 {
-    miniDumpDir = AddTrailingSlash(pathName);
+    miniDumpDir = add_trailing_slash(pathName);
 }
 
 String GetMiniDumpDir()

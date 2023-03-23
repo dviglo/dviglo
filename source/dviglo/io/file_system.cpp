@@ -420,12 +420,12 @@ String FileSystem::GetCurrentDir() const
     wchar_t path[MAX_PATH];
     path[0] = 0;
     GetCurrentDirectoryW(MAX_PATH, path);
-    return AddTrailingSlash(String(path));
+    return add_trailing_slash(String(path));
 #else
     char path[MAX_PATH];
     path[0] = 0;
     getcwd(path, MAX_PATH);
-    return AddTrailingSlash(String(path));
+    return add_trailing_slash(String(path));
 #endif
 }
 
@@ -470,7 +470,7 @@ void FileSystem::scan_dir(Vector<String>& result, const String& pathName, const 
 {
     result.Clear();
 
-    String initialPath = AddTrailingSlash(pathName);
+    String initialPath = add_trailing_slash(pathName);
     ScanDirInternal(result, initialPath, initialPath, filter, flags, recursive);
 }
 
@@ -499,12 +499,12 @@ String FileSystem::GetUserDocumentsDir() const
     wchar_t pathName[MAX_PATH];
     pathName[0] = 0;
     SHGetSpecialFolderPathW(nullptr, pathName, CSIDL_PERSONAL, 0);
-    return AddTrailingSlash(String(pathName));
+    return add_trailing_slash(String(pathName));
 #else
     char pathName[MAX_PATH];
     pathName[0] = 0;
     strcpy(pathName, getenv("HOME"));
-    return AddTrailingSlash(String(pathName));
+    return add_trailing_slash(String(pathName));
 #endif
 }
 
@@ -535,7 +535,7 @@ bool FileSystem::SetLastModifiedTime(const String& fileName, unsigned newTime)
 void FileSystem::ScanDirInternal(Vector<String>& result, String path, const String& startPath,
     const String& filter, unsigned flags, bool recursive) const
 {
-    path = AddTrailingSlash(path);
+    path = add_trailing_slash(path);
     String deltaPath;
     if (path.Length() > startPath.Length())
         deltaPath = path.Substring(startPath.Length());
@@ -705,7 +705,7 @@ String replace_extension(const String& fullPath, const String& newExtension)
     return path + file + newExtension;
 }
 
-String AddTrailingSlash(const String& pathName)
+String add_trailing_slash(const String& pathName)
 {
     String ret = pathName.Trimmed();
     ret.Replace('\\', '/');
@@ -738,12 +738,12 @@ String FileSystem::GetTemporaryDir() const
     wchar_t pathName[MAX_PATH];
     pathName[0] = 0;
     GetTempPathW(SDL_arraysize(pathName), pathName);
-    return AddTrailingSlash(String(pathName));
+    return add_trailing_slash(String(pathName));
 #else
     if (char* pathName = getenv("TMPDIR"))
-        return AddTrailingSlash(pathName);
+        return add_trailing_slash(pathName);
 #ifdef P_tmpdir
-    return AddTrailingSlash(P_tmpdir);
+    return add_trailing_slash(P_tmpdir);
 #else
     return "/tmp/";
 #endif

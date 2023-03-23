@@ -74,7 +74,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
 
     if (dirHandle_ != INVALID_HANDLE_VALUE)
     {
-        path_ = AddTrailingSlash(pathName);
+        path_ = add_trailing_slash(pathName);
         watchSubDirs_ = watchSubDirs;
         Run();
 
@@ -99,7 +99,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
     {
         // Store the root path here when reconstructed with inotify later
         dirHandle_[handle] = "";
-        path_ = AddTrailingSlash(pathName);
+        path_ = add_trailing_slash(pathName);
         watchSubDirs_ = watchSubDirs;
 
         if (watchSubDirs_)
@@ -109,7 +109,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
 
             for (unsigned i = 0; i < subDirs.Size(); ++i)
             {
-                String subDirFullPath = AddTrailingSlash(path_ + subDirs[i]);
+                String subDirFullPath = add_trailing_slash(path_ + subDirs[i]);
 
                 // Don't watch ./ or ../ sub-directories
                 if (!subDirFullPath.EndsWith("./"))
@@ -120,7 +120,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
                     else
                     {
                         // Store sub-directory to reconstruct later from inotify
-                        dirHandle_[handle] = AddTrailingSlash(subDirs[i]);
+                        dirHandle_[handle] = add_trailing_slash(subDirs[i]);
                     }
                 }
             }
@@ -140,7 +140,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
     watcher_ = CreateFileWatcher(pathName.c_str(), watchSubDirs);
     if (watcher_)
     {
-        path_ = AddTrailingSlash(pathName);
+        path_ = add_trailing_slash(pathName);
         watchSubDirs_ = watchSubDirs;
         Run();
 

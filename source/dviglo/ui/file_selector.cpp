@@ -173,7 +173,7 @@ void FileSelector::SetPath(const String& path)
 {
     if (dir_exists(path))
     {
-        path_ = AddTrailingSlash(path);
+        path_ = add_trailing_slash(path);
         SetLineEditText(pathEdit_, path_);
         RefreshFiles();
     }

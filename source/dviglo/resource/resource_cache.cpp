@@ -821,7 +821,7 @@ ResourceRouter* ResourceCache::GetResourceRouter(unsigned index) const
 
 String ResourceCache::GetPreferredResourceDir(const String& path) const
 {
-    String fixedPath = AddTrailingSlash(path);
+    String fixedPath = add_trailing_slash(path);
 
     bool pathHasKnownDirs = false;
     bool parentHasKnownDirs = false;
@@ -885,7 +885,7 @@ String ResourceCache::SanitateResourceName(const String& name) const
 
 String ResourceCache::SanitateResourceDirName(const String& name) const
 {
-    String fixedPath = AddTrailingSlash(name);
+    String fixedPath = add_trailing_slash(name);
     if (!IsAbsolutePath(fixedPath))
         fixedPath = DV_FILE_SYSTEM.GetCurrentDir() + fixedPath;
 

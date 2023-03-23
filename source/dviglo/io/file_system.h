@@ -123,7 +123,7 @@ DV_API String GetFileNameAndExtension(const String& fileName, bool lowercaseExte
 DV_API String replace_extension(const String& fullPath, const String& newExtension);
 
 /// Add a slash at the end of the path if missing and convert to internal format (use slashes).
-DV_API String AddTrailingSlash(const String& pathName);
+DV_API String add_trailing_slash(const String& pathName);
 
 /// Return whether a path is absolute.
 DV_API bool IsAbsolutePath(const String& pathName);

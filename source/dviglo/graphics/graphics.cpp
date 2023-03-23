@@ -381,7 +381,7 @@ void Graphics::SetShaderCacheDir(const String& path)
 {
     String trimmedPath = path.Trimmed();
     if (trimmedPath.Length())
-        shaderCacheDir_ = AddTrailingSlash(trimmedPath);
+        shaderCacheDir_ = add_trailing_slash(trimmedPath);
 }
 
 void Graphics::AddGPUObject(GpuObject* object)

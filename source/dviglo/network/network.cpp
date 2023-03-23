@@ -613,7 +613,7 @@ void Network::UnregisterAllRemoteEvents()
 
 void Network::SetPackageCacheDir(const String& path)
 {
-    packageCacheDir_ = AddTrailingSlash(path);
+    packageCacheDir_ = add_trailing_slash(path);
 }
 
 void Network::SendPackageToClients(Scene* scene, PackageFile* package)
