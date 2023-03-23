@@ -48,7 +48,7 @@ public:
     /// Set whether to execute engine console commands as OS-specific system command.
     void SetExecuteConsoleCommands(bool enable);
     /// Run a program using the command interpreter, block until it exits and return the exit code
-    int SystemCommand(const String& commandLine, bool redirectStdOutToLog = false);
+    int system_command(const String& commandLine, bool redirectStdOutToLog = false);
     /// Run a specific program, block until it exits and return the exit code
     int SystemRun(const String& fileName, const Vector<String>& arguments);
     /// Run a program using the command interpreter asynchronously. Return a request ID or M_MAX_UNSIGNED if failed. The exit code will be posted together with the request ID in an AsyncExecFinished event

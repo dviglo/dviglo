@@ -321,7 +321,7 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
         UnsubscribeFromEvent(E_CONSOLECOMMAND);
 }
 
-int FileSystem::SystemCommand(const String& commandLine, bool redirectStdOutToLog)
+int FileSystem::system_command(const String& commandLine, bool redirectStdOutToLog)
 {
     return DoSystemCommand(commandLine, redirectStdOutToLog);
 }
@@ -637,7 +637,7 @@ void FileSystem::HandleConsoleCommand(StringHash eventType, VariantMap& eventDat
 {
     using namespace ConsoleCommand;
     if (eventData[P_ID].GetString() == GetTypeName())
-        SystemCommand(eventData[P_COMMAND].GetString(), true);
+        system_command(eventData[P_COMMAND].GetString(), true);
 }
 
 void SplitPath(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension)
