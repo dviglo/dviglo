@@ -69,7 +69,7 @@ bool Sound::BeginLoad(Deserializer& source)
     else if (GetExtension(source.GetName()) == ".wav")
         success = LoadWav(source);
     else
-        success = LoadRaw(source);
+        success = load_raw(source);
 
     // Load optional parameters
     if (success)
@@ -191,7 +191,7 @@ bool Sound::LoadWav(Deserializer& source)
     return true;
 }
 
-bool Sound::LoadRaw(Deserializer& source)
+bool Sound::load_raw(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
     SetSize(dataSize);
