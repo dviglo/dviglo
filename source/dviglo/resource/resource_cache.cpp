@@ -348,7 +348,7 @@ void ResourceCache::release_resources(const String& partialName, bool force)
     } while (released && !force);
 }
 
-void ResourceCache::ReleaseAllResources(bool force)
+void ResourceCache::release_all_resources(bool force)
 {
     bool released;
     do

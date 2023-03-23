@@ -103,7 +103,7 @@ public:
     /// Release resources of all types by partial name.
     void release_resources(const String& partialName, bool force = false);
     /// Release all resources. When called with the force flag false, releases all currently unused resources.
-    void ReleaseAllResources(bool force = false);
+    void release_all_resources(bool force = false);
     /// Reload a resource. Return true on success. The resource will not be removed from the cache in case of failure.
     bool ReloadResource(Resource* resource);
     /// Reload a resource based on filename. Causes also reload of dependent resources if necessary.
