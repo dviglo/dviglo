@@ -159,7 +159,7 @@ public:
     /// Update and reinsert drawable objects.
     void Update(const FrameInfo& frame);
     /// Add a drawable manually.
-    void AddManualDrawable(Drawable* drawable);
+    void add_manual_drawable(Drawable* drawable);
     /// Remove a manually added drawable.
     void RemoveManualDrawable(Drawable* drawable);
 

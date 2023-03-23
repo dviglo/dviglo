@@ -459,7 +459,7 @@ void Octree::Update(const FrameInfo& frame)
     drawableUpdates_.Clear();
 }
 
-void Octree::AddManualDrawable(Drawable* drawable)
+void Octree::add_manual_drawable(Drawable* drawable)
 {
     if (!drawable || drawable->GetOctant())
         return;
