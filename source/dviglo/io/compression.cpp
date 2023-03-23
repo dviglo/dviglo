@@ -61,7 +61,7 @@ bool CompressStream(Serializer& dest, Deserializer& src)
     return success;
 }
 
-bool DecompressStream(Serializer& dest, Deserializer& src)
+bool decompress_stream(Serializer& dest, Deserializer& src)
 {
     if (src.IsEof())
         return false;
@@ -97,7 +97,7 @@ VectorBuffer decompress_vector_buffer(VectorBuffer& src)
 {
     VectorBuffer ret;
     src.Seek(0);
-    DecompressStream(ret, src);
+    decompress_stream(ret, src);
     ret.Seek(0);
     return ret;
 }
