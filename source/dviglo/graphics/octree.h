@@ -161,7 +161,7 @@ public:
     /// Add a drawable manually.
     void add_manual_drawable(Drawable* drawable);
     /// Remove a manually added drawable.
-    void RemoveManualDrawable(Drawable* drawable);
+    void remove_manual_drawable(Drawable* drawable);
 
     /// Return drawable objects by a query.
     void GetDrawables(OctreeQuery& query) const;

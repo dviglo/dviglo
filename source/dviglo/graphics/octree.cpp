@@ -467,7 +467,7 @@ void Octree::add_manual_drawable(Drawable* drawable)
     AddDrawable(drawable);
 }
 
-void Octree::RemoveManualDrawable(Drawable* drawable)
+void Octree::remove_manual_drawable(Drawable* drawable)
 {
     if (!drawable)
         return;
