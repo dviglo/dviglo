@@ -34,7 +34,7 @@ static Vector2 TransformNode2D(const Matrix3x4& transform, Vector2 local)
     return Vector2(transformed.x_, transformed.y_);
 }
 
-void TileMapLayer2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void TileMapLayer2D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (!debug)
         return;

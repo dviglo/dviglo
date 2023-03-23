@@ -116,7 +116,7 @@ void Constraint::GetDependencyNodes(Vector<Node*>& dest)
         dest.Push(otherBody_->GetNode());
 }
 
-void Constraint::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Constraint::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && physicsWorld_ && constraint_)
     {

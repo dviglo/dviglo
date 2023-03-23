@@ -47,9 +47,9 @@ public:
     unsigned GetObstacleID() const { return obstacleId_; }
 
     /// Render debug information.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
     /// Simplified rendering of debug information for script usage.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
 
 protected:
     /// Handle node being assigned.

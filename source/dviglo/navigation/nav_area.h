@@ -23,7 +23,7 @@ public:
     static void RegisterObject();
 
     /// Render debug geometry for the bounds.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Get the area id for this volume.
     unsigned GetAreaID() const { return (unsigned)areaID_; }

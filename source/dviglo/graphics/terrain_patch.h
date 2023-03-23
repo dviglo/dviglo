@@ -41,7 +41,7 @@ public:
     /// Draw to occlusion buffer. Return true if did not run out of triangles.
     bool DrawOcclusion(OcclusionBuffer* buffer) override;
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set owner terrain.
     void SetOwner(Terrain* terrain);

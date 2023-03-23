@@ -34,7 +34,7 @@ public:
     /// Apply Attributes to the SplinePath.
     void ApplyAttributes() override;
     /// Draw the Debug Geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Add a Node to the SplinePath as a Control Point.
     void AddControlPoint(Node* point, unsigned index = M_MAX_UNSIGNED);

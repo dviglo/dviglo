@@ -51,7 +51,7 @@ BoundingBox NavArea::GetWorldBoundingBox() const
     return boundingBox_.Transformed(mat);
 }
 
-void NavArea::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void NavArea::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && IsEnabledEffective())
     {

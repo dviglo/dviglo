@@ -27,12 +27,12 @@ public:
     static void RegisterObject();
 
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set tmx file.
     void SetTmxFile(TmxFile2D* tmxFile);
     /// Add debug geometry to the debug renderer.
-    void DrawDebugGeometry();
+    void draw_debug_geometry();
 
     /// Return tmx file.
     TmxFile2D* GetTmxFile() const;

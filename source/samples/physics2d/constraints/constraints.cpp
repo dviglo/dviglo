@@ -79,8 +79,8 @@ void Urho2DConstraints::CreateScene()
     scene_->create_component<Octree>();
     scene_->create_component<DebugRenderer>();
     auto* physicsWorld = scene_->create_component<PhysicsWorld2D>(); // Create 2D physics world component
-    physicsWorld->SetDrawJoint(true); // Display the joints (Note that DrawDebugGeometry() must be set to true to acually draw the joints)
-    drawDebug_ = true; // Set DrawDebugGeometry() to true
+    physicsWorld->SetDrawJoint(true); // Display the joints (Note that draw_debug_geometry() must be set to true to acually draw the joints)
+    drawDebug_ = true; // Set draw_debug_geometry() to true
 
     // Create camera
     cameraNode_ = scene_->create_child("Camera");
@@ -453,7 +453,7 @@ void Urho2DConstraints::HandleUpdate(StringHash eventType, VariantMap& eventData
 void Urho2DConstraints::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
 {
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-    if (drawDebug_) physicsWorld->DrawDebugGeometry();
+    if (drawDebug_) physicsWorld->draw_debug_geometry();
 }
 
 void Urho2DConstraints::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)

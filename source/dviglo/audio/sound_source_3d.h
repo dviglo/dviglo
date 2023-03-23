@@ -23,7 +23,7 @@ public:
     static void RegisterObject();
 
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
     /// Update sound source.
     void Update(float timeStep) override;
 

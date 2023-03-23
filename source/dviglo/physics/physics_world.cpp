@@ -206,7 +206,7 @@ void PhysicsWorld::drawLine(const btVector3& from, const btVector3& to, const bt
         debugRenderer_->AddLine(ToVector3(from), ToVector3(to), Color(color.x(), color.y(), color.z()), debugDepthTest_);
 }
 
-void PhysicsWorld::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void PhysicsWorld::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug)
     {
@@ -733,10 +733,10 @@ void PhysicsWorld::AddDelayedWorldTransform(const DelayedWorldTransform& transfo
     delayedWorldTransforms_[transform.rigidBody_] = transform;
 }
 
-void PhysicsWorld::DrawDebugGeometry(bool depthTest)
+void PhysicsWorld::draw_debug_geometry(bool depthTest)
 {
     auto* debug = GetComponent<DebugRenderer>();
-    DrawDebugGeometry(debug, depthTest);
+    draw_debug_geometry(debug, depthTest);
 }
 
 void PhysicsWorld::SetDebugRenderer(DebugRenderer* debug)

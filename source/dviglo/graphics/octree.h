@@ -78,7 +78,7 @@ public:
     /// Reset root pointer recursively. Called when the whole octree is being destroyed.
     void ResetRoot();
     /// Draw bounds to the debug graphics recursively.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest);
 
 protected:
     /// Initialize bounding box.
@@ -152,7 +152,7 @@ public:
     static void RegisterObject();
 
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set size and maximum subdivision levels. If octree is not empty, drawable objects will be temporarily moved to the root.
     void SetSize(const BoundingBox& box, i32 numLevels);
@@ -178,7 +178,7 @@ public:
     /// Cancel drawable object's update.
     void CancelUpdate(Drawable* drawable);
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
 
 private:
     /// Handle render update in case of headless execution.

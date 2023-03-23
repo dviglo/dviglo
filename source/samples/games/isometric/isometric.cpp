@@ -252,11 +252,11 @@ void Urho2DIsometricDemo::HandlePostRenderUpdate(StringHash eventType, VariantMa
     if (drawDebug_)
     {
         auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-        physicsWorld->DrawDebugGeometry();
+        physicsWorld->draw_debug_geometry();
 
         Node* tileMapNode = scene_->GetChild("TileMap", true);
         auto* map = tileMapNode->GetComponent<TileMap2D>();
-        map->DrawDebugGeometry(scene_->GetComponent<DebugRenderer>(), false);
+        map->draw_debug_geometry(scene_->GetComponent<DebugRenderer>(), false);
     }
 }
 

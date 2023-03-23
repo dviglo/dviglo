@@ -74,7 +74,7 @@ void PhysicsWorld2D::RegisterObject()
         AM_DEFAULT);
 }
 
-void PhysicsWorld2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void PhysicsWorld2D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug)
     {
@@ -315,11 +315,11 @@ void PhysicsWorld2D::Update(float timeStep)
     SendEvent(E_PHYSICSPOSTSTEP, eventData);
 }
 
-void PhysicsWorld2D::DrawDebugGeometry()
+void PhysicsWorld2D::draw_debug_geometry()
 {
     auto* debug = GetComponent<DebugRenderer>();
     if (debug)
-        DrawDebugGeometry(debug, false);
+        draw_debug_geometry(debug, false);
 }
 
 void PhysicsWorld2D::SetUpdateEnabled(bool enable)

@@ -198,5 +198,5 @@ void Urho2DPhysicsRope::HandleUpdate(StringHash eventType, VariantMap& eventData
     MoveCamera(timeStep);
 
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-    physicsWorld->DrawDebugGeometry();
+    physicsWorld->draw_debug_geometry();
 }

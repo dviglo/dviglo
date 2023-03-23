@@ -301,7 +301,7 @@ UpdateGeometryType AnimatedModel::GetUpdateGeometryType()
         return UPDATE_NONE;
 }
 
-void AnimatedModel::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void AnimatedModel::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && IsEnabledEffective())
     {

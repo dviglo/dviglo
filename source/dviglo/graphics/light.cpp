@@ -213,7 +213,7 @@ void Light::update_batches(const FrameInfo& frame)
     }
 }
 
-void Light::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Light::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     Color color = GetEffectiveColor();
 

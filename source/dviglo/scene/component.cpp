@@ -88,7 +88,7 @@ void Component::GetDependencyNodes(Vector<Node*>& dest)
 {
 }
 
-void Component::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Component::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
 }
 

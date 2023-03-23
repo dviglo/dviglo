@@ -496,7 +496,7 @@ void CollisionShape::OnSetEnabled()
     NotifyRigidBody();
 }
 
-void CollisionShape::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void CollisionShape::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && physicsWorld_ && shape_ && node_ && IsEnabledEffective())
     {

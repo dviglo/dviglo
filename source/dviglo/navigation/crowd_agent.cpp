@@ -140,18 +140,18 @@ void CrowdAgent::OnSetEnabled()
         RemoveAgentFromCrowd();
 }
 
-void CrowdAgent::DrawDebugGeometry(bool depthTest)
+void CrowdAgent::draw_debug_geometry(bool depthTest)
 {
     Scene* scene = GetScene();
     if (scene)
     {
         auto* debug = scene->GetComponent<DebugRenderer>();
         if (debug)
-            DrawDebugGeometry(debug, depthTest);
+            draw_debug_geometry(debug, depthTest);
     }
 }
 
-void CrowdAgent::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void CrowdAgent::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (node_)
     {

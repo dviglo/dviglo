@@ -64,7 +64,7 @@ public:
     static void RegisterObject();
 
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     // Implement b2ContactListener
     /// Called when two fixtures begin to touch.
@@ -93,7 +93,7 @@ public:
     /// Step the simulation forward.
     void Update(float timeStep);
     /// Add debug geometry to the debug renderer.
-    void DrawDebugGeometry();
+    void draw_debug_geometry();
     /// Enable or disable automatic physics simulation during scene update. Enabled by default.
     void SetUpdateEnabled(bool enable);
     /// Set draw shape.

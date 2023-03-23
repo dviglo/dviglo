@@ -284,5 +284,5 @@ void Ragdolls::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventDat
 {
     // If draw debug mode is enabled, draw physics debug geometry. Use depth test to make the result easier to interpret
     if (drawDebug_)
-        scene_->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+        scene_->GetComponent<PhysicsWorld>()->draw_debug_geometry(true);
 }

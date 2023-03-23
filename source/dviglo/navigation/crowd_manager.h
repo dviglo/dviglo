@@ -55,9 +55,9 @@ public:
     void ApplyAttributes() override;
 
     /// Draw the agents' pathing debug data.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
     /// Add debug geometry to the debug renderer.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
 
     /// Set the crowd target position. The target position is set to all crowd agents found in the specified node. Defaulted to scene node.
     void SetCrowdTarget(const Vector3& position, Node* node = nullptr);

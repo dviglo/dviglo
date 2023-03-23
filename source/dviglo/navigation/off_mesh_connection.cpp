@@ -52,7 +52,7 @@ void OffMeshConnection::ApplyAttributes()
     }
 }
 
-void OffMeshConnection::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void OffMeshConnection::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (!node_ || !endPoint_)
         return;

@@ -57,9 +57,9 @@ public:
     /// Remove all tiles from navigation mesh.
     void RemoveAllTiles() override;
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
     /// Add debug geometry to the debug renderer.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
 
     /// Set navigation data attribute.
     void SetNavigationDataAttr(const Vector<byte>& value) override;

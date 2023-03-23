@@ -309,5 +309,5 @@ void Billboards::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventD
     // If draw debug mode is enabled, draw viewport debug geometry. This time use depth test, as otherwise the result becomes
     // hard to interpret due to large object count
     if (drawDebug_)
-        DV_RENDERER.DrawDebugGeometry(true);
+        DV_RENDERER.draw_debug_geometry(true);
 }

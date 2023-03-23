@@ -177,7 +177,7 @@ void RigidBody::setWorldTransform(const btTransform& worldTrans)
     hasSimulated_ = true;
 }
 
-void RigidBody::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void RigidBody::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && physicsWorld_ && body_ && IsEnabledEffective())
     {

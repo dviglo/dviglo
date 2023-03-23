@@ -54,7 +54,7 @@ public:
     /// Update world transform from Bullet.
     void setWorldTransform(const btTransform& worldTrans) override;
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set mass. Zero mass makes the body static.
     void SetMass(float mass);

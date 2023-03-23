@@ -142,7 +142,7 @@ bool Drawable::DrawOcclusion(OcclusionBuffer* buffer)
     return true;
 }
 
-void Drawable::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Drawable::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && IsEnabledEffective())
         debug->AddBoundingBox(GetWorldBoundingBox(), Color::GREEN, depthTest);

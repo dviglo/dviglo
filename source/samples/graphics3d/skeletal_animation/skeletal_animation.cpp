@@ -266,5 +266,5 @@ void SkeletalAnimation::HandlePostRenderUpdate(StringHash eventType, VariantMap&
     // bones. Note that debug geometry has to be separately requested each frame. Disable depth test so that we can see the
     // bones properly
     if (drawDebug_)
-        DV_RENDERER.DrawDebugGeometry(false);
+        DV_RENDERER.draw_debug_geometry(false);
 }

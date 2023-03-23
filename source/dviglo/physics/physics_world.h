@@ -143,7 +143,7 @@ public:
     int getDebugMode() const override { return debugMode_; }
 
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Step the simulation forward.
     void Update(float timeStep);
@@ -237,7 +237,7 @@ public:
     /// Add a delayed world transform assignment. Called by RigidBody.
     void AddDelayedWorldTransform(const DelayedWorldTransform& transform);
     /// Add debug geometry to the debug renderer.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
     /// Set debug renderer to use. Called both by PhysicsWorld itself and physics components.
     void SetDebugRenderer(DebugRenderer* debug);
     /// Set debug geometry depth test mode. Called both by PhysicsWorld itself and physics components.

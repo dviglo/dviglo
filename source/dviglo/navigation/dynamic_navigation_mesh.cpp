@@ -569,7 +569,7 @@ void DynamicNavigationMesh::RemoveAllTiles()
     NavigationMesh::RemoveAllTiles();
 }
 
-void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void DynamicNavigationMesh::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (!debug || !navMesh_ || !node_)
         return;
@@ -609,7 +609,7 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
             {
                 auto* obstacle = obstacles[i]->GetComponent<Obstacle>();
                 if (obstacle && obstacle->IsEnabledEffective())
-                    obstacle->DrawDebugGeometry(debug, depthTest);
+                    obstacle->draw_debug_geometry(debug, depthTest);
             }
         }
 
@@ -622,7 +622,7 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
             {
                 auto* connection = connections[i]->GetComponent<OffMeshConnection>();
                 if (connection && connection->IsEnabledEffective())
-                    connection->DrawDebugGeometry(debug, depthTest);
+                    connection->draw_debug_geometry(debug, depthTest);
             }
         }
 
@@ -635,20 +635,20 @@ void DynamicNavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTe
             {
                 auto* area = areas[i]->GetComponent<NavArea>();
                 if (area && area->IsEnabledEffective())
-                    area->DrawDebugGeometry(debug, depthTest);
+                    area->draw_debug_geometry(debug, depthTest);
             }
         }
     }
 }
 
-void DynamicNavigationMesh::DrawDebugGeometry(bool depthTest)
+void DynamicNavigationMesh::draw_debug_geometry(bool depthTest)
 {
     Scene* scene = GetScene();
     if (scene)
     {
         auto* debug = scene->GetComponent<DebugRenderer>();
         if (debug)
-            DrawDebugGeometry(debug, depthTest);
+            draw_debug_geometry(debug, depthTest);
     }
 }
 

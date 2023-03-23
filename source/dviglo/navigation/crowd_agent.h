@@ -73,9 +73,9 @@ public:
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;
     /// Draw debug geometry.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
     /// Draw debug feelers.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Submit a new target position request for this agent.
     void SetTargetPosition(const Vector3& position);

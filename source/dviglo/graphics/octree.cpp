@@ -188,7 +188,7 @@ void Octant::ResetRoot()
     }
 }
 
-void Octant::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Octant::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && debug->IsInside(worldBoundingBox_))
     {
@@ -197,7 +197,7 @@ void Octant::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
         for (auto& child : children_)
         {
             if (child)
-                child->DrawDebugGeometry(debug, depthTest);
+                child->draw_debug_geometry(debug, depthTest);
         }
     }
 }
@@ -321,13 +321,13 @@ void Octree::RegisterObject()
     DV_ATTRIBUTE_EX("Number of Levels", numLevels_, UpdateOctreeSize, DEFAULT_OCTREE_LEVELS, AM_DEFAULT);
 }
 
-void Octree::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Octree::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug)
     {
         DV_PROFILE(OctreeDrawDebug);
 
-        Octant::DrawDebugGeometry(debug, depthTest);
+        Octant::draw_debug_geometry(debug, depthTest);
     }
 }
 
@@ -554,10 +554,10 @@ void Octree::CancelUpdate(Drawable* drawable)
     drawable->updateQueued_ = false;
 }
 
-void Octree::DrawDebugGeometry(bool depthTest)
+void Octree::draw_debug_geometry(bool depthTest)
 {
     auto* debug = GetComponent<DebugRenderer>();
-    DrawDebugGeometry(debug, depthTest);
+    draw_debug_geometry(debug, depthTest);
 }
 
 void Octree::HandleRenderUpdate(StringHash eventType, VariantMap& eventData)

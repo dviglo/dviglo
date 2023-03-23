@@ -55,7 +55,7 @@ public:
     /// Return the depended on nodes to order network updates.
     virtual void GetDependencyNodes(Vector<Node*>& dest);
     /// Visualize the component as debug geometry.
-    virtual void DrawDebugGeometry(DebugRenderer* debug, bool depthTest);
+    virtual void draw_debug_geometry(DebugRenderer* debug, bool depthTest);
 
     /// Set enabled/disabled state.
     void SetEnabled(bool enable);

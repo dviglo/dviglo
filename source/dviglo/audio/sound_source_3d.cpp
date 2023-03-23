@@ -49,7 +49,7 @@ void SoundSource3D::RegisterObject()
     DV_ATTRIBUTE("Rolloff Factor", rolloffFactor_, DEFAULT_ROLLOFF, AM_DEFAULT);
 }
 
-void SoundSource3D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void SoundSource3D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (!debug || !node_ || !IsEnabledEffective())
         return;

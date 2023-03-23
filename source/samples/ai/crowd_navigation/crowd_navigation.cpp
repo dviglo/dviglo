@@ -546,9 +546,9 @@ void CrowdNavigation::HandlePostRenderUpdate(StringHash eventType, VariantMap& e
     if (drawDebug_)
     {
         // Visualize navigation mesh, obstacles and off-mesh connections
-        scene_->GetComponent<DynamicNavigationMesh>()->DrawDebugGeometry(true);
+        scene_->GetComponent<DynamicNavigationMesh>()->draw_debug_geometry(true);
         // Visualize agents' path and position to reach
-        scene_->GetComponent<CrowdManager>()->DrawDebugGeometry(true);
+        scene_->GetComponent<CrowdManager>()->draw_debug_geometry(true);
     }
 }
 

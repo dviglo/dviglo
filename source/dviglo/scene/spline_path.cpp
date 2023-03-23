@@ -92,7 +92,7 @@ void SplinePath::ApplyAttributes()
     dirty_ = false;
 }
 
-void SplinePath::DrawDebugGeometry(DebugRenderer* debug, bool /*depthTest*/)
+void SplinePath::draw_debug_geometry(DebugRenderer* debug, bool /*depthTest*/)
 {
     if (debug && node_ && IsEnabledEffective())
     {

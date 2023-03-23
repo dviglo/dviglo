@@ -88,7 +88,7 @@ public:
     static void RegisterObject();
 
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set tile size.
     void SetTileSize(int size);
@@ -170,7 +170,7 @@ public:
         (const Vector3& start, const Vector3& end, const Vector3& extents = Vector3::ONE, const dtQueryFilter* filter = nullptr,
             Vector3* hitNormal = nullptr);
     /// Add debug geometry to the debug renderer.
-    void DrawDebugGeometry(bool depthTest);
+    void draw_debug_geometry(bool depthTest);
 
     /// Return the given name of this navigation mesh.
     String GetMeshName() const { return meshName_; }

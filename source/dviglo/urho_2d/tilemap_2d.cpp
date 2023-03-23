@@ -40,7 +40,7 @@ static Vector2 TransformNode2D(const Matrix3x4& transform, Vector2 local)
     return Vector2(transformed.x_, transformed.y_);
 }
 
-void TileMap2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void TileMap2D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     const Color& color = Color::RED;
     float mapW = info_.GetMapWidth();
@@ -75,10 +75,10 @@ void TileMap2D::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
     }
 
     for (const WeakPtr<TileMapLayer2D>& layer : layers_)
-        layer->DrawDebugGeometry(debug, depthTest);
+        layer->draw_debug_geometry(debug, depthTest);
 }
 
-void TileMap2D::DrawDebugGeometry()
+void TileMap2D::draw_debug_geometry()
 {
     Scene* scene = GetScene();
     if (!scene)
@@ -88,7 +88,7 @@ void TileMap2D::DrawDebugGeometry()
     if (!debug)
         return;
 
-    DrawDebugGeometry(debug, false);
+    draw_debug_geometry(debug, false);
 }
 
 void TileMap2D::SetTmxFile(TmxFile2D* tmxFile)

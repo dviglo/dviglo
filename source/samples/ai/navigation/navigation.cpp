@@ -458,7 +458,7 @@ void Navigation::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventD
 {
     // If draw debug mode is enabled, draw navigation mesh debug geometry
     if (drawDebug_)
-        scene_->GetComponent<NavigationMesh>()->DrawDebugGeometry(true);
+        scene_->GetComponent<NavigationMesh>()->draw_debug_geometry(true);
 
     if (currentPath_.Size())
     {

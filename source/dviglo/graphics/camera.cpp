@@ -86,7 +86,7 @@ void Camera::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Use Clipping", GetUseClipping, SetUseClipping, false, AM_DEFAULT);
 }
 
-void Camera::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Camera::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     debug->AddFrustum(GetFrustum(), Color::WHITE, depthTest);
 }

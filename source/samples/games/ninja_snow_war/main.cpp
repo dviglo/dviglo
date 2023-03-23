@@ -497,10 +497,10 @@ public:
             return;
 
         if (drawDebug)
-            gameScene->GetComponent<PhysicsWorld>()->DrawDebugGeometry(true);
+            gameScene->GetComponent<PhysicsWorld>()->draw_debug_geometry(true);
 
         if (drawOctreeDebug)
-            gameScene->GetComponent<Octree>()->DrawDebugGeometry(true);
+            gameScene->GetComponent<Octree>()->draw_debug_geometry(true);
     }
 
     void HandleKeyDown(StringHash eventType, VariantMap& eventData)

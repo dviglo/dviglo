@@ -762,7 +762,7 @@ void Renderer::Render()
     SendEvent(E_ENDALLVIEWSRENDER);
 }
 
-void Renderer::DrawDebugGeometry(bool depthTest)
+void Renderer::draw_debug_geometry(bool depthTest)
 {
     DV_PROFILE(RendererDrawDebug);
 
@@ -790,7 +790,7 @@ void Renderer::DrawDebugGeometry(bool depthTest)
         {
             if (!processedGeometries.Contains(geometry))
             {
-                geometry->DrawDebugGeometry(debug, depthTest);
+                geometry->draw_debug_geometry(debug, depthTest);
                 processedGeometries.Insert(geometry);
             }
         }
@@ -799,7 +799,7 @@ void Renderer::DrawDebugGeometry(bool depthTest)
         {
             if (!processedLights.Contains(light))
             {
-                light->DrawDebugGeometry(debug, depthTest);
+                light->draw_debug_geometry(debug, depthTest);
                 processedLights.Insert(light);
             }
         }

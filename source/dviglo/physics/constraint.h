@@ -50,7 +50,7 @@ public:
     /// Return the depended on nodes to order network updates.
     void GetDependencyNodes(Vector<Node*>& dest) override;
     /// Visualize the component as debug geometry.
-    void DrawDebugGeometry(DebugRenderer* debug, bool depthTest) override;
+    void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 
     /// Set constraint type and recreate the constraint.
     void SetConstraintType(ConstraintType type);

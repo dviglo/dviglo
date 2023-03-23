@@ -126,17 +126,17 @@ void Obstacle::HandleNavigationTileAdded(StringHash eventType, VariantMap& event
         ownerMesh_->ObstacleChanged(this);
 }
 
-void Obstacle::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Obstacle::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && IsEnabledEffective())
         debug->AddCylinder(node_->GetWorldPosition(), radius_, height_, Color(0.0f, 1.0f, 1.0f), depthTest);
 }
 
-void Obstacle::DrawDebugGeometry(bool depthTest)
+void Obstacle::draw_debug_geometry(bool depthTest)
 {
     Scene* scene = GetScene();
     if (scene)
-        DrawDebugGeometry(scene->GetComponent<DebugRenderer>(), depthTest);
+        draw_debug_geometry(scene->GetComponent<DebugRenderer>(), depthTest);
 }
 
 }

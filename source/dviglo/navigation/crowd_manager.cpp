@@ -110,7 +110,7 @@ void CrowdManager::ApplyAttributes()
         CreateCrowd();
 }
 
-void CrowdManager::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void CrowdManager::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && crowd_)
     {
@@ -123,7 +123,7 @@ void CrowdManager::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
 
             // Draw CrowdAgent shape (from its radius & height)
             auto* crowdAgent = static_cast<CrowdAgent*>(ag->params.userData);
-            crowdAgent->DrawDebugGeometry(debug, depthTest);
+            crowdAgent->draw_debug_geometry(debug, depthTest);
 
             // Draw move target if any
             if (crowdAgent->GetTargetState() == CA_TARGET_NONE || crowdAgent->GetTargetState() == CA_TARGET_VELOCITY)
@@ -153,14 +153,14 @@ void CrowdManager::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
     }
 }
 
-void CrowdManager::DrawDebugGeometry(bool depthTest)
+void CrowdManager::draw_debug_geometry(bool depthTest)
 {
     Scene* scene = GetScene();
     if (scene)
     {
         auto* debug = scene->GetComponent<DebugRenderer>();
         if (debug)
-            DrawDebugGeometry(debug, depthTest);
+            draw_debug_geometry(debug, depthTest);
     }
 }
 

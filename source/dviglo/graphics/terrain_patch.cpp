@@ -189,7 +189,7 @@ bool TerrainPatch::DrawOcclusion(OcclusionBuffer* buffer)
         occlusionGeometry_->GetIndexCount());
 }
 
-void TerrainPatch::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void TerrainPatch::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     // Intentionally no operation
 }

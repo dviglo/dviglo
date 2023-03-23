@@ -70,7 +70,7 @@ void Zone::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Zone Mask", GetZoneMask, SetZoneMask, DEFAULT_ZONEMASK, AM_DEFAULT);
 }
 
-void Zone::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void Zone::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (debug && IsEnabledEffective())
         debug->AddBoundingBox(boundingBox_, node_->GetWorldTransform(), Color::GREEN, depthTest);

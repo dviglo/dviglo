@@ -138,7 +138,7 @@ void NavigationMesh::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Draw NavAreas", GetDrawNavAreas, SetDrawNavAreas, false, AM_DEFAULT);
 }
 
-void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
+void NavigationMesh::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 {
     if (!debug || !navMesh_ || !node_)
         return;
@@ -181,7 +181,7 @@ void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
             {
                 OffMeshConnection* connection = node->GetComponent<OffMeshConnection>();
                 if (connection && connection->IsEnabledEffective())
-                    connection->DrawDebugGeometry(debug, depthTest);
+                    connection->draw_debug_geometry(debug, depthTest);
             }
         }
 
@@ -191,7 +191,7 @@ void NavigationMesh::DrawDebugGeometry(DebugRenderer* debug, bool depthTest)
             for (const WeakPtr<NavArea>& area : areas_)
             {
                 if (area && area->IsEnabledEffective())
-                    area->DrawDebugGeometry(debug, depthTest);
+                    area->draw_debug_geometry(debug, depthTest);
             }
         }
     }
@@ -825,14 +825,14 @@ Vector3 NavigationMesh::Raycast(const Vector3& start, const Vector3& end, const 
     return start.Lerp(end, t);
 }
 
-void NavigationMesh::DrawDebugGeometry(bool depthTest)
+void NavigationMesh::draw_debug_geometry(bool depthTest)
 {
     Scene* scene = GetScene();
     if (scene)
     {
         auto* debug = scene->GetComponent<DebugRenderer>();
         if (debug)
-            DrawDebugGeometry(debug, depthTest);
+            draw_debug_geometry(debug, depthTest);
     }
 }
 
