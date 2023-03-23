@@ -11,6 +11,6 @@ namespace dviglo
 inline constexpr float PIXEL_SIZE = 0.01f;
 
 /// Register Urho2D library objects.
-void DV_API RegisterUrho2DLibrary();
+void DV_API register_urho_2d_library();
 
 }

@@ -179,7 +179,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
 #ifdef DV_URHO2D
     // 2D graphics library is dependent on 3D graphics library
-    RegisterUrho2DLibrary();
+    register_urho_2d_library();
 #endif
 
     // Начинаем запись лога в файл

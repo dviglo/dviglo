@@ -23,7 +23,7 @@ namespace dviglo
 
 const char* URHO2D_CATEGORY = "Urho2D";
 
-void RegisterUrho2DLibrary()
+void register_urho_2d_library()
 {
     Renderer2D::register_object();
 
