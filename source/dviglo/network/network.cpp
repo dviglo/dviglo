@@ -213,7 +213,7 @@ Network::Network() :
     SetNATServerInfo("127.0.0.1", 61111);
 
     // Register Network library object factories
-    RegisterNetworkLibrary();
+    register_network_library();
 
     SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(Network, HandleBeginFrame));
     SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Network, HandleRenderUpdate));
@@ -1033,7 +1033,7 @@ void Network::ConfigureNetworkSimulator()
         i->second_->ConfigureNetworkSimulator(simulated_latency_, simulatedPacketLoss_);
 }
 
-void RegisterNetworkLibrary()
+void register_network_library()
 {
     NetworkPriority::register_object();
 }

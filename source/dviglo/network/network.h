@@ -185,6 +185,6 @@ private:
 #define DV_NET (dviglo::Network::get_instance())
 
 /// Register Network library objects.
-void DV_API RegisterNetworkLibrary();
+void DV_API register_network_library();
 
 }
