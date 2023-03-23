@@ -2410,6 +2410,8 @@ unsigned Graphics::GetReadableDepthFormat_OGL()
 
 unsigned Graphics::GetFormat_OGL(const String& formatName)
 {
+    // https://www.khronos.org/opengl/wiki/Image_Format
+
     String nameLower = formatName.ToLower().Trimmed();
 
     if (nameLower == "a")
