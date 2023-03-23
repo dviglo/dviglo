@@ -715,7 +715,7 @@ void Engine::apply_frame_limit()
         timeStep_ = lastTimeSteps_.Back();
 }
 
-VariantMap Engine::ParseParameters(const Vector<String>& arguments)
+VariantMap Engine::parse_parameters(const Vector<String>& arguments)
 {
     VariantMap ret;
 

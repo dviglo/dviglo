@@ -16,7 +16,7 @@ namespace dviglo
 Application::Application() :
     exitCode_(EXIT_SUCCESS)
 {
-    engineParameters_ = Engine::ParseParameters(GetArguments());
+    engineParameters_ = Engine::parse_parameters(GetArguments());
 
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
     Engine::get_instance();

@@ -92,7 +92,7 @@ public:
     void apply_frame_limit();
 
     /// Parse the engine startup parameters map from command line arguments.
-    static VariantMap ParseParameters(const Vector<String>& arguments);
+    static VariantMap parse_parameters(const Vector<String>& arguments);
     /// Return whether startup parameters contains a specific parameter.
     static bool HasParameter(const VariantMap& parameters, const String& parameter);
     /// Get an engine startup parameter, with default value if missing.
