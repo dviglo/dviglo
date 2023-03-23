@@ -137,7 +137,7 @@ bool ResourceCache::add_resource_dir(const String& pathName, i32 priority)
     return true;
 }
 
-bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
+bool ResourceCache::add_package_file(PackageFile* package, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
 
@@ -159,11 +159,11 @@ bool ResourceCache::AddPackageFile(PackageFile* package, i32 priority)
     return true;
 }
 
-bool ResourceCache::AddPackageFile(const String& fileName, i32 priority)
+bool ResourceCache::add_package_file(const String& fileName, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
     SharedPtr<PackageFile> package(new PackageFile());
-    return package->Open(fileName) && AddPackageFile(package, priority);
+    return package->Open(fileName) && add_package_file(package, priority);
 }
 
 bool ResourceCache::AddManualResource(Resource* resource)

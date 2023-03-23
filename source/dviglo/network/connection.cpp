@@ -890,7 +890,7 @@ void Connection::ProcessPackageDownload(int msgID, MemoryBuffer& msg)
 
                 // Instantiate the package and add to the resource system, as we will need it to load the scene
                 download.file_->Close();
-                DV_RES_CACHE.AddPackageFile(download.file_->GetName(), 0);
+                DV_RES_CACHE.add_package_file(download.file_->GetName(), 0);
 
                 // Then start the next download if there are more
                 downloads_.Erase(i);
@@ -1507,7 +1507,7 @@ bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
                 if (newPackage->GetTotalSize() == fileSize && newPackage->GetChecksum() == checksum)
                 {
                     // Add the package to the resource system now, as we will need it to load the scene
-                    cache.AddPackageFile(newPackage, 0);
+                    cache.add_package_file(newPackage, 0);
                     found = true;
                     break;
                 }

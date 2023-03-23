@@ -84,10 +84,10 @@ public:
     bool add_resource_dir(const String& pathName, i32 priority = PRIORITY_LAST);
 
     /// Add a package file for loading resources from. Optional priority parameter which will control search order.
-    bool AddPackageFile(PackageFile* package, i32 priority = PRIORITY_LAST);
+    bool add_package_file(PackageFile* package, i32 priority = PRIORITY_LAST);
 
     /// Add a package file for loading resources from by name. Optional priority parameter which will control search order.
-    bool AddPackageFile(const String& fileName, i32 priority = PRIORITY_LAST);
+    bool add_package_file(const String& fileName, i32 priority = PRIORITY_LAST);
 
     /// Add a manually created resource. Must be uniquely named within its type.
     bool AddManualResource(Resource* resource);

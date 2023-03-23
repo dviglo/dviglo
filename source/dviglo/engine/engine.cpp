@@ -328,7 +328,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                 String packageName = resourcePrefixPaths[j] + resourcePaths[i] + ".pak";
                 if (fileSystem.file_exists(packageName))
                 {
-                    if (cache.AddPackageFile(packageName))
+                    if (cache.add_package_file(packageName))
                         break;
                     else
                         return false;   // The root cause of the error should have already been logged
@@ -368,7 +368,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             String packageName = resourcePrefixPaths[j] + resourcePackages[i];
             if (fileSystem.file_exists(packageName))
             {
-                if (cache.AddPackageFile(packageName))
+                if (cache.add_package_file(packageName))
                     break;
                 else
                     return false;
@@ -422,7 +422,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         continue;
 
                     String autoPackageName = autoLoadPath + "/" + pak;
-                    if (!cache.AddPackageFile(autoPackageName, 0))
+                    if (!cache.add_package_file(autoPackageName, 0))
                         return false;
                 }
             }
