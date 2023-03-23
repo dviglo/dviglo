@@ -114,7 +114,7 @@ void Frustum::Define(const Matrix4& projection)
     UpdatePlanes();
 }
 
-void Frustum::DefineOrtho(float orthoSize, float aspectRatio, float zoom, float nearZ, float farZ, const Matrix3x4& transform)
+void Frustum::define_ortho(float orthoSize, float aspectRatio, float zoom, float nearZ, float farZ, const Matrix3x4& transform)
 {
     nearZ = Max(nearZ, 0.0f);
     farZ = Max(farZ, nearZ);

@@ -354,7 +354,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
     // Build the decal frustum
     Frustum decalFrustum;
     Matrix3x4 frustumTransform = targetTransform * Matrix3x4(adjustedWorldPosition, worldRotation, 1.0f);
-    decalFrustum.DefineOrtho(size, aspectRatio, 1.0, 0.0f, depth, frustumTransform);
+    decalFrustum.define_ortho(size, aspectRatio, 1.0, 0.0f, depth, frustumTransform);
 
     Vector3 decalNormal = (targetTransform * Vector4(worldRotation * Vector3::BACK, 0.0f)).Normalized();
 
