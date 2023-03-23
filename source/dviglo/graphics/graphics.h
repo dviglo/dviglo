@@ -438,9 +438,6 @@ public:
     /// Return whether shadow map depth compare is done in hardware.
     bool GetHardwareShadowSupport() const { return hardwareShadowSupport_; }
 
-    /// Return whether a readable hardware depth format is available.
-    bool GetReadableDepthSupport() const { return GetReadableDepthFormat() != 0; }
-
     /// Return whether sRGB conversion on texture sampling is supported.
     bool GetSRGBSupport() const { return sRGBSupport_; }
 
