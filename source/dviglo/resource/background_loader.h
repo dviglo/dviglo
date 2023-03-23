@@ -62,7 +62,7 @@ private:
     /// Resource cache.
     ResourceCache* owner_;
     /// Mutex for thread-safe access to the background load queue.
-    mutable std::mutex backgroundLoadMutex_;
+    mutable std::mutex background_load_mutex_;
     /// Resources that are queued for background loading.
     HashMap<Pair<StringHash, StringHash>, BackgroundLoadItem> backgroundLoadQueue_;
 };
