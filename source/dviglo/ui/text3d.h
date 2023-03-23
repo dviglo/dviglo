@@ -28,7 +28,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Calculate distance and prepare batches for rendering. May be called from worker thread(s), possibly re-entrantly.
     void update_batches(const FrameInfo& frame) override;
     /// Prepare geometry for rendering. Called from a worker thread if possible (no GPU update).

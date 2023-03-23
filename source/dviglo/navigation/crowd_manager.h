@@ -52,7 +52,7 @@ public:
     /// Register object factory.
     static void RegisterObject();
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
 
     /// Draw the agents' pathing debug data.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;

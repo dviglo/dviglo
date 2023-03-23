@@ -42,7 +42,7 @@ void OffMeshConnection::RegisterObject()
     DV_ATTRIBUTE("Area Type", areaId_, DEFAULT_AREA, AM_DEFAULT);
 }
 
-void OffMeshConnection::ApplyAttributes()
+void OffMeshConnection::apply_attributes()
 {
     if (endPointDirty_)
     {

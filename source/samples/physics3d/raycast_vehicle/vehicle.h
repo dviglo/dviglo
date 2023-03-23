@@ -42,7 +42,7 @@ public :
     static void RegisterObject();
 
     /// Perform post-load after deserialization. Acquire the components from the scene nodes.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
 
     /// Initialize the vehicle. Create rendering and physics components. Called by the application.
     void Init();

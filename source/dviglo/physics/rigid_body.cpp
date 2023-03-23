@@ -109,7 +109,7 @@ void RigidBody::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Gravity Override", GetGravityOverride, SetGravityOverride, Vector3::ZERO, AM_DEFAULT);
 }
 
-void RigidBody::ApplyAttributes()
+void RigidBody::apply_attributes()
 {
     if (readdBody_)
         AddBodyToWorld();

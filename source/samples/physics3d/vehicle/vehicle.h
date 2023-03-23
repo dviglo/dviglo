@@ -41,7 +41,7 @@ public:
     static void RegisterObject();
 
     /// Perform post-load after deserialization. Acquire the components from the scene nodes.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Handle physics world update. Called by LogicComponent base class.
     void FixedUpdate(float timeStep) override;
 

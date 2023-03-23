@@ -173,7 +173,7 @@ void DecalSet::RegisterObject()
         AM_FILE | AM_NOEDIT);
 }
 
-void DecalSet::ApplyAttributes()
+void DecalSet::apply_attributes()
 {
     if (assignBonesPending_)
         AssignBoneNodes();

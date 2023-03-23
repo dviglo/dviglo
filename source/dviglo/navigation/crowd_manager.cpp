@@ -85,7 +85,7 @@ void CrowdManager::RegisterObject()
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, obstacleAvoidanceTypesStructureElementNames);
 }
 
-void CrowdManager::ApplyAttributes()
+void CrowdManager::apply_attributes()
 {
     // Values from Editor, saved-file, or network must be checked before applying
     maxAgents_ = Max(1, maxAgents_);

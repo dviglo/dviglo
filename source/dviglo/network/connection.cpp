@@ -404,7 +404,7 @@ void Connection::ProcessPendingLatestData()
             MemoryBuffer msg(current->second_);
             msg.ReadNetID(); // Skip the node ID
             node->ReadLatestDataUpdate(msg);
-            // ApplyAttributes() is deliberately skipped, as Node has no attributes that require late applying.
+            // apply_attributes() is deliberately skipped, as Node has no attributes that require late applying.
             // Furthermore it would propagate to components and child nodes, which is not desired in this case
             nodeLatestData_.Erase(current);
         }
@@ -420,7 +420,7 @@ void Connection::ProcessPendingLatestData()
             MemoryBuffer msg(current->second_);
             msg.ReadNetID(); // Skip the component ID
             if (component->ReadLatestDataUpdate(msg))
-                component->ApplyAttributes();
+                component->apply_attributes();
             componentLatestData_.Erase(current);
         }
     }
@@ -636,7 +636,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
 
                 // Read initial attributes and apply
                 component->ReadDeltaUpdate(msg);
-                component->ApplyAttributes();
+                component->apply_attributes();
             }
         }
         break;
@@ -648,7 +648,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
             if (node)
             {
                 node->ReadDeltaUpdate(msg);
-                // ApplyAttributes() is deliberately skipped, as Node has no attributes that require late applying.
+                // apply_attributes() is deliberately skipped, as Node has no attributes that require late applying.
                 // Furthermore it would propagate to components and child nodes, which is not desired in this case
                 unsigned changedVars = msg.ReadVLE();
                 while (changedVars)
@@ -670,7 +670,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
             if (node)
             {
                 node->ReadLatestDataUpdate(msg);
-                // ApplyAttributes() is deliberately skipped, as Node has no attributes that require late applying.
+                // apply_attributes() is deliberately skipped, as Node has no attributes that require late applying.
                 // Furthermore it would propagate to components and child nodes, which is not desired in this case
             }
             else
@@ -720,7 +720,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
 
                 // Read initial attributes and apply
                 component->ReadDeltaUpdate(msg);
-                component->ApplyAttributes();
+                component->apply_attributes();
             }
             else
                 DV_LOGWARNING("create_component message received for missing node " + String(nodeID));
@@ -734,7 +734,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
             if (component)
             {
                 component->ReadDeltaUpdate(msg);
-                component->ApplyAttributes();
+                component->apply_attributes();
             }
             else
                 DV_LOGWARNING("ComponentDeltaUpdate message received for missing component " + String(componentID));
@@ -748,7 +748,7 @@ void Connection::ProcessSceneUpdate(int msgID, MemoryBuffer& msg)
             if (component)
             {
                 if (component->ReadLatestDataUpdate(msg))
-                    component->ApplyAttributes();
+                    component->apply_attributes();
             }
             else
             {

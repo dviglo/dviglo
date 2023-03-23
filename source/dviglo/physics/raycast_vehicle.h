@@ -29,7 +29,7 @@ public:
     void OnSetEnabled() override;
 
     /// Perform post-load after deserialization. Acquire the components from the scene nodes.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
 
     /// Add a wheel. All parameters are relative to RigidBody / node.
     void AddWheel(Node* wheelNode, Vector3 wheelDirection, Vector3 wheelAxle, float restLength, float wheelRadius, bool frontWheel);
@@ -184,7 +184,7 @@ private:
     Vector<float> wheelSideSlipSpeed_;
     /// Side slip speed threshold.
     float maxSideSlipSpeed_;
-    /// Loaded data temporarily wait here for ApplyAttributes to come pick them up.
+    /// Loaded data temporarily wait here for apply_attributes to come pick them up.
     VariantVector loadedWheelData_;
 };
 

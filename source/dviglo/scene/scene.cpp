@@ -517,7 +517,7 @@ Node* Scene::Instantiate(Deserializer& source, const Vector3& position, const Qu
     {
         resolver.Resolve();
         node->SetTransform(position, rotation);
-        node->ApplyAttributes();
+        node->apply_attributes();
         return node;
     }
     else
@@ -540,7 +540,7 @@ Node* Scene::InstantiateXML(const XmlElement& source, const Vector3& position, c
     {
         resolver.Resolve();
         node->SetTransform(position, rotation);
-        node->ApplyAttributes();
+        node->apply_attributes();
         return node;
     }
     else
@@ -563,7 +563,7 @@ Node* Scene::InstantiateJSON(const JSONValue& source, const Vector3& position, c
     {
         resolver.Resolve();
         node->SetTransform(position, rotation);
-        node->ApplyAttributes();
+        node->apply_attributes();
         return node;
     }
     else
@@ -1235,7 +1235,7 @@ void Scene::FinishAsyncLoading()
     if (asyncProgress_.mode_ > LOAD_RESOURCES_ONLY)
     {
         resolver_.Resolve();
-        ApplyAttributes();
+        apply_attributes();
         FinishLoading(asyncProgress_.file_);
     }
 

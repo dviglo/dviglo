@@ -179,7 +179,7 @@ void RaycastVehicle::OnSetEnabled()
         vehicleData_->SetEnabled(IsEnabledEffective());
 }
 
-void RaycastVehicle::ApplyAttributes()
+void RaycastVehicle::apply_attributes()
 {
     int index = 0;
     hullBody_ = node_->GetOrCreateComponent<RigidBody>();

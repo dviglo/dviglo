@@ -25,7 +25,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Return UI rendering batches.
     void GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor) override;
     /// React to the popup being shown.

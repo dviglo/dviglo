@@ -72,9 +72,9 @@ void ScrollBar::RegisterObject()
     DV_ATTRIBUTE("Down Image Rect", downRect_, IntRect::ZERO, AM_FILE);
 }
 
-void ScrollBar::ApplyAttributes()
+void ScrollBar::apply_attributes()
 {
-    BorderImage::ApplyAttributes();
+    BorderImage::apply_attributes();
 
     // Reapply orientation to the button images
     if (slider_->GetOrientation() == O_HORIZONTAL)

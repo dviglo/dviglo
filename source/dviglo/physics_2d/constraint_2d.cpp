@@ -31,7 +31,7 @@ void Constraint2D::RegisterObject()
     DV_ATTRIBUTE_EX("Other Body NodeID", otherBodyNodeID_, MarkOtherBodyNodeIDDirty, 0, AM_DEFAULT | AM_NODEID);
 }
 
-void Constraint2D::ApplyAttributes()
+void Constraint2D::apply_attributes()
 {
     // If other body node ID dirty, try to find it now and apply
     if (otherBodyNodeIDDirty_)

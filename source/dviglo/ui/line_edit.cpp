@@ -66,9 +66,9 @@ void LineEdit::RegisterObject()
     DV_ATTRIBUTE("Echo Character", echoCharacter_, 0, AM_FILE);
 }
 
-void LineEdit::ApplyAttributes()
+void LineEdit::apply_attributes()
 {
-    BorderImage::ApplyAttributes();
+    BorderImage::apply_attributes();
 
     // Set the text's position to match clipping and indent width, so that text left edge is not left partially hidden
     text_->SetPosition(GetIndentWidth() + clipBorder_.left_, clipBorder_.top_);

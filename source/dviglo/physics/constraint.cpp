@@ -78,7 +78,7 @@ void Constraint::RegisterObject()
     DV_ATTRIBUTE_EX("Disable Collision", disableCollision_, MarkConstraintDirty, false, AM_DEFAULT);
 }
 
-void Constraint::ApplyAttributes()
+void Constraint::apply_attributes()
 {
     if (recreateConstraint_)
     {

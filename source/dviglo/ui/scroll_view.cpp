@@ -68,9 +68,9 @@ void ScrollView::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Auto Show/Hide Scrollbars", GetScrollBarsAutoVisible, SetScrollBarsAutoVisible, true, AM_FILE);
 }
 
-void ScrollView::ApplyAttributes()
+void ScrollView::apply_attributes()
 {
-    UiElement::ApplyAttributes();
+    UiElement::apply_attributes();
 
     // Set the scrollbar orientations again and perform size update now that the style is known
     horizontalScrollBar_->SetOrientation(O_HORIZONTAL);

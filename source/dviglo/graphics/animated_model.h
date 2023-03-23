@@ -36,7 +36,7 @@ public:
     /// Load from JSON data. Return true if successful.
     bool load_json(const JSONValue& source) override;
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;
     /// Update before octree reinsertion. Is called from a worker thread.
@@ -159,7 +159,7 @@ protected:
     void OnWorldBoundingBoxUpdate() override;
 
 private:
-    /// Assign skeleton and animation bone node references as a postprocess. Called by ApplyAttributes.
+    /// Assign skeleton and animation bone node references as a postprocess. Called by apply_attributes.
     void AssignBoneNodes();
     /// Finalize master model bone bounding boxes by merging from matching non-master bones.. Performed whenever any of the AnimatedModels in the same node changes its model.
     void FinalizeBoneBoundingBoxes();

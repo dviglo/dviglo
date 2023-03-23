@@ -26,7 +26,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// React to mouse wheel.
     void OnWheel(int delta, MouseButtonFlags buttons, QualifierFlags qualifiers) override;
     /// React to a key press.

@@ -26,7 +26,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// React to resize.
     void OnResize(const IntVector2& newSize, const IntVector2& delta) override;
     /// React to editable status change.

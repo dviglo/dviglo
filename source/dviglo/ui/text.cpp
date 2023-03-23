@@ -77,9 +77,9 @@ void Text::RegisterObject()
     DV_CONTEXT.GetAttribute<Text>("Use Derived Opacity")->defaultValue_ = false;
 }
 
-void Text::ApplyAttributes()
+void Text::apply_attributes()
 {
-    UISelectable::ApplyAttributes();
+    UISelectable::apply_attributes();
 
     // Localize now if attributes were loaded out-of-order
     if (autoLocalizable_ && stringId_.Length())

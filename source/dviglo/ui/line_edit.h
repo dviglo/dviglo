@@ -26,7 +26,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Perform UI element update.
     void Update(float timeStep) override;
     /// React to mouse click begin.

@@ -130,7 +130,7 @@ void Vehicle::CreateEmitter(Vector3 place)
 }
 
 /// Applying attributes
-void Vehicle::ApplyAttributes()
+void Vehicle::apply_attributes()
 {
     auto* vehicle = node_->GetOrCreateComponent<RaycastVehicle>();
     if (emittersCreated)

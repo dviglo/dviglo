@@ -134,7 +134,7 @@ void UiElement::RegisterObject()
     DV_ATTRIBUTE("Tags", tags_, Variant::emptyStringVector, AM_FILE);
 }
 
-void UiElement::ApplyAttributes()
+void UiElement::apply_attributes()
 {
     colorGradient_ = false;
     derivedColorDirty_ = true;
@@ -231,7 +231,7 @@ bool UiElement::load_xml(const XmlElement& source, XmlFile* styleFile)
         childElem = childElem.GetNext("element");
     }
 
-    ApplyAttributes();
+    apply_attributes();
 
     EnableLayoutUpdate();
     UpdateLayout();

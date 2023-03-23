@@ -23,7 +23,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Visualize the component as debug geometry.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 

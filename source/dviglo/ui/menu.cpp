@@ -206,7 +206,7 @@ bool Menu::load_xml(const XmlElement& source, XmlFile* styleFile)
         childElem = childElem.GetNext("element");
     }
 
-    ApplyAttributes();
+    apply_attributes();
 
     return true;
 }

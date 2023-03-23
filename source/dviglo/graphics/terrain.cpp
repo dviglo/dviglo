@@ -127,7 +127,7 @@ void Terrain::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Occlusion LOD level", GetOcclusionLodLevel, SetOcclusionLodLevelAttr, NINDEX, AM_DEFAULT);
 }
 
-void Terrain::ApplyAttributes()
+void Terrain::apply_attributes()
 {
     if (recreateTerrain_)
         CreateGeometry();

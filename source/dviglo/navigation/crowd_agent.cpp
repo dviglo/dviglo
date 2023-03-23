@@ -100,7 +100,7 @@ void CrowdAgent::RegisterObject()
     DV_ENUM_ATTRIBUTE("Navigation Quality", navQuality_, crowdAgentAvoidanceQualityNames, DEFAULT_AGENT_AVOIDANCE_QUALITY, AM_DEFAULT);
 }
 
-void CrowdAgent::ApplyAttributes()
+void CrowdAgent::apply_attributes()
 {
     // Values from Editor, saved-file, or network must be checked before applying
     maxAccel_ = Max(0.f, maxAccel_);
@@ -259,7 +259,7 @@ int CrowdAgent::AddAgentToCrowd(bool force)
         if (agentCrowdId_ == -1)
             return -1;
 
-        ApplyAttributes();
+        apply_attributes();
 
         previousAgentState_ = GetAgentState();
         previousTargetState_ = GetTargetState();

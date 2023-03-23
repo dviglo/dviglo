@@ -37,7 +37,7 @@ void Vehicle::RegisterObject()
     DV_ATTRIBUTE("Rear Right Node", rearRightID_, 0, AM_DEFAULT | AM_NODEID);
 }
 
-void Vehicle::ApplyAttributes()
+void Vehicle::apply_attributes()
 {
     // This function is called on each Serializable after the whole scene has been loaded. Reacquire wheel nodes from ID's
     // as well as all required physics components

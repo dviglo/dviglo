@@ -68,7 +68,7 @@ public:
     /// Register object factory.
     static void RegisterObject();
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

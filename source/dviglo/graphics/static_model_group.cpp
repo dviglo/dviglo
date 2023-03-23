@@ -44,7 +44,7 @@ void StaticModelGroup::RegisterObject()
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, instanceNodesStructureElementNames);
 }
 
-void StaticModelGroup::ApplyAttributes()
+void StaticModelGroup::apply_attributes()
 {
     if (!nodesDirty_)
         return;
@@ -300,7 +300,7 @@ Node* StaticModelGroup::GetInstanceNode(unsigned index) const
 void StaticModelGroup::SetNodeIDsAttr(const VariantVector& value)
 {
     // Just remember the node IDs. They need to go through the SceneResolver, and we actually find the nodes during
-    // ApplyAttributes()
+    // apply_attributes()
     if (value.Size())
     {
         nodeIDsAttr_.Clear();

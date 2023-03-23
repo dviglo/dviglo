@@ -46,7 +46,7 @@ void SplinePath::RegisterObject()
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, controlPointsStructureElementNames);
 }
 
-void SplinePath::ApplyAttributes()
+void SplinePath::apply_attributes()
 {
     if (!dirty_)
         return;
@@ -221,7 +221,7 @@ void SplinePath::Reset()
 void SplinePath::SetControlPointIdsAttr(const VariantVector& value)
 {
     // Just remember the node IDs. They need to go through the SceneResolver, and we actually find the nodes during
-    // ApplyAttributes()
+    // apply_attributes()
     if (value.Size())
     {
         controlPointIdsAttr_.Clear();

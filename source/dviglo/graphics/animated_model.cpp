@@ -131,7 +131,7 @@ bool AnimatedModel::load_json(const JSONValue& source)
     return success;
 }
 
-void AnimatedModel::ApplyAttributes()
+void AnimatedModel::apply_attributes()
 {
     if (assignBonesPending_)
         AssignBoneNodes();

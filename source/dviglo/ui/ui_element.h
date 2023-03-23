@@ -114,7 +114,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Load from XML data. Return true if successful.
     bool load_xml(const XmlElement& source) override;
     /// Load from XML data with style. Return true if successful.

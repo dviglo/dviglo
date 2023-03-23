@@ -23,7 +23,7 @@ public:
     static void RegisterObject();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;
     /// Calculate distance and prepare batches for rendering. May be called from worker thread(s), possibly re-entrantly.
@@ -72,7 +72,7 @@ private:
     mutable VariantVector nodeIDsAttr_;
     /// Number of valid instance node transforms.
     unsigned numWorldTransforms_{};
-    /// Whether node IDs have been set and nodes should be searched for during ApplyAttributes.
+    /// Whether node IDs have been set and nodes should be searched for during apply_attributes.
     mutable bool nodesDirty_{};
     /// Whether nodes have been manipulated by the API and node ID attribute should be refreshed.
     mutable bool nodeIDsDirty_{};

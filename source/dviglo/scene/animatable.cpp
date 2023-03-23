@@ -36,7 +36,7 @@ void AttributeAnimationInfo::ApplyValue(const Variant& newValue)
     if (animatable)
     {
         animatable->OnSetAttribute(attributeInfo_, newValue);
-        animatable->ApplyAttributes();
+        animatable->apply_attributes();
     }
 }
 

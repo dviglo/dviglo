@@ -83,9 +83,9 @@ void Text3D::RegisterObject()
     DV_COPY_BASE_ATTRIBUTES(Drawable);
 }
 
-void Text3D::ApplyAttributes()
+void Text3D::apply_attributes()
 {
-    text_.ApplyAttributes();
+    text_.apply_attributes();
     MarkTextDirty();
     UpdateTextBatches();
     UpdateTextMaterials();

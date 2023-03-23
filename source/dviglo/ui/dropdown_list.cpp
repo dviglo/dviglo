@@ -57,7 +57,7 @@ void DropDownList::RegisterObject()
     DV_ACCESSOR_ATTRIBUTE("Resize Popup", GetResizePopup, SetResizePopup, false, AM_FILE);
 }
 
-void DropDownList::ApplyAttributes()
+void DropDownList::apply_attributes()
 {
     // Reapply selection after possible items have been loaded
     SetSelection(selectionAttr_);
@@ -213,7 +213,7 @@ void DropDownList::SetSelectionAttr(i32 index)
     assert(index >= 0);
     selectionAttr_ = index;
 
-    // We may not have the list items yet. Apply the index again in ApplyAttributes().
+    // We may not have the list items yet. Apply the index again in apply_attributes().
     SetSelection(index);
 }
 

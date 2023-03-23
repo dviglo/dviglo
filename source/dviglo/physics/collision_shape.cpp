@@ -482,7 +482,7 @@ void CollisionShape::RegisterObject()
     DV_ATTRIBUTE_EX("CustomGeometry ComponentID", customGeometryID_, MarkShapeDirty, 0, AM_DEFAULT | AM_COMPONENTID);
 }
 
-void CollisionShape::ApplyAttributes()
+void CollisionShape::apply_attributes()
 {
     if (recreateShape_)
     {

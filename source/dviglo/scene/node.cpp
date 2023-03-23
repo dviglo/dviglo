@@ -83,7 +83,7 @@ bool Node::Load(Deserializer& source)
     if (success)
     {
         resolver.Resolve();
-        ApplyAttributes();
+        apply_attributes();
     }
 
     return success;
@@ -141,7 +141,7 @@ bool Node::load_xml(const XmlElement& source)
     if (success)
     {
         resolver.Resolve();
-        ApplyAttributes();
+        apply_attributes();
     }
 
     return success;
@@ -160,7 +160,7 @@ bool Node::load_json(const JSONValue& source)
     if (success)
     {
         resolver.Resolve();
-        ApplyAttributes();
+        apply_attributes();
     }
 
     return success;
@@ -243,13 +243,13 @@ bool Node::save_json(JSONValue& dest) const
     return true;
 }
 
-void Node::ApplyAttributes()
+void Node::apply_attributes()
 {
     for (const SharedPtr<Component>& component : components_)
-        component->ApplyAttributes();
+        component->apply_attributes();
 
     for (const SharedPtr<Node>& child : children_)
-        child->ApplyAttributes();
+        child->apply_attributes();
 }
 
 void Node::MarkNetworkUpdate()
@@ -956,7 +956,7 @@ Component* Node::CloneComponent(Component* component, CreateMode mode, Component
                 cloneComponent->OnSetAttribute(cloneAttr, value);
             }
         }
-        cloneComponent->ApplyAttributes();
+        cloneComponent->apply_attributes();
     }
 
     if (scene_)
@@ -1087,7 +1087,7 @@ Node* Node::Clone(CreateMode mode)
     SceneResolver resolver;
     Node* clone = CloneRecursive(parent_, resolver, mode);
     resolver.Resolve();
-    clone->ApplyAttributes();
+    clone->apply_attributes();
     return clone;
 }
 

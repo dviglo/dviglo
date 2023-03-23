@@ -32,7 +32,7 @@ public:
     static void RegisterObject();
 
     /// Apply Attributes to the SplinePath.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
     /// Draw the Debug Geometry.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;
 

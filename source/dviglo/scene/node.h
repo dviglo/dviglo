@@ -86,7 +86,7 @@ public:
     /// Save as JSON data. Return true if successful.
     bool save_json(JSONValue& dest) const override;
     /// Apply attribute changes that can not be applied immediately recursively to child nodes and components.
-    void ApplyAttributes() override;
+    void apply_attributes() override;
 
     /// Return whether should save default-valued attributes into XML. Always save node transforms for readability, even if identity.
     bool SaveDefaultAttributes() const override { return true; }
