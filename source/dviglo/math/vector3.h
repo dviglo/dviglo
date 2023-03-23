@@ -370,7 +370,7 @@ struct DV_API Vector3
     }
 
     /// Calculate distance to another position vector.
-    float DistanceToPoint(const Vector3& point) const { return (*this - point).Length(); }
+    float distance_to_point(const Vector3& point) const { return (*this - point).Length(); }
 
     /// Calculate distance to the plane with given origin and normal.
     float DistanceToPlane(const Vector3& origin, const Vector3& normal) const { return (*this - origin).ProjectOntoAxis(normal); }

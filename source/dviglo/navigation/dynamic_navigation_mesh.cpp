@@ -529,7 +529,7 @@ bool DynamicNavigationMesh::IsObstacleInTile(Obstacle* obstacle, const IntVector
 {
     const BoundingBox tileBoundingBox = GetTileBoundingBox(tile);
     const Vector3 obstaclePosition = obstacle->GetNode()->GetWorldPosition();
-    return tileBoundingBox.DistanceToPoint(obstaclePosition) < obstacle->GetRadius();
+    return tileBoundingBox.distance_to_point(obstaclePosition) < obstacle->GetRadius();
 }
 
 bool DynamicNavigationMesh::AddTile(const Vector<byte>& tileData)

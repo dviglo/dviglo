@@ -250,7 +250,7 @@ public:
     /// Return projected by a 4x4 projection matrix.
     Rect Projected(const Matrix4& projection) const;
     /// Return distance to point.
-    float DistanceToPoint(const Vector3& point) const;
+    float distance_to_point(const Vector3& point) const;
 
     /// Test if a point is inside.
     Intersection IsInside(const Vector3& point) const
