@@ -482,7 +482,7 @@ void ResourceCache::AddResourceRouter(ResourceRouter* router, bool addAsFirst)
         resourceRouters_.Push(SharedPtr<ResourceRouter>(router));
 }
 
-void ResourceCache::RemoveResourceRouter(ResourceRouter* router)
+void ResourceCache::remove_resource_router(ResourceRouter* router)
 {
     for (unsigned i = 0; i < resourceRouters_.Size(); ++i)
     {

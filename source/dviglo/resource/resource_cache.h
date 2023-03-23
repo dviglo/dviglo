@@ -141,7 +141,7 @@ public:
     void AddResourceRouter(ResourceRouter* router, bool addAsFirst = false);
 
     /// Remove a resource router object.
-    void RemoveResourceRouter(ResourceRouter* router);
+    void remove_resource_router(ResourceRouter* router);
 
     /// Open and return a file from the resource load paths or from inside a package file. If not found, use a fallback search with absolute path. Return null if fails. Can be called from outside the main thread.
     SharedPtr<File> GetFile(const String& name, bool sendEventOnFailure = true);
