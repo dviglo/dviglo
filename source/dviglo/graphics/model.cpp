@@ -288,7 +288,7 @@ bool Model::BeginLoad(Deserializer& source)
     memoryUse += sizeof(Vector3) * geometries_.Size();
 
     // Read metadata
-    String xmlName = ReplaceExtension(GetName(), ".xml");
+    String xmlName = replace_extension(GetName(), ".xml");
     SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
     if (file)
         load_metadata_from_xml(file->GetRoot());
@@ -446,7 +446,7 @@ bool Model::Save(Serializer& dest) const
         auto* destFile = dynamic_cast<File*>(&dest);
         if (destFile)
         {
-            String xmlName = ReplaceExtension(destFile->GetName(), ".xml");
+            String xmlName = replace_extension(destFile->GetName(), ".xml");
 
             SharedPtr<XmlFile> xml(new XmlFile());
             XmlElement rootElem = xml->CreateRoot("model");

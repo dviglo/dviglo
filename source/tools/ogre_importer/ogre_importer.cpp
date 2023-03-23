@@ -903,14 +903,14 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
 
     if (saveMaterialList)
     {
-        String materialListName = ReplaceExtension(outputFileName, ".txt");
+        String materialListName = replace_extension(outputFileName, ".txt");
         File listFile;
         if (listFile.Open(materialListName, FILE_WRITE))
         {
             for (unsigned i = 0; i < materialNames_.Size(); ++i)
             {
                 // Assume the materials will be located inside the standard Materials subdirectory
-                listFile.WriteLine("Materials/" + ReplaceExtension(SanitateAssetName(materialNames_[i]), ".xml"));
+                listFile.WriteLine("Materials/" + replace_extension(SanitateAssetName(materialNames_[i]), ".xml"));
             }
         }
         else

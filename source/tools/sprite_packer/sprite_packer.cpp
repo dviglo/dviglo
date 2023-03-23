@@ -146,7 +146,7 @@ void Run(Vector<String>& arguments)
 
     // set spritesheet name to outputfile.xml if not specified
     if (spriteSheetFileName.Empty())
-        spriteSheetFileName = ReplaceExtension(outputFile, ".xml");
+        spriteSheetFileName = replace_extension(outputFile, ".xml");
 
     if (get_parent(spriteSheetFileName) != get_parent(outputFile))
         ErrorExit("Both output xml and png must be in the same folder");
@@ -167,7 +167,7 @@ void Run(Vector<String>& arguments)
 
     for (const String& path : inputFiles)
     {
-        String name = ReplaceExtension(GetFileName(path), "");
+        String name = replace_extension(GetFileName(path), "");
         File file(path);
         Image image;
 

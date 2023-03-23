@@ -64,7 +64,7 @@ bool Texture2D::BeginLoad(Deserializer& source)
         loadImage_->PrecalculateLevels();
 
     // Load the optional parameters file
-    String xmlName = ReplaceExtension(GetName(), ".xml");
+    String xmlName = replace_extension(GetName(), ".xml");
     loadParameters_ = DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false);
 
     return true;

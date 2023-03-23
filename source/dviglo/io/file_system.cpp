@@ -698,7 +698,7 @@ String GetFileNameAndExtension(const String& fileName, bool lowercaseExtension)
     return file + extension;
 }
 
-String ReplaceExtension(const String& fullPath, const String& newExtension)
+String replace_extension(const String& fullPath, const String& newExtension)
 {
     String path, file, extension;
     SplitPath(fullPath, path, file, extension);

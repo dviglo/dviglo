@@ -217,7 +217,7 @@ bool AnimationSet2D::EndLoadSpine()
 {
     currentAnimationSet = this;
 
-    String atlasFileName = ReplaceExtension(GetName(), ".atlas");
+    String atlasFileName = replace_extension(GetName(), ".atlas");
     atlas_ = spAtlas_createFromFile(atlasFileName.c_str(), 0);
     if (!atlas_)
     {

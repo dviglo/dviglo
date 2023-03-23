@@ -116,7 +116,7 @@ DV_API String GetExtension(const String& fullPath, bool lowercaseExtension = tru
 /// Return the filename and extension from a full path. The case of the extension is preserved by default, so that the file can be opened in case-sensitive operating systems.
 DV_API String GetFileNameAndExtension(const String& fileName, bool lowercaseExtension = false);
 /// Replace the extension of a file name with another.
-DV_API String ReplaceExtension(const String& fullPath, const String& newExtension);
+DV_API String replace_extension(const String& fullPath, const String& newExtension);
 /// Add a slash at the end of the path if missing and convert to internal format (use slashes).
 DV_API String AddTrailingSlash(const String& pathName);
 /// Return whether a path is absolute.

@@ -288,7 +288,7 @@ void StaticModel::ApplyMaterialList(const String& fileName)
 {
     String useFileName = fileName;
     if (useFileName.Trimmed().Empty() && model_)
-        useFileName = ReplaceExtension(model_->GetName(), ".txt");
+        useFileName = replace_extension(model_->GetName(), ".txt");
 
     ResourceCache& cache = DV_RES_CACHE;
     SharedPtr<File> file = cache.GetFile(useFileName, false);
