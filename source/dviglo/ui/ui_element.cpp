@@ -443,7 +443,7 @@ IntVector2 UiElement::screen_to_element(const IntVector2& screenPosition)
     return screenPosition - GetScreenPosition();
 }
 
-IntVector2 UiElement::ElementToScreen(const IntVector2& position)
+IntVector2 UiElement::element_to_screen(const IntVector2& position)
 {
     return position + GetScreenPosition();
 }
@@ -1743,7 +1743,7 @@ bool UiElement::IsInsideCombined(IntVector2 position, bool isScreen)
         return IsInside(position, isScreen);
 
     if (!isScreen)
-        position = ElementToScreen(position);
+        position = element_to_screen(position);
 
     IntRect combined = GetCombinedScreenRect();
     return position.x_ >= combined.left_ && position.y_ >= combined.top_ && position.x_ < combined.right_ &&

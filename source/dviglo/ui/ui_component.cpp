@@ -43,9 +43,9 @@ public:
     /// Set active viewport through which this element is rendered. If viewport is not set, it defaults to first viewport.
     void SetViewport(Viewport* viewport) { viewport_ = viewport; }
     /// Convert element coordinates to screen coordinates.
-    IntVector2 ElementToScreen(const IntVector2& position) override
+    IntVector2 element_to_screen(const IntVector2& position) override
     {
-        DV_LOGERROR("UIElement3D::ElementToScreen is not implemented.");
+        DV_LOGERROR("UIElement3D::element_to_screen is not implemented.");
         return {-1, -1};
     }
     /// Convert screen coordinates to element coordinates.

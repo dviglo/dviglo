@@ -34,7 +34,7 @@ public:
     /// Convert screen coordinates to element coordinates.
     IntVector2 screen_to_element(const IntVector2& screenPosition) override;
     /// Convert element coordinates to screen coordinates.
-    IntVector2 ElementToScreen(const IntVector2& position) override;
+    IntVector2 element_to_screen(const IntVector2& position) override;
 
     /// Set floating point position.
     void SetPosition(const Vector2& position);

@@ -185,7 +185,7 @@ public:
     /// Convert screen coordinates to element coordinates.
     virtual IntVector2 screen_to_element(const IntVector2& screenPosition);
     /// Convert element coordinates to screen coordinates.
-    virtual IntVector2 ElementToScreen(const IntVector2& position);
+    virtual IntVector2 element_to_screen(const IntVector2& position);
 
     /// Return whether the element could handle wheel input.
     virtual bool IsWheelHandler() const { return false; }

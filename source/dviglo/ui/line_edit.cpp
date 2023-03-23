@@ -585,7 +585,7 @@ void LineEdit::UpdateCursor()
     cursor_->SetPosition(text_->GetPosition() + IntVector2(x, 0));
     cursor_->SetSize(cursor_->GetWidth(), text_->GetRowHeight());
 
-    IntVector2 screenPosition = ElementToScreen(cursor_->GetPosition());
+    IntVector2 screenPosition = element_to_screen(cursor_->GetPosition());
     SDL_Rect rect = {screenPosition.x_, screenPosition.y_, cursor_->GetSize().x_, cursor_->GetSize().y_};
     SDL_SetTextInputRect(&rect);
 
@@ -607,7 +607,7 @@ void LineEdit::UpdateCursor()
 
 i32 LineEdit::GetCharIndex(const IntVector2& position)
 {
-    IntVector2 screenPosition = ElementToScreen(position);
+    IntVector2 screenPosition = element_to_screen(position);
     IntVector2 textPosition = text_->screen_to_element(screenPosition);
 
     if (textPosition.x_ < 0)
