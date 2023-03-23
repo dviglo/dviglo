@@ -608,7 +608,7 @@ void LineEdit::UpdateCursor()
 i32 LineEdit::GetCharIndex(const IntVector2& position)
 {
     IntVector2 screenPosition = ElementToScreen(position);
-    IntVector2 textPosition = text_->ScreenToElement(screenPosition);
+    IntVector2 textPosition = text_->screen_to_element(screenPosition);
 
     if (textPosition.x_ < 0)
         return 0;

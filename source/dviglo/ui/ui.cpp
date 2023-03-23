@@ -354,10 +354,10 @@ void UI::Update(float timeStep)
                 IntVector2 beginSendPos = dragData->dragBeginSumPos / dragData->numDragButtons;
                 dragConfirmedCount_++;
                 if (!usingTouchInput_)
-                    dragElement->OnDragBegin(dragElement->ScreenToElement(beginSendPos), beginSendPos, dragData->dragButtons,
+                    dragElement->OnDragBegin(dragElement->screen_to_element(beginSendPos), beginSendPos, dragData->dragButtons,
                         qualifiers_, cursor_);
                 else
-                    dragElement->OnDragBegin(dragElement->ScreenToElement(beginSendPos), beginSendPos, dragData->dragButtons, QUAL_NONE, nullptr);
+                    dragElement->OnDragBegin(dragElement->screen_to_element(beginSendPos), beginSendPos, dragData->dragButtons, QUAL_NONE, nullptr);
 
                 SendDragOrHoverEvent(E_DRAGBEGIN, dragElement, beginSendPos, IntVector2::ZERO, dragData);
             }
@@ -787,7 +787,7 @@ UiElement* UI::GetElementAt(const IntVector2& position, bool enabledOnly, IntVec
             if (data.rootElement_.Expired() || !data.rootElement_->IsEnabled())
                 continue;
 
-            IntVector2 screenPosition = data.rootElement_->ScreenToElement(position);
+            IntVector2 screenPosition = data.rootElement_->screen_to_element(position);
             if (data.rootElement_->GetCombinedScreenRect().IsInside(screenPosition) == INSIDE)
             {
                 result = GetElementAt(data.rootElement_, screenPosition, enabledOnly);
@@ -1364,7 +1364,7 @@ void UI::ProcessHover(const IntVector2& windowCursorPos, MouseButtonFlags button
         {
             if (dragElement == element || dragDropTest)
             {
-                element->OnHover(element->ScreenToElement(cursorPos), cursorPos, buttons, qualifiers, cursor);
+                element->OnHover(element->screen_to_element(cursorPos), cursorPos, buttons, qualifiers, cursor);
 
                 // Begin hover event
                 if (!hoveredElements_.Contains(element))
@@ -1409,7 +1409,7 @@ void UI::ProcessHover(const IntVector2& windowCursorPos, MouseButtonFlags button
     {
         if (dragElementsCount_ == 0)
         {
-            element->OnHover(element->ScreenToElement(cursorPos), cursorPos, buttons, qualifiers, cursor);
+            element->OnHover(element->screen_to_element(cursorPos), cursorPos, buttons, qualifiers, cursor);
 
             // Begin hover event
             if (!hoveredElements_.Contains(element))
@@ -1448,14 +1448,14 @@ void UI::ProcessClickBegin(const IntVector2& windowCursorPos, MouseButton button
             element->BringToFront();
 
             // Handle click
-            element->OnClickBegin(element->ScreenToElement(cursorPos), cursorPos, button, buttons, qualifiers, cursor);
+            element->OnClickBegin(element->screen_to_element(cursorPos), cursorPos, button, buttons, qualifiers, cursor);
             SendClickEvent(E_UIMOUSECLICK, nullptr, element, cursorPos, button, buttons, qualifiers);
 
             // Fire double click event if element matches and is in time and is within max distance from the original click
             if (doubleClickElement_ && element == doubleClickElement_ &&
                 (clickTimer_.GetMSec(true) < (unsigned)(doubleClickInterval_ * 1000)) && lastMouseButtons_ == buttons && (windowCursorPos - doubleClickFirstPos_).Length() < maxDoubleClickDist_)
             {
-                element->OnDoubleClick(element->ScreenToElement(cursorPos), cursorPos, button, buttons, qualifiers, cursor);
+                element->OnDoubleClick(element->screen_to_element(cursorPos), cursorPos, button, buttons, qualifiers, cursor);
                 doubleClickElement_.Reset();
                 SendDoubleClickEvent(nullptr, element, doubleClickFirstPos_, cursorPos, button, buttons, qualifiers);
             }
@@ -1529,14 +1529,14 @@ void UI::ProcessClickEnd(const IntVector2& windowCursorPos, MouseButton button, 
         {
             // Handle end of click
             if (element)
-                element->OnClickEnd(element->ScreenToElement(cursorPos), cursorPos, button, buttons, qualifiers, cursor,
+                element->OnClickEnd(element->screen_to_element(cursorPos), cursorPos, button, buttons, qualifiers, cursor,
                     dragElement);
 
             SendClickEvent(E_UIMOUSECLICKEND, dragElement, element, cursorPos, button, buttons, qualifiers);
 
             if (dragElement && dragElement->IsEnabled() && dragElement->IsVisible() && !dragData->dragBeginPending)
             {
-                dragElement->OnDragEnd(dragElement->ScreenToElement(cursorPos), cursorPos, dragData->dragButtons, buttons,
+                dragElement->OnDragEnd(dragElement->screen_to_element(cursorPos), cursorPos, dragData->dragButtons, buttons,
                     cursor);
                 SendDragOrHoverEvent(E_DRAGEND, dragElement, cursorPos, IntVector2::ZERO, dragData);
 
@@ -1627,7 +1627,7 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
                     {
                         dragData->dragBeginPending = false;
                         dragConfirmedCount_++;
-                        dragElement->OnDragBegin(dragElement->ScreenToElement(beginSendPos), beginSendPos, buttons, qualifiers,
+                        dragElement->OnDragBegin(dragElement->screen_to_element(beginSendPos), beginSendPos, buttons, qualifiers,
                             cursor);
                         SendDragOrHoverEvent(E_DRAGBEGIN, dragElement, beginSendPos, IntVector2::ZERO, dragData);
                     }
@@ -1635,14 +1635,14 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
 
                 if (!dragData->dragBeginPending)
                 {
-                    dragElement->OnDragMove(dragElement->ScreenToElement(sendPos), sendPos, cursorDeltaPos, buttons, qualifiers,
+                    dragElement->OnDragMove(dragElement->screen_to_element(sendPos), sendPos, cursorDeltaPos, buttons, qualifiers,
                         cursor);
                     SendDragOrHoverEvent(E_DRAGMOVE, dragElement, sendPos, cursorDeltaPos, dragData);
                 }
             }
             else
             {
-                dragElement->OnDragEnd(dragElement->ScreenToElement(sendPos), sendPos, dragData->dragButtons, buttons, cursor);
+                dragElement->OnDragEnd(dragElement->screen_to_element(sendPos), sendPos, dragData->dragButtons, buttons, cursor);
                 SendDragOrHoverEvent(E_DRAGEND, dragElement, sendPos, IntVector2::ZERO, dragData);
                 dragElement.Reset();
             }
@@ -1658,7 +1658,7 @@ void UI::SendDragOrHoverEvent(StringHash eventType, UiElement* element, const In
     if (!element)
         return;
 
-    IntVector2 relativePos = element->ScreenToElement(screenPos);
+    IntVector2 relativePos = element->screen_to_element(screenPos);
 
     using namespace DragMove;
 
@@ -1914,7 +1914,7 @@ void UI::HandleTouchEnd(StringHash eventType, VariantMap& eventData)
     }
 
     if (element && element->IsEnabled())
-        element->OnHover(element->ScreenToElement(pos), pos, MOUSEB_NONE, QUAL_NONE, nullptr);
+        element->OnHover(element->screen_to_element(pos), pos, MOUSEB_NONE, QUAL_NONE, nullptr);
 
     ProcessClickEnd(pos, touchId, MOUSEB_NONE, QUAL_NONE, nullptr, true);
 }
@@ -2058,7 +2058,7 @@ void UI::HandleDropFile(StringHash eventType, VariantMap& eventData)
 
         if (element)
         {
-            IntVector2 relativePos = element->ScreenToElement(screenPos);
+            IntVector2 relativePos = element->screen_to_element(screenPos);
             uiEventData[P_ELEMENTX] = relativePos.x_;
             uiEventData[P_ELEMENTY] = relativePos.y_;
         }
@@ -2103,7 +2103,7 @@ void UI::ProcessDragCancel()
 
         if (dragElement && dragElement->IsEnabled() && dragElement->IsVisible() && !dragData->dragBeginPending)
         {
-            dragElement->OnDragCancel(dragElement->ScreenToElement(cursorPos), cursorPos, dragData->dragButtons, mouseButtons_,
+            dragElement->OnDragCancel(dragElement->screen_to_element(cursorPos), cursorPos, dragData->dragButtons, mouseButtons_,
                 cursor_);
             SendDragOrHoverEvent(E_DRAGCANCEL, dragElement, cursorPos, IntVector2::ZERO, dragData);
             i = DragElementErase(i);

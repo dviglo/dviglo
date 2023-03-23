@@ -32,7 +32,7 @@ public:
     /// React to position change.
     void OnPositionSet(const IntVector2& newPosition) override;
     /// Convert screen coordinates to element coordinates.
-    IntVector2 ScreenToElement(const IntVector2& screenPosition) override;
+    IntVector2 screen_to_element(const IntVector2& screenPosition) override;
     /// Convert element coordinates to screen coordinates.
     IntVector2 ElementToScreen(const IntVector2& position) override;
 

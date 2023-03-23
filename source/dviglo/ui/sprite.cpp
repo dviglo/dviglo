@@ -72,7 +72,7 @@ const IntVector2& Sprite::GetScreenPosition() const
     return screenPosition_;
 }
 
-IntVector2 Sprite::ScreenToElement(const IntVector2& screenPosition)
+IntVector2 Sprite::screen_to_element(const IntVector2& screenPosition)
 {
     Vector3 floatPos((float)screenPosition.x_, (float)screenPosition.y_, 0.0f);
     Vector3 transformedPos = GetTransform().Inverse() * floatPos;

@@ -183,7 +183,7 @@ public:
     virtual void OnIndentSet() { }
 
     /// Convert screen coordinates to element coordinates.
-    virtual IntVector2 ScreenToElement(const IntVector2& screenPosition);
+    virtual IntVector2 screen_to_element(const IntVector2& screenPosition);
     /// Convert element coordinates to screen coordinates.
     virtual IntVector2 ElementToScreen(const IntVector2& position);
 

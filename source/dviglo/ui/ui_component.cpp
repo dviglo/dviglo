@@ -49,7 +49,7 @@ public:
         return {-1, -1};
     }
     /// Convert screen coordinates to element coordinates.
-    IntVector2 ScreenToElement(const IntVector2& screenPos) override
+    IntVector2 screen_to_element(const IntVector2& screenPos) override
     {
         IntVector2 result(-1, -1);
 

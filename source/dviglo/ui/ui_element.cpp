@@ -438,7 +438,7 @@ bool UiElement::OnDragDropFinish(UiElement* source)
     return true;
 }
 
-IntVector2 UiElement::ScreenToElement(const IntVector2& screenPosition)
+IntVector2 UiElement::screen_to_element(const IntVector2& screenPosition)
 {
     return screenPosition - GetScreenPosition();
 }
@@ -1732,7 +1732,7 @@ void UiElement::GetChildrenWithTagRecursive(Vector<UiElement*>& dest, const Stri
 bool UiElement::IsInside(IntVector2 position, bool isScreen)
 {
     if (isScreen)
-        position = ScreenToElement(position);
+        position = screen_to_element(position);
     return position.x_ >= 0 && position.y_ >= 0 && position.x_ < size_.x_ && position.y_ < size_.y_;
 }
 
