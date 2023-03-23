@@ -276,7 +276,7 @@ protected:
     /// Build one tile of the navigation mesh. Return true if successful.
     virtual bool BuildTile(Vector<NavigationGeometryInfo>& geometryList, int x, int z);
     /// Build tiles in the rectangular area. Return number of built tiles.
-    unsigned BuildTiles(Vector<NavigationGeometryInfo>& geometryList, const IntVector2& from, const IntVector2& to);
+    unsigned build_tiles(Vector<NavigationGeometryInfo>& geometryList, const IntVector2& from, const IntVector2& to);
     /// Ensure that the navigation mesh query is initialized. Return true if successful.
     bool InitializeQuery();
     /// Release the navigation mesh and the query.

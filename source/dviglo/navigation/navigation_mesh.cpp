@@ -423,7 +423,7 @@ bool NavigationMesh::Build()
         }
 
         // Build each tile
-        unsigned numTiles = BuildTiles(geometryList, IntVector2::ZERO, GetNumTiles() - IntVector2::ONE);
+        unsigned numTiles = build_tiles(geometryList, IntVector2::ZERO, GetNumTiles() - IntVector2::ONE);
 
         DV_LOGDEBUG("Built navigation mesh with " + String(numTiles) + " tiles");
 
@@ -468,7 +468,7 @@ bool NavigationMesh::Build(const BoundingBox& boundingBox)
     int ex = Clamp((int)((localSpaceBox.max_.x_ - boundingBox_.min_.x_) / tileEdgeLength), 0, numTilesX_ - 1);
     int ez = Clamp((int)((localSpaceBox.max_.z_ - boundingBox_.min_.z_) / tileEdgeLength), 0, numTilesZ_ - 1);
 
-    unsigned numTiles = BuildTiles(geometryList, IntVector2(sx, sz), IntVector2(ex, ez));
+    unsigned numTiles = build_tiles(geometryList, IntVector2(sx, sz), IntVector2(ex, ez));
 
     DV_LOGDEBUG("Rebuilt " + String(numTiles) + " tiles of the navigation mesh");
     return true;
@@ -493,7 +493,7 @@ bool NavigationMesh::Build(const IntVector2& from, const IntVector2& to)
     Vector<NavigationGeometryInfo> geometryList;
     collect_geometries(geometryList);
 
-    unsigned numTiles = BuildTiles(geometryList, from, to);
+    unsigned numTiles = build_tiles(geometryList, from, to);
 
     DV_LOGDEBUG("Rebuilt " + String(numTiles) + " tiles of the navigation mesh");
     return true;
@@ -1502,7 +1502,7 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     return true;
 }
 
-unsigned NavigationMesh::BuildTiles(Vector<NavigationGeometryInfo>& geometryList, const IntVector2& from, const IntVector2& to)
+unsigned NavigationMesh::build_tiles(Vector<NavigationGeometryInfo>& geometryList, const IntVector2& from, const IntVector2& to)
 {
     unsigned numTiles = 0;
 
