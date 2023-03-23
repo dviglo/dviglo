@@ -46,7 +46,7 @@ private:
     /// Byte position in the front most buffer.
     unsigned position_;
     /// Mutex for buffer data.
-    mutable std::mutex bufferMutex_;
+    mutable std::mutex buffer_mutex_;
 };
 
 }

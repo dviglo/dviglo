@@ -21,7 +21,7 @@ BufferedSoundStream::~BufferedSoundStream() = default;
 
 unsigned BufferedSoundStream::GetData(signed char* dest, unsigned numBytes)
 {
-    std::scoped_lock lock(bufferMutex_);
+    std::scoped_lock lock(buffer_mutex_);
 
     unsigned outBytes = 0;
 
@@ -54,7 +54,7 @@ void BufferedSoundStream::AddData(void* data, unsigned numBytes)
 {
     if (data && numBytes)
     {
-        std::scoped_lock lock(bufferMutex_);
+        std::scoped_lock lock(buffer_mutex_);
 
         SharedArrayPtr<signed char> newBuffer(new signed char[numBytes]);
         memcpy(newBuffer.Get(), data, numBytes);
@@ -66,7 +66,7 @@ void BufferedSoundStream::AddData(const SharedArrayPtr<signed char>& data, unsig
 {
     if (data && numBytes)
     {
-        std::scoped_lock lock(bufferMutex_);
+        std::scoped_lock lock(buffer_mutex_);
 
         buffers_.Push(MakePair(data, numBytes));
     }
@@ -76,7 +76,7 @@ void BufferedSoundStream::AddData(const SharedArrayPtr<signed short>& data, unsi
 {
     if (data && numBytes)
     {
-        std::scoped_lock lock(bufferMutex_);
+        std::scoped_lock lock(buffer_mutex_);
 
         buffers_.Push(MakePair(ReinterpretCast<signed char>(data), numBytes));
     }
@@ -84,7 +84,7 @@ void BufferedSoundStream::AddData(const SharedArrayPtr<signed short>& data, unsi
 
 void BufferedSoundStream::Clear()
 {
-    std::scoped_lock lock(bufferMutex_);
+    std::scoped_lock lock(buffer_mutex_);
 
     buffers_.Clear();
     position_ = 0;
@@ -92,7 +92,7 @@ void BufferedSoundStream::Clear()
 
 unsigned BufferedSoundStream::GetBufferNumBytes() const
 {
-    std::scoped_lock lock(bufferMutex_);
+    std::scoped_lock lock(buffer_mutex_);
 
     unsigned ret = 0;
     for (List<Pair<SharedArrayPtr<signed char>, unsigned>>::ConstIterator i = buffers_.Begin(); i != buffers_.End(); ++i)
