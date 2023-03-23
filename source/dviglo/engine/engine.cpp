@@ -606,7 +606,7 @@ void Engine::DumpMemory()
 
 void Engine::Update()
 {
-    DV_PROFILE(Update);
+    ZoneScoped;
 
     // Logic update event
     using namespace Update;
@@ -630,7 +630,7 @@ void Engine::Render()
     if (GParams::is_headless())
         return;
 
-    DV_PROFILE(Render);
+    ZoneScoped;
 
     // If device is lost, BeginFrame will fail and we skip rendering
     if (!DV_GRAPHICS.BeginFrame())
@@ -662,7 +662,7 @@ void Engine::ApplyFrameLimit()
     if (maxFps < 60)
 #endif
     {
-        DV_PROFILE(ApplyFrameLimit);
+        ZoneScoped;
 
         long long targetMax = 1000000LL / maxFps;
 
