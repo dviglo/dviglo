@@ -1792,12 +1792,12 @@ void Renderer::ReloadTextures()
     cache.GetResources(textures, Texture2D::GetTypeStatic());
 
     for (Resource* texture : textures)
-        cache.ReloadResource(texture);
+        cache.reload_resource(texture);
 
     cache.GetResources(textures, TextureCube::GetTypeStatic());
 
     for (Resource* texture : textures)
-        cache.ReloadResource(texture);
+        cache.reload_resource(texture);
 }
 
 void Renderer::CreateGeometries()

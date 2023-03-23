@@ -43,7 +43,7 @@ void TextureCube::OnDeviceReset_OGL()
     {
         // If has a resource file, reload through the resource cache. Otherwise just recreate.
         if (DV_RES_CACHE.Exists(GetName()))
-            dataLost_ = !DV_RES_CACHE.ReloadResource(this);
+            dataLost_ = !DV_RES_CACHE.reload_resource(this);
 
         if (!gpu_object_name_)
         {

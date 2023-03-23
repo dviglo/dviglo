@@ -376,7 +376,7 @@ void ResourceCache::release_all_resources(bool force)
     } while (released && !force);
 }
 
-bool ResourceCache::ReloadResource(Resource* resource)
+bool ResourceCache::reload_resource(Resource* resource)
 {
     if (!resource)
         return false;
@@ -410,7 +410,7 @@ void ResourceCache::ReloadResourceWithDependencies(const String& fileName)
     if (resource)
     {
         DV_LOGDEBUG("Reloading changed resource " + fileName);
-        ReloadResource(resource);
+        reload_resource(resource);
     }
     // Always perform dependency resource check for resource loaded from XML file as it could be used in inheritance
     if (!resource || GetExtension(resource->GetName()) == ".xml")
@@ -434,7 +434,7 @@ void ResourceCache::ReloadResourceWithDependencies(const String& fileName)
             for (const SharedPtr<Resource>& dependent : dependents)
             {
                 DV_LOGDEBUG("Reloading resource " + dependent->GetName() + " depending on " + fileName);
-                ReloadResource(dependent);
+                reload_resource(dependent);
             }
         }
     }
