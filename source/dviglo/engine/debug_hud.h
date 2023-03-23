@@ -53,10 +53,6 @@ public:
     /// Set elements to show.
     void SetMode(DebugHudElements mode);
 
-    /// Set maximum profiler block depth, default unlimited.
-    void SetProfilerMaxDepth(unsigned depth);
-    /// Set profiler accumulation interval in seconds.
-    void SetProfilerInterval(float interval);
     /// Set whether to show 3D geometry primitive/batch count only. Default false.
     void SetUseRendererStats(bool enable);
 
@@ -80,12 +76,6 @@ public:
 
     /// Return currently shown elements.
     DebugHudElements GetMode() const { return mode_; }
-
-    /// Return maximum profiler block depth.
-    unsigned GetProfilerMaxDepth() const { return profilerMaxDepth_; }
-
-    /// Return profiler accumulation interval in seconds.
-    float GetProfilerInterval() const;
 
     /// Return whether showing 3D geometry primitive/batch count only.
     bool GetUseRendererStats() const { return useRendererStats_; }
@@ -118,12 +108,6 @@ private:
     /// Нужен, чтобы обновлять FPS не каждый кадр
     Timer fps_timer_;
 
-    /// Profiler timer.
-    Timer profilerTimer_;
-    /// Profiler max block depth.
-    unsigned profilerMaxDepth_;
-    /// Profiler accumulation interval.
-    unsigned profilerInterval_;
     /// Show 3D geometry primitive/batch count flag.
     bool useRendererStats_;
 

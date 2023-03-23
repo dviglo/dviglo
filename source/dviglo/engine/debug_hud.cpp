@@ -55,8 +55,6 @@ DebugHud& DebugHud::get_instance()
 }
 
 DebugHud::DebugHud() :
-    profilerMaxDepth_(M_MAX_UNSIGNED),
-    profilerInterval_(1000),
     useRendererStats_(false),
     mode_(DebugHudElements::None)
 {
@@ -205,16 +203,6 @@ void DebugHud::SetMode(DebugHudElements mode)
     mode_ = mode;
 }
 
-void DebugHud::SetProfilerMaxDepth(unsigned depth)
-{
-    profilerMaxDepth_ = depth;
-}
-
-void DebugHud::SetProfilerInterval(float interval)
-{
-    profilerInterval_ = Max((unsigned)(interval * 1000.0f), 0U);
-}
-
 void DebugHud::SetUseRendererStats(bool enable)
 {
     useRendererStats_ = enable;
@@ -233,11 +221,6 @@ void DebugHud::ToggleAll()
 XmlFile* DebugHud::GetDefaultStyle() const
 {
     return statsText_->GetDefaultStyle(false);
-}
-
-float DebugHud::GetProfilerInterval() const
-{
-    return (float)profilerInterval_ / 1000.0f;
 }
 
 void DebugHud::SetAppStats(const String& label, const Variant& stats)
