@@ -317,7 +317,7 @@ unsigned Texture::GetRowDataSize(int width) const
     return {}; // Prevent warning
 }
 
-void Texture::RegenerateLevels()
+void Texture::regenerate_levels()
 {
     GAPI gapi = GParams::get_gapi();
 

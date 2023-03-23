@@ -144,7 +144,7 @@ public:
     /// Set the mipmap levels dirty flag. Called internally by Graphics.
     void SetLevelsDirty();
     /// Regenerate mipmap levels for a rendertarget after rendering and before sampling. Called internally by Graphics. No-op on Direct3D9. On OpenGL the texture must have been bound to work properly.
-    void RegenerateLevels();
+    void regenerate_levels();
 
     /// Check maximum allowed mip levels for a specific texture size.
     static unsigned CheckMaxLevels(int width, int height, unsigned requestedLevels);

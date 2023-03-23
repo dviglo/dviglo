@@ -1368,7 +1368,7 @@ void Graphics::SetTexture_OGL(unsigned index, Texture* texture)
             if (texture->GetParametersDirty())
                 texture->UpdateParameters();
             if (texture->GetLevelsDirty())
-                texture->RegenerateLevels();
+                texture->regenerate_levels();
         }
         else if (impl->textureTypes_[index])
         {
@@ -1392,7 +1392,7 @@ void Graphics::SetTexture_OGL(unsigned index, Texture* texture)
             if (texture->GetParametersDirty())
                 texture->UpdateParameters();
             if (texture->GetLevelsDirty())
-                texture->RegenerateLevels();
+                texture->regenerate_levels();
         }
     }
 }
