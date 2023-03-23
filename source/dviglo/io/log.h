@@ -104,7 +104,7 @@ private:
     void HandleEndFrame(StringHash eventType, VariantMap& eventData);
 
     /// Mutex for threaded operation.
-    std::mutex logMutex_;
+    std::mutex log_mutex_;
     /// Log messages from other threads.
     List<StoredLogMessage> threadMessages_;
 
