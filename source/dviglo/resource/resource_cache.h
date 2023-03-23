@@ -95,7 +95,7 @@ public:
     /// Remove a package file by name. Optionally release the resources loaded from it.
     void remove_package_file(const String& fileName, bool releaseResources = true, bool forceRelease = false);
     /// Release a resource by name.
-    void ReleaseResource(StringHash type, const String& name, bool force = false);
+    void release_resource(StringHash type, const String& name, bool force = false);
     /// Release all resources of a specific type.
     void ReleaseResources(StringHash type, bool force = false);
     /// Release resources of a specific type and partial name.
@@ -157,7 +157,7 @@ public:
     /// Template version of loading a resource without storing it to the cache.
     template <class T> SharedPtr<T> GetTempResource(const String& name, bool sendEventOnFailure = true);
     /// Template version of releasing a resource by name.
-    template <class T> void ReleaseResource(const String& name, bool force = false);
+    template <class T> void release_resource(const String& name, bool force = false);
     /// Template version of queueing a resource background load.
     template <class T> bool BackgroundLoadResource(const String& name, bool sendEventOnFailure = true, Resource* caller = nullptr);
     /// Template version of returning loaded resources of a specific type.
@@ -260,10 +260,10 @@ template <class T> T* ResourceCache::GetResource(const String& name, bool sendEv
     return static_cast<T*>(GetResource(type, name, sendEventOnFailure));
 }
 
-template <class T> void ResourceCache::ReleaseResource(const String& name, bool force)
+template <class T> void ResourceCache::release_resource(const String& name, bool force)
 {
     StringHash type = T::GetTypeStatic();
-    ReleaseResource(type, name, force);
+    release_resource(type, name, force);
 }
 
 template <class T> SharedPtr<T> ResourceCache::GetTempResource(const String& name, bool sendEventOnFailure)

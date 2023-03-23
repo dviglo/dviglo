@@ -250,7 +250,7 @@ void ResourceCache::remove_package_file(const String& fileName, bool releaseReso
     }
 }
 
-void ResourceCache::ReleaseResource(StringHash type, const String& name, bool force)
+void ResourceCache::release_resource(StringHash type, const String& name, bool force)
 {
     StringHash nameHash(name);
     const SharedPtr<Resource>& existingRes = FindResource(type, nameHash);
