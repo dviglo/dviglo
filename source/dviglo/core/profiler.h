@@ -5,8 +5,10 @@
 #pragma once
 
 #ifdef DV_TRACY_PROFILING
-#define TRACY_ENABLE 1
-#include "tracy/Tracy.hpp"
+    #define TRACY_ENABLE 1
+    #include "tracy/Tracy.hpp"
+#else
+    #define ZoneScoped
 #endif
 
 namespace dviglo
