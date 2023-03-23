@@ -16,6 +16,11 @@ add_library(${TARGET_NAME} STATIC ${source_files})
 # Добавляем дефайны
 target_compile_definitions(${TARGET_NAME} PRIVATE TRACY_ENABLE=1)
 
+if(MINGW)
+    # Подключаем библиотеки
+    target_link_libraries(${TARGET_NAME} PRIVATE dbghelp ws2_32)
+endif ()
+
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/public)
 
