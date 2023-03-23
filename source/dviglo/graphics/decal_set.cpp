@@ -281,7 +281,7 @@ bool DecalSet::AddDecal(Drawable* target, const Vector3& worldPosition, const Qu
     float aspectRatio, float depth, const Vector2& topLeftUV, const Vector2& bottomRightUV, float timeToLive, float normalCutoff,
     unsigned subGeometry)
 {
-    DV_PROFILE(AddDecal);
+    ZoneScoped;
 
     // Do not add decals in headless mode
     if (!node_ || GParams::is_headless())

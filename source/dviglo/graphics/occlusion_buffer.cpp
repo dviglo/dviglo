@@ -223,7 +223,7 @@ void OcclusionBuffer::BuildDepthHierarchy()
     if (buffers_.Empty() || !depthHierarchyDirty_)
         return;
 
-    DV_PROFILE(BuildDepthHierarchy);
+    ZoneScoped;
 
     // Build the first mip level from the pixel-level data
     int width = (width_ + 1) / 2;
@@ -996,7 +996,7 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
 
 void OcclusionBuffer::MergeBuffers()
 {
-    DV_PROFILE(MergeBuffers);
+    ZoneScoped;
 
     for (i32 i = 1; i < buffers_.Size(); ++i)
     {

@@ -372,7 +372,7 @@ void Graphics::EndDumpShaders()
 
 void Graphics::PrecacheShaders(Deserializer& source)
 {
-    DV_PROFILE(PrecacheShaders);
+    ZoneScoped;
 
     ShaderPrecache::LoadShaders(this, source);
 }

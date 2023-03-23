@@ -369,7 +369,7 @@ void Network::SetPassword(const String& password)
 
 bool Network::Connect(const String& address, unsigned short port, Scene* scene, const VariantMap& identity)
 {
-    DV_PROFILE(Connect);
+    ZoneScoped;
 
     if (!rakPeerClient_->IsActive())
     {
@@ -415,7 +415,7 @@ void Network::Disconnect(int waitMSec)
     if (!serverConnection_)
         return;
 
-    DV_PROFILE(Disconnect);
+    ZoneScoped;
     serverConnection_->Disconnect(waitMSec);
 }
 
@@ -424,7 +424,7 @@ bool Network::StartServer(unsigned short port, unsigned int maxConnections)
     if (IsServerRunning())
         return true;
 
-    DV_PROFILE(StartServer);
+    ZoneScoped;
 
     SLNet::SocketDescriptor socket;//(port, AF_INET);
     socket.port = port;

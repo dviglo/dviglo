@@ -253,7 +253,7 @@ int CrowdAgent::AddAgentToCrowd(bool force)
 
     if (force || !IsInCrowd())
     {
-        DV_PROFILE(AddAgentToCrowd);
+        ZoneScoped;
 
         agentCrowdId_ = crowdManager_->AddAgent(this, node_->GetWorldPosition());
         if (agentCrowdId_ == -1)

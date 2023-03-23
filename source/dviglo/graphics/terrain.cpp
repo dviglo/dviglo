@@ -644,7 +644,7 @@ Vector3 Terrain::HeightMapToWorld(const IntVector2& pixelPosition) const
 
 void Terrain::CreatePatchGeometry(TerrainPatch* patch)
 {
-    DV_PROFILE(CreatePatchGeometry);
+    ZoneScoped;
 
     auto row = (unsigned)(patchSize_ + 1);
     VertexBuffer* vertexBuffer = patch->GetVertexBuffer();
@@ -1359,7 +1359,7 @@ Vector3 Terrain::GetRawNormal(int x, int z) const
 
 void Terrain::CalculateLodErrors(TerrainPatch* patch)
 {
-    DV_PROFILE(CalculateLodErrors);
+    ZoneScoped;
 
     const IntVector2& coords = patch->GetCoordinates();
     Vector<float>& lodErrors = patch->GetLodErrors();

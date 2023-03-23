@@ -935,7 +935,7 @@ void RigidBody::AddBodyToWorld()
     if (!physicsWorld_)
         return;
 
-    DV_PROFILE(AddBodyToWorld);
+    ZoneScoped;
 
     if (mass_ < 0.0f)
         mass_ = 0.0f;

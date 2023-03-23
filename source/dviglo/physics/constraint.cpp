@@ -438,7 +438,7 @@ void Constraint::OnMarkedDirty(Node* node)
 
 void Constraint::CreateConstraint()
 {
-    DV_PROFILE(CreateConstraint);
+    ZoneScoped;
 
     cachedWorldScale_ = node_->GetWorldScale();
 

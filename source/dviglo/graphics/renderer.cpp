@@ -1672,7 +1672,7 @@ void Renderer::LoadShaders()
 
 void Renderer::LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& vertexShaders, Vector<SharedPtr<ShaderVariation>>& pixelShaders, const BatchQueue& queue)
 {
-    DV_PROFILE(LoadPassShaders);
+    ZoneScoped;
 
     // Forget all the old shaders
     vertexShaders.Clear();
