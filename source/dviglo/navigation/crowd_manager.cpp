@@ -98,7 +98,7 @@ void CrowdManager::ApplyAttributes()
         auto* navMesh = dynamic_cast<NavigationMesh*>(scene->GetComponent(navigationMeshId_));
         if (navMesh && navMesh != navigationMesh_)
         {
-            SetNavigationMesh(navMesh); // This will also CreateCrowd(), so the rest of the function is unnecessary
+            SetNavigationMesh(navMesh); // This will also create_crowd(), so the rest of the function is unnecessary
             return;
         }
     }
@@ -107,7 +107,7 @@ void CrowdManager::ApplyAttributes()
 
     // If the Detour crowd initialization parameters have changed then recreate it
     if (crowd_ && (navMeshChange || crowd_->getAgentCount() != maxAgents_ || crowd_->getMaxAgentRadius() != maxAgentRadius_))
-        CreateCrowd();
+        create_crowd();
 }
 
 void CrowdManager::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
@@ -217,7 +217,7 @@ void CrowdManager::SetMaxAgents(i32 maxAgents)
     if (maxAgents != maxAgents_ && maxAgents > 0)
     {
         maxAgents_ = maxAgents;
-        CreateCrowd();
+        create_crowd();
         MarkNetworkUpdate();
     }
 }
@@ -227,7 +227,7 @@ void CrowdManager::SetMaxAgentRadius(float maxAgentRadius)
     if (maxAgentRadius != maxAgentRadius_ && maxAgentRadius > 0.f)
     {
         maxAgentRadius_ = maxAgentRadius;
-        CreateCrowd();
+        create_crowd();
         MarkNetworkUpdate();
     }
 }
@@ -251,7 +251,7 @@ void CrowdManager::SetNavigationMesh(NavigationMesh* navMesh)
             SubscribeToEvent(scene, E_COMPONENTREMOVED, DV_HANDLER(CrowdManager, HandleNavMeshChanged));
         }
 
-        CreateCrowd();
+        create_crowd();
         MarkNetworkUpdate();
     }
 }
@@ -544,7 +544,7 @@ Vector<CrowdAgent*> CrowdManager::GetAgents(Node* node, bool inCrowdFilter) cons
     return agents;
 }
 
-bool CrowdManager::CreateCrowd()
+bool CrowdManager::create_crowd()
 {
     if (!navigationMesh_ || !navigationMesh_->InitializeQuery())
         return false;
