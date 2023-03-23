@@ -183,7 +183,7 @@ bool ResourceCache::add_manual_resource(Resource* resource)
 
     resource->ResetUseTimer();
     resourceGroups_[resource->GetType()].resources_[resource->GetNameHash()] = resource;
-    UpdateResourceGroup(resource->GetType());
+    update_resource_group(resource->GetType());
     return true;
 }
 
@@ -261,7 +261,7 @@ void ResourceCache::release_resource(StringHash type, const String& name, bool f
     if ((existingRes.Refs() == 1 && existingRes.WeakRefs() == 0) || force)
     {
         resourceGroups_[type].resources_.Erase(nameHash);
-        UpdateResourceGroup(type);
+        update_resource_group(type);
     }
 }
 
@@ -286,7 +286,7 @@ void ResourceCache::release_resources(StringHash type, bool force)
     }
 
     if (released)
-        UpdateResourceGroup(type);
+        update_resource_group(type);
 }
 
 void ResourceCache::release_resources(StringHash type, const String& partialName, bool force)
@@ -313,7 +313,7 @@ void ResourceCache::release_resources(StringHash type, const String& partialName
     }
 
     if (released)
-        UpdateResourceGroup(type);
+        update_resource_group(type);
 }
 
 void ResourceCache::release_resources(const String& partialName, bool force)
@@ -342,7 +342,7 @@ void ResourceCache::release_resources(const String& partialName, bool force)
                 }
             }
             if (released)
-                UpdateResourceGroup(i->first_);
+                update_resource_group(i->first_);
         }
 
     } while (released && !force);
@@ -370,7 +370,7 @@ void ResourceCache::release_all_resources(bool force)
                 }
             }
             if (released)
-                UpdateResourceGroup(i->first_);
+                update_resource_group(i->first_);
         }
 
     } while (released && !force);
@@ -391,7 +391,7 @@ bool ResourceCache::reload_resource(Resource* resource)
     if (success)
     {
         resource->ResetUseTimer();
-        UpdateResourceGroup(resource->GetType());
+        update_resource_group(resource->GetType());
         resource->SendEvent(E_RELOADFINISHED);
         return true;
     }
@@ -642,7 +642,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     // Store to cache
     resource->ResetUseTimer();
     resourceGroups_[type].resources_[nameHash] = resource;
-    UpdateResourceGroup(type);
+    update_resource_group(type);
 
     return resource;
 }
@@ -1041,10 +1041,10 @@ void ResourceCache::release_package_resources(PackageFile* package, bool force)
     }
 
     for (HashSet<StringHash>::Iterator i = affectedGroups.Begin(); i != affectedGroups.End(); ++i)
-        UpdateResourceGroup(*i);
+        update_resource_group(*i);
 }
 
-void ResourceCache::UpdateResourceGroup(StringHash type)
+void ResourceCache::update_resource_group(StringHash type)
 {
     HashMap<StringHash, ResourceGroup>::Iterator i = resourceGroups_.Find(type);
     if (i == resourceGroups_.End())

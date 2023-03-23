@@ -247,7 +247,7 @@ private:
     /// Release resources loaded from a package file.
     void release_package_resources(PackageFile* package, bool force = false);
     /// Update a resource group. Recalculate memory use and release resources if over memory budget.
-    void UpdateResourceGroup(StringHash type);
+    void update_resource_group(StringHash type);
     /// Handle begin frame event. Automatic resource reloads and the finalization of background loaded resources are processed here.
     void HandleBeginFrame(StringHash eventType, VariantMap& eventData);
     /// Search FileSystem for file.
