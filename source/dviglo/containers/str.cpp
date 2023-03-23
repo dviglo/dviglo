@@ -836,7 +836,7 @@ void String::SetUTF8FromWChar(const wchar_t* str)
 #ifdef _WIN32
     while (*str)
     {
-        c32 unicodeChar = DecodeUTF16(str);
+        c32 unicodeChar = decode_utf16(str);
         char* dest = temp;
         encode_utf8(dest, unicodeChar);
         *dest = 0;
@@ -1089,7 +1089,7 @@ void String::EncodeUTF16(wchar_t*& dest, c32 unicodeChar)
     }
 }
 
-c32 String::DecodeUTF16(const wchar_t*& src)
+c32 String::decode_utf16(const wchar_t*& src)
 {
     if (src == nullptr)
         return 0;

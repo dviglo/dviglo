@@ -240,7 +240,7 @@ void FileWatcher::ThreadFunction()
                     const wchar_t* src = record->FileName;
                     const wchar_t* end = src + record->FileNameLength / 2;
                     while (src < end)
-                        fileName.AppendUTF8(String::DecodeUTF16(src));
+                        fileName.AppendUTF8(String::decode_utf16(src));
 
                     fileName = to_internal(fileName);
                     AddChange(fileName);
