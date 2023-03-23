@@ -559,7 +559,7 @@ void Engine::DumpResources(bool dumpFileName)
     }
     else
     {
-        DV_LOGRAW(DV_RES_CACHE.PrintMemoryUsage() + "\n");
+        DV_LOGRAW(DV_RES_CACHE.print_memory_usage() + "\n");
     }
 #endif
 }

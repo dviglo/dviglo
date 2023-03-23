@@ -237,7 +237,7 @@ public:
     void ResetDependencies(Resource* resource);
 
     /// Returns a formatted string containing the memory actively used.
-    String PrintMemoryUsage() const;
+    String print_memory_usage() const;
 
 private:
     /// Find a resource.

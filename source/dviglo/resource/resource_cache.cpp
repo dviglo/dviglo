@@ -927,7 +927,7 @@ void ResourceCache::ResetDependencies(Resource* resource)
     }
 }
 
-String ResourceCache::PrintMemoryUsage() const
+String ResourceCache::print_memory_usage() const
 {
     String output = "Resource Type                 Cnt       Avg       Max    Budget     Total\n\n";
     char outputLine[256];

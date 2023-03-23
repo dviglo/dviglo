@@ -176,7 +176,7 @@ void DebugHud::Update()
     }
 
     if (memoryText_->IsVisible())
-        memoryText_->SetText(DV_RES_CACHE.PrintMemoryUsage());
+        memoryText_->SetText(DV_RES_CACHE.print_memory_usage());
 }
 
 void DebugHud::SetDefaultStyle(XmlFile* style)
