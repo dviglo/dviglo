@@ -251,7 +251,7 @@ private:
     /// Handle begin frame event. Automatic resource reloads and the finalization of background loaded resources are processed here.
     void HandleBeginFrame(StringHash eventType, VariantMap& eventData);
     /// Search FileSystem for file.
-    File* SearchResourceDirs(const String& name);
+    File* search_resource_dirs(const String& name);
     /// Search resource packages for file.
     File* SearchPackages(const String& name);
 

@@ -518,11 +518,11 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
         {
             file = SearchPackages(sanitatedName);
             if (!file)
-                file = SearchResourceDirs(sanitatedName);
+                file = search_resource_dirs(sanitatedName);
         }
         else
         {
-            file = SearchResourceDirs(sanitatedName);
+            file = search_resource_dirs(sanitatedName);
             if (!file)
                 file = SearchPackages(sanitatedName);
         }
@@ -1112,7 +1112,7 @@ void ResourceCache::HandleBeginFrame(StringHash eventType, VariantMap& eventData
 #endif
 }
 
-File* ResourceCache::SearchResourceDirs(const String& name)
+File* ResourceCache::search_resource_dirs(const String& name)
 {
     FileSystem& fileSystem = DV_FILE_SYSTEM;
 
