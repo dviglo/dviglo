@@ -55,7 +55,7 @@ Camera::Camera() :
     useClipping_(false),
     customProjection_(false)
 {
-    reflectionMatrix_ = reflectionPlane_.ReflectionMatrix();
+    reflectionMatrix_ = reflectionPlane_.reflection_matrix();
 }
 
 Camera::~Camera() = default;
@@ -204,7 +204,7 @@ void Camera::SetUseReflection(bool enable)
 void Camera::SetReflectionPlane(const Plane& plane)
 {
     reflectionPlane_ = plane;
-    reflectionMatrix_ = reflectionPlane_.ReflectionMatrix();
+    reflectionMatrix_ = reflectionPlane_.reflection_matrix();
     viewDirty_ = true;
     frustumDirty_ = true;
     MarkNetworkUpdate();

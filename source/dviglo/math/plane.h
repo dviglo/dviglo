@@ -85,7 +85,7 @@ public:
     Vector3 Reflect(const Vector3& direction) const { return direction - (2.0f * normal_.DotProduct(direction) * normal_); }
 
     /// Return a reflection matrix.
-    Matrix3x4 ReflectionMatrix() const;
+    Matrix3x4 reflection_matrix() const;
     /// Return transformed by a 3x3 matrix.
     Plane Transformed(const Matrix3& transform) const;
     /// Return transformed by a 3x4 matrix.

@@ -27,7 +27,7 @@ void Plane::Transform(const Matrix4& transform)
     Define(transform.Inverse().Transpose() * ToVector4());
 }
 
-Matrix3x4 Plane::ReflectionMatrix() const
+Matrix3x4 Plane::reflection_matrix() const
 {
     return Matrix3x4(
         -2.0f * normal_.x_ * normal_.x_ + 1.0f,
