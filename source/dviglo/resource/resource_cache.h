@@ -89,7 +89,7 @@ public:
     /// Add a manually created resource. Must be uniquely named within its type.
     bool AddManualResource(Resource* resource);
     /// Remove a resource load directory.
-    void RemoveResourceDir(const String& pathName);
+    void remove_resource_dir(const String& pathName);
     /// Remove a package file. Optionally release the resources loaded from it.
     void RemovePackageFile(PackageFile* package, bool releaseResources = true, bool forceRelease = false);
     /// Remove a package file by name. Optionally release the resources loaded from it.

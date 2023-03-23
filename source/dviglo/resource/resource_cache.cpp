@@ -187,7 +187,7 @@ bool ResourceCache::AddManualResource(Resource* resource)
     return true;
 }
 
-void ResourceCache::RemoveResourceDir(const String& pathName)
+void ResourceCache::remove_resource_dir(const String& pathName)
 {
     std::scoped_lock lock(resourceMutex_);
 

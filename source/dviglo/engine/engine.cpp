@@ -303,7 +303,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         Vector<String> resourceDirs = cache.GetResourceDirs();
         Vector<SharedPtr<PackageFile>> packageFiles = cache.GetPackageFiles();
         for (unsigned i = 0; i < resourceDirs.Size(); ++i)
-            cache.RemoveResourceDir(resourceDirs[i]);
+            cache.remove_resource_dir(resourceDirs[i]);
         for (unsigned i = 0; i < packageFiles.Size(); ++i)
             cache.RemovePackageFile(packageFiles[i]);
     }
