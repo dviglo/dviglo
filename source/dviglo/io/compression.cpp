@@ -93,7 +93,7 @@ VectorBuffer CompressVectorBuffer(VectorBuffer& src)
     return ret;
 }
 
-VectorBuffer DecompressVectorBuffer(VectorBuffer& src)
+VectorBuffer decompress_vector_buffer(VectorBuffer& src)
 {
     VectorBuffer ret;
     src.Seek(0);
