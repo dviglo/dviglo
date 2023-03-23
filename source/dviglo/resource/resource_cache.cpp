@@ -467,7 +467,7 @@ void ResourceCache::SetAutoReloadResources(bool enable)
     }
 }
 
-void ResourceCache::AddResourceRouter(ResourceRouter* router, bool addAsFirst)
+void ResourceCache::add_resource_router(ResourceRouter* router, bool addAsFirst)
 {
     // Check for duplicate
     for (const SharedPtr<ResourceRouter>& resourceRouter : resourceRouters_)

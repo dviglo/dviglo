@@ -138,7 +138,7 @@ public:
     void SetFinishBackgroundResourcesMs(int ms) { finishBackgroundResourcesMs_ = Max(ms, 1); }
 
     /// Add a resource router object. By default there is none, so the routing process is skipped.
-    void AddResourceRouter(ResourceRouter* router, bool addAsFirst = false);
+    void add_resource_router(ResourceRouter* router, bool addAsFirst = false);
 
     /// Remove a resource router object.
     void remove_resource_router(ResourceRouter* router);
