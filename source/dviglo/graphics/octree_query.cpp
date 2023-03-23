@@ -9,7 +9,7 @@
 namespace dviglo
 {
 
-Intersection PointOctreeQuery::TestOctant(const BoundingBox& box, bool inside)
+Intersection PointOctreeQuery::test_octant(const BoundingBox& box, bool inside)
 {
     if (inside)
         return INSIDE;
@@ -31,7 +31,7 @@ void PointOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool insi
     }
 }
 
-Intersection SphereOctreeQuery::TestOctant(const BoundingBox& box, bool inside)
+Intersection SphereOctreeQuery::test_octant(const BoundingBox& box, bool inside)
 {
     if (inside)
         return INSIDE;
@@ -53,7 +53,7 @@ void SphereOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool ins
     }
 }
 
-Intersection BoxOctreeQuery::TestOctant(const BoundingBox& box, bool inside)
+Intersection BoxOctreeQuery::test_octant(const BoundingBox& box, bool inside)
 {
     if (inside)
         return INSIDE;
@@ -75,7 +75,7 @@ void BoxOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool inside
     }
 }
 
-Intersection FrustumOctreeQuery::TestOctant(const BoundingBox& box, bool inside)
+Intersection FrustumOctreeQuery::test_octant(const BoundingBox& box, bool inside)
 {
     if (inside)
         return INSIDE;
@@ -98,7 +98,7 @@ void FrustumOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool in
 }
 
 
-Intersection AllContentOctreeQuery::TestOctant(const BoundingBox& box, bool inside)
+Intersection AllContentOctreeQuery::test_octant(const BoundingBox& box, bool inside)
 {
     return INSIDE;
 }

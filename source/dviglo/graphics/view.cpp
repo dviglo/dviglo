@@ -106,7 +106,7 @@ public:
     }
 
     /// Intersection test for an octant.
-    Intersection TestOctant(const BoundingBox& box, bool inside) override
+    Intersection test_octant(const BoundingBox& box, bool inside) override
     {
         if (inside)
             return buffer_->IsVisible(box) ? INSIDE : OUTSIDE;

@@ -214,7 +214,7 @@ void Octant::GetDrawablesInternal(OctreeQuery& query, bool inside) const
 {
     if (this != root_)
     {
-        Intersection res = query.TestOctant(cullingBox_, inside);
+        Intersection res = query.test_octant(cullingBox_, inside);
         if (res == INSIDE)
             inside = true;
         else if (res == OUTSIDE)

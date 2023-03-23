@@ -39,7 +39,7 @@ public:
     OctreeQuery& operator =(const OctreeQuery& rhs) = delete;
 
     /// Intersection test for an octant.
-    virtual Intersection TestOctant(const BoundingBox& box, bool inside) = 0;
+    virtual Intersection test_octant(const BoundingBox& box, bool inside) = 0;
     /// Intersection test for drawables.
     virtual void TestDrawables(Drawable** start, Drawable** end, bool inside) = 0;
 
@@ -64,7 +64,7 @@ public:
     }
 
     /// Intersection test for an octant.
-    Intersection TestOctant(const BoundingBox& box, bool inside) override;
+    Intersection test_octant(const BoundingBox& box, bool inside) override;
     /// Intersection test for drawables.
     void TestDrawables(Drawable** start, Drawable** end, bool inside) override;
 
@@ -85,7 +85,7 @@ public:
     }
 
     /// Intersection test for an octant.
-    Intersection TestOctant(const BoundingBox& box, bool inside) override;
+    Intersection test_octant(const BoundingBox& box, bool inside) override;
     /// Intersection test for drawables.
     void TestDrawables(Drawable** start, Drawable** end, bool inside) override;
 
@@ -106,7 +106,7 @@ public:
     }
 
     /// Intersection test for an octant.
-    Intersection TestOctant(const BoundingBox& box, bool inside) override;
+    Intersection test_octant(const BoundingBox& box, bool inside) override;
     /// Intersection test for drawables.
     void TestDrawables(Drawable** start, Drawable** end, bool inside) override;
 
@@ -127,7 +127,7 @@ public:
     }
 
     /// Intersection test for an octant.
-    Intersection TestOctant(const BoundingBox& box, bool inside) override;
+    Intersection test_octant(const BoundingBox& box, bool inside) override;
     /// Intersection test for drawables.
     void TestDrawables(Drawable** start, Drawable** end, bool inside) override;
 
@@ -246,7 +246,7 @@ public:
     }
 
     /// Intersection test for an octant.
-    Intersection TestOctant(const BoundingBox& box, bool inside) override;
+    Intersection test_octant(const BoundingBox& box, bool inside) override;
     /// Intersection test for drawables.
     void TestDrawables(Drawable** start, Drawable** end, bool inside) override;
 };
