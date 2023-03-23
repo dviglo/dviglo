@@ -1871,11 +1871,6 @@ bool Graphics::IsInitialized_OGL() const
     return window_ != nullptr;
 }
 
-bool Graphics::GetDither_OGL() const
-{
-    return glIsEnabled(GL_DITHER) ? true : false;
-}
-
 Vector<int> Graphics::GetMultiSampleLevels_OGL() const
 {
     Vector<int> ret;

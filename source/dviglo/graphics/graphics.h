@@ -796,7 +796,6 @@ private:
     void SetClipPlane_OGL(bool enable, const Plane& clipPlane, const Matrix3x4& view, const Matrix4& projection);
     void SetStencilTest_OGL(bool enable, CompareMode mode = CMP_ALWAYS, StencilOp pass = OP_KEEP, StencilOp fail = OP_KEEP, StencilOp zFail = OP_KEEP, u32 stencilRef = 0, u32 compareMask = M_U32_MASK_ALL_BITS, u32 writeMask = M_U32_MASK_ALL_BITS);
     bool IsInitialized_OGL() const;
-    bool GetDither_OGL() const;
     Vector<int> GetMultiSampleLevels_OGL() const;
     unsigned GetFormat_OGL(CompressedFormat format) const;
     ShaderVariation* GetShader_OGL(ShaderType type, const String& name, const String& defines = String::EMPTY) const;

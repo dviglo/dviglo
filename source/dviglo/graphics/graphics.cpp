@@ -1289,14 +1289,7 @@ bool Graphics::IsInitialized() const
 
 bool Graphics::GetDither() const
 {
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return GetDither_OGL();
-#endif
-
-    return {}; // Prevent warning
+    return glIsEnabled(GL_DITHER) ? true : false;
 }
 
 bool Graphics::IsDeviceLost() const
