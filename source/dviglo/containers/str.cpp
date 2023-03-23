@@ -866,7 +866,7 @@ i32 String::LengthUTF8() const
 
     while (src < end)
     {
-        DecodeUTF8(src);
+        decode_utf8(src);
         ++ret;
     }
 
@@ -894,7 +894,7 @@ c32 String::NextUTF8Char(i32& byteOffset) const
     const char* buffer = GetBuffer();
 
     const char* src = buffer + byteOffset;
-    c32 ret = DecodeUTF8(src);
+    c32 ret = decode_utf8(src);
     byteOffset = (i32)(src - buffer);
 
     return ret;
@@ -1020,7 +1020,7 @@ void String::EncodeUTF8(char*& dest, c32 unicodeChar)
 
 #define GET_NEXT_CONTINUATION_BYTE(ptr) *(ptr); if ((u8)*(ptr) < 0x80 || (u8)*(ptr) >= 0xc0) return '?'; else ++(ptr);
 
-c32 String::DecodeUTF8(const char*& src)
+c32 String::decode_utf8(const char*& src)
 {
     if (src == nullptr)
         return 0;
