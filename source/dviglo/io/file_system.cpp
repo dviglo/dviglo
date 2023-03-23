@@ -357,7 +357,7 @@ unsigned FileSystem::SystemRunAsync(const String& fileName, const Vector<String>
 #endif
 }
 
-bool FileSystem::SystemOpen(const String& fileName, const String& mode)
+bool FileSystem::system_open(const String& fileName, const String& mode)
 {
     if (!file_exists(fileName) && !dir_exists(fileName))
     {
