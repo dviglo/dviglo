@@ -136,7 +136,7 @@ protected:
     /// Create and initialized internal Detour crowd object. When it is a recreate, it preserves the configuration and attempts to re-add existing agents in the previous crowd back to the newly created crowd.
     bool create_crowd();
     /// Create and adds an detour crowd agent, Agent's radius and height is set through the navigation mesh. Return -1 on error, agent ID on success.
-    int AddAgent(CrowdAgent* agent, const Vector3& pos);
+    int add_agent(CrowdAgent* agent, const Vector3& pos);
     /// Removes the detour crowd agent.
     void RemoveAgent(CrowdAgent* agent);
 

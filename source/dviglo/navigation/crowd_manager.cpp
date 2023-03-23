@@ -591,7 +591,7 @@ bool CrowdManager::create_crowd()
     return true;
 }
 
-int CrowdManager::AddAgent(CrowdAgent* agent, const Vector3& pos)
+int CrowdManager::add_agent(CrowdAgent* agent, const Vector3& pos)
 {
     if (!crowd_ || !navigationMesh_ || !agent)
         return -1;

@@ -255,7 +255,7 @@ int CrowdAgent::AddAgentToCrowd(bool force)
     {
         ZoneScoped;
 
-        agentCrowdId_ = crowdManager_->AddAgent(this, node_->GetWorldPosition());
+        agentCrowdId_ = crowdManager_->add_agent(this, node_->GetWorldPosition());
         if (agentCrowdId_ == -1)
             return -1;
 
