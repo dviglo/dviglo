@@ -655,8 +655,6 @@ public:
     static unsigned GetRGFloat16Format();
     /// Return the API-specific RG 32-bit float texture format.
     static unsigned GetRGFloat32Format();
-    /// Return the API-specific single channel 16-bit float texture format.
-    static unsigned GetFloat16Format();
     /// Return the API-specific single channel 32-bit float texture format.
     static unsigned GetFloat32Format();
     /// Return the API-specific linear depth texture format.

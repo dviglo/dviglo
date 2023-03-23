@@ -2383,11 +2383,6 @@ unsigned Graphics::GetRGFloat32Format_OGL()
     return GL_RG32F;
 }
 
-unsigned Graphics::GetFloat16Format_OGL()
-{
-    return GL_R16F;
-}
-
 unsigned Graphics::GetFloat32Format_OGL()
 {
 #ifndef DV_GLES2
@@ -2440,7 +2435,7 @@ unsigned Graphics::GetFormat_OGL(const String& formatName)
     if (nameLower == "rg32f")
         return GetRGFloat32Format_OGL();
     if (nameLower == "r16f")
-        return GetFloat16Format_OGL();
+        return GL_R16F;
     if (nameLower == "r32f" || nameLower == "float")
         return GetFloat32Format_OGL();
     if (nameLower == "lineardepth" || nameLower == "depth")

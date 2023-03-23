@@ -1586,18 +1586,6 @@ unsigned Graphics::GetRGFloat32Format()
     return {}; // Prevent warning
 }
 
-unsigned Graphics::GetFloat16Format()
-{
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return GetFloat16Format_OGL();
-#endif
-
-    return {}; // Prevent warning
-}
-
 unsigned Graphics::GetFloat32Format()
 {
     GAPI gapi = GParams::get_gapi();
