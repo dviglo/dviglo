@@ -147,6 +147,6 @@ private:
 #define DV_AUDIO (dviglo::Audio::get_instance())
 
 /// Register Audio library objects.
-void DV_API RegisterAudioLibrary();
+void DV_API register_audio_library();
 
 }

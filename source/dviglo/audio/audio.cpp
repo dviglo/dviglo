@@ -53,7 +53,7 @@ Audio::Audio()
     masterGain_[SOUND_MASTER_HASH] = 1.0f;
 
     // Register Audio library object factories
-    RegisterAudioLibrary();
+    register_audio_library();
 
     SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
 
@@ -355,7 +355,7 @@ void Audio::UpdateInternal(float timeStep)
     }
 }
 
-void RegisterAudioLibrary()
+void register_audio_library()
 {
     Sound::register_object();
     SoundSource::register_object();
