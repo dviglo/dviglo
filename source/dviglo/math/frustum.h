@@ -158,7 +158,7 @@ public:
     Rect Projected(const Matrix4& projection) const;
 
     /// Update the planes. Called internally.
-    void UpdatePlanes();
+    void update_planes();
 
     /// Frustum planes.
     Plane planes_[NUM_FRUSTUM_PLANES];

@@ -81,7 +81,7 @@ void Frustum::Define(const Vector3& near, const Vector3& far, const Matrix3x4& t
     vertices_[6] = transform * Vector3(-far.x_, -far.y_, far.z_);
     vertices_[7] = transform * Vector3(-far.x_, far.y_, far.z_);
 
-    UpdatePlanes();
+    update_planes();
 }
 
 void Frustum::Define(const BoundingBox& box, const Matrix3x4& transform)
@@ -95,7 +95,7 @@ void Frustum::Define(const BoundingBox& box, const Matrix3x4& transform)
     vertices_[6] = transform * Vector3(box.min_.x_, box.min_.y_, box.max_.z_);
     vertices_[7] = transform * Vector3(box.min_.x_, box.max_.y_, box.max_.z_);
 
-    UpdatePlanes();
+    update_planes();
 }
 
 void Frustum::Define(const Matrix4& projection)
@@ -111,7 +111,7 @@ void Frustum::Define(const Matrix4& projection)
     vertices_[6] = projInverse * Vector3(-1.0f, -1.0f, 1.0f);
     vertices_[7] = projInverse * Vector3(-1.0f, 1.0f, 1.0f);
 
-    UpdatePlanes();
+    update_planes();
 }
 
 void Frustum::define_ortho(float orthoSize, float aspectRatio, float zoom, float nearZ, float farZ, const Matrix3x4& transform)
@@ -148,7 +148,7 @@ void Frustum::define_split(const Matrix4& projection, float near, float far)
     vertices_[6] = projInverse * Vector3(-1.0f, -1.0f, farZ);
     vertices_[7] = projInverse * Vector3(-1.0f, 1.0f, farZ);
 
-    UpdatePlanes();
+    update_planes();
 }
 
 void Frustum::Transform(const Matrix3& transform)
@@ -156,7 +156,7 @@ void Frustum::Transform(const Matrix3& transform)
     for (auto& vertice : vertices_)
         vertice = transform * vertice;
 
-    UpdatePlanes();
+    update_planes();
 }
 
 void Frustum::Transform(const Matrix3x4& transform)
@@ -164,7 +164,7 @@ void Frustum::Transform(const Matrix3x4& transform)
     for (auto& vertice : vertices_)
         vertice = transform * vertice;
 
-    UpdatePlanes();
+    update_planes();
 }
 
 Frustum Frustum::Transformed(const Matrix3& transform) const
@@ -174,7 +174,7 @@ Frustum Frustum::Transformed(const Matrix3& transform) const
     for (i32 i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
         transformed.vertices_[i] = transform * vertices_[i];
 
-    transformed.UpdatePlanes();
+    transformed.update_planes();
     return transformed;
 }
 
@@ -185,7 +185,7 @@ Frustum Frustum::Transformed(const Matrix3x4& transform) const
     for (i32 i = 0; i < NUM_FRUSTUM_VERTICES; ++i)
         transformed.vertices_[i] = transform * vertices_[i];
 
-    transformed.UpdatePlanes();
+    transformed.update_planes();
     return transformed;
 }
 
@@ -205,7 +205,7 @@ Rect Frustum::Projected(const Matrix4& projection) const
     return rect;
 }
 
-void Frustum::UpdatePlanes()
+void Frustum::update_planes()
 {
     planes_[PLANE_NEAR].Define(vertices_[2], vertices_[1], vertices_[0]);
     planes_[PLANE_LEFT].Define(vertices_[3], vertices_[7], vertices_[6]);
