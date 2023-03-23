@@ -178,7 +178,7 @@ PhysicsWorld::~PhysicsWorld()
     collisionConfiguration_ = nullptr;
 }
 
-void PhysicsWorld::RegisterObject()
+void PhysicsWorld::register_object()
 {
     DV_CONTEXT.RegisterFactory<PhysicsWorld>(SUBSYSTEM_CATEGORY);
 
@@ -1064,11 +1064,11 @@ void PhysicsWorld::SendCollisionEvents()
 
 void RegisterPhysicsLibrary()
 {
-    CollisionShape::RegisterObject();
-    RigidBody::RegisterObject();
-    Constraint::RegisterObject();
-    PhysicsWorld::RegisterObject();
-    RaycastVehicle::RegisterObject();
+    CollisionShape::register_object();
+    RigidBody::register_object();
+    Constraint::register_object();
+    PhysicsWorld::register_object();
+    RaycastVehicle::register_object();
 }
 
 }

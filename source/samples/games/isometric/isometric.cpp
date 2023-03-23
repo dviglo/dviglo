@@ -43,9 +43,9 @@ Urho2DIsometricDemo::Urho2DIsometricDemo() :
     drawDebug_(false)
 {
     // Register factory for the Character2D component so it can be created via create_component
-    Character2D::RegisterObject();
+    Character2D::register_object();
     // Register factory and attributes for the Mover component so it can be created via create_component, and loaded / saved
-    Mover::RegisterObject();
+    Mover::register_object();
 }
 
 void Urho2DIsometricDemo::Setup()

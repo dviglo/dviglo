@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~CollisionEdge2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set vertex 1.
     void SetVertex1(const Vector2& vertex);

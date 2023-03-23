@@ -33,7 +33,7 @@ StaticModel::StaticModel() :
 
 StaticModel::~StaticModel() = default;
 
-void StaticModel::RegisterObject()
+void StaticModel::register_object()
 {
     DV_CONTEXT.RegisterFactory<StaticModel>(GEOMETRY_CATEGORY);
 

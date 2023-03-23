@@ -35,7 +35,7 @@ Drawable2D::~Drawable2D()
         renderer_->RemoveDrawable(this);
 }
 
-void Drawable2D::RegisterObject()
+void Drawable2D::register_object()
 {
     DV_ACCESSOR_ATTRIBUTE("Layer", GetLayer, SetLayer, 0, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Order in Layer", GetOrderInLayer, SetOrderInLayer, 0, AM_DEFAULT);

@@ -36,7 +36,7 @@ public:
     /// Destruct.
     ~RigidBody2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

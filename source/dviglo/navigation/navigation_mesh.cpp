@@ -110,7 +110,7 @@ NavigationMesh::~NavigationMesh()
     release_navigation_mesh();
 }
 
-void NavigationMesh::RegisterObject()
+void NavigationMesh::register_object()
 {
     DV_CONTEXT.RegisterFactory<NavigationMesh>(NAVIGATION_CATEGORY);
 
@@ -1562,14 +1562,14 @@ void NavigationMesh::SetPartitionType(NavmeshPartitionType partitionType)
 
 void RegisterNavigationLibrary()
 {
-    Navigable::RegisterObject();
-    NavigationMesh::RegisterObject();
-    OffMeshConnection::RegisterObject();
-    CrowdAgent::RegisterObject();
-    CrowdManager::RegisterObject();
-    DynamicNavigationMesh::RegisterObject();
-    Obstacle::RegisterObject();
-    NavArea::RegisterObject();
+    Navigable::register_object();
+    NavigationMesh::register_object();
+    OffMeshConnection::register_object();
+    CrowdAgent::register_object();
+    CrowdManager::register_object();
+    DynamicNavigationMesh::register_object();
+    Obstacle::register_object();
+    NavArea::register_object();
 }
 
 }

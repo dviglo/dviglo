@@ -22,7 +22,7 @@ Character::Character() :
     SetUpdateEventMask(LogicComponentEvents::FixedUpdate);
 }
 
-void Character::RegisterObject()
+void Character::register_object()
 {
     DV_CONTEXT.RegisterFactory<Character>();
 

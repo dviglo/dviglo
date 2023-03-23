@@ -26,7 +26,7 @@ public:
     /// Destruct.
     ~View3D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// React to resize.
     void OnResize(const IntVector2& newSize, const IntVector2& delta) override;

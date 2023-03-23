@@ -81,7 +81,7 @@ CrowdAgent::~CrowdAgent()
     RemoveAgentFromCrowd();
 }
 
-void CrowdAgent::RegisterObject()
+void CrowdAgent::register_object()
 {
     DV_CONTEXT.RegisterFactory<CrowdAgent>(NAVIGATION_CATEGORY);
 

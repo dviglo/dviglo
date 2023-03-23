@@ -78,7 +78,7 @@ Cursor::~Cursor()
     }
 }
 
-void Cursor::RegisterObject()
+void Cursor::register_object()
 {
     DV_CONTEXT.RegisterFactory<Cursor>(UI_CATEGORY);
 

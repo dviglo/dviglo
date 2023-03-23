@@ -30,7 +30,7 @@ OffMeshConnection::OffMeshConnection() :
 
 OffMeshConnection::~OffMeshConnection() = default;
 
-void OffMeshConnection::RegisterObject()
+void OffMeshConnection::register_object()
 {
     DV_CONTEXT.RegisterFactory<OffMeshConnection>(NAVIGATION_CATEGORY);
 

@@ -30,7 +30,7 @@ Obstacle::~Obstacle()
         ownerMesh_->RemoveObstacle(this);
 }
 
-void Obstacle::RegisterObject()
+void Obstacle::register_object()
 {
     DV_CONTEXT.RegisterFactory<Obstacle>(NAVIGATION_CATEGORY);
     DV_COPY_BASE_ATTRIBUTES(Component);

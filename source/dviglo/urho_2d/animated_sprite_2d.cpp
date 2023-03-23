@@ -50,7 +50,7 @@ AnimatedSprite2D::~AnimatedSprite2D()
     Dispose();
 }
 
-void AnimatedSprite2D::RegisterObject()
+void AnimatedSprite2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<AnimatedSprite2D>(URHO2D_CATEGORY);
 

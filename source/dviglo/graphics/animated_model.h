@@ -27,7 +27,7 @@ public:
     /// Destruct.
     ~AnimatedModel() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;

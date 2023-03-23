@@ -22,7 +22,7 @@ SmoothedTransform::SmoothedTransform() :
 
 SmoothedTransform::~SmoothedTransform() = default;
 
-void SmoothedTransform::RegisterObject()
+void SmoothedTransform::register_object()
 {
     DV_CONTEXT.RegisterFactory<SmoothedTransform>();
 }

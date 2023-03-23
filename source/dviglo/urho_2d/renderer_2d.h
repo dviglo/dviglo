@@ -60,7 +60,7 @@ public:
     /// Destruct.
     ~Renderer2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;

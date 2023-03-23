@@ -16,7 +16,7 @@ SoundListener::SoundListener()
 
 SoundListener::~SoundListener() = default;
 
-void SoundListener::RegisterObject()
+void SoundListener::register_object()
 {
     DV_CONTEXT.RegisterFactory<SoundListener>(AUDIO_CATEGORY);
 

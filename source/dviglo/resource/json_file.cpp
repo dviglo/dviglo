@@ -28,7 +28,7 @@ JSONFile::JSONFile()
 
 JSONFile::~JSONFile() = default;
 
-void JSONFile::RegisterObject()
+void JSONFile::register_object()
 {
     DV_CONTEXT.RegisterFactory<JSONFile>();
 }

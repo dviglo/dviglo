@@ -17,7 +17,7 @@ public:
     /// Construct.
     explicit StretchableSprite2D();
     /// Register object factory. Drawable2D must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set border as number of pixels from each side.
     void SetBorder(const IntRect& border);

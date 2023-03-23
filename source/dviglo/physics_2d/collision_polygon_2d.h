@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~CollisionPolygon2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set vertex count.
     void SetVertexCount(i32 count);

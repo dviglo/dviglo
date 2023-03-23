@@ -47,9 +47,9 @@ DV_DEFINE_APPLICATION_MAIN(Urho2DPlatformer)
 Urho2DPlatformer::Urho2DPlatformer()
 {
     // Register factory for the Character2D component so it can be created via create_component
-    Character2D::RegisterObject();
+    Character2D::register_object();
     // Register factory and attributes for the Mover component so it can be created via create_component, and loaded / saved
-    Mover::RegisterObject();
+    Mover::register_object();
 }
 
 void Urho2DPlatformer::Setup()

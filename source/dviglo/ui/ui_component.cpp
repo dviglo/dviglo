@@ -160,7 +160,7 @@ UIComponent::UIComponent()
 
 UIComponent::~UIComponent() = default;
 
-void UIComponent::RegisterObject()
+void UIComponent::register_object()
 {
     DV_CONTEXT.RegisterFactory<UIComponent>();
     DV_CONTEXT.RegisterFactory<UIElement3D>();

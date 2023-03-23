@@ -46,7 +46,7 @@ Zone::Zone() :
 
 Zone::~Zone() = default;
 
-void Zone::RegisterObject()
+void Zone::register_object()
 {
     DV_CONTEXT.RegisterFactory<Zone>(SCENE_CATEGORY);
 

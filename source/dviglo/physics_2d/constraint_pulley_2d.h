@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~ConstraintPulley2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set other body ground anchor point.
     void SetOwnerBodyGroundAnchor(const Vector2& groundAnchor);

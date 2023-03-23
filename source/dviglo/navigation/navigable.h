@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~Navigable() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set whether geometry is automatically collected from child nodes. Default true.
     void SetRecursive(bool enable);

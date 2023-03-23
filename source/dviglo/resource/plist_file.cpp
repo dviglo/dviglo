@@ -282,7 +282,7 @@ PListFile::PListFile()
 
 PListFile::~PListFile() = default;
 
-void PListFile::RegisterObject()
+void PListFile::register_object()
 {
     DV_CONTEXT.RegisterFactory<PListFile>();
 }

@@ -1648,34 +1648,34 @@ unsigned Graphics::GetFormat(const String& formatName)
 
 void RegisterGraphicsLibrary()
 {
-    Animation::RegisterObject();
-    Material::RegisterObject();
-    Model::RegisterObject();
-    Shader::RegisterObject();
-    Technique::RegisterObject();
-    Texture2D::RegisterObject();
-    Texture2DArray::RegisterObject();
-    Texture3D::RegisterObject();
-    TextureCube::RegisterObject();
-    Camera::RegisterObject();
-    Drawable::RegisterObject();
-    Light::RegisterObject();
-    StaticModel::RegisterObject();
-    StaticModelGroup::RegisterObject();
-    Skybox::RegisterObject();
-    AnimatedModel::RegisterObject();
-    AnimationController::RegisterObject();
-    BillboardSet::RegisterObject();
-    ParticleEffect::RegisterObject();
-    ParticleEmitter::RegisterObject();
-    RibbonTrail::RegisterObject();
-    CustomGeometry::RegisterObject();
-    DecalSet::RegisterObject();
-    Terrain::RegisterObject();
-    TerrainPatch::RegisterObject();
-    DebugRenderer::RegisterObject();
-    Octree::RegisterObject();
-    Zone::RegisterObject();
+    Animation::register_object();
+    Material::register_object();
+    Model::register_object();
+    Shader::register_object();
+    Technique::register_object();
+    Texture2D::register_object();
+    Texture2DArray::register_object();
+    Texture3D::register_object();
+    TextureCube::register_object();
+    Camera::register_object();
+    Drawable::register_object();
+    Light::register_object();
+    StaticModel::register_object();
+    StaticModelGroup::register_object();
+    Skybox::register_object();
+    AnimatedModel::register_object();
+    AnimationController::register_object();
+    BillboardSet::register_object();
+    ParticleEffect::register_object();
+    ParticleEmitter::register_object();
+    RibbonTrail::register_object();
+    CustomGeometry::register_object();
+    DecalSet::register_object();
+    Terrain::register_object();
+    TerrainPatch::register_object();
+    DebugRenderer::register_object();
+    Octree::register_object();
+    Zone::register_object();
 }
 
 }

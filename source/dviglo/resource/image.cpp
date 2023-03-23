@@ -241,7 +241,7 @@ Image::Image()
 
 Image::~Image() = default;
 
-void Image::RegisterObject()
+void Image::register_object()
 {
     DV_CONTEXT.RegisterFactory<Image>();
 }

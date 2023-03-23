@@ -45,7 +45,7 @@ TerrainPatch::TerrainPatch() :
 
 TerrainPatch::~TerrainPatch() = default;
 
-void TerrainPatch::RegisterObject()
+void TerrainPatch::register_object()
 {
     DV_CONTEXT.RegisterFactory<TerrainPatch>();
 }

@@ -84,7 +84,7 @@ MessageBox::~MessageBox()
         window_->Remove();
 }
 
-void MessageBox::RegisterObject()
+void MessageBox::register_object()
 {
     DV_CONTEXT.RegisterFactory<MessageBox>();
 }

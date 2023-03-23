@@ -96,7 +96,7 @@ Terrain::Terrain() :
 
 Terrain::~Terrain() = default;
 
-void Terrain::RegisterObject()
+void Terrain::register_object()
 {
     DV_CONTEXT.RegisterFactory<Terrain>(GEOMETRY_CATEGORY);
 

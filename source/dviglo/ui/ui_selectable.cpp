@@ -10,7 +10,7 @@ namespace dviglo
 
 extern const char* UI_CATEGORY;
 
-void UISelectable::RegisterObject()
+void UISelectable::register_object()
 {
     DV_CONTEXT.RegisterFactory<UISelectable>(UI_CATEGORY);
 

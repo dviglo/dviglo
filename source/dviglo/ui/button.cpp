@@ -29,7 +29,7 @@ Button::Button() :
 
 Button::~Button() = default;
 
-void Button::RegisterObject()
+void Button::register_object()
 {
     DV_CONTEXT.RegisterFactory<Button>(UI_CATEGORY);
 

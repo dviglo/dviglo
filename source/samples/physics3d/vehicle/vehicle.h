@@ -38,7 +38,7 @@ public:
     explicit Vehicle();
 
     /// Register object factory and attributes.
-    static void RegisterObject();
+    static void register_object();
 
     /// Perform post-load after deserialization. Acquire the components from the scene nodes.
     void apply_attributes() override;

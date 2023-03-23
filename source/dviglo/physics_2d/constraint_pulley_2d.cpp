@@ -25,7 +25,7 @@ ConstraintPulley2D::ConstraintPulley2D() :
 
 ConstraintPulley2D::~ConstraintPulley2D() = default;
 
-void ConstraintPulley2D::RegisterObject()
+void ConstraintPulley2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintPulley2D>(PHYSICS2D_CATEGORY);
 

@@ -24,7 +24,7 @@ TileMap2D::TileMap2D()
 
 TileMap2D::~TileMap2D() = default;
 
-void TileMap2D::RegisterObject()
+void TileMap2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<TileMap2D>(URHO2D_CATEGORY);
 

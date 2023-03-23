@@ -34,7 +34,7 @@ public:
     /// Destruct.
     ~ListView() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// React to a key press.
     void OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifiers) override;

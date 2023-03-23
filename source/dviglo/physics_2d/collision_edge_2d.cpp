@@ -27,7 +27,7 @@ CollisionEdge2D::CollisionEdge2D() :
 
 CollisionEdge2D::~CollisionEdge2D() = default;
 
-void CollisionEdge2D::RegisterObject()
+void CollisionEdge2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<CollisionEdge2D>(PHYSICS2D_CATEGORY);
 

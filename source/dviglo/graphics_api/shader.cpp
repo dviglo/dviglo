@@ -55,7 +55,7 @@ Shader::~Shader()
         DV_RES_CACHE.ResetDependencies(this);
 }
 
-void Shader::RegisterObject()
+void Shader::register_object()
 {
     DV_CONTEXT.RegisterFactory<Shader>();
 }

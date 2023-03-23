@@ -47,7 +47,7 @@ Animatable::Animatable() :
 
 Animatable::~Animatable() = default;
 
-void Animatable::RegisterObject()
+void Animatable::register_object()
 {
     DV_ACCESSOR_ATTRIBUTE("Object Animation", GetObjectAnimationAttr, SetObjectAnimationAttr,
         ResourceRef(ObjectAnimation::GetTypeStatic()), AM_DEFAULT);

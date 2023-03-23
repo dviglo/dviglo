@@ -163,7 +163,7 @@ static const StringVector wheelElementNames =
     "   Brake"
 };
 
-void RaycastVehicle::RegisterObject()
+void RaycastVehicle::register_object()
 {
     DV_CONTEXT.RegisterFactory<RaycastVehicle>();
     DV_ACCESSOR_ATTRIBUTE("Wheel data", GetWheelDataAttr, SetWheelDataAttr, Variant::emptyVariantVector, AM_DEFAULT)

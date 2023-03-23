@@ -8,7 +8,7 @@
 namespace dviglo
 {
 
-void FootSteps::RegisterObject()
+void FootSteps::register_object()
 {
     DV_CONTEXT.RegisterFactory<FootSteps>();
 }

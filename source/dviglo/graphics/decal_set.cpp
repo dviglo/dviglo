@@ -156,7 +156,7 @@ DecalSet::DecalSet() :
 
 DecalSet::~DecalSet() = default;
 
-void DecalSet::RegisterObject()
+void DecalSet::register_object()
 {
     DV_CONTEXT.RegisterFactory<DecalSet>(GEOMETRY_CATEGORY);
 

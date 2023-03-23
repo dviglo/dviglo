@@ -36,7 +36,7 @@ public:
     ~DynamicNavigationMesh() override;
 
     /// Register with engine context.
-    static void RegisterObject();
+    static void register_object();
 
     /// Allocate the navigation mesh without building any tiles. Bounding box is not padded. Return true if successful.
     bool Allocate(const BoundingBox& boundingBox, unsigned maxTiles) override;

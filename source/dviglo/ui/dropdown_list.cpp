@@ -47,7 +47,7 @@ DropDownList::DropDownList() :
 
 DropDownList::~DropDownList() = default;
 
-void DropDownList::RegisterObject()
+void DropDownList::register_object()
 {
     DV_CONTEXT.RegisterFactory<DropDownList>(UI_CATEGORY);
 

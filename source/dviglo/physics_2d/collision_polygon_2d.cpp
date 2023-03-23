@@ -22,7 +22,7 @@ CollisionPolygon2D::CollisionPolygon2D()
 
 CollisionPolygon2D::~CollisionPolygon2D() = default;
 
-void CollisionPolygon2D::RegisterObject()
+void CollisionPolygon2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<CollisionPolygon2D>(PHYSICS2D_CATEGORY);
 

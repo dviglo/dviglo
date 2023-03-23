@@ -22,7 +22,7 @@ ConstraintFriction2D::ConstraintFriction2D() :
 
 ConstraintFriction2D::~ConstraintFriction2D() = default;
 
-void ConstraintFriction2D::RegisterObject()
+void ConstraintFriction2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintFriction2D>(PHYSICS2D_CATEGORY);
 

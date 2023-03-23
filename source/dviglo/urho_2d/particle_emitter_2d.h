@@ -65,7 +65,7 @@ public:
     /// Destruct.
     ~ParticleEmitter2D() override;
     /// Register object factory. Drawable2D must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

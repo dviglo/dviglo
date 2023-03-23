@@ -31,7 +31,7 @@ SplinePath::SplinePath() :
     UpdateNodeIds();
 }
 
-void SplinePath::RegisterObject()
+void SplinePath::register_object()
 {
     DV_CONTEXT.RegisterFactory<SplinePath>(LOGIC_CATEGORY);
 

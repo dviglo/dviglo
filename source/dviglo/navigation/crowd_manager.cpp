@@ -70,7 +70,7 @@ CrowdManager::~CrowdManager()
     crowd_ = nullptr;
 }
 
-void CrowdManager::RegisterObject()
+void CrowdManager::register_object()
 {
     DV_CONTEXT.RegisterFactory<CrowdManager>(NAVIGATION_CATEGORY);
 

@@ -108,7 +108,7 @@ public:
     /// Destruct.
     ~Drawable() override;
     /// Register object attributes. Drawable must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle enabled/disabled state change.
     void OnSetEnabled() override;

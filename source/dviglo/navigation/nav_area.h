@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~NavArea() override;
     /// Register object factory and attributes.
-    static void RegisterObject();
+    static void register_object();
 
     /// Render debug geometry for the bounds.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;

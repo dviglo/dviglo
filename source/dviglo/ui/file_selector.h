@@ -40,7 +40,7 @@ public:
     /// Destruct.
     ~FileSelector() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set fileselector UI style.
     void SetDefaultStyle(XmlFile* style);

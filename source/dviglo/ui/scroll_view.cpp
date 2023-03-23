@@ -54,7 +54,7 @@ ScrollView::ScrollView() :
 
 ScrollView::~ScrollView() = default;
 
-void ScrollView::RegisterObject()
+void ScrollView::register_object()
 {
     DV_CONTEXT.RegisterFactory<ScrollView>(UI_CATEGORY);
 

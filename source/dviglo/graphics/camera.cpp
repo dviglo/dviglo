@@ -60,7 +60,7 @@ Camera::Camera() :
 
 Camera::~Camera() = default;
 
-void Camera::RegisterObject()
+void Camera::register_object()
 {
     DV_CONTEXT.RegisterFactory<Camera>(SCENE_CATEGORY);
 

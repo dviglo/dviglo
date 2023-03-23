@@ -26,7 +26,7 @@ NavArea::NavArea() :
 
 NavArea::~NavArea() = default;
 
-void NavArea::RegisterObject()
+void NavArea::register_object()
 {
     DV_CONTEXT.RegisterFactory<NavArea>(NAVIGATION_CATEGORY);
 

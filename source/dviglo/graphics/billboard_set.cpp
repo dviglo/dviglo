@@ -88,7 +88,7 @@ BillboardSet::BillboardSet() :
 
 BillboardSet::~BillboardSet() = default;
 
-void BillboardSet::RegisterObject()
+void BillboardSet::register_object()
 {
     DV_CONTEXT.RegisterFactory<BillboardSet>(GEOMETRY_CATEGORY);
 

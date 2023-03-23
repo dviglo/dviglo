@@ -60,7 +60,7 @@ Constraint::~Constraint()
         physicsWorld_->RemoveConstraint(this);
 }
 
-void Constraint::RegisterObject()
+void Constraint::register_object()
 {
     DV_CONTEXT.RegisterFactory<Constraint>(PHYSICS_CATEGORY);
 

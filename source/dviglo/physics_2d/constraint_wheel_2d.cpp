@@ -22,7 +22,7 @@ ConstraintWheel2D::ConstraintWheel2D() :
 
 ConstraintWheel2D::~ConstraintWheel2D() = default;
 
-void ConstraintWheel2D::RegisterObject()
+void ConstraintWheel2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintWheel2D>(PHYSICS2D_CATEGORY);
 

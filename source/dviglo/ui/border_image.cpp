@@ -28,7 +28,7 @@ BorderImage::BorderImage() :
 
 BorderImage::~BorderImage() = default;
 
-void BorderImage::RegisterObject()
+void BorderImage::register_object()
 {
     DV_CONTEXT.RegisterFactory<BorderImage>(UI_CATEGORY);
 

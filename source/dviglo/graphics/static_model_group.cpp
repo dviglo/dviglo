@@ -34,7 +34,7 @@ StaticModelGroup::StaticModelGroup()
 
 StaticModelGroup::~StaticModelGroup() = default;
 
-void StaticModelGroup::RegisterObject()
+void StaticModelGroup::register_object()
 {
     DV_CONTEXT.RegisterFactory<StaticModelGroup>(GEOMETRY_CATEGORY);
 

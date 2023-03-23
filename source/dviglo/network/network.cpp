@@ -1035,7 +1035,7 @@ void Network::ConfigureNetworkSimulator()
 
 void RegisterNetworkLibrary()
 {
-    NetworkPriority::RegisterObject();
+    NetworkPriority::register_object();
 }
 
 }

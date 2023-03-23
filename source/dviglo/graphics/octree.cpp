@@ -309,7 +309,7 @@ Octree::~Octree()
     ResetRoot();
 }
 
-void Octree::RegisterObject()
+void Octree::register_object()
 {
     DV_CONTEXT.RegisterFactory<Octree>(SUBSYSTEM_CATEGORY);
 

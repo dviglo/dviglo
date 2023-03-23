@@ -114,7 +114,7 @@ FileSelector::~FileSelector()
     window_->Remove();
 }
 
-void FileSelector::RegisterObject()
+void FileSelector::register_object()
 {
     DV_CONTEXT.RegisterFactory<FileSelector>();
 }

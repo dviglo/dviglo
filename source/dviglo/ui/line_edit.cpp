@@ -50,7 +50,7 @@ LineEdit::LineEdit() :
 
 LineEdit::~LineEdit() = default;
 
-void LineEdit::RegisterObject()
+void LineEdit::register_object()
 {
     DV_CONTEXT.RegisterFactory<LineEdit>(UI_CATEGORY);
 

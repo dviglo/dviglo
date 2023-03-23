@@ -52,7 +52,7 @@ public:
     /// Destruct.
     ~Animatable() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Load from XML data. Return true if successful.
     bool load_xml(const XmlElement& source) override;

@@ -106,7 +106,7 @@ Animation::Animation() :
 
 Animation::~Animation() = default;
 
-void Animation::RegisterObject()
+void Animation::register_object()
 {
     DV_CONTEXT.RegisterFactory<Animation>();
 }

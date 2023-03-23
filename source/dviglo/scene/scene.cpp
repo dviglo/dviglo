@@ -72,7 +72,7 @@ Scene::~Scene()
         i->second_->ResetScene();
 }
 
-void Scene::RegisterObject()
+void Scene::register_object()
 {
     DV_CONTEXT.RegisterFactory<Scene>();
 
@@ -1506,13 +1506,13 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
 
 void RegisterSceneLibrary()
 {
-    ValueAnimation::RegisterObject();
-    ObjectAnimation::RegisterObject();
-    Node::RegisterObject();
-    Scene::RegisterObject();
-    SmoothedTransform::RegisterObject();
-    UnknownComponent::RegisterObject();
-    SplinePath::RegisterObject();
+    ValueAnimation::register_object();
+    ObjectAnimation::register_object();
+    Node::register_object();
+    Scene::register_object();
+    SmoothedTransform::register_object();
+    UnknownComponent::register_object();
+    SplinePath::register_object();
 }
 
 }

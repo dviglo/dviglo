@@ -55,7 +55,7 @@ ScrollBar::ScrollBar() :
 
 ScrollBar::~ScrollBar() = default;
 
-void ScrollBar::RegisterObject()
+void ScrollBar::register_object()
 {
     DV_CONTEXT.RegisterFactory<ScrollBar>(UI_CATEGORY);
 

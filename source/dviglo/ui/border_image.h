@@ -24,7 +24,7 @@ public:
     /// Destruct.
     ~BorderImage() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Return UI rendering batches.
     void GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor) override;

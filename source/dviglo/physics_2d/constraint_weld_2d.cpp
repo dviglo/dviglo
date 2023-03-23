@@ -21,7 +21,7 @@ ConstraintWeld2D::ConstraintWeld2D() :
 
 ConstraintWeld2D::~ConstraintWeld2D() = default;
 
-void ConstraintWeld2D::RegisterObject()
+void ConstraintWeld2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintWeld2D>(PHYSICS2D_CATEGORY);
 

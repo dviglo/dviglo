@@ -362,7 +362,7 @@ TmxFile2D::~TmxFile2D()
         delete layer;
 }
 
-void TmxFile2D::RegisterObject()
+void TmxFile2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<TmxFile2D>();
 }

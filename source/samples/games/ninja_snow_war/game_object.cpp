@@ -7,7 +7,7 @@
 namespace dviglo
 {
 
-void GameObject::RegisterObject()
+void GameObject::register_object()
 {
     DV_CONTEXT.RegisterFactory<GameObject>();
 }

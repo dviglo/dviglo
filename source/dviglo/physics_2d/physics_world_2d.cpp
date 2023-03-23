@@ -53,7 +53,7 @@ PhysicsWorld2D::~PhysicsWorld2D()
     }
 }
 
-void PhysicsWorld2D::RegisterObject()
+void PhysicsWorld2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<PhysicsWorld2D>(SUBSYSTEM_CATEGORY);
 

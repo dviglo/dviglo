@@ -71,7 +71,7 @@ public:
     /// Destruct. Any child nodes are detached.
     ~Node() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Load from binary data. Return true if successful.
     bool Load(Deserializer& source) override;

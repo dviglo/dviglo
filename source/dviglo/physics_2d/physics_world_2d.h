@@ -61,7 +61,7 @@ public:
     /// Destruct.
     ~PhysicsWorld2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Visualize the component as debug geometry.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;

@@ -67,7 +67,7 @@ public:
     }
 
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle layout updated by adjusting the position of the overlays.
     void HandleLayoutUpdated(StringHash eventType, VariantMap& eventData)
@@ -138,7 +138,7 @@ private:
     UiElement* overlayContainer_;
 };
 
-void HierarchyContainer::RegisterObject()
+void HierarchyContainer::register_object()
 {
     DV_COPY_BASE_ATTRIBUTES(UiElement);
 }
@@ -166,11 +166,11 @@ ListView::ListView() :
 
 ListView::~ListView() = default;
 
-void ListView::RegisterObject()
+void ListView::register_object()
 {
     DV_CONTEXT.RegisterFactory<ListView>(UI_CATEGORY);
 
-    HierarchyContainer::RegisterObject();
+    HierarchyContainer::register_object();
 
     DV_COPY_BASE_ATTRIBUTES(ScrollView);
     DV_ENUM_ACCESSOR_ATTRIBUTE("Highlight Mode", GetHighlightMode, SetHighlightMode, highlightModes, HM_FOCUS, AM_FILE);

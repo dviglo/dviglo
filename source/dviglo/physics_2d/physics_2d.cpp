@@ -32,27 +32,27 @@ const char* PHYSICS2D_CATEGORY = "Physics2D";
 
 void RegisterPhysics2DLibrary()
 {
-    PhysicsWorld2D::RegisterObject();
-    RigidBody2D::RegisterObject();
+    PhysicsWorld2D::register_object();
+    RigidBody2D::register_object();
 
-    CollisionShape2D::RegisterObject();
-    CollisionBox2D::RegisterObject();
-    CollisionChain2D::RegisterObject();
-    CollisionCircle2D::RegisterObject();
-    CollisionEdge2D::RegisterObject();
-    CollisionPolygon2D::RegisterObject();
+    CollisionShape2D::register_object();
+    CollisionBox2D::register_object();
+    CollisionChain2D::register_object();
+    CollisionCircle2D::register_object();
+    CollisionEdge2D::register_object();
+    CollisionPolygon2D::register_object();
 
-    Constraint2D::RegisterObject();
-    ConstraintDistance2D::RegisterObject();
-    ConstraintFriction2D::RegisterObject();
-    ConstraintGear2D::RegisterObject();
-    ConstraintMotor2D::RegisterObject();
-    ConstraintMouse2D::RegisterObject();
-    ConstraintPrismatic2D::RegisterObject();
-    ConstraintPulley2D::RegisterObject();
-    ConstraintRevolute2D::RegisterObject();
-    ConstraintWeld2D::RegisterObject();
-    ConstraintWheel2D::RegisterObject();
+    Constraint2D::register_object();
+    ConstraintDistance2D::register_object();
+    ConstraintFriction2D::register_object();
+    ConstraintGear2D::register_object();
+    ConstraintMotor2D::register_object();
+    ConstraintMouse2D::register_object();
+    ConstraintPrismatic2D::register_object();
+    ConstraintPulley2D::register_object();
+    ConstraintRevolute2D::register_object();
+    ConstraintWeld2D::register_object();
+    ConstraintWheel2D::register_object();
 }
 
 }

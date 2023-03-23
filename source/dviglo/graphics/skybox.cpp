@@ -22,7 +22,7 @@ Skybox::Skybox() :
 
 Skybox::~Skybox() = default;
 
-void Skybox::RegisterObject()
+void Skybox::register_object()
 {
     DV_CONTEXT.RegisterFactory<Skybox>(GEOMETRY_CATEGORY);
 

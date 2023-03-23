@@ -43,7 +43,7 @@ public:
     /// Destruct. Free the rigid body and geometries.
     ~RigidBody() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void apply_attributes() override;

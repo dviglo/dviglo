@@ -96,7 +96,7 @@ AnimationSet2D::~AnimationSet2D()
     Dispose();
 }
 
-void AnimationSet2D::RegisterObject()
+void AnimationSet2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<AnimationSet2D>();
 }

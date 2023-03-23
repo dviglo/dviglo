@@ -32,7 +32,7 @@ public:
     explicit Character();
 
     /// Register object factory and attributes.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle startup. Called by LogicComponent base class.
     void Start() override;

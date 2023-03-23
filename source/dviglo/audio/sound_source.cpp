@@ -102,7 +102,7 @@ SoundSource::~SoundSource()
     DV_AUDIO.RemoveSoundSource(this);
 }
 
-void SoundSource::RegisterObject()
+void SoundSource::register_object()
 {
     DV_CONTEXT.RegisterFactory<SoundSource>(AUDIO_CATEGORY);
 

@@ -24,7 +24,7 @@ CheckBox::CheckBox() :
 
 CheckBox::~CheckBox() = default;
 
-void CheckBox::RegisterObject()
+void CheckBox::register_object()
 {
     DV_CONTEXT.RegisterFactory<CheckBox>(UI_CATEGORY);
 

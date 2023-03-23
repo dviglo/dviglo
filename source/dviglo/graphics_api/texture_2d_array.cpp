@@ -38,7 +38,7 @@ Texture2DArray::~Texture2DArray()
     Release();
 }
 
-void Texture2DArray::RegisterObject()
+void Texture2DArray::register_object()
 {
     DV_CONTEXT.RegisterFactory<Texture2DArray>();
 }

@@ -25,7 +25,7 @@ using namespace dviglo;
 
 const float CHASSIS_WIDTH = 2.6f;
 
-void Vehicle::RegisterObject()
+void Vehicle::register_object()
 {
     DV_CONTEXT.RegisterFactory<Vehicle>();
     DV_ATTRIBUTE("Steering", steering_, 0.0f, AM_DEFAULT);

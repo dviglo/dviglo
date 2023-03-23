@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~NetworkPriority() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set base priority. Default 100 (send updates at full frequency).
     void SetBasePriority(float priority);

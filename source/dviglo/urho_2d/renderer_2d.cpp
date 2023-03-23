@@ -63,7 +63,7 @@ Renderer2D::Renderer2D() :
 
 Renderer2D::~Renderer2D() = default;
 
-void Renderer2D::RegisterObject()
+void Renderer2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<Renderer2D>();
 }

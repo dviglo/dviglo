@@ -34,7 +34,7 @@ SoundSource3D::SoundSource3D() :
     attenuation_ = 0.0f;
 }
 
-void SoundSource3D::RegisterObject()
+void SoundSource3D::register_object()
 {
     DV_CONTEXT.RegisterFactory<SoundSource3D>(AUDIO_CATEGORY);
 

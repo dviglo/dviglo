@@ -14,7 +14,7 @@ class FootSteps : public LogicComponent
     DV_OBJECT(FootSteps, LogicComponent);
 
 public:
-    static void RegisterObject();
+    static void register_object();
 
     FootSteps();
 

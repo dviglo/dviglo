@@ -66,7 +66,7 @@ UnknownComponent::UnknownComponent() :
 {
 }
 
-void UnknownComponent::RegisterObject()
+void UnknownComponent::register_object()
 {
     DV_CONTEXT.RegisterFactory<UnknownComponent>();
 }

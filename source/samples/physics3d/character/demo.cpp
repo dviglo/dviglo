@@ -40,7 +40,7 @@ CharacterDemo::CharacterDemo() :
     firstPerson_(false)
 {
     // Register factory and attributes for the Character component so it can be created via create_component, and loaded / saved
-    Character::RegisterObject();
+    Character::register_object();
 }
 
 CharacterDemo::~CharacterDemo() = default;

@@ -27,7 +27,7 @@ NetworkPriority::NetworkPriority() :
 
 NetworkPriority::~NetworkPriority() = default;
 
-void NetworkPriority::RegisterObject()
+void NetworkPriority::register_object()
 {
     DV_CONTEXT.RegisterFactory<NetworkPriority>(NETWORK_CATEGORY);
 

@@ -467,7 +467,7 @@ CollisionShape::~CollisionShape()
         physicsWorld_->RemoveCollisionShape(this);
 }
 
-void CollisionShape::RegisterObject()
+void CollisionShape::register_object()
 {
     DV_CONTEXT.RegisterFactory<CollisionShape>(PHYSICS_CATEGORY);
 

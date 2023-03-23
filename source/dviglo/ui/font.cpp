@@ -47,7 +47,7 @@ Font::~Font()
     fontData_.Reset();
 }
 
-void Font::RegisterObject()
+void Font::register_object()
 {
     DV_CONTEXT.RegisterFactory<Font>();
 }

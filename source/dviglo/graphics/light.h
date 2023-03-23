@@ -139,7 +139,7 @@ public:
     /// Destruct.
     ~Light() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Process octree raycast. May be called from a worker thread.
     void ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results) override;

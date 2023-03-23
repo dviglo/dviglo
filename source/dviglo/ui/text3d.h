@@ -25,7 +25,7 @@ public:
     /// Destruct.
     ~Text3D() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Apply attribute changes that can not be applied immediately.
     void apply_attributes() override;

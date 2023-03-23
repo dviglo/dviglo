@@ -47,7 +47,7 @@ Model::Model()
 
 Model::~Model() = default;
 
-void Model::RegisterObject()
+void Model::register_object()
 {
     DV_CONTEXT.RegisterFactory<Model>();
 }

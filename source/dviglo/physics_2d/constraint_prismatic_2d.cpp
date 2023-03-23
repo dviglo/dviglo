@@ -22,7 +22,7 @@ ConstraintPrismatic2D::ConstraintPrismatic2D() :
 
 ConstraintPrismatic2D::~ConstraintPrismatic2D() = default;
 
-void ConstraintPrismatic2D::RegisterObject()
+void ConstraintPrismatic2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintPrismatic2D>(PHYSICS2D_CATEGORY);
 

@@ -24,7 +24,7 @@ CollisionCircle2D::CollisionCircle2D() :
 
 CollisionCircle2D::~CollisionCircle2D() = default;
 
-void CollisionCircle2D::RegisterObject()
+void CollisionCircle2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<CollisionCircle2D>(PHYSICS2D_CATEGORY);
 

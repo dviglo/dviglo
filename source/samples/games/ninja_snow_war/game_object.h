@@ -26,7 +26,7 @@ class GameObject : public LogicComponent
     DV_OBJECT(GameObject, LogicComponent);
 
 public:
-    static void RegisterObject();
+    static void register_object();
 
     bool onGround;
     bool isSliding;

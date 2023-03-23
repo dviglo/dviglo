@@ -82,7 +82,7 @@ RibbonTrail::RibbonTrail() :
 
 RibbonTrail::~RibbonTrail() = default;
 
-void RibbonTrail::RegisterObject()
+void RibbonTrail::register_object()
 {
     DV_CONTEXT.RegisterFactory<RibbonTrail>(GEOMETRY_CATEGORY);
 

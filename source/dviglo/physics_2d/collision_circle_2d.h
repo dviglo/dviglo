@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~CollisionCircle2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set radius.
     void SetRadius(float radius);

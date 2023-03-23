@@ -23,7 +23,7 @@ public:
     /// Destruct and free sound data.
     ~Sound() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool BeginLoad(Deserializer& source) override;

@@ -26,7 +26,7 @@ public:
     /// Destruct.
     ~MessageBox() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set title text. No-ops if there is no title text element.
     void SetTitle(const String& text);

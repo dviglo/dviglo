@@ -216,7 +216,7 @@ namespace AttributeMetadata
 #define DV_GETTER_RETURN_TYPE(getFunction) \
     std::remove_cv_t<std::remove_reference_t<std::invoke_result_t<decltype(&ClassName::getFunction), ClassName>>>
 
-// The following macros need to be used within a class member function such as ClassName::RegisterObject()
+// The following macros need to be used within a class member function such as ClassName::register_object()
 
 /// Copy attributes from a base class.
 #define DV_COPY_BASE_ATTRIBUTES(sourceClassName) DV_CONTEXT.CopyBaseAttributes<sourceClassName, ClassName>()

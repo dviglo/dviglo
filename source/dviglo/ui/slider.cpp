@@ -38,7 +38,7 @@ Slider::Slider() :
 
 Slider::~Slider() = default;
 
-void Slider::RegisterObject()
+void Slider::register_object()
 {
     DV_CONTEXT.RegisterFactory<Slider>(UI_CATEGORY);
 

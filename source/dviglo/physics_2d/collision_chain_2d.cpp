@@ -23,7 +23,7 @@ CollisionChain2D::CollisionChain2D() :
 
 CollisionChain2D::~CollisionChain2D() = default;
 
-void CollisionChain2D::RegisterObject()
+void CollisionChain2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<CollisionChain2D>(PHYSICS2D_CATEGORY);
 

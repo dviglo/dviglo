@@ -54,7 +54,7 @@ Text::Text() :
 
 Text::~Text() = default;
 
-void Text::RegisterObject()
+void Text::register_object()
 {
     DV_CONTEXT.RegisterFactory<Text>(UI_CATEGORY);
 

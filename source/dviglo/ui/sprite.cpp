@@ -29,7 +29,7 @@ Sprite::Sprite() :
 
 Sprite::~Sprite() = default;
 
-void Sprite::RegisterObject()
+void Sprite::register_object()
 {
     DV_CONTEXT.RegisterFactory<Sprite>(UI_CATEGORY);
 

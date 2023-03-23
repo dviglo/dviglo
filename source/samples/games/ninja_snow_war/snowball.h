@@ -17,7 +17,7 @@ private:
     int hitDamage;
 
 public:
-    static void RegisterObject();
+    static void register_object();
 
     Snowball();
 

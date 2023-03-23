@@ -17,7 +17,7 @@ public:
     explicit UnknownComponent();
 
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Return type of the stored component.
     StringHash GetType() const override { return typeHash_; }

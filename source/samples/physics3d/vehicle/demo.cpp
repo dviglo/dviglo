@@ -38,7 +38,7 @@ DV_DEFINE_APPLICATION_MAIN(VehicleDemo)
 VehicleDemo::VehicleDemo()
 {
     // Register factory and attributes for the Vehicle component so it can be created via create_component, and loaded / saved
-    Vehicle::RegisterObject();
+    Vehicle::register_object();
 }
 
 void VehicleDemo::Start()

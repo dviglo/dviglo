@@ -33,7 +33,7 @@ Character2D::Character2D() :
 {
 }
 
-void Character2D::RegisterObject()
+void Character2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<Character2D>();
 

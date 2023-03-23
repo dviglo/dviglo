@@ -32,7 +32,7 @@ Texture2D::~Texture2D()
     Release();
 }
 
-void Texture2D::RegisterObject()
+void Texture2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<Texture2D>();
 }

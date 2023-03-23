@@ -30,7 +30,7 @@ CollisionShape2D::~CollisionShape2D()
     ReleaseFixture();
 }
 
-void CollisionShape2D::RegisterObject()
+void CollisionShape2D::register_object()
 {
     DV_ACCESSOR_ATTRIBUTE("Trigger", IsTrigger, SetTrigger, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Category Bits", GetCategoryBits, SetCategoryBits, 0, AM_DEFAULT);

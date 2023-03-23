@@ -56,7 +56,7 @@ TextureCube::~TextureCube()
     Release();
 }
 
-void TextureCube::RegisterObject()
+void TextureCube::register_object()
 {
     DV_CONTEXT.RegisterFactory<TextureCube>();
 }

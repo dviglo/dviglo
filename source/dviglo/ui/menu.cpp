@@ -42,7 +42,7 @@ Menu::~Menu()
         ShowPopup(false);
 }
 
-void Menu::RegisterObject()
+void Menu::register_object()
 {
     DV_CONTEXT.RegisterFactory<Menu>(UI_CATEGORY);
 

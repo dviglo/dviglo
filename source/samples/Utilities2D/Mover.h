@@ -22,7 +22,7 @@ public:
     explicit Mover();
 
     /// Register object factory and attributes.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle scene update. Called by LogicComponent base class.
     void Update(float timeStep) override;

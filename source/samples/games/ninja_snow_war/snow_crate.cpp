@@ -11,7 +11,7 @@ namespace dviglo
 static constexpr i32 SNOWCRATE_HEALTH = 5;
 static constexpr i32 SNOWCRATE_POINTS = 250;
 
-void SnowCrate::RegisterObject()
+void SnowCrate::register_object()
 {
     DV_CONTEXT.RegisterFactory<SnowCrate>();
 }

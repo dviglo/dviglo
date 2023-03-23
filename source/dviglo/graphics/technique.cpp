@@ -230,7 +230,7 @@ Technique::Technique() :
 
 Technique::~Technique() = default;
 
-void Technique::RegisterObject()
+void Technique::register_object()
 {
     DV_CONTEXT.RegisterFactory<Technique>();
 }

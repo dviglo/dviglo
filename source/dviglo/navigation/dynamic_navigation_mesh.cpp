@@ -205,7 +205,7 @@ DynamicNavigationMesh::~DynamicNavigationMesh()
     release_navigation_mesh();
 }
 
-void DynamicNavigationMesh::RegisterObject()
+void DynamicNavigationMesh::register_object()
 {
     DV_CONTEXT.RegisterFactory<DynamicNavigationMesh>(NAVIGATION_CATEGORY);
 

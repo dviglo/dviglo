@@ -86,7 +86,7 @@ ParticleEffect2D::ParticleEffect2D() :
 
 ParticleEffect2D::~ParticleEffect2D() = default;
 
-void ParticleEffect2D::RegisterObject()
+void ParticleEffect2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ParticleEffect2D>();
 }

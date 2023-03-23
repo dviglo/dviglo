@@ -22,7 +22,7 @@ public:
     explicit Character2D();
 
     /// Register object factory and attributes.
-    static void RegisterObject();
+    static void register_object();
 
     /// Handle update. Called by LogicComponent base class.
     void Update(float timeStep) override;

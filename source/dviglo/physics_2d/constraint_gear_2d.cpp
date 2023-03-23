@@ -20,7 +20,7 @@ ConstraintGear2D::ConstraintGear2D()
 
 ConstraintGear2D::~ConstraintGear2D() = default;
 
-void ConstraintGear2D::RegisterObject()
+void ConstraintGear2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintGear2D>(PHYSICS2D_CATEGORY);
 

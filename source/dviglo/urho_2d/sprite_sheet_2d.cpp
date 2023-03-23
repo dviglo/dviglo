@@ -26,7 +26,7 @@ SpriteSheet2D::SpriteSheet2D()
 
 SpriteSheet2D::~SpriteSheet2D() = default;
 
-void SpriteSheet2D::RegisterObject()
+void SpriteSheet2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<SpriteSheet2D>();
 }

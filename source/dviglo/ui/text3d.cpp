@@ -45,7 +45,7 @@ Text3D::Text3D() :
 
 Text3D::~Text3D() = default;
 
-void Text3D::RegisterObject()
+void Text3D::register_object()
 {
     DV_CONTEXT.RegisterFactory<Text3D>(GEOMETRY_CATEGORY);
 

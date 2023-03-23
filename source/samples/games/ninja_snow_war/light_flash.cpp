@@ -7,7 +7,7 @@
 namespace dviglo
 {
 
-void LightFlash::RegisterObject()
+void LightFlash::register_object()
 {
     DV_CONTEXT.RegisterFactory<LightFlash>();
 }

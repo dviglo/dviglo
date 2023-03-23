@@ -29,7 +29,7 @@ ObjectAnimation::ObjectAnimation()
 
 ObjectAnimation::~ObjectAnimation() = default;
 
-void ObjectAnimation::RegisterObject()
+void ObjectAnimation::register_object()
 {
     DV_CONTEXT.RegisterFactory<ObjectAnimation>();
 }

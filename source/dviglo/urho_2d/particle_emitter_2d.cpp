@@ -37,7 +37,7 @@ ParticleEmitter2D::ParticleEmitter2D() :
 
 ParticleEmitter2D::~ParticleEmitter2D() = default;
 
-void ParticleEmitter2D::RegisterObject()
+void ParticleEmitter2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ParticleEmitter2D>(URHO2D_CATEGORY);
 

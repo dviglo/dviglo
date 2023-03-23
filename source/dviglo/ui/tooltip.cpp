@@ -20,7 +20,7 @@ ToolTip::ToolTip() :
 
 ToolTip::~ToolTip() = default;
 
-void ToolTip::RegisterObject()
+void ToolTip::register_object()
 {
     DV_CONTEXT.RegisterFactory<ToolTip>(UI_CATEGORY);
 

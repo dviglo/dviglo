@@ -19,7 +19,7 @@ Navigable::Navigable() :
 
 Navigable::~Navigable() = default;
 
-void Navigable::RegisterObject()
+void Navigable::register_object()
 {
     DV_CONTEXT.RegisterFactory<Navigable>(NAVIGATION_CATEGORY);
 

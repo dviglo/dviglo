@@ -17,7 +17,7 @@ private:
     i32 healAmount;
 
 public:
-    static void RegisterObject();
+    static void register_object();
 
     Potion();
     void Start() override;

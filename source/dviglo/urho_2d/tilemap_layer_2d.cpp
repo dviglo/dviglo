@@ -22,7 +22,7 @@ TileMapLayer2D::TileMapLayer2D()
 
 TileMapLayer2D::~TileMapLayer2D() = default;
 
-void TileMapLayer2D::RegisterObject()
+void TileMapLayer2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<TileMapLayer2D>();
 }

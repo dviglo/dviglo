@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~ConstraintPrismatic2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set anchor.
     void SetAnchor(const Vector2& anchor);

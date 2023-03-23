@@ -23,7 +23,7 @@ static constexpr float NINJA_THROW_DELAY = 0.1f;
 static constexpr float NINJA_CORPSE_DURATION = 3.f;
 static constexpr i32 NINJA_POINTS = 250;
 
-void Ninja::RegisterObject()
+void Ninja::register_object()
 {
     DV_CONTEXT.RegisterFactory<Ninja>();
 }

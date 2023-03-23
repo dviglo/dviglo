@@ -23,7 +23,7 @@ public:
     /// Destruct.
     ~ScrollBar() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Apply attribute changes that can not be applied immediately.
     void apply_attributes() override;

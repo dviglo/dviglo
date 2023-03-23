@@ -25,26 +25,26 @@ const char* URHO2D_CATEGORY = "Urho2D";
 
 void RegisterUrho2DLibrary()
 {
-    Renderer2D::RegisterObject();
+    Renderer2D::register_object();
 
-    Sprite2D::RegisterObject();
-    SpriteSheet2D::RegisterObject();
+    Sprite2D::register_object();
+    SpriteSheet2D::register_object();
 
     // Must register objects from base to derived order
-    Drawable2D::RegisterObject();
-    StaticSprite2D::RegisterObject();
+    Drawable2D::register_object();
+    StaticSprite2D::register_object();
 
-    StretchableSprite2D::RegisterObject();
+    StretchableSprite2D::register_object();
 
-    AnimationSet2D::RegisterObject();
-    AnimatedSprite2D::RegisterObject();
+    AnimationSet2D::register_object();
+    AnimatedSprite2D::register_object();
 
-    ParticleEffect2D::RegisterObject();
-    ParticleEmitter2D::RegisterObject();
+    ParticleEffect2D::register_object();
+    ParticleEmitter2D::register_object();
 
-    TmxFile2D::RegisterObject();
-    TileMap2D::RegisterObject();
-    TileMapLayer2D::RegisterObject();
+    TmxFile2D::register_object();
+    TileMap2D::register_object();
+    TileMapLayer2D::register_object();
 }
 
 }

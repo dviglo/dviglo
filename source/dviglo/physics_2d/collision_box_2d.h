@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~CollisionBox2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set size.
     void SetSize(const Vector2& size);

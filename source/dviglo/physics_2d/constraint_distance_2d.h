@@ -22,7 +22,7 @@ public:
     ~ConstraintDistance2D() override;
 
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set owner body anchor.
     void SetOwnerBodyAnchor(const Vector2& anchor);

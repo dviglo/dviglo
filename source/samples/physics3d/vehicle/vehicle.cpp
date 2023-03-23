@@ -22,7 +22,7 @@ Vehicle::Vehicle()
     SetUpdateEventMask(LogicComponentEvents::FixedUpdate);
 }
 
-void Vehicle::RegisterObject()
+void Vehicle::register_object()
 {
     DV_CONTEXT.RegisterFactory<Vehicle>();
 

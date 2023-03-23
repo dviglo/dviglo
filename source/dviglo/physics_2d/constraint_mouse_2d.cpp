@@ -21,7 +21,7 @@ ConstraintMouse2D::ConstraintMouse2D() :
 
 ConstraintMouse2D::~ConstraintMouse2D() = default;
 
-void ConstraintMouse2D::RegisterObject()
+void ConstraintMouse2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintMouse2D>(PHYSICS2D_CATEGORY);
 

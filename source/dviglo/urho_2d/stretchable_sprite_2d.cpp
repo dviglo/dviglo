@@ -103,7 +103,7 @@ StretchableSprite2D::StretchableSprite2D()
 {
 }
 
-void StretchableSprite2D::RegisterObject()
+void StretchableSprite2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<StretchableSprite2D>(URHO2D_CATEGORY);
 

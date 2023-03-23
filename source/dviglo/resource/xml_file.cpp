@@ -54,7 +54,7 @@ XmlFile::XmlFile() :
 
 XmlFile::~XmlFile() = default;
 
-void XmlFile::RegisterObject()
+void XmlFile::register_object()
 {
     DV_CONTEXT.RegisterFactory<XmlFile>();
 }

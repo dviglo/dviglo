@@ -182,7 +182,7 @@ Material::Material()
 
 Material::~Material() = default;
 
-void Material::RegisterObject()
+void Material::register_object()
 {
     DV_CONTEXT.RegisterFactory<Material>();
 }

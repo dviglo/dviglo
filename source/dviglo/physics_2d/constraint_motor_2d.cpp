@@ -22,7 +22,7 @@ ConstraintMotor2D::ConstraintMotor2D() :
 
 ConstraintMotor2D::~ConstraintMotor2D() = default;
 
-void ConstraintMotor2D::RegisterObject()
+void ConstraintMotor2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintMotor2D>(PHYSICS2D_CATEGORY);
 

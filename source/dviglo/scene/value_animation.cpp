@@ -40,7 +40,7 @@ ValueAnimation::ValueAnimation() :
 
 ValueAnimation::~ValueAnimation() = default;
 
-void ValueAnimation::RegisterObject()
+void ValueAnimation::register_object()
 {
     DV_CONTEXT.RegisterFactory<ValueAnimation>();
 }

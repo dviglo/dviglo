@@ -35,7 +35,7 @@ ProgressBar::ProgressBar() :
 
 ProgressBar::~ProgressBar() = default;
 
-void ProgressBar::RegisterObject()
+void ProgressBar::register_object()
 {
     DV_CONTEXT.RegisterFactory<ProgressBar>(UI_CATEGORY);
 

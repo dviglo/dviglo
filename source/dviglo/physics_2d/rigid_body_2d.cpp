@@ -47,7 +47,7 @@ RigidBody2D::~RigidBody2D()
     }
 }
 
-void RigidBody2D::RegisterObject()
+void RigidBody2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<RigidBody2D>(PHYSICS2D_CATEGORY);
 

@@ -54,7 +54,7 @@ Sound::Sound() :
 
 Sound::~Sound() = default;
 
-void Sound::RegisterObject()
+void Sound::register_object()
 {
     DV_CONTEXT.RegisterFactory<Sound>();
 }

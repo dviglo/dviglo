@@ -136,7 +136,7 @@ public:
     /// Destruct. Free the geometry data and clean up unused data from the geometry data cache.
     ~CollisionShape() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Apply attribute changes that can not be applied immediately. Called after scene load or a network update.
     void apply_attributes() override;

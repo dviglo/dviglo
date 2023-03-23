@@ -34,7 +34,7 @@ Texture3D::~Texture3D()
     Release();
 }
 
-void Texture3D::RegisterObject()
+void Texture3D::register_object()
 {
     DV_CONTEXT.RegisterFactory<Texture3D>();
 }

@@ -39,7 +39,7 @@ CustomGeometry::CustomGeometry()
 
 CustomGeometry::~CustomGeometry() = default;
 
-void CustomGeometry::RegisterObject()
+void CustomGeometry::register_object()
 {
     DV_CONTEXT.RegisterFactory<CustomGeometry>(GEOMETRY_CATEGORY);
 

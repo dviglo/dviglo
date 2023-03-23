@@ -78,7 +78,7 @@ AnimatedModel::~AnimatedModel()
     }
 }
 
-void AnimatedModel::RegisterObject()
+void AnimatedModel::register_object()
 {
     DV_CONTEXT.RegisterFactory<AnimatedModel>(GEOMETRY_CATEGORY);
 

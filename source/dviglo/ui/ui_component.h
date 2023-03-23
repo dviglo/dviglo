@@ -29,7 +29,7 @@ public:
     /// Destruct.
     ~UIComponent() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Return UiElement.
     UiElement* GetRoot() const;

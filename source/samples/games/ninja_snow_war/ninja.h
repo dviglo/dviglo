@@ -18,7 +18,7 @@ class Ninja : public GameObject
     DV_OBJECT(Ninja, GameObject);
 
 public:
-    static void RegisterObject();
+    static void register_object();
 
     Controls controls;
     Controls prevControls;

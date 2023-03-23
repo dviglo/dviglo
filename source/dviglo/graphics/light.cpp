@@ -97,7 +97,7 @@ Light::Light() :
 
 Light::~Light() = default;
 
-void Light::RegisterObject()
+void Light::register_object()
 {
     DV_CONTEXT.RegisterFactory<Light>(SCENE_CATEGORY);
 

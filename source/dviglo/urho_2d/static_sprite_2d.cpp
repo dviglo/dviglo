@@ -38,7 +38,7 @@ StaticSprite2D::StaticSprite2D() :
 
 StaticSprite2D::~StaticSprite2D() = default;
 
-void StaticSprite2D::RegisterObject()
+void StaticSprite2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
 

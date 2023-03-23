@@ -22,7 +22,7 @@ public:
     /// Destruct.
     ~Zone() override;
     /// Register object factory. Drawable must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Visualize the component as debug geometry.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;

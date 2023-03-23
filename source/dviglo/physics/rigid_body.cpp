@@ -72,7 +72,7 @@ RigidBody::~RigidBody()
         physicsWorld_->RemoveRigidBody(this);
 }
 
-void RigidBody::RegisterObject()
+void RigidBody::register_object()
 {
     DV_CONTEXT.RegisterFactory<RigidBody>(PHYSICS_CATEGORY);
 

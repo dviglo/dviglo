@@ -28,7 +28,7 @@ public:
     /// Destruct. Remove self from the audio subsystem.
     ~SoundSource() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Seek to time.
     void Seek(float seekTime);

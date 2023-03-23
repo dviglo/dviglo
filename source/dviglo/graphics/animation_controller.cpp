@@ -39,7 +39,7 @@ AnimationController::AnimationController()
 
 AnimationController::~AnimationController() = default;
 
-void AnimationController::RegisterObject()
+void AnimationController::register_object()
 {
     DV_CONTEXT.RegisterFactory<AnimationController>(LOGIC_CATEGORY);
 

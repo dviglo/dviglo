@@ -72,7 +72,7 @@ ParticleEffect::ParticleEffect() :
 
 ParticleEffect::~ParticleEffect() = default;
 
-void ParticleEffect::RegisterObject()
+void ParticleEffect::register_object()
 {
     DV_CONTEXT.RegisterFactory<ParticleEffect>();
 }

@@ -40,7 +40,7 @@ View3D::~View3D()
     ResetScene();
 }
 
-void View3D::RegisterObject()
+void View3D::register_object()
 {
     DV_CONTEXT.RegisterFactory<View3D>(UI_CATEGORY);
 

@@ -87,7 +87,7 @@ UiElement::~UiElement()
     }
 }
 
-void UiElement::RegisterObject()
+void UiElement::register_object()
 {
     DV_CONTEXT.RegisterFactory<UiElement>(UI_CATEGORY);
 

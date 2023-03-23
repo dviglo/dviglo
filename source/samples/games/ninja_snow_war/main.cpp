@@ -79,13 +79,13 @@ private:
 public:
     App()
     {
-        Ninja::RegisterObject();
-        FootSteps::RegisterObject();
-        GameObject::RegisterObject();
-        LightFlash::RegisterObject();
-        Potion::RegisterObject();
-        SnowCrate::RegisterObject();
-        Snowball::RegisterObject();
+        Ninja::register_object();
+        FootSteps::register_object();
+        GameObject::register_object();
+        LightFlash::register_object();
+        Potion::register_object();
+        SnowCrate::register_object();
+        Snowball::register_object();
     }
 
     void Setup() override

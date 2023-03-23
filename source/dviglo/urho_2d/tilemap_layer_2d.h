@@ -33,7 +33,7 @@ public:
     /// Destruct.
     ~TileMapLayer2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Add debug geometry to the debug renderer.
     void draw_debug_geometry(DebugRenderer* debug, bool depthTest) override;

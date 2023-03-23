@@ -20,7 +20,7 @@ public:
     /// Destruct.
     ~ConstraintMotor2D() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Set linear offset.
     void SetLinearOffset(const Vector2& linearOffset);

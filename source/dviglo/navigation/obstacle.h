@@ -26,7 +26,7 @@ public:
     ~Obstacle() override;
 
     /// Register Obstacle with engine context.
-    static void RegisterObject();
+    static void register_object();
 
     /// Update the owning mesh when enabled status has changed.
     void OnSetEnabled() override;

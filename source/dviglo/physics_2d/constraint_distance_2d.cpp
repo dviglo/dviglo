@@ -23,7 +23,7 @@ ConstraintDistance2D::ConstraintDistance2D() :
 
 ConstraintDistance2D::~ConstraintDistance2D() = default;
 
-void ConstraintDistance2D::RegisterObject()
+void ConstraintDistance2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<ConstraintDistance2D>(PHYSICS2D_CATEGORY);
 

@@ -38,7 +38,7 @@ Window::Window() :
 
 Window::~Window() = default;
 
-void Window::RegisterObject()
+void Window::register_object()
 {
     DV_CONTEXT.RegisterFactory<Window>(UI_CATEGORY);
 

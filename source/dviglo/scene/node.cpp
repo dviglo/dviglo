@@ -51,7 +51,7 @@ Node::~Node()
         scene_->NodeRemoved(this);
 }
 
-void Node::RegisterObject()
+void Node::register_object()
 {
     DV_CONTEXT.RegisterFactory<Node>();
 

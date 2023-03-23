@@ -81,7 +81,7 @@ public:
     /// Destruct.
     ~Scene() override;
     /// Register object factory. Node must be registered first.
-    static void RegisterObject();
+    static void register_object();
 
     /// Load from binary data. Removes all existing child nodes and components first. Return true if successful.
     bool Load(Deserializer& source) override;

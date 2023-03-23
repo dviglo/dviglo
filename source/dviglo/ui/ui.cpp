@@ -2191,31 +2191,31 @@ void UI::SetElementRenderTexture(UiElement* element, Texture2D* texture)
 
 void RegisterUILibrary()
 {
-    Font::RegisterObject();
+    Font::register_object();
 
-    UiElement::RegisterObject();
-    UISelectable::RegisterObject();
-    BorderImage::RegisterObject();
-    Sprite::RegisterObject();
-    Button::RegisterObject();
-    CheckBox::RegisterObject();
-    Cursor::RegisterObject();
-    Text::RegisterObject();
-    Text3D::RegisterObject();
-    Window::RegisterObject();
-    View3D::RegisterObject();
-    LineEdit::RegisterObject();
-    Slider::RegisterObject();
-    ScrollBar::RegisterObject();
-    ScrollView::RegisterObject();
-    ListView::RegisterObject();
-    Menu::RegisterObject();
-    DropDownList::RegisterObject();
-    FileSelector::RegisterObject();
-    MessageBox::RegisterObject();
-    ProgressBar::RegisterObject();
-    ToolTip::RegisterObject();
-    UIComponent::RegisterObject();
+    UiElement::register_object();
+    UISelectable::register_object();
+    BorderImage::register_object();
+    Sprite::register_object();
+    Button::register_object();
+    CheckBox::register_object();
+    Cursor::register_object();
+    Text::register_object();
+    Text3D::register_object();
+    Window::register_object();
+    View3D::register_object();
+    LineEdit::register_object();
+    Slider::register_object();
+    ScrollBar::register_object();
+    ScrollView::register_object();
+    ListView::register_object();
+    Menu::register_object();
+    DropDownList::register_object();
+    FileSelector::register_object();
+    MessageBox::register_object();
+    ProgressBar::register_object();
+    ToolTip::register_object();
+    UIComponent::register_object();
 }
 
 }

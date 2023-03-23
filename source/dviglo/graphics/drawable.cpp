@@ -71,7 +71,7 @@ Drawable::~Drawable()
     RemoveFromOctree();
 }
 
-void Drawable::RegisterObject()
+void Drawable::register_object()
 {
     DV_ATTRIBUTE("Max Lights", max_lights_, 0, AM_DEFAULT);
     DV_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);

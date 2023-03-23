@@ -21,7 +21,7 @@ public:
     /// Destruct.
     ~ToolTip() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Perform UI element update.
     void Update(float timeStep) override;

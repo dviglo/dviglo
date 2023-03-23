@@ -1148,10 +1148,10 @@ File* ResourceCache::SearchPackages(const String& name)
 
 void RegisterResourceLibrary()
 {
-    Image::RegisterObject();
-    JSONFile::RegisterObject();
-    PListFile::RegisterObject();
-    XmlFile::RegisterObject();
+    Image::register_object();
+    JSONFile::register_object();
+    PListFile::register_object();
+    XmlFile::register_object();
 }
 
 }

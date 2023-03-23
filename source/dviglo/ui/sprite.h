@@ -21,7 +21,7 @@ public:
     /// Destruct.
     ~Sprite() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Return whether is visible and inside a scissor rectangle and should be rendered.
     bool IsWithinScissor(const IntRect& currentScissor) override;

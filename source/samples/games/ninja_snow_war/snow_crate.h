@@ -14,7 +14,7 @@ class SnowCrate : public GameObject
     DV_OBJECT(SnowCrate, GameObject);
 
 public:
-    static void RegisterObject();
+    static void register_object();
 
     SnowCrate();
 

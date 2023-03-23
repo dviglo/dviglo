@@ -24,7 +24,7 @@ Mover::Mover() :
     SetUpdateEventMask(LogicComponentEvents::Update);
 }
 
-void Mover::RegisterObject()
+void Mover::register_object()
 {
     DV_CONTEXT.RegisterFactory<Mover>();
 

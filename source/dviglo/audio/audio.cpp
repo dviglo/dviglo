@@ -357,10 +357,10 @@ void Audio::UpdateInternal(float timeStep)
 
 void RegisterAudioLibrary()
 {
-    Sound::RegisterObject();
-    SoundSource::RegisterObject();
-    SoundSource3D::RegisterObject();
-    SoundListener::RegisterObject();
+    Sound::register_object();
+    SoundSource::register_object();
+    SoundSource3D::register_object();
+    SoundListener::register_object();
 }
 
 }

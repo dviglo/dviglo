@@ -39,7 +39,7 @@ ParticleEmitter::ParticleEmitter() :
 
 ParticleEmitter::~ParticleEmitter() = default;
 
-void ParticleEmitter::RegisterObject()
+void ParticleEmitter::register_object()
 {
     DV_CONTEXT.RegisterFactory<ParticleEmitter>(GEOMETRY_CATEGORY);
 

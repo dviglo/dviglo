@@ -27,7 +27,7 @@ CollisionBox2D::CollisionBox2D() :
 
 CollisionBox2D::~CollisionBox2D() = default;
 
-void CollisionBox2D::RegisterObject()
+void CollisionBox2D::register_object()
 {
     DV_CONTEXT.RegisterFactory<CollisionBox2D>(PHYSICS2D_CATEGORY);
 

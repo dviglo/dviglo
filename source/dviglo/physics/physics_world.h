@@ -122,7 +122,7 @@ public:
     /// Destruct.
     ~PhysicsWorld() override;
     /// Register object factory.
-    static void RegisterObject();
+    static void register_object();
 
     /// Check if an AABB is visible for debug drawing.
     bool isVisible(const btVector3& aabbMin, const btVector3& aabbMax) override;
