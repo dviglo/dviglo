@@ -468,7 +468,7 @@ public:
     /// Return a string by joining substrings with a 'glue' string.
     static String Joined(const Vector<String>& subStrings, const String& glue);
     /// Encode Unicode character to UTF8. Pointer will be incremented.
-    static void EncodeUTF8(char*& dest, c32 unicodeChar);
+    static void encode_utf8(char*& dest, c32 unicodeChar);
     /// Decode Unicode character from UTF8. Pointer will be incremented.
     static c32 decode_utf8(const char*& src);
 #ifdef _WIN32

@@ -818,7 +818,7 @@ void String::SetUTF8FromLatin1(const char* str)
     while (*str)
     {
         char* dest = temp;
-        EncodeUTF8(dest, (c32)*str++);
+        encode_utf8(dest, (c32)*str++);
         *dest = 0;
         Append(temp);
     }
@@ -838,7 +838,7 @@ void String::SetUTF8FromWChar(const wchar_t* str)
     {
         c32 unicodeChar = DecodeUTF16(str);
         char* dest = temp;
-        EncodeUTF8(dest, unicodeChar);
+        encode_utf8(dest, unicodeChar);
         *dest = 0;
         Append(temp);
     }
@@ -846,7 +846,7 @@ void String::SetUTF8FromWChar(const wchar_t* str)
     while (*str)
     {
         char* dest = temp;
-        EncodeUTF8(dest, (c32)*str++);
+        encode_utf8(dest, (c32)*str++);
         *dest = 0;
         Append(temp);
     }
@@ -926,7 +926,7 @@ void String::ReplaceUTF8(i32 index, c32 unicodeChar)
 
     char temp[7];
     char* dest = temp;
-    EncodeUTF8(dest, unicodeChar);
+    encode_utf8(dest, unicodeChar);
     *dest = 0;
 
     Replace(beginCharPos, byteOffset - beginCharPos, temp, (i32)(dest - temp));
@@ -936,7 +936,7 @@ String& String::AppendUTF8(c32 unicodeChar)
 {
     char temp[7];
     char* dest = temp;
-    EncodeUTF8(dest, unicodeChar);
+    encode_utf8(dest, unicodeChar);
     *dest = 0;
     return Append(temp);
 }
@@ -972,7 +972,7 @@ String String::SubstringUTF8(i32 pos, i32 length) const
     return ret;
 }
 
-void String::EncodeUTF8(char*& dest, c32 unicodeChar)
+void String::encode_utf8(char*& dest, c32 unicodeChar)
 {
     if (unicodeChar < 0x80)
         *dest++ = (char)unicodeChar;
