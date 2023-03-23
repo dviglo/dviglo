@@ -59,7 +59,7 @@ bool Texture2DArray::BeginLoad(Deserializer& source)
         return true;
     }
 
-    cache.ResetDependencies(this);
+    cache.reset_dependencies(this);
 
     String texPath, texName, texExt;
     split_path(GetName(), texPath, texName, texExt);

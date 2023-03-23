@@ -56,7 +56,7 @@ bool Texture3D::BeginLoad(Deserializer& source)
     String texPath, texName, texExt;
     split_path(GetName(), texPath, texName, texExt);
 
-    DV_RES_CACHE.ResetDependencies(this);
+    DV_RES_CACHE.reset_dependencies(this);
 
     loadParameters_ = new XmlFile();
     if (!loadParameters_->Load(source))

@@ -234,7 +234,7 @@ public:
     void StoreResourceDependency(Resource* resource, const String& dependency);
 
     /// Reset dependencies for a resource.
-    void ResetDependencies(Resource* resource);
+    void reset_dependencies(Resource* resource);
 
     /// Returns a formatted string containing the memory actively used.
     String print_memory_usage() const;

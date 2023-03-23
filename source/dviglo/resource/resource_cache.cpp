@@ -907,7 +907,7 @@ void ResourceCache::StoreResourceDependency(Resource* resource, const String& de
     dependents.Insert(nameHash);
 }
 
-void ResourceCache::ResetDependencies(Resource* resource)
+void ResourceCache::reset_dependencies(Resource* resource)
 {
     if (!resource)
         return;
