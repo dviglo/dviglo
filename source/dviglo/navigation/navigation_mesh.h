@@ -344,6 +344,6 @@ protected:
 };
 
 /// Register Navigation library objects.
-void DV_API RegisterNavigationLibrary();
+void DV_API register_navigation_library();
 
 }

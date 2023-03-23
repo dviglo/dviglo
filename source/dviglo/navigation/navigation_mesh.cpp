@@ -1560,7 +1560,7 @@ void NavigationMesh::SetPartitionType(NavmeshPartitionType partitionType)
     MarkNetworkUpdate();
 }
 
-void RegisterNavigationLibrary()
+void register_navigation_library()
 {
     Navigable::register_object();
     NavigationMesh::register_object();

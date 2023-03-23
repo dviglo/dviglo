@@ -134,7 +134,7 @@ Engine::Engine() :
 #endif
 
 #ifdef DV_NAVIGATION
-    RegisterNavigationLibrary();
+    register_navigation_library();
 #endif
 
     SubscribeToEvent(E_EXITREQUESTED, DV_HANDLER(Engine, HandleExitRequested));
