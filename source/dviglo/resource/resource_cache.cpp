@@ -98,7 +98,7 @@ ResourceCache::~ResourceCache()
     resource_cache_destructed = true;
 }
 
-bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
+bool ResourceCache::add_resource_dir(const String& pathName, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
 

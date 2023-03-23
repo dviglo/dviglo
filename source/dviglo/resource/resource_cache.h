@@ -81,7 +81,7 @@ public:
     ResourceCache& operator =(const ResourceCache&) = delete;
 
     /// Add a resource load directory. Optional priority parameter which will control search order.
-    bool AddResourceDir(const String& pathName, i32 priority = PRIORITY_LAST);
+    bool add_resource_dir(const String& pathName, i32 priority = PRIORITY_LAST);
     /// Add a package file for loading resources from. Optional priority parameter which will control search order.
     bool AddPackageFile(PackageFile* package, i32 priority = PRIORITY_LAST);
     /// Add a package file for loading resources from by name. Optional priority parameter which will control search order.

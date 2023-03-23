@@ -336,7 +336,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                 String pathName = resourcePrefixPaths[j] + resourcePaths[i];
                 if (dir_exists(pathName))
                 {
-                    if (cache.AddResourceDir(pathName))
+                    if (cache.add_resource_dir(pathName))
                         break;
                     else
                         return false;
@@ -354,7 +354,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         {
             String pathName = resourcePaths[i];
             if (dir_exists(pathName))
-                if (!cache.AddResourceDir(pathName))
+                if (!cache.add_resource_dir(pathName))
                     return false;
         }
     }
@@ -408,7 +408,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         continue;
 
                     String autoResourceDir = autoLoadPath + "/" + dir;
-                    if (!cache.AddResourceDir(autoResourceDir, 0))
+                    if (!cache.add_resource_dir(autoResourceDir, 0))
                         return false;
                 }
 
