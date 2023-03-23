@@ -327,7 +327,7 @@ bool DynamicNavigationMesh::Build()
         DV_LOGWARNING("Navigation mesh root node has scaling. Agent parameters may not work as intended");
 
     Vector<NavigationGeometryInfo> geometryList;
-    CollectGeometries(geometryList);
+    collect_geometries(geometryList);
 
     if (geometryList.Empty())
         return true; // Nothing to do
@@ -480,7 +480,7 @@ bool DynamicNavigationMesh::Build(const BoundingBox& boundingBox)
     float tileEdgeLength = (float)tileSize_ * cellSize_;
 
     Vector<NavigationGeometryInfo> geometryList;
-    CollectGeometries(geometryList);
+    collect_geometries(geometryList);
 
     int sx = Clamp((int)((localSpaceBox.min_.x_ - boundingBox_.min_.x_) / tileEdgeLength), 0, numTilesX_ - 1);
     int sz = Clamp((int)((localSpaceBox.min_.z_ - boundingBox_.min_.z_) / tileEdgeLength), 0, numTilesZ_ - 1);
@@ -510,7 +510,7 @@ bool DynamicNavigationMesh::Build(const IntVector2& from, const IntVector2& to)
         DV_LOGWARNING("Navigation mesh root node has scaling. Agent parameters may not work as intended");
 
     Vector<NavigationGeometryInfo> geometryList;
-    CollectGeometries(geometryList);
+    collect_geometries(geometryList);
 
     unsigned numTiles = BuildTiles(geometryList, from, to);
 

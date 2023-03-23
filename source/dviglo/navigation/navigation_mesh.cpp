@@ -373,7 +373,7 @@ bool NavigationMesh::Build()
         DV_LOGWARNING("Navigation mesh root node has scaling. Agent parameters may not work as intended");
 
     Vector<NavigationGeometryInfo> geometryList;
-    CollectGeometries(geometryList);
+    collect_geometries(geometryList);
 
     if (geometryList.Empty())
         return true; // Nothing to do
@@ -461,7 +461,7 @@ bool NavigationMesh::Build(const BoundingBox& boundingBox)
     float tileEdgeLength = (float)tileSize_ * cellSize_;
 
     Vector<NavigationGeometryInfo> geometryList;
-    CollectGeometries(geometryList);
+    collect_geometries(geometryList);
 
     int sx = Clamp((int)((localSpaceBox.min_.x_ - boundingBox_.min_.x_) / tileEdgeLength), 0, numTilesX_ - 1);
     int sz = Clamp((int)((localSpaceBox.min_.z_ - boundingBox_.min_.z_) / tileEdgeLength), 0, numTilesZ_ - 1);
@@ -491,7 +491,7 @@ bool NavigationMesh::Build(const IntVector2& from, const IntVector2& to)
         DV_LOGWARNING("Navigation mesh root node has scaling. Agent parameters may not work as intended");
 
     Vector<NavigationGeometryInfo> geometryList;
-    CollectGeometries(geometryList);
+    collect_geometries(geometryList);
 
     unsigned numTiles = BuildTiles(geometryList, from, to);
 
@@ -928,7 +928,7 @@ Vector<byte> NavigationMesh::GetNavigationDataAttr() const
     return ret.GetBuffer();
 }
 
-void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryList)
+void NavigationMesh::collect_geometries(Vector<NavigationGeometryInfo>& geometryList)
 {
     DV_PROFILE(CollectNavigationGeometry);
 
@@ -941,7 +941,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     for (const Navigable* navigable : navigables)
     {
         if (navigable->IsEnabledEffective())
-            CollectGeometries(geometryList, navigable->GetNode(), processedNodes, navigable->IsRecursive());
+            collect_geometries(geometryList, navigable->GetNode(), processedNodes, navigable->IsRecursive());
     }
 
     // Get offmesh connections
@@ -980,7 +980,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     }
 }
 
-void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryList, Node* node, HashSet<Node*>& processedNodes,
+void NavigationMesh::collect_geometries(Vector<NavigationGeometryInfo>& geometryList, Node* node, HashSet<Node*>& processedNodes,
     bool recursive)
 {
     // Make sure nodes are not included twice
@@ -1053,7 +1053,7 @@ void NavigationMesh::CollectGeometries(Vector<NavigationGeometryInfo>& geometryL
     {
         const Vector<SharedPtr<Node>>& children = node->GetChildren();
         for (const SharedPtr<Node>& child : children)
-            CollectGeometries(geometryList, child, processedNodes, recursive);
+            collect_geometries(geometryList, child, processedNodes, recursive);
     }
 }
 

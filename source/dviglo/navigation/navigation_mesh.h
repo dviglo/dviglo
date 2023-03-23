@@ -266,9 +266,9 @@ private:
 
 protected:
     /// Collect geometry from under Navigable components.
-    void CollectGeometries(Vector<NavigationGeometryInfo>& geometryList);
+    void collect_geometries(Vector<NavigationGeometryInfo>& geometryList);
     /// Visit nodes and collect navigable geometry.
-    void CollectGeometries(Vector<NavigationGeometryInfo>& geometryList, Node* node, HashSet<Node*>& processedNodes, bool recursive);
+    void collect_geometries(Vector<NavigationGeometryInfo>& geometryList, Node* node, HashSet<Node*>& processedNodes, bool recursive);
     /// Get geometry data within a bounding box.
     void GetTileGeometry(NavBuildData* build, Vector<NavigationGeometryInfo>& geometryList, BoundingBox& box);
     /// Add a triangle mesh to the geometry data.
