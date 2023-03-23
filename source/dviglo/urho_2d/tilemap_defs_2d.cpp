@@ -47,7 +47,7 @@ Vector2 TileMapInfo2D::ConvertPosition(const Vector2& position) const
     }
 }
 
-Vector2 TileMapInfo2D::TileIndexToPosition(int x, int y) const
+Vector2 TileMapInfo2D::tile_index_to_position(int x, int y) const
 {
     switch (orientation_)
     {

@@ -48,7 +48,7 @@ struct DV_API TileMapInfo2D
     /// Convert tmx position to Urho position.
     Vector2 ConvertPosition(const Vector2& position) const;
     /// Convert tile index to position.
-    Vector2 TileIndexToPosition(int x, int y) const;
+    Vector2 tile_index_to_position(int x, int y) const;
     /// Convert position to tile index, if out of map return false.
     bool PositionToTileIndex(int& x, int& y, const Vector2& position) const;
 };

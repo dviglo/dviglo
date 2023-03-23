@@ -142,9 +142,9 @@ TileMapLayer2D* TileMap2D::GetLayer(unsigned index) const
     return layers_[index];
 }
 
-Vector2 TileMap2D::TileIndexToPosition(int x, int y) const
+Vector2 TileMap2D::tile_index_to_position(int x, int y) const
 {
-    return info_.TileIndexToPosition(x, y);
+    return info_.tile_index_to_position(x, y);
 }
 
 bool TileMap2D::PositionToTileIndex(int& x, int& y, const Vector2& position) const

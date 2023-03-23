@@ -332,7 +332,7 @@ void TileMapLayer2D::SetTileLayer(const TmxTileLayer2D* tileLayer)
                 continue;
 
             SharedPtr<Node> tileNode(GetNode()->CreateTemporaryChild("Tile"));
-            tileNode->SetPosition(Vector3(info.TileIndexToPosition(x, y)));
+            tileNode->SetPosition(Vector3(info.tile_index_to_position(x, y)));
 
             auto* staticSprite = tileNode->create_component<StaticSprite2D>();
             staticSprite->SetSprite(tile->GetSprite());

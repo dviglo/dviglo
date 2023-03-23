@@ -46,7 +46,7 @@ public:
     /// Return tile map layer at index.
     TileMapLayer2D* GetLayer(unsigned index) const;
     /// Convert tile index to position.
-    Vector2 TileIndexToPosition(int x, int y) const;
+    Vector2 tile_index_to_position(int x, int y) const;
     /// Convert position to tile index, if out of map return false.
     bool PositionToTileIndex(int& x, int& y, const Vector2& position) const;
 
