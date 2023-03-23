@@ -35,7 +35,7 @@ unsigned DecompressData(void* dest, const void* src, unsigned destSize)
         return (unsigned)LZ4_decompress_fast((const char*)src, (char*)dest, destSize);
 }
 
-bool CompressStream(Serializer& dest, Deserializer& src)
+bool compress_stream(Serializer& dest, Deserializer& src)
 {
     unsigned srcSize = src.GetSize() - src.GetPosition();
     // Prepend the source and dest. data size in the stream so that we know to buffer & uncompress the right amount
@@ -88,7 +88,7 @@ VectorBuffer compress_vector_buffer(VectorBuffer& src)
 {
     VectorBuffer ret;
     src.Seek(0);
-    CompressStream(ret, src);
+    compress_stream(ret, src);
     ret.Seek(0);
     return ret;
 }
