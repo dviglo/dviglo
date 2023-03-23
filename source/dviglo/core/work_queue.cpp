@@ -152,7 +152,7 @@ void WorkQueue::AddWorkItem(const SharedPtr<WorkItem>& item)
 
     // Make sure worker threads' list is safe to modify
     if (threads_.Size() && !paused_)
-        queueMutex_.lock();
+        queue_mutex_.lock();
 
     // Find position for new item
     if (queue_.Empty())
@@ -177,7 +177,7 @@ void WorkQueue::AddWorkItem(const SharedPtr<WorkItem>& item)
 
     if (threads_.Size())
     {
-        queueMutex_.unlock();
+        queue_mutex_.unlock();
         paused_ = false;
     }
 }
@@ -187,7 +187,7 @@ bool WorkQueue::RemoveWorkItem(SharedPtr<WorkItem> item)
     if (!item)
         return false;
 
-    std::scoped_lock lock(queueMutex_);
+    std::scoped_lock lock(queue_mutex_);
 
     // Can only remove successfully if the item was not yet taken by threads for execution
     List<WorkItem*>::Iterator i = queue_.Find(item.Get());
@@ -208,7 +208,7 @@ bool WorkQueue::RemoveWorkItem(SharedPtr<WorkItem> item)
 
 i32 WorkQueue::RemoveWorkItems(const Vector<SharedPtr<WorkItem>>& items)
 {
-    std::scoped_lock lock(queueMutex_);
+    std::scoped_lock lock(queue_mutex_);
     i32 removed = 0;
 
     for (Vector<SharedPtr<WorkItem>>::ConstIterator i = items.Begin(); i != items.End(); ++i)
@@ -236,7 +236,7 @@ void WorkQueue::Pause()
     {
         pausing_ = true;
 
-        queueMutex_.lock();
+        queue_mutex_.lock();
         paused_ = true;
 
         pausing_ = false;
@@ -247,7 +247,7 @@ void WorkQueue::Resume()
 {
     if (paused_)
     {
-        queueMutex_.unlock();
+        queue_mutex_.unlock();
         paused_ = false;
     }
 }
@@ -264,18 +264,18 @@ void WorkQueue::Complete(i32 priority)
         // Take work items also in the main thread until queue empty or no high-priority items anymore
         while (!queue_.Empty())
         {
-            queueMutex_.lock();
+            queue_mutex_.lock();
             if (!queue_.Empty() && queue_.Front()->priority_ >= priority)
             {
                 WorkItem* item = queue_.Front();
                 queue_.PopFront();
-                queueMutex_.unlock();
+                queue_mutex_.unlock();
                 item->workFunction_(item, 0);
                 item->completed_ = true;
             }
             else
             {
-                queueMutex_.unlock();
+                queue_mutex_.unlock();
                 break;
             }
         }
@@ -332,14 +332,14 @@ void WorkQueue::ProcessItems(i32 threadIndex)
             Time::Sleep(0);
         else
         {
-            queueMutex_.lock();
+            queue_mutex_.lock();
             if (!queue_.Empty())
             {
                 wasActive = true;
 
                 WorkItem* item = queue_.Front();
                 queue_.PopFront();
-                queueMutex_.unlock();
+                queue_mutex_.unlock();
                 item->workFunction_(item, threadIndex);
                 item->completed_ = true;
             }
@@ -347,7 +347,7 @@ void WorkQueue::ProcessItems(i32 threadIndex)
             {
                 wasActive = false;
 
-                queueMutex_.unlock();
+                queue_mutex_.unlock();
                 Time::Sleep(0);
             }
         }
