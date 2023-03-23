@@ -15,7 +15,7 @@ const Quaternion Quaternion::IDENTITY;
 
 void Quaternion::FromAngleAxis(float angle, const Vector3& axis)
 {
-    Vector3 normAxis = axis.Normalized();
+    Vector3 normAxis = axis.normalized();
     angle *= M_DEGTORAD_2;
     float sinAngle = sinf(angle);
     float cosAngle = cosf(angle);
@@ -47,8 +47,8 @@ void Quaternion::FromEulerAngles(float x, float y, float z)
 
 void Quaternion::FromRotationTo(const Vector3& start, const Vector3& end)
 {
-    Vector3 normStart = start.Normalized();
-    Vector3 normEnd = end.Normalized();
+    Vector3 normStart = start.normalized();
+    Vector3 normEnd = end.normalized();
     float d = normStart.DotProduct(normEnd);
 
     if (d > -1.0f + M_EPSILON)
@@ -131,7 +131,7 @@ void Quaternion::FromRotationMatrix(const Matrix3& matrix)
 bool Quaternion::FromLookRotation(const Vector3& direction, const Vector3& up)
 {
     Quaternion ret;
-    Vector3 forward = direction.Normalized();
+    Vector3 forward = direction.normalized();
 
     Vector3 v = forward.CrossProduct(up);
     // If direction & up are parallel and crossproduct becomes zero, use FromRotationTo() fallback
@@ -258,7 +258,7 @@ Quaternion Quaternion::Slerp(const Quaternion& rhs, float t) const
         b = t;
     }
     // Lerp and renormalize.
-    return (*this * (a * sign) + rhs * b).Normalized();
+    return (*this * (a * sign) + rhs * b).normalized();
 #else
     // Favor accuracy for native code builds
     float cosAngle = DotProduct(rhs);

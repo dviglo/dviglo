@@ -53,7 +53,7 @@ void Benchmark03_MoleculeLogic::Update(float timeStep)
         if (distance >= INTERACTION_RANGE)
             continue;
 
-        Vector2 direction = (anotherMoleculePos - moleculePos).Normalized();
+        Vector2 direction = (anotherMoleculePos - moleculePos).normalized();
         float forceModulus = 1.f - distance / INTERACTION_RANGE;
         forceModulus = forceModulus * forceModulus * forceModulus;
         forceModulus = forceModulus * 25.f;
@@ -66,7 +66,7 @@ void Benchmark03_MoleculeLogic::Update(float timeStep)
 
     if (moleculePos.Length() > CONTAINER_RADIUS - MOLECULE_RADIUS)
     {
-        Vector2 backDirection = -moleculePos.Normalized();
+        Vector2 backDirection = -moleculePos.normalized();
 
         float backModulus = (moleculePos.Length() - CONTAINER_RADIUS + MOLECULE_RADIUS) * 50.0f;
         force_ = force_ + backDirection * backModulus;

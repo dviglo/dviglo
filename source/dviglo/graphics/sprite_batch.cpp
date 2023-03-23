@@ -448,7 +448,7 @@ void SpriteBatch::DrawArrow(const Vector2& start, const Vector2& end, float widt
     if (len < M_EPSILON)
         return;
 
-    Vector2 dir = vec.Normalized();
+    Vector2 dir = vec.normalized();
 
     // TODO: Обработать случай, когда вектор короткий
     float headLen = width * 2; // Длина наконечника

@@ -560,16 +560,16 @@ void Node::Rotate(const Quaternion& delta, TransformSpace space)
     switch (space)
     {
     case TransformSpace::Local:
-        rotation_ = (rotation_ * delta).Normalized();
+        rotation_ = (rotation_ * delta).normalized();
         break;
 
     case TransformSpace::Parent:
-        rotation_ = (delta * rotation_).Normalized();
+        rotation_ = (delta * rotation_).normalized();
         break;
 
     case TransformSpace::World:
         if (parent_ == scene_ || !parent_)
-            rotation_ = (delta * rotation_).Normalized();
+            rotation_ = (delta * rotation_).normalized();
         else
         {
             Quaternion worldRotation = GetWorldRotation();
@@ -592,19 +592,19 @@ void Node::RotateAround(const Vector3& point, const Quaternion& delta, Transform
     {
     case TransformSpace::Local:
         parentSpacePoint = GetTransform() * point;
-        rotation_ = (rotation_ * delta).Normalized();
+        rotation_ = (rotation_ * delta).normalized();
         break;
 
     case TransformSpace::Parent:
         parentSpacePoint = point;
-        rotation_ = (delta * rotation_).Normalized();
+        rotation_ = (delta * rotation_).normalized();
         break;
 
     case TransformSpace::World:
         if (parent_ == scene_ || !parent_)
         {
             parentSpacePoint = point;
-            rotation_ = (delta * rotation_).Normalized();
+            rotation_ = (delta * rotation_).normalized();
         }
         else
         {

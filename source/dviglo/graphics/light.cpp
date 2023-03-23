@@ -605,7 +605,7 @@ void Light::SetIntensitySortValue(const BoundingBox& box)
         {
             Vector3 centerPos = box.Center();
             Vector3 lightPos = node_->GetWorldPosition();
-            Vector3 lightDir = (centerPos - lightPos).Normalized();
+            Vector3 lightDir = (centerPos - lightPos).normalized();
             Ray lightRay(lightPos, lightDir);
             float distance = lightRay.HitDistance(box);
             float normDistance = distance / range_;

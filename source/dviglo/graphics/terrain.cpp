@@ -606,7 +606,7 @@ Vector3 Terrain::GetNormal(const Vector3& worldPosition) const
             n3 = GetRawNormal((unsigned)xPos, (unsigned)zPos + 1);
         }
 
-        Vector3 n = (n1 * (1.0f - xFrac - zFrac) + n2 * xFrac + n3 * zFrac).Normalized();
+        Vector3 n = (n1 * (1.0f - xFrac - zFrac) + n2 * xFrac + n3 * zFrac).normalized();
         return node_->GetWorldRotation() * n;
     }
     else
@@ -725,7 +725,7 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
                 *vertexData++ = texCoord.y_;
 
                 // Tangent
-                Vector3 xyz = (Vector3::RIGHT - normal * normal.DotProduct(Vector3::RIGHT)).Normalized();
+                Vector3 xyz = (Vector3::RIGHT - normal * normal.DotProduct(Vector3::RIGHT)).normalized();
                 *vertexData++ = xyz.x_;
                 *vertexData++ = xyz.y_;
                 *vertexData++ = xyz.z_;
@@ -1354,7 +1354,7 @@ Vector3 Terrain::GetRawNormal(int x, int z) const
             Vector3(0.0f, up, -sSlope) +
             Vector3(swSlope, up, -swSlope) +
             Vector3(wSlope, up, 0.0f) +
-            Vector3(nwSlope, up, nwSlope)).Normalized();
+            Vector3(nwSlope, up, nwSlope)).normalized();
 }
 
 void Terrain::CalculateLodErrors(TerrainPatch* patch)

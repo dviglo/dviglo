@@ -127,7 +127,7 @@ bool Serializer::WriteQuaternion(const Quaternion& value)
 bool Serializer::WritePackedQuaternion(const Quaternion& value)
 {
     short coords[4];
-    Quaternion norm = value.Normalized();
+    Quaternion norm = value.normalized();
 
     coords[0] = (short)Round(Clamp(norm.w_, -1.0f, 1.0f) * q);
     coords[1] = (short)Round(Clamp(norm.x_, -1.0f, 1.0f) * q);

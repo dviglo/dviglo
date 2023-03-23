@@ -55,7 +55,7 @@ public:
     /// Define from a normal vector and a point on the plane.
     void Define(const Vector3& normal, const Vector3& point)
     {
-        normal_ = normal.Normalized();
+        normal_ = normal.normalized();
         absNormal_ = normal_.Abs();
         d_ = -normal_.DotProduct(point);
     }

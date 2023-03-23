@@ -158,7 +158,7 @@ struct DV_API Vector4
     }
 
     /// Project vector onto axis.
-    float ProjectOntoAxis(const Vector3& axis) const { return DotProduct(Vector4(axis.Normalized(), 0.0f)); }
+    float ProjectOntoAxis(const Vector3& axis) const { return DotProduct(Vector4(axis.normalized(), 0.0f)); }
 
     /// Return absolute vector.
     Vector4 Abs() const { return Vector4(dviglo::Abs(x_), dviglo::Abs(y_), dviglo::Abs(z_), dviglo::Abs(w_)); }

@@ -124,7 +124,7 @@ void StaticModelGroup::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQu
                         if (geometryDistance < query.maxDistance_ && geometryDistance < distance)
                         {
                             distance = geometryDistance;
-                            normal = (worldTransforms_[i] * Vector4(geometryNormal, 0.0f)).Normalized();
+                            normal = (worldTransforms_[i] * Vector4(geometryNormal, 0.0f)).normalized();
                         }
                     }
                 }

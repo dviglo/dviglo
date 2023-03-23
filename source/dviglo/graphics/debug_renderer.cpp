@@ -417,7 +417,7 @@ void DebugRenderer::AddTriangleMesh(const void* vertexData, unsigned vertexSize,
 void DebugRenderer::AddCircle(const Vector3& center, const Vector3& normal, float radius, const Color& color, int steps, bool depthTest)
 {
     Quaternion orientation;
-    orientation.FromRotationTo(Vector3::UP, normal.Normalized());
+    orientation.FromRotationTo(Vector3::UP, normal.normalized());
     Vector3 p = orientation * Vector3(radius, 0, 0) + center;
     color32 uintColor = color.ToU32();
 

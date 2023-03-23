@@ -347,13 +347,13 @@ struct DV_API Vector3
     }
 
     /// Project direction vector onto axis.
-    float ProjectOntoAxis(const Vector3& axis) const { return DotProduct(axis.Normalized()); }
+    float ProjectOntoAxis(const Vector3& axis) const { return DotProduct(axis.normalized()); }
 
     /// Project position vector onto plane with given origin and normal.
     Vector3 ProjectOntoPlane(const Vector3& origin, const Vector3& normal) const
     {
         const Vector3 delta = *this - origin;
-        return *this - normal.Normalized() * delta.ProjectOntoAxis(normal);
+        return *this - normal.normalized() * delta.ProjectOntoAxis(normal);
     }
 
     /// Project position vector onto line segment.
@@ -376,7 +376,7 @@ struct DV_API Vector3
     float DistanceToPlane(const Vector3& origin, const Vector3& normal) const { return (*this - origin).ProjectOntoAxis(normal); }
 
     /// Make vector orthogonal to the axis.
-    Vector3 Orthogonalize(const Vector3& axis) const { return axis.CrossProduct(*this).CrossProduct(axis).Normalized(); }
+    Vector3 Orthogonalize(const Vector3& axis) const { return axis.CrossProduct(*this).CrossProduct(axis).normalized(); }
 
     /// Calculate cross product.
     Vector3 CrossProduct(const Vector3& rhs) const
@@ -410,7 +410,7 @@ struct DV_API Vector3
     bool IsInf() const { return dviglo::IsInf(x_) || dviglo::IsInf(y_) || dviglo::IsInf(z_); }
 
     /// Return normalized to unit length.
-    Vector3 Normalized() const
+    Vector3 normalized() const
     {
         const float lenSquared = LengthSquared();
         if (!dviglo::Equals(lenSquared, 1.0f) && lenSquared > 0.0f)

@@ -253,7 +253,7 @@ void RibbonTrail::UpdateTail(float timeStep)
     // Add starting points
     if (points_.Size() == 0 && path > M_LARGE_EPSILON && emitting_)
     {
-        const Vector3 forwardMotion = (previousPosition_ - worldPosition).Normalized();
+        const Vector3 forwardMotion = (previousPosition_ - worldPosition).normalized();
 
         TrailPoint startPoint{previousPosition_, forwardMotion};
         TrailPoint nextPoint{worldPosition, forwardMotion};
@@ -275,7 +275,7 @@ void RibbonTrail::UpdateTail(float timeStep)
     // Add more points
     if (points_.Size() > 1 && emitting_)
     {
-        const Vector3 forwardMotion = (previousPosition_ - worldPosition).Normalized();
+        const Vector3 forwardMotion = (previousPosition_ - worldPosition).normalized();
 
         // Add more points if path exceeded tail length
         if (path > vertexDistance_)

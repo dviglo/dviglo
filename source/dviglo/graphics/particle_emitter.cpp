@@ -185,7 +185,7 @@ void ParticleEmitter::Update(const FrameInfo& frame)
                 particle.velocity_ += lastTimeStep_ * force;
             }
             billboard.position_ += lastTimeStep_ * particle.velocity_ * scaleVector;
-            billboard.direction_ = particle.velocity_.Normalized();
+            billboard.direction_ = particle.velocity_.normalized();
 
             // Rotation
             billboard.rotation_ += lastTimeStep_ * particle.rotationSpeed_;

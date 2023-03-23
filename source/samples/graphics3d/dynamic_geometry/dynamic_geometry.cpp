@@ -192,7 +192,7 @@ void DynamicGeometry::CreateScene()
 
             Vector3 edge1 = v1 - v2;
             Vector3 edge2 = v1 - v3;
-            n1 = n2 = n3 = edge1.CrossProduct(edge2).Normalized();
+            n1 = n2 = n3 = edge1.CrossProduct(edge2).normalized();
         }
 
         SharedPtr<Model> fromScratchModel(new Model());

@@ -147,14 +147,14 @@ void SoundSource3D::CalculateAttenuation()
                 attenuation_ = distance <= nearDistance_ ? 1.0f : 0.0f;
 
             // Panning
-            panning_ = relativePos.Normalized().x_;
+            panning_ = relativePos.normalized().x_;
 
             // Angle attenuation
             if (innerAngle_ < DEFAULT_ANGLE && outerAngle_ > 0.0f)
             {
                 Vector3 listenerRelativePos
                     (node_->GetWorldRotation().Inverse() * (listenerNode->GetWorldPosition() - node_->GetWorldPosition()));
-                float listenerDot = Vector3::FORWARD.DotProduct(listenerRelativePos.Normalized());
+                float listenerDot = Vector3::FORWARD.DotProduct(listenerRelativePos.normalized());
                 float listenerAngle = acosf(listenerDot) * M_RADTODEG * 2.0f;
                 float angleInterval = Max(outerAngle_ - innerAngle_, 0.0f);
                 float angleAttenuation = 1.0f;

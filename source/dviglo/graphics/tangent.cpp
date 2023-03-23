@@ -94,7 +94,7 @@ void GenerateTangents(void* vertexData, unsigned vertexSize, const void* indexDa
         float w;
 
         // Gram-Schmidt orthogonalize
-        xyz = (t - n * n.DotProduct(t)).Normalized();
+        xyz = (t - n * n.DotProduct(t)).normalized();
 
         // Calculate handedness
         w = n.CrossProduct(t).DotProduct(tan2[i]) < 0.0f ? -1.0f : 1.0f;

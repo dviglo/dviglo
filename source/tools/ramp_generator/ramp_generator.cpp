@@ -344,7 +344,7 @@ void WriteIES(unsigned char* data, unsigned width, unsigned height, Vector<float
                 {
                     if (height > 1)
                     {
-                        Vector3 normalized = dirVec.Normalized();
+                        Vector3 normalized = dirVec.normalized();
                         float angle = Atan2(normalized.x_, normalized.y_) - maxHoriz;
                         while (angle < 0)
                             angle += 360.0f;

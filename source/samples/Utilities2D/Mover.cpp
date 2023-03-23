@@ -107,7 +107,7 @@ void Mover::Update(float timeStep)
 
     // Set direction and move to target
     Vector2 dir = path_[currentPathID_] - node_->GetPosition2D();
-    Vector2 dirNormal = dir.Normalized();
+    Vector2 dirNormal = dir.normalized();
     node_->Translate(Vector3(dirNormal.x_, dirNormal.y_, 0.0f) * Abs(speed_) * timeStep);
     flip_ = dir.x_;
 

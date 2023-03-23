@@ -383,7 +383,7 @@ Ray Camera::GetScreenRay(float x, float y) const
     Vector3 far(x, y, 1.0f);
 
     ret.origin_ = viewProjInverse * near;
-    ret.direction_ = ((viewProjInverse * far) - ret.origin_).Normalized();
+    ret.direction_ = ((viewProjInverse * far) - ret.origin_).normalized();
     return ret;
 }
 

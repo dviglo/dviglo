@@ -298,7 +298,7 @@ public:
     }
 
     /// Return normalized to unit length.
-    Quaternion Normalized() const
+    Quaternion normalized() const
     {
         /*
         float lenSquared = LengthSquared();
@@ -399,7 +399,7 @@ public:
     Matrix3 RotationMatrix() const;
     /// Spherical interpolation with another quaternion.
     Quaternion Slerp(const Quaternion& rhs, float t) const;
-    /// Normalized linear interpolation with another quaternion.
+    /// normalized linear interpolation with another quaternion.
     Quaternion Nlerp(const Quaternion& rhs, float t, bool shortestPath = false) const;
 
     /// Return float data.

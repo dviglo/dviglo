@@ -524,7 +524,7 @@ void AnimationState::ApplyTrack(AnimationStateTrack& stateTrack, float weight, b
         if (!!(channelMask & AnimationChannels::Rotation))
         {
             Quaternion delta = newRotation * stateTrack.bone_->initialRotation_.Inverse();
-            newRotation = (delta * node->GetRotation()).Normalized();
+            newRotation = (delta * node->GetRotation()).normalized();
             if (!Equals(weight, 1.0f))
                 newRotation = node->GetRotation().Slerp(newRotation, weight);
         }
