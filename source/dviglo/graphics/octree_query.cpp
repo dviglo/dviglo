@@ -17,7 +17,7 @@ Intersection PointOctreeQuery::test_octant(const BoundingBox& box, bool inside)
         return box.IsInside(point_);
 }
 
-void PointOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool inside)
+void PointOctreeQuery::test_drawables(Drawable** start, Drawable** end, bool inside)
 {
     while (start != end)
     {
@@ -39,7 +39,7 @@ Intersection SphereOctreeQuery::test_octant(const BoundingBox& box, bool inside)
         return sphere_.IsInside(box);
 }
 
-void SphereOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool inside)
+void SphereOctreeQuery::test_drawables(Drawable** start, Drawable** end, bool inside)
 {
     while (start != end)
     {
@@ -61,7 +61,7 @@ Intersection BoxOctreeQuery::test_octant(const BoundingBox& box, bool inside)
         return box_.IsInside(box);
 }
 
-void BoxOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool inside)
+void BoxOctreeQuery::test_drawables(Drawable** start, Drawable** end, bool inside)
 {
     while (start != end)
     {
@@ -83,7 +83,7 @@ Intersection FrustumOctreeQuery::test_octant(const BoundingBox& box, bool inside
         return frustum_.IsInside(box);
 }
 
-void FrustumOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool inside)
+void FrustumOctreeQuery::test_drawables(Drawable** start, Drawable** end, bool inside)
 {
     while (start != end)
     {
@@ -103,7 +103,7 @@ Intersection AllContentOctreeQuery::test_octant(const BoundingBox& box, bool ins
     return INSIDE;
 }
 
-void AllContentOctreeQuery::TestDrawables(Drawable** start, Drawable** end, bool inside)
+void AllContentOctreeQuery::test_drawables(Drawable** start, Drawable** end, bool inside)
 {
     while (start != end)
     {

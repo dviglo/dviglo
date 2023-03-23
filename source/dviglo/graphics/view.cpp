@@ -48,7 +48,7 @@ public:
     }
 
     /// Intersection test for drawables.
-    void TestDrawables(Drawable** start, Drawable** end, bool inside) override
+    void test_drawables(Drawable** start, Drawable** end, bool inside) override
     {
         while (start != end)
         {
@@ -76,7 +76,7 @@ public:
     }
 
     /// Intersection test for drawables.
-    void TestDrawables(Drawable** start, Drawable** end, bool inside) override
+    void test_drawables(Drawable** start, Drawable** end, bool inside) override
     {
         while (start != end)
         {
@@ -120,7 +120,7 @@ public:
     }
 
     /// Intersection test for drawables. Note: drawable occlusion is performed later in worker threads.
-    void TestDrawables(Drawable** start, Drawable** end, bool inside) override
+    void test_drawables(Drawable** start, Drawable** end, bool inside) override
     {
         while (start != end)
         {

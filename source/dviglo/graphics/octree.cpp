@@ -228,7 +228,7 @@ void Octant::GetDrawablesInternal(OctreeQuery& query, bool inside) const
     {
         auto** start = const_cast<Drawable**>(&drawables_[0]);
         Drawable** end = start + drawables_.Size();
-        query.TestDrawables(start, end, inside);
+        query.test_drawables(start, end, inside);
     }
 
     for (auto child : children_)
