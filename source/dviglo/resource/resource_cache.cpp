@@ -516,7 +516,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
 
         if (searchPackagesFirst_)
         {
-            file = SearchPackages(sanitatedName);
+            file = search_packages(sanitatedName);
             if (!file)
                 file = search_resource_dirs(sanitatedName);
         }
@@ -524,7 +524,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
         {
             file = search_resource_dirs(sanitatedName);
             if (!file)
-                file = SearchPackages(sanitatedName);
+                file = search_packages(sanitatedName);
         }
 
         if (file)
@@ -1135,7 +1135,7 @@ File* ResourceCache::search_resource_dirs(const String& name)
     return nullptr;
 }
 
-File* ResourceCache::SearchPackages(const String& name)
+File* ResourceCache::search_packages(const String& name)
 {
     for (const SharedPtr<PackageFile>& package : packages_)
     {

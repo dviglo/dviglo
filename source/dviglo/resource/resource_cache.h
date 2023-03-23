@@ -253,7 +253,7 @@ private:
     /// Search FileSystem for file.
     File* search_resource_dirs(const String& name);
     /// Search resource packages for file.
-    File* SearchPackages(const String& name);
+    File* search_packages(const String& name);
 
     /// Mutex for thread-safe access to the resource directories, resource packages and resource dependencies.
     mutable std::mutex resourceMutex_;
