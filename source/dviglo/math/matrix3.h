@@ -291,7 +291,7 @@ public:
     float m22_;
 
     /// Bulk transpose matrices.
-    static void BulkTranspose(float* dest, const float* src, unsigned count)
+    static void bulk_transpose(float* dest, const float* src, unsigned count)
     {
         for (unsigned i = 0; i < count; ++i)
         {
