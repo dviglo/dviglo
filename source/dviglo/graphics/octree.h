@@ -191,7 +191,7 @@ private:
     /// Drawable objects that were inserted during threaded update phase.
     Vector<Drawable*> threadedDrawableUpdates_;
     /// Mutex for octree reinsertions.
-    std::mutex octreeMutex_;
+    std::mutex octree_mutex_;
     /// Ray query temporary list of drawables.
     mutable Vector<Drawable*> rayQueryDrawables_;
     /// Subdivision level.

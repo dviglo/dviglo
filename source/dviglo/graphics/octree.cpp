@@ -537,7 +537,7 @@ void Octree::queue_update(Drawable* drawable)
     Scene* scene = GetScene();
     if (scene && scene->IsThreadedUpdate())
     {
-        std::scoped_lock lock(octreeMutex_);
+        std::scoped_lock lock(octree_mutex_);
         threadedDrawableUpdates_.Push(drawable);
     }
     else
