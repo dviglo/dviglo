@@ -19,7 +19,7 @@ unsigned EstimateCompressBound(unsigned srcSize)
     return (unsigned)LZ4_compressBound(srcSize);
 }
 
-unsigned CompressData(void* dest, const void* src, unsigned srcSize)
+unsigned compress_data(void* dest, const void* src, unsigned srcSize)
 {
     if (!dest || !src || !srcSize)
         return 0;
