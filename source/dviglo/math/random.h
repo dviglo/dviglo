@@ -18,6 +18,6 @@ DV_API unsigned GetRandomSeed();
 /// Return a random number between 0-32767. Should operate similarly to MSVC rand().
 DV_API int Rand();
 /// Return a standard normal distributed number.
-DV_API float RandStandardNormal();
+DV_API float rand_standard_normal();
 
 }

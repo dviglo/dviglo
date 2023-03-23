@@ -27,7 +27,7 @@ int Rand()
     return (randomSeed >> 16u) & 32767u;
 }
 
-float RandStandardNormal()
+float rand_standard_normal()
 {
     float val = 0.0f;
     for (int i = 0; i < 12; i++)
