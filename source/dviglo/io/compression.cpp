@@ -14,7 +14,7 @@
 namespace dviglo
 {
 
-unsigned EstimateCompressBound(unsigned srcSize)
+unsigned estimate_compress_bound(unsigned srcSize)
 {
     return (unsigned)LZ4_compressBound(srcSize);
 }

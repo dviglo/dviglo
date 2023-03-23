@@ -14,9 +14,9 @@ class Serializer;
 class VectorBuffer;
 
 /// Estimate and return worst case LZ4 compressed output size in bytes for given input size
-DV_API unsigned EstimateCompressBound(unsigned srcSize);
+DV_API unsigned estimate_compress_bound(unsigned srcSize);
 
-/// Compress data using the LZ4 algorithm and return the compressed data size. The needed destination buffer worst-case size is given by EstimateCompressBound()
+/// Compress data using the LZ4 algorithm and return the compressed data size. The needed destination buffer worst-case size is given by estimate_compress_bound()
 DV_API unsigned compress_data(void* dest, const void* src, unsigned srcSize);
 
 /// Uncompress data using the LZ4 algorithm. The uncompressed data size must be known. Return the number of compressed data bytes consumed
