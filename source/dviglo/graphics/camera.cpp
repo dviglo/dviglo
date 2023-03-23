@@ -301,9 +301,9 @@ Frustum Camera::GetSplitFrustum(float nearClip, float farClip) const
 
     if (customProjection_)
     {
-        // DefineSplit() needs to project the near & far distances, so can not use a combined view-projection matrix.
+        // define_split() needs to project the near & far distances, so can not use a combined view-projection matrix.
         // Transform to world space afterward instead
-        ret.DefineSplit(projection_, nearClip, farClip);
+        ret.define_split(projection_, nearClip, farClip);
         ret.Transform(GetEffectiveWorldTransform());
     }
     else
@@ -350,7 +350,7 @@ Frustum Camera::GetViewSpaceSplitFrustum(float nearClip, float farClip) const
     Frustum ret;
 
     if (customProjection_)
-        ret.DefineSplit(projection_, nearClip, farClip);
+        ret.define_split(projection_, nearClip, farClip);
     else
     {
         if (!orthographic_)

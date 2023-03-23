@@ -129,7 +129,7 @@ void Frustum::define_ortho(float orthoSize, float aspectRatio, float zoom, float
     Define(near, far, transform);
 }
 
-void Frustum::DefineSplit(const Matrix4& projection, float near, float far)
+void Frustum::define_split(const Matrix4& projection, float near, float far)
 {
     Matrix4 projInverse = projection.Inverse();
 
