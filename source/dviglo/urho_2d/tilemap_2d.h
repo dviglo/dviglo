@@ -48,7 +48,7 @@ public:
     /// Convert tile index to position.
     Vector2 tile_index_to_position(int x, int y) const;
     /// Convert position to tile index, if out of map return false.
-    bool PositionToTileIndex(int& x, int& y, const Vector2& position) const;
+    bool position_to_tile_index(int& x, int& y, const Vector2& position) const;
 
     /// Set tile map file attribute.
     void SetTmxFileAttr(const ResourceRef& value);

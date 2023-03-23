@@ -147,9 +147,9 @@ Vector2 TileMap2D::tile_index_to_position(int x, int y) const
     return info_.tile_index_to_position(x, y);
 }
 
-bool TileMap2D::PositionToTileIndex(int& x, int& y, const Vector2& position) const
+bool TileMap2D::position_to_tile_index(int& x, int& y, const Vector2& position) const
 {
-    return info_.PositionToTileIndex(x, y, position);
+    return info_.position_to_tile_index(x, y, position);
 }
 
 void TileMap2D::SetTmxFileAttr(const ResourceRef& value)

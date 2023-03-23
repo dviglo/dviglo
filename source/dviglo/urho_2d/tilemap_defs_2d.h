@@ -50,7 +50,7 @@ struct DV_API TileMapInfo2D
     /// Convert tile index to position.
     Vector2 tile_index_to_position(int x, int y) const;
     /// Convert position to tile index, if out of map return false.
-    bool PositionToTileIndex(int& x, int& y, const Vector2& position) const;
+    bool position_to_tile_index(int& x, int& y, const Vector2& position) const;
 };
 
 /// Tile map layer type.

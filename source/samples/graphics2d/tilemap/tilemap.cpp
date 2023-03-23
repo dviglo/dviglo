@@ -172,7 +172,7 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
 
     Vector2 pos = GetMousePositionXY();
     int x, y;
-    if (map->PositionToTileIndex(x, y, pos))
+    if (map->position_to_tile_index(x, y, pos))
     {
         // Get tile's sprite. Note that layer.GetTile(x, y).sprite is read-only, so we get the sprite through tile's node
         Node* n = layer->GetTileNode(x, y);
