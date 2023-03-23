@@ -778,7 +778,7 @@ void View::GetDrawables()
     if (!octree_ || !cullCamera_)
         return;
 
-    DV_PROFILE(GetDrawables);
+    ZoneScoped;
 
     WorkQueue& queue = DV_WORK_QUEUE;
     Vector<Drawable*>& tempDrawables = tempDrawables_[0];
@@ -957,7 +957,7 @@ void View::GetBatches()
 void View::ProcessLights()
 {
     // Process lit geometries and shadow casters for each light
-    DV_PROFILE(ProcessLights);
+    ZoneScoped;
 
     WorkQueue& queue = DV_WORK_QUEUE;
     lightQueryResults_.Resize(lights_.Size());
@@ -1171,7 +1171,7 @@ void View::GetLightBatches()
 
 void View::GetBaseBatches()
 {
-    DV_PROFILE(GetBaseBatches);
+    ZoneScoped;
 
     for (Vector<Drawable*>::ConstIterator i = geometries_.Begin(); i != geometries_.End(); ++i)
     {
@@ -2081,7 +2081,7 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
     if (!source)
         return;
 
-    DV_PROFILE(BlitFramebuffer);
+    ZoneScoped;
 
     Graphics& graphics = DV_GRAPHICS;
 
@@ -2953,7 +2953,7 @@ void View::PrepareInstancingBuffer()
         return;
     }
 
-    DV_PROFILE(PrepareInstancingBuffer);
+    ZoneScoped;
 
     i32 totalInstances = 0;
 
@@ -3054,7 +3054,7 @@ bool View::NeedRenderShadowMap(const LightBatchQueue& queue)
 
 void View::RenderShadowMap(const LightBatchQueue& queue)
 {
-    DV_PROFILE(RenderShadowMap);
+    ZoneScoped;
 
     Renderer& renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
