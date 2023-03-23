@@ -258,7 +258,7 @@ void Texture::CheckTextureBudget(StringHash type)
     // If textures are over the budget, they likely can not be freed directly as materials still refer to them.
     // Therefore free unused materials first
     if (textureUse > textureBudget)
-        DV_RES_CACHE.ReleaseResources(Material::GetTypeStatic());
+        DV_RES_CACHE.release_resources(Material::GetTypeStatic());
 }
 
 void Texture::SetSRGB(bool enable)

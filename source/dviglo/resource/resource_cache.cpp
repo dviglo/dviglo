@@ -265,7 +265,7 @@ void ResourceCache::release_resource(StringHash type, const String& name, bool f
     }
 }
 
-void ResourceCache::ReleaseResources(StringHash type, bool force)
+void ResourceCache::release_resources(StringHash type, bool force)
 {
     bool released = false;
 
@@ -289,7 +289,7 @@ void ResourceCache::ReleaseResources(StringHash type, bool force)
         UpdateResourceGroup(type);
 }
 
-void ResourceCache::ReleaseResources(StringHash type, const String& partialName, bool force)
+void ResourceCache::release_resources(StringHash type, const String& partialName, bool force)
 {
     bool released = false;
 
@@ -316,7 +316,7 @@ void ResourceCache::ReleaseResources(StringHash type, const String& partialName,
         UpdateResourceGroup(type);
 }
 
-void ResourceCache::ReleaseResources(const String& partialName, bool force)
+void ResourceCache::release_resources(const String& partialName, bool force)
 {
     // Some resources refer to others, like materials to textures. Repeat the release logic as many times as necessary to ensure
     // these get released. This is not necessary if forcing release

@@ -97,11 +97,11 @@ public:
     /// Release a resource by name.
     void release_resource(StringHash type, const String& name, bool force = false);
     /// Release all resources of a specific type.
-    void ReleaseResources(StringHash type, bool force = false);
+    void release_resources(StringHash type, bool force = false);
     /// Release resources of a specific type and partial name.
-    void ReleaseResources(StringHash type, const String& partialName, bool force = false);
+    void release_resources(StringHash type, const String& partialName, bool force = false);
     /// Release resources of all types by partial name.
-    void ReleaseResources(const String& partialName, bool force = false);
+    void release_resources(const String& partialName, bool force = false);
     /// Release all resources. When called with the force flag false, releases all currently unused resources.
     void ReleaseAllResources(bool force = false);
     /// Reload a resource. Return true on success. The resource will not be removed from the cache in case of failure.
