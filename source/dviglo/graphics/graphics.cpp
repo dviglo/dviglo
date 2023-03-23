@@ -1277,14 +1277,7 @@ void Graphics::SetStencilTest(bool enable, CompareMode mode, StencilOp pass, Ste
 
 bool Graphics::IsInitialized() const
 {
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return IsInitialized_OGL();
-#endif
-
-    return {}; // Prevent warning
+    return window_ != nullptr;
 }
 
 bool Graphics::GetDither() const

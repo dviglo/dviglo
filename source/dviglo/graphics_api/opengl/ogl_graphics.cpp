@@ -221,11 +221,11 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
     ScreenModeParams newParams = params;
     AdjustScreenMode(width, height, newParams, maximize);
 
-    if (IsInitialized_OGL() && width == width_ && height == height_ && screenParams_ == newParams)
+    if (IsInitialized() && width == width_ && height == height_ && screenParams_ == newParams)
         return true;
 
     // If only vsync changes, do not destroy/recreate the context
-    if (IsInitialized_OGL() && width == width_ && height == height_
+    if (IsInitialized() && width == width_ && height == height_
         && screenParams_.EqualsExceptVSync(newParams) && screenParams_.vsync_ != newParams.vsync_)
     {
         SDL_GL_SetSwapInterval(newParams.vsync_ ? 1 : 0);
@@ -409,7 +409,7 @@ void Graphics::SetFlushGPU_OGL(bool enable)
 
 void Graphics::Close_OGL()
 {
-    if (!IsInitialized_OGL())
+    if (!IsInitialized())
         return;
 
     // Actually close the window
@@ -420,7 +420,7 @@ bool Graphics::TakeScreenShot_OGL(Image& destImage)
 {
     DV_PROFILE(TakeScreenShot_OGL);
 
-    if (!IsInitialized_OGL())
+    if (!IsInitialized())
         return false;
 
     if (IsDeviceLost())
@@ -448,7 +448,7 @@ bool Graphics::TakeScreenShot_OGL(Image& destImage)
 
 bool Graphics::BeginFrame_OGL()
 {
-    if (!IsInitialized_OGL() || IsDeviceLost())
+    if (!IsInitialized() || IsDeviceLost())
         return false;
     // Re-enable depth test and depth func in case a third party program has modified it
     glEnable(GL_DEPTH_TEST);
@@ -475,7 +475,7 @@ bool Graphics::BeginFrame_OGL()
 
 void Graphics::EndFrame_OGL()
 {
-    if (!IsInitialized_OGL())
+    if (!IsInitialized())
         return;
 
     DV_PROFILE(Present);
@@ -1864,11 +1864,6 @@ void Graphics::SetStencilTest_OGL(bool enable, CompareMode mode, StencilOp pass,
         }
     }
 #endif
-}
-
-bool Graphics::IsInitialized_OGL() const
-{
-    return window_ != nullptr;
 }
 
 Vector<int> Graphics::GetMultiSampleLevels_OGL() const
