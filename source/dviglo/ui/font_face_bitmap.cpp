@@ -93,7 +93,7 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
 
         // Add texture to resource cache
         texture->SetName(fontFile->GetName());
-        cache.AddManualResource(texture);
+        cache.add_manual_resource(texture);
 
         totalTextureSize += fontImage->GetWidth() * fontImage->GetHeight() * fontImage->GetComponents();
 

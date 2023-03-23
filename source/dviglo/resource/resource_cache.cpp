@@ -166,7 +166,7 @@ bool ResourceCache::add_package_file(const String& fileName, i32 priority)
     return package->Open(fileName) && add_package_file(package, priority);
 }
 
-bool ResourceCache::AddManualResource(Resource* resource)
+bool ResourceCache::add_manual_resource(Resource* resource)
 {
     if (!resource)
     {

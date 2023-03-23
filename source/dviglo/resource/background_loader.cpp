@@ -269,7 +269,7 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
 
     // Store to the cache just before sending the event; use same mechanism as for manual resources
     if (success || owner_->GetReturnFailedResources())
-        owner_->AddManualResource(resource);
+        owner_->add_manual_resource(resource);
 
     // Send event, either success or failure
     {

@@ -90,7 +90,7 @@ public:
     bool add_package_file(const String& fileName, i32 priority = PRIORITY_LAST);
 
     /// Add a manually created resource. Must be uniquely named within its type.
-    bool AddManualResource(Resource* resource);
+    bool add_manual_resource(Resource* resource);
 
     /// Remove a resource load directory.
     void remove_resource_dir(const String& pathName);

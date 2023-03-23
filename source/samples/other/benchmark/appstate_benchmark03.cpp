@@ -31,31 +31,31 @@ AppState_Benchmark03::AppState_Benchmark03()
     material0->SetName("Molecule0");
     material0->SetShaderParameter("MatDiffColor", Vector4(0, 1, 1, 1));
     material0->SetShaderParameter("MatSpecColor", Vector4(1, 1, 1, 100));
-    DV_RES_CACHE.AddManualResource(material0);
+    DV_RES_CACHE.add_manual_resource(material0);
 
     SharedPtr<Material> material1 = material0->Clone("Molecule1");
     material1->SetShaderParameter("MatDiffColor", Vector4(0, 1, 0, 1));
-    DV_RES_CACHE.AddManualResource(material1);
+    DV_RES_CACHE.add_manual_resource(material1);
 
     SharedPtr<Material> material2 = material0->Clone("Molecule2");
     material2->SetShaderParameter("MatDiffColor", Vector4(0, 0, 1, 1));
-    DV_RES_CACHE.AddManualResource(material2);
+    DV_RES_CACHE.add_manual_resource(material2);
 
     SharedPtr<Material> material3 = material0->Clone("Molecule3");
     material3->SetShaderParameter("MatDiffColor", Vector4(1, 0.5f, 0, 1));
-    DV_RES_CACHE.AddManualResource(material3);
+    DV_RES_CACHE.add_manual_resource(material3);
 
     SharedPtr<Material> material4 = material0->Clone("Molecule4");
     material4->SetShaderParameter("MatDiffColor", Vector4(1, 0, 0, 1));
-    DV_RES_CACHE.AddManualResource(material4);
+    DV_RES_CACHE.add_manual_resource(material4);
 
     SharedPtr<Material> material5 = material0->Clone("Molecule5");
     material5->SetShaderParameter("MatDiffColor", Vector4(1, 0, 1, 1));
-    DV_RES_CACHE.AddManualResource(material5);
+    DV_RES_CACHE.add_manual_resource(material5);
 
     SharedPtr<Material> material6 = material0->Clone("Molecule6");
     material6->SetShaderParameter("MatDiffColor", Vector4(1, 1, 0, 1));
-    DV_RES_CACHE.AddManualResource(material6);
+    DV_RES_CACHE.add_manual_resource(material6);
 }
 
 void AppState_Benchmark03::OnEnter()
