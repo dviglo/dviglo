@@ -129,7 +129,7 @@ bool ResourceCache::AddResourceDir(const String& pathName, i32 priority)
     if (autoReloadResources_)
     {
         SharedPtr<FileWatcher> watcher(new FileWatcher());
-        watcher->StartWatching(fixedPath, true);
+        watcher->start_watching(fixedPath, true);
         fileWatchers_.Push(watcher);
     }
 
@@ -454,7 +454,7 @@ void ResourceCache::SetAutoReloadResources(bool enable)
             for (const String& resourceDir : resourceDirs_)
             {
                 SharedPtr<FileWatcher> watcher(new FileWatcher());
-                watcher->StartWatching(resourceDir, true);
+                watcher->start_watching(resourceDir, true);
                 fileWatchers_.Push(watcher);
             }
         }

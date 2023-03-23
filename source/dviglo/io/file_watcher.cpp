@@ -54,7 +54,7 @@ FileWatcher::~FileWatcher()
 #endif
 }
 
-bool FileWatcher::StartWatching(const String& pathName, bool watchSubDirs)
+bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
 {
     // Stop any previous watching
     StopWatching();
