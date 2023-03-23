@@ -75,7 +75,7 @@ ResourceCache::ResourceCache() :
     finishBackgroundResourcesMs_(5)
 {
     // Register Resource library object factories
-    RegisterResourceLibrary();
+    register_resource_library();
 
 #ifdef DV_THREADING
     // Create resource background loader. Its thread will start on the first background request
@@ -1146,7 +1146,7 @@ File* ResourceCache::SearchPackages(const String& name)
     return nullptr;
 }
 
-void RegisterResourceLibrary()
+void register_resource_library()
 {
     Image::register_object();
     JSONFile::register_object();

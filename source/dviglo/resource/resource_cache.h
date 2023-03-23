@@ -293,6 +293,6 @@ template <class T> void ResourceCache::GetResources(Vector<T*>& result) const
 }
 
 /// Register Resource library subsystems and objects.
-void DV_API RegisterResourceLibrary();
+void DV_API register_resource_library();
 
 }
