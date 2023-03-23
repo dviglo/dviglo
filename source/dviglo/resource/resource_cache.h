@@ -107,7 +107,7 @@ public:
     /// Reload a resource. Return true on success. The resource will not be removed from the cache in case of failure.
     bool reload_resource(Resource* resource);
     /// Reload a resource based on filename. Causes also reload of dependent resources if necessary.
-    void ReloadResourceWithDependencies(const String& fileName);
+    void reload_resource_with_dependencies(const String& fileName);
     /// Set memory budget for a specific resource type, default 0 is unlimited.
     void SetMemoryBudget(StringHash type, unsigned long long budget);
     /// Enable or disable automatic reloading of resources as files are modified. Default false.
