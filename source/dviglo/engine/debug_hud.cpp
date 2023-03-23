@@ -130,8 +130,15 @@ void DebugHud::Update()
             batches = renderer.GetNumBatches();
         }
 
+        if (fps_timer_.GetMSec(false) >= 500)
+        {
+            fps_timer_.Reset();
+            fps_ = (u32)Round(DV_TIME.GetFramesPerSecond());
+        }
+
         String stats;
-        stats.AppendWithFormat("Triangles %u\nBatches %u\nViews %u\nLights %u\nShadowmaps %u\nOccluders %u",
+        stats.AppendWithFormat("FPS %u\nTriangles %u\nBatches %u\nViews %u\nLights %u\nShadowmaps %u\nOccluders %u",
+            fps_,
             primitives,
             batches,
             renderer.GetNumViews(),

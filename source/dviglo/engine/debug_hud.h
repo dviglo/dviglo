@@ -111,6 +111,13 @@ private:
     SharedPtr<Text> memoryText_;
     /// Hashmap containing application specific stats.
     HashMap<String, String> appStats_;
+
+    /// Отображаемый FPS
+    u32 fps_ = 0;
+
+    /// Нужен, чтобы обновлять FPS не каждый кадр
+    Timer fps_timer_;
+
     /// Profiler timer.
     Timer profilerTimer_;
     /// Profiler max block depth.
