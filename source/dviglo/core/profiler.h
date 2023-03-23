@@ -49,3 +49,11 @@ namespace dviglo
 #endif
 
 }
+
+/*
+
+Название зоны при использовании `ZoneScoped;`:
+* GCC и MinGW: имя метода (например `update`)
+* VS: полный путь к методу (например `dviglo::engine::update`)
+
+*/
