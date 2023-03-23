@@ -425,6 +425,6 @@ private:
 #define DV_UI (dviglo::UI::get_instance())
 
 /// Register UI library objects.
-void DV_API RegisterUILibrary();
+void DV_API register_ui_library();
 
 }

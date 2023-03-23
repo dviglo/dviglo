@@ -120,7 +120,7 @@ UI::UI() :
     rootModalElement_->SetTraversalMode(TM_DEPTH_FIRST);
 
     // Register UI library object factories
-    RegisterUILibrary();
+    register_ui_library();
 
     SubscribeToEvent(E_SCREENMODE, DV_HANDLER(UI, HandleScreenMode));
     SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(UI, HandleMouseButtonDown));
@@ -2189,7 +2189,7 @@ void UI::SetElementRenderTexture(UiElement* element, Texture2D* texture)
     }
 }
 
-void RegisterUILibrary()
+void register_ui_library()
 {
     Font::register_object();
 
