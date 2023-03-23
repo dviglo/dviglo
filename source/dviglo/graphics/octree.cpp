@@ -68,7 +68,7 @@ Octant::~Octant()
         {
             (*i)->SetOctant(root_);
             root_->drawables_.Push(*i);
-            root_->QueueUpdate(*i);
+            root_->queue_update(*i);
         }
         drawables_.Clear();
         numDrawables_ = 0;
@@ -532,7 +532,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
     }
 }
 
-void Octree::QueueUpdate(Drawable* drawable)
+void Octree::queue_update(Drawable* drawable)
 {
     Scene* scene = GetScene();
     if (scene && scene->IsThreadedUpdate())

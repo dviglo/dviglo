@@ -218,7 +218,7 @@ void Drawable::SetOccludee(bool enable)
         occludee_ = enable;
         // Reinsert to octree to make sure octant occlusion does not erroneously hide this drawable
         if (octant_ && !updateQueued_)
-            octant_->GetRoot()->QueueUpdate(this);
+            octant_->GetRoot()->queue_update(this);
         MarkNetworkUpdate();
     }
 }
@@ -226,7 +226,7 @@ void Drawable::SetOccludee(bool enable)
 void Drawable::MarkForUpdate()
 {
     if (!updateQueued_ && octant_)
-        octant_->GetRoot()->QueueUpdate(this);
+        octant_->GetRoot()->queue_update(this);
 }
 
 const BoundingBox& Drawable::GetWorldBoundingBox()
@@ -360,7 +360,7 @@ void Drawable::OnMarkedDirty(Node* node)
 {
     worldBoundingBoxDirty_ = true;
     if (!updateQueued_ && octant_)
-        octant_->GetRoot()->QueueUpdate(this);
+        octant_->GetRoot()->queue_update(this);
 
     // Mark zone assignment dirty when transform changes
     if (node == node_)

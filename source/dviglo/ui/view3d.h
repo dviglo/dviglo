@@ -38,7 +38,7 @@ public:
     /// Set render target auto update mode. Default is true.
     void SetAutoUpdate(bool enable);
     /// Queue manual update on the render texture.
-    void QueueUpdate();
+    void queue_update();
 
     /// Return render texture pixel format.
     unsigned GetFormat() const { return rttFormat_; }

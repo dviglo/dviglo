@@ -2849,7 +2849,7 @@ void View::CheckMaterialForAuxView(Material* material)
                 auto* tex2D = static_cast<Texture2D*>(texture);
                 RenderSurface* target = tex2D->GetRenderSurface();
                 if (target && target->GetUpdateMode() == SURFACE_UPDATEVISIBLE)
-                    target->QueueUpdate();
+                    target->queue_update();
             }
             else if (texture->GetType() == TextureCube::GetTypeStatic())
             {
@@ -2858,7 +2858,7 @@ void View::CheckMaterialForAuxView(Material* material)
                 {
                     RenderSurface* target = texCube->GetRenderSurface((CubeMapFace)j);
                     if (target && target->GetUpdateMode() == SURFACE_UPDATEVISIBLE)
-                        target->QueueUpdate();
+                        target->queue_update();
                 }
             }
         }

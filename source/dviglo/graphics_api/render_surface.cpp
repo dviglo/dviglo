@@ -49,7 +49,7 @@ void RenderSurface::SetLinkedDepthStencil(RenderSurface* depthStencil)
         linkedDepthStencil_ = depthStencil;
 }
 
-void RenderSurface::QueueUpdate()
+void RenderSurface::queue_update()
 {
     updateQueued_ = true;
 }

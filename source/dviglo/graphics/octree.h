@@ -174,7 +174,7 @@ public:
     i32 GetNumLevels() const { return numLevels_; }
 
     /// Mark drawable object as requiring an update and a reinsertion.
-    void QueueUpdate(Drawable* drawable);
+    void queue_update(Drawable* drawable);
     /// Cancel drawable object's update.
     void CancelUpdate(Drawable* drawable);
     /// Visualize the component as debug geometry.

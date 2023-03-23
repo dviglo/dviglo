@@ -36,7 +36,7 @@ public:
     /// Set linked depth-stencil surface.
     void SetLinkedDepthStencil(RenderSurface* depthStencil);
     /// Queue manual update of the viewport(s).
-    void QueueUpdate();
+    void queue_update();
     /// Release surface.
     void Release();
     /// Mark the GPU resource destroyed on graphics context destruction. Only used on OpenGL.

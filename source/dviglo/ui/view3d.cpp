@@ -69,7 +69,7 @@ void View3D::OnResize(const IntVector2& newSize, const IntVector2& delta)
         SetImageRect(IntRect(0, 0, width, height));
 
         if (!autoUpdate_)
-            surface->QueueUpdate();
+            surface->queue_update();
     }
 }
 
@@ -83,7 +83,7 @@ void View3D::SetView(Scene* scene, Camera* camera, bool ownScene)
 
     viewport_->SetScene(scene_);
     viewport_->SetCamera(camera);
-    QueueUpdate();
+    queue_update();
 }
 
 void View3D::SetFormat(unsigned format)
@@ -100,11 +100,11 @@ void View3D::SetAutoUpdate(bool enable)
     autoUpdate_ = enable;
 }
 
-void View3D::QueueUpdate()
+void View3D::queue_update()
 {
     RenderSurface* surface = renderTexture_->GetRenderSurface();
     if (surface)
-        surface->QueueUpdate();
+        surface->queue_update();
 }
 
 Scene* View3D::GetScene() const
@@ -151,7 +151,7 @@ void View3D::ResetScene()
 void View3D::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& eventData)
 {
     if (autoUpdate_ && IsVisibleEffective())
-        QueueUpdate();
+        queue_update();
 }
 
 }
