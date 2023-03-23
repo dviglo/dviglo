@@ -225,7 +225,7 @@ public:
     String GetPreferredResourceDir(const String& path) const;
 
     /// Remove unsupported constructs from the resource name to prevent ambiguity, and normalize absolute filename to resource path relative if possible.
-    String SanitateResourceName(const String& name) const;
+    String sanitate_resource_name(const String& name) const;
 
     /// Remove unnecessary constructs from a resource directory name and ensure it to be an absolute path.
     String sanitate_resource_dir_name(const String& name) const;

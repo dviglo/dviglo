@@ -498,7 +498,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
 {
     std::scoped_lock lock(resourceMutex_);
 
-    String sanitatedName = SanitateResourceName(name);
+    String sanitatedName = sanitate_resource_name(name);
 
     if (!isRouting_)
     {
@@ -553,7 +553,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
 
 Resource* ResourceCache::GetExistingResource(StringHash type, const String& name)
 {
-    String sanitatedName = SanitateResourceName(name);
+    String sanitatedName = sanitate_resource_name(name);
 
     if (!Thread::IsMainThread())
     {
@@ -573,7 +573,7 @@ Resource* ResourceCache::GetExistingResource(StringHash type, const String& name
 
 Resource* ResourceCache::GetResource(StringHash type, const String& name, bool sendEventOnFailure)
 {
-    String sanitatedName = SanitateResourceName(name);
+    String sanitatedName = sanitate_resource_name(name);
 
     if (!Thread::IsMainThread())
     {
@@ -651,7 +651,7 @@ bool ResourceCache::BackgroundLoadResource(StringHash type, const String& name, 
 {
 #ifdef DV_THREADING
     // If empty name, fail immediately
-    String sanitatedName = SanitateResourceName(name);
+    String sanitatedName = sanitate_resource_name(name);
     if (sanitatedName.Empty())
         return false;
 
@@ -669,7 +669,7 @@ bool ResourceCache::BackgroundLoadResource(StringHash type, const String& name, 
 
 SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String& name, bool sendEventOnFailure)
 {
-    String sanitatedName = SanitateResourceName(name);
+    String sanitatedName = sanitate_resource_name(name);
 
     // If empty name, return null pointer immediately
     if (sanitatedName.Empty())
@@ -745,7 +745,7 @@ bool ResourceCache::Exists(const String& name) const
 {
     std::scoped_lock lock(resourceMutex_);
 
-    String sanitatedName = SanitateResourceName(name);
+    String sanitatedName = sanitate_resource_name(name);
 
     if (!isRouting_)
     {
@@ -853,7 +853,7 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
     return fixedPath;
 }
 
-String ResourceCache::SanitateResourceName(const String& name) const
+String ResourceCache::sanitate_resource_name(const String& name) const
 {
     // Sanitate unsupported constructs from the resource name
     String sanitatedName = to_internal(name);
