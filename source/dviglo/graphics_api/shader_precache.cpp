@@ -82,7 +82,7 @@ void ShaderPrecache::store_shaders(ShaderVariation* vs, ShaderVariation* ps)
     shaderElem.SetAttribute("psdefines", psDefines);
 }
 
-void ShaderPrecache::LoadShaders(Graphics* graphics, Deserializer& source)
+void ShaderPrecache::load_shaders(Graphics* graphics, Deserializer& source)
 {
     DV_LOGDEBUG("Begin precaching shaders");
 

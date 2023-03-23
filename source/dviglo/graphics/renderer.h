@@ -424,7 +424,7 @@ private:
     /// Initialize when screen mode initially set.
     void Initialize();
     /// Reload shaders.
-    void LoadShaders();
+    void load_shaders();
     /// Reload shaders for a material pass. The related batch queue is provided in case it has extra shader compilation defines.
     void LoadPassShaders(Pass* pass, Vector<SharedPtr<ShaderVariation>>& vertexShaders, Vector<SharedPtr<ShaderVariation>>& pixelShaders, const BatchQueue& queue);
     /// Release shaders used in materials.

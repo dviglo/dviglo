@@ -29,7 +29,7 @@ public:
     void store_shaders(ShaderVariation* vs, ShaderVariation* ps);
 
     /// Load shaders from an XML file.
-    static void LoadShaders(Graphics* graphics, Deserializer& source);
+    static void load_shaders(Graphics* graphics, Deserializer& source);
 
 private:
     /// XML file name.

@@ -676,7 +676,7 @@ void Renderer::Update(float timeStep)
 
     // Reload shaders now if needed
     if (shadersDirty_)
-        LoadShaders();
+        load_shaders();
 
     // Queue update of the main viewports. Use reverse order, as rendering order is also reverse
     // to render auxiliary views before dependent main views
@@ -1647,7 +1647,7 @@ void Renderer::Initialize()
     DV_LOGINFO("Initialized renderer");
 }
 
-void Renderer::LoadShaders()
+void Renderer::load_shaders()
 {
     DV_LOGDEBUG("Reloading shaders");
 

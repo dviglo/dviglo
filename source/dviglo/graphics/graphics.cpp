@@ -374,7 +374,7 @@ void Graphics::PrecacheShaders(Deserializer& source)
 {
     ZoneScoped;
 
-    ShaderPrecache::LoadShaders(this, source);
+    ShaderPrecache::load_shaders(this, source);
 }
 
 void Graphics::SetShaderCacheDir(const String& path)
