@@ -1301,14 +1301,7 @@ bool Graphics::GetDither() const
 
 bool Graphics::IsDeviceLost() const
 {
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return IsDeviceLost_OGL();
-#endif
-
-    return {}; // Prevent warning
+    return GetImpl_OGL()->context_ == nullptr;
 }
 
 Vector<int> Graphics::GetMultiSampleLevels() const

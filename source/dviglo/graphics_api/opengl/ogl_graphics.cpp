@@ -423,7 +423,7 @@ bool Graphics::TakeScreenShot_OGL(Image& destImage)
     if (!IsInitialized_OGL())
         return false;
 
-    if (IsDeviceLost_OGL())
+    if (IsDeviceLost())
     {
         DV_LOGERROR("Can not take screenshot while device is lost");
         return false;
@@ -448,7 +448,7 @@ bool Graphics::TakeScreenShot_OGL(Image& destImage)
 
 bool Graphics::BeginFrame_OGL()
 {
-    if (!IsInitialized_OGL() || IsDeviceLost_OGL())
+    if (!IsInitialized_OGL() || IsDeviceLost())
         return false;
     // Re-enable depth test and depth func in case a third party program has modified it
     glEnable(GL_DEPTH_TEST);
@@ -1876,17 +1876,6 @@ bool Graphics::GetDither_OGL() const
     return glIsEnabled(GL_DITHER) ? true : false;
 }
 
-bool Graphics::IsDeviceLost_OGL() const
-{
-    // On iOS and tvOS treat window minimization as device loss, as it is forbidden to access OpenGL when minimized
-#if defined(IOS) || defined(TVOS)
-    if (window_ && (SDL_GetWindowFlags(window_) & SDL_WINDOW_MINIMIZED) != 0)
-        return true;
-#endif
-
-    return GetImpl_OGL()->context_ == nullptr;
-}
-
 Vector<int> Graphics::GetMultiSampleLevels_OGL() const
 {
     Vector<int> ret;
@@ -2888,7 +2877,7 @@ void Graphics::CleanupFramebuffers_OGL()
 {
     GraphicsImpl_OGL* impl = GetImpl_OGL();
 
-    if (!IsDeviceLost_OGL())
+    if (!IsDeviceLost())
     {
         BindFramebuffer_OGL(impl->systemFBO_);
         impl->boundFBO_ = impl->systemFBO_;
@@ -2904,7 +2893,9 @@ void Graphics::CleanupFramebuffers_OGL()
             DeleteFramebuffer_OGL(impl->resolveDestFBO_);
     }
     else
+    {
         impl->boundFBO_ = 0;
+    }
 
     impl->resolveSrcFBO_ = 0;
     impl->resolveDestFBO_ = 0;
