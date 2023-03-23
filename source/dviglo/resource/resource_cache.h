@@ -82,36 +82,52 @@ public:
 
     /// Add a resource load directory. Optional priority parameter which will control search order.
     bool add_resource_dir(const String& pathName, i32 priority = PRIORITY_LAST);
+
     /// Add a package file for loading resources from. Optional priority parameter which will control search order.
     bool AddPackageFile(PackageFile* package, i32 priority = PRIORITY_LAST);
+
     /// Add a package file for loading resources from by name. Optional priority parameter which will control search order.
     bool AddPackageFile(const String& fileName, i32 priority = PRIORITY_LAST);
+
     /// Add a manually created resource. Must be uniquely named within its type.
     bool AddManualResource(Resource* resource);
+
     /// Remove a resource load directory.
     void remove_resource_dir(const String& pathName);
+
     /// Remove a package file. Optionally release the resources loaded from it.
     void remove_package_file(PackageFile* package, bool releaseResources = true, bool forceRelease = false);
+
     /// Remove a package file by name. Optionally release the resources loaded from it.
     void remove_package_file(const String& fileName, bool releaseResources = true, bool forceRelease = false);
+
     /// Release a resource by name.
     void release_resource(StringHash type, const String& name, bool force = false);
+
     /// Release all resources of a specific type.
     void release_resources(StringHash type, bool force = false);
+
     /// Release resources of a specific type and partial name.
     void release_resources(StringHash type, const String& partialName, bool force = false);
+
     /// Release resources of all types by partial name.
     void release_resources(const String& partialName, bool force = false);
+
     /// Release all resources. When called with the force flag false, releases all currently unused resources.
     void release_all_resources(bool force = false);
+
     /// Reload a resource. Return true on success. The resource will not be removed from the cache in case of failure.
     bool reload_resource(Resource* resource);
+
     /// Reload a resource based on filename. Causes also reload of dependent resources if necessary.
     void reload_resource_with_dependencies(const String& fileName);
+
     /// Set memory budget for a specific resource type, default 0 is unlimited.
     void SetMemoryBudget(StringHash type, unsigned long long budget);
+
     /// Enable or disable automatic reloading of resources as files are modified. Default false.
     void SetAutoReloadResources(bool enable);
+
     /// Enable or disable returning resources that failed to load. Default false. This may be useful in editing to not lose resource ref attributes.
     void SetReturnFailedResources(bool enable) { returnFailedResources_ = enable; }
 
@@ -123,21 +139,28 @@ public:
 
     /// Add a resource router object. By default there is none, so the routing process is skipped.
     void AddResourceRouter(ResourceRouter* router, bool addAsFirst = false);
+
     /// Remove a resource router object.
     void RemoveResourceRouter(ResourceRouter* router);
 
     /// Open and return a file from the resource load paths or from inside a package file. If not found, use a fallback search with absolute path. Return null if fails. Can be called from outside the main thread.
     SharedPtr<File> GetFile(const String& name, bool sendEventOnFailure = true);
+
     /// Return a resource by type and name. Load if not loaded yet. Return null if not found or if fails, unless SetReturnFailedResources(true) has been called. Can be called only from the main thread.
     Resource* GetResource(StringHash type, const String& name, bool sendEventOnFailure = true);
+
     /// Load a resource without storing it in the resource cache. Return null if not found or if fails. Can be called from outside the main thread if the resource itself is safe to load completely (it does not possess for example GPU data).
     SharedPtr<Resource> GetTempResource(StringHash type, const String& name, bool sendEventOnFailure = true);
+
     /// Background load a resource. An event will be sent when complete. Return true if successfully stored to the load queue, false if eg. already exists. Can be called from outside the main thread.
     bool BackgroundLoadResource(StringHash type, const String& name, bool sendEventOnFailure = true, Resource* caller = nullptr);
+
     /// Return number of pending background-loaded resources.
     unsigned GetNumBackgroundLoadResources() const;
+
     /// Return all loaded resources of a specific type.
     void GetResources(Vector<Resource*>& result, StringHash type) const;
+
     /// Return an already loaded resource of specific type & name, or null if not found. Will not load if does not exist.
     Resource* GetExistingResource(StringHash type, const String& name);
 
@@ -152,24 +175,34 @@ public:
 
     /// Template version of returning a resource by name.
     template <class T> T* GetResource(const String& name, bool sendEventOnFailure = true);
+
     /// Template version of returning an existing resource by name.
     template <class T> T* GetExistingResource(const String& name);
+
     /// Template version of loading a resource without storing it to the cache.
     template <class T> SharedPtr<T> GetTempResource(const String& name, bool sendEventOnFailure = true);
+
     /// Template version of releasing a resource by name.
     template <class T> void release_resource(const String& name, bool force = false);
+
     /// Template version of queueing a resource background load.
     template <class T> bool BackgroundLoadResource(const String& name, bool sendEventOnFailure = true, Resource* caller = nullptr);
+
     /// Template version of returning loaded resources of a specific type.
     template <class T> void GetResources(Vector<T*>& result) const;
+
     /// Return whether a file exists in the resource directories or package files. Does not check manually added in-memory resources.
     bool Exists(const String& name) const;
+
     /// Return memory budget for a resource type.
     unsigned long long GetMemoryBudget(StringHash type) const;
+
     /// Return total memory use for a resource type.
     unsigned long long GetMemoryUse(StringHash type) const;
+
     /// Return total memory use for all resources.
     unsigned long long GetTotalMemoryUse() const;
+
     /// Return full absolute file name of resource if possible, or empty if not found.
     String GetResourceFileName(const String& name) const;
 
@@ -190,12 +223,16 @@ public:
 
     /// Return either the path itself or its parent, based on which of them has recognized resource subdirectories.
     String GetPreferredResourceDir(const String& path) const;
+
     /// Remove unsupported constructs from the resource name to prevent ambiguity, and normalize absolute filename to resource path relative if possible.
     String SanitateResourceName(const String& name) const;
+
     /// Remove unnecessary constructs from a resource directory name and ensure it to be an absolute path.
     String SanitateResourceDirName(const String& name) const;
+
     /// Store a dependency for a resource. If a dependency file changes, the resource will be reloaded.
     void StoreResourceDependency(Resource* resource, const String& dependency);
+
     /// Reset dependencies for a resource.
     void ResetDependencies(Resource* resource);
 
