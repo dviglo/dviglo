@@ -126,7 +126,7 @@ Engine::Engine() :
     RegisterSceneLibrary();
 
 #ifdef DV_BULLET
-    RegisterPhysicsLibrary();
+    register_physics_library();
 #endif
 
 #ifdef DV_BOX2D

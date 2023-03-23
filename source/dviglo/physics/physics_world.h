@@ -352,6 +352,6 @@ private:
 };
 
 /// Register Physics library objects.
-void DV_API RegisterPhysicsLibrary();
+void DV_API register_physics_library();
 
 }

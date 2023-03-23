@@ -1062,7 +1062,7 @@ void PhysicsWorld::SendCollisionEvents()
     previousCollisions_ = currentCollisions_;
 }
 
-void RegisterPhysicsLibrary()
+void register_physics_library()
 {
     CollisionShape::register_object();
     RigidBody::register_object();
