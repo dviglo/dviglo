@@ -295,7 +295,7 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
     {
         if (hasSpriteSheet_)
         {
-            DV_RES_CACHE.BackgroundLoadResource<SpriteSheet2D>(spriteSheetFilePath_, true, this);
+            DV_RES_CACHE.background_load_resource<SpriteSheet2D>(spriteSheetFilePath_, true, this);
         }
         else
         {
@@ -306,7 +306,7 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
                 {
                     Spriter::File* file = folder->files_[j];
                     String imagePath = parentPath + file->name_;
-                    DV_RES_CACHE.BackgroundLoadResource<Image>(imagePath, true, this);
+                    DV_RES_CACHE.background_load_resource<Image>(imagePath, true, this);
                 }
             }
         }

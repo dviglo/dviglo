@@ -121,7 +121,7 @@ bool SpriteSheet2D::BeginLoadFromPListFile(Deserializer& source)
     // If we're async loading, request the texture now. Finish during EndLoad().
     loadTextureName_ = get_parent(GetName()) + textureFileName;
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.BackgroundLoadResource<Texture2D>(loadTextureName_, true, this);
+        DV_RES_CACHE.background_load_resource<Texture2D>(loadTextureName_, true, this);
 
     return true;
 }
@@ -196,7 +196,7 @@ bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
     // If we're async loading, request the texture now. Finish during EndLoad().
     loadTextureName_ = get_parent(GetName()) + rootElem.GetAttribute("imagePath");
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.BackgroundLoadResource<Texture2D>(loadTextureName_, true, this);
+        DV_RES_CACHE.background_load_resource<Texture2D>(loadTextureName_, true, this);
 
     return true;
 }
@@ -269,7 +269,7 @@ bool SpriteSheet2D::BeginLoadFromJSONFile(Deserializer& source)
     // If we're async loading, request the texture now. Finish during EndLoad().
     loadTextureName_ = get_parent(GetName()) + rootElem.Get("imagePath").GetString();
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.BackgroundLoadResource<Texture2D>(loadTextureName_, true, this);
+        DV_RES_CACHE.background_load_resource<Texture2D>(loadTextureName_, true, this);
 
     return true;
 }

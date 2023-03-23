@@ -261,7 +261,7 @@ bool Material::begin_load_xml(Deserializer& source)
             XmlElement techniqueElem = rootElem.GetChild("technique");
             while (techniqueElem)
             {
-                cache.BackgroundLoadResource<Technique>(techniqueElem.GetAttribute("name"), true, this);
+                cache.background_load_resource<Technique>(techniqueElem.GetAttribute("name"), true, this);
                 techniqueElem = techniqueElem.GetNext("technique");
             }
 
@@ -282,15 +282,15 @@ bool Material::begin_load_xml(Deserializer& source)
                     }
 
                     if (type == Texture3D::GetTypeStatic())
-                        cache.BackgroundLoadResource<Texture3D>(name, true, this);
+                        cache.background_load_resource<Texture3D>(name, true, this);
                     else if (type == Texture2DArray::GetTypeStatic())
-                        cache.BackgroundLoadResource<Texture2DArray>(name, true, this);
+                        cache.background_load_resource<Texture2DArray>(name, true, this);
                     else
 #endif
-                        cache.BackgroundLoadResource<TextureCube>(name, true, this);
+                        cache.background_load_resource<TextureCube>(name, true, this);
                 }
                 else
-                    cache.BackgroundLoadResource<Texture2D>(name, true, this);
+                    cache.background_load_resource<Texture2D>(name, true, this);
                 textureElem = textureElem.GetNext("texture");
             }
         }
@@ -321,7 +321,7 @@ bool Material::begin_load_json(Deserializer& source)
             JSONArray techniqueArray = rootVal.Get("techniques").GetArray();
 
             for (const JSONValue& techVal : techniqueArray)
-                cache.BackgroundLoadResource<Technique>(techVal.Get("name").GetString(), true, this);
+                cache.background_load_resource<Technique>(techVal.Get("name").GetString(), true, this);
 
             JSONObject textureObject = rootVal.Get("textures").GetObject();
             for (JSONObject::ConstIterator it = textureObject.Begin(); it != textureObject.End(); it++)
@@ -341,15 +341,15 @@ bool Material::begin_load_json(Deserializer& source)
                     }
 
                     if (type == Texture3D::GetTypeStatic())
-                        cache.BackgroundLoadResource<Texture3D>(name, true, this);
+                        cache.background_load_resource<Texture3D>(name, true, this);
                     else if (type == Texture2DArray::GetTypeStatic())
-                        cache.BackgroundLoadResource<Texture2DArray>(name, true, this);
+                        cache.background_load_resource<Texture2DArray>(name, true, this);
                     else
 #endif
-                        cache.BackgroundLoadResource<TextureCube>(name, true, this);
+                        cache.background_load_resource<TextureCube>(name, true, this);
                 }
                 else
-                    cache.BackgroundLoadResource<Texture2D>(name, true, this);
+                    cache.background_load_resource<Texture2D>(name, true, this);
             }
         }
 

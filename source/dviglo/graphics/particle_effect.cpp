@@ -156,7 +156,7 @@ bool ParticleEffect::Load(const XmlElement& source)
         loadMaterialName_ = source.GetChild("material").GetAttribute("name");
         // If async loading, can not GetResource() the material. But can do a background request for it
         if (GetAsyncLoadState() == ASYNC_LOADING)
-            DV_RES_CACHE.BackgroundLoadResource<Material>(loadMaterialName_, true, this);
+            DV_RES_CACHE.background_load_resource<Material>(loadMaterialName_, true, this);
     }
 
     if (source.HasChild("numparticles"))

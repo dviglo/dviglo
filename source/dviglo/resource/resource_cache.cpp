@@ -647,7 +647,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     return resource;
 }
 
-bool ResourceCache::BackgroundLoadResource(StringHash type, const String& name, bool sendEventOnFailure, Resource* caller)
+bool ResourceCache::background_load_resource(StringHash type, const String& name, bool sendEventOnFailure, Resource* caller)
 {
 #ifdef DV_THREADING
     // If empty name, fail immediately

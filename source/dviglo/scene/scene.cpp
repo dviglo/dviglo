@@ -1311,7 +1311,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
                     const ResourceRef& ref = varValue.GetResourceRef();
                     // Sanitate resource name beforehand so that when we get the background load event, the name matches exactly
                     String name = cache.sanitate_resource_name(ref.name_);
-                    bool success = cache.BackgroundLoadResource(ref.type_, name);
+                    bool success = cache.background_load_resource(ref.type_, name);
                     if (success)
                     {
                         ++asyncProgress_.totalResources_;
@@ -1324,7 +1324,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
                     for (unsigned k = 0; k < refList.names_.Size(); ++k)
                     {
                         String name = cache.sanitate_resource_name(refList.names_[k]);
-                        bool success = cache.BackgroundLoadResource(refList.type_, name);
+                        bool success = cache.background_load_resource(refList.type_, name);
                         if (success)
                         {
                             ++asyncProgress_.totalResources_;
@@ -1375,7 +1375,7 @@ void Scene::PreloadResourcesXML(const XmlElement& element)
                         {
                             ResourceRef ref = attrElem.GetVariantValue(attr.type_).GetResourceRef();
                             String name = cache.sanitate_resource_name(ref.name_);
-                            bool success = cache.BackgroundLoadResource(ref.type_, name);
+                            bool success = cache.background_load_resource(ref.type_, name);
                             if (success)
                             {
                                 ++asyncProgress_.totalResources_;
@@ -1388,7 +1388,7 @@ void Scene::PreloadResourcesXML(const XmlElement& element)
                             for (unsigned k = 0; k < refList.names_.Size(); ++k)
                             {
                                 String name = cache.sanitate_resource_name(refList.names_[k]);
-                                bool success = cache.BackgroundLoadResource(refList.type_, name);
+                                bool success = cache.background_load_resource(refList.type_, name);
                                 if (success)
                                 {
                                     ++asyncProgress_.totalResources_;
@@ -1460,7 +1460,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                         {
                             ResourceRef ref = attrVal.Get("value").GetVariantValue(attr.type_).GetResourceRef();
                             String name = cache.sanitate_resource_name(ref.name_);
-                            bool success = cache.BackgroundLoadResource(ref.type_, name);
+                            bool success = cache.background_load_resource(ref.type_, name);
                             if (success)
                             {
                                 ++asyncProgress_.totalResources_;
@@ -1473,7 +1473,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                             for (unsigned k = 0; k < refList.names_.Size(); ++k)
                             {
                                 String name = cache.sanitate_resource_name(refList.names_[k]);
-                                bool success = cache.BackgroundLoadResource(refList.type_, name);
+                                bool success = cache.background_load_resource(refList.type_, name);
                                 if (success)
                                 {
                                     ++asyncProgress_.totalResources_;
