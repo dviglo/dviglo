@@ -256,7 +256,7 @@ private:
     File* search_packages(const String& name);
 
     /// Mutex for thread-safe access to the resource directories, resource packages and resource dependencies.
-    mutable std::mutex resourceMutex_;
+    mutable std::mutex resource_mutex_;
     /// Resources by type.
     HashMap<StringHash, ResourceGroup> resourceGroups_;
     /// Resource load directories.
