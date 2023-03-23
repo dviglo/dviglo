@@ -107,7 +107,7 @@ NavigationMesh::NavigationMesh() :
 
 NavigationMesh::~NavigationMesh()
 {
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 }
 
 void NavigationMesh::RegisterObject()
@@ -303,7 +303,7 @@ void NavigationMesh::SetPadding(const Vector3& padding)
 bool NavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned maxTiles)
 {
     // Release existing navigation data and zero the bounding box
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 
     if (!node_)
         return false;
@@ -342,7 +342,7 @@ bool NavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned maxTiles)
     if (dtStatusFailed(navMesh_->init(&params)))
     {
         DV_LOGERROR("Could not initialize navigation mesh");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return false;
     }
 
@@ -364,7 +364,7 @@ bool NavigationMesh::Build()
     DV_PROFILE(BuildNavigationMesh);
 
     // Release existing navigation data and zero the bounding box
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 
     if (!node_)
         return false;
@@ -418,7 +418,7 @@ bool NavigationMesh::Build()
         if (dtStatusFailed(navMesh_->init(&params)))
         {
             DV_LOGERROR("Could not initialize navigation mesh");
-            ReleaseNavigationMesh();
+            release_navigation_mesh();
             return false;
         }
 
@@ -856,7 +856,7 @@ float NavigationMesh::GetAreaCost(unsigned areaID) const
 
 void NavigationMesh::SetNavigationDataAttr(const Vector<byte>& value)
 {
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 
     if (value.Empty())
         return;
@@ -884,7 +884,7 @@ void NavigationMesh::SetNavigationDataAttr(const Vector<byte>& value)
     if (dtStatusFailed(navMesh_->init(&params)))
     {
         DV_LOGERROR("Could not initialize navigation mesh");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return;
     }
 
@@ -1541,7 +1541,7 @@ bool NavigationMesh::InitializeQuery()
     return true;
 }
 
-void NavigationMesh::ReleaseNavigationMesh()
+void NavigationMesh::release_navigation_mesh()
 {
     dtFreeNavMesh(navMesh_);
     navMesh_ = nullptr;

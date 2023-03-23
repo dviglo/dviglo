@@ -202,7 +202,7 @@ DynamicNavigationMesh::DynamicNavigationMesh() :
 
 DynamicNavigationMesh::~DynamicNavigationMesh()
 {
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 }
 
 void DynamicNavigationMesh::RegisterObject()
@@ -218,7 +218,7 @@ void DynamicNavigationMesh::RegisterObject()
 bool DynamicNavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned maxTiles)
 {
     // Release existing navigation data and zero the bounding box
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 
     if (!node_)
         return false;
@@ -257,7 +257,7 @@ bool DynamicNavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned ma
     if (dtStatusFailed(navMesh_->init(&params)))
     {
         DV_LOGERROR("Could not initialize navigation mesh");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return false;
     }
 
@@ -280,14 +280,14 @@ bool DynamicNavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned ma
     if (!tileCache_)
     {
         DV_LOGERROR("Could not allocate tile cache");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return false;
     }
 
     if (dtStatusFailed(tileCache_->init(&tileCacheParams, allocator_.get(), compressor_.get(), meshProcessor_.get())))
     {
         DV_LOGERROR("Could not initialize tile cache");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return false;
     }
 
@@ -318,7 +318,7 @@ bool DynamicNavigationMesh::Build()
 {
     DV_PROFILE(BuildNavigationMesh);
     // Release existing navigation data and zero the bounding box
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 
     if (!node_)
         return false;
@@ -372,7 +372,7 @@ bool DynamicNavigationMesh::Build()
         if (dtStatusFailed(navMesh_->init(&params)))
         {
             DV_LOGERROR("Could not initialize navigation mesh");
-            ReleaseNavigationMesh();
+            release_navigation_mesh();
             return false;
         }
 
@@ -395,14 +395,14 @@ bool DynamicNavigationMesh::Build()
         if (!tileCache_)
         {
             DV_LOGERROR("Could not allocate tile cache");
-            ReleaseNavigationMesh();
+            release_navigation_mesh();
             return false;
         }
 
         if (dtStatusFailed(tileCache_->init(&tileCacheParams, allocator_.get(), compressor_.get(), meshProcessor_.get())))
         {
             DV_LOGERROR("Could not initialize tile cache");
-            ReleaseNavigationMesh();
+            release_navigation_mesh();
             return false;
         }
 
@@ -654,7 +654,7 @@ void DynamicNavigationMesh::draw_debug_geometry(bool depthTest)
 
 void DynamicNavigationMesh::SetNavigationDataAttr(const Vector<byte>& value)
 {
-    ReleaseNavigationMesh();
+    release_navigation_mesh();
 
     if (value.Empty())
         return;
@@ -677,7 +677,7 @@ void DynamicNavigationMesh::SetNavigationDataAttr(const Vector<byte>& value)
     if (dtStatusFailed(navMesh_->init(&params)))
     {
         DV_LOGERROR("Could not initialize navigation mesh");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return;
     }
 
@@ -688,13 +688,13 @@ void DynamicNavigationMesh::SetNavigationDataAttr(const Vector<byte>& value)
     if (!tileCache_)
     {
         DV_LOGERROR("Could not allocate tile cache");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return;
     }
     if (dtStatusFailed(tileCache_->init(&tcParams, allocator_.get(), compressor_.get(), meshProcessor_.get())))
     {
         DV_LOGERROR("Could not initialize tile cache");
-        ReleaseNavigationMesh();
+        release_navigation_mesh();
         return;
     }
 
@@ -1034,9 +1034,9 @@ Vector<OffMeshConnection*> DynamicNavigationMesh::CollectOffMeshConnections(cons
     return connections;
 }
 
-void DynamicNavigationMesh::ReleaseNavigationMesh()
+void DynamicNavigationMesh::release_navigation_mesh()
 {
-    NavigationMesh::ReleaseNavigationMesh();
+    NavigationMesh::release_navigation_mesh();
     ReleaseTileCache();
 }
 

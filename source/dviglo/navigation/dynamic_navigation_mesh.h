@@ -104,7 +104,7 @@ protected:
     /// Off-mesh connections to be rebuilt in the mesh processor.
     Vector<OffMeshConnection*> CollectOffMeshConnections(const BoundingBox& bounds);
     /// Release the navigation mesh, query, and tile cache.
-    void ReleaseNavigationMesh() override;
+    void release_navigation_mesh() override;
 
 private:
     /// Write tiles data.

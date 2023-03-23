@@ -280,7 +280,7 @@ protected:
     /// Ensure that the navigation mesh query is initialized. Return true if successful.
     bool InitializeQuery();
     /// Release the navigation mesh and the query.
-    virtual void ReleaseNavigationMesh();
+    virtual void release_navigation_mesh();
 
     /// Identifying name for this navigation mesh.
     String meshName_;
