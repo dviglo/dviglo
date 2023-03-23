@@ -466,7 +466,7 @@ bool FileSystem::file_exists(const String& fileName) const
     return true;
 }
 
-void FileSystem::ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const
+void FileSystem::scan_dir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const
 {
     result.Clear();
 

@@ -110,7 +110,7 @@ void Pack(const Vector<String>& arguments)
 
     // Get the file list recursively
     Vector<String> fileNames;
-    DV_FILE_SYSTEM.ScanDir(fileNames, dirName, "*.*", SCAN_FILES, true);
+    DV_FILE_SYSTEM.scan_dir(fileNames, dirName, "*.*", SCAN_FILES, true);
     if (!fileNames.Size())
         ErrorExit("No files found");
 

@@ -77,7 +77,7 @@ public:
     /// Check if a file exists.
     bool file_exists(const String& fileName) const;
     /// Scan a directory for specified files.
-    void ScanDir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const;
+    void scan_dir(Vector<String>& result, const String& pathName, const String& filter, unsigned flags, bool recursive) const;
     /// Return the program's directory.
     String GetProgramDir() const;
     /// Return the user documents directory.

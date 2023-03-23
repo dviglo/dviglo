@@ -271,8 +271,8 @@ void FileSelector::RefreshFiles()
 
     Vector<String> directories;
     Vector<String> files;
-    DV_FILE_SYSTEM.ScanDir(directories, path_, "*", SCAN_DIRS, false);
-    DV_FILE_SYSTEM.ScanDir(files, path_, GetFilter(), SCAN_FILES, false);
+    DV_FILE_SYSTEM.scan_dir(directories, path_, "*", SCAN_DIRS, false);
+    DV_FILE_SYSTEM.scan_dir(files, path_, GetFilter(), SCAN_FILES, false);
 
     fileEntries_.Reserve(directories.Size() + files.Size());
 

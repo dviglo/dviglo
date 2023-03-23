@@ -400,7 +400,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
 
                 // Add all the subdirs (non-recursive) as resource directory
                 Vector<String> subdirs;
-                fileSystem.ScanDir(subdirs, autoLoadPath, "*", SCAN_DIRS, false);
+                fileSystem.scan_dir(subdirs, autoLoadPath, "*", SCAN_DIRS, false);
                 for (unsigned y = 0; y < subdirs.Size(); ++y)
                 {
                     String dir = subdirs[y];
@@ -414,7 +414,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
 
                 // Add all the found package files (non-recursive)
                 Vector<String> paks;
-                fileSystem.ScanDir(paks, autoLoadPath, "*.pak", SCAN_FILES, false);
+                fileSystem.scan_dir(paks, autoLoadPath, "*.pak", SCAN_FILES, false);
                 for (unsigned y = 0; y < paks.Size(); ++y)
                 {
                     String pak = paks[y];

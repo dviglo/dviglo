@@ -1491,7 +1491,7 @@ bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
                 return false;
             }
 
-            DV_FILE_SYSTEM.ScanDir(downloadedPackages, packageCacheDir, "*.*", SCAN_FILES, false);
+            DV_FILE_SYSTEM.scan_dir(downloadedPackages, packageCacheDir, "*.*", SCAN_FILES, false);
             packagesScanned = true;
         }
 
