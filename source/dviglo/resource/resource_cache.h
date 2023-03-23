@@ -245,7 +245,7 @@ private:
     /// Find a resource by name only. Searches all type groups.
     const SharedPtr<Resource>& find_resource(StringHash nameHash);
     /// Release resources loaded from a package file.
-    void ReleasePackageResources(PackageFile* package, bool force = false);
+    void release_package_resources(PackageFile* package, bool force = false);
     /// Update a resource group. Recalculate memory use and release resources if over memory budget.
     void UpdateResourceGroup(StringHash type);
     /// Handle begin frame event. Automatic resource reloads and the finalization of background loaded resources are processed here.

@@ -222,7 +222,7 @@ void ResourceCache::remove_package_file(PackageFile* package, bool releaseResour
         if (*i == package)
         {
             if (releaseResources)
-                ReleasePackageResources(*i, forceRelease);
+                release_package_resources(*i, forceRelease);
             DV_LOGINFO("Removed resource package " + (*i)->GetName());
             packages_.Erase(i);
             return;
@@ -242,7 +242,7 @@ void ResourceCache::remove_package_file(const String& fileName, bool releaseReso
         if (!GetFileNameAndExtension((*i)->GetName()).Compare(fileNameNoPath, false))
         {
             if (releaseResources)
-                ReleasePackageResources(*i, forceRelease);
+                release_package_resources(*i, forceRelease);
             DV_LOGINFO("Removed resource package " + (*i)->GetName());
             packages_.Erase(i);
             return;
@@ -1014,7 +1014,7 @@ const SharedPtr<Resource>& ResourceCache::find_resource(StringHash nameHash)
     return noResource;
 }
 
-void ResourceCache::ReleasePackageResources(PackageFile* package, bool force)
+void ResourceCache::release_package_resources(PackageFile* package, bool force)
 {
     HashSet<StringHash> affectedGroups;
 
