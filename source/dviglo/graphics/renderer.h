@@ -517,7 +517,7 @@ private:
     /// Techniques for which missing shader error has been displayed.
     HashSet<Technique*> shaderErrorDisplayed_;
     /// Mutex for shadow camera allocation.
-    std::mutex rendererMutex_;
+    std::mutex renderer_mutex_;
     /// Current variation names for deferred light volume shaders.
     Vector<String> deferredLightPSVariations_;
     /// Frame info for rendering.
