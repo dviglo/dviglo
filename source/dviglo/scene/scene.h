@@ -290,7 +290,7 @@ private:
     /// Delayed dirty notification queue for components.
     Vector<Component*> delayedDirtyComponents_;
     /// Mutex for the delayed dirty notification queue.
-    std::mutex sceneMutex_;
+    std::mutex scene_mutex_;
     /// Preallocated event data map for smoothing update events.
     VariantMap smoothingData_;
     /// Next free non-local node ID.

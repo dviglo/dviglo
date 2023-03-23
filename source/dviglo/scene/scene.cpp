@@ -814,7 +814,7 @@ void Scene::EndThreadedUpdate()
 
 void Scene::DelayedMarkedDirty(Component* component)
 {
-    std::scoped_lock lock(sceneMutex_);
+    std::scoped_lock lock(scene_mutex_);
     delayedDirtyComponents_.Push(component);
 }
 
@@ -1106,7 +1106,7 @@ void Scene::MarkNetworkUpdate(Node* node)
             networkUpdateNodes_.Insert(node->GetID());
         else
         {
-            std::scoped_lock lock(sceneMutex_);
+            std::scoped_lock lock(scene_mutex_);
             networkUpdateNodes_.Insert(node->GetID());
         }
     }
@@ -1120,7 +1120,7 @@ void Scene::MarkNetworkUpdate(Component* component)
             networkUpdateComponents_.Insert(component->GetID());
         else
         {
-            std::scoped_lock lock(sceneMutex_);
+            std::scoped_lock lock(scene_mutex_);
             networkUpdateComponents_.Insert(component->GetID());
         }
     }
