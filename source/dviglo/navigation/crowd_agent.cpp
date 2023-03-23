@@ -297,7 +297,7 @@ void CrowdAgent::RemoveAgentFromCrowd()
 {
     if (IsInCrowd())
     {
-        crowdManager_->RemoveAgent(this);
+        crowdManager_->remove_agent(this);
         agentCrowdId_ = -1;
     }
 }

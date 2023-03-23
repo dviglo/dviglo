@@ -606,7 +606,7 @@ int CrowdManager::add_agent(CrowdAgent* agent, const Vector3& pos)
     return crowd_->addAgent(pos.Data(), &params);
 }
 
-void CrowdManager::RemoveAgent(CrowdAgent* agent)
+void CrowdManager::remove_agent(CrowdAgent* agent)
 {
     if (!crowd_ || !agent)
         return;

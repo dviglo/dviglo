@@ -138,7 +138,7 @@ protected:
     /// Create and adds an detour crowd agent, Agent's radius and height is set through the navigation mesh. Return -1 on error, agent ID on success.
     int add_agent(CrowdAgent* agent, const Vector3& pos);
     /// Removes the detour crowd agent.
-    void RemoveAgent(CrowdAgent* agent);
+    void remove_agent(CrowdAgent* agent);
 
 protected:
     /// Handle scene being assigned.
