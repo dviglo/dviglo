@@ -253,7 +253,7 @@ void ResourceCache::remove_package_file(const String& fileName, bool releaseReso
 void ResourceCache::release_resource(StringHash type, const String& name, bool force)
 {
     StringHash nameHash(name);
-    const SharedPtr<Resource>& existingRes = FindResource(type, nameHash);
+    const SharedPtr<Resource>& existingRes = find_resource(type, nameHash);
     if (!existingRes)
         return;
 
@@ -406,7 +406,7 @@ void ResourceCache::reload_resource_with_dependencies(const String& fileName)
 {
     StringHash fileNameHash(fileName);
     // If the filename is a resource we keep track of, reload it
-    const SharedPtr<Resource>& resource = FindResource(fileNameHash);
+    const SharedPtr<Resource>& resource = find_resource(fileNameHash);
     if (resource)
     {
         DV_LOGDEBUG("Reloading changed resource " + fileName);
@@ -426,7 +426,7 @@ void ResourceCache::reload_resource_with_dependencies(const String& fileName)
 
             for (HashSet<StringHash>::ConstIterator k = j->second_.Begin(); k != j->second_.End(); ++k)
             {
-                const SharedPtr<Resource>& dependent = FindResource(*k);
+                const SharedPtr<Resource>& dependent = find_resource(*k);
                 if (dependent)
                     dependents.Push(dependent);
             }
@@ -567,7 +567,7 @@ Resource* ResourceCache::GetExistingResource(StringHash type, const String& name
 
     StringHash nameHash(sanitatedName);
 
-    const SharedPtr<Resource>& existing = FindResource(type, nameHash);
+    const SharedPtr<Resource>& existing = find_resource(type, nameHash);
     return existing;
 }
 
@@ -592,7 +592,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     backgroundLoader_->WaitForResource(type, nameHash);
 #endif
 
-    const SharedPtr<Resource>& existing = FindResource(type, nameHash);
+    const SharedPtr<Resource>& existing = find_resource(type, nameHash);
     if (existing)
         return existing;
 
@@ -657,7 +657,7 @@ bool ResourceCache::background_load_resource(StringHash type, const String& name
 
     // First check if already exists as a loaded resource
     StringHash nameHash(sanitatedName);
-    if (FindResource(type, nameHash) != noResource)
+    if (find_resource(type, nameHash) != noResource)
         return false;
 
     return backgroundLoader_->QueueResource(type, sanitatedName, sendEventOnFailure, caller);
@@ -986,7 +986,7 @@ String ResourceCache::print_memory_usage() const
     return output;
 }
 
-const SharedPtr<Resource>& ResourceCache::FindResource(StringHash type, StringHash nameHash)
+const SharedPtr<Resource>& ResourceCache::find_resource(StringHash type, StringHash nameHash)
 {
     std::scoped_lock lock(resourceMutex_);
 
@@ -1000,7 +1000,7 @@ const SharedPtr<Resource>& ResourceCache::FindResource(StringHash type, StringHa
     return j->second_;
 }
 
-const SharedPtr<Resource>& ResourceCache::FindResource(StringHash nameHash)
+const SharedPtr<Resource>& ResourceCache::find_resource(StringHash nameHash)
 {
     std::scoped_lock lock(resourceMutex_);
 
