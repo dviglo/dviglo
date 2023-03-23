@@ -163,7 +163,7 @@ IntVector2 Viewport::world_to_screen_point(const Vector3& worldPos) const
     return IntVector2(x, y);
 }
 
-Vector3 Viewport::ScreenToWorldPoint(int x, int y, float depth) const
+Vector3 Viewport::screen_to_world_point(int x, int y, float depth) const
 {
     if (!camera_)
         return Vector3::ZERO;
@@ -184,7 +184,7 @@ Vector3 Viewport::ScreenToWorldPoint(int x, int y, float depth) const
         screenY = float(y - rect_.top_) / (float)rect_.Height();
     }
 
-    return camera_->ScreenToWorldPoint(Vector3(screenX, screenY, depth));
+    return camera_->screen_to_world_point(Vector3(screenX, screenY, depth));
 }
 
 void Viewport::AllocateView()

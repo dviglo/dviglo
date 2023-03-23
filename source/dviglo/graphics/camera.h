@@ -149,7 +149,7 @@ public:
     /// Convert normalized screen coordinates (0 - 1) and distance along view Z axis (in Z coordinate) to a world space point. The distance can not be closer than the near clip plane.
     /** Note that a HitDistance() from the camera screen ray is not the same as distance along the view Z axis, as under a perspective projection the ray is likely to not be Z-aligned.
      */
-    Vector3 ScreenToWorldPoint(const Vector3& screenPos) const;
+    Vector3 screen_to_world_point(const Vector3& screenPos) const;
 
     /// Return projection offset.
     const Vector2& GetProjectionOffset() const { return projectionOffset_; }

@@ -120,6 +120,6 @@ void Urho2DParticle::HandleMouseMove(StringHash eventType, VariantMap& eventData
         auto x = (float)eventData[P_X].GetI32();
         auto y = (float)eventData[P_Y].GetI32();
         auto* camera = cameraNode_->GetComponent<Camera>();
-        particleNode_->SetPosition(camera->ScreenToWorldPoint(Vector3(x / DV_GRAPHICS.GetWidth(), y / DV_GRAPHICS.GetHeight(), 10.0f)));
+        particleNode_->SetPosition(camera->screen_to_world_point(Vector3(x / DV_GRAPHICS.GetWidth(), y / DV_GRAPHICS.GetHeight(), 10.0f)));
     }
 }

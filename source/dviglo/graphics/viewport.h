@@ -73,7 +73,7 @@ public:
     /// Convert a world space point to normalized screen coordinates.
     IntVector2 world_to_screen_point(const Vector3& worldPos) const;
     /// Convert screen coordinates and depth to a world space point.
-    Vector3 ScreenToWorldPoint(int x, int y, float depth) const;
+    Vector3 screen_to_world_point(int x, int y, float depth) const;
 
     /// Allocate the view structure. Called by Renderer.
     void AllocateView();

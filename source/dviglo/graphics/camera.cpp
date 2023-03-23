@@ -409,7 +409,7 @@ Vector2 Camera::world_to_screen_point(const Vector3& worldPos) const
     return ret;
 }
 
-Vector3 Camera::ScreenToWorldPoint(const Vector3& screenPos) const
+Vector3 Camera::screen_to_world_point(const Vector3& screenPos) const
 {
     Ray ray = GetScreenRay(screenPos.x_, screenPos.y_);
     Vector3 viewSpaceDir = (GetView() * Vector4(ray.direction_, 0.0f));
