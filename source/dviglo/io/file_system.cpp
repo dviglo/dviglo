@@ -331,7 +331,7 @@ int FileSystem::SystemRun(const String& fileName, const Vector<String>& argument
     return DoSystemRun(fileName, arguments);
 }
 
-unsigned FileSystem::SystemCommandAsync(const String& commandLine)
+unsigned FileSystem::system_command_async(const String& commandLine)
 {
 #ifdef DV_THREADING
     unsigned requestID = nextAsyncExecID_;
