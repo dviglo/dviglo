@@ -477,11 +477,11 @@ void Engine::RunFrame()
             audioPaused_ = false;
         }
 
-        Update();
+        update();
     }
 
-    Render();
-    ApplyFrameLimit();
+    render();
+    apply_frame_limit();
 
     time.EndFrame();
 
@@ -604,7 +604,7 @@ void Engine::DumpMemory()
 #endif
 }
 
-void Engine::Update()
+void Engine::update()
 {
     ZoneScoped;
 
@@ -625,7 +625,7 @@ void Engine::Update()
     SendEvent(E_POSTRENDERUPDATE, eventData);
 }
 
-void Engine::Render()
+void Engine::render()
 {
     if (GParams::is_headless())
         return;
@@ -641,7 +641,7 @@ void Engine::Render()
     DV_GRAPHICS.EndFrame();
 }
 
-void Engine::ApplyFrameLimit()
+void Engine::apply_frame_limit()
 {
     if (!initialized_)
         return;

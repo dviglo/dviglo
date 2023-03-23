@@ -85,11 +85,11 @@ public:
     bool IsExiting() const { return exiting_; }
 
     /// Send frame update events.
-    void Update();
+    void update();
     /// Render after frame update.
-    void Render();
+    void render();
     /// Get the timestep for the next frame and sleep for frame limiting if necessary.
-    void ApplyFrameLimit();
+    void apply_frame_limit();
 
     /// Parse the engine startup parameters map from command line arguments.
     static VariantMap ParseParameters(const Vector<String>& arguments);
