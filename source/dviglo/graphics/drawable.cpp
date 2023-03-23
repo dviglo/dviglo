@@ -395,7 +395,7 @@ void Drawable::RemoveFromOctree()
     {
         Octree* octree = octant_->GetRoot();
         if (updateQueued_)
-            octree->CancelUpdate(this);
+            octree->cancel_update(this);
 
         // Perform subclass specific deinitialization if necessary
         OnRemoveFromOctree();

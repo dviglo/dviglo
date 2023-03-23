@@ -546,7 +546,7 @@ void Octree::queue_update(Drawable* drawable)
     drawable->updateQueued_ = true;
 }
 
-void Octree::CancelUpdate(Drawable* drawable)
+void Octree::cancel_update(Drawable* drawable)
 {
     // This doesn't have to take into account scene being in threaded update, because it is called only
     // when removing a drawable from octree, which should only ever happen from the main thread.

@@ -176,7 +176,7 @@ public:
     /// Mark drawable object as requiring an update and a reinsertion.
     void queue_update(Drawable* drawable);
     /// Cancel drawable object's update.
-    void CancelUpdate(Drawable* drawable);
+    void cancel_update(Drawable* drawable);
     /// Visualize the component as debug geometry.
     void draw_debug_geometry(bool depthTest);
 
