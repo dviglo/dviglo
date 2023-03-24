@@ -151,6 +151,27 @@ function(dv_copy_shared_libs_to_bin_dir exe_target_name exe_target_dir copying_t
             list(APPEND libs ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS})
         endif()
 
+        # Ищем dll-ки msys64
+        if(MINGW)
+            # dll-ки находятся рядом с экзешником, поэтому определяем путь к экзешнику
+            execute_process(COMMAND where x86_64-w64-mingw32-gcc.exe
+                            OUTPUT_VARIABLE mingw_fullpath)
+
+            # Команда where может вернуть несколько строк, если MinGW установлен в разные места.
+            # Преобразуем вывод команды в список и получаем нулевой элемент
+            string(REPLACE "\n" ";" mingw_fullpath ${mingw_fullpath})
+            list(GET mingw_fullpath 0 mingw_fullpath)
+
+            cmake_path(GET mingw_fullpath PARENT_PATH mingw_dir)
+
+            # Выводим содержимое папки
+            #file(GLOB mingw_dir_content ${mingw_dir}/*.dll)
+            #message("!!! mingw_dir_content: ${mingw_dir_content}")
+
+            list(APPEND libs "${mingw_dir}/libgcc_s_seh-1.dll" "${mingw_dir}/libstdc++-6.dll"
+                             "${mingw_dir}/libwinpthread-1.dll")
+        endif()
+
         # Если список пустой, то не создаём кастомный таргет
         if(NOT libs)
             return()
