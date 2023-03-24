@@ -16,6 +16,10 @@ add_library(${TARGET_NAME} STATIC ${source_files})
 # Добавляем дефайны
 target_compile_definitions(${TARGET_NAME} PRIVATE TRACY_ENABLE=1)
 
+if(DV_SHARED)
+    target_compile_definitions(${TARGET_NAME} PRIVATE TRACY_EXPORTS=1)
+endif ()
+
 if(MINGW)
     # Подключаем библиотеки
     target_link_libraries(${TARGET_NAME} PRIVATE dbghelp ws2_32)
