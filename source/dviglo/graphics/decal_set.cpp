@@ -944,8 +944,8 @@ void DecalSet::CalculateUVs(Decal& decal, const Matrix3x4& view, const Matrix4& 
     {
         Vector3 projected = viewProj * i->position_;
         i->texCoord_ = Vector2(
-            Lerp(topLeftUV.x_, bottomRightUV.x_, projected.x_ * 0.5f + 0.5f),
-            Lerp(bottomRightUV.y_, topLeftUV.y_, projected.y_ * 0.5f + 0.5f)
+            Lerp(topLeftUV.x_, bottomRightUV.x_, projected.x * 0.5f + 0.5f),
+            Lerp(bottomRightUV.y_, topLeftUV.y_, projected.y * 0.5f + 0.5f)
         );
     }
 }
@@ -1011,12 +1011,12 @@ void DecalSet::UpdateBuffers()
             for (unsigned j = 0; j < i->vertices_.Size(); ++j)
             {
                 const DecalVertex& vertex = i->vertices_[j];
-                *vertices++ = vertex.position_.x_;
-                *vertices++ = vertex.position_.y_;
-                *vertices++ = vertex.position_.z_;
-                *vertices++ = vertex.normal_.x_;
-                *vertices++ = vertex.normal_.y_;
-                *vertices++ = vertex.normal_.z_;
+                *vertices++ = vertex.position_.x;
+                *vertices++ = vertex.position_.y;
+                *vertices++ = vertex.position_.z;
+                *vertices++ = vertex.normal_.x;
+                *vertices++ = vertex.normal_.y;
+                *vertices++ = vertex.normal_.z;
                 *vertices++ = vertex.texCoord_.x_;
                 *vertices++ = vertex.texCoord_.y_;
                 *vertices++ = vertex.tangent_.x;

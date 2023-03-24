@@ -136,7 +136,7 @@ void BillboardSet::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryR
             continue;
 
         // Approximate the billboards as spheres for raycasting
-        float size = INV_SQRT_TWO * (billboards_[i].size_.x_ * billboardScale.x_ + billboards_[i].size_.y_ * billboardScale.y_);
+        float size = INV_SQRT_TWO * (billboards_[i].size_.x_ * billboardScale.x + billboards_[i].size_.y_ * billboardScale.y);
         if (fixedScreenSize_)
             size *= billboards_[i].screenScaleFactor_;
         Vector3 center = billboardTransform * billboards_[i].position_;
@@ -471,7 +471,7 @@ void BillboardSet::OnWorldBoundingBoxUpdate()
         if (!billboard.enabled_)
             continue;
 
-        float size = INV_SQRT_TWO * (billboard.size_.x_ * billboardScale.x_ + billboard.size_.y_ * billboardScale.y_);
+        float size = INV_SQRT_TWO * (billboard.size_.x_ * billboardScale.x + billboard.size_.y_ * billboardScale.y);
         if (fixedScreenSize_)
             size *= billboard.screenScaleFactor_;
 
@@ -635,7 +635,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
         {
             Billboard& billboard = *sortedBillboards_[i];
 
-            Vector2 size(billboard.size_.x_ * billboardScale.x_, billboard.size_.y_ * billboardScale.y_);
+            Vector2 size(billboard.size_.x_ * billboardScale.x, billboard.size_.y_ * billboardScale.y);
             color32 color = billboard.color_.ToU32();
             if (fixedScreenSize_)
                 size *= billboard.screenScaleFactor_;
@@ -645,36 +645,36 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
             rotationMatrix[1][0] = -rotationMatrix[0][1];
             rotationMatrix[1][1] = rotationMatrix[0][0];
 
-            dest[0] = billboard.position_.x_;
-            dest[1] = billboard.position_.y_;
-            dest[2] = billboard.position_.z_;
+            dest[0] = billboard.position_.x;
+            dest[1] = billboard.position_.y;
+            dest[2] = billboard.position_.z;
             ((color32&)dest[3]) = color;
             dest[4] = billboard.uv_.min_.x_;
             dest[5] = billboard.uv_.min_.y_;
             dest[6] = -size.x_ * rotationMatrix[0][0] + size.y_ * rotationMatrix[0][1];
             dest[7] = -size.x_ * rotationMatrix[1][0] + size.y_ * rotationMatrix[1][1];
 
-            dest[8] = billboard.position_.x_;
-            dest[9] = billboard.position_.y_;
-            dest[10] = billboard.position_.z_;
+            dest[8] = billboard.position_.x;
+            dest[9] = billboard.position_.y;
+            dest[10] = billboard.position_.z;
             ((color32&)dest[11]) = color;
             dest[12] = billboard.uv_.max_.x_;
             dest[13] = billboard.uv_.min_.y_;
             dest[14] = size.x_ * rotationMatrix[0][0] + size.y_ * rotationMatrix[0][1];
             dest[15] = size.x_ * rotationMatrix[1][0] + size.y_ * rotationMatrix[1][1];
 
-            dest[16] = billboard.position_.x_;
-            dest[17] = billboard.position_.y_;
-            dest[18] = billboard.position_.z_;
+            dest[16] = billboard.position_.x;
+            dest[17] = billboard.position_.y;
+            dest[18] = billboard.position_.z;
             ((color32&)dest[19]) = color;
             dest[20] = billboard.uv_.max_.x_;
             dest[21] = billboard.uv_.max_.y_;
             dest[22] = size.x_ * rotationMatrix[0][0] - size.y_ * rotationMatrix[0][1];
             dest[23] = size.x_ * rotationMatrix[1][0] - size.y_ * rotationMatrix[1][1];
 
-            dest[24] = billboard.position_.x_;
-            dest[25] = billboard.position_.y_;
-            dest[26] = billboard.position_.z_;
+            dest[24] = billboard.position_.x;
+            dest[25] = billboard.position_.y;
+            dest[26] = billboard.position_.z;
             ((color32&)dest[27]) = color;
             dest[28] = billboard.uv_.min_.x_;
             dest[29] = billboard.uv_.max_.y_;
@@ -690,7 +690,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
         {
             Billboard& billboard = *sortedBillboards_[i];
 
-            Vector2 size(billboard.size_.x_ * billboardScale.x_, billboard.size_.y_ * billboardScale.y_);
+            Vector2 size(billboard.size_.x_ * billboardScale.x, billboard.size_.y_ * billboardScale.y);
             color32 color = billboard.color_.ToU32();
             if (fixedScreenSize_)
                 size *= billboard.screenScaleFactor_;
@@ -700,48 +700,48 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
             rot2D[1][0] = -rot2D[0][1];
             rot2D[1][1] = rot2D[0][0];
 
-            dest[0] = billboard.position_.x_;
-            dest[1] = billboard.position_.y_;
-            dest[2] = billboard.position_.z_;
-            dest[3] = billboard.direction_.x_;
-            dest[4] = billboard.direction_.y_;
-            dest[5] = billboard.direction_.z_;
+            dest[0] = billboard.position_.x;
+            dest[1] = billboard.position_.y;
+            dest[2] = billboard.position_.z;
+            dest[3] = billboard.direction_.x;
+            dest[4] = billboard.direction_.y;
+            dest[5] = billboard.direction_.z;
             ((color32&)dest[6]) = color;
             dest[7] = billboard.uv_.min_.x_;
             dest[8] = billboard.uv_.min_.y_;
             dest[9] = -size.x_ * rot2D[0][0] + size.y_ * rot2D[0][1];
             dest[10] = -size.x_ * rot2D[1][0] + size.y_ * rot2D[1][1];
 
-            dest[11] = billboard.position_.x_;
-            dest[12] = billboard.position_.y_;
-            dest[13] = billboard.position_.z_;
-            dest[14] = billboard.direction_.x_;
-            dest[15] = billboard.direction_.y_;
-            dest[16] = billboard.direction_.z_;
+            dest[11] = billboard.position_.x;
+            dest[12] = billboard.position_.y;
+            dest[13] = billboard.position_.z;
+            dest[14] = billboard.direction_.x;
+            dest[15] = billboard.direction_.y;
+            dest[16] = billboard.direction_.z;
             ((color32&)dest[17]) = color;
             dest[18] = billboard.uv_.max_.x_;
             dest[19] = billboard.uv_.min_.y_;
             dest[20] = size.x_ * rot2D[0][0] + size.y_ * rot2D[0][1];
             dest[21] = size.x_ * rot2D[1][0] + size.y_ * rot2D[1][1];
 
-            dest[22] = billboard.position_.x_;
-            dest[23] = billboard.position_.y_;
-            dest[24] = billboard.position_.z_;
-            dest[25] = billboard.direction_.x_;
-            dest[26] = billboard.direction_.y_;
-            dest[27] = billboard.direction_.z_;
+            dest[22] = billboard.position_.x;
+            dest[23] = billboard.position_.y;
+            dest[24] = billboard.position_.z;
+            dest[25] = billboard.direction_.x;
+            dest[26] = billboard.direction_.y;
+            dest[27] = billboard.direction_.z;
             ((color32&)dest[28]) = color;
             dest[29] = billboard.uv_.max_.x_;
             dest[30] = billboard.uv_.max_.y_;
             dest[31] = size.x_ * rot2D[0][0] - size.y_ * rot2D[0][1];
             dest[32] = size.x_ * rot2D[1][0] - size.y_ * rot2D[1][1];
 
-            dest[33] = billboard.position_.x_;
-            dest[34] = billboard.position_.y_;
-            dest[35] = billboard.position_.z_;
-            dest[36] = billboard.direction_.x_;
-            dest[37] = billboard.direction_.y_;
-            dest[38] = billboard.direction_.z_;
+            dest[33] = billboard.position_.x;
+            dest[34] = billboard.position_.y;
+            dest[35] = billboard.position_.z;
+            dest[36] = billboard.direction_.x;
+            dest[37] = billboard.direction_.y;
+            dest[38] = billboard.direction_.z;
             ((color32&)dest[39]) = color;
             dest[40] = billboard.uv_.min_.x_;
             dest[41] = billboard.uv_.max_.y_;

@@ -563,11 +563,11 @@ void Text3D::UpdateTextBatches()
         break;
 
     case HA_CENTER:
-        offset.x_ -= (float)text_.GetWidth() * 0.5f;
+        offset.x -= (float)text_.GetWidth() * 0.5f;
         break;
 
     case HA_RIGHT:
-        offset.x_ -= (float)text_.GetWidth();
+        offset.x -= (float)text_.GetWidth();
         break;
 
     case HA_CUSTOM:
@@ -580,11 +580,11 @@ void Text3D::UpdateTextBatches()
         break;
 
     case VA_CENTER:
-        offset.y_ -= (float)text_.GetHeight() * 0.5f;
+        offset.y -= (float)text_.GetHeight() * 0.5f;
         break;
 
     case VA_BOTTOM:
-        offset.y_ -= (float)text_.GetHeight();
+        offset.y -= (float)text_.GetHeight();
         break;
 
     case VA_CUSTOM:
@@ -600,7 +600,7 @@ void Text3D::UpdateTextBatches()
             Vector3& position = *(reinterpret_cast<Vector3*>(&uiVertexData_[i]));
             position += offset;
             position *= TEXT_SCALING;
-            position.y_ = -position.y_;
+            position.y = -position.y;
             boundingBox_.Merge(position);
         }
     }

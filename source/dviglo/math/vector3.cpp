@@ -32,7 +32,7 @@ const IntVector3 IntVector3::ONE(1, 1, 1);
 String Vector3::ToString() const
 {
     char tempBuffer[CONVERSION_BUFFER_LENGTH];
-    sprintf(tempBuffer, "%g %g %g", x_, y_, z_);
+    sprintf(tempBuffer, "%g %g %g", x, y, z);
     return String(tempBuffer);
 }
 

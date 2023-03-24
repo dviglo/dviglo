@@ -133,7 +133,7 @@ public:
         SetRotation(rotation.RotationMatrix() * scale);
         SetTranslation(translation);
         */
-        __m128 t = _mm_set_ps(1.f, translation.z_, translation.y_, translation.x_);
+        __m128 t = _mm_set_ps(1.f, translation.z, translation.y, translation.x);
         __m128 q = _mm_loadu_ps(&rotation.w_);
         __m128 s = _mm_set_ps(1.f, scale, scale, scale);
         SetFromTRS(t, q, s);
@@ -146,9 +146,9 @@ public:
         SetRotation(rotation.RotationMatrix().Scaled(scale));
         SetTranslation(translation);
         */
-        __m128 t = _mm_set_ps(1.f, translation.z_, translation.y_, translation.x_);
+        __m128 t = _mm_set_ps(1.f, translation.z, translation.y, translation.x);
         __m128 q = _mm_loadu_ps(&rotation.w_);
-        __m128 s = _mm_set_ps(1.f, scale.z_, scale.y_, scale.x_);
+        __m128 s = _mm_set_ps(1.f, scale.z, scale.y, scale.x);
         SetFromTRS(t, q, s);
     }
 
@@ -242,7 +242,7 @@ public:
         );
         */
 
-        __m128 vec = _mm_set_ps(1.f, rhs.z_, rhs.y_, rhs.x_);
+        __m128 vec = _mm_set_ps(1.f, rhs.z, rhs.y, rhs.x);
         __m128 r0 = _mm_mul_ps(_mm_loadu_ps(&m00_), vec);
         __m128 r1 = _mm_mul_ps(_mm_loadu_ps(&m10_), vec);
         __m128 t0 = _mm_unpacklo_ps(r0, r1);
@@ -481,9 +481,9 @@ public:
     /// Set translation elements.
     void SetTranslation(const Vector3& translation)
     {
-        m03_ = translation.x_;
-        m13_ = translation.y_;
-        m23_ = translation.z_;
+        m03_ = translation.x;
+        m13_ = translation.y;
+        m23_ = translation.z;
     }
 
     /// Set rotation elements from a 3x3 matrix.
@@ -503,9 +503,9 @@ public:
     /// Set scaling elements.
     void SetScale(const Vector3& scale)
     {
-        m00_ = scale.x_;
-        m11_ = scale.y_;
-        m22_ = scale.z_;
+        m00_ = scale.x;
+        m11_ = scale.y;
+        m22_ = scale.z;
     }
 
     /// Set uniform scaling elements.

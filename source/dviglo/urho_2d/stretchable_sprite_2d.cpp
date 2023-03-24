@@ -77,13 +77,13 @@ void pushVertices(Vector<Vertex2D>& target, const Vertex2D source[4][4])
 {
     for (unsigned i = 0; i < 3; ++i) // iterate over 3 columns
     {
-        if (!Equals(source[i][0].position_.x_,
-            source[i + 1][0].position_.x_)) // if width != 0
+        if (!Equals(source[i][0].position_.x,
+            source[i + 1][0].position_.x)) // if width != 0
         {
             for (unsigned j = 0; j < 3; ++j) // iterate over 3 lines
             {
-                if (!Equals(source[0][j].position_.y_,
-                    source[0][j + 1].position_.y_)) // if height != 0
+                if (!Equals(source[0][j].position_.y,
+                    source[0][j + 1].position_.y)) // if height != 0
                 {
                     target.Push(source[i][j]);          // V0 in V1---V2
                     target.Push(source[i][j + 1]);      // V1 in |   / |
@@ -156,8 +156,8 @@ void StretchableSprite2D::UpdateSourceBatches()
     float xs[4], ys[4], us[4], vs[4]; // prepare all coordinates
     const auto signedScale = node_->GetSignedWorldScale();
 
-    prepareXYCoords(xs, drawRect_.min_.x_, drawRect_.max_.x_, effectiveBorder.min_.x_, effectiveBorder.max_.x_, signedScale.x_);
-    prepareXYCoords(ys, drawRect_.min_.y_, drawRect_.max_.y_, effectiveBorder.min_.y_, effectiveBorder.max_.y_, signedScale.y_);
+    prepareXYCoords(xs, drawRect_.min_.x_, drawRect_.max_.x_, effectiveBorder.min_.x_, effectiveBorder.max_.x_, signedScale.x);
+    prepareXYCoords(ys, drawRect_.min_.y_, drawRect_.max_.y_, effectiveBorder.min_.y_, effectiveBorder.max_.y_, signedScale.y);
 
     prepareUVCoords(us, textureRect_.min_.x_, textureRect_.max_.x_, effectiveBorder.min_.x_, effectiveBorder.max_.x_,
         drawRect_.max_.x_ - drawRect_.min_.x_);

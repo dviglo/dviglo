@@ -217,7 +217,7 @@ void Urho2DPlatformer::HandleCollisionBegin(StringHash eventType, VariantMap& ev
     if (nodeName == "Enemy" || nodeName == "Orc")
     {
         auto* animatedSprite = character2DNode->GetComponent<AnimatedSprite2D>();
-        float deltaX = character2DNode->GetPosition().x_ - hitNode->GetPosition().x_;
+        float deltaX = character2DNode->GetPosition().x - hitNode->GetPosition().x;
 
         // Orc killed if character is fighting in its direction when the contact occurs (flowers are not destroyable)
         if (nodeName == "Orc" && animatedSprite->GetAnimation() == "attack" && (deltaX < 0 == animatedSprite->GetFlipX()))
@@ -339,7 +339,7 @@ void Urho2DPlatformer::HandlePostUpdate(StringHash eventType, VariantMap& eventD
         return;
 
     Node* character2DNode = character2D_->GetNode();
-    cameraNode_->SetPosition(Vector3(character2DNode->GetPosition().x_, character2DNode->GetPosition().y_, -10.0f)); // Camera tracks character
+    cameraNode_->SetPosition(Vector3(character2DNode->GetPosition().x, character2DNode->GetPosition().y, -10.0f)); // Camera tracks character
 }
 
 void Urho2DPlatformer::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

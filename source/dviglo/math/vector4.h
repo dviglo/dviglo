@@ -26,9 +26,9 @@ struct DV_API Vector4
 
     /// Construct from a 3-dimensional vector and the W coordinate.
     Vector4(const Vector3& vector, float w) noexcept :
-        x(vector.x_),
-        y(vector.y_),
-        z(vector.z_),
+        x(vector.x),
+        y(vector.y),
+        z(vector.z),
         w(w)
     {
     }

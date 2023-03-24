@@ -76,14 +76,14 @@ IntVector2 Sprite::screen_to_element(const IntVector2& screenPosition)
 {
     Vector3 floatPos((float)screenPosition.x_, (float)screenPosition.y_, 0.0f);
     Vector3 transformedPos = GetTransform().Inverse() * floatPos;
-    return IntVector2((int)transformedPos.x_, (int)transformedPos.y_);
+    return IntVector2((int)transformedPos.x, (int)transformedPos.y);
 }
 
 IntVector2 Sprite::element_to_screen(const IntVector2& position)
 {
     Vector3 floatPos((float)position.x_, (float)position.y_, 0.0f);
     Vector3 transformedPos = GetTransform() * floatPos;
-    return IntVector2((int)transformedPos.x_, (int)transformedPos.y_);
+    return IntVector2((int)transformedPos.x, (int)transformedPos.y);
 }
 
 void Sprite::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const IntRect& currentScissor)
@@ -260,7 +260,7 @@ const Matrix3x4& Sprite::GetTransform() const
 
         // Calculate an approximate screen position for GetElementAt(), or pixel-perfect child elements
         Vector3 topLeftCorner = transform_ * Vector3::ZERO;
-        screenPosition_ = IntVector2((int)topLeftCorner.x_, (int)topLeftCorner.y_);
+        screenPosition_ = IntVector2((int)topLeftCorner.x, (int)topLeftCorner.y);
     }
 
     return transform_;

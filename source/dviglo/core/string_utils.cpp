@@ -358,9 +358,9 @@ Vector3 ToVector3(const char* source)
         return ret;
 
     auto* ptr = (char*)source;
-    ret.x_ = (float)strtod(ptr, &ptr);
-    ret.y_ = (float)strtod(ptr, &ptr);
-    ret.z_ = (float)strtod(ptr, &ptr);
+    ret.x = (float)strtod(ptr, &ptr);
+    ret.y = (float)strtod(ptr, &ptr);
+    ret.z = (float)strtod(ptr, &ptr);
 
     return ret;
 }

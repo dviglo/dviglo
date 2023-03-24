@@ -240,8 +240,8 @@ void Zone::UpdateAmbientGradient()
     {
         const Matrix3x4& worldTransform = node_->GetWorldTransform();
         Vector3 center = boundingBox_.Center();
-        Vector3 minZPosition = worldTransform * Vector3(center.x_, center.y_, boundingBox_.min_.z_);
-        Vector3 maxZPosition = worldTransform * Vector3(center.x_, center.y_, boundingBox_.max_.z_);
+        Vector3 minZPosition = worldTransform * Vector3(center.x, center.y, boundingBox_.min_.z);
+        Vector3 maxZPosition = worldTransform * Vector3(center.x, center.y, boundingBox_.max_.z);
 
         Vector<Zone*> result;
         {

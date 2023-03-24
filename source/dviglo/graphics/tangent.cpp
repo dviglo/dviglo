@@ -61,12 +61,12 @@ void GenerateTangents(void* vertexData, unsigned vertexSize, const void* indexDa
         const Vector2& w2 = *((Vector2*)(vertices + i2 * vertexSize + texCoordOffset));
         const Vector2& w3 = *((Vector2*)(vertices + i3 * vertexSize + texCoordOffset));
 
-        float x1 = v2.x_ - v1.x_;
-        float x2 = v3.x_ - v1.x_;
-        float y1 = v2.y_ - v1.y_;
-        float y2 = v3.y_ - v1.y_;
-        float z1 = v2.z_ - v1.z_;
-        float z2 = v3.z_ - v1.z_;
+        float x1 = v2.x - v1.x;
+        float x2 = v3.x - v1.x;
+        float y1 = v2.y - v1.y;
+        float y2 = v3.y - v1.y;
+        float z1 = v2.z - v1.z;
+        float z2 = v3.z - v1.z;
 
         float s1 = w2.x_ - w1.x_;
         float s2 = w3.x_ - w1.x_;

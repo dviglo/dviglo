@@ -98,8 +98,8 @@ void Vehicle::Init()
         // Front wheels are at front (z > 0)
         // back wheels are at z < 0
         // Setting rotation according to wheel position
-        bool isFrontWheel = connectionPoints_[id].z_ > 0.0f;
-        wheelNode->SetRotation(connectionPoint.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) : Quaternion(0.0f, 0.0f, 90.0f));
+        bool isFrontWheel = connectionPoints_[id].z > 0.0f;
+        wheelNode->SetRotation(connectionPoint.x >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) : Quaternion(0.0f, 0.0f, 90.0f));
         wheelNode->SetWorldPosition(node_->GetWorldPosition() + node_->GetWorldRotation() * connectionPoints_[id]);
         vehicle->AddWheel(wheelNode, wheelDirection, wheelAxle, suspensionRestLength_, wheelRadius_, isFrontWheel);
         vehicle->SetWheelSuspensionStiffness(id, suspensionStiffness_);
@@ -208,7 +208,7 @@ void Vehicle::PostUpdate(float timeStep)
     auto* vehicleBody = node_->GetComponent<RigidBody>();
     Vector3 velocity = vehicleBody->GetLinearVelocity();
     Vector3 accel = (velocity - prevVelocity_) / timeStep;
-    float planeAccel = Vector3(accel.x_, 0.0f, accel.z_).Length();
+    float planeAccel = Vector3(accel.x, 0.0f, accel.z).Length();
     for (int i = 0; i < vehicle->GetNumWheels(); i++)
     {
         Node* emitter = particleEmitterNodeList_[i];

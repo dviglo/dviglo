@@ -17,7 +17,7 @@ namespace dviglo
 
 inline btVector3 ToBtVector3(const Vector3& vector)
 {
-    return btVector3(vector.x_, vector.y_, vector.z_);
+    return btVector3(vector.x, vector.y, vector.z);
 }
 
 inline btQuaternion ToBtQuaternion(const Quaternion& quaternion)

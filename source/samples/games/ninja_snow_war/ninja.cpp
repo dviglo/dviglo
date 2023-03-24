@@ -166,7 +166,7 @@ void Ninja::FixedUpdate(float timeStep)
         }
 
         // Overall damping to cap maximum speed
-        body->ApplyImpulse(Vector3(-NINJA_DAMPING_FORCE * vel.x_, 0, -NINJA_DAMPING_FORCE * vel.z_));
+        body->ApplyImpulse(Vector3(-NINJA_DAMPING_FORCE * vel.x, 0, -NINJA_DAMPING_FORCE * vel.z));
 
         // Jumping
         if (controls.IsDown(CTRL_JUMP))
@@ -256,7 +256,7 @@ void Ninja::DeathUpdate(float timeStep)
     Vector3 vel = body->GetLinearVelocity();
 
     // Overall damping to cap maximum speed
-    body->ApplyImpulse(Vector3(-NINJA_DAMPING_FORCE * vel.x_, 0, -NINJA_DAMPING_FORCE * vel.z_));
+    body->ApplyImpulse(Vector3(-NINJA_DAMPING_FORCE * vel.x, 0, -NINJA_DAMPING_FORCE * vel.z));
 
     // Collide only to world geometry
     body->SetCollisionMask(2);

@@ -226,9 +226,9 @@ void RaycastVehicle::apply_attributes()
         }
         btRaycastVehicle* vehicle = vehicleData_->Get();
         int id = GetNumWheels();
-        btVector3 connectionPointCS0(connectionPoint.x_, connectionPoint.y_, connectionPoint.z_);
-        btVector3 wheelDirectionCS0(direction.x_, direction.y_, direction.z_);
-        btVector3 wheelAxleCS(axle.x_, axle.y_, axle.z_);
+        btVector3 connectionPointCS0(connectionPoint.x, connectionPoint.y, connectionPoint.z);
+        btVector3 wheelDirectionCS0(direction.x, direction.y, direction.z);
+        btVector3 wheelAxleCS(axle.x, axle.y, axle.z);
         btWheelInfo& wheel = vehicle->addWheel(connectionPointCS0,
                                 wheelDirectionCS0,
                                 wheelAxleCS,
@@ -242,8 +242,8 @@ void RaycastVehicle::apply_attributes()
         wheelSideSlipSpeed_.Push(sideSlipSpeed);
         SetSteeringValue(wheelIndex, steering);
         wheel.m_raycastInfo.m_isInContact = isContact;
-        wheel.m_raycastInfo.m_contactNormalWS = btVector3(contactNormal.x_, contactNormal.y_, contactNormal.z_);
-        wheel.m_raycastInfo.m_contactPointWS = btVector3(contactPosition.x_, contactPosition.y_, contactPosition.z_);
+        wheel.m_raycastInfo.m_contactNormalWS = btVector3(contactNormal.x, contactNormal.y, contactNormal.z);
+        wheel.m_raycastInfo.m_contactPointWS = btVector3(contactPosition.x, contactPosition.y, contactPosition.z);
         wheel.m_suspensionStiffness = suspensionStiffness;
         wheel.m_maxSuspensionForce = maxSuspensionForce;
         wheel.m_wheelsDampingRelaxation = dampingRelaxation;
@@ -363,9 +363,9 @@ void RaycastVehicle::AddWheel(Node* wheelNode,
     btRaycastVehicle* vehicle = vehicleData_->Get();
     int id = GetNumWheels();
     Vector3 connectionPoint = wheelNode->GetWorldPosition() - node_->GetWorldPosition();
-    btVector3 connectionPointCS0(connectionPoint.x_, connectionPoint.y_, connectionPoint.z_);
-    btVector3 wheelDirectionCS0(wheelDirection.x_, wheelDirection.y_, wheelDirection.z_);
-    btVector3 wheelAxleCS(wheelAxle.x_, wheelAxle.y_, wheelAxle.z_);
+    btVector3 connectionPointCS0(connectionPoint.x, connectionPoint.y, connectionPoint.z);
+    btVector3 wheelDirectionCS0(wheelDirection.x, wheelDirection.y, wheelDirection.z);
+    btVector3 wheelAxleCS(wheelAxle.x, wheelAxle.y, wheelAxle.z);
     btWheelInfo& wheel = vehicle->addWheel(connectionPointCS0,
                             wheelDirectionCS0,
                             wheelAxleCS,
@@ -599,7 +599,7 @@ float RaycastVehicle::GetMaxSuspensionTravel(int wheel)
 
 void RaycastVehicle::SetWheelDirection(int wheel, Vector3 direction)
 {
-    btVector3 dir(direction.x_, direction.y_, direction.z_);
+    btVector3 dir(direction.x, direction.y, direction.z);
     btRaycastVehicle* vehicle = vehicleData_->Get();
     btWheelInfo& whInfo = vehicle->getWheelInfo(wheel);
     whInfo.m_wheelDirectionCS = dir;
@@ -614,7 +614,7 @@ Vector3 RaycastVehicle::GetWheelDirection(int wheel) const
 
 void RaycastVehicle::SetWheelAxle(int wheel, Vector3 axle)
 {
-    btVector3 ax(axle.x_, axle.y_, axle.z_);
+    btVector3 ax(axle.x, axle.y, axle.z);
     btRaycastVehicle* vehicle = vehicleData_->Get();
     btWheelInfo& whInfo = vehicle->getWheelInfo(wheel);
     whInfo.m_wheelAxleCS = ax;

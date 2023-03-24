@@ -317,7 +317,7 @@ bool NavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned maxTiles)
     // Calculate number of tiles
     int gridW = 0, gridH = 0;
     float tileEdgeLength = (float)tileSize_ * cellSize_;
-    rcCalcGridSize(&boundingBox_.min_.x_, &boundingBox_.max_.x_, cellSize_, &gridW, &gridH);
+    rcCalcGridSize(&boundingBox_.min_.x, &boundingBox_.max_.x, cellSize_, &gridW, &gridH);
     numTilesX_ = (gridW + tileSize_ - 1) / tileSize_;
     numTilesZ_ = (gridH + tileSize_ - 1) / tileSize_;
 
@@ -326,7 +326,7 @@ bool NavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned maxTiles)
     unsigned maxPolys = 1u << (22 - tileBits);
 
     dtNavMeshParams params;     // NOLINT(hicpp-member-init)
-    rcVcopy(params.orig, &boundingBox_.min_.x_);
+    rcVcopy(params.orig, &boundingBox_.min_.x);
     params.tileWidth = tileEdgeLength;
     params.tileHeight = tileEdgeLength;
     params.maxTiles = maxTiles;
@@ -392,7 +392,7 @@ bool NavigationMesh::Build()
         // Calculate number of tiles
         int gridW = 0, gridH = 0;
         float tileEdgeLength = (float)tileSize_ * cellSize_;
-        rcCalcGridSize(&boundingBox_.min_.x_, &boundingBox_.max_.x_, cellSize_, &gridW, &gridH);
+        rcCalcGridSize(&boundingBox_.min_.x, &boundingBox_.max_.x, cellSize_, &gridW, &gridH);
         numTilesX_ = (gridW + tileSize_ - 1) / tileSize_;
         numTilesZ_ = (gridH + tileSize_ - 1) / tileSize_;
 
@@ -402,7 +402,7 @@ bool NavigationMesh::Build()
         unsigned maxPolys = 1u << (22 - tileBits);
 
         dtNavMeshParams params;     // NOLINT(hicpp-member-init)
-        rcVcopy(params.orig, &boundingBox_.min_.x_);
+        rcVcopy(params.orig, &boundingBox_.min_.x);
         params.tileWidth = tileEdgeLength;
         params.tileHeight = tileEdgeLength;
         params.maxTiles = maxTiles;
@@ -463,10 +463,10 @@ bool NavigationMesh::Build(const BoundingBox& boundingBox)
     Vector<NavigationGeometryInfo> geometryList;
     collect_geometries(geometryList);
 
-    int sx = Clamp((int)((localSpaceBox.min_.x_ - boundingBox_.min_.x_) / tileEdgeLength), 0, numTilesX_ - 1);
-    int sz = Clamp((int)((localSpaceBox.min_.z_ - boundingBox_.min_.z_) / tileEdgeLength), 0, numTilesZ_ - 1);
-    int ex = Clamp((int)((localSpaceBox.max_.x_ - boundingBox_.min_.x_) / tileEdgeLength), 0, numTilesX_ - 1);
-    int ez = Clamp((int)((localSpaceBox.max_.z_ - boundingBox_.min_.z_) / tileEdgeLength), 0, numTilesZ_ - 1);
+    int sx = Clamp((int)((localSpaceBox.min_.x - boundingBox_.min_.x) / tileEdgeLength), 0, numTilesX_ - 1);
+    int sz = Clamp((int)((localSpaceBox.min_.z - boundingBox_.min_.z) / tileEdgeLength), 0, numTilesZ_ - 1);
+    int ex = Clamp((int)((localSpaceBox.max_.x - boundingBox_.min_.x) / tileEdgeLength), 0, numTilesX_ - 1);
+    int ez = Clamp((int)((localSpaceBox.max_.z - boundingBox_.min_.z) / tileEdgeLength), 0, numTilesZ_ - 1);
 
     unsigned numTiles = build_tiles(geometryList, IntVector2(sx, sz), IntVector2(ex, ez));
 
@@ -524,14 +524,14 @@ BoundingBox NavigationMesh::GetTileBoundingBox(const IntVector2& tile) const
     const float tileEdgeLength = (float)tileSize_ * cellSize_;
     return BoundingBox(
         Vector3(
-            boundingBox_.min_.x_ + tileEdgeLength * (float)tile.x_,
-            boundingBox_.min_.y_,
-            boundingBox_.min_.z_ + tileEdgeLength * (float)tile.y_
+            boundingBox_.min_.x + tileEdgeLength * (float)tile.x_,
+            boundingBox_.min_.y,
+            boundingBox_.min_.z + tileEdgeLength * (float)tile.y_
         ),
         Vector3(
-            boundingBox_.min_.x_ + tileEdgeLength * (float)(tile.x_ + 1),
-            boundingBox_.max_.y_,
-            boundingBox_.min_.z_ + tileEdgeLength * (float)(tile.y_ + 1)
+            boundingBox_.min_.x + tileEdgeLength * (float)(tile.x_ + 1),
+            boundingBox_.max_.y,
+            boundingBox_.min_.z + tileEdgeLength * (float)(tile.y_ + 1)
         ));
 }
 
@@ -539,7 +539,7 @@ IntVector2 NavigationMesh::GetTileIndex(const Vector3& position) const
 {
     const float tileEdgeLength = (float)tileSize_ * cellSize_;
     const Vector3 localPosition = node_->GetWorldTransform().Inverse() * position - boundingBox_.min_;
-    const Vector2 localPosition2D(localPosition.x_, localPosition.z_);
+    const Vector2 localPosition2D(localPosition.x, localPosition.z);
     return VectorMin(VectorMax(IntVector2::ZERO, VectorFloorToInt(localPosition2D / tileEdgeLength)), GetNumTiles() - IntVector2::ONE);
 }
 
@@ -597,7 +597,7 @@ Vector3 NavigationMesh::FindNearestPoint(const Vector3& point, const Vector3& ex
     dtPolyRef pointRef;
     if (!nearestRef)
         nearestRef = &pointRef;
-    navMeshQuery_->findNearestPoly(&localPoint.x_, &extents.x_, filter ? filter : queryFilter_.get(), nearestRef, &nearestPoint.x_);
+    navMeshQuery_->findNearestPoly(&localPoint.x, &extents.x, filter ? filter : queryFilter_.get(), nearestRef, &nearestPoint.x);
     return *nearestRef ? transform * nearestPoint : point;
 }
 
@@ -615,7 +615,7 @@ Vector3 NavigationMesh::MoveAlongSurface(const Vector3& start, const Vector3& en
 
     const dtQueryFilter* queryFilter = filter ? filter : queryFilter_.get();
     dtPolyRef startRef;
-    navMeshQuery_->findNearestPoly(&localStart.x_, &extents.x_, queryFilter, &startRef, nullptr);
+    navMeshQuery_->findNearestPoly(&localStart.x, &extents.x, queryFilter, &startRef, nullptr);
     if (!startRef)
         return end;
 
@@ -623,7 +623,7 @@ Vector3 NavigationMesh::MoveAlongSurface(const Vector3& start, const Vector3& en
     int visitedCount = 0;
     maxVisited = Max(maxVisited, 0);
     Vector<dtPolyRef> visited((unsigned)maxVisited);
-    navMeshQuery_->moveAlongSurface(startRef, &localStart.x_, &localEnd.x_, queryFilter, &resultPos.x_, maxVisited ?
+    navMeshQuery_->moveAlongSurface(startRef, &localStart.x, &localEnd.x, queryFilter, &resultPos.x, maxVisited ?
         &visited[0] : nullptr, &visitedCount, maxVisited);
     return transform * resultPos;
 }
@@ -658,8 +658,8 @@ void NavigationMesh::find_path(Vector<NavigationPathPoint>& dest, const Vector3&
     const dtQueryFilter* queryFilter = filter ? filter : queryFilter_.get();
     dtPolyRef startRef;
     dtPolyRef endRef;
-    navMeshQuery_->findNearestPoly(&localStart.x_, &extents.x_, queryFilter, &startRef, nullptr);
-    navMeshQuery_->findNearestPoly(&localEnd.x_, &extents.x_, queryFilter, &endRef, nullptr);
+    navMeshQuery_->findNearestPoly(&localStart.x, &extents.x, queryFilter, &startRef, nullptr);
+    navMeshQuery_->findNearestPoly(&localEnd.x, &extents.x, queryFilter, &endRef, nullptr);
 
     if (!startRef || !endRef)
         return;
@@ -667,7 +667,7 @@ void NavigationMesh::find_path(Vector<NavigationPathPoint>& dest, const Vector3&
     int numPolys = 0;
     int numPathPoints = 0;
 
-    navMeshQuery_->findPath(startRef, endRef, &localStart.x_, &localEnd.x_, queryFilter, pathData_->polys_, &numPolys,
+    navMeshQuery_->findPath(startRef, endRef, &localStart.x, &localEnd.x, queryFilter, pathData_->polys_, &numPolys,
         MAX_POLYS);
     if (!numPolys)
         return;
@@ -676,10 +676,10 @@ void NavigationMesh::find_path(Vector<NavigationPathPoint>& dest, const Vector3&
 
     // If full path was not found, clamp end point to the end polygon
     if (pathData_->polys_[numPolys - 1] != endRef)
-        navMeshQuery_->closestPointOnPoly(pathData_->polys_[numPolys - 1], &localEnd.x_, &actualLocalEnd.x_, nullptr);
+        navMeshQuery_->closestPointOnPoly(pathData_->polys_[numPolys - 1], &localEnd.x, &actualLocalEnd.x, nullptr);
 
-    navMeshQuery_->findStraightPath(&localStart.x_, &actualLocalEnd.x_, pathData_->polys_, numPolys,
-        &pathData_->pathPoints_[0].x_, pathData_->pathFlags_, pathData_->pathPolys_, &numPathPoints, MAX_POLYS);
+    navMeshQuery_->findStraightPath(&localStart.x, &actualLocalEnd.x, pathData_->polys_, numPolys,
+        &pathData_->pathPoints_[0].x, pathData_->pathFlags_, pathData_->pathPolys_, &numPathPoints, MAX_POLYS);
 
     // Transform path result back to world space
     for (int i = 0; i < numPathPoints; ++i)
@@ -723,7 +723,7 @@ Vector3 NavigationMesh::GetRandomPoint(const dtQueryFilter* filter, dtPolyRef* r
     dtPolyRef polyRef;
     Vector3 point(Vector3::ZERO);
 
-    navMeshQuery_->findRandomPoint(filter ? filter : queryFilter_.get(), Random, randomRef ? randomRef : &polyRef, &point.x_);
+    navMeshQuery_->findRandomPoint(filter ? filter : queryFilter_.get(), Random, randomRef ? randomRef : &polyRef, &point.x);
 
     return node_->GetWorldTransform() * point;
 }
@@ -743,7 +743,7 @@ Vector3 NavigationMesh::GetRandomPointInCircle(const Vector3& center, float radi
 
     const dtQueryFilter* queryFilter = filter ? filter : queryFilter_.get();
     dtPolyRef startRef;
-    navMeshQuery_->findNearestPoly(&localCenter.x_, &extents.x_, queryFilter, &startRef, nullptr);
+    navMeshQuery_->findNearestPoly(&localCenter.x, &extents.x, queryFilter, &startRef, nullptr);
     if (!startRef)
         return center;
 
@@ -752,7 +752,7 @@ Vector3 NavigationMesh::GetRandomPointInCircle(const Vector3& center, float radi
         randomRef = &polyRef;
     Vector3 point(localCenter);
 
-    navMeshQuery_->findRandomPointAroundCircle(startRef, &localCenter.x_, radius, queryFilter, Random, randomRef, &point.x_);
+    navMeshQuery_->findRandomPointAroundCircle(startRef, &localCenter.x, radius, queryFilter, Random, randomRef, &point.x);
 
     return transform * point;
 }
@@ -774,7 +774,7 @@ float NavigationMesh::GetDistanceToWall(const Vector3& point, float radius, cons
 
     const dtQueryFilter* queryFilter = filter ? filter : queryFilter_.get();
     dtPolyRef startRef;
-    navMeshQuery_->findNearestPoly(&localPoint.x_, &extents.x_, queryFilter, &startRef, nullptr);
+    navMeshQuery_->findNearestPoly(&localPoint.x, &extents.x, queryFilter, &startRef, nullptr);
     if (!startRef)
         return radius;
 
@@ -786,7 +786,7 @@ float NavigationMesh::GetDistanceToWall(const Vector3& point, float radius, cons
     if (!hitNormal)
         hitNormal = &normal;
 
-    navMeshQuery_->findDistanceToWall(startRef, &localPoint.x_, radius, queryFilter, &hitDist, &hitPos->x_, &hitNormal->x_);
+    navMeshQuery_->findDistanceToWall(startRef, &localPoint.x, radius, queryFilter, &hitDist, &hitPos->x, &hitNormal->x);
     return hitDist;
 }
 
@@ -807,7 +807,7 @@ Vector3 NavigationMesh::Raycast(const Vector3& start, const Vector3& end, const 
 
     const dtQueryFilter* queryFilter = filter ? filter : queryFilter_.get();
     dtPolyRef startRef;
-    navMeshQuery_->findNearestPoly(&localStart.x_, &extents.x_, queryFilter, &startRef, nullptr);
+    navMeshQuery_->findNearestPoly(&localStart.x, &extents.x, queryFilter, &startRef, nullptr);
     if (!startRef)
         return end;
 
@@ -817,7 +817,7 @@ Vector3 NavigationMesh::Raycast(const Vector3& start, const Vector3& end, const 
     float t;
     int numPolys;
 
-    navMeshQuery_->raycast(startRef, &localStart.x_, &localEnd.x_, queryFilter, &t, &hitNormal->x_, pathData_->polys_, &numPolys,
+    navMeshQuery_->raycast(startRef, &localStart.x, &localEnd.x, queryFilter, &t, &hitNormal->x, pathData_->polys_, &numPolys,
         MAX_POLYS);
     if (t == FLT_MAX)
         t = 1.0f;
@@ -868,7 +868,7 @@ void NavigationMesh::SetNavigationDataAttr(const Vector<byte>& value)
     numTilesZ_ = buffer.ReadI32();
 
     dtNavMeshParams params;     // NOLINT(hicpp-member-init)
-    rcVcopy(params.orig, &boundingBox_.min_.x_);
+    rcVcopy(params.orig, &boundingBox_.min_.x);
     params.tileWidth = buffer.ReadFloat();
     params.tileHeight = buffer.ReadFloat();
     params.maxTiles = buffer.ReadI32();
@@ -1305,8 +1305,8 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     cfg.detailSampleDist = detailSampleDistance_ < 0.9f ? 0.0f : cellSize_ * detailSampleDistance_;
     cfg.detailSampleMaxError = cellHeight_ * detailSampleMaxError_;
 
-    rcVcopy(cfg.bmin, &tileBoundingBox.min_.x_);
-    rcVcopy(cfg.bmax, &tileBoundingBox.max_.x_);
+    rcVcopy(cfg.bmin, &tileBoundingBox.min_.x);
+    rcVcopy(cfg.bmax, &tileBoundingBox.max_.x);
     cfg.bmin[0] -= cfg.borderSize * cfg.cs;
     cfg.bmin[2] -= cfg.borderSize * cfg.cs;
     cfg.bmax[0] += cfg.borderSize * cfg.cs;
@@ -1336,9 +1336,9 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     SharedArrayPtr<unsigned char> triAreas(new unsigned char[numTriangles]);
     memset(triAreas.Get(), 0, numTriangles);
 
-    rcMarkWalkableTriangles(build.ctx_, cfg.walkableSlopeAngle, &build.vertices_[0].x_, build.vertices_.Size(),
+    rcMarkWalkableTriangles(build.ctx_, cfg.walkableSlopeAngle, &build.vertices_[0].x, build.vertices_.Size(),
         &build.indices_[0], numTriangles, triAreas.Get());
-    rcRasterizeTriangles(build.ctx_, &build.vertices_[0].x_, build.vertices_.Size(), &build.indices_[0],
+    rcRasterizeTriangles(build.ctx_, &build.vertices_[0].x, build.vertices_.Size(), &build.indices_[0],
         triAreas.Get(), numTriangles, *build.heightField_, cfg.walkableClimb);
     rcFilterLowHangingWalkableObstacles(build.ctx_, cfg.walkableClimb, *build.heightField_);
 
@@ -1365,7 +1365,7 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
 
     // Mark area volumes
     for (const NavAreaStub& navArea : build.navAreas_)
-        rcMarkBoxArea(build.ctx_, &navArea.bounds_.min_.x_, &navArea.bounds_.max_.x_,
+        rcMarkBoxArea(build.ctx_, &navArea.bounds_.min_.x, &navArea.bounds_.max_.x,
             navArea.areaID_, *build.compactHeightField_);
 
     if (this->partitionType_ == NAVMESH_PARTITION_WATERSHED)
@@ -1469,7 +1469,7 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     if (build.offMeshRadii_.Size())
     {
         params.offMeshConCount = build.offMeshRadii_.Size();
-        params.offMeshConVerts = &build.offMeshVertices_[0].x_;
+        params.offMeshConVerts = &build.offMeshVertices_[0].x;
         params.offMeshConRad = &build.offMeshRadii_[0];
         params.offMeshConFlags = &build.offMeshFlags_[0];
         params.offMeshConAreas = &build.offMeshAreas_[0];

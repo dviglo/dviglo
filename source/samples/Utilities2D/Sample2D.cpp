@@ -513,7 +513,7 @@ void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, co
 void Sample2D::SpawnEffect(Node* node)
 {
     Node* particleNode = node->create_child("Emitter");
-    particleNode->SetScale(0.5f / node->GetScale().x_);
+    particleNode->SetScale(0.5f / node->GetScale().x);
     auto* particleEmitter = particleNode->create_component<ParticleEmitter2D>();
     particleEmitter->SetLayer(2);
     particleEmitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect2D>("Urho2D/sun.pex"));

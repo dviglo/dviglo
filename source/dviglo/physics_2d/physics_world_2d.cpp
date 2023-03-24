@@ -610,7 +610,7 @@ RigidBody2D* PhysicsWorld2D::GetRigidBody(int screenX, int screenY, u16 collisio
         if (viewport && viewport->GetScene() == GetScene())
         {
             Vector3 worldPoint = viewport->screen_to_world_point(screenX, screenY, 0.0f);
-            return GetRigidBody(Vector2(worldPoint.x_, worldPoint.y_), collisionMask);
+            return GetRigidBody(Vector2(worldPoint.x, worldPoint.y), collisionMask);
         }
     }
 

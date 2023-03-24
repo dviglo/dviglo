@@ -175,43 +175,43 @@ void UIBatch::AddQuad(const Matrix3x4& transform, int x, int y, int width, int h
     float* dest = &(vertexData_->At(begin));
     vertexEnd_ = vertexData_->Size();
 
-    dest[0] = v1.x_;
-    dest[1] = v1.y_;
+    dest[0] = v1.x;
+    dest[1] = v1.y;
     dest[2] = 0.0f;
     ((unsigned&)dest[3]) = topLeftColor;
     dest[4] = leftUV;
     dest[5] = topUV;
 
-    dest[6] = v2.x_;
-    dest[7] = v2.y_;
+    dest[6] = v2.x;
+    dest[7] = v2.y;
     dest[8] = 0.0f;
     ((unsigned&)dest[9]) = topRightColor;
     dest[10] = rightUV;
     dest[11] = topUV;
 
-    dest[12] = v3.x_;
-    dest[13] = v3.y_;
+    dest[12] = v3.x;
+    dest[13] = v3.y;
     dest[14] = 0.0f;
     ((unsigned&)dest[15]) = bottomLeftColor;
     dest[16] = leftUV;
     dest[17] = bottomUV;
 
-    dest[18] = v2.x_;
-    dest[19] = v2.y_;
+    dest[18] = v2.x;
+    dest[19] = v2.y;
     dest[20] = 0.0f;
     ((unsigned&)dest[21]) = topRightColor;
     dest[22] = rightUV;
     dest[23] = topUV;
 
-    dest[24] = v4.x_;
-    dest[25] = v4.y_;
+    dest[24] = v4.x;
+    dest[25] = v4.y;
     dest[26] = 0.0f;
     ((unsigned&)dest[27]) = bottomRightColor;
     dest[28] = rightUV;
     dest[29] = bottomUV;
 
-    dest[30] = v3.x_;
-    dest[31] = v3.y_;
+    dest[30] = v3.x;
+    dest[31] = v3.y;
     dest[32] = 0.0f;
     ((unsigned&)dest[33]) = bottomLeftColor;
     dest[34] = leftUV;
@@ -270,43 +270,43 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const Int
     float* dest = &(vertexData_->At(begin));
     vertexEnd_ = vertexData_->Size();
 
-    dest[0] = v1.x_;
-    dest[1] = v1.y_;
+    dest[0] = v1.x;
+    dest[1] = v1.y;
     dest[2] = 0.0f;
     ((unsigned&)dest[3]) = color_;
     dest[4] = uv1.x_;
     dest[5] = uv1.y_;
 
-    dest[6] = v2.x_;
-    dest[7] = v2.y_;
+    dest[6] = v2.x;
+    dest[7] = v2.y;
     dest[8] = 0.0f;
     ((unsigned&)dest[9]) = color_;
     dest[10] = uv2.x_;
     dest[11] = uv2.y_;
 
-    dest[12] = v3.x_;
-    dest[13] = v3.y_;
+    dest[12] = v3.x;
+    dest[13] = v3.y;
     dest[14] = 0.0f;
     ((unsigned&)dest[15]) = color_;
     dest[16] = uv3.x_;
     dest[17] = uv3.y_;
 
-    dest[18] = v1.x_;
-    dest[19] = v1.y_;
+    dest[18] = v1.x;
+    dest[19] = v1.y;
     dest[20] = 0.0f;
     ((unsigned&)dest[21]) = color_;
     dest[22] = uv1.x_;
     dest[23] = uv1.y_;
 
-    dest[24] = v3.x_;
-    dest[25] = v3.y_;
+    dest[24] = v3.x;
+    dest[25] = v3.y;
     dest[26] = 0.0f;
     ((unsigned&)dest[27]) = color_;
     dest[28] = uv3.x_;
     dest[29] = uv3.y_;
 
-    dest[30] = v4.x_;
-    dest[31] = v4.y_;
+    dest[30] = v4.x;
+    dest[31] = v4.y;
     dest[32] = 0.0f;
     ((unsigned&)dest[33]) = color_;
     dest[34] = uv4.x_;
@@ -337,43 +337,43 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const Int
     float* dest = &(vertexData_->At(begin));
     vertexEnd_ = vertexData_->Size();
 
-    dest[0] = v1.x_;
-    dest[1] = v1.y_;
+    dest[0] = v1.x;
+    dest[1] = v1.y;
     dest[2] = 0.0f;
     ((color32&)dest[3]) = c1;
     dest[4] = uv1.x_;
     dest[5] = uv1.y_;
 
-    dest[6] = v2.x_;
-    dest[7] = v2.y_;
+    dest[6] = v2.x;
+    dest[7] = v2.y;
     dest[8] = 0.0f;
     ((color32&)dest[9]) = c2;
     dest[10] = uv2.x_;
     dest[11] = uv2.y_;
 
-    dest[12] = v3.x_;
-    dest[13] = v3.y_;
+    dest[12] = v3.x;
+    dest[13] = v3.y;
     dest[14] = 0.0f;
     ((color32&)dest[15]) = c3;
     dest[16] = uv3.x_;
     dest[17] = uv3.y_;
 
-    dest[18] = v1.x_;
-    dest[19] = v1.y_;
+    dest[18] = v1.x;
+    dest[19] = v1.y;
     dest[20] = 0.0f;
     ((color32&)dest[21]) = c1;
     dest[22] = uv1.x_;
     dest[23] = uv1.y_;
 
-    dest[24] = v3.x_;
-    dest[25] = v3.y_;
+    dest[24] = v3.x;
+    dest[25] = v3.y;
     dest[26] = 0.0f;
     ((color32&)dest[27]) = c3;
     dest[28] = uv3.x_;
     dest[29] = uv3.y_;
 
-    dest[30] = v4.x_;
-    dest[31] = v4.y_;
+    dest[30] = v4.x;
+    dest[31] = v4.y;
     dest[32] = 0.0f;
     ((unsigned&)dest[33]) = c4;
     dest[34] = uv4.x_;

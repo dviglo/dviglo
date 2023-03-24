@@ -235,8 +235,8 @@ void Camera::SetProjection(const Matrix4& projection)
     Matrix4 projInverse = projection_.Inverse();
 
     // Calculate the actual near & far clip from the custom matrix
-    projNearClip_ = (projInverse * Vector3(0.0f, 0.0f, 0.0f)).z_;
-    projFarClip_ = (projInverse * Vector3(0.0f, 0.0f, 1.0f)).z_;
+    projNearClip_ = (projInverse * Vector3(0.0f, 0.0f, 0.0f)).z;
+    projFarClip_ = (projInverse * Vector3(0.0f, 0.0f, 1.0f)).z;
     projectionDirty_ = false;
     autoAspectRatio_ = false;
     frustumDirty_ = true;
@@ -392,16 +392,16 @@ Vector2 Camera::world_to_screen_point(const Vector3& worldPos) const
     Vector3 eyeSpacePos = GetView() * worldPos;
     Vector2 ret;
 
-    if (eyeSpacePos.z_ > 0.0f)
+    if (eyeSpacePos.z > 0.0f)
     {
         Vector3 screenSpacePos = GetProjection() * eyeSpacePos;
-        ret.x_ = screenSpacePos.x_;
-        ret.y_ = screenSpacePos.y_;
+        ret.x_ = screenSpacePos.x;
+        ret.y_ = screenSpacePos.y;
     }
     else
     {
-        ret.x_ = (-eyeSpacePos.x_ > 0.0f) ? -1.0f : 1.0f;
-        ret.y_ = (-eyeSpacePos.y_ > 0.0f) ? -1.0f : 1.0f;
+        ret.x_ = (-eyeSpacePos.x > 0.0f) ? -1.0f : 1.0f;
+        ret.y_ = (-eyeSpacePos.y > 0.0f) ? -1.0f : 1.0f;
     }
 
     ret.x_ = (ret.x_ / 2.0f) + 0.5f;
@@ -411,9 +411,9 @@ Vector2 Camera::world_to_screen_point(const Vector3& worldPos) const
 
 Vector3 Camera::screen_to_world_point(const Vector3& screenPos) const
 {
-    Ray ray = GetScreenRay(screenPos.x_, screenPos.y_);
+    Ray ray = GetScreenRay(screenPos.x, screenPos.y);
     Vector3 viewSpaceDir = (GetView() * Vector4(ray.direction_, 0.0f));
-    float rayDistance = (Max(screenPos.z_ - GetNearClip(), 0.0f) / viewSpaceDir.z_);
+    float rayDistance = (Max(screenPos.z - GetNearClip(), 0.0f) / viewSpaceDir.z);
     return ray.origin_ + ray.direction_ * rayDistance;
 }
 
@@ -454,8 +454,8 @@ void Camera::GetFrustumSize(Vector3& near, Vector3& far) const
     /// \todo Necessary? Explain this
     if (flipVertical_)
     {
-        near.y_ = -near.y_;
-        far.y_ = -far.y_;
+        near.y = -near.y;
+        far.y = -far.y;
     }
 }
 
@@ -475,7 +475,7 @@ float Camera::GetDistance(const Vector3& worldPos) const
         return (worldPos - cameraPos).Length();
     }
     else
-        return Abs((GetView() * worldPos).z_);
+        return Abs((GetView() * worldPos).z);
 }
 
 float Camera::GetDistanceSquared(const Vector3& worldPos) const
@@ -487,7 +487,7 @@ float Camera::GetDistanceSquared(const Vector3& worldPos) const
     }
     else
     {
-        float distance = (GetView() * worldPos).z_;
+        float distance = (GetView() * worldPos).z;
         return distance * distance;
     }
 }
@@ -514,8 +514,8 @@ Quaternion Camera::GetFaceCameraRotation(const Vector3& position, const Quaterni
     case FC_ROTATE_Y:
         {
             Vector3 euler = rotation.EulerAngles();
-            euler.y_ = node_->GetWorldRotation().EulerAngles().y_;
-            return Quaternion(euler.x_, euler.y_, euler.z_);
+            euler.y = node_->GetWorldRotation().EulerAngles().y;
+            return Quaternion(euler.x, euler.y, euler.z);
         }
 
     case FC_LOOKAT_XYZ:
@@ -531,7 +531,7 @@ Quaternion Camera::GetFaceCameraRotation(const Vector3& position, const Quaterni
             // Mixed mode needs true look-at vector
             const Vector3 lookAtVec(position - node_->GetWorldPosition());
             // While Y-only lookat happens on an XZ plane to make sure there are no unwanted transitions or singularities
-            const Vector3 lookAtVecXZ(lookAtVec.x_, 0.0f, lookAtVec.z_);
+            const Vector3 lookAtVecXZ(lookAtVec.x, 0.0f, lookAtVec.z);
 
             Quaternion lookAt;
             lookAt.FromLookRotation(lookAtVecXZ);
@@ -541,12 +541,12 @@ Quaternion Camera::GetFaceCameraRotation(const Vector3& position, const Quaterni
             {
                 const float angle = lookAtVec.Angle(rotation * Vector3::UP);
                 if (angle > 180 - minAngle)
-                    euler.x_ += minAngle - (180 - angle);
+                    euler.x += minAngle - (180 - angle);
                 else if (angle < minAngle)
-                    euler.x_ -= minAngle - angle;
+                    euler.x -= minAngle - angle;
             }
-            euler.y_ = lookAt.EulerAngles().y_;
-            return Quaternion(euler.x_, euler.y_, euler.z_);
+            euler.y = lookAt.EulerAngles().y;
+            return Quaternion(euler.x, euler.y, euler.z);
         }
 
     default:

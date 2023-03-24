@@ -88,7 +88,7 @@ void Mover::Update(float timeStep)
             if (fightTimer_ > 0.0f)
             {
                 anim = "attack";
-                flip_ = GetScene()->GetChild("Imp", true)->GetPosition().x_ - node_->GetPosition().x_;
+                flip_ = GetScene()->GetChild("Imp", true)->GetPosition().x - node_->GetPosition().x;
                 fightTimer_ += timeStep;
                 if (fightTimer_ >= 3.0f)
                     fightTimer_ = 0.0f; // Reset

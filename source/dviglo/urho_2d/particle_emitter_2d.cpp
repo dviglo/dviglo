@@ -228,10 +228,10 @@ void ParticleEmitter2D::UpdateSourceBatches()
         float add = (c + s) * p.size_ * 0.5f;
         float sub = (c - s) * p.size_ * 0.5f;
 
-        vertex0.position_ = Vector3(p.position_.x_ - sub, p.position_.y_ - add, p.position_.z_);
-        vertex1.position_ = Vector3(p.position_.x_ - add, p.position_.y_ + sub, p.position_.z_);
-        vertex2.position_ = Vector3(p.position_.x_ + sub, p.position_.y_ + add, p.position_.z_);
-        vertex3.position_ = Vector3(p.position_.x_ + add, p.position_.y_ - sub, p.position_.z_);
+        vertex0.position_ = Vector3(p.position_.x - sub, p.position_.y - add, p.position_.z);
+        vertex1.position_ = Vector3(p.position_.x - add, p.position_.y + sub, p.position_.z);
+        vertex2.position_ = Vector3(p.position_.x + sub, p.position_.y + add, p.position_.z);
+        vertex3.position_ = Vector3(p.position_.x + add, p.position_.y - sub, p.position_.z);
 
         vertex0.color_ = vertex1.color_ = vertex2.color_ = vertex3.color_ = p.color_.ToU32();
 
@@ -292,7 +292,7 @@ void ParticleEmitter2D::Update(float timeStep)
         return;
 
     Vector3 worldPosition = GetNode()->GetWorldPosition();
-    float worldScale = GetNode()->GetWorldScale().x_ * PIXEL_SIZE;
+    float worldScale = GetNode()->GetWorldScale().x * PIXEL_SIZE;
 
     boundingBoxMinPoint_ = Vector3(M_INFINITY, M_INFINITY, M_INFINITY);
     boundingBoxMaxPoint_ = Vector3(-M_INFINITY, -M_INFINITY, -M_INFINITY);
@@ -352,11 +352,11 @@ bool ParticleEmitter2D::EmitParticle(const Vector3& worldPosition, float worldAn
     Particle2D& particle = particles_[numParticles_++];
     particle.timeToLive_ = lifespan;
 
-    particle.position_.x_ = worldPosition.x_ + worldScale * effect_->GetSourcePositionVariance().x_ * Random(-1.0f, 1.0f);
-    particle.position_.y_ = worldPosition.y_ + worldScale * effect_->GetSourcePositionVariance().y_ * Random(-1.0f, 1.0f);
-    particle.position_.z_ = worldPosition.z_;
-    particle.startPos_.x_ = worldPosition.x_;
-    particle.startPos_.y_ = worldPosition.y_;
+    particle.position_.x = worldPosition.x + worldScale * effect_->GetSourcePositionVariance().x_ * Random(-1.0f, 1.0f);
+    particle.position_.y = worldPosition.y + worldScale * effect_->GetSourcePositionVariance().y_ * Random(-1.0f, 1.0f);
+    particle.position_.z = worldPosition.z;
+    particle.startPos_.x_ = worldPosition.x;
+    particle.startPos_.y_ = worldPosition.y;
 
     float angle = worldAngle + effect_->GetAngle() + effect_->GetAngleVariance() * Random(-1.0f, 1.0f);
     float speed = worldScale * (effect_->GetSpeed() + effect_->GetSpeedVariance() * Random(-1.0f, 1.0f));
@@ -404,13 +404,13 @@ void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, con
         particle.emitRotation_ += particle.emitRotationDelta_ * timeStep;
         particle.emitRadius_ += particle.emitRadiusDelta_ * timeStep;
 
-        particle.position_.x_ = particle.startPos_.x_ - Cos(particle.emitRotation_) * particle.emitRadius_;
-        particle.position_.y_ = particle.startPos_.y_ + Sin(particle.emitRotation_) * particle.emitRadius_;
+        particle.position_.x = particle.startPos_.x_ - Cos(particle.emitRotation_) * particle.emitRadius_;
+        particle.position_.y = particle.startPos_.y_ + Sin(particle.emitRotation_) * particle.emitRadius_;
     }
     else
     {
-        float distanceX = particle.position_.x_ - particle.startPos_.x_;
-        float distanceY = particle.position_.y_ - particle.startPos_.y_;
+        float distanceX = particle.position_.x - particle.startPos_.x_;
+        float distanceY = particle.position_.y - particle.startPos_.y_;
 
         float distanceScalar = Vector2(distanceX, distanceY).Length();
         if (distanceScalar < 0.0001f)
@@ -431,8 +431,8 @@ void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, con
 
         particle.velocity_.x_ += (effect_->GetGravity().x_ * worldScale + radialX - tangentialX) * timeStep;
         particle.velocity_.y_ -= (effect_->GetGravity().y_ * worldScale - radialY + tangentialY) * timeStep;
-        particle.position_.x_ += particle.velocity_.x_ * timeStep;
-        particle.position_.y_ += particle.velocity_.y_ * timeStep;
+        particle.position_.x += particle.velocity_.x_ * timeStep;
+        particle.position_.y += particle.velocity_.y_ * timeStep;
     }
 
     particle.size_ += particle.sizeDelta_ * timeStep;
@@ -440,12 +440,12 @@ void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, con
     particle.color_ += particle.colorDelta_ * timeStep;
 
     float halfSize = particle.size_ * 0.5f;
-    boundingBoxMinPoint_.x_ = Min(boundingBoxMinPoint_.x_, particle.position_.x_ - halfSize);
-    boundingBoxMinPoint_.y_ = Min(boundingBoxMinPoint_.y_, particle.position_.y_ - halfSize);
-    boundingBoxMinPoint_.z_ = Min(boundingBoxMinPoint_.z_, particle.position_.z_);
-    boundingBoxMaxPoint_.x_ = Max(boundingBoxMaxPoint_.x_, particle.position_.x_ + halfSize);
-    boundingBoxMaxPoint_.y_ = Max(boundingBoxMaxPoint_.y_, particle.position_.y_ + halfSize);
-    boundingBoxMaxPoint_.z_ = Max(boundingBoxMaxPoint_.z_, particle.position_.z_);
+    boundingBoxMinPoint_.x = Min(boundingBoxMinPoint_.x, particle.position_.x - halfSize);
+    boundingBoxMinPoint_.y = Min(boundingBoxMinPoint_.y, particle.position_.y - halfSize);
+    boundingBoxMinPoint_.z = Min(boundingBoxMinPoint_.z, particle.position_.z);
+    boundingBoxMaxPoint_.x = Max(boundingBoxMaxPoint_.x, particle.position_.x + halfSize);
+    boundingBoxMaxPoint_.y = Max(boundingBoxMaxPoint_.y, particle.position_.y + halfSize);
+    boundingBoxMaxPoint_.z = Max(boundingBoxMaxPoint_.z, particle.position_.z);
 }
 
 }

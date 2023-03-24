@@ -143,7 +143,7 @@ void Character2D::HandleWoundedState(float timeStep)
         }
 
         // Re-position the character to the nearest point
-        if (node_->GetPosition().x_ < 15.0f)
+        if (node_->GetPosition().x < 15.0f)
             node_->SetPosition(Vector3(-5.0f, 11.0f, 0.0f));
         else
             node_->SetPosition(Vector3(18.8f, 9.2f, 0.0f));

@@ -579,26 +579,26 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
             float nextWidth = Lerp(width_ * endScale_, width_ * startScale_, nextFactor);
 
             // First row
-            dest[0] = point.position_.x_;
-            dest[1] = point.position_.y_;
-            dest[2] = point.position_.z_;
+            dest[0] = point.position_.x;
+            dest[1] = point.position_.y;
+            dest[2] = point.position_.z;
             ((color32&)dest[3]) = c;
             dest[4] = factor;
             dest[5] = 0.0f;
-            dest[6] = point.forward_.x_;
-            dest[7] = point.forward_.y_;
-            dest[8] = point.forward_.z_;
+            dest[6] = point.forward_.x;
+            dest[7] = point.forward_.y;
+            dest[8] = point.forward_.z;
             dest[9] = width;
 
-            dest[10] = point.next_->position_.x_;
-            dest[11] = point.next_->position_.y_;
-            dest[12] = point.next_->position_.z_;
+            dest[10] = point.next_->position_.x;
+            dest[11] = point.next_->position_.y;
+            dest[12] = point.next_->position_.z;
             ((color32&)dest[13]) = nextC;
             dest[14] = nextFactor;
             dest[15] = 0.0f;
-            dest[16] = point.next_->forward_.x_;
-            dest[17] = point.next_->forward_.y_;
-            dest[18] = point.next_->forward_.z_;
+            dest[16] = point.next_->forward_.x;
+            dest[17] = point.next_->forward_.y;
+            dest[18] = point.next_->forward_.z;
             dest[19] = nextWidth;
 
             dest += 20;
@@ -610,52 +610,52 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
                 float midWidth = width - elapsed * 2.0f * width;
                 float nextMidWidth = nextWidth - elapsed * 2.0f * nextWidth;
 
-                dest[0] = point.position_.x_;
-                dest[1] = point.position_.y_;
-                dest[2] = point.position_.z_;
+                dest[0] = point.position_.x;
+                dest[1] = point.position_.y;
+                dest[2] = point.position_.z;
                 ((color32&)dest[3]) = c;
                 dest[4] = factor;
                 dest[5] = elapsed;
-                dest[6] = point.forward_.x_;
-                dest[7] = point.forward_.y_;
-                dest[8] = point.forward_.z_;
+                dest[6] = point.forward_.x;
+                dest[7] = point.forward_.y;
+                dest[8] = point.forward_.z;
                 dest[9] = midWidth;
 
-                dest[10] = point.next_->position_.x_;
-                dest[11] = point.next_->position_.y_;
-                dest[12] = point.next_->position_.z_;
+                dest[10] = point.next_->position_.x;
+                dest[11] = point.next_->position_.y;
+                dest[12] = point.next_->position_.z;
                 ((color32&)dest[13]) = nextC;
                 dest[14] = nextFactor;
                 dest[15] = elapsed;
-                dest[16] = point.next_->forward_.x_;
-                dest[17] = point.next_->forward_.y_;
-                dest[18] = point.next_->forward_.z_;
+                dest[16] = point.next_->forward_.x;
+                dest[17] = point.next_->forward_.y;
+                dest[18] = point.next_->forward_.z;
                 dest[19] = nextMidWidth;
 
                 dest += 20;
             }
 
             // Last row
-            dest[0] = point.position_.x_;
-            dest[1] = point.position_.y_;
-            dest[2] = point.position_.z_;
+            dest[0] = point.position_.x;
+            dest[1] = point.position_.y;
+            dest[2] = point.position_.z;
             ((unsigned&)dest[3]) = c;
             dest[4] = factor;
             dest[5] = 1.0f;
-            dest[6] = point.forward_.x_;
-            dest[7] = point.forward_.y_;
-            dest[8] = point.forward_.z_;
+            dest[6] = point.forward_.x;
+            dest[7] = point.forward_.y;
+            dest[8] = point.forward_.z;
             dest[9] = -width;
 
-            dest[10] = point.next_->position_.x_;
-            dest[11] = point.next_->position_.y_;
-            dest[12] = point.next_->position_.z_;
+            dest[10] = point.next_->position_.x;
+            dest[11] = point.next_->position_.y;
+            dest[12] = point.next_->position_.z;
             ((unsigned&)dest[13]) = nextC;
             dest[14] = nextFactor;
             dest[15] = 1.0f;
-            dest[16] = point.next_->forward_.x_;
-            dest[17] = point.next_->forward_.y_;
-            dest[18] = point.next_->forward_.z_;
+            dest[16] = point.next_->forward_.x;
+            dest[17] = point.next_->forward_.y;
+            dest[18] = point.next_->forward_.z;
             dest[19] = -nextWidth;
 
             dest += 20;
@@ -686,32 +686,32 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
             float nextLeftScale = 0.0f - nextShift;
 
             // First row
-            dest[0] = point.position_.x_;
-            dest[1] = point.position_.y_;
-            dest[2] = point.position_.z_;
-            dest[3] = point.forward_.x_;
-            dest[4] = point.forward_.y_;
-            dest[5] = point.forward_.z_;
+            dest[0] = point.position_.x;
+            dest[1] = point.position_.y;
+            dest[2] = point.position_.z;
+            dest[3] = point.forward_.x;
+            dest[4] = point.forward_.y;
+            dest[5] = point.forward_.z;
             ((color32&)dest[6]) = c;
             dest[7] = factor;
             dest[8] = 0.0f;
-            dest[9] = point.parentPos_.x_;
-            dest[10] = point.parentPos_.y_;
-            dest[11] = point.parentPos_.z_;
+            dest[9] = point.parentPos_.x;
+            dest[10] = point.parentPos_.y;
+            dest[11] = point.parentPos_.z;
             dest[12] = leftScale;
 
-            dest[13] = point.next_->position_.x_;
-            dest[14] = point.next_->position_.y_;
-            dest[15] = point.next_->position_.z_;
-            dest[16] = point.next_->forward_.x_;
-            dest[17] = point.next_->forward_.y_;
-            dest[18] = point.next_->forward_.z_;
+            dest[13] = point.next_->position_.x;
+            dest[14] = point.next_->position_.y;
+            dest[15] = point.next_->position_.z;
+            dest[16] = point.next_->forward_.x;
+            dest[17] = point.next_->forward_.y;
+            dest[18] = point.next_->forward_.z;
             ((color32&)dest[19]) = nextC;
             dest[20] = nextFactor;
             dest[21] = 0.0f;
-            dest[22] = point.next_->parentPos_.x_;
-            dest[23] = point.next_->parentPos_.y_;
-            dest[24] = point.next_->parentPos_.z_;
+            dest[22] = point.next_->parentPos_.x;
+            dest[23] = point.next_->parentPos_.y;
+            dest[24] = point.next_->parentPos_.z;
             dest[25] = nextLeftScale;
 
             dest += 26;
@@ -721,64 +721,64 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
             {
                 float elapsed = 1.0f / tailColumn_ * (j + 1);
 
-                dest[0] = point.position_.x_;
-                dest[1] = point.position_.y_;
-                dest[2] = point.position_.z_;
-                dest[3] = point.forward_.x_;
-                dest[4] = point.forward_.y_;
-                dest[5] = point.forward_.z_;
+                dest[0] = point.position_.x;
+                dest[1] = point.position_.y;
+                dest[2] = point.position_.z;
+                dest[3] = point.forward_.x;
+                dest[4] = point.forward_.y;
+                dest[5] = point.forward_.z;
                 ((color32&)dest[6]) = c;
                 dest[7] = factor;
                 dest[8] = elapsed;
-                dest[9] = point.parentPos_.x_;
-                dest[10] = point.parentPos_.y_;
-                dest[11] = point.parentPos_.z_;
+                dest[9] = point.parentPos_.x;
+                dest[10] = point.parentPos_.y;
+                dest[11] = point.parentPos_.z;
                 dest[12] = Lerp(leftScale, rightScale, elapsed);
 
-                dest[13] = point.next_->position_.x_;
-                dest[14] = point.next_->position_.y_;
-                dest[15] = point.next_->position_.z_;
-                dest[16] = point.next_->forward_.x_;
-                dest[17] = point.next_->forward_.y_;
-                dest[18] = point.next_->forward_.z_;
+                dest[13] = point.next_->position_.x;
+                dest[14] = point.next_->position_.y;
+                dest[15] = point.next_->position_.z;
+                dest[16] = point.next_->forward_.x;
+                dest[17] = point.next_->forward_.y;
+                dest[18] = point.next_->forward_.z;
                 ((color32&)dest[19]) = nextC;
                 dest[20] = nextFactor;
                 dest[21] = elapsed;
-                dest[22] = point.next_->parentPos_.x_;
-                dest[23] = point.next_->parentPos_.y_;
-                dest[24] = point.next_->parentPos_.z_;
+                dest[22] = point.next_->parentPos_.x;
+                dest[23] = point.next_->parentPos_.y;
+                dest[24] = point.next_->parentPos_.z;
                 dest[25] = Lerp(nextLeftScale, nextRightScale, elapsed);
 
                 dest += 26;
             }
 
             // Last row
-            dest[0] = point.position_.x_;
-            dest[1] = point.position_.y_;
-            dest[2] = point.position_.z_;
-            dest[3] = point.forward_.x_;
-            dest[4] = point.forward_.y_;
-            dest[5] = point.forward_.z_;
+            dest[0] = point.position_.x;
+            dest[1] = point.position_.y;
+            dest[2] = point.position_.z;
+            dest[3] = point.forward_.x;
+            dest[4] = point.forward_.y;
+            dest[5] = point.forward_.z;
             ((color32&)dest[6]) = c;
             dest[7] = factor;
             dest[8] = 1.0f;
-            dest[9] = point.parentPos_.x_;
-            dest[10] = point.parentPos_.y_;
-            dest[11] = point.parentPos_.z_;
+            dest[9] = point.parentPos_.x;
+            dest[10] = point.parentPos_.y;
+            dest[11] = point.parentPos_.z;
             dest[12] = rightScale;
 
-            dest[13] = point.next_->position_.x_;
-            dest[14] = point.next_->position_.y_;
-            dest[15] = point.next_->position_.z_;
-            dest[16] = point.next_->forward_.x_;
-            dest[17] = point.next_->forward_.y_;
-            dest[18] = point.next_->forward_.z_;
+            dest[13] = point.next_->position_.x;
+            dest[14] = point.next_->position_.y;
+            dest[15] = point.next_->position_.z;
+            dest[16] = point.next_->forward_.x;
+            dest[17] = point.next_->forward_.y;
+            dest[18] = point.next_->forward_.z;
             ((color32&)dest[19]) = nextC;
             dest[20] = nextFactor;
             dest[21] = 1.0f;
-            dest[22] = point.next_->parentPos_.x_;
-            dest[23] = point.next_->parentPos_.y_;
-            dest[24] = point.next_->parentPos_.z_;
+            dest[22] = point.next_->parentPos_.x;
+            dest[23] = point.next_->parentPos_.y;
+            dest[24] = point.next_->parentPos_.z;
             dest[25] = nextRightScale;
 
             dest += 26;

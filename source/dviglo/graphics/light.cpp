@@ -586,8 +586,8 @@ void Light::SetIntensitySortValue(const BoundingBox& box)
             float centerAngle = centerRay.HitDistance(box) / centerDistance;
 
             // Check if a corner of the bounding box is closer to the light ray than the center, use its angle in that case
-            Vector3 cornerPos = centerPos + box.HalfSize() * Vector3(centerPos.x_ < centerProj.x_ ? 1.0f : -1.0f,
-                centerPos.y_ < centerProj.y_ ? 1.0f : -1.0f, centerPos.z_ < centerProj.z_ ? 1.0f : -1.0f);
+            Vector3 cornerPos = centerPos + box.HalfSize() * Vector3(centerPos.x < centerProj.x ? 1.0f : -1.0f,
+                centerPos.y < centerProj.y ? 1.0f : -1.0f, centerPos.z < centerProj.z ? 1.0f : -1.0f);
             Vector3 cornerProj = lightRay.Project(cornerPos);
             float cornerDistance = (cornerProj - lightPos).Length();
             float cornerAngle = (cornerPos - cornerProj).Length() / cornerDistance;
@@ -628,7 +628,7 @@ Matrix3x4 Light::GetFullscreenQuadTransform(Camera* camera)
     // Position the directional light quad in halfway between far & near planes to prevent depth clipping
     camera->GetFrustumSize(near, far);
     quadTransform.SetTranslation(Vector3(0.0f, 0.0f, (camera->GetNearClip() + camera->GetFarClip()) * 0.5f));
-    quadTransform.SetScale(Vector3(far.x_, far.y_, 1.0f)); // Will be oversized, but doesn't matter (gets frustum clipped)
+    quadTransform.SetScale(Vector3(far.x, far.y, 1.0f)); // Will be oversized, but doesn't matter (gets frustum clipped)
     return camera->GetEffectiveWorldTransform() * quadTransform;
 }
 

@@ -96,7 +96,7 @@ void Vehicle::FixedUpdate(float timeStep)
 
     // Apply downforce proportional to velocity
     Vector3 localVelocity = hullRot.Inverse() * hullBody_->GetLinearVelocity();
-    hullBody_->ApplyForce(hullRot * Vector3::DOWN * Abs(localVelocity.z_) * DOWN_FORCE);
+    hullBody_->ApplyForce(hullRot * Vector3::DOWN * Abs(localVelocity.z) * DOWN_FORCE);
 }
 
 void Vehicle::Init()
@@ -130,7 +130,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     // constraint keep it together
     wheelNode = GetScene()->create_child(name);
     wheelNode->SetPosition(node_->LocalToWorld(offset));
-    wheelNode->SetRotation(node_->GetRotation() * (offset.x_ >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
+    wheelNode->SetRotation(node_->GetRotation() * (offset.x >= 0.0 ? Quaternion(0.0f, 0.0f, -90.0f) :
         Quaternion(0.0f, 0.0f, 90.0f)));
     wheelNode->SetScale(Vector3(0.8f, 0.5f, 0.8f));
     // Remember the ID for serialization
@@ -154,7 +154,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     wheelConstraint->SetOtherBody(GetComponent<RigidBody>()); // Connect to the hull body
     wheelConstraint->SetWorldPosition(wheelNode->GetPosition()); // Set constraint's both ends at wheel's location
     wheelConstraint->SetAxis(Vector3::UP); // Wheel rotates around its local Y-axis
-    wheelConstraint->SetOtherAxis(offset.x_ >= 0.0 ? Vector3::RIGHT : Vector3::LEFT); // Wheel's hull axis points either left or right
+    wheelConstraint->SetOtherAxis(offset.x >= 0.0 ? Vector3::RIGHT : Vector3::LEFT); // Wheel's hull axis points either left or right
     wheelConstraint->SetLowLimit(Vector2(-180.0f, 0.0f)); // Let the wheel rotate freely around the axis
     wheelConstraint->SetHighLimit(Vector2(180.0f, 0.0f));
     wheelConstraint->SetDisableCollision(true); // Let the wheel intersect the vehicle hull

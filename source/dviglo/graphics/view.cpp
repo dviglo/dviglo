@@ -2451,7 +2451,7 @@ bool View::IsShadowCasterVisible(Drawable* drawable, BoundingBox lightViewBox, C
     if (shadowCamera->IsOrthographic())
     {
         // Extrude the light space bounding box up to the far edge of the frustum's light space bounding box
-        lightViewBox.max_.z_ = Max(lightViewBox.max_.z_, lightViewFrustumBox.max_.z_);
+        lightViewBox.max_.z = Max(lightViewBox.max_.z, lightViewFrustumBox.max_.z);
         return lightViewFrustum.IsInsideFast(lightViewBox) != OUTSIDE;
     }
     else
@@ -2661,7 +2661,7 @@ void View::SetupDirLightShadowCamera(Camera* shadowCamera, Light* light, float n
     shadowCamera->SetOrthographic(true);
     shadowCamera->SetAspectRatio(1.0f);
     shadowCamera->SetNearClip(0.0f);
-    shadowCamera->SetFarClip(shadowBox.max_.z_);
+    shadowCamera->SetFarClip(shadowBox.max_.z);
 
     // Center shadow camera on the bounding box. Can not snap to texels yet as the shadow map viewport is unknown
     QuantizeDirLightShadowCamera(shadowCamera, light, IntRect(0, 0, 0, 0), shadowBox);
@@ -2677,10 +2677,10 @@ void View::FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRec
     if (type == LIGHT_DIRECTIONAL)
     {
         BoundingBox shadowBox;
-        shadowBox.max_.y_ = shadowCamera->GetOrthoSize() * 0.5f;
-        shadowBox.max_.x_ = shadowCamera->GetAspectRatio() * shadowBox.max_.y_;
-        shadowBox.min_.y_ = -shadowBox.max_.y_;
-        shadowBox.min_.x_ = -shadowBox.max_.x_;
+        shadowBox.max_.y = shadowCamera->GetOrthoSize() * 0.5f;
+        shadowBox.max_.x = shadowCamera->GetAspectRatio() * shadowBox.max_.y;
+        shadowBox.min_.y = -shadowBox.max_.y;
+        shadowBox.min_.x = -shadowBox.max_.x;
 
         // Requantize and snap to shadow map texels
         QuantizeDirLightShadowCamera(shadowCamera, light, shadowViewport, shadowBox);
@@ -2688,8 +2688,8 @@ void View::FinalizeShadowCamera(Camera* shadowCamera, Light* light, const IntRec
 
     if (type == LIGHT_SPOT && parameters.focus_)
     {
-        float viewSizeX = Max(Abs(shadowCasterBox.min_.x_), Abs(shadowCasterBox.max_.x_));
-        float viewSizeY = Max(Abs(shadowCasterBox.min_.y_), Abs(shadowCasterBox.max_.y_));
+        float viewSizeX = Max(Abs(shadowCasterBox.min_.x), Abs(shadowCasterBox.max_.x));
+        float viewSizeY = Max(Abs(shadowCasterBox.min_.y), Abs(shadowCasterBox.max_.y));
         float viewSize = Max(viewSizeX, viewSizeY);
         // Scale the quantization parameters, because view size is in projection space (-1.0 - 1.0)
         float invOrthoSize = 1.0f / shadowCamera->GetOrthoSize();
@@ -2724,10 +2724,10 @@ void View::QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, cons
     const FocusParameters& parameters = light->GetShadowFocus();
     auto shadowMapWidth = (float)(shadowViewport.Width());
 
-    float minX = viewBox.min_.x_;
-    float minY = viewBox.min_.y_;
-    float maxX = viewBox.max_.x_;
-    float maxY = viewBox.max_.y_;
+    float minX = viewBox.min_.x;
+    float minY = viewBox.min_.y;
+    float maxX = viewBox.max_.x;
+    float maxY = viewBox.max_.y;
 
     Vector2 center((minX + maxX) * 0.5f, (minY + maxY) * 0.5f);
     Vector2 viewSize(maxX - minX, maxY - minY);
@@ -2763,7 +2763,7 @@ void View::QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, cons
         // Take into account that shadow map border will not be used
         float invActualSize = 1.0f / (shadowMapWidth - 2.0f);
         Vector2 texelSize(viewSize.x_ * invActualSize, viewSize.y_ * invActualSize);
-        Vector3 snap(-fmodf(viewPos.x_, texelSize.x_), -fmodf(viewPos.y_, texelSize.y_), 0.0f);
+        Vector3 snap(-fmodf(viewPos.x, texelSize.x_), -fmodf(viewPos.y, texelSize.y_), 0.0f);
         shadowCameraNode->Translate(rot * snap, TransformSpace::World);
     }
 }

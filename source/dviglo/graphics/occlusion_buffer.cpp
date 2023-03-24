@@ -328,12 +328,12 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
     // Transform corners to projection space
     Vector4 vertices[8];
     vertices[0] = ModelTransform(viewProj_, worldSpaceBox.min_);
-    vertices[1] = ModelTransform(viewProj_, Vector3(worldSpaceBox.max_.x_, worldSpaceBox.min_.y_, worldSpaceBox.min_.z_));
-    vertices[2] = ModelTransform(viewProj_, Vector3(worldSpaceBox.min_.x_, worldSpaceBox.max_.y_, worldSpaceBox.min_.z_));
-    vertices[3] = ModelTransform(viewProj_, Vector3(worldSpaceBox.max_.x_, worldSpaceBox.max_.y_, worldSpaceBox.min_.z_));
-    vertices[4] = ModelTransform(viewProj_, Vector3(worldSpaceBox.min_.x_, worldSpaceBox.min_.y_, worldSpaceBox.max_.z_));
-    vertices[5] = ModelTransform(viewProj_, Vector3(worldSpaceBox.max_.x_, worldSpaceBox.min_.y_, worldSpaceBox.max_.z_));
-    vertices[6] = ModelTransform(viewProj_, Vector3(worldSpaceBox.min_.x_, worldSpaceBox.max_.y_, worldSpaceBox.max_.z_));
+    vertices[1] = ModelTransform(viewProj_, Vector3(worldSpaceBox.max_.x, worldSpaceBox.min_.y, worldSpaceBox.min_.z));
+    vertices[2] = ModelTransform(viewProj_, Vector3(worldSpaceBox.min_.x, worldSpaceBox.max_.y, worldSpaceBox.min_.z));
+    vertices[3] = ModelTransform(viewProj_, Vector3(worldSpaceBox.max_.x, worldSpaceBox.max_.y, worldSpaceBox.min_.z));
+    vertices[4] = ModelTransform(viewProj_, Vector3(worldSpaceBox.min_.x, worldSpaceBox.min_.y, worldSpaceBox.max_.z));
+    vertices[5] = ModelTransform(viewProj_, Vector3(worldSpaceBox.max_.x, worldSpaceBox.min_.y, worldSpaceBox.max_.z));
+    vertices[6] = ModelTransform(viewProj_, Vector3(worldSpaceBox.min_.x, worldSpaceBox.max_.y, worldSpaceBox.max_.z));
     vertices[7] = ModelTransform(viewProj_, worldSpaceBox.max_);
 
     // Apply a far clip relative bias
@@ -347,9 +347,9 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
         return true;
 
     Vector3 projected = ViewportTransform(vertices[0]);
-    minX = maxX = projected.x_;
-    minY = maxY = projected.y_;
-    minZ = projected.z_;
+    minX = maxX = projected.x;
+    minY = maxY = projected.y;
+    minZ = projected.z;
 
     // Project the rest
     for (unsigned i = 1; i < 8; ++i)
@@ -359,11 +359,11 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
 
         projected = ViewportTransform(vertices[i]);
 
-        if (projected.x_ < minX) minX = projected.x_;
-        if (projected.x_ > maxX) maxX = projected.x_;
-        if (projected.y_ < minY) minY = projected.y_;
-        if (projected.y_ > maxY) maxY = projected.y_;
-        if (projected.z_ < minZ) minZ = projected.z_;
+        if (projected.x < minX) minX = projected.x;
+        if (projected.x > maxX) maxX = projected.x;
+        if (projected.y < minY) minY = projected.y;
+        if (projected.y > maxY) maxY = projected.y;
+        if (projected.z < minZ) minZ = projected.z;
     }
 
     // Expand the bounding box 1 pixel in each direction to be conservative and correct rasterization offset
@@ -532,10 +532,10 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, i32 threadIndex)
 inline Vector4 OcclusionBuffer::ModelTransform(const Matrix4& transform, const Vector3& vertex) const
 {
     return Vector4(
-        transform.m00_ * vertex.x_ + transform.m01_ * vertex.y_ + transform.m02_ * vertex.z_ + transform.m03_,
-        transform.m10_ * vertex.x_ + transform.m11_ * vertex.y_ + transform.m12_ * vertex.z_ + transform.m13_,
-        transform.m20_ * vertex.x_ + transform.m21_ * vertex.y_ + transform.m22_ * vertex.z_ + transform.m23_,
-        transform.m30_ * vertex.x_ + transform.m31_ * vertex.y_ + transform.m32_ * vertex.z_ + transform.m33_
+        transform.m00_ * vertex.x + transform.m01_ * vertex.y + transform.m02_ * vertex.z + transform.m03_,
+        transform.m10_ * vertex.x + transform.m11_ * vertex.y + transform.m12_ * vertex.z + transform.m13_,
+        transform.m20_ * vertex.x + transform.m21_ * vertex.y + transform.m22_ * vertex.z + transform.m23_,
+        transform.m30_ * vertex.x + transform.m31_ * vertex.y + transform.m32_ * vertex.z + transform.m33_
     );
 }
 
@@ -557,10 +557,10 @@ inline Vector4 OcclusionBuffer::ClipEdge(const Vector4& v0, const Vector4& v1, f
 
 inline float OcclusionBuffer::SignedArea(const Vector3& v0, const Vector3& v1, const Vector3& v2) const
 {
-    float aX = v0.x_ - v1.x_;
-    float aY = v0.y_ - v1.y_;
-    float bX = v2.x_ - v1.x_;
-    float bY = v2.y_ - v1.y_;
+    float aX = v0.x - v1.x;
+    float aY = v0.y - v1.y;
+    float bX = v2.x - v1.x;
+    float bY = v2.y - v1.y;
     return aX * bY - aY * bX;
 }
 
@@ -752,18 +752,18 @@ struct Gradients
     /// Construct from vertices.
     explicit Gradients(const Vector3* vertices)
     {
-        float invdX = 1.0f / (((vertices[1].x_ - vertices[2].x_) *
-                               (vertices[0].y_ - vertices[2].y_)) -
-                              ((vertices[0].x_ - vertices[2].x_) *
-                               (vertices[1].y_ - vertices[2].y_)));
+        float invdX = 1.0f / (((vertices[1].x - vertices[2].x) *
+                               (vertices[0].y - vertices[2].y)) -
+                              ((vertices[0].x - vertices[2].x) *
+                               (vertices[1].y - vertices[2].y)));
 
         float invdY = -invdX;
 
-        dInvZdX_ = invdX * (((vertices[1].z_ - vertices[2].z_) * (vertices[0].y_ - vertices[2].y_)) -
-                            ((vertices[0].z_ - vertices[2].z_) * (vertices[1].y_ - vertices[2].y_)));
+        dInvZdX_ = invdX * (((vertices[1].z - vertices[2].z) * (vertices[0].y - vertices[2].y)) -
+                            ((vertices[0].z - vertices[2].z) * (vertices[1].y - vertices[2].y)));
 
-        dInvZdY_ = invdY * (((vertices[1].z_ - vertices[2].z_) * (vertices[0].x_ - vertices[2].x_)) -
-                            ((vertices[0].z_ - vertices[2].z_) * (vertices[1].x_ - vertices[2].x_)));
+        dInvZdY_ = invdY * (((vertices[1].z - vertices[2].z) * (vertices[0].x - vertices[2].x)) -
+                            ((vertices[0].z - vertices[2].z) * (vertices[1].x - vertices[2].x)));
 
         dInvZdXInt_ = (int)dInvZdX_;
     }
@@ -782,14 +782,14 @@ struct Edge
     /// Construct from gradients and top & bottom vertices.
     Edge(const Gradients& gradients, const Vector3& top, const Vector3& bottom, int topY)
     {
-        float height = (bottom.y_ - top.y_);
-        float slope = (height != 0.0f) ? (bottom.x_ - top.x_) / height : 0.0f;
-        float yPreStep = (float)(topY + 1) - top.y_;
+        float height = (bottom.y - top.y);
+        float slope = (height != 0.0f) ? (bottom.x - top.x) / height : 0.0f;
+        float yPreStep = (float)(topY + 1) - top.y;
         float xPreStep = slope * yPreStep;
 
-        x_ = RoundToInt((xPreStep + top.x_) * OCCLUSION_X_SCALE);
+        x_ = RoundToInt((xPreStep + top.x) * OCCLUSION_X_SCALE);
         xStep_ = RoundToInt(slope * OCCLUSION_X_SCALE);
-        invZ_ = RoundToInt(top.z_ + xPreStep * gradients.dInvZdX_ + yPreStep * gradients.dInvZdY_);
+        invZ_ = RoundToInt(top.z + xPreStep * gradients.dInvZdX_ + yPreStep * gradients.dInvZdY_);
         invZStep_ = RoundToInt(slope * gradients.dInvZdX_ + gradients.dInvZdY_);
     }
 
@@ -811,9 +811,9 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
     bool middleIsRight;
 
     // Sort vertices in Y-direction
-    if (vertices[0].y_ < vertices[1].y_)
+    if (vertices[0].y < vertices[1].y)
     {
-        if (vertices[2].y_ < vertices[0].y_)
+        if (vertices[2].y < vertices[0].y)
         {
             top = 2;
             middle = 0;
@@ -823,7 +823,7 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
         else
         {
             top = 0;
-            if (vertices[1].y_ < vertices[2].y_)
+            if (vertices[1].y < vertices[2].y)
             {
                 middle = 1;
                 bottom = 2;
@@ -839,7 +839,7 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
     }
     else
     {
-        if (vertices[2].y_ < vertices[1].y_)
+        if (vertices[2].y < vertices[1].y)
         {
             top = 2;
             middle = 1;
@@ -849,7 +849,7 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
         else
         {
             top = 1;
-            if (vertices[0].y_ < vertices[2].y_)
+            if (vertices[0].y < vertices[2].y)
             {
                 middle = 0;
                 bottom = 2;
@@ -864,9 +864,9 @@ void OcclusionBuffer::DrawTriangle2D(const Vector3* vertices, bool clockwise, i3
         }
     }
 
-    auto topY = (int)vertices[top].y_;
-    auto middleY = (int)vertices[middle].y_;
-    auto bottomY = (int)vertices[bottom].y_;
+    auto topY = (int)vertices[top].y;
+    auto middleY = (int)vertices[middle].y;
+    auto bottomY = (int)vertices[bottom].y;
 
     // Check for degenerate triangle
     if (topY == bottomY)

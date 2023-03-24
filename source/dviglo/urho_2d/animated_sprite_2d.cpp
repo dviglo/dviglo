@@ -425,9 +425,9 @@ void AnimatedSprite2D::UpdateSourceBatchesSpriter()
         Spriter::SpatialInfo& info = timelineKey->info_;
         Vector3 position(info.x_, info.y_, 0.0f);
         if (flipX_)
-            position.x_ = -position.x_;
+            position.x = -position.x;
         if (flipY_)
-            position.y_ = -position.y_;
+            position.y = -position.y;
 
         float angle = info.angle_;
         if (flipX_ != flipY_)

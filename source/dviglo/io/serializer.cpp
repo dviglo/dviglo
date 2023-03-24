@@ -108,9 +108,9 @@ bool Serializer::WritePackedVector3(const Vector3& value, float maxAbsCoord)
     short coords[3];
     float v = 32767.0f / maxAbsCoord;
 
-    coords[0] = (short)Round(Clamp(value.x_, -maxAbsCoord, maxAbsCoord) * v);
-    coords[1] = (short)Round(Clamp(value.y_, -maxAbsCoord, maxAbsCoord) * v);
-    coords[2] = (short)Round(Clamp(value.z_, -maxAbsCoord, maxAbsCoord) * v);
+    coords[0] = (short)Round(Clamp(value.x, -maxAbsCoord, maxAbsCoord) * v);
+    coords[1] = (short)Round(Clamp(value.y, -maxAbsCoord, maxAbsCoord) * v);
+    coords[2] = (short)Round(Clamp(value.z, -maxAbsCoord, maxAbsCoord) * v);
     return Write(&coords[0], sizeof coords) == sizeof coords;
 }
 

@@ -260,8 +260,8 @@ void CrowdNavigation::CreateMushroom(const Vector3& pos)
 
     // Create the navigation Obstacle component and set its height & radius proportional to scale
     auto* obstacle = mushroomNode->create_component<Obstacle>();
-    obstacle->SetRadius(mushroomNode->GetScale().x_);
-    obstacle->SetHeight(mushroomNode->GetScale().y_);
+    obstacle->SetRadius(mushroomNode->GetScale().x);
+    obstacle->SetHeight(mushroomNode->GetScale().y);
 }
 
 void CrowdNavigation::CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh, Node* boxGroup)
@@ -270,7 +270,7 @@ void CrowdNavigation::CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh
     for (const SharedPtr<Node>& box : boxes)
     {
         Vector3 boxPos = box->GetPosition();
-        float boxHalfSize = box->GetScale().x_ / 2;
+        float boxHalfSize = box->GetScale().x / 2;
 
         // Create 2 empty nodes for the start & end points of the connection. Note that order matters only when using one-way/unidirectional connection.
         Node* connectionStart = box->create_child("ConnectionStart");
@@ -300,7 +300,7 @@ void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
         clone->SetScale(Vector3(size / 1.5f, size * 2.0f, size / 1.5f));
         clone->SetPosition(navMesh->FindNearestPoint(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f)));
         auto* agent = clone->create_component<CrowdAgent>();
-        agent->SetRadius(clone->GetScale().x_ * 0.5f);
+        agent->SetRadius(clone->GetScale().x * 0.5f);
         agent->SetHeight(size);
         agent->SetNavigationQuality(NAVIGATIONQUALITY_LOW);
     }

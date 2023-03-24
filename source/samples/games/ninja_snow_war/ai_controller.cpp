@@ -94,15 +94,15 @@ void AIController::Control(Ninja* ownNinja, Node* ownNode, float timeStep)
 
         // X-aiming
         targetAim.Normalize();
-        Vector3 currentYaw(currentAim.x_, 0.f, currentAim.z_);
-        Vector3 targetYaw(targetAim.x_, 0.f, targetAim.z_);
+        Vector3 currentYaw(currentAim.x, 0.f, currentAim.z);
+        Vector3 targetYaw(targetAim.x, 0.f, targetAim.z);
         currentYaw.Normalize();
         targetYaw.Normalize();
         deltaX = Clamp(Quaternion(currentYaw, targetYaw).YawAngle(), -aiAimSpeed, aiAimSpeed);
 
         // Y-aiming
-        Vector3 currentPitch(0.f, currentAim.y_, 1.f);
-        Vector3 targetPitch(0.f, targetAim.y_, 1.f);
+        Vector3 currentPitch(0.f, currentAim.y, 1.f);
+        Vector3 targetPitch(0.f, targetAim.y, 1.f);
         currentPitch.Normalize();
         targetPitch.Normalize();
         deltaY = Clamp(Quaternion(currentPitch, targetPitch).PitchAngle(), -aiAimSpeed, aiAimSpeed);

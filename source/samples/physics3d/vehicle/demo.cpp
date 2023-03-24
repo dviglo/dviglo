@@ -122,7 +122,7 @@ void VehicleDemo::CreateScene()
     {
         Node* objectNode = scene_->create_child("Mushroom");
         Vector3 position(Random(2000.0f) - 1000.0f, 0.0f, Random(2000.0f) - 1000.0f);
-        position.y_ = terrain->GetHeight(position) - 0.1f;
+        position.y = terrain->GetHeight(position) - 0.1f;
         objectNode->SetPosition(position);
         // Create a rotation quaternion from up vector to terrain normal
         objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));

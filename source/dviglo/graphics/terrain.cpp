@@ -551,8 +551,8 @@ float Terrain::GetHeight(const Vector3& worldPosition) const
     if (node_)
     {
         Vector3 position = node_->GetWorldTransform().Inverse() * worldPosition;
-        float xPos = (position.x_ - patchWorldOrigin_.x_) / spacing_.x_;
-        float zPos = (position.z_ - patchWorldOrigin_.y_) / spacing_.z_;
+        float xPos = (position.x - patchWorldOrigin_.x_) / spacing_.x;
+        float zPos = (position.z - patchWorldOrigin_.y_) / spacing_.z;
         float xFrac = Fract(xPos);
         float zFrac = Fract(zPos);
         float h1, h2, h3;
@@ -574,7 +574,7 @@ float Terrain::GetHeight(const Vector3& worldPosition) const
 
         float h = h1 * (1.0f - xFrac - zFrac) + h2 * xFrac + h3 * zFrac;
         /// \todo This assumes that the terrain scene node is upright
-        return node_->GetWorldScale().y_ * h + node_->GetWorldPosition().y_;
+        return node_->GetWorldScale().y * h + node_->GetWorldPosition().y;
     }
     else
         return 0.0f;
@@ -585,8 +585,8 @@ Vector3 Terrain::GetNormal(const Vector3& worldPosition) const
     if (node_)
     {
         Vector3 position = node_->GetWorldTransform().Inverse() * worldPosition;
-        float xPos = (position.x_ - patchWorldOrigin_.x_) / spacing_.x_;
-        float zPos = (position.z_ - patchWorldOrigin_.y_) / spacing_.z_;
+        float xPos = (position.x - patchWorldOrigin_.x_) / spacing_.x;
+        float zPos = (position.z - patchWorldOrigin_.y_) / spacing_.z;
         float xFrac = Fract(xPos);
         float zFrac = Fract(zPos);
         Vector3 n1, n2, n3;
@@ -619,8 +619,8 @@ IntVector2 Terrain::WorldToHeightMap(const Vector3& worldPosition) const
         return IntVector2::ZERO;
 
     Vector3 position = node_->GetWorldTransform().Inverse() * worldPosition;
-    auto xPos = RoundToInt((position.x_ - patchWorldOrigin_.x_) / spacing_.x_);
-    auto zPos = RoundToInt((position.z_ - patchWorldOrigin_.y_) / spacing_.z_);
+    auto xPos = RoundToInt((position.x - patchWorldOrigin_.x_) / spacing_.x);
+    auto zPos = RoundToInt((position.z - patchWorldOrigin_.y_) / spacing_.z);
     xPos = Clamp(xPos, 0, numVertices_.x_ - 1);
     zPos = Clamp(zPos, 0, numVertices_.y_ - 1);
 
@@ -633,11 +633,11 @@ Vector3 Terrain::HeightMapToWorld(const IntVector2& pixelPosition) const
         return Vector3::ZERO;
 
     IntVector2 pos(pixelPosition.x_, numVertices_.y_ - 1 - pixelPosition.y_);
-    auto xPos = pos.x_ * spacing_.x_ + patchWorldOrigin_.x_;
-    auto zPos = pos.y_ * spacing_.z_ + patchWorldOrigin_.y_;
+    auto xPos = pos.x_ * spacing_.x + patchWorldOrigin_.x_;
+    auto zPos = pos.y_ * spacing_.z + patchWorldOrigin_.y_;
     Vector3 lPos(xPos, 0.0f, zPos);
     Vector3 wPos = node_->GetWorldTransform() * lPos;
-    wPos.y_ = GetHeight(wPos);
+    wPos.y = GetHeight(wPos);
 
     return wPos;
 }
@@ -684,19 +684,19 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
                 int zPos = coords.y_ * patchSize_ + z;
 
                 // Position
-                Vector3 position((float)x * spacing_.x_, GetRawHeight(xPos, zPos), (float)z * spacing_.z_);
-                *vertexData++ = position.x_;
-                *vertexData++ = position.y_;
-                *vertexData++ = position.z_;
-                *positionData++ = position.x_;
-                *positionData++ = position.y_;
-                *positionData++ = position.z_;
+                Vector3 position((float)x * spacing_.x, GetRawHeight(xPos, zPos), (float)z * spacing_.z);
+                *vertexData++ = position.x;
+                *vertexData++ = position.y;
+                *vertexData++ = position.z;
+                *positionData++ = position.x;
+                *positionData++ = position.y;
+                *positionData++ = position.z;
 
                 box.Merge(position);
 
                 // For vertices that are part of the occlusion LOD, calculate the minimum height in the neighborhood
                 // to prevent false positive occlusion due to inaccuracy between occlusion LOD & visible LOD
-                float minHeight = position.y_;
+                float minHeight = position.y;
                 if (halfLodExpand > 0 && (x & lodExpand) == 0 && (z & lodExpand) == 0)
                 {
                     int minX = Max(xPos - halfLodExpand, 0);
@@ -709,15 +709,15 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
                             minHeight = Min(minHeight, GetRawHeight(nX, nZ));
                     }
                 }
-                *occlusionData++ = position.x_;
+                *occlusionData++ = position.x;
                 *occlusionData++ = minHeight;
-                *occlusionData++ = position.z_;
+                *occlusionData++ = position.z;
 
                 // Normal
                 Vector3 normal = GetRawNormal(xPos, zPos);
-                *vertexData++ = normal.x_;
-                *vertexData++ = normal.y_;
-                *vertexData++ = normal.z_;
+                *vertexData++ = normal.x;
+                *vertexData++ = normal.y;
+                *vertexData++ = normal.z;
 
                 // Texture coordinate
                 Vector2 texCoord((float)xPos / (float)(numVertices_.x_ - 1), 1.0f - (float)zPos / (float)(numVertices_.y_ - 1));
@@ -726,9 +726,9 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
 
                 // Tangent
                 Vector3 xyz = (Vector3::RIGHT - normal * normal.DotProduct(Vector3::RIGHT)).normalized();
-                *vertexData++ = xyz.x_;
-                *vertexData++ = xyz.y_;
-                *vertexData++ = xyz.z_;
+                *vertexData++ = xyz.x;
+                *vertexData++ = xyz.y;
+                *vertexData++ = xyz.z;
                 *vertexData++ = 1.0f;
             }
         }
@@ -863,7 +863,7 @@ void Terrain::CreateGeometry()
     }
 
     // Determine total terrain size
-    patchWorldSize_ = Vector2(spacing_.x_ * (float)patchSize_, spacing_.z_ * (float)patchSize_);
+    patchWorldSize_ = Vector2(spacing_.x * (float)patchSize_, spacing_.z * (float)patchSize_);
     bool updateAll = false;
 
     if (heightMap_)
@@ -948,7 +948,7 @@ void Terrain::CreateGeometry()
             {
                 for (int x = 0; x < numVertices_.x_; ++x)
                 {
-                    float newHeight = (float)src[imgRow * (numVertices_.y_ - 1 - z) + x] * spacing_.y_;
+                    float newHeight = (float)src[imgRow * (numVertices_.y_ - 1 - z) + x] * spacing_.y;
 
                     if (updateAll)
                         *dest = newHeight;
@@ -975,7 +975,7 @@ void Terrain::CreateGeometry()
                 for (int x = 0; x < numVertices_.x_; ++x)
                 {
                     float newHeight = ((float)src[imgRow * (numVertices_.y_ - 1 - z) + imgComps * x] +
-                                       (float)src[imgRow * (numVertices_.y_ - 1 - z) + imgComps * x + 1] / 256.0f) * spacing_.y_;
+                                       (float)src[imgRow * (numVertices_.y_ - 1 - z) + imgComps * x + 1] / 256.0f) * spacing_.y;
 
                     if (updateAll)
                         *dest = newHeight;
@@ -1345,7 +1345,7 @@ Vector3 Terrain::GetRawNormal(int x, int z) const
     float swSlope = GetRawHeight(x - 1, z + 1) - baseHeight;
     float wSlope = GetRawHeight(x - 1, z) - baseHeight;
     float nwSlope = GetRawHeight(x - 1, z - 1) - baseHeight;
-    float up = 0.5f * (spacing_.x_ + spacing_.z_);
+    float up = 0.5f * (spacing_.x + spacing_.z);
 
     return (Vector3(0.0f, up, nSlope) +
             Vector3(-neSlope, up, neSlope) +
@@ -1391,7 +1391,7 @@ void Terrain::CalculateLodErrors(TerrainPatch* patch)
             }
 
             // Set error to be at least same as (half vertex spacing x LOD) to prevent horizontal stretches getting too inaccurate
-            maxError = Max(maxError, 0.25f * (spacing_.x_ + spacing_.z_) * (float)(1u << i));
+            maxError = Max(maxError, 0.25f * (spacing_.x + spacing_.z) * (float)(1u << i));
         }
 
         lodErrors.Push(maxError);

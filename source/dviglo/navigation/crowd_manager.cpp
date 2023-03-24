@@ -136,15 +136,15 @@ void CrowdManager::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
             Vector3 pos2;
             for (int i = 0; i < ag->ncorners; ++i)
             {
-                pos2.x_ = ag->cornerVerts[i * 3];
-                pos2.y_ = ag->cornerVerts[i * 3 + 1];
-                pos2.z_ = ag->cornerVerts[i * 3 + 2];
+                pos2.x = ag->cornerVerts[i * 3];
+                pos2.y = ag->cornerVerts[i * 3 + 1];
+                pos2.z = ag->cornerVerts[i * 3 + 2];
                 debug->AddLine(pos1, pos2, color, depthTest);
                 pos1 = pos2;
             }
-            pos2.x_ = ag->targetPos[0];
-            pos2.y_ = ag->targetPos[1];
-            pos2.z_ = ag->targetPos[2];
+            pos2.x = ag->targetPos[0];
+            pos2.y = ag->targetPos[1];
+            pos2.z = ag->targetPos[2];
             debug->AddLine(pos1, pos2, color, depthTest);
 
             // Draw target circle

@@ -941,7 +941,7 @@ void Material::SetShaderParameter(const String& name, const Variant& value)
         if (type == VAR_VECTOR3)
         {
             const Vector3& vec = value.GetVector3();
-            specular_ = vec.x_ > 0.0f || vec.y_ > 0.0f || vec.z_ > 0.0f;
+            specular_ = vec.x > 0.0f || vec.y > 0.0f || vec.z > 0.0f;
         }
         else if (type == VAR_VECTOR4)
         {

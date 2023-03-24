@@ -194,16 +194,16 @@ void Urho2DSprite::HandleUpdate(StringHash eventType, VariantMap& eventData)
         Vector3 position = node->GetPosition();
         Vector3 moveSpeed = node->GetVar(VAR_MOVESPEED).GetVector3();
         Vector3 newPosition = position + moveSpeed * timeStep;
-        if (newPosition.x_ < -halfWidth || newPosition.x_ > halfWidth)
+        if (newPosition.x < -halfWidth || newPosition.x > halfWidth)
         {
-            newPosition.x_ = position.x_;
-            moveSpeed.x_ = -moveSpeed.x_;
+            newPosition.x = position.x;
+            moveSpeed.x = -moveSpeed.x;
             node->SetVar(VAR_MOVESPEED, moveSpeed);
         }
-        if (newPosition.y_ < -halfHeight || newPosition.y_ > halfHeight)
+        if (newPosition.y < -halfHeight || newPosition.y > halfHeight)
         {
-            newPosition.y_ = position.y_;
-            moveSpeed.y_ = -moveSpeed.y_;
+            newPosition.y = position.y;
+            moveSpeed.y = -moveSpeed.y;
             node->SetVar(VAR_MOVESPEED, moveSpeed);
         }
 

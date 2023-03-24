@@ -86,7 +86,7 @@ public:
     explicit Color(unsigned color, const ChannelMask& mask = ABGR) { FromU32(color, mask); }
 
     /// Construct from 3-vector.
-    explicit Color(const Vector3& color) : Color(color.x_, color.y_, color.z_) {}
+    explicit Color(const Vector3& color) : Color(color.x, color.y, color.z) {}
 
     /// Construct from 4-vector.
     explicit Color(const Vector4& color) : Color(color.x, color.y, color.z, color.w) {}

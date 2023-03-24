@@ -321,8 +321,8 @@ HeightfieldData::HeightfieldData(Terrain* terrain, i32 lodLevel) :
             for (i32 i = 0; i < lodLevel; ++i)
             {
                 skip *= 2;
-                lodSpacing.x_ *= 2.0f;
-                lodSpacing.z_ *= 2.0f;
+                lodSpacing.x *= 2.0f;
+                lodSpacing.z *= 2.0f;
                 int rX = lodSize.x_ & 1u;
                 int rY = lodSize.y_ & 1u;
                 lodSize.x_ >>= 1;
@@ -543,7 +543,7 @@ void CollisionShape::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
             if (shapeType_ == SHAPE_TERRAIN && geometry_)
             {
                 auto* heightfield = static_cast<HeightfieldData*>(geometry_.Get());
-                position.y_ += (heightfield->minHeight_ + heightfield->maxHeight_) * 0.5f;
+                position.y += (heightfield->minHeight_ + heightfield->maxHeight_) * 0.5f;
             }
 
             Vector3 worldPosition(worldTransform * position);
@@ -855,7 +855,7 @@ void CollisionShape::NotifyRigidBody(bool updateMass)
             if (shapeType_ == SHAPE_TERRAIN && geometry_)
             {
                 auto* heightfield = static_cast<HeightfieldData*>(geometry_.Get());
-                position.y_ += (heightfield->minHeight_ + heightfield->maxHeight_) * 0.5f;
+                position.y += (heightfield->minHeight_ + heightfield->maxHeight_) * 0.5f;
             }
 
             btTransform offset;
@@ -970,7 +970,7 @@ void CollisionShape::OnMarkedDirty(Node* node)
         case SHAPE_TERRAIN:
             {
                 auto* heightfield = static_cast<HeightfieldData*>(geometry_.Get());
-                shape_->setLocalScaling(ToBtVector3(Vector3(heightfield->spacing_.x_, 1.0f, heightfield->spacing_.z_) *
+                shape_->setLocalScaling(ToBtVector3(Vector3(heightfield->spacing_.x, 1.0f, heightfield->spacing_.z) *
                                                     newWorldScale * size_));
             }
             break;
@@ -1018,7 +1018,7 @@ void CollisionShape::UpdateShape()
             break;
 
         case SHAPE_SPHERE:
-            shape_ = make_unique<btSphereShape>(size_.x_ * 0.5f);
+            shape_ = make_unique<btSphereShape>(size_.x * 0.5f);
             shape_->setLocalScaling(ToBtVector3(cachedWorldScale_));
             break;
 
@@ -1027,17 +1027,17 @@ void CollisionShape::UpdateShape()
             break;
 
         case SHAPE_CYLINDER:
-            shape_ = make_unique<btCylinderShape>(btVector3(size_.x_ * 0.5f, size_.y_ * 0.5f, size_.x_ * 0.5f));
+            shape_ = make_unique<btCylinderShape>(btVector3(size_.x * 0.5f, size_.y * 0.5f, size_.x * 0.5f));
             shape_->setLocalScaling(ToBtVector3(cachedWorldScale_));
             break;
 
         case SHAPE_CAPSULE:
-            shape_ = make_unique<btCapsuleShape>(size_.x_ * 0.5f, Max(size_.y_ - size_.x_, 0.0f));
+            shape_ = make_unique<btCapsuleShape>(size_.x * 0.5f, Max(size_.y - size_.x, 0.0f));
             shape_->setLocalScaling(ToBtVector3(cachedWorldScale_));
             break;
 
         case SHAPE_CONE:
-            shape_ = make_unique<btConeShape>(size_.x_ * 0.5f, size_.y_);
+            shape_ = make_unique<btConeShape>(size_.x * 0.5f, size_.y);
             shape_->setLocalScaling(ToBtVector3(cachedWorldScale_));
             break;
 
@@ -1067,7 +1067,7 @@ void CollisionShape::UpdateShape()
                         1.0f, heightfield->minHeight_, heightfield->maxHeight_, 1, PHY_FLOAT, false);
 
                     shape_->setLocalScaling(
-                        ToBtVector3(Vector3(heightfield->spacing_.x_, 1.0f, heightfield->spacing_.z_) * cachedWorldScale_ * size_));
+                        ToBtVector3(Vector3(heightfield->spacing_.x, 1.0f, heightfield->spacing_.z) * cachedWorldScale_ * size_));
                 }
             }
             break;

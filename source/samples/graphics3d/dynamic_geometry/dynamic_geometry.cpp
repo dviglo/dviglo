@@ -337,9 +337,9 @@ void DynamicGeometry::AnimateObjects(float timeStep)
                 float phase = startPhase + vertexDuplicates_[j] * 10.0f;
                 Vector3& src = originalVertices_[j];
                 Vector3& dest = *reinterpret_cast<Vector3*>(vertexData + j * vertexSize);
-                dest.x_ = src.x_ * (1.0f + 0.1f * Sin(phase));
-                dest.y_ = src.y_ * (1.0f + 0.1f * Sin(phase + 60.0f));
-                dest.z_ = src.z_ * (1.0f + 0.1f * Sin(phase + 120.0f));
+                dest.x = src.x * (1.0f + 0.1f * Sin(phase));
+                dest.y = src.y * (1.0f + 0.1f * Sin(phase + 60.0f));
+                dest.z = src.z * (1.0f + 0.1f * Sin(phase + 120.0f));
             }
 
             buffer->Unlock();

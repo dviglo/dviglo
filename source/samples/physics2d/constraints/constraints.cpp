@@ -497,7 +497,7 @@ Vector2 Urho2DConstraints::GetMousePositionXY()
 {
     Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / DV_GRAPHICS.GetHeight(), 0.0f);
     Vector3 worldPoint = camera_->screen_to_world_point(screenPoint);
-    return Vector2(worldPoint.x_, worldPoint.y_);
+    return Vector2(worldPoint.x, worldPoint.y);
 }
 
 void Urho2DConstraints::HandleMouseMove(StringHash eventType, VariantMap& eventData)

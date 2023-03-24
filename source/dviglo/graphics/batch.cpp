@@ -91,25 +91,25 @@ void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, i32 split)
         1.0f
     );
 
-    offset.x_ += scale.x_;
-    offset.y_ += scale.y_;
+    offset.x += scale.x;
+    offset.y += scale.y;
 
     if (GParams::get_gapi() == GAPI_OPENGL)
     {
-        offset.z_ = 0.5f;
-        scale.z_ = 0.5f;
-        offset.y_ = 1.0f - offset.y_;
+        offset.z = 0.5f;
+        scale.z = 0.5f;
+        offset.y = 1.0f - offset.y;
     }
     else
     {
-        scale.y_ = -scale.y_;
+        scale.y = -scale.y;
     }
 
     // If using 4 shadow samples, offset the position diagonally by half pixel
     if (DV_RENDERER.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || DV_RENDERER.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
     {
-        offset.x_ -= 0.5f / width;
-        offset.y_ -= 0.5f / height;
+        offset.x -= 0.5f / width;
+        offset.y -= 0.5f / height;
     }
     texAdjust.SetTranslation(offset);
     texAdjust.SetScale(scale);
@@ -263,7 +263,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         const BoundingBox& box = zone_->GetBoundingBox();
         Vector3 boxSize = box.Size();
         Matrix3x4 adjust(Matrix3x4::IDENTITY);
-        adjust.SetScale(Vector3(1.0f / boxSize.x_, 1.0f / boxSize.y_, 1.0f / boxSize.z_));
+        adjust.SetScale(Vector3(1.0f / boxSize.x, 1.0f / boxSize.y, 1.0f / boxSize.z));
         adjust.SetTranslation(Vector3(0.5f, 0.5f, 0.5f));
         Matrix3x4 zoneTransform = adjust * zone_->GetInverseWorldTransform();
         graphics.SetShaderParameter(VSP_ZONE, zoneTransform);
@@ -285,8 +285,8 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         if (zone_->GetHeightFog() && zoneNode)
         {
             Vector3 worldFogHeightVec = zoneNode->GetWorldTransform() * Vector3(0.0f, zone_->GetFogHeight(), 0.0f);
-            fogParams.z = worldFogHeightVec.y_;
-            fogParams.w = zone_->GetFogHeightScale() / Max(zoneNode->GetWorldScale().y_, M_EPSILON);
+            fogParams.z = worldFogHeightVec.y;
+            fogParams.w = zone_->GetFogHeightScale() / Max(zoneNode->GetWorldScale().y, M_EPSILON);
         }
 
         graphics.SetShaderParameter(PSP_FOGPARAMS, fogParams);

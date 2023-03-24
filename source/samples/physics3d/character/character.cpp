@@ -60,7 +60,7 @@ void Character::FixedUpdate(float timeStep)
     Vector3 moveDir = Vector3::ZERO;
     const Vector3& velocity = body->GetLinearVelocity();
     // Velocity on the XZ plane
-    Vector3 planeVelocity(velocity.x_, 0.0f, velocity.z_);
+    Vector3 planeVelocity(velocity.x, 0.0f, velocity.z);
 
     if (controls_.IsDown(CTRL_FORWARD))
         moveDir += Vector3::FORWARD;
@@ -133,9 +133,9 @@ void Character::HandleNodeCollision(StringHash eventType, VariantMap& eventData)
         /*float contactImpulse = */contacts.ReadFloat();
 
         // If contact is below node center and pointing up, assume it's a ground contact
-        if (contactPosition.y_ < (node_->GetPosition().y_ + 1.0f))
+        if (contactPosition.y < (node_->GetPosition().y + 1.0f))
         {
-            float level = contactNormal.y_;
+            float level = contactNormal.y;
             if (level > 0.75)
                 onGround_ = true;
         }

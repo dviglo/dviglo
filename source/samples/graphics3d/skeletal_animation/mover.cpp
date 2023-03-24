@@ -31,7 +31,7 @@ void Mover::Update(float timeStep)
 
     // If in risk of going outside the plane, rotate the model right
     Vector3 pos = node_->GetPosition();
-    if (pos.x_ < bounds_.min_.x_ || pos.x_ > bounds_.max_.x_ || pos.z_ < bounds_.min_.z_ || pos.z_ > bounds_.max_.z_)
+    if (pos.x < bounds_.min_.x || pos.x > bounds_.max_.x || pos.z < bounds_.min_.z || pos.z > bounds_.max_.z)
         node_->Yaw(rotationSpeed_ * timeStep);
 
     // Get the model's first (only) animation state and advance its time. Note the convenience accessor to other components

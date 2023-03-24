@@ -39,7 +39,7 @@ void Snowball::FixedUpdate(float timeStep)
     if (onGround || duration < SNOWBALL_GROUND_HIT_DURATION)
     {
         Vector3 vel = body->GetLinearVelocity();
-        body->ApplyForce(Vector3(-SNOWBALL_DAMPING_FORCE * vel.x_, 0.f, -SNOWBALL_DAMPING_FORCE * vel.z_));
+        body->ApplyForce(Vector3(-SNOWBALL_DAMPING_FORCE * vel.x, 0.f, -SNOWBALL_DAMPING_FORCE * vel.z));
     }
 
     // Disappear when duration expired

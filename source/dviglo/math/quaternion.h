@@ -99,7 +99,7 @@ public:
     /// Construct from Euler angles (in degrees).
     explicit Quaternion(const Vector3& angles) noexcept
     {
-        FromEulerAngles(angles.x_, angles.y_, angles.z_);
+        FromEulerAngles(angles.x, angles.y, angles.z);
     }
 
     /// Construct from the rotation difference between two direction vectors.
@@ -240,7 +240,7 @@ public:
 
         __m128 q = _mm_loadu_ps(&w_);
         q = _mm_shuffle_ps(q, q, _MM_SHUFFLE(0, 3, 2, 1));
-        __m128 v = _mm_set_ps(0.f, rhs.z_, rhs.y_, rhs.x_);
+        __m128 v = _mm_set_ps(0.f, rhs.z, rhs.y, rhs.x);
         const __m128 W = _mm_shuffle_ps(q, q, _MM_SHUFFLE(3, 3, 3, 3));
         const __m128 a_yzx = _mm_shuffle_ps(q, q, _MM_SHUFFLE(3, 0, 2, 1));
         __m128 x = _mm_mul_ps(q, _mm_shuffle_ps(v, v, _MM_SHUFFLE(3, 0, 2, 1)));

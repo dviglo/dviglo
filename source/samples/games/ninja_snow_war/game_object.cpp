@@ -106,9 +106,9 @@ void GameObject::WorldCollision(VariantMap& eventData)
         float contactImpulse = contacts.ReadFloat();
 
         // If contact is below node center and pointing up, assume it's ground contact
-        if (contactPosition.y_ < node_->GetPosition().y_)
+        if (contactPosition.y < node_->GetPosition().y)
         {
-            float level = contactNormal.y_;
+            float level = contactNormal.y;
 
             if (level > 0.75)
             {

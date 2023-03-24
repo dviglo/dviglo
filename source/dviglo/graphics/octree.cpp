@@ -90,19 +90,19 @@ Octant* Octant::GetOrCreateChild(i32 index)
     Vector3 oldCenter = worldBoundingBox_.Center();
 
     if (index & 1u)
-        newMin.x_ = oldCenter.x_;
+        newMin.x = oldCenter.x;
     else
-        newMax.x_ = oldCenter.x_;
+        newMax.x = oldCenter.x;
 
     if (index & 2u)
-        newMin.y_ = oldCenter.y_;
+        newMin.y = oldCenter.y;
     else
-        newMax.y_ = oldCenter.y_;
+        newMax.y = oldCenter.y;
 
     if (index & 4u)
-        newMin.z_ = oldCenter.z_;
+        newMin.z = oldCenter.z;
     else
-        newMax.z_ = oldCenter.z_;
+        newMax.z = oldCenter.z;
 
     children_[index] = new Octant(BoundingBox(newMin, newMax), level_ + 1, this, root_, index);
     return children_[index];
@@ -141,9 +141,9 @@ void Octant::InsertDrawable(Drawable* drawable)
     else
     {
         Vector3 boxCenter = box.Center();
-        i32 x = boxCenter.x_ < center_.x_ ? 0 : 1;
-        i32 y = boxCenter.y_ < center_.y_ ? 0 : 2;
-        i32 z = boxCenter.z_ < center_.z_ ? 0 : 4;
+        i32 x = boxCenter.x < center_.x ? 0 : 1;
+        i32 y = boxCenter.y < center_.y ? 0 : 2;
+        i32 z = boxCenter.z < center_.z ? 0 : 4;
 
         GetOrCreateChild(x + y + z)->InsertDrawable(drawable);
     }
@@ -154,18 +154,18 @@ bool Octant::CheckDrawableFit(const BoundingBox& box) const
     Vector3 boxSize = box.Size();
 
     // If max split level, size always OK, otherwise check that box is at least half size of octant
-    if (level_ >= root_->GetNumLevels() || boxSize.x_ >= halfSize_.x_ || boxSize.y_ >= halfSize_.y_ ||
-        boxSize.z_ >= halfSize_.z_)
+    if (level_ >= root_->GetNumLevels() || boxSize.x >= halfSize_.x || boxSize.y >= halfSize_.y ||
+        boxSize.z >= halfSize_.z)
         return true;
     // Also check if the box can not fit a child octant's culling box, in that case size OK (must insert here)
     else
     {
-        if (box.min_.x_ <= worldBoundingBox_.min_.x_ - 0.5f * halfSize_.x_ ||
-            box.max_.x_ >= worldBoundingBox_.max_.x_ + 0.5f * halfSize_.x_ ||
-            box.min_.y_ <= worldBoundingBox_.min_.y_ - 0.5f * halfSize_.y_ ||
-            box.max_.y_ >= worldBoundingBox_.max_.y_ + 0.5f * halfSize_.y_ ||
-            box.min_.z_ <= worldBoundingBox_.min_.z_ - 0.5f * halfSize_.z_ ||
-            box.max_.z_ >= worldBoundingBox_.max_.z_ + 0.5f * halfSize_.z_)
+        if (box.min_.x <= worldBoundingBox_.min_.x - 0.5f * halfSize_.x ||
+            box.max_.x >= worldBoundingBox_.max_.x + 0.5f * halfSize_.x ||
+            box.min_.y <= worldBoundingBox_.min_.y - 0.5f * halfSize_.y ||
+            box.max_.y >= worldBoundingBox_.max_.y + 0.5f * halfSize_.y ||
+            box.min_.z <= worldBoundingBox_.min_.z - 0.5f * halfSize_.z ||
+            box.max_.z >= worldBoundingBox_.max_.z + 0.5f * halfSize_.z)
             return true;
     }
 

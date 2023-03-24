@@ -197,7 +197,7 @@ bool ParticleEffect::Load(const XmlElement& source)
         emitterSize_ = source.GetChild("emittersize").GetVector3("value");
 
     if (source.HasChild("emitterradius"))
-        emitterSize_.x_ = emitterSize_.y_ = emitterSize_.z_ = source.GetChild("emitterradius").GetFloat("value");
+        emitterSize_.x = emitterSize_.y = emitterSize_.z = source.GetChild("emitterradius").GetFloat("value");
 
     if (source.HasChild("direction"))
         GetVector3MinMax(source.GetChild("direction"), directionMin_, directionMax_);
@@ -768,8 +768,8 @@ const TextureFrame* ParticleEffect::GetTextureFrame(unsigned index) const
 
 Vector3 ParticleEffect::GetRandomDirection() const
 {
-    return Vector3(Lerp(directionMin_.x_, directionMax_.x_, Random(1.0f)), Lerp(directionMin_.y_, directionMax_.y_, Random(1.0f)),
-        Lerp(directionMin_.z_, directionMax_.z_, Random(1.0f)));
+    return Vector3(Lerp(directionMin_.x, directionMax_.x, Random(1.0f)), Lerp(directionMin_.y, directionMax_.y, Random(1.0f)),
+        Lerp(directionMin_.z, directionMax_.z, Random(1.0f)));
 }
 
 Vector2 ParticleEffect::GetRandomSize() const
