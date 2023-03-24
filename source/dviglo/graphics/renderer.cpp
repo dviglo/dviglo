@@ -422,8 +422,8 @@ void Renderer::SetShadowSoftness(float shadowSoftness)
 
 void Renderer::SetVSMShadowParameters(float minVariance, float lightBleedingReduction)
 {
-    vsmShadowParams_.x_ = Max(minVariance, 0.0f);
-    vsmShadowParams_.y_ = Clamp(lightBleedingReduction, 0.0f, 1.0f);
+    vsmShadowParams_.x = Max(minVariance, 0.0f);
+    vsmShadowParams_.y = Clamp(lightBleedingReduction, 0.0f, 1.0f);
 }
 
 void Renderer::SetVSMMultiSample(int multiSample)
@@ -881,7 +881,7 @@ Texture2D* Renderer::GetShadowMap(Light* light, Camera* camera, i32 viewWidth, i
         }
 
         Vector2 projectionSize = lightBox.Projected(projection).Size();
-        lightPixels = Max(0.5f * (float)viewWidth * projectionSize.x_, 0.5f * (float)viewHeight * projectionSize.y_);
+        lightPixels = Max(0.5f * (float)viewWidth * projectionSize.x, 0.5f * (float)viewHeight * projectionSize.y);
 
         // Clamp pixel amount to a sufficient minimum to avoid self-shadowing artifacts due to loss of precision
         if (lightPixels < SHADOW_MIN_PIXELS)

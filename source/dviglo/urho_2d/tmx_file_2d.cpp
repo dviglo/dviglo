@@ -250,8 +250,8 @@ void TmxObjectGroup2D::StoreObject(const XmlElement& objectElem, const SharedPtr
         {
         case OT_RECTANGLE:
         case OT_ELLIPSE:
-            object->position_ = info.ConvertPosition(Vector2(position.x_, position.y_ + size.y_));
-            object->size_ = Vector2(size.x_ * PIXEL_SIZE, size.y_ * PIXEL_SIZE);
+            object->position_ = info.ConvertPosition(Vector2(position.x, position.y + size.y));
+            object->size_ = Vector2(size.x * PIXEL_SIZE, size.y * PIXEL_SIZE);
             break;
 
         case OT_TILE:
@@ -261,7 +261,7 @@ void TmxObjectGroup2D::StoreObject(const XmlElement& objectElem, const SharedPtr
 
             if (objectElem.HasAttribute("width") || objectElem.HasAttribute("height"))
             {
-                object->size_ = Vector2(size.x_ * PIXEL_SIZE, size.y_ * PIXEL_SIZE);
+                object->size_ = Vector2(size.x * PIXEL_SIZE, size.y * PIXEL_SIZE);
             }
             else if (object->sprite_)
             {
@@ -648,8 +648,8 @@ bool TmxFile2D::LoadTileSet(const XmlElement& element)
             if (tileSetElem.HasChild("tileoffset"))
             {
                 XmlElement offsetElem = tileSetElem.GetChild("tileoffset");
-                hotSpot.x_ += offsetElem.GetFloat("x") / (float)tileWidth;
-                hotSpot.y_ += offsetElem.GetFloat("y") / (float)tileHeight;
+                hotSpot.x += offsetElem.GetFloat("x") / (float)tileWidth;
+                hotSpot.y += offsetElem.GetFloat("y") / (float)tileHeight;
             }
 
             imageWidth = imageElem.GetI32("width");

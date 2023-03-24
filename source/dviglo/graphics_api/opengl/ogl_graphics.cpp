@@ -1709,7 +1709,7 @@ void Graphics::SetScissorTest_OGL(bool enable, const Rect& rect, bool borderIncl
 {
     // During some light rendering loops, a full rect is toggled on/off repeatedly.
     // Disable scissor in that case to reduce state changes
-    if (rect.min_.x_ <= 0.0f && rect.min_.y_ <= 0.0f && rect.max_.x_ >= 1.0f && rect.max_.y_ >= 1.0f)
+    if (rect.min_.x <= 0.0f && rect.min_.y <= 0.0f && rect.max_.x >= 1.0f && rect.max_.y >= 1.0f)
         enable = false;
 
     if (enable)
@@ -1720,10 +1720,10 @@ void Graphics::SetScissorTest_OGL(bool enable, const Rect& rect, bool borderIncl
         IntRect intRect;
         int expand = borderInclusive ? 1 : 0;
 
-        intRect.left_ = Clamp((int)((rect.min_.x_ + 1.0f) * 0.5f * viewSize.x_) + viewPos.x_, 0, rtSize.x_ - 1);
-        intRect.top_ = Clamp((int)((-rect.max_.y_ + 1.0f) * 0.5f * viewSize.y_) + viewPos.y_, 0, rtSize.y_ - 1);
-        intRect.right_ = Clamp((int)((rect.max_.x_ + 1.0f) * 0.5f * viewSize.x_) + viewPos.x_ + expand, 0, rtSize.x_);
-        intRect.bottom_ = Clamp((int)((-rect.min_.y_ + 1.0f) * 0.5f * viewSize.y_) + viewPos.y_ + expand, 0, rtSize.y_);
+        intRect.left_ = Clamp((int)((rect.min_.x + 1.0f) * 0.5f * viewSize.x_) + viewPos.x_, 0, rtSize.x_ - 1);
+        intRect.top_ = Clamp((int)((-rect.max_.y + 1.0f) * 0.5f * viewSize.y_) + viewPos.y_, 0, rtSize.y_ - 1);
+        intRect.right_ = Clamp((int)((rect.max_.x + 1.0f) * 0.5f * viewSize.x_) + viewPos.x_ + expand, 0, rtSize.x_);
+        intRect.bottom_ = Clamp((int)((-rect.min_.y + 1.0f) * 0.5f * viewSize.y_) + viewPos.y_ + expand, 0, rtSize.y_);
 
         if (intRect.right_ == intRect.left_)
             intRect.right_++;

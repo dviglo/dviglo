@@ -356,12 +356,12 @@ bool AnimationSet2D::EndLoadSpriter()
                 const IntVector2& offset = sprite->GetOffset();
                 if (offset != IntVector2::ZERO)
                 {
-                    float pivotX = file->width_ * hotSpot.x_;
-                    float pivotY = file->height_ * (1.0f - hotSpot.y_);
+                    float pivotX = file->width_ * hotSpot.x;
+                    float pivotY = file->height_ * (1.0f - hotSpot.y);
 
                     const IntRect& rectangle = sprite->GetRectangle();
-                    hotSpot.x_ = (offset.x_ + pivotX) / rectangle.Width();
-                    hotSpot.y_ = 1.0f - (offset.y_ + pivotY) / rectangle.Height();
+                    hotSpot.x = (offset.x_ + pivotX) / rectangle.Width();
+                    hotSpot.y = 1.0f - (offset.y_ + pivotY) / rectangle.Height();
                 }
 
                 sprite->SetHotSpot(hotSpot);

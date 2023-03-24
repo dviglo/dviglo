@@ -127,8 +127,8 @@ void Camera::SetOrthoSize(float orthoSize)
 void Camera::SetOrthoSize(const Vector2& orthoSize)
 {
     autoAspectRatio_ = false;
-    orthoSize_ = orthoSize.y_;
-    aspectRatio_ = orthoSize.x_ / orthoSize.y_;
+    orthoSize_ = orthoSize.y;
+    aspectRatio_ = orthoSize.x / orthoSize.y;
     frustumDirty_ = true;
     projectionDirty_ = true;
     MarkNetworkUpdate();
@@ -395,17 +395,17 @@ Vector2 Camera::world_to_screen_point(const Vector3& worldPos) const
     if (eyeSpacePos.z > 0.0f)
     {
         Vector3 screenSpacePos = GetProjection() * eyeSpacePos;
-        ret.x_ = screenSpacePos.x;
-        ret.y_ = screenSpacePos.y;
+        ret.x = screenSpacePos.x;
+        ret.y = screenSpacePos.y;
     }
     else
     {
-        ret.x_ = (-eyeSpacePos.x > 0.0f) ? -1.0f : 1.0f;
-        ret.y_ = (-eyeSpacePos.y > 0.0f) ? -1.0f : 1.0f;
+        ret.x = (-eyeSpacePos.x > 0.0f) ? -1.0f : 1.0f;
+        ret.y = (-eyeSpacePos.y > 0.0f) ? -1.0f : 1.0f;
     }
 
-    ret.x_ = (ret.x_ / 2.0f) + 0.5f;
-    ret.y_ = 1.0f - ((ret.y_ / 2.0f) + 0.5f);
+    ret.x = (ret.x / 2.0f) + 0.5f;
+    ret.y = 1.0f - ((ret.y / 2.0f) + 0.5f);
     return ret;
 }
 
@@ -641,9 +641,9 @@ void Camera::UpdateProjection() const
         float r = -q * nearClip_;
 
         projection_.m00_ = w;
-        projection_.m02_ = projectionOffset_.x_ * 2.0f;
+        projection_.m02_ = projectionOffset_.x * 2.0f;
         projection_.m11_ = h;
-        projection_.m12_ = projectionOffset_.y_ * 2.0f;
+        projection_.m12_ = projectionOffset_.y * 2.0f;
         projection_.m22_ = q;
         projection_.m23_ = r;
         projection_.m32_ = 1.0f;
@@ -658,9 +658,9 @@ void Camera::UpdateProjection() const
         float r = 0.0f;
 
         projection_.m00_ = w;
-        projection_.m03_ = projectionOffset_.x_ * 2.0f;
+        projection_.m03_ = projectionOffset_.x * 2.0f;
         projection_.m11_ = h;
-        projection_.m13_ = projectionOffset_.y_ * 2.0f;
+        projection_.m13_ = projectionOffset_.y * 2.0f;
         projection_.m22_ = q;
         projection_.m23_ = r;
         projection_.m33_ = 1.0f;

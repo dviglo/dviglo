@@ -996,22 +996,22 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     RenderSurface* surface = graphics.GetRenderTarget(0);
     IntVector2 viewSize = graphics.GetViewport().Size();
     Vector2 invScreenSize(1.0f / (float)viewSize.x_, 1.0f / (float)viewSize.y_);
-    Vector2 scale(2.0f * invScreenSize.x_, -2.0f * invScreenSize.y_);
+    Vector2 scale(2.0f * invScreenSize.x, -2.0f * invScreenSize.y);
     Vector2 offset(-1.0f, 1.0f);
 
     if (GParams::get_gapi() == GAPI_OPENGL && surface)
     {
         // On OpenGL, flip the projection if rendering to a texture so that the texture can be addressed in the
         // same way as a render texture produced on Direct3D.
-        offset.y_ = -offset.y_;
-        scale.y_ = -scale.y_;
+        offset.y = -offset.y;
+        scale.y = -scale.y;
     }
 
     Matrix4 projection(Matrix4::IDENTITY);
-    projection.m00_ = scale.x_ * uiScale_;
-    projection.m03_ = offset.x_;
-    projection.m11_ = scale.y_ * uiScale_;
-    projection.m13_ = offset.y_;
+    projection.m00_ = scale.x * uiScale_;
+    projection.m03_ = offset.x;
+    projection.m11_ = scale.y * uiScale_;
+    projection.m13_ = offset.y;
     projection.m22_ = 1.0f;
     projection.m23_ = 0.0f;
     projection.m33_ = 1.0f;

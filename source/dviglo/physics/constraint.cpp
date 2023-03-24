@@ -527,24 +527,24 @@ void Constraint::ApplyLimits()
     case HINGE_CONSTRAINT_TYPE:
         {
             auto* hingeConstraint = static_cast<btHingeConstraint*>(constraint_.get());
-            hingeConstraint->setLimit(lowLimit_.x_ * M_DEGTORAD, highLimit_.x_ * M_DEGTORAD);
+            hingeConstraint->setLimit(lowLimit_.x * M_DEGTORAD, highLimit_.x * M_DEGTORAD);
         }
         break;
 
     case SLIDER_CONSTRAINT_TYPE:
         {
             auto* sliderConstraint = static_cast<btSliderConstraint*>(constraint_.get());
-            sliderConstraint->setUpperLinLimit(highLimit_.x_);
-            sliderConstraint->setUpperAngLimit(highLimit_.y_ * M_DEGTORAD);
-            sliderConstraint->setLowerLinLimit(lowLimit_.x_);
-            sliderConstraint->setLowerAngLimit(lowLimit_.y_ * M_DEGTORAD);
+            sliderConstraint->setUpperLinLimit(highLimit_.x);
+            sliderConstraint->setUpperAngLimit(highLimit_.y * M_DEGTORAD);
+            sliderConstraint->setLowerLinLimit(lowLimit_.x);
+            sliderConstraint->setLowerAngLimit(lowLimit_.y * M_DEGTORAD);
         }
         break;
 
     case CONETWIST_CONSTRAINT_TYPE:
         {
             auto* coneTwistConstraint = static_cast<btConeTwistConstraint*>(constraint_.get());
-            coneTwistConstraint->setLimit(highLimit_.y_ * M_DEGTORAD, highLimit_.y_ * M_DEGTORAD, highLimit_.x_ * M_DEGTORAD);
+            coneTwistConstraint->setLimit(highLimit_.y * M_DEGTORAD, highLimit_.y * M_DEGTORAD, highLimit_.x * M_DEGTORAD);
         }
         break;
 

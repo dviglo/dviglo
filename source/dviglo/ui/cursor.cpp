@@ -97,8 +97,8 @@ void Cursor::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
 
     for (i32 i = initialSize; i < vertexData.Size(); i += 6)
     {
-        vertexData[i] += floatOffset.x_;
-        vertexData[i + 1] += floatOffset.y_;
+        vertexData[i] += floatOffset.x;
+        vertexData[i + 1] += floatOffset.y;
     }
 }
 

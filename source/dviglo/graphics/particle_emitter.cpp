@@ -403,7 +403,7 @@ VariantVector ParticleEmitter::GetParticleBillboardsAttr() const
     {
         ret.Push(i->position_);
         ret.Push(i->size_);
-        ret.Push(Vector4(i->uv_.min_.x_, i->uv_.min_.y_, i->uv_.max_.x_, i->uv_.max_.y_));
+        ret.Push(Vector4(i->uv_.min_.x, i->uv_.min_.y, i->uv_.max_.x, i->uv_.max_.y));
         ret.Push(i->color_);
         ret.Push(i->rotation_);
         ret.Push(i->direction_);
@@ -501,7 +501,7 @@ bool ParticleEmitter::EmitNewParticle()
 
     if (faceCameraMode_ == FC_DIRECTION)
     {
-        startPos += startDir * particle.size_.y_;
+        startPos += startDir * particle.size_.y;
     }
 
     if (!relative_)

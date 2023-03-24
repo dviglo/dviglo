@@ -303,15 +303,15 @@ void StaticSprite2D::UpdateSourceBatches()
 
     // Convert to world space
     const Matrix3x4& worldTransform = node_->GetWorldTransform();
-    vertex0.position_ = worldTransform * Vector3(drawRect_.min_.x_, drawRect_.min_.y_, 0.0f);
-    vertex1.position_ = worldTransform * Vector3(drawRect_.min_.x_, drawRect_.max_.y_, 0.0f);
-    vertex2.position_ = worldTransform * Vector3(drawRect_.max_.x_, drawRect_.max_.y_, 0.0f);
-    vertex3.position_ = worldTransform * Vector3(drawRect_.max_.x_, drawRect_.min_.y_, 0.0f);
+    vertex0.position_ = worldTransform * Vector3(drawRect_.min_.x, drawRect_.min_.y, 0.0f);
+    vertex1.position_ = worldTransform * Vector3(drawRect_.min_.x, drawRect_.max_.y, 0.0f);
+    vertex2.position_ = worldTransform * Vector3(drawRect_.max_.x, drawRect_.max_.y, 0.0f);
+    vertex3.position_ = worldTransform * Vector3(drawRect_.max_.x, drawRect_.min_.y, 0.0f);
 
     vertex0.uv_ = textureRect_.min_;
-    (swapXY_ ? vertex3.uv_ : vertex1.uv_) = Vector2(textureRect_.min_.x_, textureRect_.max_.y_);
+    (swapXY_ ? vertex3.uv_ : vertex1.uv_) = Vector2(textureRect_.min_.x, textureRect_.max_.y);
     vertex2.uv_ = textureRect_.max_;
-    (swapXY_ ? vertex1.uv_ : vertex3.uv_) = Vector2(textureRect_.max_.x_, textureRect_.min_.y_);
+    (swapXY_ ? vertex1.uv_ : vertex3.uv_) = Vector2(textureRect_.max_.x, textureRect_.min_.y);
 
     vertex0.color_ = vertex1.color_ = vertex2.color_ = vertex3.color_ = color_.ToU32();
 

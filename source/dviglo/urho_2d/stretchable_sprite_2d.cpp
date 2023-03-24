@@ -25,10 +25,10 @@ void checkBorder(int border, float drawSize)
 
 Rect calcEffectiveBorder(const IntRect& border, const Vector2& drawSize)
 {
-    Vector2 min{Clamp(border.left_ * PIXEL_SIZE, 0.0f, drawSize.x_),
-                Clamp(border.bottom_ * PIXEL_SIZE, 0.0f, drawSize.y_)};
-    return Rect{min, {Clamp(border.right_ * PIXEL_SIZE, 0.0f, drawSize.x_ - min.x_),
-                      Clamp(border.top_ * PIXEL_SIZE, 0.0f, drawSize.y_ - min.y_)} /* max*/ };
+    Vector2 min{Clamp(border.left_ * PIXEL_SIZE, 0.0f, drawSize.x),
+                Clamp(border.bottom_ * PIXEL_SIZE, 0.0f, drawSize.y)};
+    return Rect{min, {Clamp(border.right_ * PIXEL_SIZE, 0.0f, drawSize.x - min.x),
+                      Clamp(border.top_ * PIXEL_SIZE, 0.0f, drawSize.y - min.y)} /* max*/ };
 }
 
 void prepareXYCoords(float coords[4], float low, float high, float lowBorder, float highBorder, float scale)
@@ -117,13 +117,13 @@ void StretchableSprite2D::SetBorder(const IntRect& border)
 
     auto drawSize = drawRect_.Size();
 
-    checkBorder(border_.left_, drawSize.x_);
-    checkBorder(border_.right_, drawSize.x_);
-    checkBorder(border_.left_ + border_.right_, drawSize.x_);
+    checkBorder(border_.left_, drawSize.x);
+    checkBorder(border_.right_, drawSize.x);
+    checkBorder(border_.left_ + border_.right_, drawSize.x);
 
-    checkBorder(border_.bottom_, drawSize.y_);
-    checkBorder(border_.top_, drawSize.y_);
-    checkBorder(border_.bottom_ + border_.top_, drawSize.y_);
+    checkBorder(border_.bottom_, drawSize.y);
+    checkBorder(border_.top_, drawSize.y);
+    checkBorder(border_.bottom_ + border_.top_, drawSize.y);
 }
 
 void StretchableSprite2D::UpdateSourceBatches()
@@ -156,13 +156,13 @@ void StretchableSprite2D::UpdateSourceBatches()
     float xs[4], ys[4], us[4], vs[4]; // prepare all coordinates
     const auto signedScale = node_->GetSignedWorldScale();
 
-    prepareXYCoords(xs, drawRect_.min_.x_, drawRect_.max_.x_, effectiveBorder.min_.x_, effectiveBorder.max_.x_, signedScale.x);
-    prepareXYCoords(ys, drawRect_.min_.y_, drawRect_.max_.y_, effectiveBorder.min_.y_, effectiveBorder.max_.y_, signedScale.y);
+    prepareXYCoords(xs, drawRect_.min_.x, drawRect_.max_.x, effectiveBorder.min_.x, effectiveBorder.max_.x, signedScale.x);
+    prepareXYCoords(ys, drawRect_.min_.y, drawRect_.max_.y, effectiveBorder.min_.y, effectiveBorder.max_.y, signedScale.y);
 
-    prepareUVCoords(us, textureRect_.min_.x_, textureRect_.max_.x_, effectiveBorder.min_.x_, effectiveBorder.max_.x_,
-        drawRect_.max_.x_ - drawRect_.min_.x_);
-    prepareUVCoords(vs, textureRect_.min_.y_, textureRect_.max_.y_, -effectiveBorder.min_.y_,
-        -effectiveBorder.max_.y_ /* texture y direction inverted*/, drawRect_.max_.y_ - drawRect_.min_.y_);
+    prepareUVCoords(us, textureRect_.min_.x, textureRect_.max_.x, effectiveBorder.min_.x, effectiveBorder.max_.x,
+        drawRect_.max_.x - drawRect_.min_.x);
+    prepareUVCoords(vs, textureRect_.min_.y, textureRect_.max_.y, -effectiveBorder.min_.y,
+        -effectiveBorder.max_.y /* texture y direction inverted*/, drawRect_.max_.y - drawRect_.min_.y);
 
     Vertex2D vtx[4][4]; // prepare all vertices
     prepareVertices(vtx, xs, ys, us, vs, color_.ToU32(), node_->GetWorldPosition(), node_->GetWorldRotation());

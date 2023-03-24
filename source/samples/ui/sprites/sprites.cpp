@@ -95,14 +95,14 @@ void Sprites::MoveSprites(float timeStep)
 
         // Move, wrap around rendering window edges
         Vector2 newPos = sprite->GetPosition() + sprite->GetVar(VAR_VELOCITY).GetVector2() * timeStep;
-        if (newPos.x_ < 0.0f)
-            newPos.x_ += width;
-        if (newPos.x_ >= width)
-            newPos.x_ -= width;
-        if (newPos.y_ < 0.0f)
-            newPos.y_ += height;
-        if (newPos.y_ >= height)
-            newPos.y_ -= height;
+        if (newPos.x < 0.0f)
+            newPos.x += width;
+        if (newPos.x >= width)
+            newPos.x -= width;
+        if (newPos.y < 0.0f)
+            newPos.y += height;
+        if (newPos.y >= height)
+            newPos.y -= height;
         sprite->SetPosition(newPos);
     }
 }

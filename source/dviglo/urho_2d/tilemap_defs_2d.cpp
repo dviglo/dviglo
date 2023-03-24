@@ -33,17 +33,17 @@ Vector2 TileMapInfo2D::ConvertPosition(const Vector2& position) const
     case O_ISOMETRIC:
         {
             Vector2 index = position * PIXEL_SIZE / tileHeight_;
-            return Vector2((width_ + index.x_ - index.y_) * tileWidth_ * 0.5f,
-                (height_ * 2.0f - index.x_ - index.y_) * tileHeight_ * 0.5f);
+            return Vector2((width_ + index.x - index.y) * tileWidth_ * 0.5f,
+                (height_ * 2.0f - index.x - index.y) * tileHeight_ * 0.5f);
         }
 
     case O_STAGGERED:
-        return Vector2(position.x_ * PIXEL_SIZE, GetMapHeight() - position.y_ * PIXEL_SIZE);
+        return Vector2(position.x * PIXEL_SIZE, GetMapHeight() - position.y * PIXEL_SIZE);
 
     case O_HEXAGONAL:
     case O_ORTHOGONAL:
     default:
-        return Vector2(position.x_ * PIXEL_SIZE, GetMapHeight() - position.y_ * PIXEL_SIZE);
+        return Vector2(position.x * PIXEL_SIZE, GetMapHeight() - position.y * PIXEL_SIZE);
     }
 }
 
@@ -78,8 +78,8 @@ bool TileMapInfo2D::position_to_tile_index(int& x, int& y, const Vector2& positi
     {
     case O_ISOMETRIC:
     {
-        float ox = position.x_ / tileWidth_ - height_ * 0.5f;
-        float oy = position.y_ / tileHeight_;
+        float ox = position.x / tileWidth_ - height_ * 0.5f;
+        float oy = position.y / tileHeight_;
 
         x = (int)(width_ - oy + ox);
         y = (int)(height_ - oy - ox);
@@ -87,26 +87,26 @@ bool TileMapInfo2D::position_to_tile_index(int& x, int& y, const Vector2& positi
         break;
 
     case O_STAGGERED:
-        y = (int)(height_ - 1 - position.y_ * 2.0f / tileHeight_);
+        y = (int)(height_ - 1 - position.y * 2.0f / tileHeight_);
         if (y % 2 == 0)
-            x = (int)(position.x_ / tileWidth_);
+            x = (int)(position.x / tileWidth_);
         else
-            x = (int)(position.x_ / tileWidth_ - 0.5f);
+            x = (int)(position.x / tileWidth_ - 0.5f);
 
         break;
 
     case O_HEXAGONAL:
-        y = (int)(height_ - 1 - position.y_ / 0.75f / tileHeight_);
+        y = (int)(height_ - 1 - position.y / 0.75f / tileHeight_);
         if (y % 2 == 0)
-            x = (int)(position.x_ / tileWidth_);
+            x = (int)(position.x / tileWidth_);
         else
-            x = (int)(position.x_ / tileWidth_ - 0.75f);
+            x = (int)(position.x / tileWidth_ - 0.75f);
         break;
 
     case O_ORTHOGONAL:
     default:
-        x = (int)(position.x_ / tileWidth_);
-        y = height_ - 1 - int(position.y_ / tileHeight_);
+        x = (int)(position.x / tileWidth_);
+        y = height_ - 1 - int(position.y / tileHeight_);
         break;
 
     }

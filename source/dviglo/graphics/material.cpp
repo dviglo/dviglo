@@ -1019,8 +1019,8 @@ void Material::SetTexture(TextureUnit unit, Texture* texture)
 void Material::SetUVTransform(const Vector2& offset, float rotation, const Vector2& repeat)
 {
     Matrix3x4 transform(Matrix3x4::IDENTITY);
-    transform.m00_ = repeat.x_;
-    transform.m11_ = repeat.y_;
+    transform.m00_ = repeat.x;
+    transform.m11_ = repeat.y;
 
     Matrix3x4 rotationMatrix(Matrix3x4::IDENTITY);
     rotationMatrix.m00_ = Cos(rotation);
@@ -1033,8 +1033,8 @@ void Material::SetUVTransform(const Vector2& offset, float rotation, const Vecto
     transform = transform * rotationMatrix;
 
     Matrix3x4 offsetMatrix = Matrix3x4::IDENTITY;
-    offsetMatrix.m03_ = offset.x_;
-    offsetMatrix.m13_ = offset.y_;
+    offsetMatrix.m03_ = offset.x;
+    offsetMatrix.m13_ = offset.y;
 
     transform = offsetMatrix * transform;
 

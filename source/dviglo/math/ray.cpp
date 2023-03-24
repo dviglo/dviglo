@@ -272,8 +272,8 @@ float Ray::HitDistance(const void* vertexData, i32 vertexStride, i32 vertexStart
             const Vector2& uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIdx * vertexStride]));
             const Vector2& uv1 = *((const Vector2*)(&vertices[uvOffset + (nearestIdx + 1) * vertexStride]));
             const Vector2& uv2 = *((const Vector2*)(&vertices[uvOffset + (nearestIdx + 2) * vertexStride]));
-            *outUV = Vector2(uv0.x_ * barycentric.x + uv1.x_ * barycentric.y + uv2.x_ * barycentric.z,
-                uv0.y_ * barycentric.x + uv1.y_ * barycentric.y + uv2.y_ * barycentric.z);
+            *outUV = Vector2(uv0.x * barycentric.x + uv1.x * barycentric.y + uv2.x * barycentric.z,
+                uv0.y * barycentric.x + uv1.y * barycentric.y + uv2.y * barycentric.z);
         }
     }
 
@@ -336,8 +336,8 @@ float Ray::HitDistance(const void* vertexData, i32 vertexStride, const void* ind
                 const Vector2& uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[0] * vertexStride]));
                 const Vector2& uv1 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[1] * vertexStride]));
                 const Vector2& uv2 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[2] * vertexStride]));
-                *outUV = Vector2(uv0.x_ * barycentric.x + uv1.x_ * barycentric.y + uv2.x_ * barycentric.z,
-                    uv0.y_ * barycentric.x + uv1.y_ * barycentric.y + uv2.y_ * barycentric.z);
+                *outUV = Vector2(uv0.x * barycentric.x + uv1.x * barycentric.y + uv2.x * barycentric.z,
+                    uv0.y * barycentric.x + uv1.y * barycentric.y + uv2.y * barycentric.z);
             }
         }
     }
@@ -378,8 +378,8 @@ float Ray::HitDistance(const void* vertexData, i32 vertexStride, const void* ind
                 const Vector2& uv0 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[0] * vertexStride]));
                 const Vector2& uv1 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[1] * vertexStride]));
                 const Vector2& uv2 = *((const Vector2*)(&vertices[uvOffset + nearestIndices[2] * vertexStride]));
-                *outUV = Vector2(uv0.x_ * barycentric.x + uv1.x_ * barycentric.y + uv2.x_ * barycentric.z,
-                    uv0.y_ * barycentric.x + uv1.y_ * barycentric.y + uv2.y_ * barycentric.z);
+                *outUV = Vector2(uv0.x * barycentric.x + uv1.x * barycentric.y + uv2.x * barycentric.z,
+                    uv0.y * barycentric.x + uv1.y * barycentric.y + uv2.y * barycentric.z);
             }
         }
     }

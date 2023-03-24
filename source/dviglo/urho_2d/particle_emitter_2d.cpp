@@ -214,9 +214,9 @@ void ParticleEmitter2D::UpdateSourceBatches()
     Vertex2D vertex3;
 
     vertex0.uv_ = textureRect.min_;
-    vertex1.uv_ = Vector2(textureRect.min_.x_, textureRect.max_.y_);
+    vertex1.uv_ = Vector2(textureRect.min_.x, textureRect.max_.y);
     vertex2.uv_ = textureRect.max_;
-    vertex3.uv_ = Vector2(textureRect.max_.x_, textureRect.min_.y_);
+    vertex3.uv_ = Vector2(textureRect.max_.x, textureRect.min_.y);
 
     for (unsigned i = 0; i < numParticles_; ++i)
     {
@@ -352,16 +352,16 @@ bool ParticleEmitter2D::EmitParticle(const Vector3& worldPosition, float worldAn
     Particle2D& particle = particles_[numParticles_++];
     particle.timeToLive_ = lifespan;
 
-    particle.position_.x = worldPosition.x + worldScale * effect_->GetSourcePositionVariance().x_ * Random(-1.0f, 1.0f);
-    particle.position_.y = worldPosition.y + worldScale * effect_->GetSourcePositionVariance().y_ * Random(-1.0f, 1.0f);
+    particle.position_.x = worldPosition.x + worldScale * effect_->GetSourcePositionVariance().x * Random(-1.0f, 1.0f);
+    particle.position_.y = worldPosition.y + worldScale * effect_->GetSourcePositionVariance().y * Random(-1.0f, 1.0f);
     particle.position_.z = worldPosition.z;
-    particle.startPos_.x_ = worldPosition.x;
-    particle.startPos_.y_ = worldPosition.y;
+    particle.startPos_.x = worldPosition.x;
+    particle.startPos_.y = worldPosition.y;
 
     float angle = worldAngle + effect_->GetAngle() + effect_->GetAngleVariance() * Random(-1.0f, 1.0f);
     float speed = worldScale * (effect_->GetSpeed() + effect_->GetSpeedVariance() * Random(-1.0f, 1.0f));
-    particle.velocity_.x_ = speed * Cos(angle);
-    particle.velocity_.y_ = speed * Sin(angle);
+    particle.velocity_.x = speed * Cos(angle);
+    particle.velocity_.y = speed * Sin(angle);
 
     float maxRadius = Max(0.0f, worldScale * (effect_->GetMaxRadius() + effect_->GetMaxRadiusVariance() * Random(-1.0f, 1.0f)));
     float minRadius = Max(0.0f, worldScale * (effect_->GetMinRadius() + effect_->GetMinRadiusVariance() * Random(-1.0f, 1.0f)));
@@ -404,13 +404,13 @@ void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, con
         particle.emitRotation_ += particle.emitRotationDelta_ * timeStep;
         particle.emitRadius_ += particle.emitRadiusDelta_ * timeStep;
 
-        particle.position_.x = particle.startPos_.x_ - Cos(particle.emitRotation_) * particle.emitRadius_;
-        particle.position_.y = particle.startPos_.y_ + Sin(particle.emitRotation_) * particle.emitRadius_;
+        particle.position_.x = particle.startPos_.x - Cos(particle.emitRotation_) * particle.emitRadius_;
+        particle.position_.y = particle.startPos_.y + Sin(particle.emitRotation_) * particle.emitRadius_;
     }
     else
     {
-        float distanceX = particle.position_.x - particle.startPos_.x_;
-        float distanceY = particle.position_.y - particle.startPos_.y_;
+        float distanceX = particle.position_.x - particle.startPos_.x;
+        float distanceY = particle.position_.y - particle.startPos_.y;
 
         float distanceScalar = Vector2(distanceX, distanceY).Length();
         if (distanceScalar < 0.0001f)
@@ -429,10 +429,10 @@ void ParticleEmitter2D::UpdateParticle(Particle2D& particle, float timeStep, con
         tangentialX = -tangentialY * particle.tangentialAcceleration_;
         tangentialY = newY * particle.tangentialAcceleration_;
 
-        particle.velocity_.x_ += (effect_->GetGravity().x_ * worldScale + radialX - tangentialX) * timeStep;
-        particle.velocity_.y_ -= (effect_->GetGravity().y_ * worldScale - radialY + tangentialY) * timeStep;
-        particle.position_.x += particle.velocity_.x_ * timeStep;
-        particle.position_.y += particle.velocity_.y_ * timeStep;
+        particle.velocity_.x += (effect_->GetGravity().x * worldScale + radialX - tangentialX) * timeStep;
+        particle.velocity_.y -= (effect_->GetGravity().y * worldScale - radialY + tangentialY) * timeStep;
+        particle.position_.x += particle.velocity_.x * timeStep;
+        particle.position_.y += particle.velocity_.y * timeStep;
     }
 
     particle.size_ += particle.sizeDelta_ * timeStep;

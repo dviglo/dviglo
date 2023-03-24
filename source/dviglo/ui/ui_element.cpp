@@ -382,10 +382,10 @@ const IntVector2& UiElement::GetScreenPosition() const
         {
             const IntVector2& parentScreenPos = parent->GetScreenPosition();
 
-            pos.x_ += parentScreenPos.x_ + (int)Lerp(0.0f, (float)parent->size_.x_, anchorMin_.x_);
-            pos.y_ += parentScreenPos.y_ + (int)Lerp(0.0f, (float)parent->size_.y_, anchorMin_.y_);
-            pos.x_ -= (int)(size_.x_ * pivot_.x_);
-            pos.y_ -= (int)(size_.y_ * pivot_.y_);
+            pos.x_ += parentScreenPos.x_ + (int)Lerp(0.0f, (float)parent->size_.x_, anchorMin_.x);
+            pos.y_ += parentScreenPos.y_ + (int)Lerp(0.0f, (float)parent->size_.y_, anchorMin_.y);
+            pos.x_ -= (int)(size_.x_ * pivot_.x);
+            pos.y_ -= (int)(size_.y_ * pivot_.y);
 
             pos += parent_->childOffset_;
         }
@@ -662,23 +662,23 @@ void UiElement::SetHorizontalAlignment(HorizontalAlignment align)
 
     Vector2 min = anchorMin_;
     Vector2 max = anchorMax_;
-    float pivot = pivot_.x_;
-    float anchorSize = max.x_ - min.x_;
+    float pivot = pivot_.x;
+    float anchorSize = max.x - min.x;
 
     if (align == HA_CENTER)
-        min.x_ = pivot = 0.5f;
+        min.x = pivot = 0.5f;
     else if (align == HA_LEFT)
-        min.x_ = pivot = 0.0f;
+        min.x = pivot = 0.0f;
     else if (align == HA_RIGHT)
-        min.x_ = pivot = 1.0f;
+        min.x = pivot = 1.0f;
 
-    max.x_ = enableAnchor_ ? (min.x_ + anchorSize) : min.x_;
+    max.x = enableAnchor_ ? (min.x + anchorSize) : min.x;
 
-    if (min.x_ != anchorMin_.x_ || max.x_ != anchorMax_.x_ || pivot != pivot_.x_)
+    if (min.x != anchorMin_.x || max.x != anchorMax_.x || pivot != pivot_.x)
     {
-        anchorMin_.x_ = min.x_;
-        anchorMax_.x_ = max.x_;
-        pivot_.x_ = pivot;
+        anchorMin_.x = min.x;
+        anchorMax_.x = max.x;
+        pivot_.x = pivot;
         if (enableAnchor_)
             UpdateAnchoring();
         MarkDirty();
@@ -695,23 +695,23 @@ void UiElement::SetVerticalAlignment(VerticalAlignment align)
 
     Vector2 min = anchorMin_;
     Vector2 max = anchorMax_;
-    float pivot = pivot_.y_;
-    float anchorSize = max.y_ - min.y_;
+    float pivot = pivot_.y;
+    float anchorSize = max.y - min.y;
 
     if (align == VA_CENTER)
-        min.y_ = pivot = 0.5f;
+        min.y = pivot = 0.5f;
     else if (align == VA_TOP)
-        min.y_ = pivot = 0.0f;
+        min.y = pivot = 0.0f;
     else if (align == VA_BOTTOM)
-        min.y_ = pivot = 1.0f;
+        min.y = pivot = 1.0f;
 
-    max.y_ = enableAnchor_ ? (min.y_ + anchorSize) : min.y_;
+    max.y = enableAnchor_ ? (min.y + anchorSize) : min.y;
 
-    if (min.y_ != anchorMin_.y_ || max.y_ != anchorMax_.y_ || pivot != pivot_.y_)
+    if (min.y != anchorMin_.y || max.y != anchorMax_.y || pivot != pivot_.y)
     {
-        anchorMin_.y_ = min.y_;
-        anchorMax_.y_ = max.y_;
-        pivot_.y_ = pivot;
+        anchorMin_.y = min.y;
+        anchorMax_.y = max.y;
+        pivot_.y = pivot;
         if (enableAnchor_)
             UpdateAnchoring();
         MarkDirty();
@@ -1040,7 +1040,7 @@ void UiElement::SetLayoutBorder(const IntRect& border)
 
 void UiElement::SetLayoutFlexScale(const Vector2& scale)
 {
-    layoutFlexScale_ = Vector2(Max(scale.x_, 0.0f), Max(scale.y_, 0.0f));
+    layoutFlexScale_ = Vector2(Max(scale.x, 0.0f), Max(scale.y, 0.0f));
 }
 
 void UiElement::SetIndent(int indent)
@@ -1091,7 +1091,7 @@ void UiElement::UpdateLayout()
             sizes.Push(child->GetWidth() + indent);
             minSizes.Push(child->GetEffectiveMinSize().x_ + indent);
             maxSizes.Push(child->GetMaxWidth() + indent);
-            flexScales.Push(child->GetLayoutFlexScale().x_);
+            flexScales.Push(child->GetLayoutFlexScale().x);
             minChildHeight = Max(minChildHeight, child->GetEffectiveMinSize().y_);
         }
 
@@ -1132,7 +1132,7 @@ void UiElement::UpdateLayout()
             sizes.Push(child->GetHeight());
             minSizes.Push(child->GetEffectiveMinSize().y_);
             maxSizes.Push(child->GetMaxHeight());
-            flexScales.Push(child->GetLayoutFlexScale().y_);
+            flexScales.Push(child->GetLayoutFlexScale().y);
             minChildWidth = Max(minChildWidth, child->GetEffectiveMinSize().x_ + child->GetIndentWidth());
         }
 
@@ -1481,11 +1481,11 @@ void UiElement::remove_all_tags()
 
 HorizontalAlignment UiElement::GetHorizontalAlignment() const
 {
-    if (anchorMin_.x_ == 0.0f && anchorMax_.x_ == 0.0f && (!pivotSet_ || pivot_.x_ == 0.0f))
+    if (anchorMin_.x == 0.0f && anchorMax_.x == 0.0f && (!pivotSet_ || pivot_.x == 0.0f))
         return HA_LEFT;
-    else if (anchorMin_.x_ == 0.5f && anchorMax_.x_ == 0.5f && (!pivotSet_ || pivot_.x_ == 0.5f))
+    else if (anchorMin_.x == 0.5f && anchorMax_.x == 0.5f && (!pivotSet_ || pivot_.x == 0.5f))
         return HA_CENTER;
-    else if (anchorMin_.x_ == 1.0f && anchorMax_.x_ == 1.0f && (!pivotSet_ || pivot_.x_ == 1.0f))
+    else if (anchorMin_.x == 1.0f && anchorMax_.x == 1.0f && (!pivotSet_ || pivot_.x == 1.0f))
         return HA_RIGHT;
 
     return HA_CUSTOM;
@@ -1493,11 +1493,11 @@ HorizontalAlignment UiElement::GetHorizontalAlignment() const
 
 VerticalAlignment UiElement::GetVerticalAlignment() const
 {
-    if (anchorMin_.y_ == 0.0f && anchorMax_.y_ == 0.0f && (!pivotSet_ || pivot_.y_ == 0.0f))
+    if (anchorMin_.y == 0.0f && anchorMax_.y == 0.0f && (!pivotSet_ || pivot_.y == 0.0f))
         return VA_TOP;
-    else if (anchorMin_.y_ == 0.5f && anchorMax_.y_ == 0.5f && (!pivotSet_ || pivot_.y_ == 0.5f))
+    else if (anchorMin_.y == 0.5f && anchorMax_.y == 0.5f && (!pivotSet_ || pivot_.y == 0.5f))
         return VA_CENTER;
-    else if (anchorMin_.y_ == 1.0f && anchorMax_.y_ == 1.0f && (!pivotSet_ || pivot_.y_ == 1.0f))
+    else if (anchorMin_.y == 1.0f && anchorMax_.y == 1.0f && (!pivotSet_ || pivot_.y == 1.0f))
         return VA_BOTTOM;
 
     return VA_CUSTOM;
@@ -1827,8 +1827,8 @@ void UiElement::GetBatchesWithOffset(IntVector2& offset, Vector<UIBatch>& batche
     GetBatches(batches, vertexData, currentScissor);
     for (i32 i = initialSize; i < vertexData.Size(); i += 6)
     {
-        vertexData[i] += floatOffset.x_;
-        vertexData[i + 1] += floatOffset.y_;
+        vertexData[i] += floatOffset.x;
+        vertexData[i + 1] += floatOffset.y;
     }
 
     AdjustScissor(currentScissor);
@@ -2031,8 +2031,8 @@ void UiElement::UpdateAnchoring()
     if (parent_ && enableAnchor_)
     {
         IntVector2 newSize;
-        newSize.x_ = (int)(parent_->size_.x_ * Clamp(anchorMax_.x_ - anchorMin_.x_, 0.0f, 1.0f)) + maxOffset_.x_ - minOffset_.x_;
-        newSize.y_ = (int)(parent_->size_.y_ * Clamp(anchorMax_.y_ - anchorMin_.y_, 0.0f, 1.0f)) + maxOffset_.y_ - minOffset_.y_;
+        newSize.x_ = (int)(parent_->size_.x_ * Clamp(anchorMax_.x - anchorMin_.x, 0.0f, 1.0f)) + maxOffset_.x_ - minOffset_.x_;
+        newSize.y_ = (int)(parent_->size_.y_ * Clamp(anchorMax_.y - anchorMin_.y, 0.0f, 1.0f)) + maxOffset_.y_ - minOffset_.y_;
 
         if (position_ != minOffset_)
             SetPosition(minOffset_);

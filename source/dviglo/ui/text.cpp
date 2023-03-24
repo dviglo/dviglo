@@ -128,23 +128,23 @@ void Text::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const
             // Check if row changes, and start a new quad in that case
             if (charLocations_[i].size_ != Vector2::ZERO)
             {
-                if (charLocations_[i].position_.y_ != currentStart.y_)
+                if (charLocations_[i].position_.y != currentStart.y)
                 {
-                    batch.AddQuad(currentStart.x_, currentStart.y_, currentEnd.x_ - currentStart.x_,
-                        currentEnd.y_ - currentStart.y_, 0, 0);
+                    batch.AddQuad(currentStart.x, currentStart.y, currentEnd.x - currentStart.x,
+                        currentEnd.y - currentStart.y, 0, 0);
                     currentStart = charLocations_[i].position_;
                     currentEnd = currentStart + charLocations_[i].size_;
                 }
                 else
                 {
-                    currentEnd.x_ += charLocations_[i].size_.x_;
-                    currentEnd.y_ = Max(currentStart.y_ + charLocations_[i].size_.y_, currentEnd.y_);
+                    currentEnd.x += charLocations_[i].size_.x;
+                    currentEnd.y = Max(currentStart.y + charLocations_[i].size_.y, currentEnd.y);
                 }
             }
         }
         if (currentEnd != currentStart)
         {
-            batch.AddQuad(currentStart.x_, currentStart.y_, currentEnd.x_ - currentStart.x_, currentEnd.y_ - currentStart.y_, 0, 0);
+            batch.AddQuad(currentStart.x, currentStart.y, currentEnd.x - currentStart.x, currentEnd.y - currentStart.y, 0, 0);
         }
 
         UIBatch::AddOrMerge(batch, batches);

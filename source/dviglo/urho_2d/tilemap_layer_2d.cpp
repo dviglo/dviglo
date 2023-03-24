@@ -30,7 +30,7 @@ void TileMapLayer2D::register_object()
 // Transform vector from node-local space to global space
 static Vector2 TransformNode2D(const Matrix3x4& transform, Vector2 local)
 {
-    Vector3 transformed = transform * Vector4(local.x_, local.y_, 0.f, 1.f);
+    Vector3 transformed = transform * Vector4(local.x, local.y, 0.f, 1.f);
     return Vector2(transformed.x, transformed.y);
 }
 
@@ -63,18 +63,18 @@ void TileMapLayer2D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
                     case O_STAGGERED:
                         {
                             points.Push(Vector2::ZERO);
-                            points.Push(Vector2(size.x_, 0.0f));
-                            points.Push(Vector2(size.x_, -size.y_));
-                            points.Push(Vector2(0.0f, -size.y_));
+                            points.Push(Vector2(size.x, 0.0f));
+                            points.Push(Vector2(size.x, -size.y));
+                            points.Push(Vector2(0.0f, -size.y));
                             break;
                         }
                     case O_ISOMETRIC:
                         {
                             float ratio = (info.tileWidth_ / info.tileHeight_) * 0.5f;
                             points.Push(Vector2::ZERO);
-                            points.Push(Vector2(size.y_ * ratio, size.y_ * 0.5f));
-                            points.Push(Vector2((size.x_ + size.y_) * ratio, (-size.x_ + size.y_) * 0.5f));
-                            points.Push(Vector2(size.x_ * ratio, -size.x_ * 0.5f));
+                            points.Push(Vector2(size.y * ratio, size.y * 0.5f));
+                            points.Push(Vector2((size.x + size.y) * ratio, (-size.x + size.y) * 0.5f));
+                            points.Push(Vector2(size.x * ratio, -size.x * 0.5f));
                             break;
                         }
                     }
@@ -94,7 +94,7 @@ void TileMapLayer2D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
                     Vector2 pivot = object->GetPosition();
                     if (info.orientation_ == O_ISOMETRIC)
                     {
-                        pivot += Vector2((halfSize.x_ + halfSize.y_) * ratio, (-halfSize.x_ + halfSize.y_) * 0.5f);
+                        pivot += Vector2((halfSize.x + halfSize.y) * ratio, (-halfSize.x + halfSize.y) * 0.5f);
                     }
                     else
                     {
@@ -104,17 +104,17 @@ void TileMapLayer2D::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
                     for (unsigned i = 0; i < 360; i += 30)
                     {
                         unsigned j = i + 30;
-                        float x1 = halfSize.x_ * Cos((float)i);
-                        float y1 = halfSize.y_ * Sin((float)i);
-                        float x2 = halfSize.x_ * Cos((float)j);
-                        float y2 = halfSize.y_ * Sin((float)j);
+                        float x1 = halfSize.x * Cos((float)i);
+                        float y1 = halfSize.y * Sin((float)i);
+                        float x2 = halfSize.x * Cos((float)j);
+                        float y2 = halfSize.y * Sin((float)j);
                         Vector2 point1 = Vector2(x1, - y1);
                         Vector2 point2 = Vector2(x2, - y2);
 
                         if (info.orientation_ == O_ISOMETRIC)
                         {
-                            point1 = Vector2((point1.x_ + point1.y_) * ratio, (point1.y_ - point1.x_) * 0.5f);
-                            point2 = Vector2((point2.x_ + point2.y_) * ratio, (point2.y_ - point2.x_) * 0.5f);
+                            point1 = Vector2((point1.x + point1.y) * ratio, (point1.y - point1.x) * 0.5f);
+                            point2 = Vector2((point2.x + point2.y) * ratio, (point2.y - point2.x) * 0.5f);
                         }
 
                         debug->AddLine(Vector3(TransformNode2D(transform, pivot + point1)),
@@ -367,7 +367,7 @@ void TileMapLayer2D::SetObjectGroup(const TmxObjectGroup2D* objectGroup)
             staticSprite->SetSprite(object->GetTileSprite());
             staticSprite->SetFlip(object->GetTileFlipX(), object->GetTileFlipY(), object->GetTileSwapXY());
             staticSprite->SetLayer(drawOrder_);
-            staticSprite->SetOrderInLayer((int)((10.0f - object->GetPosition().y_) * 100));
+            staticSprite->SetOrderInLayer((int)((10.0f - object->GetPosition().y) * 100));
 
             if (tmxFile->GetInfo().orientation_ == O_ISOMETRIC)
             {

@@ -116,8 +116,8 @@ public:
             }
 
             Vector2& uv = queryResult.textureUV_;
-            result = IntVector2(static_cast<int>(uv.x_ * GetWidth()),
-                static_cast<int>(uv.y_ * GetHeight()));
+            result = IntVector2(static_cast<int>(uv.x * GetWidth()),
+                static_cast<int>(uv.y * GetHeight()));
 
             // Convert back to scaled UI position
             result = DV_UI.ConvertSystemToUI(result);

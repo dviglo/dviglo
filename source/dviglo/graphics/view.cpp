@@ -2051,8 +2051,8 @@ void View::AllocateScreenBuffers()
         if (!rtInfo.enabled_)
             continue;
 
-        float width = rtInfo.size_.x_;
-        float height = rtInfo.size_.y_;
+        float width = rtInfo.size_.x;
+        float height = rtInfo.size_.y;
 
         if (rtInfo.sizeMode_ == SIZE_VIEWPORTDIVISOR)
         {
@@ -2736,24 +2736,24 @@ void View::QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, cons
     // Note: if size is uniform and there is no focusing, quantization is unnecessary
     if (parameters.nonUniform_)
     {
-        viewSize.x_ = ceilf(sqrtf(viewSize.x_ / parameters.quantize_));
-        viewSize.y_ = ceilf(sqrtf(viewSize.y_ / parameters.quantize_));
-        viewSize.x_ = Max(viewSize.x_ * viewSize.x_ * parameters.quantize_, parameters.minView_);
-        viewSize.y_ = Max(viewSize.y_ * viewSize.y_ * parameters.quantize_, parameters.minView_);
+        viewSize.x = ceilf(sqrtf(viewSize.x / parameters.quantize_));
+        viewSize.y = ceilf(sqrtf(viewSize.y / parameters.quantize_));
+        viewSize.x = Max(viewSize.x * viewSize.x * parameters.quantize_, parameters.minView_);
+        viewSize.y = Max(viewSize.y * viewSize.y * parameters.quantize_, parameters.minView_);
     }
     else if (parameters.focus_)
     {
-        viewSize.x_ = Max(viewSize.x_, viewSize.y_);
-        viewSize.x_ = ceilf(sqrtf(viewSize.x_ / parameters.quantize_));
-        viewSize.x_ = Max(viewSize.x_ * viewSize.x_ * parameters.quantize_, parameters.minView_);
-        viewSize.y_ = viewSize.x_;
+        viewSize.x = Max(viewSize.x, viewSize.y);
+        viewSize.x = ceilf(sqrtf(viewSize.x / parameters.quantize_));
+        viewSize.x = Max(viewSize.x * viewSize.x * parameters.quantize_, parameters.minView_);
+        viewSize.y = viewSize.x;
     }
 
     shadowCamera->SetOrthoSize(viewSize);
 
     // Center shadow camera to the view space bounding box
     Quaternion rot(shadowCameraNode->GetWorldRotation());
-    Vector3 adjust(center.x_, center.y_, 0.0f);
+    Vector3 adjust(center.x, center.y, 0.0f);
     shadowCameraNode->Translate(rot * adjust, TransformSpace::World);
 
     // If the shadow map viewport is known, snap to whole texels
@@ -2762,8 +2762,8 @@ void View::QuantizeDirLightShadowCamera(Camera* shadowCamera, Light* light, cons
         Vector3 viewPos(rot.Inverse() * shadowCameraNode->GetWorldPosition());
         // Take into account that shadow map border will not be used
         float invActualSize = 1.0f / (shadowMapWidth - 2.0f);
-        Vector2 texelSize(viewSize.x_ * invActualSize, viewSize.y_ * invActualSize);
-        Vector3 snap(-fmodf(viewPos.x, texelSize.x_), -fmodf(viewPos.y, texelSize.y_), 0.0f);
+        Vector2 texelSize(viewSize.x * invActualSize, viewSize.y * invActualSize);
+        Vector3 snap(-fmodf(viewPos.x, texelSize.x), -fmodf(viewPos.y, texelSize.y), 0.0f);
         shadowCameraNode->Translate(rot * snap, TransformSpace::World);
     }
 }

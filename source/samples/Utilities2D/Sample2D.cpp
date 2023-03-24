@@ -67,7 +67,7 @@ void Sample2D::CreateCollisionShapesFromTMXObjects(Node* tileMapNode, TileMapLay
 
             case OT_ELLIPSE:
             {
-                CreateCircleShape(tileMapNode, tileMapObject, tileMapObject->GetSize().x_ / 2, info); // Ellipse is built as a Circle shape as it doesn't exist in Box2D
+                CreateCircleShape(tileMapNode, tileMapObject, tileMapObject->GetSize().x / 2, info); // Ellipse is built as a Circle shape as it doesn't exist in Box2D
             }
             break;
 

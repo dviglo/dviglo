@@ -579,7 +579,7 @@ void LineEdit::UpdateText()
 
 void LineEdit::UpdateCursor()
 {
-    i32 x = text_->GetCharPosition(cursorPosition_).x_;
+    i32 x = text_->GetCharPosition(cursorPosition_).x;
 
     text_->SetPosition(GetIndentWidth() + clipBorder_.left_, clipBorder_.top_);
     cursor_->SetPosition(text_->GetPosition() + IntVector2(x, 0));
@@ -615,7 +615,7 @@ i32 LineEdit::GetCharIndex(const IntVector2& position)
 
     for (i32 i = text_->GetNumChars(); i >= 0; --i)
     {
-        if (textPosition.x_ >= text_->GetCharPosition(i).x_)
+        if (textPosition.x_ >= text_->GetCharPosition(i).x)
             return i;
     }
 

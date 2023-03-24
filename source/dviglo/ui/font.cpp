@@ -158,7 +158,7 @@ FontFace* Font::GetFace(float pointSize)
 IntVector2 Font::GetTotalGlyphOffset(float pointSize) const
 {
     Vector2 multipliedOffset = pointSize * scaledOffset_;
-    return absoluteOffset_ + IntVector2(RoundToInt(multipliedOffset.x_), RoundToInt(multipliedOffset.y_));
+    return absoluteOffset_ + IntVector2(RoundToInt(multipliedOffset.x), RoundToInt(multipliedOffset.y));
 }
 
 void Font::ReleaseFaces()
@@ -191,8 +191,8 @@ void Font::LoadParameters()
 
     if (scaledElem)
     {
-        scaledOffset_.x_ = scaledElem.GetFloat("x");
-        scaledOffset_.y_ = scaledElem.GetFloat("y");
+        scaledOffset_.x = scaledElem.GetFloat("x");
+        scaledOffset_.y = scaledElem.GetFloat("y");
     }
 }
 

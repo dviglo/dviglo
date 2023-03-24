@@ -22,7 +22,7 @@ inline Color ToColor(const b2Color& color)
 
 inline b2Vec2 ToB2Vec2(const Vector2& vector)
 {
-    return {vector.x_, vector.y_};
+    return {vector.x, vector.y};
 }
 
 inline Vector2 ToVector2(const b2Vec2& vec2)

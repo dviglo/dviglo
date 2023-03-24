@@ -99,8 +99,8 @@ Vector2 SpriteBatchBase::GetVirtualPos(const Vector2& realPos)
     IntRect viewportRect = GetViewportRect();
     float factor = (float)virtualScreenSize_.x_ / viewportRect.Width();
 
-    float virtualX = (realPos.x_ - viewportRect.left_) * factor;
-    float virtualY = (realPos.y_ - viewportRect.top_) * factor;
+    float virtualX = (realPos.x - viewportRect.left_) * factor;
+    float virtualY = (realPos.y - viewportRect.top_) * factor;
 
     return Vector2(virtualX, virtualY);
 }

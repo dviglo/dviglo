@@ -113,7 +113,7 @@ void Character2D::Update(float timeStep)
         if (onSlope_)
             body->ApplyForceToCenter(moveDir * MOVE_SPEED / 2, true); // When climbing a slope, apply force (todo: replace by setting linear velocity to zero when will work)
         else
-            node_->Translate(Vector3(moveDir.x_, moveDir.y_, 0) * timeStep * 1.8f);
+            node_->Translate(Vector3(moveDir.x, moveDir.y, 0) * timeStep * 1.8f);
         if (jump)
             body->ApplyLinearImpulse(Vector2(0.0f, 0.17f) * MOVE_SPEED, body->GetMassCenter(), true);
     }

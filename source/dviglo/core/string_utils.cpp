@@ -281,10 +281,10 @@ Rect ToRect(const char* source)
         return ret;
 
     auto* ptr = (char*)source;
-    ret.min_.x_ = (float)strtod(ptr, &ptr);
-    ret.min_.y_ = (float)strtod(ptr, &ptr);
-    ret.max_.x_ = (float)strtod(ptr, &ptr);
-    ret.max_.y_ = (float)strtod(ptr, &ptr);
+    ret.min_.x = (float)strtod(ptr, &ptr);
+    ret.min_.y = (float)strtod(ptr, &ptr);
+    ret.max_.x = (float)strtod(ptr, &ptr);
+    ret.max_.y = (float)strtod(ptr, &ptr);
 
     return ret;
 }
@@ -338,8 +338,8 @@ Vector2 ToVector2(const char* source)
         return ret;
 
     auto* ptr = (char*)source;
-    ret.x_ = (float)strtod(ptr, &ptr);
-    ret.y_ = (float)strtod(ptr, &ptr);
+    ret.x = (float)strtod(ptr, &ptr);
+    ret.y = (float)strtod(ptr, &ptr);
 
     return ret;
 }

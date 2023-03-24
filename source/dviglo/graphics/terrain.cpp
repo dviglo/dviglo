@@ -551,8 +551,8 @@ float Terrain::GetHeight(const Vector3& worldPosition) const
     if (node_)
     {
         Vector3 position = node_->GetWorldTransform().Inverse() * worldPosition;
-        float xPos = (position.x - patchWorldOrigin_.x_) / spacing_.x;
-        float zPos = (position.z - patchWorldOrigin_.y_) / spacing_.z;
+        float xPos = (position.x - patchWorldOrigin_.x) / spacing_.x;
+        float zPos = (position.z - patchWorldOrigin_.y) / spacing_.z;
         float xFrac = Fract(xPos);
         float zFrac = Fract(zPos);
         float h1, h2, h3;
@@ -585,8 +585,8 @@ Vector3 Terrain::GetNormal(const Vector3& worldPosition) const
     if (node_)
     {
         Vector3 position = node_->GetWorldTransform().Inverse() * worldPosition;
-        float xPos = (position.x - patchWorldOrigin_.x_) / spacing_.x;
-        float zPos = (position.z - patchWorldOrigin_.y_) / spacing_.z;
+        float xPos = (position.x - patchWorldOrigin_.x) / spacing_.x;
+        float zPos = (position.z - patchWorldOrigin_.y) / spacing_.z;
         float xFrac = Fract(xPos);
         float zFrac = Fract(zPos);
         Vector3 n1, n2, n3;
@@ -619,8 +619,8 @@ IntVector2 Terrain::WorldToHeightMap(const Vector3& worldPosition) const
         return IntVector2::ZERO;
 
     Vector3 position = node_->GetWorldTransform().Inverse() * worldPosition;
-    auto xPos = RoundToInt((position.x - patchWorldOrigin_.x_) / spacing_.x);
-    auto zPos = RoundToInt((position.z - patchWorldOrigin_.y_) / spacing_.z);
+    auto xPos = RoundToInt((position.x - patchWorldOrigin_.x) / spacing_.x);
+    auto zPos = RoundToInt((position.z - patchWorldOrigin_.y) / spacing_.z);
     xPos = Clamp(xPos, 0, numVertices_.x_ - 1);
     zPos = Clamp(zPos, 0, numVertices_.y_ - 1);
 
@@ -633,8 +633,8 @@ Vector3 Terrain::HeightMapToWorld(const IntVector2& pixelPosition) const
         return Vector3::ZERO;
 
     IntVector2 pos(pixelPosition.x_, numVertices_.y_ - 1 - pixelPosition.y_);
-    auto xPos = pos.x_ * spacing_.x + patchWorldOrigin_.x_;
-    auto zPos = pos.y_ * spacing_.z + patchWorldOrigin_.y_;
+    auto xPos = pos.x_ * spacing_.x + patchWorldOrigin_.x;
+    auto zPos = pos.y_ * spacing_.z + patchWorldOrigin_.y;
     Vector3 lPos(xPos, 0.0f, zPos);
     Vector3 wPos = node_->GetWorldTransform() * lPos;
     wPos.y = GetHeight(wPos);
@@ -721,8 +721,8 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
 
                 // Texture coordinate
                 Vector2 texCoord((float)xPos / (float)(numVertices_.x_ - 1), 1.0f - (float)zPos / (float)(numVertices_.y_ - 1));
-                *vertexData++ = texCoord.x_;
-                *vertexData++ = texCoord.y_;
+                *vertexData++ = texCoord.x;
+                *vertexData++ = texCoord.y;
 
                 // Tangent
                 Vector3 xyz = (Vector3::RIGHT - normal * normal.DotProduct(Vector3::RIGHT)).normalized();
@@ -871,7 +871,7 @@ void Terrain::CreateGeometry()
         numPatches_ = IntVector2((heightMap_->GetWidth() - 1) / patchSize_, (heightMap_->GetHeight() - 1) / patchSize_);
         numVertices_ = IntVector2(numPatches_.x_ * patchSize_ + 1, numPatches_.y_ * patchSize_ + 1);
         patchWorldOrigin_ =
-            Vector2(-0.5f * (float)numPatches_.x_ * patchWorldSize_.x_, -0.5f * (float)numPatches_.y_ * patchWorldSize_.y_);
+            Vector2(-0.5f * (float)numPatches_.x_ * patchWorldSize_.x, -0.5f * (float)numPatches_.y_ * patchWorldSize_.y);
         if (numVertices_ != lastNumVertices_ || lastSpacing_ != spacing_ || patchSize_ != lastPatchSize_)
             updateAll = true;
         auto newDataSize = (unsigned)(numVertices_.x_ * numVertices_.y_);
@@ -1036,8 +1036,8 @@ void Terrain::CreateGeometry()
                         patchNode = node_->CreateTemporaryChild(nodeName, LOCAL);
                     }
 
-                    patchNode->SetPosition(Vector3(patchWorldOrigin_.x_ + (float)x * patchWorldSize_.x_, 0.0f,
-                        patchWorldOrigin_.y_ + (float)z * patchWorldSize_.y_));
+                    patchNode->SetPosition(Vector3(patchWorldOrigin_.x + (float)x * patchWorldSize_.x, 0.0f,
+                        patchWorldOrigin_.y + (float)z * patchWorldSize_.y));
 
                     auto* patch = patchNode->GetComponent<TerrainPatch>();
                     if (!patch)

@@ -32,20 +32,20 @@ static Rect PosToDest(const Vector2& position, Texture2D* texture, const Rect* s
         // Проверки не производятся, текстура должна быть корректной
         return Rect
         (
-            position.x_,
-            position.y_,
-            position.x_ + texture->GetWidth(),
-            position.y_ + texture->GetHeight()
+            position.x,
+            position.y,
+            position.x + texture->GetWidth(),
+            position.y + texture->GetHeight()
         );
     }
     else
     {
         return Rect
         (
-            position.x_,
-            position.y_,
-            position.x_ + (src->Right() - src->Left()), // Сперва вычисляем размер, так как там вероятно более близкие
-            position.y_ + (src->Bottom() - src->Top()) // значения и меньше ошибка вычислений
+            position.x,
+            position.y,
+            position.x + (src->Right() - src->Left()), // Сперва вычисляем размер, так как там вероятно более близкие
+            position.y + (src->Bottom() - src->Top()) // значения и меньше ошибка вычислений
         );
     }
 }
@@ -64,10 +64,10 @@ static Rect SrcToUV(const Rect* source, Texture2D* texture)
         float invHeight = 1.0f / texture->GetHeight();
         return Rect
         (
-            source->min_.x_ * invWidth,
-            source->min_.y_ * invHeight,
-            source->max_.x_ * invWidth,
-            source->max_.y_ * invHeight
+            source->min_.x * invWidth,
+            source->min_.y * invHeight,
+            source->max_.x * invWidth,
+            source->max_.y * invHeight
         );
     }
 }
@@ -132,10 +132,10 @@ void SpriteBatch::DrawSpriteInternal()
 
         // Лицевая грань задаётся по часовой стрелке. Учитываем, что ось Y направлена вниз.
         // Но нет большой разницы, так как спрайты двусторонние
-        quad_.v0_.position_ = Vector3(resultDest.min_.x_, resultDest.min_.y_, 0); // Верхний левый угол спрайта
-        quad_.v1_.position_ = Vector3(resultDest.max_.x_, resultDest.min_.y_, 0); // Верхний правый угол
-        quad_.v2_.position_ = Vector3(resultDest.max_.x_, resultDest.max_.y_, 0); // Нижний правый угол
-        quad_.v3_.position_ = Vector3(resultDest.min_.x_, resultDest.max_.y_, 0); // Нижний левый угол
+        quad_.v0_.position_ = Vector3(resultDest.min_.x, resultDest.min_.y, 0); // Верхний левый угол спрайта
+        quad_.v1_.position_ = Vector3(resultDest.max_.x, resultDest.min_.y, 0); // Верхний правый угол
+        quad_.v2_.position_ = Vector3(resultDest.max_.x, resultDest.max_.y, 0); // Нижний правый угол
+        quad_.v3_.position_ = Vector3(resultDest.min_.x, resultDest.max_.y, 0); // Нижний левый угол
     }
     else
     {
@@ -153,18 +153,18 @@ void SpriteBatch::DrawSpriteInternal()
         // смещает ее в требуемые мировые координаты.
         // Но в матрице 3x3 последняя строка "0 0 1", умножать на которую бессмысленно.
         // Поэтому вычисляем без матрицы для оптимизации
-        float m11 = cos * sprite_.scale_.x_; float m12 = -sin * sprite_.scale_.y_; float m13 = sprite_.destination_.min_.x_;
-        float m21 = sin * sprite_.scale_.x_; float m22 =  cos * sprite_.scale_.y_; float m23 = sprite_.destination_.min_.y_;
+        float m11 = cos * sprite_.scale_.x; float m12 = -sin * sprite_.scale_.y; float m13 = sprite_.destination_.min_.x;
+        float m21 = sin * sprite_.scale_.x; float m22 =  cos * sprite_.scale_.y; float m23 = sprite_.destination_.min_.y;
         //          0                                      0                                     1
 
-        float minXm11 = local.min_.x_ * m11;
-        float minXm21 = local.min_.x_ * m21;
-        float maxXm11 = local.max_.x_ * m11;
-        float maxXm21 = local.max_.x_ * m21;
-        float minYm12 = local.min_.y_ * m12;
-        float minYm22 = local.min_.y_ * m22;
-        float maxYm12 = local.max_.y_ * m12;
-        float maxYm22 = local.max_.y_ * m22;
+        float minXm11 = local.min_.x * m11;
+        float minXm21 = local.min_.x * m21;
+        float maxXm11 = local.max_.x * m11;
+        float maxXm21 = local.max_.x * m21;
+        float minYm12 = local.min_.y * m12;
+        float minYm22 = local.min_.y * m22;
+        float maxYm12 = local.max_.y * m12;
+        float maxYm22 = local.max_.y * m22;
 
         // transform * Vector3(local.min_.x_, local.min_.y_, 1.0f);
         quad_.v0_.position_ = Vector3(minXm11 + minYm12 + m13,
@@ -188,22 +188,22 @@ void SpriteBatch::DrawSpriteInternal()
     }
 
     if (!!(sprite_.flipModes_ & FlipModes::Horizontally))
-        std::swap(sprite_.sourceUV_.min_.x_, sprite_.sourceUV_.max_.x_);
+        std::swap(sprite_.sourceUV_.min_.x, sprite_.sourceUV_.max_.x);
 
     if (!!(sprite_.flipModes_ & FlipModes::Vertically))
-        std::swap(sprite_.sourceUV_.min_.y_, sprite_.sourceUV_.max_.y_);
+        std::swap(sprite_.sourceUV_.min_.y, sprite_.sourceUV_.max_.y);
 
     quad_.v0_.color_ = sprite_.color0_;
     quad_.v0_.uv_ = sprite_.sourceUV_.min_;
 
     quad_.v1_.color_ = sprite_.color1_;
-    quad_.v1_.uv_ = Vector2(sprite_.sourceUV_.max_.x_, sprite_.sourceUV_.min_.y_);
+    quad_.v1_.uv_ = Vector2(sprite_.sourceUV_.max_.x, sprite_.sourceUV_.min_.y);
 
     quad_.v2_.color_ = sprite_.color2_;
     quad_.v2_.uv_ = sprite_.sourceUV_.max_;
 
     quad_.v3_.color_ = sprite_.color3_;
-    quad_.v3_.uv_ = Vector2(sprite_.sourceUV_.min_.x_, sprite_.sourceUV_.max_.y_);
+    quad_.v3_.uv_ = Vector2(sprite_.sourceUV_.min_.x, sprite_.sourceUV_.max_.y);
 
     AddQuad();
 }
@@ -274,7 +274,7 @@ void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, con
         float goy = (float)glyph->offsetY_;
 
         sprite_.texture_ = textures[glyph->page_];
-        sprite_.destination_ = Rect(charPos.x_, charPos.y_, charPos.x_ + gw, charPos.y_ + gh);
+        sprite_.destination_ = Rect(charPos.x, charPos.y, charPos.x + gw, charPos.y + gh);
         sprite_.sourceUV_ = Rect(gx * pixelWidth, gy * pixelHeight, (gx + gw) * pixelWidth, (gy + gh) * pixelHeight);
 
         // Модифицируем origin, а не позицию, чтобы было правильное вращение
@@ -282,7 +282,7 @@ void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, con
 
         DrawSpriteInternal();
 
-        charOrig.x_ -= (float)glyph->advanceX_;
+        charOrig.x -= (float)glyph->advanceX_;
     }
 }
 
@@ -322,18 +322,18 @@ void SpriteBatch::DrawLine(const Vector2& start, const Vector2&end, float width)
     // {newX = oldX * cos(deltaAngle) - oldY * sin(deltaAngle) = 0 * cos(deltaAngle) - halfWidth * sin(deltaAngle)
     // {newY = oldX * sin(deltaAngle) + oldY * cos(deltaAngle) = 0 * sin(deltaAngle) + halfWidth * cos(deltaAngle)
     // Так как повернутая линия может оказаться в любом квадранте, при вычислениии синуса и косинуса нам важен знак.
-    len = len * MySign(end.x_ - start.x_) * MySign(end.y_ - start.y_);
-    float cos = (end.x_ - start.x_) / len; // Прилежащий катет к гипотенузе.
-    float sin = (end.y_ - start.y_) / len; // Противолежащий катет к гипотенузе.
+    len = len * MySign(end.x - start.x) * MySign(end.y - start.y);
+    float cos = (end.x - start.x) / len; // Прилежащий катет к гипотенузе.
+    float sin = (end.y - start.y) / len; // Противолежащий катет к гипотенузе.
     Vector2 offset = Vector2(-halfWidth * sin, halfWidth * cos);
 
     // Так как противоположные стороны параллельны, то можно не делать повторных вычислений:
     // смещение v0 всегда равно смещению v1, смещение v3 = смещению v2.
     // К тому же смещения вершин v0, v1 отличаются от смещений вершин v3, v2 только знаком (противоположны).
-    Vector2 v0 = Vector2(start.x_ + offset.x_, start.y_ + offset.y_);
-    Vector2 v1 = Vector2(end.x_ + offset.x_, end.y_ + offset.y_);
-    Vector2 v2 = Vector2(end.x_ - offset.x_, end.y_ - offset.y_);
-    Vector2 v3 = Vector2(start.x_ - offset.x_, start.y_ - offset.y_);
+    Vector2 v0 = Vector2(start.x + offset.x, start.y + offset.y);
+    Vector2 v1 = Vector2(end.x + offset.x, end.y + offset.y);
+    Vector2 v2 = Vector2(end.x - offset.x, end.y - offset.y);
+    Vector2 v3 = Vector2(start.x - offset.x, start.y - offset.y);
 
     DrawTriangle(v0, v1, v2);
     DrawTriangle(v2, v3, v0);
@@ -346,13 +346,13 @@ void SpriteBatch::DrawLine(float startX, float startY, float endX, float endY, f
 
 void SpriteBatch::DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSize)
 {
-    DrawAABoxSolid(centerPos.x_, centerPos.y_, halfSize.x_, halfSize.y_);
+    DrawAABoxSolid(centerPos.x, centerPos.y, halfSize.x, halfSize.y);
 }
 
 void SpriteBatch::DrawAABBSolid(const Vector2& min, const Vector2& max)
 {
-    Vector2 rightTop = Vector2(max.x_, min.y_); // Правый верхний угол
-    Vector2 leftBot = Vector2(min.x_, max.y_); // Левый нижний
+    Vector2 rightTop = Vector2(max.x, min.y); // Правый верхний угол
+    Vector2 leftBot = Vector2(min.x, max.y); // Левый нижний
 
     DrawTriangle(min, rightTop, max);
     DrawTriangle(leftBot, min, max);
@@ -428,14 +428,14 @@ void SpriteBatch::DrawCircle(float centerX, float centerY, float radius)
 // Поворачивает вектор по часовой стрелке на 90 градусов
 static Vector2 RotatePlus90(const Vector2& v)
 {
-    Vector2 result(-v.y_, v.x_);
+    Vector2 result(-v.y, v.x);
     return result;
 }
 
 // Поворачивает вектор по часовой стрелке на -90 градусов
 static Vector2 RotateMinus90(const Vector2& v)
 {
-    Vector2 result(v.y_, -v.x_);
+    Vector2 result(v.y, -v.x);
     return result;
 }
 

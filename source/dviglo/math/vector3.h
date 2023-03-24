@@ -177,16 +177,16 @@ struct DV_API Vector3
 
     /// Construct from a two-dimensional vector and the Z coordinate.
     Vector3(const Vector2& vector, float z) noexcept :
-        x(vector.x_),
-        y(vector.y_),
+        x(vector.x),
+        y(vector.y),
         z(z)
     {
     }
 
     /// Construct from a two-dimensional vector (for Urho2D).
     explicit Vector3(const Vector2& vector) noexcept :
-        x(vector.x_),
-        y(vector.y_),
+        x(vector.x),
+        y(vector.y),
         z(0.0f)
     {
     }

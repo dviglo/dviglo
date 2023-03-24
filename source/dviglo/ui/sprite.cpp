@@ -118,7 +118,7 @@ void Sprite::SetPosition(const Vector2& position)
     {
         floatPosition_ = position;
         // Copy to the integer position
-        position_ = IntVector2((int)position.x_, (int)position.y_);
+        position_ = IntVector2((int)position.x, (int)position.y);
         MarkDirty();
     }
 }
@@ -220,11 +220,11 @@ const Matrix3x4& Sprite::GetTransform() const
                 break;
 
             case HA_CENTER:
-                pos.x_ += (float)parent_->GetSize().x_ / 2.f;
+                pos.x += (float)parent_->GetSize().x_ / 2.f;
                 break;
 
             case HA_RIGHT:
-                pos.x_ += (float)parent_->GetSize().x_;
+                pos.x += (float)parent_->GetSize().x_;
                 break;
 
             case HA_CUSTOM:
@@ -236,11 +236,11 @@ const Matrix3x4& Sprite::GetTransform() const
                 break;
 
             case VA_CENTER:
-                pos.y_ += (float)parent_->GetSize().y_ / 2.f;
+                pos.y += (float)parent_->GetSize().y_ / 2.f;
                 break;
 
             case VA_BOTTOM:
-                pos.y_ += (float)(parent_->GetSize().y_);
+                pos.y += (float)(parent_->GetSize().y_);
                 break;
 
             case VA_CUSTOM:

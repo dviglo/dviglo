@@ -151,13 +151,13 @@ IntVector2 Viewport::world_to_screen_point(const Vector3& worldPos) const
     {
         /// \todo This is incorrect if the viewport is used on a texture rendertarget instead of the backbuffer, as it may have different dimensions.
         Graphics& graphics = DV_GRAPHICS;
-        x = (int)(screenPoint.x_ * graphics.GetWidth());
-        y = (int)(screenPoint.y_ * graphics.GetHeight());
+        x = (int)(screenPoint.x * graphics.GetWidth());
+        y = (int)(screenPoint.y * graphics.GetHeight());
     }
     else
     {
-        x = (int)(rect_.left_ + screenPoint.x_ * rect_.Width());
-        y = (int)(rect_.top_ + screenPoint.y_ * rect_.Height());
+        x = (int)(rect_.left_ + screenPoint.x * rect_.Width());
+        y = (int)(rect_.top_ + screenPoint.y * rect_.Height());
     }
 
     return IntVector2(x, y);

@@ -450,15 +450,15 @@ void AnimatedSprite2D::UpdateSourceBatchesSpriter()
         if (!sprite->GetTextureRectangle(textureRect, flipX_, flipY_))
             return;
 
-        vertex0.position_ = worldTransform * Vector3(drawRect.min_.x_, drawRect.min_.y_, 0.0f);
-        vertex1.position_ = worldTransform * Vector3(drawRect.min_.x_, drawRect.max_.y_, 0.0f);
-        vertex2.position_ = worldTransform * Vector3(drawRect.max_.x_, drawRect.max_.y_, 0.0f);
-        vertex3.position_ = worldTransform * Vector3(drawRect.max_.x_, drawRect.min_.y_, 0.0f);
+        vertex0.position_ = worldTransform * Vector3(drawRect.min_.x, drawRect.min_.y, 0.0f);
+        vertex1.position_ = worldTransform * Vector3(drawRect.min_.x, drawRect.max_.y, 0.0f);
+        vertex2.position_ = worldTransform * Vector3(drawRect.max_.x, drawRect.max_.y, 0.0f);
+        vertex3.position_ = worldTransform * Vector3(drawRect.max_.x, drawRect.min_.y, 0.0f);
 
         vertex0.uv_ = textureRect.min_;
-        vertex1.uv_ = Vector2(textureRect.min_.x_, textureRect.max_.y_);
+        vertex1.uv_ = Vector2(textureRect.min_.x, textureRect.max_.y);
         vertex2.uv_ = textureRect.max_;
-        vertex3.uv_ = Vector2(textureRect.max_.x_, textureRect.min_.y_);
+        vertex3.uv_ = Vector2(textureRect.max_.x, textureRect.min_.y);
 
         Color finalColor;
         finalColor.FromU32(color);
