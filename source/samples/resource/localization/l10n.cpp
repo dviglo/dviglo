@@ -175,8 +175,8 @@ void L10n::HandleUpdate(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
     const float MOUSE_SENSITIVITY = 0.1f;
     IntVector2 mouseMove = DV_INPUT.GetMouseMove();
-    yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
-    pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
+    yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
+    pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
     pitch_ = Clamp(pitch_, -90.0f, 90.0f);
     cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 }

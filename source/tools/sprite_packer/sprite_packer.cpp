@@ -257,8 +257,8 @@ void Run(Vector<String>& arguments)
             IntVector2 size = tries[0];
             tries.Erase(0);
             bool fit = true;
-            int textureHeight = size.y_;
-            int textureWidth = size.x_;
+            int textureHeight = size.y;
+            int textureWidth = size.x;
             if (success && textureHeight * textureWidth > packedWidth * packedHeight)
                 continue;
 
@@ -282,8 +282,8 @@ void Run(Vector<String>& arguments)
                     packerInfo->x = packerRect->x;
                     packerInfo->y = packerRect->y;
                 }
-                packedWidth = size.x_;
-                packedHeight = size.y_;
+                packedWidth = size.x;
+                packedHeight = size.y;
             }
         }
         delete[] packerRects;

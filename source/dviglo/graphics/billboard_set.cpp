@@ -764,7 +764,7 @@ void BillboardSet::MarkPositionsDirty()
 
 void BillboardSet::CalculateFixedScreenSize(const FrameInfo& frame)
 {
-    float invViewHeight = 1.0f / frame.viewSize_.y_;
+    float invViewHeight = 1.0f / frame.viewSize_.y;
     float halfViewWorldSize = frame.camera_->GetHalfViewSize();
     bool scaleFactorChanged = false;
 

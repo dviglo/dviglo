@@ -298,8 +298,8 @@ void SceneReplication::MoveCamera()
     if (!DV_UI.GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = DV_INPUT.GetMouseMove();
-        yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
-        pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
+        yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
+        pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, 1.0f, 90.0f);
     }
 

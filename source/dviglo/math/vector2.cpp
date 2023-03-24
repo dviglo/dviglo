@@ -35,7 +35,7 @@ String Vector2::ToString() const
 String IntVector2::ToString() const
 {
     char tempBuffer[CONVERSION_BUFFER_LENGTH];
-    sprintf(tempBuffer, "%d %d", x_, y_);
+    sprintf(tempBuffer, "%d %d", x, y);
     return String(tempBuffer);
 }
 

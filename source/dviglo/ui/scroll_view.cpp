@@ -337,9 +337,9 @@ void ScrollView::UpdatePanelSize()
 
     IntVector2 panelSize = GetSize();
     if (verticalScrollBar_->IsVisible())
-        panelSize.x_ -= verticalScrollBar_->GetWidth();
+        panelSize.x -= verticalScrollBar_->GetWidth();
     if (horizontalScrollBar_->IsVisible())
-        panelSize.y_ -= horizontalScrollBar_->GetHeight();
+        panelSize.y -= horizontalScrollBar_->GetHeight();
 
     scrollPanel_->SetSize(panelSize);
     horizontalScrollBar_->SetWidth(scrollPanel_->GetWidth());
@@ -362,8 +362,8 @@ void ScrollView::UpdateViewSize()
         size = contentElement_->GetSize();
     IntRect panelBorder = scrollPanel_->GetClipBorder();
 
-    viewSize_.x_ = Max(size.x_, scrollPanel_->GetWidth() - panelBorder.left_ - panelBorder.right_);
-    viewSize_.y_ = Max(size.y_, scrollPanel_->GetHeight() - panelBorder.top_ - panelBorder.bottom_);
+    viewSize_.x = Max(size.x, scrollPanel_->GetWidth() - panelBorder.left_ - panelBorder.right_);
+    viewSize_.y = Max(size.y, scrollPanel_->GetHeight() - panelBorder.top_ - panelBorder.bottom_);
 
     UpdateView(viewPosition_);
     UpdateScrollBars();
@@ -375,22 +375,22 @@ void ScrollView::UpdateScrollBars()
 
     IntVector2 size = scrollPanel_->GetSize();
     IntRect panelBorder = scrollPanel_->GetClipBorder();
-    size.x_ -= panelBorder.left_ + panelBorder.right_;
-    size.y_ -= panelBorder.top_ + panelBorder.bottom_;
+    size.x -= panelBorder.left_ + panelBorder.right_;
+    size.y -= panelBorder.top_ + panelBorder.bottom_;
 
-    if (size.x_ > 0 && viewSize_.x_ > 0)
+    if (size.x > 0 && viewSize_.x > 0)
     {
-        float range = (float)viewSize_.x_ / (float)size.x_ - 1.0f;
+        float range = (float)viewSize_.x / (float)size.x - 1.0f;
         horizontalScrollBar_->SetRange(range);
-        horizontalScrollBar_->SetValue((float)viewPosition_.x_ / (float)size.x_);
-        horizontalScrollBar_->SetStepFactor(STEP_FACTOR / (float)size.x_);
+        horizontalScrollBar_->SetValue((float)viewPosition_.x / (float)size.x);
+        horizontalScrollBar_->SetStepFactor(STEP_FACTOR / (float)size.x);
     }
-    if (size.y_ > 0 && viewSize_.y_ > 0)
+    if (size.y > 0 && viewSize_.y > 0)
     {
-        float range = (float)viewSize_.y_ / (float)size.y_ - 1.0f;
+        float range = (float)viewSize_.y / (float)size.y - 1.0f;
         verticalScrollBar_->SetRange(range);
-        verticalScrollBar_->SetValue((float)viewPosition_.y_ / (float)size.y_);
-        verticalScrollBar_->SetStepFactor(STEP_FACTOR / (float)size.y_);
+        verticalScrollBar_->SetValue((float)viewPosition_.y / (float)size.y);
+        verticalScrollBar_->SetStepFactor(STEP_FACTOR / (float)size.y);
     }
 
     ignoreEvents_ = false;
@@ -403,9 +403,9 @@ void ScrollView::UpdateView(const IntVector2& position)
     IntVector2 panelSize(scrollPanel_->GetWidth() - panelBorder.left_ - panelBorder.right_,
         scrollPanel_->GetHeight() - panelBorder.top_ - panelBorder.bottom_);
 
-    viewPosition_.x_ = Clamp(position.x_, 0, viewSize_.x_ - panelSize.x_);
-    viewPosition_.y_ = Clamp(position.y_, 0, viewSize_.y_ - panelSize.y_);
-    scrollPanel_->SetChildOffset(IntVector2(-viewPosition_.x_ + panelBorder.left_, -viewPosition_.y_ + panelBorder.top_));
+    viewPosition_.x = Clamp(position.x, 0, viewSize_.x - panelSize.x);
+    viewPosition_.y = Clamp(position.y, 0, viewSize_.y - panelSize.y);
+    scrollPanel_->SetChildOffset(IntVector2(-viewPosition_.x + panelBorder.left_, -viewPosition_.y + panelBorder.top_));
 
     if (viewPosition_ != oldPosition)
     {
@@ -413,8 +413,8 @@ void ScrollView::UpdateView(const IntVector2& position)
 
         VariantMap& eventData = GetEventDataMap();
         eventData[P_ELEMENT] = this;
-        eventData[P_X] = viewPosition_.x_;
-        eventData[P_Y] = viewPosition_.y_;
+        eventData[P_X] = viewPosition_.x;
+        eventData[P_Y] = viewPosition_.y;
         SendEvent(E_VIEWCHANGED, eventData);
     }
 }
@@ -425,12 +425,12 @@ void ScrollView::HandleScrollBarChanged(StringHash eventType, VariantMap& eventD
     {
         IntVector2 size = scrollPanel_->GetSize();
         IntRect panelBorder = scrollPanel_->GetClipBorder();
-        size.x_ -= panelBorder.left_ + panelBorder.right_;
-        size.y_ -= panelBorder.top_ + panelBorder.bottom_;
+        size.x -= panelBorder.left_ + panelBorder.right_;
+        size.y -= panelBorder.top_ + panelBorder.bottom_;
 
         UpdateView(IntVector2(
-            (int)(horizontalScrollBar_->GetValue() * (float)size.x_),
-            (int)(verticalScrollBar_->GetValue() * (float)size.y_)
+            (int)(horizontalScrollBar_->GetValue() * (float)size.x),
+            (int)(verticalScrollBar_->GetValue() * (float)size.y)
         ));
     }
 }

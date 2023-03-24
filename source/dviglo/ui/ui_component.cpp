@@ -95,7 +95,7 @@ public:
         IntVector2 pos;
         pos = DV_UI.ConvertUIToSystem(screenPos);
 
-        Ray ray(camera->GetScreenRay((float)pos.x_ / rect.Width(), (float)pos.y_ / rect.Height()));
+        Ray ray(camera->GetScreenRay((float)pos.x / rect.Width(), (float)pos.y / rect.Height()));
         Vector<RayQueryResult> queryResultVector;
         RayOctreeQuery query(queryResultVector, ray, RAY_TRIANGLE_UV, M_INFINITY, DrawableTypes::Geometry, DEFAULT_VIEWMASK);
 

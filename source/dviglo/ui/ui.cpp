@@ -167,8 +167,8 @@ void UI::SetCursor(Cursor* cursor)
         IntVector2 pos = cursor_->GetPosition();
         const IntVector2& rootSize = rootElement_->GetSize();
         const IntVector2& rootPos = rootElement_->GetPosition();
-        pos.x_ = Clamp(pos.x_, rootPos.x_, rootPos.x_ + rootSize.x_ - 1);
-        pos.y_ = Clamp(pos.y_, rootPos.y_, rootPos.y_ + rootSize.y_ - 1);
+        pos.x = Clamp(pos.x, rootPos.x, rootPos.x + rootSize.x - 1);
+        pos.y = Clamp(pos.y, rootPos.y, rootPos.y + rootSize.y - 1);
         cursor_->SetPosition(pos);
     }
 }
@@ -425,7 +425,7 @@ void UI::RenderUpdate()
     const IntVector2& rootSize = rootElement_->GetSize();
     const IntVector2& rootPos = rootElement_->GetPosition();
     // Note: the scissors operate on unscaled coordinates. Scissor scaling is only performed during render
-    IntRect currentScissor = IntRect(rootPos.x_, rootPos.y_, rootPos.x_ + rootSize.x_, rootPos.y_ + rootSize.y_);
+    IntRect currentScissor = IntRect(rootPos.x, rootPos.y, rootPos.x + rootSize.x, rootPos.y + rootSize.y);
     if (rootElement_->IsVisible())
         GetBatches(batches_, vertexData_, rootElement_, currentScissor);
 
@@ -438,7 +438,7 @@ void UI::RenderUpdate()
     // Get batches from the cursor (and its possible children) last to draw it on top of everything
     if (cursor_ && cursor_->IsVisible() && !osCursorVisible)
     {
-        currentScissor = IntRect(0, 0, rootSize.x_, rootSize.y_);
+        currentScissor = IntRect(0, 0, rootSize.x, rootSize.y);
         cursor_->GetBatches(batches_, vertexData_, currentScissor);
         GetBatches(batches_, vertexData_, cursor_, currentScissor);
     }
@@ -461,7 +461,7 @@ void UI::RenderUpdate()
             const IntVector2& size = element->GetSize();
             const IntVector2& pos = element->GetPosition();
             // Note: the scissors operate on unscaled coordinates. Scissor scaling is only performed during render
-            IntRect scissor = IntRect(pos.x_, pos.y_, pos.x_ + size.x_, pos.y_ + size.y_);
+            IntRect scissor = IntRect(pos.x, pos.y, pos.x + size.x, pos.y + size.y);
             GetBatches(data.batches_, data.vertexData_, element, scissor);
 
             // UiElement does not have anything to show. Insert dummy batch that will clear the texture.
@@ -551,7 +551,7 @@ void UI::DebugDraw(UiElement* element)
             root = element;
         const IntVector2& rootSize = root->GetSize();
         const IntVector2& rootPos = root->GetPosition();
-        IntRect scissor(rootPos.x_, rootPos.y_, rootPos.x_ + rootSize.x_, rootPos.y_ + rootSize.y_);
+        IntRect scissor(rootPos.x, rootPos.y, rootPos.x + rootSize.x, rootPos.y + rootSize.y);
         if (root == rootElement_ || root == rootModalElement_)
             element->GetDebugDrawBatches(debugDrawBatches_, debugVertexData_, scissor);
         else
@@ -739,18 +739,18 @@ void UI::SetScale(float scale)
 void UI::SetWidth(float width)
 {
     IntVector2 size = GetEffectiveRootElementSize(false);
-    SetScale((float)size.x_ / width);
+    SetScale((float)size.x / width);
 }
 
 void UI::SetHeight(float height)
 {
     IntVector2 size = GetEffectiveRootElementSize(false);
-    SetScale((float)size.y_ / height);
+    SetScale((float)size.y / height);
 }
 
 void UI::SetCustomSize(const IntVector2& size)
 {
-    customSize_ = IntVector2(Max(0, size.x_), Max(0, size.y_));
+    customSize_ = IntVector2(Max(0, size.x), Max(0, size.y));
     ResizeRootElement();
 }
 
@@ -818,19 +818,19 @@ UiElement* UI::GetElementAt(UiElement* root, const IntVector2& position, bool en
     const IntVector2& rootPos = root->GetPosition();
 
     // If position is out of bounds of root element return null.
-    if (position.x_ < rootPos.x_ || position.x_ > rootPos.x_ + rootSize.x_)
+    if (position.x < rootPos.x || position.x > rootPos.x + rootSize.x)
         return nullptr;
 
-    if (position.y_ < rootPos.y_ || position.y_ > rootPos.y_ + rootSize.y_)
+    if (position.y < rootPos.y || position.y > rootPos.y + rootSize.y)
         return nullptr;
 
     // If UI is smaller than the screen, wrap if necessary
-    if (rootSize.x_ > 0 && rootSize.y_ > 0)
+    if (rootSize.x > 0 && rootSize.y > 0)
     {
-        if (positionCopy.x_ >= rootPos.x_ + rootSize.x_)
-            positionCopy.x_ = rootPos.x_ + ((positionCopy.x_ - rootPos.x_) % rootSize.x_);
-        if (positionCopy.y_ >= rootPos.y_ + rootSize.y_)
-            positionCopy.y_ = rootPos.y_ + ((positionCopy.y_ - rootPos.y_) % rootSize.y_);
+        if (positionCopy.x >= rootPos.x + rootSize.x)
+            positionCopy.x = rootPos.x + ((positionCopy.x - rootPos.x) % rootSize.x);
+        if (positionCopy.y >= rootPos.y + rootSize.y)
+            positionCopy.y = rootPos.y + ((positionCopy.y - rootPos.y) % rootSize.y);
     }
 
     UiElement* result = nullptr;
@@ -995,7 +995,7 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     unsigned alphaFormat = Graphics::GetAlphaFormat();
     RenderSurface* surface = graphics.GetRenderTarget(0);
     IntVector2 viewSize = graphics.GetViewport().Size();
-    Vector2 invScreenSize(1.0f / (float)viewSize.x_, 1.0f / (float)viewSize.y_);
+    Vector2 invScreenSize(1.0f / (float)viewSize.x, 1.0f / (float)viewSize.y);
     Vector2 scale(2.0f * invScreenSize.x, -2.0f * invScreenSize.y);
     Vector2 offset(-1.0f, 1.0f);
 
@@ -1111,8 +1111,8 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
         {
             int top = scissor.top_;
             int bottom = scissor.bottom_;
-            scissor.top_ = viewSize.y_ - bottom;
-            scissor.bottom_ = viewSize.y_ - top;
+            scissor.top_ = viewSize.y - bottom;
+            scissor.bottom_ = viewSize.y - top;
         }
 
         graphics.SetBlendMode(batch.blend_mode_);
@@ -1248,8 +1248,8 @@ void UI::GetElementAt(UiElement*& result, UiElement* current, const IntVector2& 
                 {
                     if (!i)
                     {
-                        int screenPos = (parentLayoutMode == LM_HORIZONTAL) ? element->GetScreenPosition().x_ :
-                            element->GetScreenPosition().y_;
+                        int screenPos = (parentLayoutMode == LM_HORIZONTAL) ? element->GetScreenPosition().x :
+                            element->GetScreenPosition().y;
                         int layoutMaxSize = current->GetLayoutElementMaxSize();
                         int spacing = current->GetLayoutSpacing();
 
@@ -1265,12 +1265,12 @@ void UI::GetElementAt(UiElement*& result, UiElement* current, const IntVector2& 
                     // the loop, since all further children will be further down or right.
                     else if (parentLayoutMode == LM_HORIZONTAL)
                     {
-                        if (element->GetScreenPosition().x_ >= rootElement_->GetPosition().x_ + rootElement_->GetSize().x_)
+                        if (element->GetScreenPosition().x >= rootElement_->GetPosition().x + rootElement_->GetSize().x)
                             break;
                     }
                     else if (parentLayoutMode == LM_VERTICAL)
                     {
-                        if (element->GetScreenPosition().y_ >= rootElement_->GetPosition().y_ + rootElement_->GetSize().y_)
+                        if (element->GetScreenPosition().y >= rootElement_->GetPosition().y + rootElement_->GetSize().y)
                             break;
                     }
                 }
@@ -1603,8 +1603,8 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
             if (usingTouchInput_)
             {
                 dragData->sumPos += cursorDeltaPos;
-                sendPos.x_ = dragData->sumPos.x_ / dragData->numDragButtons;
-                sendPos.y_ = dragData->sumPos.y_ / dragData->numDragButtons;
+                sendPos.x = dragData->sumPos.x / dragData->numDragButtons;
+                sendPos.y = dragData->sumPos.y / dragData->numDragButtons;
             }
             else
             {
@@ -1619,11 +1619,11 @@ void UI::ProcessMove(const IntVector2& windowCursorPos, const IntVector2& cursor
                 if (dragData->dragBeginPending && !mouseGrabbed)
                 {
                     IntVector2 beginSendPos;
-                    beginSendPos.x_ = dragData->dragBeginSumPos.x_ / dragData->numDragButtons;
-                    beginSendPos.y_ = dragData->dragBeginSumPos.y_ / dragData->numDragButtons;
+                    beginSendPos.x = dragData->dragBeginSumPos.x / dragData->numDragButtons;
+                    beginSendPos.y = dragData->dragBeginSumPos.y / dragData->numDragButtons;
 
                     IntVector2 offset = cursorPos - beginSendPos;
-                    if (Abs(offset.x_) >= dragBeginDistance_ || Abs(offset.y_) >= dragBeginDistance_)
+                    if (Abs(offset.x) >= dragBeginDistance_ || Abs(offset.y) >= dragBeginDistance_)
                     {
                         dragData->dragBeginPending = false;
                         dragConfirmedCount_++;
@@ -1664,15 +1664,15 @@ void UI::SendDragOrHoverEvent(StringHash eventType, UiElement* element, const In
 
     VariantMap& eventData = GetEventDataMap();
     eventData[P_ELEMENT] = element;
-    eventData[P_X] = screenPos.x_;
-    eventData[P_Y] = screenPos.y_;
-    eventData[P_ELEMENTX] = relativePos.x_;
-    eventData[P_ELEMENTY] = relativePos.y_;
+    eventData[P_X] = screenPos.x;
+    eventData[P_Y] = screenPos.y;
+    eventData[P_ELEMENTX] = relativePos.x;
+    eventData[P_ELEMENTY] = relativePos.y;
 
     if (eventType == E_DRAGMOVE)
     {
-        eventData[P_DX] = deltaPos.x_;
-        eventData[P_DY] = deltaPos.y_;
+        eventData[P_DX] = deltaPos.x;
+        eventData[P_DY] = deltaPos.y;
     }
 
     if (dragData)
@@ -1689,8 +1689,8 @@ void UI::SendClickEvent(StringHash eventType, UiElement* beginElement, UiElement
 {
     VariantMap& eventData = GetEventDataMap();
     eventData[UIMouseClick::P_ELEMENT] = endElement;
-    eventData[UIMouseClick::P_X] = pos.x_;
-    eventData[UIMouseClick::P_Y] = pos.y_;
+    eventData[UIMouseClick::P_X] = pos.x;
+    eventData[UIMouseClick::P_Y] = pos.y;
     eventData[UIMouseClick::P_BUTTON] = button;
     eventData[UIMouseClick::P_BUTTONS] = (unsigned)buttons;
     eventData[UIMouseClick::P_QUALIFIERS] = (unsigned)qualifiers;
@@ -1717,10 +1717,10 @@ void UI::SendDoubleClickEvent(UiElement* beginElement, UiElement* endElement, co
 {
     VariantMap& eventData = GetEventDataMap();
     eventData[UIMouseDoubleClick::P_ELEMENT] = endElement;
-    eventData[UIMouseDoubleClick::P_X] = secondPos.x_;
-    eventData[UIMouseDoubleClick::P_Y] = secondPos.y_;
-    eventData[UIMouseDoubleClick::P_XBEGIN] = firstPos.x_;
-    eventData[UIMouseDoubleClick::P_YBEGIN] = firstPos.y_;
+    eventData[UIMouseDoubleClick::P_X] = secondPos.x;
+    eventData[UIMouseDoubleClick::P_Y] = secondPos.y;
+    eventData[UIMouseDoubleClick::P_XBEGIN] = firstPos.x;
+    eventData[UIMouseDoubleClick::P_YBEGIN] = firstPos.y;
     eventData[UIMouseDoubleClick::P_BUTTON] = button;
     eventData[UIMouseDoubleClick::P_BUTTONS] = (unsigned)buttons;
     eventData[UIMouseDoubleClick::P_QUALIFIERS] = (unsigned)qualifiers;
@@ -1805,8 +1805,8 @@ void UI::HandleMouseMove(StringHash eventType, VariantMap& eventData)
                 // Relative mouse motion: move cursor only when visible
                 IntVector2 pos = cursor_->GetPosition();
                 pos += ConvertSystemToUI(mouseDeltaPos);
-                pos.x_ = Clamp(pos.x_, rootPos.x_, rootPos.x_ + rootSize.x_ - 1);
-                pos.y_ = Clamp(pos.y_, rootPos.y_, rootPos.y_ + rootSize.y_ - 1);
+                pos.x = Clamp(pos.x, rootPos.x, rootPos.x + rootSize.x - 1);
+                pos.y = Clamp(pos.y, rootPos.y, rootPos.y + rootSize.y - 1);
                 cursor_->SetPosition(pos);
             }
         }
@@ -2052,15 +2052,15 @@ void UI::HandleDropFile(StringHash eventType, VariantMap& eventData)
 
         VariantMap uiEventData;
         uiEventData[P_FILENAME] = eventData[P_FILENAME];
-        uiEventData[P_X] = screenPos.x_;
-        uiEventData[P_Y] = screenPos.y_;
+        uiEventData[P_X] = screenPos.x;
+        uiEventData[P_Y] = screenPos.y;
         uiEventData[P_ELEMENT] = element;
 
         if (element)
         {
             IntVector2 relativePos = element->screen_to_element(screenPos);
-            uiEventData[P_ELEMENTX] = relativePos.x_;
-            uiEventData[P_ELEMENTY] = relativePos.y_;
+            uiEventData[P_ELEMENTX] = relativePos.x;
+            uiEventData[P_ELEMENTY] = relativePos.y;
         }
 
         SendEvent(E_UIDROPFILE, uiEventData);
@@ -2133,8 +2133,8 @@ IntVector2 UI::SumTouchPositions(UI::DragData* dragData, const IntVector2& oldSe
                 dragData->sumPos += pos;
             }
         }
-        sendPos.x_ = dragData->sumPos.x_ / dragData->numDragButtons;
-        sendPos.y_ = dragData->sumPos.y_ / dragData->numDragButtons;
+        sendPos.x = dragData->sumPos.x / dragData->numDragButtons;
+        sendPos.y = dragData->sumPos.y / dragData->numDragButtons;
     }
     return sendPos;
 }
@@ -2150,13 +2150,13 @@ IntVector2 UI::GetEffectiveRootElementSize(bool applyScale) const
 {
     // Use a fake size in headless mode
     IntVector2 size = !GParams::is_headless() ? IntVector2(DV_GRAPHICS.GetWidth(), DV_GRAPHICS.GetHeight()) : IntVector2(1024, 768);
-    if (customSize_.x_ > 0 && customSize_.y_ > 0)
+    if (customSize_.x > 0 && customSize_.y > 0)
         size = customSize_;
 
     if (applyScale)
     {
-        size.x_ = RoundToInt((float)size.x_ / uiScale_);
-        size.y_ = RoundToInt((float)size.y_ / uiScale_);
+        size.x = RoundToInt((float)size.x / uiScale_);
+        size.y = RoundToInt((float)size.y / uiScale_);
     }
 
     return size;

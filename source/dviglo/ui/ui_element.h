@@ -410,37 +410,37 @@ public:
     const IntVector2& GetSize() const { return size_; }
 
     /// Return width.
-    int GetWidth() const { return size_.x_; }
+    int GetWidth() const { return size_.x; }
 
     /// Return height.
-    int GetHeight() const { return size_.y_; }
+    int GetHeight() const { return size_.y; }
 
     /// Return minimum size.
     const IntVector2& GetMinSize() const { return minSize_; }
 
     /// Return minimum width.
-    int GetMinWidth() const { return minSize_.x_; }
+    int GetMinWidth() const { return minSize_.x; }
 
     /// Return minimum height.
-    int GetMinHeight() const { return minSize_.y_; }
+    int GetMinHeight() const { return minSize_.y; }
 
     /// Return maximum size.
     const IntVector2& GetMaxSize() const { return maxSize_; }
 
     /// Return minimum width.
-    int GetMaxWidth() const { return maxSize_.x_; }
+    int GetMaxWidth() const { return maxSize_.x; }
 
     /// Return minimum height.
-    int GetMaxHeight() const { return maxSize_.y_; }
+    int GetMaxHeight() const { return maxSize_.y; }
 
     /// Return true if size is fixed.
     bool IsFixedSize() const { return minSize_ == maxSize_; }
 
     /// Return true if width is fixed.
-    bool IsFixedWidth() const { return minSize_.x_ == maxSize_.x_; }
+    bool IsFixedWidth() const { return minSize_.x == maxSize_.x; }
 
     /// Return true if height is fixed.
-    bool IsFixedHeight() const { return minSize_.y_ == maxSize_.y_; }
+    bool IsFixedHeight() const { return minSize_.y == maxSize_.y; }
 
     /// Return child element offset.
     const IntVector2& GetChildOffset() const { return childOffset_; }

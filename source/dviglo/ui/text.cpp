@@ -167,7 +167,7 @@ void Text::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const
             break;
 
         case TE_SHADOW:
-            ConstructBatch(pageBatch, pageGlyphLocation, shadowOffset_.x_, shadowOffset_.y_, &effectColor_, effectDepthBias_);
+            ConstructBatch(pageBatch, pageGlyphLocation, shadowOffset_.x, shadowOffset_.y, &effectColor_, effectDepthBias_);
             ConstructBatch(pageBatch, pageGlyphLocation, 0, 0);
             break;
 
@@ -672,8 +672,8 @@ void Text::UpdateCharLocations()
 
     i32 rowIndex = 0;
     i32 lastFilled = 0;
-    float x = Round(GetRowStartPosition(rowIndex) + offset.x_);
-    float y = Round(offset.y_);
+    float x = Round(GetRowStartPosition(rowIndex) + offset.x);
+    float y = Round(offset.y);
 
     for (i32 i = 0; i < printText_.Size(); ++i)
     {
@@ -751,10 +751,10 @@ int Text::GetRowStartPosition(i32 rowIndex) const
     case HA_LEFT:
         break;
     case HA_CENTER:
-        ret += (GetSize().x_ - rowWidth) / 2;
+        ret += (GetSize().x - rowWidth) / 2;
         break;
     case HA_RIGHT:
-        ret += GetSize().x_ - rowWidth;
+        ret += GetSize().x - rowWidth;
         break;
     case HA_CUSTOM:
         break;

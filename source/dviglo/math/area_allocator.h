@@ -26,10 +26,10 @@ public:
     bool Allocate(i32 width, i32 height, i32& x, i32& y);
 
     /// Return the current width.
-    i32 GetWidth() const { return size_.x_; }
+    i32 GetWidth() const { return size_.x; }
 
     /// Return the current height.
-    i32 GetHeight() const { return size_.y_; }
+    i32 GetHeight() const { return size_.y; }
 
     /// Return whether uses fast mode. Fast mode uses a simpler allocation scheme which may waste free space, but is OK for eg. fonts.
     bool GetFastMode() const { return fastMode_; }

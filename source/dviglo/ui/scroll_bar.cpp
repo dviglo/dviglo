@@ -93,7 +93,7 @@ void ScrollBar::OnResize(const IntVector2& newSize, const IntVector2& delta)
 {
     if (slider_->GetOrientation() == O_HORIZONTAL)
     {
-        int height = newSize.y_;
+        int height = newSize.y;
         int sliderWidth = Max(GetWidth() - 2 * height, 0);
 
         backButton_->SetSize(height, height);
@@ -106,7 +106,7 @@ void ScrollBar::OnResize(const IntVector2& newSize, const IntVector2& delta)
     }
     else
     {
-        int width = newSize.x_;
+        int width = newSize.x;
         int sliderHeight = Max(GetHeight() - 2 * width, 0);
 
         backButton_->SetSize(width, width);

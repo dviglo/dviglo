@@ -198,7 +198,7 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
 Vector2 Urho2DTileMap::GetMousePositionXY()
 {
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / DV_GRAPHICS.GetHeight(), 10.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y / DV_GRAPHICS.GetHeight(), 10.0f);
     Vector3 worldPoint = camera->screen_to_world_point(screenPoint);
     return Vector2(worldPoint.x, worldPoint.y);
 }

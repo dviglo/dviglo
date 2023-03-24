@@ -70,33 +70,33 @@ bool AreaAllocator::Allocate(i32 width, i32 height, i32& x, i32& y)
 
         if (best == freeAreas_.End())
         {
-            if (doubleWidth_ && size_.x_ < maxSize_.x_)
+            if (doubleWidth_ && size_.x < maxSize_.x)
             {
-                i32 oldWidth = size_.x_;
-                size_.x_ <<= 1;
+                i32 oldWidth = size_.x;
+                size_.x <<= 1;
                 // If no allocations yet, simply expand the single free area
                 IntRect& first = freeAreas_.Front();
                 if (freeAreas_.Size() == 1 && first.left_ == 0 && first.top_ == 0 && first.right_ == oldWidth &&
-                    first.bottom_ == size_.y_)
-                    first.right_ = size_.x_;
+                    first.bottom_ == size_.y)
+                    first.right_ = size_.x;
                 else
                 {
-                    IntRect newArea(oldWidth, 0, size_.x_, size_.y_);
+                    IntRect newArea(oldWidth, 0, size_.x, size_.y);
                     freeAreas_.Push(newArea);
                 }
             }
-            else if (!doubleWidth_ && size_.y_ < maxSize_.y_)
+            else if (!doubleWidth_ && size_.y < maxSize_.y)
             {
-                i32 oldHeight = size_.y_;
-                size_.y_ <<= 1;
+                i32 oldHeight = size_.y;
+                size_.y <<= 1;
                 // If no allocations yet, simply expand the single free area
                 IntRect& first = freeAreas_.Front();
-                if (freeAreas_.Size() == 1 && first.left_ == 0 && first.top_ == 0 && first.right_ == size_.x_ &&
+                if (freeAreas_.Size() == 1 && first.left_ == 0 && first.top_ == 0 && first.right_ == size_.x &&
                     first.bottom_ == oldHeight)
-                    first.bottom_ = size_.y_;
+                    first.bottom_ = size_.y;
                 else
                 {
-                    IntRect newArea(0, oldHeight, size_.x_, size_.y_);
+                    IntRect newArea(0, oldHeight, size_.x, size_.y);
                     freeAreas_.Push(newArea);
                 }
             }
@@ -117,7 +117,7 @@ bool AreaAllocator::Allocate(i32 width, i32 height, i32& x, i32& y)
     {
         // Reserve the area by splitting up the remaining free area
         best->left_ = reserved.right_;
-        if (best->Height() > 2 * height || height >= size_.y_ / 2)
+        if (best->Height() > 2 * height || height >= size_.y / 2)
         {
             IntRect splitArea(reserved.left_, reserved.bottom_, best->right_, best->bottom_);
             best->bottom_ = reserved.bottom_;

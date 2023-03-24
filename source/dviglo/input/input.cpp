@@ -273,10 +273,10 @@ void Input::Update()
 
                 VariantMap& eventData = GetEventDataMap();
 
-                eventData[P_X] = mousePosition.x_;
-                eventData[P_Y] = mousePosition.y_;
-                eventData[P_DX] = mouseMove_.x_;
-                eventData[P_DY] = mouseMove_.y_;
+                eventData[P_X] = mousePosition.x;
+                eventData[P_Y] = mousePosition.y;
+                eventData[P_DX] = mouseMove_.x;
+                eventData[P_DY] = mouseMove_.y;
                 eventData[P_BUTTONS] = (unsigned)mouseButtonDown_;
                 eventData[P_QUALIFIERS] = (unsigned)GetQualifiers();
                 SendEvent(E_MOUSEMOVE, eventData);
@@ -662,8 +662,8 @@ IntVector2 Input::GetMousePosition() const
 
     float x, y;
     SDL_GetMouseState(&x, &y);
-    ret.x_ = (int)(x * inputScale_.x);
-    ret.y_ = (int)(y * inputScale_.y);
+    ret.x = (int)(x * inputScale_.x);
+    ret.y = (int)(y * inputScale_.y);
 
     return ret;
 }
@@ -671,7 +671,7 @@ IntVector2 Input::GetMousePosition() const
 IntVector2 Input::GetMouseMove() const
 {
     if (!suppressNextMouseMove_)
-        return mouseMoveScaled_ ? mouseMove_ : IntVector2((int)(mouseMove_.x_ * inputScale_.x), (int)(mouseMove_.y_ * inputScale_.y));
+        return mouseMoveScaled_ ? mouseMove_ : IntVector2((int)(mouseMove_.x * inputScale_.x), (int)(mouseMove_.y * inputScale_.y));
     else
         return IntVector2::ZERO;
 }
@@ -679,7 +679,7 @@ IntVector2 Input::GetMouseMove() const
 int Input::GetMouseMoveX() const
 {
     if (!suppressNextMouseMove_)
-        return mouseMoveScaled_ ? mouseMove_.x_ : (int)(mouseMove_.x_ * inputScale_.x);
+        return mouseMoveScaled_ ? mouseMove_.x : (int)(mouseMove_.x * inputScale_.x);
     else
         return 0;
 }
@@ -687,7 +687,7 @@ int Input::GetMouseMoveX() const
 int Input::GetMouseMoveY() const
 {
     if (!suppressNextMouseMove_)
-        return mouseMoveScaled_ ? mouseMove_.y_ : mouseMove_.y_ * inputScale_.y;
+        return mouseMoveScaled_ ? mouseMove_.y : mouseMove_.y * inputScale_.y;
     else
         return 0;
 }
@@ -888,8 +888,8 @@ void Input::ResetTouches()
 
         VariantMap& eventData = GetEventDataMap();
         eventData[P_TOUCHID] = state.touchID_;
-        eventData[P_X] = state.position_.x_;
-        eventData[P_Y] = state.position_.y_;
+        eventData[P_X] = state.position_.x;
+        eventData[P_Y] = state.position_.y;
         SendEvent(E_TOUCHEND, eventData);
     }
 
@@ -1056,7 +1056,7 @@ void Input::SetMousePosition(const IntVector2& position)
     if (GParams::is_headless())
         return;
 
-    SDL_WarpMouseInWindow(DV_GRAPHICS.GetWindow(), (int)(position.x_ / inputScale_.x), (int)(position.y_ / inputScale_.y));
+    SDL_WarpMouseInWindow(DV_GRAPHICS.GetWindow(), (int)(position.x / inputScale_.x), (int)(position.y / inputScale_.y));
 }
 
 void Input::CenterMousePosition()
@@ -1212,8 +1212,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
         if ((sdlMouseRelative_ || mouseVisible_ || mouseMode_ == MM_FREE) && !touchEmulation_)
         {
             // Accumulate without scaling for accuracy, needs to be scaled to backbuffer coordinates when asked
-            mouseMove_.x_ += evt.motion.xrel;
-            mouseMove_.y_ += evt.motion.yrel;
+            mouseMove_.x += evt.motion.xrel;
+            mouseMove_.y += evt.motion.yrel;
             mouseMoveScaled_ = false;
 
             if (!suppressNextMouseMove_)
@@ -1272,8 +1272,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
             VariantMap& eventData = GetEventDataMap();
             eventData[P_TOUCHID] = touchID;
-            eventData[P_X] = state.position_.x_;
-            eventData[P_Y] = state.position_.y_;
+            eventData[P_X] = state.position_.x;
+            eventData[P_Y] = state.position_.y;
             eventData[P_PRESSURE] = state.pressure_;
             SendEvent(E_TOUCHBEGIN, eventData);
 
@@ -1295,8 +1295,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
             // Do not trust the position in the finger up event. Instead use the last position stored in the
             // touch structure
             eventData[P_TOUCHID] = touchID;
-            eventData[P_X] = state.position_.x_;
-            eventData[P_Y] = state.position_.y_;
+            eventData[P_X] = state.position_.x;
+            eventData[P_Y] = state.position_.y;
             SendEvent(E_TOUCHEND, eventData);
 
             // Add touch index back to list of available touch Ids
@@ -1324,8 +1324,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
             VariantMap& eventData = GetEventDataMap();
             eventData[P_TOUCHID] = touchID;
-            eventData[P_X] = state.position_.x_;
-            eventData[P_Y] = state.position_.y_;
+            eventData[P_X] = state.position_.x;
+            eventData[P_Y] = state.position_.y;
             eventData[P_DX] = (int)(evt.tfinger.dx * graphics.GetWidth());
             eventData[P_DY] = (int)(evt.tfinger.dy * graphics.GetHeight());
             eventData[P_PRESSURE] = state.pressure_;

@@ -375,7 +375,7 @@ void Connection::SendBuffer(PacketType type)
     if (peer_) {
         peer_->Send((const char *) buffer.GetData(), (int) buffer.GetSize(), HIGH_PRIORITY, reliability, (char) 0,
                     *address_, false);
-        tempPacketCounter_.y_++;
+        tempPacketCounter_.y++;
     }
 
     buffer.Clear();
@@ -428,7 +428,7 @@ void Connection::ProcessPendingLatestData()
 
 bool Connection::ProcessMessage(int msgID, MemoryBuffer& buffer)
 {
-    tempPacketCounter_.x_++;
+    tempPacketCounter_.x++;
     if (buffer.GetSize() == 0)
         return false;
 
@@ -1090,12 +1090,12 @@ float Connection::GetBytesOutPerSec() const
 
 int Connection::GetPacketsInPerSec() const
 {
-    return packetCounter_.x_;
+    return packetCounter_.x;
 }
 
 int Connection::GetPacketsOutPerSec() const
 {
-    return packetCounter_.y_;
+    return packetCounter_.y;
 }
 
 String Connection::ToString() const

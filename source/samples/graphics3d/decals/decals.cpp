@@ -216,8 +216,8 @@ void Decals::MoveCamera(float timeStep)
     if (!DV_UI.GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = input.GetMouseMove();
-        yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
-        pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
+        yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
+        pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
 
         // Construct new orientation for the camera scene node from yaw and pitch. Roll is fixed to zero
@@ -277,7 +277,7 @@ bool Decals::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable)
         return false;
 
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Ray cameraRay = camera->GetScreenRay((float)pos.x_ / DV_GRAPHICS.GetWidth(), (float)pos.y_ / DV_GRAPHICS.GetHeight());
+    Ray cameraRay = camera->GetScreenRay((float)pos.x / DV_GRAPHICS.GetWidth(), (float)pos.y / DV_GRAPHICS.GetHeight());
     // Pick only geometry objects, not eg. zones or lights, only get the first (closest) hit
     Vector<RayQueryResult> results;
     RayOctreeQuery query(results, cameraRay, RAY_TRIANGLE, maxDistance, DrawableTypes::Geometry);

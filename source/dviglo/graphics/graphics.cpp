@@ -75,7 +75,7 @@ void Graphics::SetWindowIcon(Image* windowIcon)
 void Graphics::SetWindowPosition(const IntVector2& position)
 {
     if (window_)
-        SDL_SetWindowPosition(window_, position.x_, position.y_);
+        SDL_SetWindowPosition(window_, position.x, position.y);
     else
         position_ = position; // Sets as initial position for SDL_CreateWindow()
 }
@@ -224,7 +224,7 @@ IntVector2 Graphics::GetWindowPosition() const
     if (window_)
     {
         IntVector2 position;
-        SDL_GetWindowPosition(window_, &position.x_, &position.y_);
+        SDL_GetWindowPosition(window_, &position.x, &position.y);
         return position;
     }
     return position_;

@@ -112,13 +112,13 @@ void Slider::OnDragMove(const IntVector2& position, const IntVector2& screenPosi
 
     if (orientation_ == O_HORIZONTAL)
     {
-        int newX = Clamp(dragBeginPosition_.x_ + delta.x_, 0, GetWidth() - knob_->GetWidth());
+        int newX = Clamp(dragBeginPosition_.x + delta.x, 0, GetWidth() - knob_->GetWidth());
         knob_->SetPosition(newX, 0);
         newValue = (float)newX * range_ / (float)(GetWidth() - knob_->GetWidth());
     }
     else
     {
-        int newY = Clamp(dragBeginPosition_.y_ + delta.y_, 0, GetHeight() - knob_->GetHeight());
+        int newY = Clamp(dragBeginPosition_.y + delta.y, 0, GetHeight() - knob_->GetHeight());
         knob_->SetPosition(0, newY);
         newValue = (float)newY * range_ / (float)(GetHeight() - knob_->GetHeight());
     }
@@ -259,7 +259,7 @@ void Slider::Page(const IntVector2& position, bool pressed)
         return;
 
     IntVector2 offsetXY = position - knob_->GetPosition() - knob_->GetSize() / 2;
-    int offset = orientation_ == O_HORIZONTAL ? offsetXY.x_ : offsetXY.y_;
+    int offset = orientation_ == O_HORIZONTAL ? offsetXY.x : offsetXY.y;
     float length = (float)(orientation_ == O_HORIZONTAL ? GetWidth() : GetHeight());
 
     using namespace SliderPaged;

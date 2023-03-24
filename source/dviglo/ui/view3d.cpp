@@ -53,8 +53,8 @@ void View3D::register_object()
 
 void View3D::OnResize(const IntVector2& newSize, const IntVector2& delta)
 {
-    int width = newSize.x_;
-    int height = newSize.y_;
+    int width = newSize.x;
+    int height = newSize.y;
 
     if (width > 0 && height > 0)
     {

@@ -521,7 +521,7 @@ bool DynamicNavigationMesh::Build(const IntVector2& from, const IntVector2& to)
 Vector<byte> DynamicNavigationMesh::GetTileData(const IntVector2& tile) const
 {
     VectorBuffer ret;
-    WriteTiles(ret, tile.x_, tile.y_);
+    WriteTiles(ret, tile.x, tile.y);
     return ret.GetBuffer();
 }
 
@@ -544,7 +544,7 @@ void DynamicNavigationMesh::RemoveTile(const IntVector2& tile)
         return;
 
     dtCompressedTileRef existing[TILECACHE_MAXLAYERS];
-    const int existingCt = tileCache_->getTilesAt(tile.x_, tile.y_, existing, maxLayers_);
+    const int existingCt = tileCache_->getTilesAt(tile.x, tile.y, existing, maxLayers_);
     for (int i = 0; i < existingCt; ++i)
     {
         unsigned char* data = nullptr;
@@ -777,7 +777,7 @@ bool DynamicNavigationMesh::ReadTiles(Deserializer& source, bool silent)
     }
 
     for (unsigned i = 0; i < tileQueue_.Size(); ++i)
-        tileCache_->buildNavMeshTilesAt(tileQueue_[i].x_, tileQueue_[i].y_, navMesh_);
+        tileCache_->buildNavMeshTilesAt(tileQueue_[i].x, tileQueue_[i].y, navMesh_);
 
     tileCache_->update(0, navMesh_);
 
@@ -980,9 +980,9 @@ unsigned DynamicNavigationMesh::build_tiles(Vector<NavigationGeometryInfo>& geom
 {
     unsigned numTiles = 0;
 
-    for (int z = from.y_; z <= to.y_; ++z)
+    for (int z = from.y; z <= to.y; ++z)
     {
-        for (int x = from.x_; x <= to.x_; ++x)
+        for (int x = from.x; x <= to.x; ++x)
         {
             dtCompressedTileRef existing[TILECACHE_MAXLAYERS];
             const int existingCt = tileCache_->getTilesAt(x, z, existing, maxLayers_);

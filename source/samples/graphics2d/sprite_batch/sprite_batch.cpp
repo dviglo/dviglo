@@ -121,8 +121,8 @@ public:
         Input& input = DV_INPUT;
 
         IntVector2 mouseMove = input.GetMouseMove();
-        yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
-        pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
+        yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
+        pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
         cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 

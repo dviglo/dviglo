@@ -502,7 +502,7 @@ bool NavigationMesh::Build(const IntVector2& from, const IntVector2& to)
 Vector<byte> NavigationMesh::GetTileData(const IntVector2& tile) const
 {
     VectorBuffer ret;
-    WriteTile(ret, tile.x_, tile.y_);
+    WriteTile(ret, tile.x, tile.y);
     return ret.GetBuffer();
 }
 
@@ -515,7 +515,7 @@ bool NavigationMesh::AddTile(const Vector<byte>& tileData)
 bool NavigationMesh::HasTile(const IntVector2& tile) const
 {
     if (navMesh_)
-        return !!navMesh_->getTileAt(tile.x_, tile.y_, 0);
+        return !!navMesh_->getTileAt(tile.x, tile.y, 0);
     return false;
 }
 
@@ -524,14 +524,14 @@ BoundingBox NavigationMesh::GetTileBoundingBox(const IntVector2& tile) const
     const float tileEdgeLength = (float)tileSize_ * cellSize_;
     return BoundingBox(
         Vector3(
-            boundingBox_.min_.x + tileEdgeLength * (float)tile.x_,
+            boundingBox_.min_.x + tileEdgeLength * (float)tile.x,
             boundingBox_.min_.y,
-            boundingBox_.min_.z + tileEdgeLength * (float)tile.y_
+            boundingBox_.min_.z + tileEdgeLength * (float)tile.y
         ),
         Vector3(
-            boundingBox_.min_.x + tileEdgeLength * (float)(tile.x_ + 1),
+            boundingBox_.min_.x + tileEdgeLength * (float)(tile.x + 1),
             boundingBox_.max_.y,
-            boundingBox_.min_.z + tileEdgeLength * (float)(tile.y_ + 1)
+            boundingBox_.min_.z + tileEdgeLength * (float)(tile.y + 1)
         ));
 }
 
@@ -548,7 +548,7 @@ void NavigationMesh::RemoveTile(const IntVector2& tile)
     if (!navMesh_)
         return;
 
-    const dtTileRef tileRef = navMesh_->getTileRefAt(tile.x_, tile.y_, 0);
+    const dtTileRef tileRef = navMesh_->getTileRefAt(tile.x, tile.y, 0);
     if (!tileRef)
         return;
 
@@ -1506,9 +1506,9 @@ unsigned NavigationMesh::build_tiles(Vector<NavigationGeometryInfo>& geometryLis
 {
     unsigned numTiles = 0;
 
-    for (int z = from.y_; z <= to.y_; ++z)
+    for (int z = from.y; z <= to.y; ++z)
     {
-        for (int x = from.x_; x <= to.x_; ++x)
+        for (int x = from.x; x <= to.x; ++x)
         {
             if (BuildTile(geometryList, x, z))
                 ++numTiles;

@@ -74,14 +74,14 @@ const IntVector2& Sprite::GetScreenPosition() const
 
 IntVector2 Sprite::screen_to_element(const IntVector2& screenPosition)
 {
-    Vector3 floatPos((float)screenPosition.x_, (float)screenPosition.y_, 0.0f);
+    Vector3 floatPos((float)screenPosition.x, (float)screenPosition.y, 0.0f);
     Vector3 transformedPos = GetTransform().Inverse() * floatPos;
     return IntVector2((int)transformedPos.x, (int)transformedPos.y);
 }
 
 IntVector2 Sprite::element_to_screen(const IntVector2& position)
 {
-    Vector3 floatPos((float)position.x_, (float)position.y_, 0.0f);
+    Vector3 floatPos((float)position.x, (float)position.y, 0.0f);
     Vector3 transformedPos = GetTransform() * floatPos;
     return IntVector2((int)transformedPos.x, (int)transformedPos.y);
 }
@@ -97,7 +97,7 @@ void Sprite::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
     UIBatch
         batch(this, blend_mode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blend_mode_, currentScissor, texture_, &vertexData);
 
-    batch.AddQuad(GetTransform(), 0, 0, size.x_, size.y_, imageRect_.left_, imageRect_.top_, imageRect_.right_ - imageRect_.left_,
+    batch.AddQuad(GetTransform(), 0, 0, size.x, size.y, imageRect_.left_, imageRect_.top_, imageRect_.right_ - imageRect_.left_,
         imageRect_.bottom_ - imageRect_.top_);
 
     UIBatch::AddOrMerge(batch, batches);
@@ -109,7 +109,7 @@ void Sprite::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
 void Sprite::OnPositionSet(const IntVector2& newPosition)
 {
     // If the integer position was set (layout update?), copy to the float position
-    floatPosition_ = Vector2((float)newPosition.x_, (float)newPosition.y_);
+    floatPosition_ = Vector2((float)newPosition.x, (float)newPosition.y);
 }
 
 void Sprite::SetPosition(const Vector2& position)
@@ -211,7 +211,7 @@ const Matrix3x4& Sprite::GetTransform() const
             {
                 const IntVector2& parentScreenPos = parent_->GetScreenPosition() + parent_->GetChildOffset();
                 parentTransform = Matrix3x4::IDENTITY;
-                parentTransform.SetTranslation(Vector3((float)parentScreenPos.x_, (float)parentScreenPos.y_, 0.0f));
+                parentTransform.SetTranslation(Vector3((float)parentScreenPos.x, (float)parentScreenPos.y, 0.0f));
             }
 
             switch (GetHorizontalAlignment())
@@ -220,11 +220,11 @@ const Matrix3x4& Sprite::GetTransform() const
                 break;
 
             case HA_CENTER:
-                pos.x += (float)parent_->GetSize().x_ / 2.f;
+                pos.x += (float)parent_->GetSize().x / 2.f;
                 break;
 
             case HA_RIGHT:
-                pos.x += (float)parent_->GetSize().x_;
+                pos.x += (float)parent_->GetSize().x;
                 break;
 
             case HA_CUSTOM:
@@ -236,11 +236,11 @@ const Matrix3x4& Sprite::GetTransform() const
                 break;
 
             case VA_CENTER:
-                pos.y += (float)parent_->GetSize().y_ / 2.f;
+                pos.y += (float)parent_->GetSize().y / 2.f;
                 break;
 
             case VA_BOTTOM:
-                pos.y += (float)(parent_->GetSize().y_);
+                pos.y += (float)(parent_->GetSize().y);
                 break;
 
             case VA_CUSTOM:
@@ -251,7 +251,7 @@ const Matrix3x4& Sprite::GetTransform() const
             parentTransform = Matrix3x4::IDENTITY;
 
         Matrix3x4 hotspotAdjust(Matrix3x4::IDENTITY);
-        hotspotAdjust.SetTranslation(Vector3((float)-hotSpot_.x_, (float)-hotSpot_.y_, 0.0f));
+        hotspotAdjust.SetTranslation(Vector3((float)-hotSpot_.x, (float)-hotSpot_.y, 0.0f));
 
         Matrix3x4 mainTransform(Vector3(pos, 0.0f), Quaternion(rotation_, Vector3::FORWARD), Vector3(scale_, 1.0f));
 

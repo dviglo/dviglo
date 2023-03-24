@@ -67,22 +67,22 @@ IntRect SpriteBatchBase::GetViewportRect()
         return IntRect(0, 0, graphics.GetWidth(), graphics.GetHeight());
 
     float realAspect = (float)graphics.GetWidth() / graphics.GetHeight();
-    float virtualAspect = (float)virtualScreenSize_.x_ / virtualScreenSize_.y_;
+    float virtualAspect = (float)virtualScreenSize_.x / virtualScreenSize_.y;
 
     float virtualScreenScale;
     if (realAspect > virtualAspect)
     {
         // Окно шире, чем надо. Будут пустые полосы по бокам
-        virtualScreenScale = (float)graphics.GetHeight() / virtualScreenSize_.y_;
+        virtualScreenScale = (float)graphics.GetHeight() / virtualScreenSize_.y;
     }
     else
     {
         // Высота окна больше, чем надо. Будут пустые полосы сверху и снизу
-        virtualScreenScale = (float)graphics.GetWidth() / virtualScreenSize_.x_;
+        virtualScreenScale = (float)graphics.GetWidth() / virtualScreenSize_.x;
     }
 
-    i32 viewportWidth = (i32)(virtualScreenSize_.x_ * virtualScreenScale);
-    i32 viewportHeight = (i32)(virtualScreenSize_.y_ * virtualScreenScale);
+    i32 viewportWidth = (i32)(virtualScreenSize_.x * virtualScreenScale);
+    i32 viewportHeight = (i32)(virtualScreenSize_.y * virtualScreenScale);
 
     // Центрируем вьюпорт
     i32 viewportX = (graphics.GetWidth() - viewportWidth) / 2;
@@ -97,7 +97,7 @@ Vector2 SpriteBatchBase::GetVirtualPos(const Vector2& realPos)
         return realPos;
 
     IntRect viewportRect = GetViewportRect();
-    float factor = (float)virtualScreenSize_.x_ / viewportRect.Width();
+    float factor = (float)virtualScreenSize_.x / viewportRect.Width();
 
     float virtualX = (realPos.x - viewportRect.left_) * factor;
     float virtualY = (realPos.y - viewportRect.top_) * factor;
@@ -121,8 +121,8 @@ void SpriteBatchBase::UpdateViewProjMatrix()
 
     if (VirtualScreenUsed())
     {
-        width = virtualScreenSize_.x_;
-        height = virtualScreenSize_.y_;
+        width = virtualScreenSize_.x;
+        height = virtualScreenSize_.y;
     }
     else
     {

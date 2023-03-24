@@ -152,7 +152,7 @@ public:
     // Размеры виртуального экрана. Если одна из координат <= 0, то используются реальные размеры экрана
     IntVector2 virtualScreenSize_ = IntVector2(0, 0);
 
-    bool VirtualScreenUsed() const { return virtualScreenSize_.x_ > 0 && virtualScreenSize_.y_ > 0; }
+    bool VirtualScreenUsed() const { return virtualScreenSize_.x > 0 && virtualScreenSize_.y > 0; }
 
     // Конструктор
     SpriteBatchBase();

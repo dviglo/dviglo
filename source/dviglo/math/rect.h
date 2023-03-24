@@ -265,10 +265,10 @@ public:
 
     /// Construct from minimum and maximum vectors.
     IntRect(const IntVector2& min, const IntVector2& max) noexcept :
-        left_(min.x_),
-        top_(min.y_),
-        right_(max.x_),
-        bottom_(max.y_)
+        left_(min.x),
+        top_(min.y),
+        right_(max.x),
+        bottom_(max.y)
     {
     }
 
@@ -390,7 +390,7 @@ public:
     /// Test whether a point is inside.
     Intersection IsInside(const IntVector2& point) const
     {
-        if (point.x_ < left_ || point.y_ < top_ || point.x_ >= right_ || point.y_ >= bottom_)
+        if (point.x < left_ || point.y < top_ || point.x >= right_ || point.y >= bottom_)
             return OUTSIDE;
         else
             return INSIDE;

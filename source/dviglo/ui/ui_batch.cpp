@@ -78,9 +78,9 @@ void UIBatch::AddQuad(float x, float y, float width, float height, int texOffset
 
     const IntVector2& screenPos = element_->GetScreenPosition();
 
-    float left = x + screenPos.x_;
+    float left = x + screenPos.x;
     float right = left + width;
-    float top = y + screenPos.y_;
+    float top = y + screenPos.y;
     float bottom = top + height;
 
     float leftUV = texOffsetX * invTextureSize_.x;
@@ -255,15 +255,15 @@ void UIBatch::AddQuad(int x, int y, int width, int height, int texOffsetX, int t
 void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
     const IntVector2& texA, const IntVector2& texB, const IntVector2& texC, const IntVector2& texD)
 {
-    Vector3 v1 = (transform * Vector3((float)a.x_, (float)a.y_, 0.0f));
-    Vector3 v2 = (transform * Vector3((float)b.x_, (float)b.y_, 0.0f));
-    Vector3 v3 = (transform * Vector3((float)c.x_, (float)c.y_, 0.0f));
-    Vector3 v4 = (transform * Vector3((float)d.x_, (float)d.y_, 0.0f));
+    Vector3 v1 = (transform * Vector3((float)a.x, (float)a.y, 0.0f));
+    Vector3 v2 = (transform * Vector3((float)b.x, (float)b.y, 0.0f));
+    Vector3 v3 = (transform * Vector3((float)c.x, (float)c.y, 0.0f));
+    Vector3 v4 = (transform * Vector3((float)d.x, (float)d.y, 0.0f));
 
-    Vector2 uv1((float)texA.x_ * invTextureSize_.x, (float)texA.y_ * invTextureSize_.y);
-    Vector2 uv2((float)texB.x_ * invTextureSize_.x, (float)texB.y_ * invTextureSize_.y);
-    Vector2 uv3((float)texC.x_ * invTextureSize_.x, (float)texC.y_ * invTextureSize_.y);
-    Vector2 uv4((float)texD.x_ * invTextureSize_.x, (float)texD.y_ * invTextureSize_.y);
+    Vector2 uv1((float)texA.x * invTextureSize_.x, (float)texA.y * invTextureSize_.y);
+    Vector2 uv2((float)texB.x * invTextureSize_.x, (float)texB.y * invTextureSize_.y);
+    Vector2 uv3((float)texC.x * invTextureSize_.x, (float)texC.y * invTextureSize_.y);
+    Vector2 uv4((float)texD.x * invTextureSize_.x, (float)texD.y * invTextureSize_.y);
 
     unsigned begin = vertexData_->Size();
     vertexData_->Resize(begin + 6 * UI_VERTEX_SIZE);
@@ -317,15 +317,15 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const Int
     const IntVector2& texA, const IntVector2& texB, const IntVector2& texC, const IntVector2& texD, const Color& colA,
     const Color& colB, const Color& colC, const Color& colD)
 {
-    Vector3 v1 = (transform * Vector3((float)a.x_, (float)a.y_, 0.0f));
-    Vector3 v2 = (transform * Vector3((float)b.x_, (float)b.y_, 0.0f));
-    Vector3 v3 = (transform * Vector3((float)c.x_, (float)c.y_, 0.0f));
-    Vector3 v4 = (transform * Vector3((float)d.x_, (float)d.y_, 0.0f));
+    Vector3 v1 = (transform * Vector3((float)a.x, (float)a.y, 0.0f));
+    Vector3 v2 = (transform * Vector3((float)b.x, (float)b.y, 0.0f));
+    Vector3 v3 = (transform * Vector3((float)c.x, (float)c.y, 0.0f));
+    Vector3 v4 = (transform * Vector3((float)d.x, (float)d.y, 0.0f));
 
-    Vector2 uv1((float)texA.x_ * invTextureSize_.x, (float)texA.y_ * invTextureSize_.y);
-    Vector2 uv2((float)texB.x_ * invTextureSize_.x, (float)texB.y_ * invTextureSize_.y);
-    Vector2 uv3((float)texC.x_ * invTextureSize_.x, (float)texC.y_ * invTextureSize_.y);
-    Vector2 uv4((float)texD.x_ * invTextureSize_.x, (float)texD.y_ * invTextureSize_.y);
+    Vector2 uv1((float)texA.x * invTextureSize_.x, (float)texA.y * invTextureSize_.y);
+    Vector2 uv2((float)texB.x * invTextureSize_.x, (float)texB.y * invTextureSize_.y);
+    Vector2 uv3((float)texC.x * invTextureSize_.x, (float)texC.y * invTextureSize_.y);
+    Vector2 uv4((float)texD.x * invTextureSize_.x, (float)texD.y * invTextureSize_.y);
 
     color32 c1 = colA.ToU32();
     color32 c2 = colB.ToU32();
@@ -397,10 +397,10 @@ unsigned UIBatch::GetInterpolatedColor(float x, float y)
 {
     const IntVector2& size = element_->GetSize();
 
-    if (size.x_ && size.y_)
+    if (size.x && size.y)
     {
-        float cLerpX = Clamp(x / (float)size.x_, 0.0f, 1.0f);
-        float cLerpY = Clamp(y / (float)size.y_, 0.0f, 1.0f);
+        float cLerpX = Clamp(x / (float)size.x, 0.0f, 1.0f);
+        float cLerpY = Clamp(y / (float)size.y, 0.0f, 1.0f);
 
         Color topColor = element_->GetColor(C_TOPLEFT).Lerp(element_->GetColor(C_TOPRIGHT), cLerpX);
         Color bottomColor = element_->GetColor(C_BOTTOMLEFT).Lerp(element_->GetColor(C_BOTTOMRIGHT), cLerpX);

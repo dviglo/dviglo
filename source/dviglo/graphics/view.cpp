@@ -303,7 +303,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     if (GParams::get_gapi() == GAPI_OPENGL && renderTarget_)
     {
         viewRect_.bottom_ = rtHeight - viewRect_.top_;
-        viewRect_.top_ = viewRect_.bottom_ - viewSize_.y_;
+        viewRect_.top_ = viewRect_.bottom_ - viewSize_.y;
     }
 
     scene_ = viewport->GetScene();
@@ -486,7 +486,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
         maxOccluderTriangles_ = 0;
 
     // Occlusion buffer has constant width. If resulting height would be too large due to aspect ratio, disable occlusion
-    if (viewSize_.y_ > viewSize_.x_ * 4)
+    if (viewSize_.y > viewSize_.x * 4)
         maxOccluderTriangles_ = 0;
 
     return true;
@@ -530,7 +530,7 @@ void View::Update(const FrameInfo& frame)
 
     // Set automatic aspect ratio if required
     if (cullCamera_ && cullCamera_->GetAutoAspectRatio())
-        cullCamera_->SetAspectRatioInternal((float)frame_.viewSize_.x_ / (float)frame_.viewSize_.y_);
+        cullCamera_->SetAspectRatioInternal((float)frame_.viewSize_.x / (float)frame_.viewSize_.y);
 
     GetDrawables();
     GetBatches();
@@ -567,7 +567,7 @@ void View::Render()
     // It is possible, though not recommended, that the same camera is used for multiple main views. Set automatic aspect ratio
     // to ensure correct projection will be used
     if (camera_ && camera_->GetAutoAspectRatio())
-        camera_->SetAspectRatioInternal((float)(viewSize_.x_) / (float)(viewSize_.y_));
+        camera_->SetAspectRatioInternal((float)(viewSize_.x) / (float)(viewSize_.y));
 
     // Bind the face selection and indirection cube maps for point light shadows
 #ifndef DV_GLES2
@@ -625,8 +625,8 @@ void View::Render()
             graphics.SetDepthStencil(lastCustomDepthSurface_ ? lastCustomDepthSurface_ : GetDepthStencil(currentRenderTarget_));
 
             IntVector2 rtSizeNow = graphics.GetRenderTargetDimensions();
-            IntRect viewport = (currentRenderTarget_ == renderTarget_) ? viewRect_ : IntRect(0, 0, rtSizeNow.x_,
-                rtSizeNow.y_);
+            IntRect viewport = (currentRenderTarget_ == renderTarget_) ? viewRect_ : IntRect(0, 0, rtSizeNow.x,
+                rtSizeNow.y);
             graphics.SetViewport(viewport);
 
             debug->SetView(camera_);
@@ -748,8 +748,8 @@ void View::SetCommandShaderParameters(const RenderPathCommand& command)
 
 void View::SetGBufferShaderParameters(const IntVector2& texSize, const IntRect& viewRect)
 {
-    auto texWidth = (float)texSize.x_;
-    auto texHeight = (float)texSize.y_;
+    auto texWidth = (float)texSize.x;
+    auto texHeight = (float)texSize.y;
     float widthRange = 0.5f * viewRect.Width() / texWidth;
     float heightRange = 0.5f * viewRect.Height() / texHeight;
 
@@ -1041,7 +1041,7 @@ void View::GetLightBatches()
                 // Allocate shadow map now
                 if (shadowSplits > 0)
                 {
-                    lightQueue.shadowMap_ = renderer.GetShadowMap(light, cullCamera_, viewSize_.x_, viewSize_.y_);
+                    lightQueue.shadowMap_ = renderer.GetShadowMap(light, cullCamera_, viewSize_.x, viewSize_.y);
                     // If did not manage to get a shadow map, convert the light to unshadowed
                     if (!lightQueue.shadowMap_)
                         shadowSplits = 0;
@@ -1768,8 +1768,8 @@ void View::SetRenderTargets(RenderPathCommand& command)
     // When rendering to the final destination rendertarget, use the actual viewport. Otherwise texture rendertargets should use
     // their full size as the viewport
     IntVector2 rtSizeNow = graphics.GetRenderTargetDimensions();
-    IntRect viewport = (useViewportOutput && currentRenderTarget_ == renderTarget_) ? viewRect_ : IntRect(0, 0, rtSizeNow.x_,
-        rtSizeNow.y_);
+    IntRect viewport = (useViewportOutput && currentRenderTarget_ == renderTarget_) ? viewRect_ : IntRect(0, 0, rtSizeNow.x,
+        rtSizeNow.y);
 
     if (!useCustomDepth)
         graphics.SetDepthStencil(GetDepthStencil(graphics.GetRenderTarget(0)));
@@ -1842,7 +1842,7 @@ void View::RenderQuad(RenderPathCommand& command)
     // During renderpath commands the G-Buffer or viewport texture is assumed to always be viewport-sized
     IntRect viewport = graphics.GetViewport();
     IntVector2 viewSize = IntVector2(viewport.Width(), viewport.Height());
-    SetGBufferShaderParameters(viewSize, IntRect(0, 0, viewSize.x_, viewSize.y_));
+    SetGBufferShaderParameters(viewSize, IntRect(0, 0, viewSize.x, viewSize.y));
 
     // Set per-rendertarget inverse size / offset shader parameters as necessary
     for (const RenderTargetInfo& rtInfo : renderPath_->renderTargets_)
@@ -1990,7 +1990,7 @@ void View::AllocateScreenBuffers()
         needSubstitute = true;
     // If viewport is smaller than whole texture/backbuffer in deferred rendering, need to reserve a buffer, as the G-buffer
     // textures will be sized equal to the viewport
-    if (viewSize_.x_ < rtSize_.x_ || viewSize_.y_ < rtSize_.y_)
+    if (viewSize_.x < rtSize_.x || viewSize_.y < rtSize_.y)
     {
         if (deferred_ || hasScenePassToRTs || hasCustomDepth)
             needSubstitute = true;
@@ -2024,7 +2024,7 @@ void View::AllocateScreenBuffers()
 
         // If rendering to a texture, but the viewport is less than the whole texture, use a substitute to ensure
         // postprocessing shaders will never read outside the viewport
-        if (renderTarget_ && (viewSize_.x_ < renderTarget_->GetWidth() || viewSize_.y_ < renderTarget_->GetHeight()))
+        if (renderTarget_ && (viewSize_.x < renderTarget_->GetWidth() || viewSize_.y < renderTarget_->GetHeight()))
             needSubstitute = true;
 
         if (hasPingpong && !needSubstitute)
@@ -2034,11 +2034,11 @@ void View::AllocateScreenBuffers()
     // Allocate screen buffers. Enable filtering in case the quad commands need that
     // Follow the sRGB mode of the destination render target
     bool sRGB = renderTarget_ ? renderTarget_->GetParentTexture()->GetSRGB() : graphics.GetSRGB();
-    substituteRenderTarget_ = needSubstitute ? GetRenderSurfaceFromTexture(renderer.GetScreenBuffer(viewSize_.x_, viewSize_.y_,
+    substituteRenderTarget_ = needSubstitute ? GetRenderSurfaceFromTexture(renderer.GetScreenBuffer(viewSize_.x, viewSize_.y,
         format, 1, false, false, true, sRGB)) : nullptr;
     for (i32 i = 0; i < MAX_VIEWPORT_TEXTURES; ++i)
     {
-        viewportTextures_[i] = i < numViewportTextures ? renderer.GetScreenBuffer(viewSize_.x_, viewSize_.y_, format, 1, false,
+        viewportTextures_[i] = i < numViewportTextures ? renderer.GetScreenBuffer(viewSize_.x, viewSize_.y, format, 1, false,
             false, true, sRGB) : nullptr;
     }
     // If using a substitute render target and pingponging, the substitute can act as the second viewport texture
@@ -2056,13 +2056,13 @@ void View::AllocateScreenBuffers()
 
         if (rtInfo.sizeMode_ == SIZE_VIEWPORTDIVISOR)
         {
-            width = (float)viewSize_.x_ / Max(width, M_EPSILON);
-            height = (float)viewSize_.y_ / Max(height, M_EPSILON);
+            width = (float)viewSize_.x / Max(width, M_EPSILON);
+            height = (float)viewSize_.y / Max(height, M_EPSILON);
         }
         else if (rtInfo.sizeMode_ == SIZE_VIEWPORTMULTIPLIER)
         {
-            width = (float)viewSize_.x_ * width;
-            height = (float)viewSize_.y_ * height;
+            width = (float)viewSize_.x * width;
+            height = (float)viewSize_.y * height;
         }
 
         auto intWidth = RoundToInt(width);
@@ -2091,8 +2091,8 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
     IntVector2 destSize = destination ? IntVector2(destination->GetWidth(), destination->GetHeight()) : IntVector2(
         graphics.GetWidth(), graphics.GetHeight());
 
-    IntRect srcRect = (GetRenderSurfaceFromTexture(source) == renderTarget_) ? viewRect_ : IntRect(0, 0, srcSize.x_, srcSize.y_);
-    IntRect destRect = (destination == renderTarget_) ? viewRect_ : IntRect(0, 0, destSize.x_, destSize.y_);
+    IntRect srcRect = (GetRenderSurfaceFromTexture(source) == renderTarget_) ? viewRect_ : IntRect(0, 0, srcSize.x, srcSize.y);
+    IntRect destRect = (destination == renderTarget_) ? viewRect_ : IntRect(0, 0, destSize.x, destSize.y);
 
     graphics.SetBlendMode(BLEND_REPLACE);
     graphics.SetDepthTest(CMP_ALWAYS);

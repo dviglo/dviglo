@@ -157,12 +157,12 @@ bool SpriteSheet2D::EndLoadFromPListFile()
         IntRect sourceColorRect = frameInfo["sourceColorRect"]->GetIntRect();
         if (sourceColorRect.left_ != 0 && sourceColorRect.top_ != 0)
         {
-            offset.x_ = -sourceColorRect.left_;
-            offset.y_ = -sourceColorRect.top_;
+            offset.x = -sourceColorRect.left_;
+            offset.y = -sourceColorRect.top_;
 
             IntVector2 sourceSize = frameInfo["sourceSize"]->GetIntVector2();
-            hotSpot.x = (offset.x_ + sourceSize.x_ / 2.f) / rectangle.Width();
-            hotSpot.y = 1.0f - (offset.y_ + sourceSize.y_ / 2.f) / rectangle.Height();
+            hotSpot.x = (offset.x + sourceSize.x / 2.f) / rectangle.Width();
+            hotSpot.y = 1.0f - (offset.y + sourceSize.y / 2.f) / rectangle.Height();
         }
 
         DefineSprite(name, rectangle, hotSpot, offset);
@@ -228,12 +228,12 @@ bool SpriteSheet2D::EndLoadFromXMLFile()
         IntVector2 offset(0, 0);
         if (subTextureElem.HasAttribute("frameWidth") && subTextureElem.HasAttribute("frameHeight"))
         {
-            offset.x_ = subTextureElem.GetI32("frameX");
-            offset.y_ = subTextureElem.GetI32("frameY");
+            offset.x = subTextureElem.GetI32("frameX");
+            offset.y = subTextureElem.GetI32("frameY");
             int frameWidth = subTextureElem.GetI32("frameWidth");
             int frameHeight = subTextureElem.GetI32("frameHeight");
-            hotSpot.x = (offset.x_ + frameWidth / 2.f) / width;
-            hotSpot.y = 1.0f - (offset.y_ + frameHeight / 2.f) / height;
+            hotSpot.x = (offset.x + frameWidth / 2.f) / width;
+            hotSpot.y = 1.0f - (offset.y + frameHeight / 2.f) / height;
         }
 
         DefineSprite(name, rectangle, hotSpot, offset);
@@ -305,12 +305,12 @@ bool SpriteSheet2D::EndLoadFromJSONFile()
 
         if (!frameWidthVal.IsNull() && !frameHeightVal.IsNull())
         {
-            offset.x_ = subTextureVal.Get("frameX").GetI32();
-            offset.y_ = subTextureVal.Get("frameY").GetI32();
+            offset.x = subTextureVal.Get("frameX").GetI32();
+            offset.y = subTextureVal.Get("frameY").GetI32();
             int frameWidth = frameWidthVal.GetI32();
             int frameHeight = frameHeightVal.GetI32();
-            hotSpot.x = (offset.x_ + frameWidth / 2.f) / width;
-            hotSpot.y = 1.0f - (offset.y_ + frameHeight / 2.f) / height;
+            hotSpot.x = (offset.x + frameWidth / 2.f) / width;
+            hotSpot.y = 1.0f - (offset.y + frameHeight / 2.f) / height;
         }
 
         DefineSprite(name, rectangle, hotSpot, offset);

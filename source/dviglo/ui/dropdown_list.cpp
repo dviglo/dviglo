@@ -96,8 +96,8 @@ void DropDownList::OnShowPopup()
     content->UpdateLayout();
     const IntVector2& contentSize = content->GetSize();
     const IntRect& border = popup_->GetLayoutBorder();
-    popup_->SetSize(resizePopup_ ? GetWidth() : contentSize.x_ + border.left_ + border.right_,
-        contentSize.y_ + border.top_ + border.bottom_);
+    popup_->SetSize(resizePopup_ ? GetWidth() : contentSize.x + border.left_ + border.right_,
+        contentSize.y + border.top_ + border.bottom_);
 
     // Check if popup fits below the button. If not, show above instead
     bool showAbove = false;
@@ -105,7 +105,7 @@ void DropDownList::OnShowPopup()
     if (root)
     {
         const IntVector2& screenPos = GetScreenPosition();
-        if (screenPos.y_ + GetHeight() + popup_->GetHeight() > root->GetHeight() && screenPos.y_ - popup_->GetHeight() >= 0)
+        if (screenPos.y + GetHeight() + popup_->GetHeight() > root->GetHeight() && screenPos.y - popup_->GetHeight() >= 0)
             showAbove = true;
     }
     SetPopupOffset(0, showAbove ? -popup_->GetHeight() : GetHeight());

@@ -137,10 +137,10 @@ void BorderImage::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData
     const IntRect& uvBorder = (imageBorder_ == IntRect::ZERO) ? border_ : imageBorder_;
     int x = GetIndentWidth();
     IntVector2 size = GetSize();
-    size.x_ -= x;
+    size.x -= x;
     IntVector2 innerSize(
-        Max(size.x_ - border_.left_ - border_.right_, 0),
-        Max(size.y_ - border_.top_ - border_.bottom_, 0));
+        Max(size.x - border_.left_ - border_.right_, 0),
+        Max(size.y - border_.top_ - border_.bottom_, 0));
     IntVector2 innerUvSize(
         Max(imageRect_.right_ - imageRect_.left_ - uvBorder.left_ - uvBorder.right_, 0),
         Max(imageRect_.bottom_ - imageRect_.top_ - uvBorder.top_ - uvBorder.bottom_, 0));
@@ -152,41 +152,41 @@ void BorderImage::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData
     if (border_.top_)
     {
         if (border_.left_)
-            batch.AddQuad(x, 0, border_.left_, border_.top_, uvTopLeft.x_, uvTopLeft.y_, uvBorder.left_, uvBorder.top_);
-        if (innerSize.x_)
-            batch.AddQuad(x + border_.left_, 0, innerSize.x_, border_.top_, uvTopLeft.x_ + uvBorder.left_, uvTopLeft.y_,
-                innerUvSize.x_, uvBorder.top_, tiled_);
+            batch.AddQuad(x, 0, border_.left_, border_.top_, uvTopLeft.x, uvTopLeft.y, uvBorder.left_, uvBorder.top_);
+        if (innerSize.x)
+            batch.AddQuad(x + border_.left_, 0, innerSize.x, border_.top_, uvTopLeft.x + uvBorder.left_, uvTopLeft.y,
+                innerUvSize.x, uvBorder.top_, tiled_);
         if (border_.right_)
-            batch.AddQuad(x + border_.left_ + innerSize.x_, 0, border_.right_, border_.top_,
-                uvTopLeft.x_ + uvBorder.left_ + innerUvSize.x_, uvTopLeft.y_, uvBorder.right_, uvBorder.top_);
+            batch.AddQuad(x + border_.left_ + innerSize.x, 0, border_.right_, border_.top_,
+                uvTopLeft.x + uvBorder.left_ + innerUvSize.x, uvTopLeft.y, uvBorder.right_, uvBorder.top_);
     }
     // Middle
-    if (innerSize.y_)
+    if (innerSize.y)
     {
         if (border_.left_)
-            batch.AddQuad(x, border_.top_, border_.left_, innerSize.y_, uvTopLeft.x_, uvTopLeft.y_ + uvBorder.top_,
-                uvBorder.left_, innerUvSize.y_, tiled_);
-        if (innerSize.x_)
-            batch.AddQuad(x + border_.left_, border_.top_, innerSize.x_, innerSize.y_, uvTopLeft.x_ + uvBorder.left_,
-                uvTopLeft.y_ + uvBorder.top_, innerUvSize.x_, innerUvSize.y_, tiled_);
+            batch.AddQuad(x, border_.top_, border_.left_, innerSize.y, uvTopLeft.x, uvTopLeft.y + uvBorder.top_,
+                uvBorder.left_, innerUvSize.y, tiled_);
+        if (innerSize.x)
+            batch.AddQuad(x + border_.left_, border_.top_, innerSize.x, innerSize.y, uvTopLeft.x + uvBorder.left_,
+                uvTopLeft.y + uvBorder.top_, innerUvSize.x, innerUvSize.y, tiled_);
         if (border_.right_)
-            batch.AddQuad(x + border_.left_ + innerSize.x_, border_.top_, border_.right_, innerSize.y_,
-                uvTopLeft.x_ + uvBorder.left_ + innerUvSize.x_, uvTopLeft.y_ + uvBorder.top_, uvBorder.right_, innerUvSize.y_,
+            batch.AddQuad(x + border_.left_ + innerSize.x, border_.top_, border_.right_, innerSize.y,
+                uvTopLeft.x + uvBorder.left_ + innerUvSize.x, uvTopLeft.y + uvBorder.top_, uvBorder.right_, innerUvSize.y,
                 tiled_);
     }
     // Bottom
     if (border_.bottom_)
     {
         if (border_.left_)
-            batch.AddQuad(x, border_.top_ + innerSize.y_, border_.left_, border_.bottom_, uvTopLeft.x_,
-                uvTopLeft.y_ + uvBorder.top_ + innerUvSize.y_, uvBorder.left_, uvBorder.bottom_);
-        if (innerSize.x_)
-            batch.AddQuad(x + border_.left_, border_.top_ + innerSize.y_, innerSize.x_, border_.bottom_,
-                uvTopLeft.x_ + uvBorder.left_, uvTopLeft.y_ + uvBorder.top_ + innerUvSize.y_, innerUvSize.x_, uvBorder.bottom_,
+            batch.AddQuad(x, border_.top_ + innerSize.y, border_.left_, border_.bottom_, uvTopLeft.x,
+                uvTopLeft.y + uvBorder.top_ + innerUvSize.y, uvBorder.left_, uvBorder.bottom_);
+        if (innerSize.x)
+            batch.AddQuad(x + border_.left_, border_.top_ + innerSize.y, innerSize.x, border_.bottom_,
+                uvTopLeft.x + uvBorder.left_, uvTopLeft.y + uvBorder.top_ + innerUvSize.y, innerUvSize.x, uvBorder.bottom_,
                 tiled_);
         if (border_.right_)
-            batch.AddQuad(x + border_.left_ + innerSize.x_, border_.top_ + innerSize.y_, border_.right_, border_.bottom_,
-                uvTopLeft.x_ + uvBorder.left_ + innerUvSize.x_, uvTopLeft.y_ + uvBorder.top_ + innerUvSize.y_, uvBorder.right_,
+            batch.AddQuad(x + border_.left_ + innerSize.x, border_.top_ + innerSize.y, border_.right_, border_.bottom_,
+                uvTopLeft.x + uvBorder.left_ + innerUvSize.x, uvTopLeft.y + uvBorder.top_ + innerUvSize.y, uvBorder.right_,
                 uvBorder.bottom_);
     }
 

@@ -266,7 +266,7 @@ void TmxObjectGroup2D::StoreObject(const XmlElement& objectElem, const SharedPtr
             else if (object->sprite_)
             {
                 IntVector2 spriteSize = object->sprite_->GetRectangle().Size();
-                object->size_ = Vector2(spriteSize.x_, spriteSize.y_);
+                object->size_ = Vector2(spriteSize.x, spriteSize.y);
             }
             break;
 

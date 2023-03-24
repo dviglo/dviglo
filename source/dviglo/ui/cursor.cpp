@@ -92,7 +92,7 @@ void Cursor::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
 {
     i32 initialSize = vertexData.Size();
     const IntVector2& offset = shapeInfos_[shape_].hotSpot_;
-    Vector2 floatOffset(-(float)offset.x_, -(float)offset.y_);
+    Vector2 floatOffset(-(float)offset.x, -(float)offset.y);
     BorderImage::GetBatches(batches, vertexData, currentScissor);
 
     for (i32 i = initialSize; i < vertexData.Size(); i += 6)
@@ -264,7 +264,7 @@ void Cursor::ApplyOSCursorShape()
 
             if (surface)
             {
-                info.osCursor_ = SDL_CreateColorCursor(surface, info.hotSpot_.x_, info.hotSpot_.y_);
+                info.osCursor_ = SDL_CreateColorCursor(surface, info.hotSpot_.x, info.hotSpot_.y);
                 info.systemDefined_ = false;
                 if (!info.osCursor_)
                     DV_LOGERROR("Could not create cursor from image " + info.image_->GetName());

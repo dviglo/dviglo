@@ -459,7 +459,7 @@ void Urho2DConstraints::HandlePostRenderUpdate(StringHash eventType, VariantMap&
 void Urho2DConstraints::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)
 {
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-    RigidBody2D* rigidBody = physicsWorld->GetRigidBody(DV_INPUT.GetMousePosition().x_, DV_INPUT.GetMousePosition().y_); // Raycast for RigidBody2Ds to pick
+    RigidBody2D* rigidBody = physicsWorld->GetRigidBody(DV_INPUT.GetMousePosition().x, DV_INPUT.GetMousePosition().y); // Raycast for RigidBody2Ds to pick
     if (rigidBody)
     {
         pickedNode = rigidBody->GetNode();
@@ -495,7 +495,7 @@ void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& ev
 
 Vector2 Urho2DConstraints::GetMousePositionXY()
 {
-    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x_ / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y_ / DV_GRAPHICS.GetHeight(), 0.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y / DV_GRAPHICS.GetHeight(), 0.0f);
     Vector3 worldPoint = camera_->screen_to_world_point(screenPoint);
     return Vector2(worldPoint.x, worldPoint.y);
 }
