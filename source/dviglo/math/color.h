@@ -89,7 +89,7 @@ public:
     explicit Color(const Vector3& color) : Color(color.x_, color.y_, color.z_) {}
 
     /// Construct from 4-vector.
-    explicit Color(const Vector4& color) : Color(color.x_, color.y_, color.z_, color.w_) {}
+    explicit Color(const Vector4& color) : Color(color.x, color.y, color.z, color.w) {}
 
     /// Assign from another color.
     Color& operator =(const Color& rhs) noexcept = default;

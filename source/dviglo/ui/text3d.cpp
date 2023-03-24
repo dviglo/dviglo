@@ -732,7 +732,7 @@ void Text3D::CalculateFixedScreenSize(const FrameInfo& frame)
         {
             Matrix4 viewProj(frame.camera_->GetProjection() * frame.camera_->GetView());
             Vector4 projPos(viewProj * Vector4(worldPosition, 1.0f));
-            worldScale *= textScaling * halfViewWorldSize * projPos.w_;
+            worldScale *= textScaling * halfViewWorldSize * projPos.w;
         }
         else
             worldScale *= textScaling * halfViewWorldSize;

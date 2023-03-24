@@ -184,7 +184,7 @@ struct ModelMorph
                 if (!!(elementMask & VertexElements::Normal))
                     dest.WriteVector3(j->second_.normal_);
                 if (!!(elementMask & VertexElements::Tangent))
-                    dest.WriteVector3(Vector3(j->second_.tangent_.x_, j->second_.tangent_.y_, j->second_.tangent_.z_));
+                    dest.WriteVector3(Vector3(j->second_.tangent_.x, j->second_.tangent_.y, j->second_.tangent_.z));
             }
         }
     }

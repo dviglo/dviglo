@@ -17,7 +17,7 @@ const Vector4 Vector4::ONE(1.0f, 1.0f, 1.0f, 1.0f);
 String Vector4::ToString() const
 {
     char tempBuffer[CONVERSION_BUFFER_LENGTH];
-    sprintf(tempBuffer, "%g %g %g %g", x_, y_, z_, w_);
+    sprintf(tempBuffer, "%g %g %g %g", x, y, z, w);
     return String(tempBuffer);
 }
 

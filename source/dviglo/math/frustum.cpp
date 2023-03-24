@@ -136,8 +136,8 @@ void Frustum::define_split(const Matrix4& projection, float near, float far)
     // Figure out depth values for near & far
     Vector4 nearTemp = projection * Vector4(0.0f, 0.0f, near, 1.0f);
     Vector4 farTemp = projection * Vector4(0.0f, 0.0f, far, 1.0f);
-    float nearZ = nearTemp.z_ / nearTemp.w_;
-    float farZ = farTemp.z_ / farTemp.w_;
+    float nearZ = nearTemp.z / nearTemp.w;
+    float farZ = farTemp.z / farTemp.w;
 
     vertices_[0] = projInverse * Vector3(1.0f, 1.0f, nearZ);
     vertices_[1] = projInverse * Vector3(1.0f, -1.0f, nearZ);

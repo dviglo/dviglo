@@ -1019,10 +1019,10 @@ void DecalSet::UpdateBuffers()
                 *vertices++ = vertex.normal_.z_;
                 *vertices++ = vertex.texCoord_.x_;
                 *vertices++ = vertex.texCoord_.y_;
-                *vertices++ = vertex.tangent_.x_;
-                *vertices++ = vertex.tangent_.y_;
-                *vertices++ = vertex.tangent_.z_;
-                *vertices++ = vertex.tangent_.w_;
+                *vertices++ = vertex.tangent_.x;
+                *vertices++ = vertex.tangent_.y;
+                *vertices++ = vertex.tangent_.z;
+                *vertices++ = vertex.tangent_.w;
                 if (skinned_)
                 {
                     *vertices++ = vertex.blendWeights_[0];

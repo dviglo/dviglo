@@ -272,7 +272,7 @@ public:
         );
         */
 
-        __m128 vec = _mm_loadu_ps(&rhs.x_);
+        __m128 vec = _mm_loadu_ps(&rhs.x);
         __m128 r0 = _mm_mul_ps(_mm_loadu_ps(&m00_), vec);
         __m128 r1 = _mm_mul_ps(_mm_loadu_ps(&m10_), vec);
         __m128 t0 = _mm_unpacklo_ps(r0, r1);

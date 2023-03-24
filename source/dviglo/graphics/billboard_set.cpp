@@ -369,7 +369,7 @@ void BillboardSet::SetBillboardsAttr(const VariantVector& value)
             i->position_ = value[index++].GetVector3();
             i->size_ = value[index++].GetVector2();
             Vector4 uv = value[index++].GetVector4();
-            i->uv_ = Rect(uv.x_, uv.y_, uv.z_, uv.w_);
+            i->uv_ = Rect(uv.x, uv.y, uv.z, uv.w);
             i->color_ = value[index++].GetColor();
             i->rotation_ = value[index++].GetFloat();
             i->enabled_ = value[index++].GetBool();
@@ -383,7 +383,7 @@ void BillboardSet::SetBillboardsAttr(const VariantVector& value)
             i->position_ = value[index++].GetVector3();
             i->size_ = value[index++].GetVector2();
             Vector4 uv = value[index++].GetVector4();
-            i->uv_ = Rect(uv.x_, uv.y_, uv.z_, uv.w_);
+            i->uv_ = Rect(uv.x, uv.y, uv.z, uv.w);
             i->color_ = value[index++].GetColor();
             i->rotation_ = value[index++].GetFloat();
             i->direction_ = value[index++].GetVector3();
@@ -777,7 +777,7 @@ void BillboardSet::CalculateFixedScreenSize(const FrameInfo& frame)
         for (Billboard& billboard : billboards_)
         {
             Vector4 projPos(viewProj * Vector4(billboardTransform * billboard.position_, 1.0f));
-            float newScaleFactor = invViewHeight * halfViewWorldSize * projPos.w_;
+            float newScaleFactor = invViewHeight * halfViewWorldSize * projPos.w;
             if (newScaleFactor != billboard.screenScaleFactor_)
             {
                 billboard.screenScaleFactor_ = newScaleFactor;

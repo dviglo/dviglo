@@ -338,12 +338,12 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
 
     // Apply a far clip relative bias
     for (auto& vertice : vertices)
-        vertice.z_ -= OCCLUSION_RELATIVE_BIAS;
+        vertice.z -= OCCLUSION_RELATIVE_BIAS;
 
     // Transform to screen space. If any of the corners cross the near plane, assume visible
     float minX, maxX, minY, maxY, minZ;
 
-    if (vertices[0].z_ <= 0.0f)
+    if (vertices[0].z <= 0.0f)
         return true;
 
     Vector3 projected = ViewportTransform(vertices[0]);
@@ -354,7 +354,7 @@ bool OcclusionBuffer::IsVisible(const BoundingBox& worldSpaceBox) const
     // Project the rest
     for (unsigned i = 1; i < 8; ++i)
     {
-        if (vertices[i].z_ <= 0.0f)
+        if (vertices[i].z <= 0.0f)
             return true;
 
         projected = ViewportTransform(vertices[i]);
@@ -541,11 +541,11 @@ inline Vector4 OcclusionBuffer::ModelTransform(const Matrix4& transform, const V
 
 inline Vector3 OcclusionBuffer::ViewportTransform(const Vector4& vertex) const
 {
-    float invW = 1.0f / vertex.w_;
+    float invW = 1.0f / vertex.w;
     return Vector3(
-        invW * vertex.x_ * scaleX_ + offsetX_,
-        invW * vertex.y_ * scaleY_ + offsetY_,
-        invW * vertex.z_ * OCCLUSION_Z_SCALE
+        invW * vertex.x * scaleX_ + offsetX_,
+        invW * vertex.y * scaleY_ + offsetY_,
+        invW * vertex.z * OCCLUSION_Z_SCALE
     );
 }
 
@@ -589,17 +589,17 @@ void OcclusionBuffer::DrawTriangle(Vector4* vertices, i32 threadIndex)
     {
         ClipMaskFlags vertexClipMask{};
 
-        if (vertices[i].x_ > vertices[i].w_)
+        if (vertices[i].x > vertices[i].w)
             vertexClipMask |= CLIPMASK_X_POS;
-        if (vertices[i].x_ < -vertices[i].w_)
+        if (vertices[i].x < -vertices[i].w)
             vertexClipMask |= CLIPMASK_X_NEG;
-        if (vertices[i].y_ > vertices[i].w_)
+        if (vertices[i].y > vertices[i].w)
             vertexClipMask |= CLIPMASK_Y_POS;
-        if (vertices[i].y_ < -vertices[i].w_)
+        if (vertices[i].y < -vertices[i].w)
             vertexClipMask |= CLIPMASK_Y_NEG;
-        if (vertices[i].z_ > vertices[i].w_)
+        if (vertices[i].z > vertices[i].w)
             vertexClipMask |= CLIPMASK_Z_POS;
-        if (vertices[i].z_ < 0.0f)
+        if (vertices[i].z < 0.0f)
             vertexClipMask |= CLIPMASK_Z_NEG;
 
         clipMask |= vertexClipMask;

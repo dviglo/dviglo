@@ -285,8 +285,8 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         if (zone_->GetHeightFog() && zoneNode)
         {
             Vector3 worldFogHeightVec = zoneNode->GetWorldTransform() * Vector3(0.0f, zone_->GetFogHeight(), 0.0f);
-            fogParams.z_ = worldFogHeightVec.y_;
-            fogParams.w_ = zone_->GetFogHeightScale() / Max(zoneNode->GetWorldScale().y_, M_EPSILON);
+            fogParams.z = worldFogHeightVec.y_;
+            fogParams.w = zone_->GetFogHeightScale() / Max(zoneNode->GetWorldScale().y_, M_EPSILON);
         }
 
         graphics.SetShaderParameter(PSP_FOGPARAMS, fogParams);
@@ -481,11 +481,11 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
 
                 Vector4 lightSplits(M_LARGE_VALUE, M_LARGE_VALUE, M_LARGE_VALUE, M_LARGE_VALUE);
                 if (lightQueue_->shadowSplits_.Size() > 1)
-                    lightSplits.x_ = lightQueue_->shadowSplits_[0].farSplit_ / camera->GetFarClip();
+                    lightSplits.x = lightQueue_->shadowSplits_[0].farSplit_ / camera->GetFarClip();
                 if (lightQueue_->shadowSplits_.Size() > 2)
-                    lightSplits.y_ = lightQueue_->shadowSplits_[1].farSplit_ / camera->GetFarClip();
+                    lightSplits.y = lightQueue_->shadowSplits_[1].farSplit_ / camera->GetFarClip();
                 if (lightQueue_->shadowSplits_.Size() > 3)
-                    lightSplits.z_ = lightQueue_->shadowSplits_[2].farSplit_ / camera->GetFarClip();
+                    lightSplits.z = lightQueue_->shadowSplits_[2].farSplit_ / camera->GetFarClip();
 
                 graphics.SetShaderParameter(PSP_SHADOWSPLITS, lightSplits);
 
@@ -500,17 +500,17 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     if (light->GetLightType() != LIGHT_DIRECTIONAL)
                     {
                         Camera* shadowCamera = lightQueue_->shadowSplits_[0].shadowCamera_;
-                        normalOffsetScale.x_ = 2.0f * tanf(shadowCamera->GetFov() * M_DEGTORAD * 0.5f) * shadowCamera->GetFarClip();
+                        normalOffsetScale.x = 2.0f * tanf(shadowCamera->GetFov() * M_DEGTORAD * 0.5f) * shadowCamera->GetFarClip();
                     }
                     else
                     {
-                        normalOffsetScale.x_ = lightQueue_->shadowSplits_[0].shadowCamera_->GetOrthoSize();
+                        normalOffsetScale.x = lightQueue_->shadowSplits_[0].shadowCamera_->GetOrthoSize();
                         if (lightQueue_->shadowSplits_.Size() > 1)
-                            normalOffsetScale.y_ = lightQueue_->shadowSplits_[1].shadowCamera_->GetOrthoSize();
+                            normalOffsetScale.y = lightQueue_->shadowSplits_[1].shadowCamera_->GetOrthoSize();
                         if (lightQueue_->shadowSplits_.Size() > 2)
-                            normalOffsetScale.z_ = lightQueue_->shadowSplits_[2].shadowCamera_->GetOrthoSize();
+                            normalOffsetScale.z = lightQueue_->shadowSplits_[2].shadowCamera_->GetOrthoSize();
                         if (lightQueue_->shadowSplits_.Size() > 3)
-                            normalOffsetScale.w_ = lightQueue_->shadowSplits_[3].shadowCamera_->GetOrthoSize();
+                            normalOffsetScale.w = lightQueue_->shadowSplits_[3].shadowCamera_->GetOrthoSize();
                     }
 
                     normalOffsetScale *= light->GetShadowBias().normalOffset_;

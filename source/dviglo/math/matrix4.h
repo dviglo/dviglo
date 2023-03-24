@@ -283,7 +283,7 @@ public:
         );
         */
 
-        __m128 vec = _mm_loadu_ps(&rhs.x_);
+        __m128 vec = _mm_loadu_ps(&rhs.x);
         __m128 r0 = _mm_mul_ps(_mm_loadu_ps(&m00_), vec);
         __m128 r1 = _mm_mul_ps(_mm_loadu_ps(&m10_), vec);
         __m128 t0 = _mm_unpacklo_ps(r0, r1);
@@ -297,7 +297,7 @@ public:
         vec = _mm_add_ps(_mm_movelh_ps(t0, t2), _mm_movehl_ps(t2, t0));
 
         Vector4 ret;
-        _mm_storeu_ps(&ret.x_, vec);
+        _mm_storeu_ps(&ret.x, vec);
         return ret;
     }
 

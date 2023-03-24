@@ -382,23 +382,23 @@ Vector4 ToVector4(const char* source, bool allowMissingCoords)
         if (elements < 4)
             return ret;
 
-        ret.x_ = (float)strtod(ptr, &ptr);
-        ret.y_ = (float)strtod(ptr, &ptr);
-        ret.z_ = (float)strtod(ptr, &ptr);
-        ret.w_ = (float)strtod(ptr, &ptr);
+        ret.x = (float)strtod(ptr, &ptr);
+        ret.y = (float)strtod(ptr, &ptr);
+        ret.z = (float)strtod(ptr, &ptr);
+        ret.w = (float)strtod(ptr, &ptr);
 
         return ret;
     }
     else
     {
         if (elements > 0)
-            ret.x_ = (float)strtod(ptr, &ptr);
+            ret.x = (float)strtod(ptr, &ptr);
         if (elements > 1)
-            ret.y_ = (float)strtod(ptr, &ptr);
+            ret.y = (float)strtod(ptr, &ptr);
         if (elements > 2)
-            ret.z_ = (float)strtod(ptr, &ptr);
+            ret.z = (float)strtod(ptr, &ptr);
         if (elements > 3)
-            ret.w_ = (float)strtod(ptr, &ptr);
+            ret.w = (float)strtod(ptr, &ptr);
 
         return ret;
     }

@@ -695,20 +695,20 @@ void View::SetCameraShaderParameters(Camera* camera)
     Vector4 depthMode = Vector4::ZERO;
     if (camera->IsOrthographic())
     {
-        depthMode.x_ = 1.0f;
+        depthMode.x = 1.0f;
         if (GParams::get_gapi() == GAPI_OPENGL)
         {
-            depthMode.z_ = 0.5f;
-            depthMode.w_ = 0.5f;
+            depthMode.z = 0.5f;
+            depthMode.w = 0.5f;
         }
         else
         {
-            depthMode.z_ = 1.0f;
+            depthMode.z = 1.0f;
         }
     }
     else
     {
-        depthMode.w_ = 1.0f / camera->GetFarClip();
+        depthMode.w = 1.0f / camera->GetFarClip();
     }
 
     graphics.SetShaderParameter(VSP_DEPTHMODE, depthMode);

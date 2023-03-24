@@ -36,8 +36,8 @@ public:
 
     /// Construct from a Vector4.
     explicit Rect(const Vector4& vector) noexcept :
-        min_(vector.x_, vector.y_),
-        max_(vector.z_, vector.w_)
+        min_(vector.x, vector.y),
+        max_(vector.z, vector.w)
     {
     }
 
