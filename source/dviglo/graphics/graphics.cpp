@@ -251,7 +251,7 @@ Vector<IntVector3> Graphics::GetResolutions(SDL_DisplayID display) const
             bool unique = true;
             for (const IntVector3& resolution : ret)
             {
-                if (resolution.x_ == width && resolution.y_ == height && resolution.z_ == rate)
+                if (resolution.x == width && resolution.y == height && resolution.z == rate)
                 {
                     unique = false;
                     break;
@@ -279,9 +279,9 @@ i32 Graphics::FindBestResolutionIndex(SDL_DisplayID display, int width, int heig
 
     for (i32 i = 0; i < resolutions.Size(); ++i)
     {
-        i32 error = Abs(resolutions[i].x_ - width) + Abs(resolutions[i].y_ - height);
+        i32 error = Abs(resolutions[i].x - width) + Abs(resolutions[i].y - height);
         if (refreshRate != 0)
-            error += Abs(resolutions[i].z_ - refreshRate);
+            error += Abs(resolutions[i].z - refreshRate);
         if (error < bestError)
         {
             best = i;
@@ -547,9 +547,9 @@ void Graphics::AdjustScreenMode(int& newWidth, int& newHeight, ScreenModeParams&
         {
             const i32 bestResolution = FindBestResolutionIndex(params.display_,
                 newWidth, newHeight, params.refreshRate_);
-            newWidth = resolutions[bestResolution].x_;
-            newHeight = resolutions[bestResolution].y_;
-            params.refreshRate_ = resolutions[bestResolution].z_;
+            newWidth = resolutions[bestResolution].x;
+            newHeight = resolutions[bestResolution].y;
+            params.refreshRate_ = resolutions[bestResolution].z;
         }
     }
     else

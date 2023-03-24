@@ -247,9 +247,9 @@ void WindowSettingsDemo::InitSettings()
         const bool highDPI = DV_GRAPHICS.GetHighDPI();
         const bool tripleBuffer = DV_GRAPHICS.GetTripleBuffer();
 
-        const int width = resolutions[selectedResolution].x_;
-        const int height = resolutions[selectedResolution].y_;
-        const int refreshRate = resolutions[selectedResolution].z_;
+        const int width = resolutions[selectedResolution].x;
+        const int height = resolutions[selectedResolution].y;
+        const int refreshRate = resolutions[selectedResolution].z;
         DV_GRAPHICS.SetMode(width, height, fullscreen, borderless, resizable, highDPI, vsync, tripleBuffer, multiSample, display, refreshRate);
     });
 }
@@ -278,7 +278,7 @@ void WindowSettingsDemo::SynchronizeSettings()
     for (const IntVector3& resolution : resolutions)
     {
         auto resolutionEntry = MakeShared<Text>();
-        resolutionEntry->SetText(ToString("%dx%d, %d Hz", resolution.x_, resolution.y_, resolution.z_));
+        resolutionEntry->SetText(ToString("%dx%d, %d Hz", resolution.x, resolution.y, resolution.z));
         resolutionEntry->SetMinWidth(CeilToInt(resolutionEntry->GetRowWidth(0) + 10));
         resolutionControl_->AddItem(resolutionEntry);
         resolutionEntry->SetStyleAuto();

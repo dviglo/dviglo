@@ -394,7 +394,7 @@ Variant ValueAnimation::LinearInterpolation(unsigned index1, unsigned index2, fl
             float s = 1.0f - t;
             const IntVector3& v1 = value1.GetIntVector3();
             const IntVector3& v2 = value2.GetIntVector3();
-            return IntVector3((int)(v1.x_ * s + v2.x_ * t), (int)(v1.y_ * s + v2.y_ * t), (int)(v1.z_ * s + v2.z_ * t));
+            return IntVector3((int)(v1.x * s + v2.x * t), (int)(v1.y * s + v2.y * t), (int)(v1.z * s + v2.z * t));
         }
 
     case VAR_DOUBLE:

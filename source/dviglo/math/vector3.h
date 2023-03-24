@@ -15,25 +15,25 @@ struct DV_API IntVector3
 {
     /// Construct a zero vector.
     IntVector3() noexcept :
-        x_(0),
-        y_(0),
-        z_(0)
+        x(0),
+        y(0),
+        z(0)
     {
     }
 
     /// Construct from coordinates.
     IntVector3(int x, int y, int z) noexcept :
-        x_(x),
-        y_(y),
-        z_(z)
+        x(x),
+        y(y),
+        z(z)
     {
     }
 
     /// Construct from an int array.
     explicit IntVector3(const int* data) noexcept :
-        x_(data[0]),
-        y_(data[1]),
-        z_(data[2])
+        x(data[0]),
+        y(data[1]),
+        z(data[2])
     {
     }
 
@@ -44,104 +44,104 @@ struct DV_API IntVector3
     IntVector3& operator =(const IntVector3& rhs) noexcept = default;
 
     /// Test for equality with another vector.
-    bool operator ==(const IntVector3& rhs) const { return x_ == rhs.x_ && y_ == rhs.y_ && z_ == rhs.z_; }
+    bool operator ==(const IntVector3& rhs) const { return x == rhs.x && y == rhs.y && z == rhs.z; }
 
     /// Test for inequality with another vector.
-    bool operator !=(const IntVector3& rhs) const { return x_ != rhs.x_ || y_ != rhs.y_ || z_ != rhs.z_; }
+    bool operator !=(const IntVector3& rhs) const { return x != rhs.x || y != rhs.y || z != rhs.z; }
 
     /// Add a vector.
-    IntVector3 operator +(const IntVector3& rhs) const { return IntVector3(x_ + rhs.x_, y_ + rhs.y_, z_ + rhs.z_); }
+    IntVector3 operator +(const IntVector3& rhs) const { return IntVector3(x + rhs.x, y + rhs.y, z + rhs.z); }
 
     /// Return negation.
-    IntVector3 operator -() const { return IntVector3(-x_, -y_, -z_); }
+    IntVector3 operator -() const { return IntVector3(-x, -y, -z); }
 
     /// Subtract a vector.
-    IntVector3 operator -(const IntVector3& rhs) const { return IntVector3(x_ - rhs.x_, y_ - rhs.y_, z_ - rhs.z_); }
+    IntVector3 operator -(const IntVector3& rhs) const { return IntVector3(x - rhs.x, y - rhs.y, z - rhs.z); }
 
     /// Multiply with a scalar.
-    IntVector3 operator *(int rhs) const { return IntVector3(x_ * rhs, y_ * rhs, z_ * rhs); }
+    IntVector3 operator *(int rhs) const { return IntVector3(x * rhs, y * rhs, z * rhs); }
 
     /// Multiply with a vector.
-    IntVector3 operator *(const IntVector3& rhs) const { return IntVector3(x_ * rhs.x_, y_ * rhs.y_, z_ * rhs.z_); }
+    IntVector3 operator *(const IntVector3& rhs) const { return IntVector3(x * rhs.x, y * rhs.y, z * rhs.z); }
 
     /// Divide by a scalar.
-    IntVector3 operator /(int rhs) const { return IntVector3(x_ / rhs, y_ / rhs, z_ / rhs); }
+    IntVector3 operator /(int rhs) const { return IntVector3(x / rhs, y / rhs, z / rhs); }
 
     /// Divide by a vector.
-    IntVector3 operator /(const IntVector3& rhs) const { return IntVector3(x_ / rhs.x_, y_ / rhs.y_, z_ / rhs.z_); }
+    IntVector3 operator /(const IntVector3& rhs) const { return IntVector3(x / rhs.x, y / rhs.y, z / rhs.z); }
 
     /// Add-assign a vector.
     IntVector3& operator +=(const IntVector3& rhs)
     {
-        x_ += rhs.x_;
-        y_ += rhs.y_;
-        z_ += rhs.z_;
+        x += rhs.x;
+        y += rhs.y;
+        z += rhs.z;
         return *this;
     }
 
     /// Subtract-assign a vector.
     IntVector3& operator -=(const IntVector3& rhs)
     {
-        x_ -= rhs.x_;
-        y_ -= rhs.y_;
-        z_ -= rhs.z_;
+        x -= rhs.x;
+        y -= rhs.y;
+        z -= rhs.z;
         return *this;
     }
 
     /// Multiply-assign a scalar.
     IntVector3& operator *=(int rhs)
     {
-        x_ *= rhs;
-        y_ *= rhs;
-        z_ *= rhs;
+        x *= rhs;
+        y *= rhs;
+        z *= rhs;
         return *this;
     }
 
     /// Multiply-assign a vector.
     IntVector3& operator *=(const IntVector3& rhs)
     {
-        x_ *= rhs.x_;
-        y_ *= rhs.y_;
-        z_ *= rhs.z_;
+        x *= rhs.x;
+        y *= rhs.y;
+        z *= rhs.z;
         return *this;
     }
 
     /// Divide-assign a scalar.
     IntVector3& operator /=(int rhs)
     {
-        x_ /= rhs;
-        y_ /= rhs;
-        z_ /= rhs;
+        x /= rhs;
+        y /= rhs;
+        z /= rhs;
         return *this;
     }
 
     /// Divide-assign a vector.
     IntVector3& operator /=(const IntVector3& rhs)
     {
-        x_ /= rhs.x_;
-        y_ /= rhs.y_;
-        z_ /= rhs.z_;
+        x /= rhs.x;
+        y /= rhs.y;
+        z /= rhs.z;
         return *this;
     }
 
     /// Return integer data.
-    const int* Data() const { return &x_; }
+    const int* Data() const { return &x; }
 
     /// Return as string.
     String ToString() const;
 
     /// Return hash value for HashSet & HashMap.
-    hash32 ToHash() const { return (hash32)x_ * 31 * 31 + (hash32)y_ * 31 + (hash32)z_; }
+    hash32 ToHash() const { return (hash32)x * 31 * 31 + (hash32)y * 31 + (hash32)z; }
 
     /// Return length.
-    float Length() const { return sqrtf((float)(x_ * x_ + y_ * y_ + z_ * z_)); }
+    float Length() const { return sqrtf((float)(x * x + y * y + z * z)); }
 
     /// X coordinate.
-    int x_;
+    int x;
     /// Y coordinate.
-    int y_;
+    int y;
     /// Z coordinate.
-    int z_;
+    int z;
 
     /// Zero vector.
     static const IntVector3 ZERO;
@@ -193,9 +193,9 @@ struct DV_API Vector3
 
     /// Construct from an IntVector3.
     explicit Vector3(const IntVector3& vector) noexcept :
-        x((float)vector.x_),
-        y((float)vector.y_),
-        z((float)vector.z_)
+        x((float)vector.x),
+        y((float)vector.y),
+        z((float)vector.z)
     {
     }
 
@@ -522,13 +522,13 @@ inline IntVector3 VectorRoundToInt(const Vector3& vec) { return IntVector3(Round
 inline IntVector3 VectorCeilToInt(const Vector3& vec) { return IntVector3(CeilToInt(vec.x), CeilToInt(vec.y), CeilToInt(vec.z)); }
 
 /// Per-component min of two 3-vectors.
-inline IntVector3 VectorMin(const IntVector3& lhs, const IntVector3& rhs) { return IntVector3(Min(lhs.x_, rhs.x_), Min(lhs.y_, rhs.y_), Min(lhs.z_, rhs.z_)); }
+inline IntVector3 VectorMin(const IntVector3& lhs, const IntVector3& rhs) { return IntVector3(Min(lhs.x, rhs.x), Min(lhs.y, rhs.y), Min(lhs.z, rhs.z)); }
 
 /// Per-component max of two 3-vectors.
-inline IntVector3 VectorMax(const IntVector3& lhs, const IntVector3& rhs) { return IntVector3(Max(lhs.x_, rhs.x_), Max(lhs.y_, rhs.y_), Max(lhs.z_, rhs.z_)); }
+inline IntVector3 VectorMax(const IntVector3& lhs, const IntVector3& rhs) { return IntVector3(Max(lhs.x, rhs.x), Max(lhs.y, rhs.y), Max(lhs.z, rhs.z)); }
 
 /// Per-component absolute value of integer 3-vector.
-inline IntVector3 VectorAbs(const IntVector3& vec) { return IntVector3(Abs(vec.x_), Abs(vec.y_), Abs(vec.z_)); }
+inline IntVector3 VectorAbs(const IntVector3& vec) { return IntVector3(Abs(vec.x), Abs(vec.y), Abs(vec.z)); }
 
 /// Return a random value from [0, 1) from 3-vector seed.
 inline float StableRandom(const Vector3& seed) { return StableRandom(Vector2(StableRandom(Vector2(seed.x, seed.y)), seed.z)); }

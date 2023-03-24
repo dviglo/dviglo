@@ -88,7 +88,7 @@ struct RaycastVehicleData
     void SetCoordinateSystem(const IntVector3& coordinateSystem)
     {
         if (vehicle_)
-            vehicle_->setCoordinateSystem(coordinateSystem.x_, coordinateSystem.y_, coordinateSystem.z_);
+            vehicle_->setCoordinateSystem(coordinateSystem.x, coordinateSystem.y, coordinateSystem.z);
     }
 
     void SetEnabled(bool enabled)

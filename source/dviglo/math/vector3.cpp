@@ -39,7 +39,7 @@ String Vector3::ToString() const
 String IntVector3::ToString() const
 {
     char tempBuffer[CONVERSION_BUFFER_LENGTH];
-    sprintf(tempBuffer, "%d %d %d", x_, y_, z_);
+    sprintf(tempBuffer, "%d %d %d", x, y, z);
     return String(tempBuffer);
 }
 
