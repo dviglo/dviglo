@@ -18,18 +18,13 @@ extern "C"
 // Need read/close for inotify
 #include "unistd.h"
 }
-#elif defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-extern "C"
-{
-#include "mac_file_watcher.h"
-}
 #endif
 
 namespace dviglo
 {
-#ifndef __APPLE__
+
 static const unsigned BUFFERSIZE = 4096;
-#endif
+
 
 FileWatcher::FileWatcher() :
     delay_(1.0f),
@@ -38,8 +33,6 @@ FileWatcher::FileWatcher() :
 #ifdef DV_FILEWATCHER
 #ifdef __linux__
     watchHandle_ = inotify_init();
-#elif defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-    supported_ = IsFileWatcherSupported();
 #endif
 #endif
 }
@@ -130,28 +123,6 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
         DV_LOGDEBUG("Started watching path " + pathName);
         return true;
     }
-#elif defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-    if (!supported_)
-    {
-        DV_LOGERROR("Individual file watching not supported by this OS version, can not start watching path " + pathName);
-        return false;
-    }
-
-    watcher_ = CreateFileWatcher(pathName.c_str(), watchSubDirs);
-    if (watcher_)
-    {
-        path_ = add_trailing_slash(pathName);
-        watchSubDirs_ = watchSubDirs;
-        Run();
-
-        DV_LOGDEBUG("Started watching path " + pathName);
-        return true;
-    }
-    else
-    {
-        DV_LOGERROR("Failed to start watching path " + pathName);
-        return false;
-    }
 #else
     DV_LOGERROR("FileWatcher not implemented, can not start watching path " + pathName);
     return false;
@@ -178,24 +149,15 @@ void FileWatcher::stop_watching()
         DV_FILE_SYSTEM.Delete(dummyFileName);
 #endif
 
-#if defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-        // Our implementation of file watcher requires the thread to be stopped first before closing the watcher
-        Stop();
-#endif
-
 #ifdef _WIN32
         CloseHandle((HANDLE)dirHandle_);
 #elif defined(__linux__)
         for (HashMap<int, String>::Iterator i = dirHandle_.Begin(); i != dirHandle_.End(); ++i)
             inotify_rm_watch(watchHandle_, i->first_);
         dirHandle_.Clear();
-#elif defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-        CloseFileWatcher(watcher_);
 #endif
 
-#ifndef __APPLE__
         Stop();
-#endif
 
         DV_LOGDEBUG("Stopped watching path " + path_);
         path_.Clear();
@@ -281,19 +243,6 @@ void FileWatcher::ThreadFunction()
             i += sizeof(inotify_event) + event->len;
         }
     }
-#elif defined(__APPLE__) && !defined(IOS) && !defined(TVOS)
-    while (shouldRun_)
-    {
-        Time::Sleep(100);
-
-        String changes = ReadFileWatcher(watcher_);
-        if (!changes.Empty())
-        {
-            Vector<String> fileNames = changes.Split(1);
-            for (unsigned i = 0; i < fileNames.Size(); ++i)
-                AddChange(fileNames[i]);
-        }
-    }
 #endif
 #endif
 }
@@ -330,4 +279,4 @@ bool FileWatcher::GetNextChange(String& dest)
     }
 }
 
-}
+} // namespace dviglo
