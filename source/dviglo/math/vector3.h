@@ -443,9 +443,9 @@ struct DV_API Vector3
     hash32 ToHash() const
     {
         hash32 hash = 37;
-        hash = 37 * hash + FloatToRawIntBits(x);
-        hash = 37 * hash + FloatToRawIntBits(y);
-        hash = 37 * hash + FloatToRawIntBits(z);
+        hash = 37 * hash + std::bit_cast<u32>(x);
+        hash = 37 * hash + std::bit_cast<u32>(y);
+        hash = 37 * hash + std::bit_cast<u32>(z);
 
         return hash;
     }

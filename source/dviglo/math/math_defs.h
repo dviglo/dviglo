@@ -14,8 +14,9 @@
 
 #include "random.h"
 
-#include <cstdlib>
+#include <bit>
 #include <cmath>
+#include <cstdlib>
 #include <limits>
 #include <type_traits>
 
@@ -110,13 +111,6 @@ inline T ToRadians(const T degrees) { return M_DEGTORAD * degrees; }
 /// Convert radians to degrees.
 template <class T>
 inline T ToDegrees(const T radians) { return M_RADTODEG * radians; }
-
-/// Return a representation of the specified floating-point value as a single format bit layout.
-inline unsigned FloatToRawIntBits(float value)
-{
-    unsigned u = *((unsigned*)&value);
-    return u;
-}
 
 /// Check whether a floating point value is NaN.
 template <class T> inline bool IsNaN(T value) { return std::isnan(value); }
@@ -313,7 +307,7 @@ inline float RandomNormal(float meanValue, float variance) { return rand_standar
 /// Convert float to half float. From https://gist.github.com/martinkallman/5049614
 inline unsigned short FloatToHalf(float value)
 {
-    unsigned inu = FloatToRawIntBits(value);
+    unsigned inu = std::bit_cast<u32>(value);
     unsigned t1 = inu & 0x7fffffffu;         // Non-sign bits
     unsigned t2 = inu & 0x80000000u;         // Sign bit
     unsigned t3 = inu & 0x7f800000u;         // Exponent
