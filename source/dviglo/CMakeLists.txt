@@ -184,6 +184,15 @@ foreach(opt
     endif()
 endforeach()
 
+if(DV_ALL_WARNINGS)
+    # Выводим больше предупреждений
+    if(MSVC)
+        target_compile_options(${TARGET_NAME} PRIVATE /W4)
+    else()
+        target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
+endif()
+
 # Делаем заголовочные файлы доступными таргетам, которые используют текущую библиотеку
 target_include_directories(${TARGET_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/.. ${CMAKE_CURRENT_BINARY_DIR}/..)
 
@@ -196,13 +205,6 @@ endif()
 # Генерируем файл dviglo_all.h
 list(JOIN dviglo_all_content "\n" dviglo_all_content)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
-
-# Выводим больше предупреждений
-if(MSVC)
-    target_compile_options(${TARGET_NAME} PRIVATE /W4)
-else()
-    target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wpedantic)
-endif()
 
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})

@@ -56,6 +56,7 @@ option(DV_NAVIGATION "Навигация" TRUE)
 option(DV_TRACY_PROFILING "Профилирование" FALSE)
 cmake_dependent_option(DV_STATIC_RUNTIME "Статическая линковка MSVC runtime" FALSE "MSVC" FALSE)
 cmake_dependent_option(DV_WIN32_CONSOLE "Использовать main(), а не WinMain()" FALSE "WIN32" FALSE) # Не на Windows всегда FALSE
+option(DV_ALL_WARNINGS "Все предупреждения компилятора" FALSE) # Влияет только на таргет dviglo
 
 if(DV_STATIC_RUNTIME)
     # Статически линкуем MSVC runtime
