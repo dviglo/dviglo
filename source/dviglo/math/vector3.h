@@ -224,17 +224,7 @@ struct DV_API Vector3
     }
 
     /// Assign from another vector.
-    //Vector3& operator =(const Vector3& rhs) noexcept = default;
-
-    // TODO: Вернуть закомментированный вариант. Это временный workaround для https://github.com/urho3d/urho3d/issues/3147
-    Vector3& operator =(const Vector3& rhs) noexcept
-    {
-        x = rhs.x;
-        y = rhs.y;
-        z = rhs.z;
-
-        return *this;
-    }
+    Vector3& operator =(const Vector3& rhs) noexcept = default;
 
     /// Test for equality with another vector without epsilon.
     bool operator ==(const Vector3& rhs) const { return x == rhs.x && y == rhs.y && z == rhs.z; }
