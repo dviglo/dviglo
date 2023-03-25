@@ -185,12 +185,12 @@ public:
     const float* Data() const { return &m00_; }
 
     /// Return whether any element is NaN.
-    bool IsNaN() const
+    bool is_nan() const
     {
         const float* data = Data();
         for (unsigned i = 0; i < 4; ++i)
         {
-            if (dviglo::IsNaN(data[i]))
+            if (std::isnan(data[i]))
                 return true;
         }
         return false;

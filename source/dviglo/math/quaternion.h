@@ -370,7 +370,7 @@ public:
     }
 
     /// Return whether any element is NaN.
-    bool IsNaN() const { return dviglo::IsNaN(w_) || dviglo::IsNaN(x_) || dviglo::IsNaN(y_) || dviglo::IsNaN(z_); }
+    bool is_nan() const { return std::isnan(w_) || std::isnan(x_) || std::isnan(y_) || std::isnan(z_); }
 
     /// Return whether any element is Inf.
     bool IsInf() const { return dviglo::IsInf(w_) || dviglo::IsInf(x_) || dviglo::IsInf(y_) || dviglo::IsInf(z_); }

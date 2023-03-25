@@ -173,7 +173,7 @@ struct DV_API Vector4
     }
 
     /// Return whether any component is NaN.
-    bool IsNaN() const { return dviglo::IsNaN(x) || dviglo::IsNaN(y) || dviglo::IsNaN(z) || dviglo::IsNaN(w); }
+    bool is_nan() const { return std::isnan(x) || std::isnan(y) || std::isnan(z) || std::isnan(w); }
 
     /// Return whether any component is Inf.
     bool IsInf() const { return dviglo::IsInf(x) || dviglo::IsInf(y) || dviglo::IsInf(z) || dviglo::IsInf(w); }

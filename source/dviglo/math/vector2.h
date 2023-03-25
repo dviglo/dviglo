@@ -312,7 +312,7 @@ struct DV_API Vector2
     bool Equals(const Vector2& rhs) const { return dviglo::Equals(x, rhs.x) && dviglo::Equals(y, rhs.y); }
 
     /// Return whether any component is NaN.
-    bool IsNaN() const { return dviglo::IsNaN(x) || dviglo::IsNaN(y); }
+    bool is_nan() const { return std::isnan(x) || std::isnan(y); }
 
     /// Return whether any component is Inf.
     bool IsInf() const { return dviglo::IsInf(x) || dviglo::IsInf(y); }

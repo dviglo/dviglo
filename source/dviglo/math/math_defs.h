@@ -112,9 +112,6 @@ inline T ToRadians(const T degrees) { return M_DEGTORAD * degrees; }
 template <class T>
 inline T ToDegrees(const T radians) { return M_RADTODEG * radians; }
 
-/// Check whether a floating point value is NaN.
-template <class T> inline bool IsNaN(T value) { return std::isnan(value); }
-
 /// Check whether a floating point value is positive or negative infinity.
 template <class T> inline bool IsInf(T value) { return std::isinf(value); }
 

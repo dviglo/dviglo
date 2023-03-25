@@ -394,7 +394,7 @@ struct DV_API Vector3
     float Angle(const Vector3& rhs) const { return dviglo::Acos(DotProduct(rhs) / (Length() * rhs.Length())); }
 
     /// Return whether any component is NaN.
-    bool IsNaN() const { return dviglo::IsNaN(x) || dviglo::IsNaN(y) || dviglo::IsNaN(z); }
+    bool is_nan() const { return std::isnan(x) || std::isnan(y) || std::isnan(z); }
 
     /// Return whether any component is Inf.
     bool IsInf() const { return dviglo::IsInf(x) || dviglo::IsInf(y) || dviglo::IsInf(z); }

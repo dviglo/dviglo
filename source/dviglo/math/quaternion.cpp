@@ -143,15 +143,19 @@ bool Quaternion::FromLookRotation(const Vector3& direction, const Vector3& up)
         ret.FromAxes(right, up, forward);
     }
     else
+    {
         ret.FromRotationTo(Vector3::FORWARD, forward);
+    }
 
-    if (!ret.IsNaN())
+    if (!ret.is_nan())
     {
         (*this) = ret;
         return true;
     }
     else
+    {
         return false;
+    }
 }
 
 Vector3 Quaternion::EulerAngles() const

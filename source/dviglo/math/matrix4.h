@@ -629,12 +629,12 @@ public:
     Vector4 Column(unsigned j) const { return Vector4(Element(0, j), Element(1, j), Element(2, j), Element(3, j)); }
 
     /// Return whether any element is NaN.
-    bool IsNaN() const
+    bool is_nan() const
     {
         const float* data = Data();
         for (unsigned i = 0; i < 16; ++i)
         {
-            if (dviglo::IsNaN(data[i]))
+            if (std::isnan(data[i]))
                 return true;
         }
         return false;
