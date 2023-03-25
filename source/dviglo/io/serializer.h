@@ -14,13 +14,13 @@ namespace dviglo
 
 class Color;
 class IntRect;
-class IntVector2;
-class IntVector3;
 class Quaternion;
 class Rect;
-class Vector2;
-class Vector3;
-class Vector4;
+struct IntVector2;
+struct IntVector3;
+struct Vector2;
+struct Vector3;
+struct Vector4;
 
 /// Abstract stream for writing.
 class DV_API Serializer

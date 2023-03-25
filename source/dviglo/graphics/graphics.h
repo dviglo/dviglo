@@ -23,9 +23,9 @@ namespace dviglo
 
 class ConstantBuffer;
 class File;
+class GpuObject;
 class Image;
 class IndexBuffer;
-class GpuObject;
 class RenderSurface;
 class Shader;
 class ShaderPrecache;
@@ -34,9 +34,9 @@ class Texture;
 class Texture2D;
 class Texture2DArray;
 class TextureCube;
-class Vector3;
-class Vector4;
 class VertexBuffer;
+struct Vector3;
+struct Vector4;
 
 typedef unsigned SDL_DisplayID;
 
