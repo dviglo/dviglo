@@ -112,9 +112,6 @@ inline T ToRadians(const T degrees) { return M_DEGTORAD * degrees; }
 template <class T>
 inline T ToDegrees(const T radians) { return M_RADTODEG * radians; }
 
-/// Check whether a floating point value is positive or negative infinity.
-template <class T> inline bool IsInf(T value) { return std::isinf(value); }
-
 /// Clamp a number to a range.
 template <class T>
 inline T Clamp(T value, T min, T max)

@@ -654,12 +654,12 @@ public:
     }
 
     /// Return whether any element is Inf.
-    bool IsInf() const
+    bool is_inf() const
     {
         const float* data = Data();
         for (unsigned i = 0; i < 12; ++i)
         {
-            if (dviglo::IsInf(data[i]))
+            if (std::isinf(data[i]))
                 return true;
         }
         return false;

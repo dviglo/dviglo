@@ -176,7 +176,7 @@ struct DV_API Vector4
     bool is_nan() const { return std::isnan(x) || std::isnan(y) || std::isnan(z) || std::isnan(w); }
 
     /// Return whether any component is Inf.
-    bool IsInf() const { return dviglo::IsInf(x) || dviglo::IsInf(y) || dviglo::IsInf(z) || dviglo::IsInf(w); }
+    bool is_inf() const { return std::isinf(x) || std::isinf(y) || std::isinf(z) || std::isinf(w); }
 
     /// Convert to Vector2.
     explicit operator Vector2() const { return { x, y }; }

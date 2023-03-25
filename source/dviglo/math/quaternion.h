@@ -373,7 +373,7 @@ public:
     bool is_nan() const { return std::isnan(w_) || std::isnan(x_) || std::isnan(y_) || std::isnan(z_); }
 
     /// Return whether any element is Inf.
-    bool IsInf() const { return dviglo::IsInf(w_) || dviglo::IsInf(x_) || dviglo::IsInf(y_) || dviglo::IsInf(z_); }
+    bool is_inf() const { return std::isinf(w_) || std::isinf(x_) || std::isinf(y_) || std::isinf(z_); }
 
     /// Return conjugate.
     Quaternion Conjugate() const

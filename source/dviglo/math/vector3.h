@@ -397,7 +397,7 @@ struct DV_API Vector3
     bool is_nan() const { return std::isnan(x) || std::isnan(y) || std::isnan(z); }
 
     /// Return whether any component is Inf.
-    bool IsInf() const { return dviglo::IsInf(x) || dviglo::IsInf(y) || dviglo::IsInf(z); }
+    bool is_inf() const { return std::isinf(x) || std::isinf(y) || std::isinf(z); }
 
     /// Return normalized to unit length.
     Vector3 normalized() const
