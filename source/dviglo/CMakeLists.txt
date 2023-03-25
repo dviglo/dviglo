@@ -197,6 +197,13 @@ endif()
 list(JOIN dviglo_all_content "\n" dviglo_all_content)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dviglo_all.h.in ${CMAKE_CURRENT_BINARY_DIR}/dviglo_all.h)
 
+# Выводим больше предупреждений
+if(MSVC)
+    target_compile_options(${TARGET_NAME} PRIVATE /W4)
+else()
+    target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})
 source_group("_generated" FILES ${generated_src_files})
