@@ -64,7 +64,7 @@ void GameObject::PlaySound(const String& soundName)
     SoundSource3D* source = node_->create_component<SoundSource3D>();
     Sound* sound = DV_RES_CACHE.GetResource<Sound>(soundName);
     // Subscribe to sound finished for cleaning up the source
-    SubscribeToEvent(node_, E_SOUNDFINISHED, DV_HANDLER(GameObject, HandleSoundFinished));
+    subscribe_to_event(node_, E_SOUNDFINISHED, DV_HANDLER(GameObject, HandleSoundFinished));
 
     source->SetDistanceAttenuation(2, 50, 1);
     source->Play(sound);

@@ -83,7 +83,7 @@ ResourceCache::ResourceCache() :
 #endif
 
     // Subscribe BeginFrame for handling directory watchers and background loaded resource finalization
-    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(ResourceCache, HandleBeginFrame));
+    subscribe_to_event(E_BEGINFRAME, DV_HANDLER(ResourceCache, HandleBeginFrame));
 
     DV_LOGDEBUG("Singleton ResourceCache constructed");
 }

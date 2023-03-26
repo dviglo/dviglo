@@ -88,24 +88,24 @@ void SoundEffects::CreateUI()
         Button* button = CreateButton(i * 140 + 20, 20, 120, 40, soundNames[i]);
         // Store the sound effect resource name as a custom variable into the button
         button->SetVar(VAR_SOUNDRESOURCE, soundResourceNames[i]);
-        SubscribeToEvent(button, E_PRESSED, DV_HANDLER(SoundEffects, HandlePlaySound));
+        subscribe_to_event(button, E_PRESSED, DV_HANDLER(SoundEffects, HandlePlaySound));
     }
 
     // Create buttons for playing/stopping music
     Button* button = CreateButton(20, 80, 120, 40, "Play Music");
-    SubscribeToEvent(button, E_RELEASED, DV_HANDLER(SoundEffects, HandlePlayMusic));
+    subscribe_to_event(button, E_RELEASED, DV_HANDLER(SoundEffects, HandlePlayMusic));
 
     button = CreateButton(160, 80, 120, 40, "Stop Music");
-    SubscribeToEvent(button, E_RELEASED, DV_HANDLER(SoundEffects, HandleStopMusic));
+    subscribe_to_event(button, E_RELEASED, DV_HANDLER(SoundEffects, HandleStopMusic));
 
     // Create sliders for controlling sound and music master volume
     Slider* slider = CreateSlider(20, 140, 200, 20, "Sound Volume");
     slider->SetValue(DV_AUDIO.GetMasterGain(SOUND_EFFECT));
-    SubscribeToEvent(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleSoundVolume));
+    subscribe_to_event(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleSoundVolume));
 
     slider = CreateSlider(20, 200, 200, 20, "Music Volume");
     slider->SetValue(DV_AUDIO.GetMasterGain(SOUND_MUSIC));
-    SubscribeToEvent(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleMusicVolume));
+    subscribe_to_event(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleMusicVolume));
 }
 
 Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const String& text)

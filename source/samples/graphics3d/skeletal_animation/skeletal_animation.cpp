@@ -211,12 +211,12 @@ void SkeletalAnimation::SetupViewport()
 void SkeletalAnimation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(SkeletalAnimation, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(SkeletalAnimation, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, sent after Renderer subsystem is
     // done with defining the draw calls for the viewports (but before actually executing them.) We will request debug geometry
     // rendering during that event
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(SkeletalAnimation, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(SkeletalAnimation, HandlePostRenderUpdate));
 }
 
 void SkeletalAnimation::MoveCamera(float timeStep)

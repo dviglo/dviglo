@@ -1884,7 +1884,7 @@ void Node::SetTransformSilent(const Vector3& position, const Quaternion& rotatio
 void Node::OnAttributeAnimationAdded()
 {
     if (attributeAnimationInfos_.Size() == 1)
-        SubscribeToEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Node, HandleAttributeAnimationUpdate));
+        subscribe_to_event(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Node, HandleAttributeAnimationUpdate));
 }
 
 void Node::OnAttributeAnimationRemoved()

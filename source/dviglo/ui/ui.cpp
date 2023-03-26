@@ -122,17 +122,17 @@ UI::UI() :
     // Register UI library object factories
     register_ui_library();
 
-    SubscribeToEvent(E_SCREENMODE, DV_HANDLER(UI, HandleScreenMode));
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(UI, HandleMouseButtonDown));
-    SubscribeToEvent(E_MOUSEBUTTONUP, DV_HANDLER(UI, HandleMouseButtonUp));
-    SubscribeToEvent(E_MOUSEMOVE, DV_HANDLER(UI, HandleMouseMove));
-    SubscribeToEvent(E_MOUSEWHEEL, DV_HANDLER(UI, HandleMouseWheel));
-    SubscribeToEvent(E_TOUCHBEGIN, DV_HANDLER(UI, HandleTouchBegin));
-    SubscribeToEvent(E_TOUCHEND, DV_HANDLER(UI, HandleTouchEnd));
-    SubscribeToEvent(E_TOUCHMOVE, DV_HANDLER(UI, HandleTouchMove));
-    SubscribeToEvent(E_KEYDOWN, DV_HANDLER(UI, HandleKeyDown));
-    SubscribeToEvent(E_TEXTINPUT, DV_HANDLER(UI, HandleTextInput));
-    SubscribeToEvent(E_DROPFILE, DV_HANDLER(UI, HandleDropFile));
+    subscribe_to_event(E_SCREENMODE, DV_HANDLER(UI, HandleScreenMode));
+    subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(UI, HandleMouseButtonDown));
+    subscribe_to_event(E_MOUSEBUTTONUP, DV_HANDLER(UI, HandleMouseButtonUp));
+    subscribe_to_event(E_MOUSEMOVE, DV_HANDLER(UI, HandleMouseMove));
+    subscribe_to_event(E_MOUSEWHEEL, DV_HANDLER(UI, HandleMouseWheel));
+    subscribe_to_event(E_TOUCHBEGIN, DV_HANDLER(UI, HandleTouchBegin));
+    subscribe_to_event(E_TOUCHEND, DV_HANDLER(UI, HandleTouchEnd));
+    subscribe_to_event(E_TOUCHMOVE, DV_HANDLER(UI, HandleTouchMove));
+    subscribe_to_event(E_KEYDOWN, DV_HANDLER(UI, HandleKeyDown));
+    subscribe_to_event(E_TEXTINPUT, DV_HANDLER(UI, HandleTextInput));
+    subscribe_to_event(E_DROPFILE, DV_HANDLER(UI, HandleDropFile));
 
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
@@ -944,9 +944,9 @@ void UI::Initialize()
 
     initialized_ = true;
 
-    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(UI, HandleBeginFrame));
-    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(UI, HandlePostUpdate));
-    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(UI, HandleRenderUpdate));
+    subscribe_to_event(E_BEGINFRAME, DV_HANDLER(UI, HandleBeginFrame));
+    subscribe_to_event(E_POSTUPDATE, DV_HANDLER(UI, HandlePostUpdate));
+    subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(UI, HandleRenderUpdate));
 
     DV_LOGINFO("Initialized user interface");
 }

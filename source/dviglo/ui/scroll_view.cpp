@@ -46,10 +46,10 @@ ScrollView::ScrollView() :
     scrollPanel_->SetEnabled(true);
     scrollPanel_->SetClipChildren(true);
 
-    SubscribeToEvent(horizontalScrollBar_, E_SCROLLBARCHANGED, DV_HANDLER(ScrollView, HandleScrollBarChanged));
-    SubscribeToEvent(horizontalScrollBar_, E_VISIBLECHANGED, DV_HANDLER(ScrollView, HandleScrollBarVisibleChanged));
-    SubscribeToEvent(verticalScrollBar_, E_SCROLLBARCHANGED, DV_HANDLER(ScrollView, HandleScrollBarChanged));
-    SubscribeToEvent(verticalScrollBar_, E_VISIBLECHANGED, DV_HANDLER(ScrollView, HandleScrollBarVisibleChanged));
+    subscribe_to_event(horizontalScrollBar_, E_SCROLLBARCHANGED, DV_HANDLER(ScrollView, HandleScrollBarChanged));
+    subscribe_to_event(horizontalScrollBar_, E_VISIBLECHANGED, DV_HANDLER(ScrollView, HandleScrollBarVisibleChanged));
+    subscribe_to_event(verticalScrollBar_, E_SCROLLBARCHANGED, DV_HANDLER(ScrollView, HandleScrollBarChanged));
+    subscribe_to_event(verticalScrollBar_, E_VISIBLECHANGED, DV_HANDLER(ScrollView, HandleScrollBarVisibleChanged));
 }
 
 ScrollView::~ScrollView() = default;
@@ -192,7 +192,7 @@ void ScrollView::SetContentElement(UiElement* element)
     if (contentElement_)
     {
         scrollPanel_->AddChild(contentElement_);
-        SubscribeToEvent(contentElement_, E_RESIZED, DV_HANDLER(ScrollView, HandleElementResized));
+        subscribe_to_event(contentElement_, E_RESIZED, DV_HANDLER(ScrollView, HandleElementResized));
     }
 
     OnResize(GetSize(), IntVector2::ZERO);

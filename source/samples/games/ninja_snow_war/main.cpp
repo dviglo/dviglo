@@ -112,18 +112,18 @@ public:
         CreateCamera();
         CreateOverlays();
 
-        SubscribeToEvent(gameScene, E_SCENEUPDATE, DV_HANDLER(App, HandleUpdate));
+        subscribe_to_event(gameScene, E_SCENEUPDATE, DV_HANDLER(App, HandleUpdate));
 
         PhysicsWorld* physicsWorld = gameScene->GetComponent<PhysicsWorld>();
         if (physicsWorld)
-            SubscribeToEvent(physicsWorld, E_PHYSICSPRESTEP, DV_HANDLER(App, HandleFixedUpdate));
+            subscribe_to_event(physicsWorld, E_PHYSICSPRESTEP, DV_HANDLER(App, HandleFixedUpdate));
 
-        SubscribeToEvent(gameScene, E_SCENEPOSTUPDATE, DV_HANDLER(App, HandlePostUpdate));
-        SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(App, HandlePostRenderUpdate));
-        SubscribeToEvent(E_KEYDOWN, DV_HANDLER(App, HandleKeyDown));
-        SubscribeToEvent("Points", DV_HANDLER(App, HandlePoints));
-        SubscribeToEvent("Kill", DV_HANDLER(App, HandleKill));
-        SubscribeToEvent(E_SCREENMODE, DV_HANDLER(App, HandleScreenMode));
+        subscribe_to_event(gameScene, E_SCENEPOSTUPDATE, DV_HANDLER(App, HandlePostUpdate));
+        subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(App, HandlePostRenderUpdate));
+        subscribe_to_event(E_KEYDOWN, DV_HANDLER(App, HandleKeyDown));
+        subscribe_to_event("Points", DV_HANDLER(App, HandlePoints));
+        subscribe_to_event("Kill", DV_HANDLER(App, HandleKill));
+        subscribe_to_event(E_SCREENMODE, DV_HANDLER(App, HandleScreenMode));
 
         if (singlePlayer)
         {
@@ -218,9 +218,9 @@ public:
             // Disable physics interpolation to ensure clients get sent physically correct transforms
             gameScene->GetComponent<PhysicsWorld>()->SetInterpolation(false);
 
-            SubscribeToEvent(E_CLIENTIDENTITY, DV_HANDLER(App, HandleClientIdentity));
-            SubscribeToEvent(E_CLIENTSCENELOADED, DV_HANDLER(App, HandleClientSceneLoaded));
-            SubscribeToEvent(E_CLIENTDISCONNECTED, DV_HANDLER(App, HandleClientDisconnected));
+            subscribe_to_event(E_CLIENTIDENTITY, DV_HANDLER(App, HandleClientIdentity));
+            subscribe_to_event(E_CLIENTSCENELOADED, DV_HANDLER(App, HandleClientSceneLoaded));
+            subscribe_to_event(E_CLIENTDISCONNECTED, DV_HANDLER(App, HandleClientDisconnected));
         }
 
         if (runClient)
@@ -230,10 +230,10 @@ public:
             network.SetUpdateFps(50); // Increase controls send rate for better responsiveness
             network.Connect(serverAddress, serverPort, gameScene, identity);
 
-            SubscribeToEvent("PlayerSpawned", DV_HANDLER(App, HandlePlayerSpawned));
-            SubscribeToEvent("UpdateScore", DV_HANDLER(App, HandleUpdateScore));
-            SubscribeToEvent("UpdateHiscores", DV_HANDLER(App, HandleUpdateHiscores));
-            SubscribeToEvent(E_NETWORKUPDATESENT, DV_HANDLER(App, HandleNetworkUpdateSent));
+            subscribe_to_event("PlayerSpawned", DV_HANDLER(App, HandlePlayerSpawned));
+            subscribe_to_event("UpdateScore", DV_HANDLER(App, HandleUpdateScore));
+            subscribe_to_event("UpdateHiscores", DV_HANDLER(App, HandleUpdateHiscores));
+            subscribe_to_event(E_NETWORKUPDATESENT, DV_HANDLER(App, HandleNetworkUpdateSent));
         }
     }
 

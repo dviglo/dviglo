@@ -40,9 +40,9 @@ DropDownList::DropDownList() :
     text->SetInternal(true);
     text->SetVisible(false);
 
-    SubscribeToEvent(listView_, E_ITEMCLICKED, DV_HANDLER(DropDownList, HandleItemClicked));
-    SubscribeToEvent(listView_, E_UNHANDLEDKEY, DV_HANDLER(DropDownList, HandleListViewKey));
-    SubscribeToEvent(listView_, E_SELECTIONCHANGED, DV_HANDLER(DropDownList, HandleSelectionChanged));
+    subscribe_to_event(listView_, E_ITEMCLICKED, DV_HANDLER(DropDownList, HandleItemClicked));
+    subscribe_to_event(listView_, E_UNHANDLEDKEY, DV_HANDLER(DropDownList, HandleListViewKey));
+    subscribe_to_event(listView_, E_SELECTIONCHANGED, DV_HANDLER(DropDownList, HandleSelectionChanged));
 }
 
 DropDownList::~DropDownList() = default;

@@ -28,7 +28,7 @@ Snowball::Snowball()
 
 void Snowball::Start()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(Snowball, HandleNodeCollision));
+    subscribe_to_event(node_, E_NODECOLLISION, DV_HANDLER(Snowball, HandleNodeCollision));
 }
 
 void Snowball::FixedUpdate(float timeStep)

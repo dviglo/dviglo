@@ -157,7 +157,7 @@ bool Texture2DArray::SetSize(unsigned layers, int width, int height, unsigned fo
     }
 
     if (usage == TEXTURE_RENDERTARGET)
-        SubscribeToEvent(E_RENDERSURFACEUPDATE, DV_HANDLER(Texture2DArray, HandleRenderSurfaceUpdate));
+        subscribe_to_event(E_RENDERSURFACEUPDATE, DV_HANDLER(Texture2DArray, HandleRenderSurfaceUpdate));
     else
         UnsubscribeFromEvent(E_RENDERSURFACEUPDATE);
 

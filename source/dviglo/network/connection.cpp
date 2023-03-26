@@ -194,7 +194,7 @@ void Connection::SetScene(Scene* newScene)
     {
         // Make sure there is no existing async loading
         scene_->StopAsyncLoading();
-        SubscribeToEvent(scene_, E_ASYNCLOADFINISHED, DV_HANDLER(Connection, HandleAsyncLoadFinished));
+        subscribe_to_event(scene_, E_ASYNCLOADFINISHED, DV_HANDLER(Connection, HandleAsyncLoadFinished));
     }
 }
 

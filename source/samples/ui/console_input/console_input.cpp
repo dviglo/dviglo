@@ -46,11 +46,11 @@ void ConsoleInput::Start()
     Sample::Start();
 
     // Subscribe to console commands and the frame update
-    SubscribeToEvent(E_CONSOLECOMMAND, DV_HANDLER(ConsoleInput, HandleConsoleCommand));
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(ConsoleInput, HandleUpdate));
+    subscribe_to_event(E_CONSOLECOMMAND, DV_HANDLER(ConsoleInput, HandleConsoleCommand));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(ConsoleInput, HandleUpdate));
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, DV_HANDLER(ConsoleInput, HandleEscKeyDown));
+    subscribe_to_event(E_KEYDOWN, DV_HANDLER(ConsoleInput, HandleEscKeyDown));
     UnsubscribeFromEvent(E_KEYUP);
 
     // Hide logo to make room for the console

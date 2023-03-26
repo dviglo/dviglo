@@ -22,7 +22,7 @@ void AppState_Benchmark04::OnEnter()
     // Сцена и вьюпорт не нужны
 
     DV_INPUT.SetMouseVisible(false);
-    SubscribeToEvent(E_ENDALLVIEWSRENDER, DV_HANDLER(AppState_Benchmark04, HandleEndAllViewsRender));
+    subscribe_to_event(E_ENDALLVIEWSRENDER, DV_HANDLER(AppState_Benchmark04, HandleEndAllViewsRender));
     fpsCounter_.Clear();
     spriteBatch_ = new SpriteBatch();
 }

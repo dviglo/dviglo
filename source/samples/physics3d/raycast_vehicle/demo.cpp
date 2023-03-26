@@ -156,10 +156,10 @@ void RaycastVehicleDemo::CreateInstructions()
 void RaycastVehicleDemo::SubscribeToEvents()
 {
     // Subscribe to Update event for setting the vehicle controls before physics simulation
-    SubscribeToEvent(E_UPDATE,
+    subscribe_to_event(E_UPDATE,
                      DV_HANDLER(RaycastVehicleDemo, HandleUpdate));
     // Subscribe to PostUpdate event for updating the camera position after physics simulation
-    SubscribeToEvent(E_POSTUPDATE,
+    subscribe_to_event(E_POSTUPDATE,
                      DV_HANDLER(RaycastVehicleDemo,
                                     HandlePostUpdate));
     // Unsubscribe the SceneUpdate event from base class as the camera node is being controlled in HandlePostUpdate() in this sample

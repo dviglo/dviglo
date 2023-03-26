@@ -954,8 +954,8 @@ void RigidBody::AddBodyToWorld()
         smoothedTransform_ = GetComponent<SmoothedTransform>();
         if (smoothedTransform_)
         {
-            SubscribeToEvent(smoothedTransform_, E_TARGETPOSITION, DV_HANDLER(RigidBody, HandleTargetPosition));
-            SubscribeToEvent(smoothedTransform_, E_TARGETROTATION, DV_HANDLER(RigidBody, HandleTargetRotation));
+            subscribe_to_event(smoothedTransform_, E_TARGETPOSITION, DV_HANDLER(RigidBody, HandleTargetPosition));
+            subscribe_to_event(smoothedTransform_, E_TARGETROTATION, DV_HANDLER(RigidBody, HandleTargetRotation));
         }
 
         // Check if CollisionShapes already exist in the node and add them to the compound shape.

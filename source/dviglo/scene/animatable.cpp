@@ -291,8 +291,8 @@ void Animatable::SetObjectAnimation(ObjectAnimation* objectAnimation)
     if (objectAnimation_)
     {
         OnObjectAnimationAdded(objectAnimation_);
-        SubscribeToEvent(objectAnimation_, E_ATTRIBUTEANIMATIONADDED, DV_HANDLER(Animatable, HandleAttributeAnimationAdded));
-        SubscribeToEvent(objectAnimation_, E_ATTRIBUTEANIMATIONREMOVED, DV_HANDLER(Animatable, HandleAttributeAnimationRemoved));
+        subscribe_to_event(objectAnimation_, E_ATTRIBUTEANIMATIONADDED, DV_HANDLER(Animatable, HandleAttributeAnimationAdded));
+        subscribe_to_event(objectAnimation_, E_ATTRIBUTEANIMATIONREMOVED, DV_HANDLER(Animatable, HandleAttributeAnimationRemoved));
     }
 }
 

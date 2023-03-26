@@ -906,7 +906,7 @@ void CollisionShape::OnNodeSet(Node* node)
         cachedWorldScale_ = node->GetWorldScale();
 
         // Terrain collision shape depends on the terrain component's geometry updates. Subscribe to them
-        SubscribeToEvent(node, E_TERRAINCREATED, DV_HANDLER(CollisionShape, HandleTerrainCreated));
+        subscribe_to_event(node, E_TERRAINCREATED, DV_HANDLER(CollisionShape, HandleTerrainCreated));
     }
 }
 
@@ -1129,7 +1129,7 @@ void CollisionShape::UpdateCachedGeometryShape(CollisionGeometryDataCache& cache
         shape_.reset(CreateCollisionGeometryDataShape(shapeType_, geometry_.Get(), cachedWorldScale_ * size_));
         assert(shape_);
         // Watch for live reloads of the collision model to reload the geometry if necessary
-        SubscribeToEvent(model_, E_RELOADFINISHED, DV_HANDLER(CollisionShape, HandleModelReloadFinished));
+        subscribe_to_event(model_, E_RELOADFINISHED, DV_HANDLER(CollisionShape, HandleModelReloadFinished));
     }
 }
 

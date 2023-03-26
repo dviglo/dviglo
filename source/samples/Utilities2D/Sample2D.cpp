@@ -447,7 +447,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     exitText->SetAlignment(HA_CENTER, VA_CENTER);
     exitText->SetFont(font, 24);
     exitText->SetText("EXIT");
-    SubscribeToEvent(exitButton, E_RELEASED, DV_HANDLER(Sample2D, HandleExitButton));
+    subscribe_to_event(exitButton, E_RELEASED, DV_HANDLER(Sample2D, HandleExitButton));
 
     // Create the 'PLAY' button
     auto* playButton = ui.GetRoot()->create_child<Button>("PlayButton");
@@ -460,7 +460,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     playText->SetAlignment(HA_CENTER, VA_CENTER);
     playText->SetFont(font, 24);
     playText->SetText("PLAY");
-//  SubscribeToEvent(playButton, E_RELEASED, HANDLER(Urho2DPlatformer, HandlePlayButton));
+//  subscribe_to_event(playButton, E_RELEASED, HANDLER(Urho2DPlatformer, HandlePlayButton));
 
     // Create the instructions
     auto* instructionText = ui.GetRoot()->create_child<Text>("Instructions");

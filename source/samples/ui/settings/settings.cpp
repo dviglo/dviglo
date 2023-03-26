@@ -53,7 +53,7 @@ void WindowSettingsDemo::Start()
     // Create window with settings.
     InitSettings();
     SynchronizeSettings();
-    SubscribeToEvent(E_SCREENMODE,
+    subscribe_to_event(E_SCREENMODE,
         [this](StringHash /*eventType*/, const VariantMap& /*eventData*/)
     {
         SynchronizeSettings();
@@ -91,7 +91,7 @@ void WindowSettingsDemo::CreateScene()
     cameraNode_->SetPosition(Vector3(0.0f, 0.0f, -4.0f));
 
     // Rotate object
-    SubscribeToEvent(scene_, E_SCENEUPDATE,
+    subscribe_to_event(scene_, E_SCENEUPDATE,
         [objectNode](StringHash /*eventType*/, VariantMap& eventData)
     {
         const float timeStep = eventData[SceneUpdate::P_TIMESTEP].GetFloat();
@@ -222,7 +222,7 @@ void WindowSettingsDemo::InitSettings()
     applyButton->SetFixedHeight(30);
 
     // Apply settings when "Apply" button is clicked
-    SubscribeToEvent(applyButton, E_RELEASED,
+    subscribe_to_event(applyButton, E_RELEASED,
         [this](StringHash /*eventType*/, const VariantMap& /*eventData*/)
     {
         const i32 index = monitorControl_->GetSelection();

@@ -133,8 +133,8 @@ void Urho2DSpriterAnimation::MoveCamera(float timeStep)
 void Urho2DSpriterAnimation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DSpriterAnimation, HandleUpdate));
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DSpriterAnimation, HandleMouseButtonDown));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DSpriterAnimation, HandleUpdate));
+    subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DSpriterAnimation, HandleMouseButtonDown));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);

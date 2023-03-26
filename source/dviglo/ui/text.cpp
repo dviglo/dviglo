@@ -318,7 +318,7 @@ void Text::SetAutoLocalizable(bool enable)
         {
             stringId_ = text_;
             text_ = DV_LOCALIZATION.Get(stringId_);
-            SubscribeToEvent(E_CHANGELANGUAGE, DV_HANDLER(Text, HandleChangeLanguage));
+            subscribe_to_event(E_CHANGELANGUAGE, DV_HANDLER(Text, HandleChangeLanguage));
         }
         else
         {

@@ -191,11 +191,11 @@ void MultipleViewports::SetupViewports()
 void MultipleViewports::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() method for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(MultipleViewports, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(MultipleViewports, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() method for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(MultipleViewports, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(MultipleViewports, HandlePostRenderUpdate));
 }
 
 void MultipleViewports::MoveCamera(float timeStep)

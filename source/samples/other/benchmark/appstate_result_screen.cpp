@@ -26,7 +26,7 @@ void AppState_ResultScreen::OnEnter()
 
     DV_INPUT.SetMouseVisible(true);
     SetupViewport();
-    SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_ResultScreen, HandleSceneUpdate));
+    subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_ResultScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
     ShowResultWindow();
 }
@@ -80,7 +80,7 @@ void AppState_ResultScreen::ShowResultWindow()
     buttonText->SetText("Ok");
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
 
-    SubscribeToEvent(okButton, E_RELEASED, DV_HANDLER(AppState_ResultScreen, HandleResultOkButtonPressed));
+    subscribe_to_event(okButton, E_RELEASED, DV_HANDLER(AppState_ResultScreen, HandleResultOkButtonPressed));
 }
 
 void AppState_ResultScreen::DestroyResultWindow()

@@ -190,11 +190,11 @@ void PhysicsStressTest::SetupViewport()
 void PhysicsStressTest::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(PhysicsStressTest, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(PhysicsStressTest, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(PhysicsStressTest, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(PhysicsStressTest, HandlePostRenderUpdate));
 }
 
 void PhysicsStressTest::MoveCamera(float timeStep)

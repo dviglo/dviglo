@@ -48,7 +48,7 @@ void AppState_MainScreen::CreateButton(const String& name, const String& text, W
     buttonText->SetText(text);
     buttonText->SetAlignment(HA_CENTER, VA_CENTER);
 
-    SubscribeToEvent(button, E_RELEASED, DV_HANDLER(AppState_MainScreen, HandleButtonPressed));
+    subscribe_to_event(button, E_RELEASED, DV_HANDLER(AppState_MainScreen, HandleButtonPressed));
 }
 
 void AppState_MainScreen::CreateGui()
@@ -86,7 +86,7 @@ void AppState_MainScreen::OnEnter()
     CreateGui();
     SetupViewport();
     DV_INPUT.SetMouseVisible(true);
-    SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
+    subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
 }
 

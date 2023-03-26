@@ -204,26 +204,26 @@ void SceneReplication::SetupViewport()
 void SceneReplication::SubscribeToEvents()
 {
     // Subscribe to fixed timestep physics updates for setting or applying controls
-    SubscribeToEvent(E_PHYSICSPRESTEP, DV_HANDLER(SceneReplication, HandlePhysicsPreStep));
+    subscribe_to_event(E_PHYSICSPRESTEP, DV_HANDLER(SceneReplication, HandlePhysicsPreStep));
 
     // Subscribe HandlePostUpdate() method for processing update events. Subscribe to PostUpdate instead
     // of the usual Update so that physics simulation has already proceeded for the frame, and can
     // accurately follow the object with the camera
-    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(SceneReplication, HandlePostUpdate));
+    subscribe_to_event(E_POSTUPDATE, DV_HANDLER(SceneReplication, HandlePostUpdate));
 
     // Subscribe to button actions
-    SubscribeToEvent(connectButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleConnect));
-    SubscribeToEvent(disconnectButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleDisconnect));
-    SubscribeToEvent(startServerButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleStartServer));
+    subscribe_to_event(connectButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleConnect));
+    subscribe_to_event(disconnectButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleDisconnect));
+    subscribe_to_event(startServerButton_, E_RELEASED, DV_HANDLER(SceneReplication, HandleStartServer));
 
     // Subscribe to network events
-    SubscribeToEvent(E_SERVERCONNECTED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
-    SubscribeToEvent(E_SERVERDISCONNECTED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
-    SubscribeToEvent(E_CONNECTFAILED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
-    SubscribeToEvent(E_CLIENTCONNECTED, DV_HANDLER(SceneReplication, HandleClientConnected));
-    SubscribeToEvent(E_CLIENTDISCONNECTED, DV_HANDLER(SceneReplication, HandleClientDisconnected));
+    subscribe_to_event(E_SERVERCONNECTED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
+    subscribe_to_event(E_SERVERDISCONNECTED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
+    subscribe_to_event(E_CONNECTFAILED, DV_HANDLER(SceneReplication, HandleConnectionStatus));
+    subscribe_to_event(E_CLIENTCONNECTED, DV_HANDLER(SceneReplication, HandleClientConnected));
+    subscribe_to_event(E_CLIENTDISCONNECTED, DV_HANDLER(SceneReplication, HandleClientDisconnected));
     // This is a custom event, sent from the server to the client. It tells the node ID of the object the client should control
-    SubscribeToEvent(E_CLIENTOBJECTID, DV_HANDLER(SceneReplication, HandleClientObjectID));
+    subscribe_to_event(E_CLIENTOBJECTID, DV_HANDLER(SceneReplication, HandleClientObjectID));
     // Events sent between client & server (remote events) must be explicitly registered or else they are not allowed to be received
     DV_NET.RegisterRemoteEvent(E_CLIENTOBJECTID);
 }

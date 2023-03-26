@@ -229,7 +229,7 @@ void StaticModel::SetModel(Model* model)
 
     if (model)
     {
-        SubscribeToEvent(model, E_RELOADFINISHED, DV_HANDLER(StaticModel, HandleModelReloadFinished));
+        subscribe_to_event(model, E_RELOADFINISHED, DV_HANDLER(StaticModel, HandleModelReloadFinished));
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());

@@ -63,7 +63,7 @@ Cursor::Cursor() :
         shapeInfos_[shapeNames[i]] = CursorShapeInfo(i);
 
     // Subscribe to OS mouse cursor visibility changes to be able to reapply the cursor shape
-    SubscribeToEvent(E_MOUSEVISIBLECHANGED, DV_HANDLER(Cursor, HandleMouseVisibleChanged));
+    subscribe_to_event(E_MOUSEVISIBLECHANGED, DV_HANDLER(Cursor, HandleMouseVisibleChanged));
 }
 
 Cursor::~Cursor()

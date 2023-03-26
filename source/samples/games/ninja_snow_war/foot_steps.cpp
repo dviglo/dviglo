@@ -20,7 +20,7 @@ FootSteps::FootSteps()
 void FootSteps::Start()
 {
     // Subscribe to animation triggers, which are sent by the AnimatedModel's node (same as our node)
-    SubscribeToEvent(node_, E_ANIMATIONTRIGGER, DV_HANDLER(FootSteps, HandleAnimationTrigger));
+    subscribe_to_event(node_, E_ANIMATIONTRIGGER, DV_HANDLER(FootSteps, HandleAnimationTrigger));
 }
 
 void FootSteps::HandleAnimationTrigger(StringHash eventType, VariantMap& eventData)

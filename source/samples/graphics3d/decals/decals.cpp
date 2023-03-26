@@ -189,11 +189,11 @@ void Decals::SetupViewport()
 void Decals::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Decals, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Decals, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Decals, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Decals, HandlePostRenderUpdate));
 }
 
 void Decals::MoveCamera(float timeStep)

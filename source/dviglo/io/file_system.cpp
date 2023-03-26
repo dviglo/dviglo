@@ -252,7 +252,7 @@ FileSystem& FileSystem::get_instance()
 
 FileSystem::FileSystem()
 {
-    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(FileSystem, HandleBeginFrame));
+    subscribe_to_event(E_BEGINFRAME, DV_HANDLER(FileSystem, HandleBeginFrame));
 
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
@@ -316,7 +316,7 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
 
     executeConsoleCommands_ = enable;
     if (enable)
-        SubscribeToEvent(E_CONSOLECOMMAND, DV_HANDLER(FileSystem, HandleConsoleCommand));
+        subscribe_to_event(E_CONSOLECOMMAND, DV_HANDLER(FileSystem, HandleConsoleCommand));
     else
         UnsubscribeFromEvent(E_CONSOLECOMMAND);
 }

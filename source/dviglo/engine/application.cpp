@@ -22,7 +22,7 @@ Application::Application() :
     Engine::get_instance();
 
     // Subscribe to log messages so that can show errors if ErrorExit() is called with empty message
-    SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));
+    subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));
 }
 
 int Application::Run()

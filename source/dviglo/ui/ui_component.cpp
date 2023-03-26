@@ -151,7 +151,7 @@ UIComponent::UIComponent()
     material_->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("Techniques/Diff.xml"));
     material_->SetTexture(TU_DIFFUSE, texture_);
 
-    SubscribeToEvent(rootElement_, E_RESIZED, DV_HANDLER(UIComponent, OnElementResized));
+    subscribe_to_event(rootElement_, E_RESIZED, DV_HANDLER(UIComponent, OnElementResized));
 
     // Triggers resizing of texture.
     rootElement_->SetRenderTexture(texture_);

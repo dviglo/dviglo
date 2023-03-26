@@ -1124,7 +1124,7 @@ void DecalSet::UpdateEventSubscription(bool checkAllDecals)
 
     if (enabled && !subscribed_)
     {
-        SubscribeToEvent(scene, E_SCENEPOSTUPDATE, DV_HANDLER(DecalSet, HandleScenePostUpdate));
+        subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(DecalSet, HandleScenePostUpdate));
         subscribed_ = true;
     }
     else if (!enabled && subscribed_)

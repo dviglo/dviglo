@@ -56,7 +56,7 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
         const IntVector2& size = window->GetSize();
         window->SetPosition((root->GetWidth() - size.x) / 2, (root->GetHeight() - size.y) / 2);
         window->SetModal(true);
-        SubscribeToEvent(window, E_MODALCHANGED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
+        subscribe_to_event(window, E_MODALCHANGED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
     }
 
     // Bind the buttons (if any in the loaded UI layout) to event handlers
@@ -64,14 +64,14 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
     if (okButton_)
     {
         DV_UI.SetFocusElement(okButton_);
-        SubscribeToEvent(okButton_, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
+        subscribe_to_event(okButton_, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
     }
     auto* cancelButton = window_->GetChildDynamicCast<Button>("CancelButton", true);
     if (cancelButton)
-        SubscribeToEvent(cancelButton, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
+        subscribe_to_event(cancelButton, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
     auto* closeButton = window_->GetChildDynamicCast<Button>("CloseButton", true);
     if (closeButton)
-        SubscribeToEvent(closeButton, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
+        subscribe_to_event(closeButton, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
 
     // Increase reference count to keep Self alive
     AddRef();

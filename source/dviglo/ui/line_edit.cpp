@@ -43,9 +43,9 @@ LineEdit::LineEdit() :
     cursor_->SetInternal(true);
     cursor_->SetPriority(1); // Show over text
 
-    SubscribeToEvent(this, E_FOCUSED, DV_HANDLER(LineEdit, HandleFocused));
-    SubscribeToEvent(this, E_DEFOCUSED, DV_HANDLER(LineEdit, HandleDefocused));
-    SubscribeToEvent(this, E_LAYOUTUPDATED, DV_HANDLER(LineEdit, HandleLayoutUpdated));
+    subscribe_to_event(this, E_FOCUSED, DV_HANDLER(LineEdit, HandleFocused));
+    subscribe_to_event(this, E_DEFOCUSED, DV_HANDLER(LineEdit, HandleDefocused));
+    subscribe_to_event(this, E_LAYOUTUPDATED, DV_HANDLER(LineEdit, HandleLayoutUpdated));
 }
 
 LineEdit::~LineEdit() = default;

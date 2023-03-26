@@ -38,7 +38,7 @@ void Character::register_object()
 void Character::Start()
 {
     // Component has been inserted into its scene node. Subscribe to events now
-    SubscribeToEvent(GetNode(), E_NODECOLLISION, DV_HANDLER(Character, HandleNodeCollision));
+    subscribe_to_event(GetNode(), E_NODECOLLISION, DV_HANDLER(Character, HandleNodeCollision));
 }
 
 void Character::FixedUpdate(float timeStep)

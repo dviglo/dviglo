@@ -61,9 +61,9 @@ public:
         listView_(listView),
         overlayContainer_(overlayContainer)
     {
-        SubscribeToEvent(this, E_LAYOUTUPDATED, DV_HANDLER(HierarchyContainer, HandleLayoutUpdated));
-        SubscribeToEvent(overlayContainer->GetParent(), E_VIEWCHANGED, DV_HANDLER(HierarchyContainer, HandleViewChanged));
-        SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(HierarchyContainer, HandleUIMouseClick));
+        subscribe_to_event(this, E_LAYOUTUPDATED, DV_HANDLER(HierarchyContainer, HandleLayoutUpdated));
+        subscribe_to_event(overlayContainer->GetParent(), E_VIEWCHANGED, DV_HANDLER(HierarchyContainer, HandleViewChanged));
+        subscribe_to_event(E_UIMOUSECLICK, DV_HANDLER(HierarchyContainer, HandleUIMouseClick));
     }
 
     /// Register object factory.
@@ -156,10 +156,10 @@ ListView::ListView() :
     // By default list view is set to non-hierarchy mode
     SetHierarchyMode(false);
 
-    SubscribeToEvent(E_UIMOUSEDOUBLECLICK, DV_HANDLER(ListView, HandleUIMouseDoubleClick));
-    SubscribeToEvent(E_FOCUSCHANGED, DV_HANDLER(ListView, HandleItemFocusChanged));
-    SubscribeToEvent(this, E_DEFOCUSED, DV_HANDLER(ListView, HandleFocusChanged));
-    SubscribeToEvent(this, E_FOCUSED, DV_HANDLER(ListView, HandleFocusChanged));
+    subscribe_to_event(E_UIMOUSEDOUBLECLICK, DV_HANDLER(ListView, HandleUIMouseDoubleClick));
+    subscribe_to_event(E_FOCUSCHANGED, DV_HANDLER(ListView, HandleItemFocusChanged));
+    subscribe_to_event(this, E_DEFOCUSED, DV_HANDLER(ListView, HandleFocusChanged));
+    subscribe_to_event(this, E_FOCUSED, DV_HANDLER(ListView, HandleFocusChanged));
 
     UpdateUIClickSubscription();
 }
@@ -1162,7 +1162,7 @@ void ListView::UpdateUIClickSubscription()
 {
     UnsubscribeFromEvent(E_UIMOUSECLICK);
     UnsubscribeFromEvent(E_UIMOUSECLICKEND);
-    SubscribeToEvent(selectOnClickEnd_ ? E_UIMOUSECLICKEND : E_UIMOUSECLICK, DV_HANDLER(ListView, HandleUIMouseClick));
+    subscribe_to_event(selectOnClickEnd_ ? E_UIMOUSECLICKEND : E_UIMOUSECLICK, DV_HANDLER(ListView, HandleUIMouseClick));
 }
 
 }

@@ -214,20 +214,20 @@ void CrowdNavigation::SetupViewport()
 void CrowdNavigation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(CrowdNavigation, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(CrowdNavigation, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(CrowdNavigation, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(CrowdNavigation, HandlePostRenderUpdate));
 
     // Subscribe HandleCrowdAgentFailure() function for resolving invalidation issues with agents, during which we
     // use a larger extents for finding a point on the navmesh to fix the agent's position
-    SubscribeToEvent(E_CROWD_AGENT_FAILURE, DV_HANDLER(CrowdNavigation, HandleCrowdAgentFailure));
+    subscribe_to_event(E_CROWD_AGENT_FAILURE, DV_HANDLER(CrowdNavigation, HandleCrowdAgentFailure));
 
     // Subscribe HandleCrowdAgentReposition() function for controlling the animation
-    SubscribeToEvent(E_CROWD_AGENT_REPOSITION, DV_HANDLER(CrowdNavigation, HandleCrowdAgentReposition));
+    subscribe_to_event(E_CROWD_AGENT_REPOSITION, DV_HANDLER(CrowdNavigation, HandleCrowdAgentReposition));
 
     // Subscribe HandleCrowdAgentFormation() function for positioning agent into a formation
-    SubscribeToEvent(E_CROWD_AGENT_FORMATION, DV_HANDLER(CrowdNavigation, HandleCrowdAgentFormation));
+    subscribe_to_event(E_CROWD_AGENT_FORMATION, DV_HANDLER(CrowdNavigation, HandleCrowdAgentFormation));
 }
 
 void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)

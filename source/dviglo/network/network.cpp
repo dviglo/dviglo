@@ -215,8 +215,8 @@ Network::Network() :
     // Register Network library object factories
     register_network_library();
 
-    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(Network, HandleBeginFrame));
-    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Network, HandleRenderUpdate));
+    subscribe_to_event(E_BEGINFRAME, DV_HANDLER(Network, HandleBeginFrame));
+    subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(Network, HandleRenderUpdate));
 
     // Blacklist remote events which are not to be allowed to be registered in any case
     blacklistedRemoteEvents_.Insert(E_CONSOLECOMMAND);

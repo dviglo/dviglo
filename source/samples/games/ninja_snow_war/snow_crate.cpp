@@ -23,7 +23,7 @@ SnowCrate::SnowCrate()
 
 void SnowCrate::Start()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(SnowCrate, HandleNodeCollision));
+    subscribe_to_event(node_, E_NODECOLLISION, DV_HANDLER(SnowCrate, HandleNodeCollision));
 }
 
 void SnowCrate::FixedUpdate(float timeStep)

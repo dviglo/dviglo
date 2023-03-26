@@ -58,7 +58,7 @@ Renderer2D::Renderer2D() :
     material_->SetCullMode(CULL_NONE);
 
     frame_.frameNumber_ = 0;
-    SubscribeToEvent(E_BEGINVIEWUPDATE, DV_HANDLER(Renderer2D, HandleBeginViewUpdate));
+    subscribe_to_event(E_BEGINVIEWUPDATE, DV_HANDLER(Renderer2D, HandleBeginViewUpdate));
 }
 
 Renderer2D::~Renderer2D() = default;

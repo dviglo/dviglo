@@ -1867,7 +1867,7 @@ IntVector2 UiElement::GetEffectiveMinSize() const
 void UiElement::OnAttributeAnimationAdded()
 {
     if (attributeAnimationInfos_.Size() == 1)
-        SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(UiElement, HandlePostUpdate));
+        subscribe_to_event(E_POSTUPDATE, DV_HANDLER(UiElement, HandlePostUpdate));
 }
 
 void UiElement::OnAttributeAnimationRemoved()

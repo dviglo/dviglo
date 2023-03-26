@@ -32,7 +32,7 @@ View3D::View3D() :
     renderTexture_->SetNumLevels(1);
     depthTexture_->SetNumLevels(1);
 
-    SubscribeToEvent(E_RENDERSURFACEUPDATE, DV_HANDLER(View3D, HandleRenderSurfaceUpdate));
+    subscribe_to_event(E_RENDERSURFACEUPDATE, DV_HANDLER(View3D, HandleRenderSurfaceUpdate));
 }
 
 View3D::~View3D()

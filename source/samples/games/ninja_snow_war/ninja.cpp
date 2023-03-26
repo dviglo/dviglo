@@ -47,7 +47,7 @@ Ninja::Ninja()
 
 void Ninja::DelayedStart()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(Ninja, HandleNodeCollision));
+    subscribe_to_event(node_, E_NODECOLLISION, DV_HANDLER(Ninja, HandleNodeCollision));
 
     // Get horizontal aim from initial rotation
     aimX = controls.yaw_ = node_->GetRotation().YawAngle();

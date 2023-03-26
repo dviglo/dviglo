@@ -56,7 +56,7 @@ void HttpRequestDemo::CreateUI()
 void HttpRequestDemo::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing HTTP request
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(HttpRequestDemo, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(HttpRequestDemo, HandleUpdate));
 }
 
 void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)

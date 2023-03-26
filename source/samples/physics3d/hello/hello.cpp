@@ -184,11 +184,11 @@ void Physics::SetupViewport()
 void Physics::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Physics, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Physics, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Physics, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Physics, HandlePostRenderUpdate));
 }
 
 void Physics::MoveCamera(float timeStep)

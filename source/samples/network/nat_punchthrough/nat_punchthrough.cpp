@@ -91,25 +91,25 @@ void NATPunchtrough::CreateUI()
 
 void NATPunchtrough::SubscribeToEvents()
 {
-    SubscribeToEvent(E_SERVERCONNECTED, DV_HANDLER(NATPunchtrough, HandleServerConnected));
-    SubscribeToEvent(E_SERVERDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleServerDisconnected));
-    SubscribeToEvent(E_CONNECTFAILED, DV_HANDLER(NATPunchtrough, HandleConnectFailed));
+    subscribe_to_event(E_SERVERCONNECTED, DV_HANDLER(NATPunchtrough, HandleServerConnected));
+    subscribe_to_event(E_SERVERDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleServerDisconnected));
+    subscribe_to_event(E_CONNECTFAILED, DV_HANDLER(NATPunchtrough, HandleConnectFailed));
 
     // NAT server connection related events
-    SubscribeToEvent(E_NATMASTERCONNECTIONFAILED, DV_HANDLER(NATPunchtrough, HandleNatConnectionFailed));
-    SubscribeToEvent(E_NATMASTERCONNECTIONSUCCEEDED, DV_HANDLER(NATPunchtrough, HandleNatConnectionSucceeded));
-    SubscribeToEvent(E_NATMASTERDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleNatDisconnected));
+    subscribe_to_event(E_NATMASTERCONNECTIONFAILED, DV_HANDLER(NATPunchtrough, HandleNatConnectionFailed));
+    subscribe_to_event(E_NATMASTERCONNECTIONSUCCEEDED, DV_HANDLER(NATPunchtrough, HandleNatConnectionSucceeded));
+    subscribe_to_event(E_NATMASTERDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleNatDisconnected));
 
     // NAT punchtrough request events
-    SubscribeToEvent(E_NETWORKNATPUNCHTROUGHSUCCEEDED, DV_HANDLER(NATPunchtrough, HandleNatPunchtroughSucceeded));
-    SubscribeToEvent(E_NETWORKNATPUNCHTROUGHFAILED, DV_HANDLER(NATPunchtrough, HandleNatPunchtroughFailed));
+    subscribe_to_event(E_NETWORKNATPUNCHTROUGHSUCCEEDED, DV_HANDLER(NATPunchtrough, HandleNatPunchtroughSucceeded));
+    subscribe_to_event(E_NETWORKNATPUNCHTROUGHFAILED, DV_HANDLER(NATPunchtrough, HandleNatPunchtroughFailed));
 
-    SubscribeToEvent(E_CLIENTCONNECTED, DV_HANDLER(NATPunchtrough, HandleClientConnected));
-    SubscribeToEvent(E_CLIENTDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleClientDisconnected));
+    subscribe_to_event(E_CLIENTCONNECTED, DV_HANDLER(NATPunchtrough, HandleClientConnected));
+    subscribe_to_event(E_CLIENTDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleClientDisconnected));
 
-    SubscribeToEvent(saveNatSettingsButton_, "Released", DV_HANDLER(NATPunchtrough, HandleSaveNatSettings));
-    SubscribeToEvent(startServerButton_, "Released", DV_HANDLER(NATPunchtrough, HandleStartServer));
-    SubscribeToEvent(connectButton_, "Released", DV_HANDLER(NATPunchtrough, HandleConnect));
+    subscribe_to_event(saveNatSettingsButton_, "Released", DV_HANDLER(NATPunchtrough, HandleSaveNatSettings));
+    subscribe_to_event(startServerButton_, "Released", DV_HANDLER(NATPunchtrough, HandleStartServer));
+    subscribe_to_event(connectButton_, "Released", DV_HANDLER(NATPunchtrough, HandleConnect));
 }
 
 Button* NATPunchtrough::CreateButton(const String& text, int width, IntVector2 position)

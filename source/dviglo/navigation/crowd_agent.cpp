@@ -73,7 +73,7 @@ CrowdAgent::CrowdAgent() :
     previousAgentState_(CA_STATE_WALKING),
     ignoreTransformChanges_(false)
 {
-    SubscribeToEvent(E_NAVIGATION_TILE_ADDED, DV_HANDLER(CrowdAgent, HandleNavigationTileAdded));
+    subscribe_to_event(E_NAVIGATION_TILE_ADDED, DV_HANDLER(CrowdAgent, HandleNavigationTileAdded));
 }
 
 CrowdAgent::~CrowdAgent()

@@ -82,10 +82,10 @@ void SceneAndUILoad::CreateUI()
     // Subscribe to button actions (toggle scene lights when pressed then released)
     auto* button = layoutRoot->GetChildStaticCast<Button>("ToggleLight1", true);
     if (button)
-        SubscribeToEvent(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight1));
+        subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight1));
     button = layoutRoot->GetChildStaticCast<Button>("ToggleLight2", true);
     if (button)
-        SubscribeToEvent(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight2));
+        subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight2));
 }
 
 void SceneAndUILoad::SetupViewport()
@@ -98,7 +98,7 @@ void SceneAndUILoad::SetupViewport()
 void SceneAndUILoad::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for camera motion
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(SceneAndUILoad, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(SceneAndUILoad, HandleUpdate));
 }
 
 void SceneAndUILoad::MoveCamera(float timeStep)

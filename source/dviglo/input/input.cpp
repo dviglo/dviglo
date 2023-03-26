@@ -147,7 +147,7 @@ Input::Input() :
     for (int i = 0; i < TOUCHID_MAX; i++)
         availableTouchIDs_.Push(i);
 
-    SubscribeToEvent(E_SCREENMODE, DV_HANDLER(Input, HandleScreenMode));
+    subscribe_to_event(E_SCREENMODE, DV_HANDLER(Input, HandleScreenMode));
 
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
@@ -763,7 +763,7 @@ void Input::Initialize()
     ResetJoysticks();
     ResetState();
 
-    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(Input, HandleBeginFrame));
+    subscribe_to_event(E_BEGINFRAME, DV_HANDLER(Input, HandleBeginFrame));
 
 #ifdef _WIN32
     // Register callback for resizing in order to repaint.

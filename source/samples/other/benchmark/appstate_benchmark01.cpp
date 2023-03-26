@@ -19,7 +19,7 @@ void AppState_Benchmark01::OnEnter()
 
     DV_INPUT.SetMouseVisible(false);
     SetupViewport();
-    SubscribeToEvent(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark01, HandleSceneUpdate));
+    subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark01, HandleSceneUpdate));
     fpsCounter_.Clear();
 }
 

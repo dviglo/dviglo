@@ -80,7 +80,7 @@ DebugHud::DebugHud() :
     memoryText_->SetVisible(false);
     uiRoot->AddChild(memoryText_);
 
-    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(DebugHud, HandlePostUpdate));
+    subscribe_to_event(E_POSTUPDATE, DV_HANDLER(DebugHud, HandlePostUpdate));
 
     DV_LOGDEBUG("Singleton DebugHud constructed");
 }

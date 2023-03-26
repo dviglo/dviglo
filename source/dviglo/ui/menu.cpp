@@ -30,10 +30,10 @@ Menu::Menu() :
 {
     focusMode_ = FM_NOTFOCUSABLE;
 
-    SubscribeToEvent(this, E_PRESSED, DV_HANDLER(Menu, HandlePressedReleased));
-    SubscribeToEvent(this, E_RELEASED, DV_HANDLER(Menu, HandlePressedReleased));
-    SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(Menu, HandleFocusChanged));
-    SubscribeToEvent(E_FOCUSCHANGED, DV_HANDLER(Menu, HandleFocusChanged));
+    subscribe_to_event(this, E_PRESSED, DV_HANDLER(Menu, HandlePressedReleased));
+    subscribe_to_event(this, E_RELEASED, DV_HANDLER(Menu, HandlePressedReleased));
+    subscribe_to_event(E_UIMOUSECLICK, DV_HANDLER(Menu, HandleFocusChanged));
+    subscribe_to_event(E_FOCUSCHANGED, DV_HANDLER(Menu, HandleFocusChanged));
 }
 
 Menu::~Menu()
@@ -317,7 +317,7 @@ void Menu::SetAccelerator(int key, int qualifiers)
     acceleratorQualifiers_ = qualifiers;
 
     if (key)
-        SubscribeToEvent(E_KEYDOWN, DV_HANDLER(Menu, HandleKeyDown));
+        subscribe_to_event(E_KEYDOWN, DV_HANDLER(Menu, HandleKeyDown));
     else
         UnsubscribeFromEvent(E_KEYDOWN);
 }

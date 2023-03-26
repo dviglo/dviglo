@@ -74,7 +74,7 @@ void Urho2DPlatformer::Start()
     // Create the UI content
     sample2D_->CreateUIContent("PLATFORMER 2D DEMO", character2D_->remainingLifes_, character2D_->remainingCoins_);
     Button* playButton = static_cast<Button*>(DV_UI.GetRoot()->GetChild("PlayButton", true));
-    SubscribeToEvent(playButton, E_RELEASED, DV_HANDLER(Urho2DPlatformer, HandlePlayButton));
+    subscribe_to_event(playButton, E_RELEASED, DV_HANDLER(Urho2DPlatformer, HandlePlayButton));
 
     // Hook up to the frame update events
     SubscribeToEvents();
@@ -138,7 +138,7 @@ void Urho2DPlatformer::CreateScene()
     sample2D_->CreateBackgroundSprite(info, 3.5, "Textures/HeightMap.png", true);
 
     // Check when scene is rendered
-    SubscribeToEvent(E_ENDRENDERING, DV_HANDLER(Urho2DPlatformer, HandleSceneRendered));
+    subscribe_to_event(E_ENDRENDERING, DV_HANDLER(Urho2DPlatformer, HandleSceneRendered));
 }
 
 void Urho2DPlatformer::HandleSceneRendered(StringHash eventType, VariantMap& eventData)
@@ -153,17 +153,17 @@ void Urho2DPlatformer::HandleSceneRendered(StringHash eventType, VariantMap& eve
 void Urho2DPlatformer::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DPlatformer, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DPlatformer, HandleUpdate));
 
     // Subscribe HandlePostUpdate() function for processing post update events
-    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostUpdate));
+    subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostUpdate));
 
     // Subscribe to PostRenderUpdate to draw debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostRenderUpdate));
 
     // Subscribe to Box2D contact listeners
-    SubscribeToEvent(E_PHYSICSBEGINCONTACT2D, DV_HANDLER(Urho2DPlatformer, HandleCollisionBegin));
-    SubscribeToEvent(E_PHYSICSENDCONTACT2D, DV_HANDLER(Urho2DPlatformer, HandleCollisionEnd));
+    subscribe_to_event(E_PHYSICSBEGINCONTACT2D, DV_HANDLER(Urho2DPlatformer, HandleCollisionBegin));
+    subscribe_to_event(E_PHYSICSENDCONTACT2D, DV_HANDLER(Urho2DPlatformer, HandleCollisionEnd));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);

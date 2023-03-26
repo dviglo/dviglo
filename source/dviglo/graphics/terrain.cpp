@@ -255,7 +255,7 @@ void Terrain::SetNorthNeighbor(Terrain* north)
     if (north_ && north_->GetNode())
     {
         northID_ = north_->GetNode()->GetID();
-        SubscribeToEvent(north_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(north_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -274,7 +274,7 @@ void Terrain::SetSouthNeighbor(Terrain* south)
     if (south_ && south_->GetNode())
     {
         southID_ = south_->GetNode()->GetID();
-        SubscribeToEvent(south_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(south_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -293,7 +293,7 @@ void Terrain::SetWestNeighbor(Terrain* west)
     if (west_ && west_->GetNode())
     {
         westID_ = west_->GetNode()->GetID();
-        SubscribeToEvent(west_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(west_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -312,7 +312,7 @@ void Terrain::SetEastNeighbor(Terrain* east)
     if (east_ && east_->GetNode())
     {
         eastID_ = east_->GetNode()->GetID();
-        SubscribeToEvent(east_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(east_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -334,25 +334,25 @@ void Terrain::SetNeighbors(Terrain* north, Terrain* south, Terrain* west, Terrai
     if (north_ && north_->GetNode())
     {
         northID_ = north_->GetNode()->GetID();
-        SubscribeToEvent(north_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(north_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
     south_ = south;
     if (south_ && south_->GetNode())
     {
         southID_ = south_->GetNode()->GetID();
-        SubscribeToEvent(south_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(south_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
     west_ = west;
     if (west_ && west_->GetNode())
     {
         westID_ = west_->GetNode()->GetID();
-        SubscribeToEvent(west_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(west_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
     east_ = east;
     if (east_ && east_->GetNode())
     {
         eastID_ = east_->GetNode()->GetID();
-        SubscribeToEvent(east_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
+        subscribe_to_event(east_->GetNode(), E_TERRAINCREATED, DV_HANDLER(Terrain, HandleNeighborTerrainCreated));
     }
 
     UpdateEdgePatchNeighbors();
@@ -1420,7 +1420,7 @@ bool Terrain::SetHeightMapInternal(Image* image, bool recreateNow)
     if (heightMap_)
         UnsubscribeFromEvent(heightMap_, E_RELOADFINISHED);
     if (image)
-        SubscribeToEvent(image, E_RELOADFINISHED, DV_HANDLER(Terrain, HandleHeightMapReloadFinished));
+        subscribe_to_event(image, E_RELOADFINISHED, DV_HANDLER(Terrain, HandleHeightMapReloadFinished));
 
     heightMap_ = image;
 

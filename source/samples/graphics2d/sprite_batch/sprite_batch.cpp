@@ -139,8 +139,8 @@ public:
 
     void SubscribeToEvents()
     {
-        SubscribeToEvent(E_UPDATE, DV_HANDLER(Game, HandleUpdate));
-        SubscribeToEvent(E_ENDVIEWRENDER, DV_HANDLER(Game, HandleEndViewRender));
+        subscribe_to_event(E_UPDATE, DV_HANDLER(Game, HandleUpdate));
+        subscribe_to_event(E_ENDVIEWRENDER, DV_HANDLER(Game, HandleEndViewRender));
     }
 
     void HandleUpdate(StringHash eventType, VariantMap& eventData)

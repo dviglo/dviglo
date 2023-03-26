@@ -73,7 +73,7 @@ WorkQueue::WorkQueue() :
     last_size_(0),
     maxNonThreadedWorkMs_(5)
 {
-    SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(WorkQueue, HandleBeginFrame));
+    subscribe_to_event(E_BEGINFRAME, DV_HANDLER(WorkQueue, HandleBeginFrame));
     DV_LOGDEBUG("Singleton WorkQueue constructed");
 }
 

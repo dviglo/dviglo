@@ -118,7 +118,7 @@ bool Object::IsInstanceOf(const TypeInfo* typeInfo) const
     return GetTypeInfo()->IsTypeOf(typeInfo);
 }
 
-void Object::SubscribeToEvent(StringHash eventType, EventHandler* handler)
+void Object::subscribe_to_event(StringHash eventType, EventHandler* handler)
 {
     if (!handler)
         return;
@@ -139,7 +139,7 @@ void Object::SubscribeToEvent(StringHash eventType, EventHandler* handler)
     }
 }
 
-void Object::SubscribeToEvent(Object* sender, StringHash eventType, EventHandler* handler)
+void Object::subscribe_to_event(Object* sender, StringHash eventType, EventHandler* handler)
 {
     // If a null sender was specified, the event can not be subscribed to. Delete the handler in that case
     if (!sender || !handler)
@@ -164,14 +164,14 @@ void Object::SubscribeToEvent(Object* sender, StringHash eventType, EventHandler
     }
 }
 
-void Object::SubscribeToEvent(StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
+void Object::subscribe_to_event(StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
 {
-    SubscribeToEvent(eventType, new EventHandler11Impl(function, userData));
+    subscribe_to_event(eventType, new EventHandler11Impl(function, userData));
 }
 
-void Object::SubscribeToEvent(Object* sender, StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
+void Object::subscribe_to_event(Object* sender, StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
 {
-    SubscribeToEvent(sender, eventType, new EventHandler11Impl(function, userData));
+    subscribe_to_event(sender, eventType, new EventHandler11Impl(function, userData));
 }
 
 void Object::UnsubscribeFromEvent(StringHash eventType)

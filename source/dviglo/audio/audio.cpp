@@ -55,7 +55,7 @@ Audio::Audio()
     // Register Audio library object factories
     register_audio_library();
 
-    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
+    subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
 
     DV_LOGDEBUG("Singleton Audio constructed");
 }

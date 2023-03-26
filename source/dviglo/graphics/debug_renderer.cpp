@@ -32,7 +32,7 @@ DebugRenderer::DebugRenderer() :
 {
     vertexBuffer_ = new VertexBuffer();
 
-    SubscribeToEvent(E_ENDFRAME, DV_HANDLER(DebugRenderer, HandleEndFrame));
+    subscribe_to_event(E_ENDFRAME, DV_HANDLER(DebugRenderer, HandleEndFrame));
 }
 
 DebugRenderer::~DebugRenderer() = default;

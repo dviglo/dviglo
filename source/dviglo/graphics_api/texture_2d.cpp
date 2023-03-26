@@ -125,7 +125,7 @@ bool Texture2D::SetSize(int width, int height, unsigned format, TextureUsage usa
     }
 
     if (usage == TEXTURE_RENDERTARGET)
-        SubscribeToEvent(E_RENDERSURFACEUPDATE, DV_HANDLER(Texture2D, HandleRenderSurfaceUpdate));
+        subscribe_to_event(E_RENDERSURFACEUPDATE, DV_HANDLER(Texture2D, HandleRenderSurfaceUpdate));
     else
         UnsubscribeFromEvent(E_RENDERSURFACEUPDATE);
 

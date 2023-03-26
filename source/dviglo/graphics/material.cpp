@@ -1305,9 +1305,9 @@ void Material::UpdateEventSubscription()
     if (shaderParameterAnimationInfos_.Size() && !subscribed_)
     {
         if (scene_)
-            SubscribeToEvent(scene_, E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Material, HandleAttributeAnimationUpdate));
+            subscribe_to_event(scene_, E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Material, HandleAttributeAnimationUpdate));
         else
-            SubscribeToEvent(E_UPDATE, DV_HANDLER(Material, HandleAttributeAnimationUpdate));
+            subscribe_to_event(E_UPDATE, DV_HANDLER(Material, HandleAttributeAnimationUpdate));
         subscribed_ = true;
     }
     else if (subscribed_ && shaderParameterAnimationInfos_.Empty())

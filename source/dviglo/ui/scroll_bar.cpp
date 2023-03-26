@@ -44,10 +44,10 @@ ScrollBar::ScrollBar() :
     // For backward compatibility
     SetColor(Color(0.0f, 0.0f, 0.0f, 0.0f));
 
-    SubscribeToEvent(backButton_, E_PRESSED, DV_HANDLER(ScrollBar, HandleBackButtonPressed));
-    SubscribeToEvent(forwardButton_, E_PRESSED, DV_HANDLER(ScrollBar, HandleForwardButtonPressed));
-    SubscribeToEvent(slider_, E_SLIDERCHANGED, DV_HANDLER(ScrollBar, HandleSliderChanged));
-    SubscribeToEvent(slider_, E_SLIDERPAGED, DV_HANDLER(ScrollBar, HandleSliderPaged));
+    subscribe_to_event(backButton_, E_PRESSED, DV_HANDLER(ScrollBar, HandleBackButtonPressed));
+    subscribe_to_event(forwardButton_, E_PRESSED, DV_HANDLER(ScrollBar, HandleForwardButtonPressed));
+    subscribe_to_event(slider_, E_SLIDERCHANGED, DV_HANDLER(ScrollBar, HandleSliderChanged));
+    subscribe_to_event(slider_, E_SLIDERPAGED, DV_HANDLER(ScrollBar, HandleSliderPaged));
 
     // Set default orientation
     SetOrientation(O_HORIZONTAL);

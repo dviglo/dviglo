@@ -189,11 +189,11 @@ void Navigation::SetupViewport()
 void Navigation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Navigation, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Navigation, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Navigation, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Navigation, HandlePostRenderUpdate));
 }
 
 void Navigation::MoveCamera(float timeStep)

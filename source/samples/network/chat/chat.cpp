@@ -105,20 +105,20 @@ void Chat::CreateUI()
 void Chat::SubscribeToEvents()
 {
     // Subscribe to UI element events
-    SubscribeToEvent(textEdit_, E_TEXTFINISHED, DV_HANDLER(Chat, HandleSend));
-    SubscribeToEvent(sendButton_, E_RELEASED, DV_HANDLER(Chat, HandleSend));
-    SubscribeToEvent(connectButton_, E_RELEASED, DV_HANDLER(Chat, HandleConnect));
-    SubscribeToEvent(disconnectButton_, E_RELEASED, DV_HANDLER(Chat, HandleDisconnect));
-    SubscribeToEvent(startServerButton_, E_RELEASED, DV_HANDLER(Chat, HandleStartServer));
+    subscribe_to_event(textEdit_, E_TEXTFINISHED, DV_HANDLER(Chat, HandleSend));
+    subscribe_to_event(sendButton_, E_RELEASED, DV_HANDLER(Chat, HandleSend));
+    subscribe_to_event(connectButton_, E_RELEASED, DV_HANDLER(Chat, HandleConnect));
+    subscribe_to_event(disconnectButton_, E_RELEASED, DV_HANDLER(Chat, HandleDisconnect));
+    subscribe_to_event(startServerButton_, E_RELEASED, DV_HANDLER(Chat, HandleStartServer));
 
     // Subscribe to log messages so that we can pipe them to the chat window
-    SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Chat, HandleLogMessage));
+    subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Chat, HandleLogMessage));
 
     // Subscribe to network events
-    SubscribeToEvent(E_NETWORKMESSAGE, DV_HANDLER(Chat, HandleNetworkMessage));
-    SubscribeToEvent(E_SERVERCONNECTED, DV_HANDLER(Chat, HandleConnectionStatus));
-    SubscribeToEvent(E_SERVERDISCONNECTED, DV_HANDLER(Chat, HandleConnectionStatus));
-    SubscribeToEvent(E_CONNECTFAILED, DV_HANDLER(Chat, HandleConnectionStatus));
+    subscribe_to_event(E_NETWORKMESSAGE, DV_HANDLER(Chat, HandleNetworkMessage));
+    subscribe_to_event(E_SERVERCONNECTED, DV_HANDLER(Chat, HandleConnectionStatus));
+    subscribe_to_event(E_SERVERDISCONNECTED, DV_HANDLER(Chat, HandleConnectionStatus));
+    subscribe_to_event(E_CONNECTFAILED, DV_HANDLER(Chat, HandleConnectionStatus));
 }
 
 Button* Chat::CreateButton(const String& text, int width)

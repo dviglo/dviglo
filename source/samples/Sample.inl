@@ -61,11 +61,11 @@ void Sample::Start()
     CreateConsoleAndDebugHud();
 
     // Subscribe key down event
-    SubscribeToEvent(E_KEYDOWN, DV_HANDLER(Sample, HandleKeyDown));
+    subscribe_to_event(E_KEYDOWN, DV_HANDLER(Sample, HandleKeyDown));
     // Subscribe key up event
-    SubscribeToEvent(E_KEYUP, DV_HANDLER(Sample, HandleKeyUp));
+    subscribe_to_event(E_KEYUP, DV_HANDLER(Sample, HandleKeyUp));
     // Subscribe scene update event
-    SubscribeToEvent(E_SCENEUPDATE, DV_HANDLER(Sample, HandleSceneUpdate));
+    subscribe_to_event(E_SCENEUPDATE, DV_HANDLER(Sample, HandleSceneUpdate));
 }
 
 void Sample::Stop()
@@ -94,8 +94,8 @@ void Sample::InitMouseMode(MouseMode mode)
     else
     {
         input.SetMouseVisible(true);
-        SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Sample, HandleMouseModeRequest));
-        SubscribeToEvent(E_MOUSEMODECHANGED, DV_HANDLER(Sample, HandleMouseModeChange));
+        subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Sample, HandleMouseModeRequest));
+        subscribe_to_event(E_MOUSEMODECHANGED, DV_HANDLER(Sample, HandleMouseModeChange));
     }
 }
 

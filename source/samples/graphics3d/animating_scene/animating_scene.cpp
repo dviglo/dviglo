@@ -131,7 +131,7 @@ void AnimatingScene::SetupViewport()
 void AnimatingScene::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(AnimatingScene, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(AnimatingScene, HandleUpdate));
 }
 
 void AnimatingScene::MoveCamera(float timeStep)

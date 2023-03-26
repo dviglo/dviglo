@@ -690,7 +690,7 @@ void PhysicsWorld2D::OnSceneSet(Scene* scene)
 {
     // Subscribe to the scene subsystem update, which will trigger the physics simulation step
     if (scene)
-        SubscribeToEvent(scene, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(PhysicsWorld2D, HandleSceneSubsystemUpdate));
+        subscribe_to_event(scene, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(PhysicsWorld2D, HandleSceneSubsystemUpdate));
     else
         UnsubscribeFromEvent(E_SCENESUBSYSTEMUPDATE);
 }

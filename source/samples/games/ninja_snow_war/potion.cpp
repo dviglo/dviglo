@@ -21,7 +21,7 @@ Potion::Potion()
 
 void Potion::Start()
 {
-    SubscribeToEvent(node_, E_NODECOLLISION, DV_HANDLER(Potion, HandleNodeCollision));
+    subscribe_to_event(node_, E_NODECOLLISION, DV_HANDLER(Potion, HandleNodeCollision));
 }
 
 void Potion::ObjectCollision(GameObject& otherObject, VariantMap& eventData)

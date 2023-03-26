@@ -83,7 +83,7 @@ void SmoothedTransform::SetTargetPosition(const Vector3& position)
     // Subscribe to smoothing update if not yet subscribed
     if (!subscribed_)
     {
-        SubscribeToEvent(GetScene(), E_UPDATESMOOTHING, DV_HANDLER(SmoothedTransform, HandleUpdateSmoothing));
+        subscribe_to_event(GetScene(), E_UPDATESMOOTHING, DV_HANDLER(SmoothedTransform, HandleUpdateSmoothing));
         subscribed_ = true;
     }
 
@@ -97,7 +97,7 @@ void SmoothedTransform::SetTargetRotation(const Quaternion& rotation)
 
     if (!subscribed_)
     {
-        SubscribeToEvent(GetScene(), E_UPDATESMOOTHING, DV_HANDLER(SmoothedTransform, HandleUpdateSmoothing));
+        subscribe_to_event(GetScene(), E_UPDATESMOOTHING, DV_HANDLER(SmoothedTransform, HandleUpdateSmoothing));
         subscribed_ = true;
     }
 

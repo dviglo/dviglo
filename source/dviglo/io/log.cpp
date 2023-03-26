@@ -56,7 +56,7 @@ Log::Log() :
     inWrite_(false),
     quiet_(false)
 {
-    SubscribeToEvent(E_ENDFRAME, DV_HANDLER(Log, HandleEndFrame));
+    subscribe_to_event(E_ENDFRAME, DV_HANDLER(Log, HandleEndFrame));
 }
 
 Log::~Log()

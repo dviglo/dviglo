@@ -124,10 +124,10 @@ void HelloGUI::InitWindow()
     buttonClose->SetStyle("CloseButton");
 
     // Subscribe to buttonClose release (following a 'press') events
-    SubscribeToEvent(buttonClose, E_RELEASED, DV_HANDLER(HelloGUI, HandleClosePressed));
+    subscribe_to_event(buttonClose, E_RELEASED, DV_HANDLER(HelloGUI, HandleClosePressed));
 
     // Subscribe also to all UI mouse clicks just to see where we have clicked
-    SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(HelloGUI, HandleControlClicked));
+    subscribe_to_event(E_UIMOUSECLICK, DV_HANDLER(HelloGUI, HandleControlClicked));
 }
 
 void HelloGUI::CreateDraggableFish()
@@ -155,9 +155,9 @@ void HelloGUI::CreateDraggableFish()
 
     // Subscribe draggableFish to Drag Events (in order to make it draggable)
     // See "Event list" in documentation's Main Page for reference on available Events and their eventData
-    SubscribeToEvent(draggableFish, E_DRAGBEGIN, DV_HANDLER(HelloGUI, HandleDragBegin));
-    SubscribeToEvent(draggableFish, E_DRAGMOVE, DV_HANDLER(HelloGUI, HandleDragMove));
-    SubscribeToEvent(draggableFish, E_DRAGEND, DV_HANDLER(HelloGUI, HandleDragEnd));
+    subscribe_to_event(draggableFish, E_DRAGBEGIN, DV_HANDLER(HelloGUI, HandleDragBegin));
+    subscribe_to_event(draggableFish, E_DRAGMOVE, DV_HANDLER(HelloGUI, HandleDragMove));
+    subscribe_to_event(draggableFish, E_DRAGEND, DV_HANDLER(HelloGUI, HandleDragEnd));
 }
 
 void HelloGUI::HandleDragBegin(StringHash eventType, VariantMap& eventData)

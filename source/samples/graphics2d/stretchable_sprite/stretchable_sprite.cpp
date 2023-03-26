@@ -106,10 +106,10 @@ void Urho2DStretchableSprite::SetupViewport()
 
 void Urho2DStretchableSprite::SubscribeToEvents()
 {
-    SubscribeToEvent(E_KEYUP, DV_HANDLER(Urho2DStretchableSprite, OnKeyUp));
+    subscribe_to_event(E_KEYUP, DV_HANDLER(Urho2DStretchableSprite, OnKeyUp));
 
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DStretchableSprite, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DStretchableSprite, HandleUpdate));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);

@@ -176,7 +176,7 @@ void MaterialAnimation::MoveCamera(float timeStep)
 void MaterialAnimation::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(MaterialAnimation, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(MaterialAnimation, HandleUpdate));
 }
 
 void MaterialAnimation::HandleUpdate(StringHash eventType, VariantMap& eventData)

@@ -26,7 +26,7 @@ public:
         // The first handler for the first event in each frame.
         // To prevent a crash, we can only change the current scene at the start of a frame,
         // before any scene events are processed
-        SubscribeToEvent(E_BEGINFRAME, DV_HANDLER(App, ApplyAppState));
+        subscribe_to_event(E_BEGINFRAME, DV_HANDLER(App, ApplyAppState));
     }
 
     void Setup() override

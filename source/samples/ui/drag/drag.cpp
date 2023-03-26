@@ -67,10 +67,10 @@ void UIDrag::CreateGUI()
         if (i % 2 == 0)
             b->add_tag("SomeTag");
 
-        SubscribeToEvent(b, E_CLICK, DV_HANDLER(UIDrag, HandleClick));
-        SubscribeToEvent(b, E_DRAGMOVE, DV_HANDLER(UIDrag, HandleDragMove));
-        SubscribeToEvent(b, E_DRAGBEGIN, DV_HANDLER(UIDrag, HandleDragBegin));
-        SubscribeToEvent(b, E_DRAGCANCEL, DV_HANDLER(UIDrag, HandleDragCancel));
+        subscribe_to_event(b, E_CLICK, DV_HANDLER(UIDrag, HandleClick));
+        subscribe_to_event(b, E_DRAGMOVE, DV_HANDLER(UIDrag, HandleDragMove));
+        subscribe_to_event(b, E_DRAGBEGIN, DV_HANDLER(UIDrag, HandleDragBegin));
+        subscribe_to_event(b, E_DRAGCANCEL, DV_HANDLER(UIDrag, HandleDragCancel));
     }
 }
 
@@ -91,7 +91,7 @@ void UIDrag::CreateInstructions()
 
 void UIDrag::SubscribeToEvents()
 {
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(UIDrag, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(UIDrag, HandleUpdate));
 }
 
 void UIDrag::HandleClick(StringHash eventType, VariantMap& eventData)

@@ -162,10 +162,10 @@ void Hello3DUI::InitWindow()
     buttonClose->SetStyle("CloseButton");
 
     // Subscribe to buttonClose release (following a 'press') events
-    SubscribeToEvent(buttonClose, E_RELEASED, DV_HANDLER(Hello3DUI, HandleClosePressed));
+    subscribe_to_event(buttonClose, E_RELEASED, DV_HANDLER(Hello3DUI, HandleClosePressed));
 
     // Subscribe also to all UI mouse clicks just to see where we have clicked
-    SubscribeToEvent(E_UIMOUSECLICK, DV_HANDLER(Hello3DUI, HandleControlClicked));
+    subscribe_to_event(E_UIMOUSECLICK, DV_HANDLER(Hello3DUI, HandleControlClicked));
 }
 
 void Hello3DUI::InitScene()
@@ -200,7 +200,7 @@ void Hello3DUI::InitScene()
     DV_RENDERER.SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Hello3DUI, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Hello3DUI, HandleUpdate));
 }
 
 void Hello3DUI::CreateDraggableFish()
@@ -228,9 +228,9 @@ void Hello3DUI::CreateDraggableFish()
 
     // Subscribe draggableFish to Drag Events (in order to make it draggable)
     // See "Event list" in documentation's Main Page for reference on available Events and their eventData
-    SubscribeToEvent(draggableFish, E_DRAGBEGIN, DV_HANDLER(Hello3DUI, HandleDragBegin));
-    SubscribeToEvent(draggableFish, E_DRAGMOVE, DV_HANDLER(Hello3DUI, HandleDragMove));
-    SubscribeToEvent(draggableFish, E_DRAGEND, DV_HANDLER(Hello3DUI, HandleDragEnd));
+    subscribe_to_event(draggableFish, E_DRAGBEGIN, DV_HANDLER(Hello3DUI, HandleDragBegin));
+    subscribe_to_event(draggableFish, E_DRAGMOVE, DV_HANDLER(Hello3DUI, HandleDragMove));
+    subscribe_to_event(draggableFish, E_DRAGEND, DV_HANDLER(Hello3DUI, HandleDragEnd));
 }
 
 void Hello3DUI::HandleDragBegin(StringHash eventType, VariantMap& eventData)

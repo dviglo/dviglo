@@ -54,8 +54,8 @@ Scene::Scene() :
     SetID(GetFreeNodeID(REPLICATED));
     NodeAdded(this);
 
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Scene, HandleUpdate));
-    SubscribeToEvent(E_RESOURCEBACKGROUNDLOADED, DV_HANDLER(Scene, HandleResourceBackgroundLoaded));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Scene, HandleUpdate));
+    subscribe_to_event(E_RESOURCEBACKGROUNDLOADED, DV_HANDLER(Scene, HandleResourceBackgroundLoaded));
 }
 
 Scene::~Scene()

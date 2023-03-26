@@ -132,7 +132,7 @@ void PBRMaterials::CreateUI()
     roughnessSlider->SetPosition(50, 50);
     roughnessSlider->SetSize(300, 20);
     roughnessSlider->SetRange(1.0f); // 0 - 1 range
-    SubscribeToEvent(roughnessSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleRoughnessSliderChanged));
+    subscribe_to_event(roughnessSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleRoughnessSliderChanged));
     roughnessSlider->SetValue(0.5f);
 
     auto* metallicSlider = ui.GetRoot()->create_child<Slider>();
@@ -140,7 +140,7 @@ void PBRMaterials::CreateUI()
     metallicSlider->SetPosition(50, 100);
     metallicSlider->SetSize(300, 20);
     metallicSlider->SetRange(1.0f); // 0 - 1 range
-    SubscribeToEvent(metallicSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleMetallicSliderChanged));
+    subscribe_to_event(metallicSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleMetallicSliderChanged));
     metallicSlider->SetValue(0.5f);
 
     auto* ambientSlider = ui.GetRoot()->create_child<Slider>();
@@ -148,7 +148,7 @@ void PBRMaterials::CreateUI()
     ambientSlider->SetPosition(50, 150);
     ambientSlider->SetSize(300, 20);
     ambientSlider->SetRange(10.0f); // 0 - 10 range
-    SubscribeToEvent(ambientSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleAmbientSliderChanged));
+    subscribe_to_event(ambientSlider, E_SLIDERCHANGED, DV_HANDLER(PBRMaterials, HandleAmbientSliderChanged));
     ambientSlider->SetValue(zone_->GetAmbientColor().a_);
 }
 
@@ -195,7 +195,7 @@ void PBRMaterials::SetupViewport()
 void PBRMaterials::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for camera motion
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(PBRMaterials, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(PBRMaterials, HandleUpdate));
 }
 
 void PBRMaterials::MoveCamera(float timeStep)

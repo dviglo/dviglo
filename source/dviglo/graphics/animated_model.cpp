@@ -329,7 +329,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
 
     if (model)
     {
-        SubscribeToEvent(model, E_RELOADFINISHED, DV_HANDLER(AnimatedModel, HandleModelReloadFinished));
+        subscribe_to_event(model, E_RELOADFINISHED, DV_HANDLER(AnimatedModel, HandleModelReloadFinished));
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());

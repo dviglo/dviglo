@@ -97,14 +97,14 @@ Console::Console() :
 
     SetNumRows(DEFAULT_CONSOLE_ROWS);
 
-    SubscribeToEvent(interpreters_, E_ITEMSELECTED, DV_HANDLER(Console, HandleInterpreterSelected));
-    SubscribeToEvent(lineEdit_, E_TEXTCHANGED, DV_HANDLER(Console, HandleTextChanged));
-    SubscribeToEvent(lineEdit_, E_TEXTFINISHED, DV_HANDLER(Console, HandleTextFinished));
-    SubscribeToEvent(lineEdit_, E_UNHANDLEDKEY, DV_HANDLER(Console, HandleLineEditKey));
-    SubscribeToEvent(closeButton_, E_RELEASED, DV_HANDLER(Console, HandleCloseButtonPressed));
-    SubscribeToEvent(uiRoot, E_RESIZED, DV_HANDLER(Console, HandleRootElementResized));
-    SubscribeToEvent(E_LOGMESSAGE, DV_HANDLER(Console, HandleLogMessage));
-    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(Console, HandlePostUpdate));
+    subscribe_to_event(interpreters_, E_ITEMSELECTED, DV_HANDLER(Console, HandleInterpreterSelected));
+    subscribe_to_event(lineEdit_, E_TEXTCHANGED, DV_HANDLER(Console, HandleTextChanged));
+    subscribe_to_event(lineEdit_, E_TEXTFINISHED, DV_HANDLER(Console, HandleTextFinished));
+    subscribe_to_event(lineEdit_, E_UNHANDLEDKEY, DV_HANDLER(Console, HandleLineEditKey));
+    subscribe_to_event(closeButton_, E_RELEASED, DV_HANDLER(Console, HandleCloseButtonPressed));
+    subscribe_to_event(uiRoot, E_RESIZED, DV_HANDLER(Console, HandleRootElementResized));
+    subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Console, HandleLogMessage));
+    subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Console, HandlePostUpdate));
 
     DV_LOGDEBUG("Singleton Console constructed");
 }

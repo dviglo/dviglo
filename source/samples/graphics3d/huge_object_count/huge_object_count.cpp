@@ -171,7 +171,7 @@ void HugeObjectCount::SetupViewport()
 void HugeObjectCount::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(HugeObjectCount, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(HugeObjectCount, HandleUpdate));
 }
 
 void HugeObjectCount::MoveCamera(float timeStep)

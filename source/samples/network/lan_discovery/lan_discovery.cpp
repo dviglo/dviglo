@@ -86,11 +86,11 @@ void LANDiscovery::CreateUI()
 
 void LANDiscovery::SubscribeToEvents()
 {
-    SubscribeToEvent(E_NETWORKHOSTDISCOVERED, DV_HANDLER(LANDiscovery, HandleNetworkHostDiscovered));
+    subscribe_to_event(E_NETWORKHOSTDISCOVERED, DV_HANDLER(LANDiscovery, HandleNetworkHostDiscovered));
 
-    SubscribeToEvent(startServer_, "Released", DV_HANDLER(LANDiscovery, HandleStartServer));
-    SubscribeToEvent(stopServer_, "Released", DV_HANDLER(LANDiscovery, HandleStopServer));
-    SubscribeToEvent(refreshServerList_, "Released", DV_HANDLER(LANDiscovery, HandleDoNetworkDiscovery));
+    subscribe_to_event(startServer_, "Released", DV_HANDLER(LANDiscovery, HandleStartServer));
+    subscribe_to_event(stopServer_, "Released", DV_HANDLER(LANDiscovery, HandleStopServer));
+    subscribe_to_event(refreshServerList_, "Released", DV_HANDLER(LANDiscovery, HandleDoNetworkDiscovery));
 }
 
 Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 position)

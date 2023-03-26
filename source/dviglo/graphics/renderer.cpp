@@ -261,7 +261,7 @@ Renderer::Renderer() :
 {
     assert(!GParams::is_headless());
 
-    SubscribeToEvent(E_SCREENMODE, DV_HANDLER(Renderer, HandleScreenMode));
+    subscribe_to_event(E_SCREENMODE, DV_HANDLER(Renderer, HandleScreenMode));
 
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
@@ -1642,7 +1642,7 @@ void Renderer::Initialize()
 
     initialized_ = true;
 
-    SubscribeToEvent(E_RENDERUPDATE, DV_HANDLER(Renderer, HandleRenderUpdate));
+    subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(Renderer, HandleRenderUpdate));
 
     DV_LOGINFO("Initialized renderer");
 }

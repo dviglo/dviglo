@@ -51,8 +51,8 @@ void Clicker::CreateUI()
 
 void Clicker::SubscribeToEvents()
 {
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Clicker, HandleUpdate));
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Clicker, HandleMouseButtonDown));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Clicker, HandleUpdate));
+    subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Clicker, HandleMouseButtonDown));
 }
 
 static String ShortNumberRepresentation(const BigInt& value)

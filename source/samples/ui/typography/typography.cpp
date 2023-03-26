@@ -152,7 +152,7 @@ SharedPtr<CheckBox> Typography::CreateCheckbox(const String& label, EventHandler
     text->SetStyleAuto();
     text->add_tag(TEXT_TAG);
 
-    SubscribeToEvent(box, E_TOGGLED, handler);
+    subscribe_to_event(box, E_TOGGLED, handler);
     return box;
 }
 
@@ -185,7 +185,7 @@ SharedPtr<DropDownList> Typography::CreateMenu(const String& label, const char**
 
     text->SetMaxWidth(text->GetRowWidth(0));
 
-    SubscribeToEvent(list, E_ITEMSELECTED, handler);
+    subscribe_to_event(list, E_ITEMSELECTED, handler);
     return list;
 }
 

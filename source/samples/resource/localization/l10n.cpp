@@ -59,7 +59,7 @@ void L10n::InitLocalizationSystem()
     l10n.load_json_file("StringsDe.json");
     l10n.load_json_file("StringsLv.json", "lv");
     // Hook up to the change language
-    SubscribeToEvent(E_CHANGELANGUAGE, DV_HANDLER(L10n, HandleChangeLanguage));
+    subscribe_to_event(E_CHANGELANGUAGE, DV_HANDLER(L10n, HandleChangeLanguage));
 }
 
 void L10n::CreateGUI()
@@ -107,7 +107,7 @@ void L10n::CreateGUI()
 
     t->SetAlignment(HA_CENTER, VA_CENTER);
     t->SetStyle("Text");
-    SubscribeToEvent(b, E_RELEASED, DV_HANDLER(L10n, HandleChangeLangButtonPressed));
+    subscribe_to_event(b, E_RELEASED, DV_HANDLER(L10n, HandleChangeLangButtonPressed));
 
     b = new Button();
     window->AddChild(b);
@@ -120,7 +120,7 @@ void L10n::CreateGUI()
     // Manually set text in the current language
     t->SetText(l10n.Get("quit"));
 
-    SubscribeToEvent(b, E_RELEASED, DV_HANDLER(L10n, HandleQuitButtonPressed));
+    subscribe_to_event(b, E_RELEASED, DV_HANDLER(L10n, HandleQuitButtonPressed));
 }
 
 void L10n::CreateScene()
@@ -166,7 +166,7 @@ void L10n::CreateScene()
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     DV_RENDERER.SetViewport(0, viewport);
 
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(L10n, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(L10n, HandleUpdate));
 }
 
 void L10n::HandleUpdate(StringHash eventType, VariantMap& eventData)

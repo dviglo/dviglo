@@ -70,7 +70,7 @@ void Urho2DIsometricDemo::Start()
     // Create the UI content
     sample2D_->CreateUIContent("ISOMETRIC 2.5D DEMO", character2D_->remainingLifes_, character2D_->remainingCoins_);
     Button* playButton = static_cast<Button*>(DV_UI.GetRoot()->GetChild("PlayButton", true));
-    SubscribeToEvent(playButton, E_RELEASED, DV_HANDLER(Urho2DIsometricDemo, HandlePlayButton));
+    subscribe_to_event(playButton, E_RELEASED, DV_HANDLER(Urho2DIsometricDemo, HandlePlayButton));
 
     // Hook up to the frame update events
     SubscribeToEvents();
@@ -129,7 +129,7 @@ void Urho2DIsometricDemo::CreateScene()
     character2D_->maxCoins_ = coinsLayer->GetNumObjects();
 
     // Check when scene is rendered
-    SubscribeToEvent(E_ENDRENDERING, DV_HANDLER(Urho2DIsometricDemo, HandleSceneRendered));
+    subscribe_to_event(E_ENDRENDERING, DV_HANDLER(Urho2DIsometricDemo, HandleSceneRendered));
 }
 
 void Urho2DIsometricDemo::HandleCollisionBegin(StringHash eventType, VariantMap& eventData)
@@ -203,19 +203,19 @@ void Urho2DIsometricDemo::HandleSceneRendered(StringHash eventType, VariantMap& 
 void Urho2DIsometricDemo::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DIsometricDemo, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DIsometricDemo, HandleUpdate));
 
     // Subscribe HandlePostUpdate() function for processing post update events
-    SubscribeToEvent(E_POSTUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostUpdate));
+    subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostUpdate));
 
     // Subscribe to PostRenderUpdate to draw debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostRenderUpdate));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);
 
     // Subscribe to Box2D contact listeners
-    SubscribeToEvent(E_PHYSICSBEGINCONTACT2D, DV_HANDLER(Urho2DIsometricDemo, HandleCollisionBegin));
+    subscribe_to_event(E_PHYSICSBEGINCONTACT2D, DV_HANDLER(Urho2DIsometricDemo, HandleCollisionBegin));
 }
 
 void Urho2DIsometricDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)

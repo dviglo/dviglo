@@ -416,13 +416,13 @@ void Urho2DConstraints::MoveCamera(float timeStep)
 void Urho2DConstraints::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Urho2DConstraints, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DConstraints, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DConstraints, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DConstraints, HandlePostRenderUpdate));
 
     // Subscribe to mouse click
-    SubscribeToEvent(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DConstraints, HandleMouseButtonDown));
+    subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DConstraints, HandleMouseButtonDown));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     UnsubscribeFromEvent(E_SCENEUPDATE);
@@ -475,8 +475,8 @@ void Urho2DConstraints::HandleMouseButtonDown(StringHash eventType, VariantMap& 
         constraintMouse->SetOtherBody(dummyBody);  // Use dummy body instead of rigidBody. It's better to create a dummy body automatically in ConstraintMouse2D
         constraintMouse->SetLinearStiffness(5.0f, 0.7f);
     }
-    SubscribeToEvent(E_MOUSEMOVE, DV_HANDLER(Urho2DConstraints, HandleMouseMove));
-    SubscribeToEvent(E_MOUSEBUTTONUP, DV_HANDLER(Urho2DConstraints, HandleMouseButtonUp));
+    subscribe_to_event(E_MOUSEMOVE, DV_HANDLER(Urho2DConstraints, HandleMouseMove));
+    subscribe_to_event(E_MOUSEBUTTONUP, DV_HANDLER(Urho2DConstraints, HandleMouseButtonUp));
 }
 
 void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& eventData)

@@ -137,7 +137,7 @@ Engine::Engine() :
     register_navigation_library();
 #endif
 
-    SubscribeToEvent(E_EXITREQUESTED, DV_HANDLER(Engine, HandleExitRequested));
+    subscribe_to_event(E_EXITREQUESTED, DV_HANDLER(Engine, HandleExitRequested));
 
     DV_LOGDEBUG("Singleton Engine constructed");
 }

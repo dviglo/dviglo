@@ -218,11 +218,11 @@ void Billboards::SetupViewport()
 void Billboards::SubscribeToEvents()
 {
     // Subscribe HandleUpdate() function for processing update events
-    SubscribeToEvent(E_UPDATE, DV_HANDLER(Billboards, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Billboards, HandleUpdate));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
-    SubscribeToEvent(E_POSTRENDERUPDATE, DV_HANDLER(Billboards, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Billboards, HandlePostRenderUpdate));
 }
 
 void Billboards::MoveCamera(float timeStep)

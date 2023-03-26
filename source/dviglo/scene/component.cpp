@@ -201,7 +201,7 @@ void Component::CleanupConnection(Connection* connection)
 void Component::OnAttributeAnimationAdded()
 {
     if (attributeAnimationInfos_.Size() == 1)
-        SubscribeToEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Component, HandleAttributeAnimationUpdate));
+        subscribe_to_event(GetScene(), E_ATTRIBUTEANIMATIONUPDATE, DV_HANDLER(Component, HandleAttributeAnimationUpdate));
 }
 
 void Component::OnAttributeAnimationRemoved()
