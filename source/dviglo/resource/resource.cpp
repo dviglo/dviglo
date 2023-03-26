@@ -21,7 +21,7 @@ Resource::Resource() :
 
 bool Resource::Load(Deserializer& source)
 {
-    // Because begin_load() / EndLoad() can be called from worker threads, where profiling would be a no-op,
+    // Because begin_load() / end_load() can be called from worker threads, where profiling would be a no-op,
     // create a type name -based profile block here
 #ifdef DV_TRACY_PROFILING
     DV_PROFILE_COLOR(Load, DV_PROFILE_RESOURCE_COLOR);
@@ -35,7 +35,7 @@ bool Resource::Load(Deserializer& source)
     SetAsyncLoadState(Thread::IsMainThread() ? ASYNC_DONE : ASYNC_LOADING);
     bool success = begin_load(source);
     if (success)
-        success &= EndLoad();
+        success &= end_load();
     SetAsyncLoadState(ASYNC_DONE);
 
     return success;
@@ -47,7 +47,7 @@ bool Resource::begin_load(Deserializer& source)
     return false;
 }
 
-bool Resource::EndLoad()
+bool Resource::end_load()
 {
     // If no GPU upload step is necessary, no override is necessary
     return true;

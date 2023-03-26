@@ -111,7 +111,7 @@ bool Model::begin_load(Deserializer& source)
         unsigned vertexSize = VertexBuffer::GetVertexSize(desc.vertexElements_);
         desc.dataSize_ = desc.vertexCount_ * vertexSize;
 
-        // Prepare vertex buffer data to be uploaded during EndLoad()
+        // Prepare vertex buffer data to be uploaded during end_load()
         if (async)
         {
             desc.data_ = new byte[desc.dataSize_];
@@ -143,7 +143,7 @@ bool Model::begin_load(Deserializer& source)
 
         SharedPtr<IndexBuffer> buffer(new IndexBuffer());
 
-        // Prepare index buffer data to be uploaded during EndLoad()
+        // Prepare index buffer data to be uploaded during end_load()
         if (async)
         {
             loadIBData_[i].indexCount_ = indexCount;
@@ -217,7 +217,7 @@ bool Model::begin_load(Deserializer& source)
             SharedPtr<Geometry> geometry(new Geometry());
             geometry->SetLodDistance(distance);
 
-            // Prepare geometry to be defined during EndLoad()
+            // Prepare geometry to be defined during end_load()
             loadGeometries_[i][j].type_ = type;
             loadGeometries_[i][j].vbRef_ = vbRef;
             loadGeometries_[i][j].ibRef_ = ibRef;
@@ -297,7 +297,7 @@ bool Model::begin_load(Deserializer& source)
     return true;
 }
 
-bool Model::EndLoad()
+bool Model::end_load()
 {
     // Upload vertex buffer data
     for (unsigned i = 0; i < vertexBuffers_.Size(); ++i)

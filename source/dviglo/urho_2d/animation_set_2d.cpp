@@ -121,7 +121,7 @@ bool AnimationSet2D::begin_load(Deserializer& source)
     return false;
 }
 
-bool AnimationSet2D::EndLoad()
+bool AnimationSet2D::end_load()
 {
 #ifdef DV_SPINE
     if (jsonData_)

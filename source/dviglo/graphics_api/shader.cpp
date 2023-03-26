@@ -88,7 +88,7 @@ bool Shader::begin_load(Deserializer& source)
     return true;
 }
 
-bool Shader::EndLoad()
+bool Shader::end_load()
 {
     // If variations had already been created, release them and require recompile
     for (HashMap<StringHash, SharedPtr<ShaderVariation>>::Iterator i = vsVariations_.Begin(); i != vsVariations_.End(); ++i)

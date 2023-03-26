@@ -221,7 +221,7 @@ bool Material::begin_load(Deserializer& source)
     return false;
 }
 
-bool Material::EndLoad()
+bool Material::end_load()
 {
     // In headless mode, do not actually load the material, just return success
     if (GParams::is_headless())

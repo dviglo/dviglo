@@ -116,7 +116,7 @@ bool Texture3D::begin_load(Deserializer& source)
 }
 
 
-bool Texture3D::EndLoad()
+bool Texture3D::end_load()
 {
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless() || DV_GRAPHICS.IsDeviceLost())

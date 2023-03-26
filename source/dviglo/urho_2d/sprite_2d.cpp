@@ -56,11 +56,11 @@ bool Sprite2D::begin_load(Deserializer& source)
     return true;
 }
 
-bool Sprite2D::EndLoad()
+bool Sprite2D::end_load()
 {
     // Finish loading of the texture in the main thread
     bool success = false;
-    if (loadTexture_ && loadTexture_->EndLoad())
+    if (loadTexture_ && loadTexture_->end_load())
     {
         success = true;
         SetTexture(loadTexture_);

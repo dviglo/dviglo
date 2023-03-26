@@ -215,7 +215,7 @@ bool TextureCube::begin_load(Deserializer& source)
     return true;
 }
 
-bool TextureCube::EndLoad()
+bool TextureCube::end_load()
 {
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless() || DV_GRAPHICS.IsDeviceLost())

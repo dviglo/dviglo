@@ -102,7 +102,7 @@ bool Texture2DArray::begin_load(Deserializer& source)
     return true;
 }
 
-bool Texture2DArray::EndLoad()
+bool Texture2DArray::end_load()
 {
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless() || DV_GRAPHICS.IsDeviceLost())

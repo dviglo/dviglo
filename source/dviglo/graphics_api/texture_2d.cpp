@@ -51,7 +51,7 @@ bool Texture2D::begin_load(Deserializer& source)
         return true;
     }
 
-    // Load the image data for EndLoad()
+    // Load the image data for end_load()
     loadImage_ = new Image();
     if (!loadImage_->Load(source))
     {
@@ -70,7 +70,7 @@ bool Texture2D::begin_load(Deserializer& source)
     return true;
 }
 
-bool Texture2D::EndLoad()
+bool Texture2D::end_load()
 {
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless() || DV_GRAPHICS.IsDeviceLost())

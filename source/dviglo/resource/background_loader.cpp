@@ -243,7 +243,7 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
     Resource* resource = item.resource_;
 
     bool success = resource->GetAsyncLoadState() == ASYNC_SUCCESS;
-    // If begin_load() phase was successful, call EndLoad() and get the final success/failure result
+    // If begin_load() phase was successful, call end_load() and get the final success/failure result
     if (success)
     {
 #ifdef DV_TRACY_PROFILING
@@ -254,7 +254,7 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
 #endif
 
         DV_LOGDEBUG("Finishing background loaded resource " + resource->GetName());
-        success = resource->EndLoad();
+        success = resource->end_load();
     }
     resource->SetAsyncLoadState(ASYNC_DONE);
 

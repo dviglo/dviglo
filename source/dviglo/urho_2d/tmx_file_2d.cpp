@@ -388,7 +388,7 @@ bool TmxFile2D::begin_load(Deserializer& source)
         return false;
     }
 
-    // If we're async loading, request the texture now. Finish during EndLoad().
+    // If we're async loading, request the texture now. Finish during end_load().
     if (GetAsyncLoadState() == ASYNC_LOADING)
     {
         for (XmlElement tileSetElem = rootElem.GetChild("tileset"); tileSetElem; tileSetElem = tileSetElem.GetNext("tileset"))
@@ -425,7 +425,7 @@ bool TmxFile2D::begin_load(Deserializer& source)
     return true;
 }
 
-bool TmxFile2D::EndLoad()
+bool TmxFile2D::end_load()
 {
     if (!loadXMLFile_)
         return false;

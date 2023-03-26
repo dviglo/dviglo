@@ -96,7 +96,7 @@ bool ParticleEffect::begin_load(Deserializer& source)
     return success;
 }
 
-bool ParticleEffect::EndLoad()
+bool ParticleEffect::end_load()
 {
     // Apply the material now
     if (!loadMaterialName_.Empty())

@@ -188,7 +188,7 @@ bool ParticleEffect2D::begin_load(Deserializer& source)
     return true;
 }
 
-bool ParticleEffect2D::EndLoad()
+bool ParticleEffect2D::end_load()
 {
     // Apply the sprite now
     if (!loadSpriteName_.Empty())

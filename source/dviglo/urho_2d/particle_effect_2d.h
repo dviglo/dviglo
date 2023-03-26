@@ -38,7 +38,7 @@ public:
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
     bool begin_load(Deserializer& source) override;
     /// Finish resource loading. Always called from the main thread. Return true if successful.
-    bool EndLoad() override;
+    bool end_load() override;
     /// Save resource. Return true if successful.
     bool Save(Serializer& dest) const override;
 
