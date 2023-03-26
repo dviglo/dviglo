@@ -70,7 +70,7 @@ private:
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
-    void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_post_render_update(StringHash eventType, VariantMap& eventData);
     /// Handle problems with crowd agent placement.
     void HandleCrowdAgentFailure(StringHash eventType, VariantMap& eventData);
     /// Handle crowd agent reposition.

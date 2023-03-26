@@ -57,7 +57,7 @@ private:
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post render update event during which we request debug geometry.
-    void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_post_render_update(StringHash eventType, VariantMap& eventData);
     /// Handle the mouse click event.
     void HandleMouseButtonDown(StringHash eventType, VariantMap& eventData);
     /// Handle the mouse button up event.

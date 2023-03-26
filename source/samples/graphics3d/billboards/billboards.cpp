@@ -220,9 +220,9 @@ void Billboards::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Billboards, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
+    // Subscribe handle_post_render_update() function for processing the post-render update event, during which we request
     // debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Billboards, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Billboards, handle_post_render_update));
 }
 
 void Billboards::move_camera(float timeStep)
@@ -304,7 +304,7 @@ void Billboards::handle_update(StringHash eventType, VariantMap& eventData)
     AnimateScene(timeStep);
 }
 
-void Billboards::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void Billboards::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw viewport debug geometry. This time use depth test, as otherwise the result becomes
     // hard to interpret due to large object count

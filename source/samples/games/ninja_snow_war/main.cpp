@@ -119,7 +119,7 @@ public:
             subscribe_to_event(physicsWorld, E_PHYSICSPRESTEP, DV_HANDLER(App, HandleFixedUpdate));
 
         subscribe_to_event(gameScene, E_SCENEPOSTUPDATE, DV_HANDLER(App, HandlePostUpdate));
-        subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(App, HandlePostRenderUpdate));
+        subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(App, handle_post_render_update));
         subscribe_to_event(E_KEYDOWN, DV_HANDLER(App, HandleKeyDown));
         subscribe_to_event("Points", DV_HANDLER(App, HandlePoints));
         subscribe_to_event("Kill", DV_HANDLER(App, HandleKill));
@@ -491,7 +491,7 @@ public:
         UpdateStatus();
     }
 
-    void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+    void handle_post_render_update(StringHash eventType, VariantMap& eventData)
     {
         if (GParams::is_headless())
             return;

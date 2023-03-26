@@ -264,9 +264,9 @@ void Ragdolls::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Ragdolls, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
+    // Subscribe handle_post_render_update() function for processing the post-render update event, during which we request
     // debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Ragdolls, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Ragdolls, handle_post_render_update));
 }
 
 void Ragdolls::handle_update(StringHash eventType, VariantMap& eventData)
@@ -280,7 +280,7 @@ void Ragdolls::handle_update(StringHash eventType, VariantMap& eventData)
     move_camera(timeStep);
 }
 
-void Ragdolls::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void Ragdolls::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw physics debug geometry. Use depth test to make the result easier to interpret
     if (drawDebug_)

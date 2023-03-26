@@ -418,8 +418,8 @@ void Urho2DConstraints::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DConstraints, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DConstraints, HandlePostRenderUpdate));
+    // Subscribe handle_post_render_update() function for processing the post-render update event, during which we request debug geometry
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DConstraints, handle_post_render_update));
 
     // Subscribe to mouse click
     subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DConstraints, HandleMouseButtonDown));
@@ -450,7 +450,7 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
     }
 }
 
-void Urho2DConstraints::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DConstraints::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
     if (drawDebug_) physicsWorld->draw_debug_geometry();

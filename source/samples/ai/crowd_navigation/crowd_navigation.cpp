@@ -216,8 +216,8 @@ void CrowdNavigation::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(CrowdNavigation, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(CrowdNavigation, HandlePostRenderUpdate));
+    // Subscribe handle_post_render_update() function for processing the post-render update event, during which we request debug geometry
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(CrowdNavigation, handle_post_render_update));
 
     // Subscribe HandleCrowdAgentFailure() function for resolving invalidation issues with agents, during which we
     // use a larger extents for finding a point on the navmesh to fix the agent's position
@@ -541,7 +541,7 @@ void CrowdNavigation::handle_update(StringHash eventType, VariantMap& eventData)
 
 }
 
-void CrowdNavigation::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void CrowdNavigation::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     if (drawDebug_)
     {

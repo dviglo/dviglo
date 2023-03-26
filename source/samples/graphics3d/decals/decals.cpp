@@ -191,9 +191,9 @@ void Decals::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Decals, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
+    // Subscribe handle_post_render_update() function for processing the post-render update event, during which we request
     // debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Decals, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Decals, handle_post_render_update));
 }
 
 void Decals::move_camera(float timeStep)
@@ -304,7 +304,7 @@ void Decals::handle_update(StringHash eventType, VariantMap& eventData)
     move_camera(timeStep);
 }
 
-void Decals::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void Decals::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw viewport debug geometry. Disable depth test so that we can see the effect of occlusion
     if (drawDebug_)

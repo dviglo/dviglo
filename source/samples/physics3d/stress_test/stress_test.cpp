@@ -192,9 +192,9 @@ void PhysicsStressTest::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(PhysicsStressTest, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
+    // Subscribe handle_post_render_update() function for processing the post-render update event, during which we request
     // debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(PhysicsStressTest, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(PhysicsStressTest, handle_post_render_update));
 }
 
 void PhysicsStressTest::move_camera(float timeStep)
@@ -287,7 +287,7 @@ void PhysicsStressTest::handle_update(StringHash eventType, VariantMap& eventDat
     move_camera(timeStep);
 }
 
-void PhysicsStressTest::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void PhysicsStressTest::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw physics debug geometry. Use depth test to make the result easier to interpret
     if (drawDebug_)

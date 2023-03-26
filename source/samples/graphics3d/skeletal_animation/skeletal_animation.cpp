@@ -213,10 +213,10 @@ void SkeletalAnimation::subscribe_to_events()
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(SkeletalAnimation, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, sent after Renderer subsystem is
+    // Subscribe handle_post_render_update() function for processing the post-render update event, sent after Renderer subsystem is
     // done with defining the draw calls for the viewports (but before actually executing them.) We will request debug geometry
     // rendering during that event
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(SkeletalAnimation, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(SkeletalAnimation, handle_post_render_update));
 }
 
 void SkeletalAnimation::move_camera(float timeStep)
@@ -267,7 +267,7 @@ void SkeletalAnimation::handle_update(StringHash eventType, VariantMap& eventDat
     move_camera(timeStep);
 }
 
-void SkeletalAnimation::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void SkeletalAnimation::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Note that debug geometry has to be separately requested each frame. Disable depth test so that we can see the

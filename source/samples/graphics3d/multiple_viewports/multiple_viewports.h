@@ -43,7 +43,7 @@ private:
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
-    void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_post_render_update(StringHash eventType, VariantMap& eventData);
 
     /// Rear-facing camera scene node.
     SharedPtr<Node> rearCameraNode_;

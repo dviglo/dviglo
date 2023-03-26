@@ -209,7 +209,7 @@ void Urho2DIsometricDemo::subscribe_to_events()
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostUpdate));
 
     // Subscribe to PostRenderUpdate to draw debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DIsometricDemo, handle_post_render_update));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
     unsubscribe_from_event(E_SCENEUPDATE);
@@ -247,7 +247,7 @@ void Urho2DIsometricDemo::HandlePostUpdate(StringHash eventType, VariantMap& eve
     cameraNode_->SetPosition(Vector3(character2DNode->GetPosition().x, character2DNode->GetPosition().y, -10.0f)); // Camera tracks character
 }
 
-void Urho2DIsometricDemo::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DIsometricDemo::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     if (drawDebug_)
     {

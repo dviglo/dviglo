@@ -193,9 +193,9 @@ void MultipleViewports::subscribe_to_events()
     // Subscribe handle_update() method for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(MultipleViewports, handle_update));
 
-    // Subscribe HandlePostRenderUpdate() method for processing the post-render update event, during which we request
+    // Subscribe handle_post_render_update() method for processing the post-render update event, during which we request
     // debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(MultipleViewports, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(MultipleViewports, handle_post_render_update));
 }
 
 void MultipleViewports::move_camera(float timeStep)
@@ -253,7 +253,7 @@ void MultipleViewports::handle_update(StringHash eventType, VariantMap& eventDat
     move_camera(timeStep);
 }
 
-void MultipleViewports::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void MultipleViewports::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Disable depth test so that we can see the effect of occlusion

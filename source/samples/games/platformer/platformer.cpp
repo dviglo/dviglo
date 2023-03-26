@@ -159,7 +159,7 @@ void Urho2DPlatformer::subscribe_to_events()
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostUpdate));
 
     // Subscribe to PostRenderUpdate to draw debug geometry
-    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostRenderUpdate));
+    subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DPlatformer, handle_post_render_update));
 
     // Subscribe to Box2D contact listeners
     subscribe_to_event(E_PHYSICSBEGINCONTACT2D, DV_HANDLER(Urho2DPlatformer, HandleCollisionBegin));
@@ -342,7 +342,7 @@ void Urho2DPlatformer::HandlePostUpdate(StringHash eventType, VariantMap& eventD
     cameraNode_->SetPosition(Vector3(character2DNode->GetPosition().x, character2DNode->GetPosition().y, -10.0f)); // Camera tracks character
 }
 
-void Urho2DPlatformer::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DPlatformer::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     if (drawDebug_)
     {
