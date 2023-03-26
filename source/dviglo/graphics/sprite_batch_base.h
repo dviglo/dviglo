@@ -89,9 +89,9 @@ private:
     // Атрибуты вершин четырёхугольников
     struct QVertex
     {
-        Vector3 position_;
-        u32 color_; // Цвет в формате 0xAABBGGRR
-        Vector2 uv_;
+        Vector3 position;
+        u32 color; // Цвет в формате 0xAABBGGRR
+        Vector2 uv;
     };
 
     // Текущая порция четырёхугольников
