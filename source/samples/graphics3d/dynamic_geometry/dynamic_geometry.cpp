@@ -279,7 +279,7 @@ void DynamicGeometry::subscribe_to_events()
     subscribe_to_event(E_UPDATE, DV_HANDLER(DynamicGeometry, handle_update));
 }
 
-void DynamicGeometry::MoveCamera(float timeStep)
+void DynamicGeometry::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -359,7 +359,7 @@ void DynamicGeometry::handle_update(StringHash eventType, VariantMap& eventData)
         animate_ = !animate_;
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 
     // Animate objects' vertex data if enabled
     if (animate_)

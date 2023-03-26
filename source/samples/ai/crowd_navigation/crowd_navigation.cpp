@@ -376,7 +376,7 @@ bool CrowdNavigation::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hit
     return false;
 }
 
-void CrowdNavigation::MoveCamera(float timeStep)
+void CrowdNavigation::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     UI& ui = DV_UI;
@@ -527,7 +527,7 @@ void CrowdNavigation::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 
     // Update streaming
     if (DV_INPUT.GetKeyPress(KEY_TAB))

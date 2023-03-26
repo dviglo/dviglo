@@ -46,7 +46,7 @@ private:
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Read input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Set crowd agents target or spawn another jack.
     void SetPathPoint(bool spawning);
     /// Add new obstacle or remove existing obstacle/agent.

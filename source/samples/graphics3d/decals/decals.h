@@ -42,7 +42,7 @@ private:
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Reads input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Paint a decal using a ray cast from the mouse cursor.
     void PaintDecal();
     /// Utility function to raycast to the cursor position. Return true if hit

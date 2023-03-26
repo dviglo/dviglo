@@ -191,7 +191,7 @@ void LightAnimation::setup_viewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void LightAnimation::MoveCamera(float timeStep)
+void LightAnimation::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -239,5 +239,5 @@ void LightAnimation::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }

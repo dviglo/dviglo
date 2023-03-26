@@ -85,7 +85,7 @@ void Urho2DConstraints::create_scene()
     // Create camera
     cameraNode_ = scene_->create_child("Camera");
     // Set camera's position
-    cameraNode_->SetPosition(Vector3(0.0f, 0.0f, 0.0f)); // Note that Z setting is discarded; use camera.zoom instead (see MoveCamera() below for example)
+    cameraNode_->SetPosition(Vector3(0.0f, 0.0f, 0.0f)); // Note that Z setting is discarded; use camera.zoom instead (see move_camera() below for example)
 
     camera_ = cameraNode_->create_component<Camera>();
     camera_->SetOrthographic(true);
@@ -385,7 +385,7 @@ void Urho2DConstraints::create_instructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void Urho2DConstraints::MoveCamera(float timeStep)
+void Urho2DConstraints::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -436,7 +436,7 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 
     // Toggle physics debug geometry with space
     if (DV_INPUT.GetKeyPress(KEY_SPACE))

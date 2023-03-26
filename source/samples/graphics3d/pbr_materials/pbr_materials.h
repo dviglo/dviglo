@@ -43,7 +43,7 @@ private:
     /// Subscribe to application-wide logic update event.
     void subscribe_to_events();
     /// Reads input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Construct an instruction text to the UI.

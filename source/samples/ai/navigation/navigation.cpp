@@ -196,7 +196,7 @@ void Navigation::subscribe_to_events()
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Navigation, HandlePostRenderUpdate));
 }
 
-void Navigation::MoveCamera(float timeStep)
+void Navigation::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     Input& input = DV_INPUT;
@@ -438,7 +438,7 @@ void Navigation::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 
     // Make Jack follow the Detour path
     FollowPath(timeStep);

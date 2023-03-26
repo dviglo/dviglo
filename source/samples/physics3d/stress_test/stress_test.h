@@ -40,7 +40,7 @@ private:
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Read input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Spawn a physics object from the camera position.
     void SpawnObject();
     /// Handle the logic update event.

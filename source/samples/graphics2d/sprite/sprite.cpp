@@ -133,7 +133,7 @@ void Urho2DSprite::setup_viewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void Urho2DSprite::MoveCamera(float timeStep)
+void Urho2DSprite::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -184,7 +184,7 @@ void Urho2DSprite::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 
     float halfWidth = (float)DV_GRAPHICS.GetWidth() * 0.5f * PIXEL_SIZE;
     float halfHeight = (float)DV_GRAPHICS.GetHeight() * 0.5f * PIXEL_SIZE;

@@ -285,7 +285,7 @@ Node* SceneReplication::CreateControllableObject()
     return ballNode;
 }
 
-void SceneReplication::MoveCamera()
+void SceneReplication::move_camera()
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     DV_UI.GetCursor()->SetVisible(!DV_INPUT.GetMouseButtonDown(MOUSEB_RIGHT));
@@ -327,7 +327,7 @@ void SceneReplication::MoveCamera()
 void SceneReplication::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
 {
     // We only rotate the camera according to mouse movement since last frame, so do not need the time step
-    MoveCamera();
+    move_camera();
 
     if (packetCounterTimer_.GetMSec(false) > 1000 && DV_NET.GetServerConnection())
     {

@@ -191,7 +191,7 @@ void Physics::subscribe_to_events()
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Physics, HandlePostRenderUpdate));
 }
 
-void Physics::MoveCamera(float timeStep)
+void Physics::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -279,7 +279,7 @@ void Physics::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }
 
 void Physics::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

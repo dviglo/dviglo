@@ -196,7 +196,7 @@ void Decals::subscribe_to_events()
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Decals, HandlePostRenderUpdate));
 }
 
-void Decals::MoveCamera(float timeStep)
+void Decals::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     Input& input = DV_INPUT;
@@ -301,7 +301,7 @@ void Decals::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }
 
 void Decals::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

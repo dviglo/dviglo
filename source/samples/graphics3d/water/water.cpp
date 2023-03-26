@@ -207,7 +207,7 @@ void Water::subscribe_to_events()
     subscribe_to_event(E_UPDATE, DV_HANDLER(Water, handle_update));
 }
 
-void Water::MoveCamera(float timeStep)
+void Water::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -252,5 +252,5 @@ void Water::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }

@@ -182,7 +182,7 @@ void Ragdolls::setup_viewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void Ragdolls::MoveCamera(float timeStep)
+void Ragdolls::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -277,7 +277,7 @@ void Ragdolls::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }
 
 void Ragdolls::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

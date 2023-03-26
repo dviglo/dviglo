@@ -113,7 +113,7 @@ public:
         cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -5.0f));
     }
 
-    void MoveCamera(float timeStep)
+    void move_camera(float timeStep)
     {
         constexpr float MOVE_SPEED = 20.0f;
         constexpr float MOUSE_SENSITIVITY = 0.1f;
@@ -160,7 +160,7 @@ public:
         if (input.GetMouseButtonDown(MOUSEB_RIGHT))
         {
             input.SetMouseVisible(false);
-            MoveCamera(timeStep);
+            move_camera(timeStep);
         }
         else
         {

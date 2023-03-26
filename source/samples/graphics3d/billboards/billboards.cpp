@@ -225,7 +225,7 @@ void Billboards::subscribe_to_events()
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Billboards, HandlePostRenderUpdate));
 }
 
-void Billboards::MoveCamera(float timeStep)
+void Billboards::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -300,7 +300,7 @@ void Billboards::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera and animate the scene, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
     AnimateScene(timeStep);
 }
 

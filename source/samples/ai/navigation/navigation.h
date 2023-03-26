@@ -44,7 +44,7 @@ private:
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Read input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Set path start or end point.
     void SetPathPoint();
     /// Add or remove object.

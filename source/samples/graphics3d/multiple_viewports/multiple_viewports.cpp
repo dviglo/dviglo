@@ -198,7 +198,7 @@ void MultipleViewports::subscribe_to_events()
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(MultipleViewports, HandlePostRenderUpdate));
 }
 
-void MultipleViewports::MoveCamera(float timeStep)
+void MultipleViewports::move_camera(float timeStep)
 {
      // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -250,7 +250,7 @@ void MultipleViewports::handle_update(StringHash eventType, VariantMap& eventDat
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }
 
 void MultipleViewports::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

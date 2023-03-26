@@ -50,7 +50,7 @@ private:
     /// Create a controllable ball object and return its scene node.
     Node* CreateControllableObject();
     /// Read input and move the camera.
-    void MoveCamera();
+    void move_camera();
     /// Handle the physics world pre-step event.
     void HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData);
     /// Handle the logic post-update event.

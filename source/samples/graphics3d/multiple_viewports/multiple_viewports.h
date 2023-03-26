@@ -39,7 +39,7 @@ private:
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Read input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.

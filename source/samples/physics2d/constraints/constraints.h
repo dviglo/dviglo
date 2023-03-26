@@ -51,7 +51,7 @@ private:
     /// Create Tex3D flag.
     void CreateFlag(const String& text, float x, float y);
     /// Read input and moves the camera.
-    void MoveCamera(float timeStep);
+    void move_camera(float timeStep);
     /// Subscribe to application-wide logic update events.
     void subscribe_to_events();
     /// Handle the logic update event.

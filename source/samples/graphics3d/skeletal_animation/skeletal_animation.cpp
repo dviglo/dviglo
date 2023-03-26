@@ -219,7 +219,7 @@ void SkeletalAnimation::subscribe_to_events()
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(SkeletalAnimation, HandlePostRenderUpdate));
 }
 
-void SkeletalAnimation::MoveCamera(float timeStep)
+void SkeletalAnimation::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
     if (DV_UI.GetFocusElement())
@@ -264,7 +264,7 @@ void SkeletalAnimation::handle_update(StringHash eventType, VariantMap& eventDat
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }
 
 void SkeletalAnimation::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

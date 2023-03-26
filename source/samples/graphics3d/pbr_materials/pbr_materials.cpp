@@ -198,7 +198,7 @@ void PBRMaterials::subscribe_to_events()
     subscribe_to_event(E_UPDATE, DV_HANDLER(PBRMaterials, handle_update));
 }
 
-void PBRMaterials::MoveCamera(float timeStep)
+void PBRMaterials::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     Input& input = DV_INPUT;
@@ -245,5 +245,5 @@ void PBRMaterials::handle_update(StringHash eventType, VariantMap& eventData)
     float timeStep = eventData[P_TIMESTEP].GetFloat();
 
     // Move the camera, scale movement with time step
-    MoveCamera(timeStep);
+    move_camera(timeStep);
 }
