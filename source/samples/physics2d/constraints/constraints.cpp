@@ -58,7 +58,7 @@ void Urho2DConstraints::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Enable OS cursor
     DV_INPUT.SetMouseVisible(true);
@@ -73,7 +73,7 @@ void Urho2DConstraints::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Urho2DConstraints::CreateScene()
+void Urho2DConstraints::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

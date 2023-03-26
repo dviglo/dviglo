@@ -34,7 +34,7 @@ public:
 
 private:
     /// Create static scene content.
-    void CreateScene();
+    void create_scene();
     /// Create the vehicle.
     void CreateVehicle();
     /// Construct an instruction text to the UI.

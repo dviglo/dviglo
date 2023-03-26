@@ -38,7 +38,7 @@ public:
 
 private:
     /// Create static scene content.
-    void CreateScene();
+    void create_scene();
     /// Create controllable character.
     void CreateCharacter();
     /// Construct an instruction text to the UI.

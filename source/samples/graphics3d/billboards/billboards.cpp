@@ -39,7 +39,7 @@ void Billboards::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -54,7 +54,7 @@ void Billboards::Start()
     Sample::InitMouseMode(MM_ABSOLUTE);
 }
 
-void Billboards::CreateScene()
+void Billboards::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

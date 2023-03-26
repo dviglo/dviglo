@@ -33,7 +33,7 @@ void Urho2DStretchableSprite::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -48,7 +48,7 @@ void Urho2DStretchableSprite::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Urho2DStretchableSprite::CreateScene()
+void Urho2DStretchableSprite::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

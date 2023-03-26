@@ -38,7 +38,7 @@ void HugeObjectCount::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -53,7 +53,7 @@ void HugeObjectCount::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void HugeObjectCount::CreateScene()
+void HugeObjectCount::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 
@@ -234,7 +234,7 @@ void HugeObjectCount::handle_update(StringHash eventType, VariantMap& eventData)
     if (DV_INPUT.GetKeyPress(KEY_G))
     {
         useGroups_ = !useGroups_;
-        CreateScene();
+        create_scene();
     }
 
     // Move the camera, scale movement with time step

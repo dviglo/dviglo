@@ -45,7 +45,7 @@ void Ragdolls::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -60,7 +60,7 @@ void Ragdolls::Start()
     Sample::InitMouseMode(MM_ABSOLUTE);
 }
 
-void Ragdolls::CreateScene()
+void Ragdolls::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

@@ -38,7 +38,7 @@ public:
 
 private:
     /// Construct the scene content.
-    void CreateScene();
+    void create_scene();
     /// Construct user interface elements.
     void CreateUI();
     /// Set up a viewport for displaying the scene.

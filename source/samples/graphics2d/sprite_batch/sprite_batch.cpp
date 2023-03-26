@@ -41,7 +41,7 @@ public:
     {
         //DV_ENGINE.SetMaxFps(10);
 
-        CreateScene();
+        create_scene();
         SetupViewport();
         SubscribeToEvents();
 
@@ -64,7 +64,7 @@ public:
         DV_RENDERER.SetViewport(0, viewport);
     }
 
-    void CreateScene()
+    void create_scene()
     {
         ResourceCache& cache = DV_RES_CACHE;
 

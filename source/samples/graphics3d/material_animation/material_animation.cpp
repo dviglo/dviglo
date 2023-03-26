@@ -35,7 +35,7 @@ void MaterialAnimation::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -50,7 +50,7 @@ void MaterialAnimation::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void MaterialAnimation::CreateScene()
+void MaterialAnimation::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

@@ -42,7 +42,7 @@ void DynamicGeometry::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -57,7 +57,7 @@ void DynamicGeometry::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void DynamicGeometry::CreateScene()
+void DynamicGeometry::create_scene()
 {
     scene_ = new Scene();
 

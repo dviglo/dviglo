@@ -34,7 +34,7 @@ void Urho2DSpriterAnimation::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -49,7 +49,7 @@ void Urho2DSpriterAnimation::Start()
     SubscribeToEvents();
 }
 
-void Urho2DSpriterAnimation::CreateScene()
+void Urho2DSpriterAnimation::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

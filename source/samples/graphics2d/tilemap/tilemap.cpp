@@ -37,7 +37,7 @@ void Urho2DTileMap::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -52,7 +52,7 @@ void Urho2DTileMap::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Urho2DTileMap::CreateScene()
+void Urho2DTileMap::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

@@ -39,7 +39,7 @@ void Urho2DSprite::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -54,7 +54,7 @@ void Urho2DSprite::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Urho2DSprite::CreateScene()
+void Urho2DSprite::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

@@ -32,7 +32,7 @@ public:
 
 private:
     /// Construct the scene content.
-    void CreateScene();
+    void create_scene();
     /// Construct an instruction text to the UI.
     void create_instructions();
     /// Set up a viewport for displaying the scene.

@@ -63,14 +63,14 @@ void WindowSettingsDemo::Start()
     Sample::InitMouseMode(MM_FREE);
 
     // Create scene
-    CreateScene();
+    create_scene();
 
     // Setup viewport
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void WindowSettingsDemo::CreateScene()
+void WindowSettingsDemo::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

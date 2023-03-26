@@ -40,7 +40,7 @@ void LightAnimation::Start()
     create_instructions();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -52,7 +52,7 @@ void LightAnimation::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void LightAnimation::CreateScene()
+void LightAnimation::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

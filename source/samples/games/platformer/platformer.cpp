@@ -69,7 +69,7 @@ void Urho2DPlatformer::Start()
     sample2D_->demoFilename_ = "Platformer2D";
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     sample2D_->CreateUIContent("PLATFORMER 2D DEMO", character2D_->remainingLifes_, character2D_->remainingCoins_);
@@ -80,7 +80,7 @@ void Urho2DPlatformer::Start()
     SubscribeToEvents();
 }
 
-void Urho2DPlatformer::CreateScene()
+void Urho2DPlatformer::create_scene()
 {
     scene_ = new Scene();
     sample2D_->scene_ = scene_;

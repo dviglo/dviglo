@@ -51,7 +51,7 @@ void CharacterDemo::Start()
     Sample::Start();
 
     // Create static scene content
-    CreateScene();
+    create_scene();
 
     // Create the controllable character
     CreateCharacter();
@@ -66,7 +66,7 @@ void CharacterDemo::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void CharacterDemo::CreateScene()
+void CharacterDemo::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

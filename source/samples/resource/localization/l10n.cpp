@@ -40,7 +40,7 @@ void L10n::Start()
     InitLocalizationSystem();
 
     // Init the 3D space
-    CreateScene();
+    create_scene();
 
     // Init the user interface
     CreateGUI();
@@ -123,7 +123,7 @@ void L10n::CreateGUI()
     subscribe_to_event(b, E_RELEASED, DV_HANDLER(L10n, HandleQuitButtonPressed));
 }
 
-void L10n::CreateScene()
+void L10n::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

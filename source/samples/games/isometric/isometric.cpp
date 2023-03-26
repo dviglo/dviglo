@@ -65,7 +65,7 @@ void Urho2DIsometricDemo::Start()
     sample2D_->demoFilename_ = "Isometric2D";
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     sample2D_->CreateUIContent("ISOMETRIC 2.5D DEMO", character2D_->remainingLifes_, character2D_->remainingCoins_);
@@ -76,7 +76,7 @@ void Urho2DIsometricDemo::Start()
     SubscribeToEvents();
 }
 
-void Urho2DIsometricDemo::CreateScene()
+void Urho2DIsometricDemo::create_scene()
 {
     scene_ = new Scene();
     sample2D_->scene_ = scene_;

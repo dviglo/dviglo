@@ -47,7 +47,7 @@ void RaycastVehicleDemo::Start()
     // Execute base class startup
     Sample::Start();
     // Create static scene content
-    CreateScene();
+    create_scene();
     // Create the controllable vehicle
     CreateVehicle();
     // Create the UI content
@@ -58,7 +58,7 @@ void RaycastVehicleDemo::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void RaycastVehicleDemo::CreateScene()
+void RaycastVehicleDemo::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
     scene_ = new Scene();

@@ -42,7 +42,7 @@ void PBRMaterials::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     CreateUI();
@@ -70,7 +70,7 @@ void PBRMaterials::create_instructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void PBRMaterials::CreateScene()
+void PBRMaterials::create_scene()
 {
     scene_ = new Scene();
 

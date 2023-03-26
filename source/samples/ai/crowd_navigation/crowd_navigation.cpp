@@ -43,7 +43,7 @@ void CrowdNavigation::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     CreateUI();
@@ -58,7 +58,7 @@ void CrowdNavigation::Start()
     Sample::InitMouseMode(MM_ABSOLUTE);
 }
 
-void CrowdNavigation::CreateScene()
+void CrowdNavigation::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

@@ -43,7 +43,7 @@ void PhysicsStressTest::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -58,7 +58,7 @@ void PhysicsStressTest::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void PhysicsStressTest::CreateScene()
+void PhysicsStressTest::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

@@ -29,7 +29,7 @@ void SceneAndUILoad::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     CreateUI();
@@ -44,7 +44,7 @@ void SceneAndUILoad::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void SceneAndUILoad::CreateScene()
+void SceneAndUILoad::create_scene()
 {
     scene_ = new Scene();
 

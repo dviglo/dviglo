@@ -26,7 +26,7 @@ private:
     // Load strings from JSON files and subscribe to the change language event
     void InitLocalizationSystem();
     // Init the 3D space
-    void CreateScene();
+    void create_scene();
     // Init the user interface
     void CreateGUI();
     /// Handle the logic update event.

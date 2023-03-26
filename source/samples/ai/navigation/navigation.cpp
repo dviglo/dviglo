@@ -41,7 +41,7 @@ void Navigation::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     CreateUI();
@@ -56,7 +56,7 @@ void Navigation::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void Navigation::CreateScene()
+void Navigation::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

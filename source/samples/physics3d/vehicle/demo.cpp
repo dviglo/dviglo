@@ -47,7 +47,7 @@ void VehicleDemo::Start()
     Sample::Start();
 
     // Create static scene content
-    CreateScene();
+    create_scene();
 
     // Create the controllable vehicle
     CreateVehicle();
@@ -62,7 +62,7 @@ void VehicleDemo::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void VehicleDemo::CreateScene()
+void VehicleDemo::create_scene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 

@@ -61,7 +61,7 @@ void SceneReplication::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     CreateUI();
@@ -76,7 +76,7 @@ void SceneReplication::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void SceneReplication::CreateScene()
+void SceneReplication::create_scene()
 {
     scene_ = new Scene();
 

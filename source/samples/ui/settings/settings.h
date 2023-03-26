@@ -29,7 +29,7 @@ public:
 
 private:
     /// Construct the scene content.
-    void CreateScene();
+    void create_scene();
     /// Create window with settings.
     void InitSettings();
     /// Synchronize settings with current state of the engine.

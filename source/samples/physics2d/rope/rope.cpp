@@ -38,7 +38,7 @@ void Urho2DPhysicsRope::Start()
     Sample::Start();
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -53,7 +53,7 @@ void Urho2DPhysicsRope::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Urho2DPhysicsRope::CreateScene()
+void Urho2DPhysicsRope::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

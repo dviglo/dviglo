@@ -36,7 +36,7 @@ public:
 
 private:
     /// Construct the scene content.
-    void CreateScene();
+    void create_scene();
     /// Construct instruction text and the login / start server UI.
     void CreateUI();
     /// Set up viewport.

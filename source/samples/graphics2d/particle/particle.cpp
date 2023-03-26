@@ -36,7 +36,7 @@ void Urho2DParticle::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Create the scene content
-    CreateScene();
+    create_scene();
 
     // Create the UI content
     create_instructions();
@@ -51,7 +51,7 @@ void Urho2DParticle::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Urho2DParticle::CreateScene()
+void Urho2DParticle::create_scene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();

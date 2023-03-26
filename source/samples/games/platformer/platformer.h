@@ -35,7 +35,7 @@ public:
 
 private:
     /// Construct the scene content.
-    void CreateScene();
+    void create_scene();
     /// Subscribe to application-wide logic update events.
     void SubscribeToEvents();
     /// Handle the logic update event.
