@@ -64,7 +64,7 @@ void SceneReplication::Start()
     create_scene();
 
     // Create the UI content
-    CreateUI();
+    create_ui();
 
     // Setup the viewport for displaying the scene
     setup_viewport();
@@ -136,7 +136,7 @@ void SceneReplication::create_scene()
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 }
 
-void SceneReplication::CreateUI()
+void SceneReplication::create_ui()
 {
     UI& ui = DV_UI;
     UiElement* root = ui.GetRoot();

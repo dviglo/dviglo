@@ -30,7 +30,7 @@ private:
     float clickDelay_ = 0.f;
 
     /// Construct UI elements.
-    void CreateUI();
+    void create_ui();
     
     /// Subscribe to application-wide logic update events.
     void subscribe_to_events();

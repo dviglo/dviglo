@@ -27,7 +27,7 @@ void HttpRequestDemo::Start()
     Sample::Start();
 
     // Create the user interface
-    CreateUI();
+    create_ui();
 
     // Subscribe to basic events such as update
     subscribe_to_events();
@@ -36,7 +36,7 @@ void HttpRequestDemo::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void HttpRequestDemo::CreateUI()
+void HttpRequestDemo::create_ui()
 {
     // Construct new Text object
     text_ = new Text();

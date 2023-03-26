@@ -37,7 +37,7 @@ protected:
 
 private:
     /// Create the UI and subscribes to UI events.
-    void CreateUI();
+    void create_ui();
     /// Create a button at position with specified text in it.
     Button* CreateButton(int x, int y, int xSize, int ySize, const String& text);
     /// Create a horizontal slider with specified text above it.

@@ -35,7 +35,7 @@ private:
     /// Construct the scene content.
     void create_scene();
     /// Construct user interface elements.
-    void CreateUI();
+    void create_ui();
     /// Set up a viewport for displaying the scene.
     void setup_viewport();
     /// Subscribe to application-wide logic update event.

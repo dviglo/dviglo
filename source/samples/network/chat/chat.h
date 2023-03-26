@@ -33,7 +33,7 @@ public:
 
 private:
     /// Create the UI.
-    void CreateUI();
+    void create_ui();
     /// Subscribe to log message, UI and network events.
     void subscribe_to_events();
     /// Create a button to the button container.

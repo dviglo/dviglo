@@ -69,13 +69,13 @@ void SoundEffects::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Create the user interface
-    CreateUI();
+    create_ui();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
 }
 
-void SoundEffects::CreateUI()
+void SoundEffects::create_ui()
 {
     UiElement* root = DV_UI.GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");

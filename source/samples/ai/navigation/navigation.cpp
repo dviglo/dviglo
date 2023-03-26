@@ -44,7 +44,7 @@ void Navigation::Start()
     create_scene();
 
     // Create the UI content
-    CreateUI();
+    create_ui();
 
     // Setup the viewport for displaying the scene
     setup_viewport();
@@ -148,7 +148,7 @@ void Navigation::create_scene()
     cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 }
 
-void Navigation::CreateUI()
+void Navigation::create_ui()
 {
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target

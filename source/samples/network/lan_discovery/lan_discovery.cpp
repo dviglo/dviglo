@@ -47,7 +47,7 @@ void LANDiscovery::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Create the user interface
-    CreateUI();
+    create_ui();
 
     // Subscribe to UI and network events
     subscribe_to_events();
@@ -56,7 +56,7 @@ void LANDiscovery::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void LANDiscovery::CreateUI()
+void LANDiscovery::create_ui()
 {
     SetLogoVisible(true); // We need the full rendering window
 

@@ -44,7 +44,7 @@ void Decals::Start()
     create_scene();
 
     // Create the UI content
-    CreateUI();
+    create_ui();
 
     // Setup the viewport for displaying the scene
     setup_viewport();
@@ -150,7 +150,7 @@ void Decals::create_scene()
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 }
 
-void Decals::CreateUI()
+void Decals::create_ui()
 {
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target

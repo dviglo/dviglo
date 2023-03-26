@@ -23,12 +23,12 @@ Clicker::Clicker()
 void Clicker::Start()
 {
     Sample::Start();
-    CreateUI();
+    create_ui();
     Sample::InitMouseMode(MM_FREE);
     subscribe_to_events();
 }
 
-void Clicker::CreateUI()
+void Clicker::create_ui()
 {
     XmlFile* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
     UiElement* uiRoot = DV_UI.GetRoot();

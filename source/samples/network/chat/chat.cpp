@@ -53,7 +53,7 @@ void Chat::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Create the user interface
-    CreateUI();
+    create_ui();
 
     // Subscribe to UI and network events
     subscribe_to_events();
@@ -62,7 +62,7 @@ void Chat::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Chat::CreateUI()
+void Chat::create_ui()
 {
     SetLogoVisible(false); // We need the full rendering window
 

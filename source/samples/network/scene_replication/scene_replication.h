@@ -38,7 +38,7 @@ private:
     /// Construct the scene content.
     void create_scene();
     /// Construct instruction text and the login / start server UI.
-    void CreateUI();
+    void create_ui();
     /// Set up viewport.
     void setup_viewport();
     /// Subscribe to update, UI and network events.

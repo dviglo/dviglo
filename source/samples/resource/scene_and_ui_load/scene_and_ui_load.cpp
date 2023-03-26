@@ -32,7 +32,7 @@ void SceneAndUILoad::Start()
     create_scene();
 
     // Create the UI content
-    CreateUI();
+    create_ui();
 
     // Setup the viewport for displaying the scene
     setup_viewport();
@@ -61,7 +61,7 @@ void SceneAndUILoad::create_scene()
     cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -10.0f));
 }
 
-void SceneAndUILoad::CreateUI()
+void SceneAndUILoad::create_ui()
 {
     // Set up global UI style into the root UI element
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");

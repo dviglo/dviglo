@@ -45,7 +45,7 @@ void PBRMaterials::Start()
     create_scene();
 
     // Create the UI content
-    CreateUI();
+    create_ui();
     create_instructions();
 
     // Setup the viewport for displaying the scene
@@ -96,7 +96,7 @@ void PBRMaterials::create_scene()
     pitch_ = cameraNode_->GetRotation().PitchAngle();
 }
 
-void PBRMaterials::CreateUI()
+void PBRMaterials::create_ui()
 {
     UI& ui = DV_UI;
 
