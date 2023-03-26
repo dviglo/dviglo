@@ -25,7 +25,7 @@ void AppState_ResultScreen::OnEnter()
     LoadSceneXml("99_Benchmark/Scenes/ResultScreen.xml");
 
     DV_INPUT.SetMouseVisible(true);
-    SetupViewport();
+    setup_viewport();
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_ResultScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
     ShowResultWindow();

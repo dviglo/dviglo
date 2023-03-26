@@ -45,7 +45,7 @@ void RibbonTrailDemo::Start()
     create_instructions();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Hook up to the frame update events
     subscribe_to_events();
@@ -172,7 +172,7 @@ void RibbonTrailDemo::create_instructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void RibbonTrailDemo::SetupViewport()
+void RibbonTrailDemo::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen. We need to define the scene and the camera
     // at minimum. Additionally we could configure the viewport screen size and the rendering path (eg. forward / deferred) to

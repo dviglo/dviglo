@@ -84,7 +84,7 @@ void AppState_MainScreen::OnEnter()
     LoadSceneXml("99_Benchmark/Scenes/MainScreen.xml");
 
     CreateGui();
-    SetupViewport();
+    setup_viewport();
     DV_INPUT.SetMouseVisible(true);
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
     fpsCounter_.Clear();

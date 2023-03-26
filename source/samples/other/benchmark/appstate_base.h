@@ -26,7 +26,7 @@ protected:
     FpsCounter fpsCounter_;
     void UpdateCurrentFpsElement();
     
-    void SetupViewport();
+    void setup_viewport();
     void DestroyViewport();
 
 public:

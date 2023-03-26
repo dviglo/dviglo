@@ -49,7 +49,7 @@ void PBRMaterials::Start()
     create_instructions();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Subscribe to global events for camera movement
     subscribe_to_events();
@@ -174,7 +174,7 @@ void PBRMaterials::HandleAmbientSliderChanged(StringHash eventType, VariantMap& 
     ambientLabel_->SetText("Ambient HDR Scale: " + String(zone_->GetAmbientColor().a_));
 }
 
-void PBRMaterials::SetupViewport()
+void PBRMaterials::setup_viewport()
 {
     DV_RENDERER.SetHDRRendering(true);
 

@@ -36,7 +36,7 @@ void AppState_Base::UpdateCurrentFpsElement()
     fpsElement->SetText("FPS: " + fpsStr);
 }
 
-void AppState_Base::SetupViewport()
+void AppState_Base::setup_viewport()
 {
     Node* cameraNode = scene_->GetChild("Camera");
     Camera* camera = cameraNode->GetComponent<Camera>();

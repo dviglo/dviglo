@@ -42,7 +42,7 @@ private:
     void CreateLights();
 #endif
     /// Set up a viewport for displaying the scene.
-    void SetupViewport();
+    void setup_viewport();
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Read input and moves the camera.

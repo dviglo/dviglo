@@ -67,7 +67,7 @@ void SceneReplication::Start()
     CreateUI();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Hook up to necessary events
     subscribe_to_events();
@@ -194,7 +194,7 @@ void SceneReplication::CreateUI()
     UpdateButtons();
 }
 
-void SceneReplication::SetupViewport()
+void SceneReplication::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));

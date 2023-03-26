@@ -47,7 +47,7 @@ void Navigation::Start()
     CreateUI();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Hook up to the frame update and render post-update events
     subscribe_to_events();
@@ -179,7 +179,7 @@ void Navigation::CreateUI()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void Navigation::SetupViewport()
+void Navigation::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));

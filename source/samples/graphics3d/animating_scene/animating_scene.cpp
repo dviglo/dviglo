@@ -44,7 +44,7 @@ void AnimatingScene::Start()
     create_instructions();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Hook up to the frame update events
     subscribe_to_events();
@@ -121,7 +121,7 @@ void AnimatingScene::create_instructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void AnimatingScene::SetupViewport()
+void AnimatingScene::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));

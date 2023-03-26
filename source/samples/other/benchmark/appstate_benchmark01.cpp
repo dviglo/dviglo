@@ -18,7 +18,7 @@ void AppState_Benchmark01::OnEnter()
     LoadSceneXml("99_Benchmark/Scenes/Benchmark01.xml");
 
     DV_INPUT.SetMouseVisible(false);
-    SetupViewport();
+    setup_viewport();
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark01, HandleSceneUpdate));
     fpsCounter_.Clear();
 }

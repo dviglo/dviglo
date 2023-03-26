@@ -35,7 +35,7 @@ void SceneAndUILoad::Start()
     CreateUI();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Subscribe to global events for camera movement
     subscribe_to_events();
@@ -88,7 +88,7 @@ void SceneAndUILoad::CreateUI()
         subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight2));
 }
 
-void SceneAndUILoad::SetupViewport()
+void SceneAndUILoad::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));

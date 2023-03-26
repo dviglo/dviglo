@@ -88,7 +88,7 @@ void AppState_Benchmark03::OnEnter()
         CreateMolecule({Random(-10.f, 10.f), Random(-6.f, 6.f)}, Random(7));
 
     DV_INPUT.SetMouseVisible(false);
-    SetupViewport();
+    setup_viewport();
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark03, HandleSceneUpdate));
     fpsCounter_.Clear();
 }

@@ -88,7 +88,7 @@ void AppState_Benchmark02::OnEnter()
     cameraTargetSplinePath->SetInterpolationMode(InterpolationMode::CATMULL_ROM_FULL_CURVE);
 
     DV_INPUT.SetMouseVisible(false);
-    SetupViewport();
+    setup_viewport();
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark02, HandleSceneUpdate));
     fpsCounter_.Clear();
 }

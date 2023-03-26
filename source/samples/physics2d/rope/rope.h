@@ -35,7 +35,7 @@ private:
     /// Construct an instruction text to the UI.
     void create_instructions();
     /// Set up a viewport for displaying the scene.
-    void SetupViewport();
+    void setup_viewport();
     /// Read input and moves the camera.
     void MoveCamera(float timeStep);
     /// Subscribe to application-wide logic update events.

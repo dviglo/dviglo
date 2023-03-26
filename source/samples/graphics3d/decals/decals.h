@@ -38,7 +38,7 @@ private:
     /// Construct user interface elements.
     void CreateUI();
     /// Set up a viewport for displaying the scene.
-    void SetupViewport();
+    void setup_viewport();
     /// Subscribe to application-wide logic update and post-render update events.
     void subscribe_to_events();
     /// Reads input and moves the camera.

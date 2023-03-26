@@ -43,7 +43,7 @@ void LightAnimation::Start()
     create_scene();
 
     // Setup the viewport for displaying the scene
-    SetupViewport();
+    setup_viewport();
 
     // Hook up to the frame update events
     subscribe_to_events();
@@ -182,7 +182,7 @@ void LightAnimation::create_instructions()
     sprite->SetSize(64, 64);
 }
 
-void LightAnimation::SetupViewport()
+void LightAnimation::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen. We need to define the scene and the camera
     // at minimum. Additionally we could configure the viewport screen size and the rendering path (eg. forward / deferred) to

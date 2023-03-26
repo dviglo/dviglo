@@ -40,7 +40,7 @@ private:
     /// Construct instruction text and the login / start server UI.
     void CreateUI();
     /// Set up viewport.
-    void SetupViewport();
+    void setup_viewport();
     /// Subscribe to update, UI and network events.
     void subscribe_to_events();
     /// Create a button to the button container.

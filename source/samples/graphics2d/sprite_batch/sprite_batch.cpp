@@ -42,7 +42,7 @@ public:
         //DV_ENGINE.SetMaxFps(10);
 
         create_scene();
-        SetupViewport();
+        setup_viewport();
         subscribe_to_events();
 
         XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
@@ -58,7 +58,7 @@ public:
         virtualSpriteBatch_->virtualScreenSize_ = IntVector2(700, 600);
     }
 
-    void SetupViewport()
+    void setup_viewport()
     {
         SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
         DV_RENDERER.SetViewport(0, viewport);
