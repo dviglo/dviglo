@@ -446,7 +446,7 @@ void CrowdNavigation::MoveCamera(float timeStep)
     }
 }
 
-void CrowdNavigation::ToggleStreaming(bool enabled)
+void CrowdNavigation::toggle_streaming(bool enabled)
 {
     auto* navMesh = scene_->GetComponent<DynamicNavigationMesh>();
     if (enabled)
@@ -533,7 +533,7 @@ void CrowdNavigation::handle_update(StringHash eventType, VariantMap& eventData)
     if (DV_INPUT.GetKeyPress(KEY_TAB))
     {
         useStreaming_ = !useStreaming_;
-        ToggleStreaming(useStreaming_);
+        toggle_streaming(useStreaming_);
     }
 
     if (useStreaming_)

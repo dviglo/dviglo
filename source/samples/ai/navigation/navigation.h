@@ -56,7 +56,7 @@ private:
     /// Make Jack follow the Detour path.
     void FollowPath(float timeStep);
     /// Toggle navigation mesh streaming.
-    void ToggleStreaming(bool enabled);
+    void toggle_streaming(bool enabled);
     /// Update navigation mesh streaming.
     void update_streaming();
     /// Save navigation data for streaming.

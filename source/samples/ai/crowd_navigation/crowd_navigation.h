@@ -62,7 +62,7 @@ private:
     /// Utility function to raycast to the cursor position. Return true if hit.
     bool Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable);
     /// Toggle navigation mesh streaming.
-    void ToggleStreaming(bool enabled);
+    void toggle_streaming(bool enabled);
     /// Update navigation mesh streaming.
     void update_streaming();
     /// Save navigation data for streaming.

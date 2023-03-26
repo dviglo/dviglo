@@ -367,7 +367,7 @@ void Navigation::FollowPath(float timeStep)
     }
 }
 
-void Navigation::ToggleStreaming(bool enabled)
+void Navigation::toggle_streaming(bool enabled)
 {
     auto* navMesh = scene_->GetComponent<NavigationMesh>();
     if (enabled)
@@ -447,7 +447,7 @@ void Navigation::handle_update(StringHash eventType, VariantMap& eventData)
     if (DV_INPUT.GetKeyPress(KEY_TAB))
     {
         useStreaming_ = !useStreaming_;
-        ToggleStreaming(useStreaming_);
+        toggle_streaming(useStreaming_);
     }
 
     if (useStreaming_)
