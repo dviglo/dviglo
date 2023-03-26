@@ -1551,7 +1551,7 @@ void Renderer::UpdateQueuedViewport(i32 index)
         // Set also the view for the debug renderer already here, so that it can use culling
         /// \todo May result in incorrect debug geometry culling if the same scene is drawn from multiple viewports
         auto* debug = scene->GetComponent<DebugRenderer>();
-        if (debug && viewport->GetDrawDebug())
+        if (debug && viewport->draw_debug)
             debug->SetView(viewport->GetCamera());
     }
 

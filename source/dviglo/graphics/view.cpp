@@ -276,7 +276,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
         return false;
 
     renderTarget_ = renderTarget;
-    draw_debug_ = viewport->GetDrawDebug();
+    draw_debug_ = viewport->draw_debug;
 
     Renderer& renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;

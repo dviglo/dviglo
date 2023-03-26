@@ -25,6 +25,8 @@ class DV_API Viewport : public Object
     DV_OBJECT(Viewport, Object);
 
 public:
+    bool draw_debug = true;
+
     /// Construct with defaults.
     explicit Viewport();
     /// Construct with a full rectangle.
@@ -44,8 +46,7 @@ public:
     void SetRenderPath(RenderPath* renderPath);
     /// Set rendering path from an XML file.
     bool SetRenderPath(XmlFile* file);
-    /// Set whether to render debug geometry. Default true.
-    void SetDrawDebug(bool enable);
+
     /// Set separate camera to use for culling. Sharing a culling camera between several viewports allows to prepare the view only once, saving in CPU use. The culling camera's frustum should cover all the viewport cameras' frusta or else objects may be missing from the rendered view.
     void SetCullCamera(Camera* camera);
 
@@ -61,9 +62,6 @@ public:
 
     /// Return rendering path.
     RenderPath* GetRenderPath() const;
-
-    /// Return whether to draw debug geometry.
-    bool GetDrawDebug() const { return draw_debug_; }
 
     /// Return the culling camera. If null, the viewport camera will be used for culling (normal case).
     Camera* GetCullCamera() const;
@@ -91,8 +89,6 @@ private:
     SharedPtr<RenderPath> renderPath_;
     /// Internal rendering structure.
     SharedPtr<View> view_;
-    /// Debug draw flag.
-    bool draw_debug_;
 };
 
 }
