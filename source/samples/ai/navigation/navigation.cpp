@@ -374,7 +374,7 @@ void Navigation::ToggleStreaming(bool enabled)
     {
         int maxTiles = (2 * streamingDistance_ + 1) * (2 * streamingDistance_ + 1);
         BoundingBox boundingBox = navMesh->GetBoundingBox();
-        SaveNavigationData();
+        save_navigation_data();
         navMesh->Allocate(boundingBox, maxTiles);
     }
     else
@@ -416,7 +416,7 @@ void Navigation::UpdateStreaming()
         }
 }
 
-void Navigation::SaveNavigationData()
+void Navigation::save_navigation_data()
 {
     auto* navMesh = scene_->GetComponent<NavigationMesh>();
     tileData_.Clear();

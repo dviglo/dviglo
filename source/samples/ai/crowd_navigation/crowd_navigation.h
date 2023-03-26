@@ -66,7 +66,7 @@ private:
     /// Update navigation mesh streaming.
     void UpdateStreaming();
     /// Save navigation data for streaming.
-    void SaveNavigationData();
+    void save_navigation_data();
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
