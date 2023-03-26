@@ -381,7 +381,7 @@ void Navigation::ToggleStreaming(bool enabled)
         navMesh->Build();
 }
 
-void Navigation::UpdateStreaming()
+void Navigation::update_streaming()
 {
     // Center the navigation mesh at the jack
     auto* navMesh = scene_->GetComponent<NavigationMesh>();
@@ -451,7 +451,7 @@ void Navigation::handle_update(StringHash eventType, VariantMap& eventData)
     }
 
     if (useStreaming_)
-        UpdateStreaming();
+        update_streaming();
 }
 
 void Navigation::HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData)

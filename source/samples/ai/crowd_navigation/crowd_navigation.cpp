@@ -460,7 +460,7 @@ void CrowdNavigation::ToggleStreaming(bool enabled)
         navMesh->Build();
 }
 
-void CrowdNavigation::UpdateStreaming()
+void CrowdNavigation::update_streaming()
 {
     // Center the navigation mesh at the crowd of jacks
     Vector3 averageJackPosition;
@@ -537,7 +537,7 @@ void CrowdNavigation::handle_update(StringHash eventType, VariantMap& eventData)
     }
 
     if (useStreaming_)
-        UpdateStreaming();
+        update_streaming();
 
 }
 

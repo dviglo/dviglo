@@ -64,7 +64,7 @@ private:
     /// Toggle navigation mesh streaming.
     void ToggleStreaming(bool enabled);
     /// Update navigation mesh streaming.
-    void UpdateStreaming();
+    void update_streaming();
     /// Save navigation data for streaming.
     void save_navigation_data();
     /// Handle the logic update event.
