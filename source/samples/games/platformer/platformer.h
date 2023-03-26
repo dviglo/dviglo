@@ -37,7 +37,7 @@ private:
     /// Construct the scene content.
     void create_scene();
     /// Subscribe to application-wide logic update events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the logic post update event.

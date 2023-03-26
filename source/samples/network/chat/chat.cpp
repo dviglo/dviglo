@@ -56,7 +56,7 @@ void Chat::Start()
     CreateUI();
 
     // Subscribe to UI and network events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -102,7 +102,7 @@ void Chat::CreateUI()
     DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
-void Chat::SubscribeToEvents()
+void Chat::subscribe_to_events()
 {
     // Subscribe to UI element events
     subscribe_to_event(textEdit_, E_TEXTFINISHED, DV_HANDLER(Chat, HandleSend));

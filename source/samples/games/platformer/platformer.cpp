@@ -77,7 +77,7 @@ void Urho2DPlatformer::Start()
     subscribe_to_event(playButton, E_RELEASED, DV_HANDLER(Urho2DPlatformer, HandlePlayButton));
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 }
 
 void Urho2DPlatformer::create_scene()
@@ -150,7 +150,7 @@ void Urho2DPlatformer::HandleSceneRendered(StringHash eventType, VariantMap& eve
     scene_->SetUpdateEnabled(false);
 }
 
-void Urho2DPlatformer::SubscribeToEvents()
+void Urho2DPlatformer::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DPlatformer, handle_update));

@@ -34,7 +34,7 @@ void Sprites::Start()
     CreateSprites();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -107,7 +107,7 @@ void Sprites::MoveSprites(float timeStep)
     }
 }
 
-void Sprites::SubscribeToEvents()
+void Sprites::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Sprites, handle_update));

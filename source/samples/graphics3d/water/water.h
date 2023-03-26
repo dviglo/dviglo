@@ -39,7 +39,7 @@ private:
     /// Set up a viewport for displaying the scene.
     void SetupViewport();
     /// Subscribe to the logic update event.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Read input and moves the camera.
     void MoveCamera(float timeStep);
     /// Handle the logic update event.

@@ -37,7 +37,7 @@ private:
     /// Create the UI.
     void CreateUI();
     /// Subscribe to log message, UI and network events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Create a button to the button container.
     Button* CreateButton(const String& text, int width, IntVector2 position);
     /// Create label

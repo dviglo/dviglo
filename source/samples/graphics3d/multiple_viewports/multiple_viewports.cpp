@@ -48,7 +48,7 @@ void MultipleViewports::Start()
     SetupViewports();
 
     // Hook up to the frame update and render post-update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_ABSOLUTE);
@@ -188,7 +188,7 @@ void MultipleViewports::SetupViewports()
     DV_RENDERER.SetViewport(1, rearViewport);
 }
 
-void MultipleViewports::SubscribeToEvents()
+void MultipleViewports::subscribe_to_events()
 {
     // Subscribe handle_update() method for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(MultipleViewports, handle_update));

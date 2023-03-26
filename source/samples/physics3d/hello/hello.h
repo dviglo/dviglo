@@ -39,7 +39,7 @@ private:
     /// Set up a viewport for displaying the scene.
     void SetupViewport();
     /// Subscribe to application-wide logic update and post-render update events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Read input and moves the camera.
     void MoveCamera(float timeStep);
     /// Spawn a physics object from the camera position.

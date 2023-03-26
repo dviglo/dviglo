@@ -52,7 +52,7 @@ void PhysicsStressTest::Start()
     SetupViewport();
 
     // Hook up to the frame update and render post-update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
@@ -187,7 +187,7 @@ void PhysicsStressTest::SetupViewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void PhysicsStressTest::SubscribeToEvents()
+void PhysicsStressTest::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(PhysicsStressTest, handle_update));

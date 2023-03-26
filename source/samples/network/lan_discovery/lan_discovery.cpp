@@ -50,7 +50,7 @@ void LANDiscovery::Start()
     CreateUI();
 
     // Subscribe to UI and network events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -84,7 +84,7 @@ void LANDiscovery::CreateUI()
     DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
-void LANDiscovery::SubscribeToEvents()
+void LANDiscovery::subscribe_to_events()
 {
     subscribe_to_event(E_NETWORKHOSTDISCOVERED, DV_HANDLER(LANDiscovery, HandleNetworkHostDiscovered));
 

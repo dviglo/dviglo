@@ -38,7 +38,7 @@ void SceneAndUILoad::Start()
     SetupViewport();
 
     // Subscribe to global events for camera movement
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
@@ -95,7 +95,7 @@ void SceneAndUILoad::SetupViewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void SceneAndUILoad::SubscribeToEvents()
+void SceneAndUILoad::subscribe_to_events()
 {
     // Subscribe handle_update() function for camera motion
     subscribe_to_event(E_UPDATE, DV_HANDLER(SceneAndUILoad, handle_update));

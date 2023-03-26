@@ -53,7 +53,7 @@ void RaycastVehicleDemo::Start()
     // Create the UI content
     create_instructions();
     // Subscribe to necessary events
-    SubscribeToEvents();
+    subscribe_to_events();
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
 }
@@ -153,7 +153,7 @@ void RaycastVehicleDemo::create_instructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void RaycastVehicleDemo::SubscribeToEvents()
+void RaycastVehicleDemo::subscribe_to_events()
 {
     // Subscribe to Update event for setting the vehicle controls before physics simulation
     subscribe_to_event(E_UPDATE, DV_HANDLER(RaycastVehicleDemo, handle_update));

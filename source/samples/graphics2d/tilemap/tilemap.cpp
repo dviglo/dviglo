@@ -46,7 +46,7 @@ void Urho2DTileMap::Start()
     SetupViewport();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -141,7 +141,7 @@ void Urho2DTileMap::MoveCamera(float timeStep)
     }
 }
 
-void Urho2DTileMap::SubscribeToEvents()
+void Urho2DTileMap::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DTileMap, handle_update));

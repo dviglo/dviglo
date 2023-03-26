@@ -67,7 +67,7 @@ void Urho2DConstraints::Start()
     create_instructions();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -413,7 +413,7 @@ void Urho2DConstraints::MoveCamera(float timeStep)
         camera_->SetZoom(camera_->GetZoom() * 0.99f);
 }
 
-void Urho2DConstraints::SubscribeToEvents()
+void Urho2DConstraints::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DConstraints, handle_update));

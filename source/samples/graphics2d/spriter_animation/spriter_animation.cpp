@@ -46,7 +46,7 @@ void Urho2DSpriterAnimation::Start()
     Sample::InitMouseMode(MM_FREE);
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 }
 
 void Urho2DSpriterAnimation::create_scene()
@@ -130,7 +130,7 @@ void Urho2DSpriterAnimation::MoveCamera(float timeStep)
     }
 }
 
-void Urho2DSpriterAnimation::SubscribeToEvents()
+void Urho2DSpriterAnimation::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DSpriterAnimation, handle_update));

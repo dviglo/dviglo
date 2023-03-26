@@ -44,7 +44,7 @@ void MaterialAnimation::Start()
     SetupViewport();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
@@ -173,7 +173,7 @@ void MaterialAnimation::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 
-void MaterialAnimation::SubscribeToEvents()
+void MaterialAnimation::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(MaterialAnimation, handle_update));

@@ -30,7 +30,7 @@ void HttpRequestDemo::Start()
     CreateUI();
 
     // Subscribe to basic events such as update
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -53,7 +53,7 @@ void HttpRequestDemo::CreateUI()
     DV_UI.GetRoot()->AddChild(text_);
 }
 
-void HttpRequestDemo::SubscribeToEvents()
+void HttpRequestDemo::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing HTTP request
     subscribe_to_event(E_UPDATE, DV_HANDLER(HttpRequestDemo, handle_update));

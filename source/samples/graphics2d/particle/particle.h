@@ -36,7 +36,7 @@ private:
     /// Set up a viewport for displaying the scene.
     void SetupViewport();
     /// Subscribe to application-wide logic update events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Handle mouse move event.
     void HandleMouseMove(StringHash eventType, VariantMap& eventData);
 

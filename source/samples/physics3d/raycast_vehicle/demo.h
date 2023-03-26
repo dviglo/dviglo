@@ -43,7 +43,7 @@ private:
     void create_instructions();
 
     /// Subscribe to necessary events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
 
     /// Handle application update. Set controls to vehicle.
     void handle_update(StringHash eventType, VariantMap& eventData);

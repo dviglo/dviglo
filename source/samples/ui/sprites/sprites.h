@@ -29,7 +29,7 @@ private:
     /// Move the sprites using the delta time step given.
     void MoveSprites(float timeStep);
     /// Subscribe to application-wide logic update events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
 

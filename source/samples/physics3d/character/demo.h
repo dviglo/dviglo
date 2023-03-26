@@ -44,7 +44,7 @@ private:
     /// Construct an instruction text to the UI.
     void create_instructions();
     /// Subscribe to necessary events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Handle application update. Set controls to character.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle application post-update. Update camera position after character has moved.

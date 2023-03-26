@@ -37,7 +37,7 @@ private:
     /// Set up a viewport for displaying the scene.
     void SetupViewport();
     /// Subscribe to application-wide logic update events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle KeyUp event.

@@ -50,7 +50,7 @@ void Water::Start()
     SetupViewport();
 
     // Hook up to the frame update event
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
@@ -201,7 +201,7 @@ void Water::SetupViewport()
     waterMat->SetTexture(TU_DIFFUSE, renderTexture);
 }
 
-void Water::SubscribeToEvents()
+void Water::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Water, handle_update));

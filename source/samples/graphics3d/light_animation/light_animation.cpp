@@ -46,7 +46,7 @@ void LightAnimation::Start()
     SetupViewport();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
@@ -225,7 +225,7 @@ void LightAnimation::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 
-void LightAnimation::SubscribeToEvents()
+void LightAnimation::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(LightAnimation, handle_update));

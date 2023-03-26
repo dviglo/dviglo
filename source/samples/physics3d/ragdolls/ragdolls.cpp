@@ -54,7 +54,7 @@ void Ragdolls::Start()
     SetupViewport();
 
     // Hook up to the frame update and render post-update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_ABSOLUTE);
@@ -259,7 +259,7 @@ void Ragdolls::SpawnObject()
     body->SetLinearVelocity(cameraNode_->GetRotation() * Vector3(0.0f, 0.25f, 1.0f) * OBJECT_VELOCITY);
 }
 
-void Ragdolls::SubscribeToEvents()
+void Ragdolls::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Ragdolls, handle_update));

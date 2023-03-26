@@ -42,7 +42,7 @@ private:
     /// Set up viewport.
     void SetupViewport();
     /// Subscribe to update, UI and network events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
     /// Create a button to the button container.
     Button* CreateButton(const String& text, int width);
     /// Update visibility of buttons according to connection and server status.

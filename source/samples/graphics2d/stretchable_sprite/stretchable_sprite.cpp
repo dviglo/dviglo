@@ -42,7 +42,7 @@ void Urho2DStretchableSprite::Start()
     SetupViewport();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -104,7 +104,7 @@ void Urho2DStretchableSprite::SetupViewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void Urho2DStretchableSprite::SubscribeToEvents()
+void Urho2DStretchableSprite::subscribe_to_events()
 {
     subscribe_to_event(E_KEYUP, DV_HANDLER(Urho2DStretchableSprite, OnKeyUp));
 

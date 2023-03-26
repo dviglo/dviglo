@@ -45,7 +45,7 @@ void Urho2DParticle::Start()
     SetupViewport();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -104,7 +104,7 @@ void Urho2DParticle::SetupViewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void Urho2DParticle::SubscribeToEvents()
+void Urho2DParticle::subscribe_to_events()
 {
     subscribe_to_event(E_MOUSEMOVE, DV_HANDLER(Urho2DParticle, HandleMouseMove));
 

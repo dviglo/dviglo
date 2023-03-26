@@ -73,7 +73,7 @@ void Urho2DIsometricDemo::Start()
     subscribe_to_event(playButton, E_RELEASED, DV_HANDLER(Urho2DIsometricDemo, HandlePlayButton));
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 }
 
 void Urho2DIsometricDemo::create_scene()
@@ -200,7 +200,7 @@ void Urho2DIsometricDemo::HandleSceneRendered(StringHash eventType, VariantMap& 
     scene_->SetUpdateEnabled(false);
 }
 
-void Urho2DIsometricDemo::SubscribeToEvents()
+void Urho2DIsometricDemo::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DIsometricDemo, handle_update));

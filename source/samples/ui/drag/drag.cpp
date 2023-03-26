@@ -33,7 +33,7 @@ void UIDrag::Start()
     create_instructions();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -89,7 +89,7 @@ void UIDrag::create_instructions()
     instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void UIDrag::SubscribeToEvents()
+void UIDrag::subscribe_to_events()
 {
     subscribe_to_event(E_UPDATE, DV_HANDLER(UIDrag, handle_update));
 }

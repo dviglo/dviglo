@@ -70,7 +70,7 @@ void SceneReplication::Start()
     SetupViewport();
 
     // Hook up to necessary events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_RELATIVE);
@@ -201,7 +201,7 @@ void SceneReplication::SetupViewport()
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void SceneReplication::SubscribeToEvents()
+void SceneReplication::subscribe_to_events()
 {
     // Subscribe to fixed timestep physics updates for setting or applying controls
     subscribe_to_event(E_PHYSICSPRESTEP, DV_HANDLER(SceneReplication, HandlePhysicsPreStep));

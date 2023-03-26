@@ -52,7 +52,7 @@ void PBRMaterials::Start()
     SetupViewport();
 
     // Subscribe to global events for camera movement
-    SubscribeToEvents();
+    subscribe_to_events();
 }
 
 void PBRMaterials::create_instructions()
@@ -192,7 +192,7 @@ void PBRMaterials::SetupViewport()
     viewport->SetRenderPath(effectRenderPath);
 }
 
-void PBRMaterials::SubscribeToEvents()
+void PBRMaterials::subscribe_to_events()
 {
     // Subscribe handle_update() function for camera motion
     subscribe_to_event(E_UPDATE, DV_HANDLER(PBRMaterials, handle_update));

@@ -25,7 +25,7 @@ void Clicker::Start()
     Sample::Start();
     CreateUI();
     Sample::InitMouseMode(MM_FREE);
-    SubscribeToEvents();
+    subscribe_to_events();
 }
 
 void Clicker::CreateUI()
@@ -49,7 +49,7 @@ void Clicker::CreateUI()
     powerText->SetPosition({10, 10});
 }
 
-void Clicker::SubscribeToEvents()
+void Clicker::subscribe_to_events()
 {
     subscribe_to_event(E_UPDATE, DV_HANDLER(Clicker, handle_update));
     subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Clicker, HandleMouseButtonDown));

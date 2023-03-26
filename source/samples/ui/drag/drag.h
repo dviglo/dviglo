@@ -35,7 +35,7 @@ private:
     /// Construct an instruction text to the UI.
     void create_instructions();
     /// Subscribe to application-wide logic update events.
-    void SubscribeToEvents();
+    void subscribe_to_events();
 
     void handle_update(StringHash eventType, VariantMap& eventData);
     void HandleClick(StringHash eventType, VariantMap& eventData);

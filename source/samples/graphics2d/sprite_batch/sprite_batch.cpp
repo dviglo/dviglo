@@ -43,7 +43,7 @@ public:
 
         create_scene();
         SetupViewport();
-        SubscribeToEvents();
+        subscribe_to_events();
 
         XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
         DV_DEBUG_HUD.SetDefaultStyle(xmlFile);
@@ -137,7 +137,7 @@ public:
 
     }
 
-    void SubscribeToEvents()
+    void subscribe_to_events()
     {
         subscribe_to_event(E_UPDATE, DV_HANDLER(Game, handle_update));
         subscribe_to_event(E_ENDVIEWRENDER, DV_HANDLER(Game, HandleEndViewRender));

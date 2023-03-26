@@ -47,7 +47,7 @@ void SoundSynthesis::Start()
     create_instructions();
 
     // Hook up to the frame update events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -111,7 +111,7 @@ void SoundSynthesis::create_instructions()
     instructionText_->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
 }
 
-void SoundSynthesis::SubscribeToEvents()
+void SoundSynthesis::subscribe_to_events()
 {
     // Subscribe handle_update() function for processing update events
     subscribe_to_event(E_UPDATE, DV_HANDLER(SoundSynthesis, handle_update));

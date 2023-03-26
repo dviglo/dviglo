@@ -44,7 +44,7 @@ void NATPunchtrough::Start()
     CreateUI();
 
     // Subscribe to UI and network events
-    SubscribeToEvents();
+    subscribe_to_events();
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -89,7 +89,7 @@ void NATPunchtrough::CreateUI()
     DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
-void NATPunchtrough::SubscribeToEvents()
+void NATPunchtrough::subscribe_to_events()
 {
     subscribe_to_event(E_SERVERCONNECTED, DV_HANDLER(NATPunchtrough, HandleServerConnected));
     subscribe_to_event(E_SERVERDISCONNECTED, DV_HANDLER(NATPunchtrough, HandleServerDisconnected));
