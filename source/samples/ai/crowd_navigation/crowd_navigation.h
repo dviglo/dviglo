@@ -54,7 +54,7 @@ private:
     /// Create a "Jack" object at position.
     void SpawnJack(const Vector3& pos, Node* jackGroup);
     /// Create a mushroom object at position.
-    void CreateMushroom(const Vector3& pos);
+    void create_mushroom(const Vector3& pos);
     /// Create an off-mesh connection for each box to make it climbable.
     void CreateBoxOffMeshConnections(DynamicNavigationMesh* navMesh, Node* boxGroup);
     /// Create some movable barrels as crowd agents.

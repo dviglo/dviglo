@@ -140,7 +140,7 @@ void CrowdNavigation::create_scene()
 
     // Create some mushrooms as obstacles. Note that obstacles are non-walkable areas
     for (unsigned i = 0; i < 100; ++i)
-        CreateMushroom(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
+        create_mushroom(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
 
     // Create a CrowdManager component to the scene root
     auto* crowdManager = scene_->create_component<CrowdManager>();
@@ -247,7 +247,7 @@ void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
     agent->SetMaxAccel(5.0f);
 }
 
-void CrowdNavigation::CreateMushroom(const Vector3& pos)
+void CrowdNavigation::create_mushroom(const Vector3& pos)
 {
     Node* mushroomNode = scene_->create_child("Mushroom");
     mushroomNode->SetPosition(pos);
@@ -342,7 +342,7 @@ void CrowdNavigation::AddOrRemoveObject()
         else if (hitNode->GetName() == "Jack")
             hitNode->Remove();
         else
-            CreateMushroom(hitPos);
+            create_mushroom(hitPos);
     }
 }
 

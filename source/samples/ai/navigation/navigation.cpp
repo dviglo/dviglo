@@ -96,7 +96,7 @@ void Navigation::create_scene()
     // Create some mushrooms
     const unsigned NUM_MUSHROOMS = 100;
     for (unsigned i = 0; i < NUM_MUSHROOMS; ++i)
-        CreateMushroom(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
+        create_mushroom(Vector3(Random(90.0f) - 45.0f, 0.0f, Random(90.0f) - 45.0f));
 
     // Create randomly sized boxes. If boxes are big enough, make them occluders
     const unsigned NUM_BOXES = 20;
@@ -292,7 +292,7 @@ void Navigation::AddOrRemoveObject()
         }
         else
         {
-            Node* newNode = CreateMushroom(hitPos);
+            Node* newNode = create_mushroom(hitPos);
             updateBox = newNode->GetComponent<StaticModel>()->GetWorldBoundingBox();
         }
 
@@ -304,7 +304,7 @@ void Navigation::AddOrRemoveObject()
     }
 }
 
-Node* Navigation::CreateMushroom(const Vector3& pos)
+Node* Navigation::create_mushroom(const Vector3& pos)
 {
     Node* mushroomNode = scene_->create_child("Mushroom");
     mushroomNode->SetPosition(pos);

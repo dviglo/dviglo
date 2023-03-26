@@ -50,7 +50,7 @@ private:
     /// Add or remove object.
     void AddOrRemoveObject();
     /// Create a mushroom object at position.
-    Node* CreateMushroom(const Vector3& pos);
+    Node* create_mushroom(const Vector3& pos);
     /// Utility function to raycast to the cursor position. Return true if hit
     bool Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable);
     /// Make Jack follow the Detour path.
