@@ -155,7 +155,7 @@ void SpriteBatch::DrawSpriteInternal()
         // Поэтому вычисляем без матрицы для оптимизации
         float m11 = cos * sprite_.scale.x; float m12 = -sin * sprite_.scale.y; float m13 = sprite_.destination.min_.x;
         float m21 = sin * sprite_.scale.x; float m22 =  cos * sprite_.scale.y; float m23 = sprite_.destination.min_.y;
-        //          0                                      0                                     1
+        //          0                                   0                                  1
 
         float minXm11 = local.min_.x * m11;
         float minXm21 = local.min_.x * m21;
@@ -166,25 +166,25 @@ void SpriteBatch::DrawSpriteInternal()
         float maxYm12 = local.max_.y * m12;
         float maxYm22 = local.max_.y * m22;
 
-        // transform * Vector3(local.min_.x_, local.min_.y_, 1.0f);
+        // transform * Vector3(local.min_.x, local.min_.y, 1.0f);
         quad_.v0.position = Vector3(minXm11 + minYm12 + m13,
-                                      minXm21 + minYm22 + m23,
-                                      0.0f);
+                                    minXm21 + minYm22 + m23,
+                                    0.0f);
 
-        // transform * Vector3(local.max_.x_, local.min_.y_, 1.0f).
+        // transform * Vector3(local.max_.x, local.min_.y, 1.0f).
         quad_.v1.position = Vector3(maxXm11 + minYm12 + m13,
-                                      maxXm21 + minYm22 + m23,
-                                      0.0f);
+                                    maxXm21 + minYm22 + m23,
+                                    0.0f);
 
-        // transform * Vector3(local.max_.x_, local.max_.y_, 1.0f).
+        // transform * Vector3(local.max_.x, local.max_.y, 1.0f).
         quad_.v2.position = Vector3(maxXm11 + maxYm12 + m13,
-                                      maxXm21 + maxYm22 + m23,
-                                      0.0f);
+                                    maxXm21 + maxYm22 + m23,
+                                    0.0f);
 
-        // transform * Vector3(local.min_.x_, local.max_.y_, 1.0f).
+        // transform * Vector3(local.min_.x, local.max_.y, 1.0f).
         quad_.v3.position = Vector3(minXm11 + maxYm12 + m13,
-                                      minXm21 + maxYm22 + m23,
-                                      0.0f);
+                                    minXm21 + maxYm22 + m23,
+                                    0.0f);
     }
 
     if (!!(sprite_.flip_modes & FlipModes::Horizontally))
