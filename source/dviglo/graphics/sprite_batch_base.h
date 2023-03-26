@@ -56,7 +56,7 @@ protected:
     // Заполняем заранее выделенную память, вместо передачи кучи аргументов в функцию
     struct
     {
-        TVertex v0_, v1_, v2_;
+        TVertex v0, v1, v2;
     } triangle_;
 
     // Добавляет 3 вершины в массив tVertices_. Вызывает Flush(), если массив полон.
@@ -117,10 +117,10 @@ protected:
     // Заполняем заранее выделенную память, вместо передачи кучи аргументов в функцию
     struct
     {
-        Texture2D* texture_;
-        ShaderVariation* vs_;
-        ShaderVariation* ps_;
-        QVertex v0_, v1_, v2_, v3_;
+        Texture2D* texture;
+        ShaderVariation* vs;
+        ShaderVariation* ps;
+        QVertex v0, v1, v2, v3;
     } quad_;
 
     // Добавляет 4 вершины в массив quads_.

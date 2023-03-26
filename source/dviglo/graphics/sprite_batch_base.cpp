@@ -26,9 +26,9 @@ void SpriteBatchBase::AddTriangle()
 
 void SpriteBatchBase::SetShapeColor(u32 color)
 {
-    triangle_.v0_.color_ = color;
-    triangle_.v1_.color_ = color;
-    triangle_.v2_.color_ = color;
+    triangle_.v0.color_ = color;
+    triangle_.v1.color_ = color;
+    triangle_.v2.color_ = color;
 }
 
 void SpriteBatchBase::SetShapeColor(const Color& color)
@@ -42,16 +42,16 @@ void SpriteBatchBase::AddQuad()
     if (tNumVertices_ > 0)
         Flush();
 
-    if (quad_.texture_ != qCurrentTexture_ || quad_.vs_ != qCurrentVS_ || quad_.ps_ != qCurrentPS_)
+    if (quad_.texture != qCurrentTexture_ || quad_.vs != qCurrentVS_ || quad_.ps != qCurrentPS_)
     {
         Flush();
 
-        qCurrentVS_ = quad_.vs_;
-        qCurrentPS_ = quad_.ps_;
-        qCurrentTexture_ = quad_.texture_;
+        qCurrentVS_ = quad_.vs;
+        qCurrentPS_ = quad_.ps;
+        qCurrentTexture_ = quad_.texture;
     }
 
-    memcpy(qVertices_ + qNumVertices_, &(quad_.v0_), sizeof(QVertex) * VERTICES_PER_QUAD);
+    memcpy(qVertices_ + qNumVertices_, &(quad_.v0), sizeof(QVertex) * VERTICES_PER_QUAD);
     qNumVertices_ += VERTICES_PER_QUAD;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
