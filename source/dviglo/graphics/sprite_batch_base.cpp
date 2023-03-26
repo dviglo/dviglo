@@ -26,9 +26,9 @@ void SpriteBatchBase::AddTriangle()
 
 void SpriteBatchBase::SetShapeColor(u32 color)
 {
-    triangle_.v0.color_ = color;
-    triangle_.v1.color_ = color;
-    triangle_.v2.color_ = color;
+    triangle_.v0.color = color;
+    triangle_.v1.color = color;
+    triangle_.v2.color = color;
 }
 
 void SpriteBatchBase::SetShapeColor(const Color& color)

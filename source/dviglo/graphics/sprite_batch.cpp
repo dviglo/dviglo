@@ -292,9 +292,9 @@ T MySign(T value) { return value >= 0.0f ? 1.0f : -1.0f; }
 
 void SpriteBatch::DrawTriangle(const Vector2& v0, const Vector2& v1, const Vector2& v2)
 {
-    triangle_.v0.position_ = Vector3(v0);
-    triangle_.v1.position_ = Vector3(v1);
-    triangle_.v2.position_ = Vector3(v2);
+    triangle_.v0.position = Vector3(v0);
+    triangle_.v1.position = Vector3(v1);
+    triangle_.v2.position = Vector3(v2);
     AddTriangle();
 }
 

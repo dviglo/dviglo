@@ -33,8 +33,8 @@ private:
     // Атрибуты вершин треугольников
     struct TVertex
     {
-        Vector3 position_;
-        u32 color_; // Цвет в формате 0xAABBGGRR
+        Vector3 position;
+        u32 color; // Цвет в формате 0xAABBGGRR
     };
 
     // Текущая порция треугольников
