@@ -73,7 +73,7 @@ void ParticleEmitter::OnSetEnabled()
         if (IsEnabledEffective())
             subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(ParticleEmitter, HandleScenePostUpdate));
         else
-            UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+            unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
     }
 }
 
@@ -248,7 +248,7 @@ void ParticleEmitter::SetEffect(ParticleEffect* effect)
 
     // Unsubscribe from the reload event of previous effect (if any), then subscribe to the new
     if (effect_)
-        UnsubscribeFromEvent(effect_, E_RELOADFINISHED);
+        unsubscribe_from_event(effect_, E_RELOADFINISHED);
 
     effect_ = effect;
 
@@ -420,7 +420,7 @@ void ParticleEmitter::OnSceneSet(Scene* scene)
     if (scene && IsEnabledEffective())
         subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(ParticleEmitter, HandleScenePostUpdate));
     else if (!scene)
-         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
+         unsubscribe_from_event(E_SCENEPOSTUPDATE);
 }
 
 bool ParticleEmitter::EmitNewParticle()

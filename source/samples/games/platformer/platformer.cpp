@@ -143,7 +143,7 @@ void Urho2DPlatformer::CreateScene()
 
 void Urho2DPlatformer::HandleSceneRendered(StringHash eventType, VariantMap& eventData)
 {
-    UnsubscribeFromEvent(E_ENDRENDERING);
+    unsubscribe_from_event(E_ENDRENDERING);
     // Save the scene so we can reload it later
     sample2D_->SaveScene(true);
     // Pause the scene as long as the UI is hiding it
@@ -166,7 +166,7 @@ void Urho2DPlatformer::SubscribeToEvents()
     subscribe_to_event(E_PHYSICSENDCONTACT2D, DV_HANDLER(Urho2DPlatformer, HandleCollisionEnd));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
-    UnsubscribeFromEvent(E_SCENEUPDATE);
+    unsubscribe_from_event(E_SCENEUPDATE);
 }
 
 void Urho2DPlatformer::HandleCollisionBegin(StringHash eventType, VariantMap& eventData)

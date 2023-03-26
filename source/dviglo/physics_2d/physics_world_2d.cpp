@@ -692,7 +692,7 @@ void PhysicsWorld2D::OnSceneSet(Scene* scene)
     if (scene)
         subscribe_to_event(scene, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(PhysicsWorld2D, HandleSceneSubsystemUpdate));
     else
-        UnsubscribeFromEvent(E_SCENESUBSYSTEMUPDATE);
+        unsubscribe_from_event(E_SCENESUBSYSTEMUPDATE);
 }
 
 void PhysicsWorld2D::HandleSceneSubsystemUpdate(StringHash eventType, VariantMap& eventData)

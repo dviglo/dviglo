@@ -323,7 +323,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
 
     // Unsubscribe from the reload event of previous model (if any), then subscribe to the new
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     model_ = model;
 

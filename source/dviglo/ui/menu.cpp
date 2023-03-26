@@ -319,7 +319,7 @@ void Menu::SetAccelerator(int key, int qualifiers)
     if (key)
         subscribe_to_event(E_KEYDOWN, DV_HANDLER(Menu, HandleKeyDown));
     else
-        UnsubscribeFromEvent(E_KEYDOWN);
+        unsubscribe_from_event(E_KEYDOWN);
 }
 
 bool Menu::FilterPopupImplicitAttributes(XmlElement& dest) const

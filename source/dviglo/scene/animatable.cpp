@@ -282,8 +282,8 @@ void Animatable::SetObjectAnimation(ObjectAnimation* objectAnimation)
     if (objectAnimation_)
     {
         OnObjectAnimationRemoved(objectAnimation_);
-        UnsubscribeFromEvent(objectAnimation_, E_ATTRIBUTEANIMATIONADDED);
-        UnsubscribeFromEvent(objectAnimation_, E_ATTRIBUTEANIMATIONREMOVED);
+        unsubscribe_from_event(objectAnimation_, E_ATTRIBUTEANIMATIONADDED);
+        unsubscribe_from_event(objectAnimation_, E_ATTRIBUTEANIMATIONREMOVED);
     }
 
     objectAnimation_ = objectAnimation;

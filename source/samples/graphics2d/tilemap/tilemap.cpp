@@ -150,7 +150,7 @@ void Urho2DTileMap::SubscribeToEvents()
     subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DTileMap, HandleMouseButtonDown));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
-    UnsubscribeFromEvent(E_SCENEUPDATE);
+    unsubscribe_from_event(E_SCENEUPDATE);
 }
 
 void Urho2DTileMap::handle_update(StringHash eventType, VariantMap& eventData)

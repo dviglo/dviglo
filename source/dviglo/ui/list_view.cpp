@@ -1160,8 +1160,8 @@ void ListView::HandleFocusChanged(StringHash eventType, VariantMap& eventData)
 
 void ListView::UpdateUIClickSubscription()
 {
-    UnsubscribeFromEvent(E_UIMOUSECLICK);
-    UnsubscribeFromEvent(E_UIMOUSECLICKEND);
+    unsubscribe_from_event(E_UIMOUSECLICK);
+    unsubscribe_from_event(E_UIMOUSECLICKEND);
     subscribe_to_event(selectOnClickEnd_ ? E_UIMOUSECLICKEND : E_UIMOUSECLICK, DV_HANDLER(ListView, HandleUIMouseClick));
 }
 

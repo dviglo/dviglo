@@ -282,7 +282,7 @@ bool TextureCube::SetSize(int size, unsigned format, TextureUsage usage, int mul
     if (usage == TEXTURE_RENDERTARGET)
         subscribe_to_event(E_RENDERSURFACEUPDATE, DV_HANDLER(TextureCube, HandleRenderSurfaceUpdate));
     else
-        UnsubscribeFromEvent(E_RENDERSURFACEUPDATE);
+        unsubscribe_from_event(E_RENDERSURFACEUPDATE);
 
     width_ = size;
     height_ = size;

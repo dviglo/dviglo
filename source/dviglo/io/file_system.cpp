@@ -318,7 +318,7 @@ void FileSystem::SetExecuteConsoleCommands(bool enable)
     if (enable)
         subscribe_to_event(E_CONSOLECOMMAND, DV_HANDLER(FileSystem, HandleConsoleCommand));
     else
-        UnsubscribeFromEvent(E_CONSOLECOMMAND);
+        unsubscribe_from_event(E_CONSOLECOMMAND);
 }
 
 int FileSystem::system_command(const String& commandLine, bool redirectStdOutToLog)

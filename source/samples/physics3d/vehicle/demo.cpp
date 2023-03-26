@@ -177,7 +177,7 @@ void VehicleDemo::SubscribeToEvents()
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(VehicleDemo, HandlePostUpdate));
 
     // Unsubscribe the SceneUpdate event from base class as the camera node is being controlled in HandlePostUpdate() in this sample
-    UnsubscribeFromEvent(E_SCENEUPDATE);
+    unsubscribe_from_event(E_SCENEUPDATE);
 }
 
 void VehicleDemo::handle_update(StringHash eventType, VariantMap& eventData)

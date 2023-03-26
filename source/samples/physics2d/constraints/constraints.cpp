@@ -425,7 +425,7 @@ void Urho2DConstraints::SubscribeToEvents()
     subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DConstraints, HandleMouseButtonDown));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
-    UnsubscribeFromEvent(E_SCENEUPDATE);
+    unsubscribe_from_event(E_SCENEUPDATE);
 }
 
 void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventData)
@@ -489,8 +489,8 @@ void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& ev
         pickedNode->RemoveComponent<ConstraintMouse2D>(); // Remove temporary constraint
         pickedNode = nullptr;
     }
-    UnsubscribeFromEvent(E_MOUSEMOVE);
-    UnsubscribeFromEvent(E_MOUSEBUTTONUP);
+    unsubscribe_from_event(E_MOUSEMOVE);
+    unsubscribe_from_event(E_MOUSEBUTTONUP);
 }
 
 Vector2 Urho2DConstraints::GetMousePositionXY()

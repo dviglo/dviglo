@@ -1873,7 +1873,7 @@ void UiElement::OnAttributeAnimationAdded()
 void UiElement::OnAttributeAnimationRemoved()
 {
     if (attributeAnimationInfos_.Empty())
-        UnsubscribeFromEvent(E_POSTUPDATE);
+        unsubscribe_from_event(E_POSTUPDATE);
 }
 
 Animatable* UiElement::FindAttributeAnimationTarget(const String& name, String& outName)

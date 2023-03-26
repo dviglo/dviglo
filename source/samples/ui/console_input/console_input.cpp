@@ -51,7 +51,7 @@ void ConsoleInput::Start()
 
     // Subscribe key down event
     subscribe_to_event(E_KEYDOWN, DV_HANDLER(ConsoleInput, HandleEscKeyDown));
-    UnsubscribeFromEvent(E_KEYUP);
+    unsubscribe_from_event(E_KEYUP);
 
     // Hide logo to make room for the console
     SetLogoVisible(false);

@@ -1890,7 +1890,7 @@ void Node::OnAttributeAnimationAdded()
 void Node::OnAttributeAnimationRemoved()
 {
     if (attributeAnimationInfos_.Empty())
-        UnsubscribeFromEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE);
+        unsubscribe_from_event(GetScene(), E_ATTRIBUTEANIMATIONUPDATE);
 }
 
 Animatable* Node::FindAttributeAnimationTarget(const String& name, String& outName)

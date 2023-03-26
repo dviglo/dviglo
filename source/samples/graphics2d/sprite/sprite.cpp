@@ -173,7 +173,7 @@ void Urho2DSprite::SubscribeToEvents()
     subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DSprite, handle_update));
 
     // Unsubscribe the SceneUpdate event from base class to prevent camera pitch and yaw in 2D sample
-    UnsubscribeFromEvent(E_SCENEUPDATE);
+    unsubscribe_from_event(E_SCENEUPDATE);
 }
 
 void Urho2DSprite::handle_update(StringHash eventType, VariantMap& eventData)

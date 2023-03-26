@@ -61,7 +61,7 @@ void ParticleEmitter2D::OnSetEnabled()
         if (IsEnabledEffective())
             subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(ParticleEmitter2D, HandleScenePostUpdate));
         else
-            UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+            unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
     }
 }
 
@@ -166,7 +166,7 @@ void ParticleEmitter2D::OnSceneSet(Scene* scene)
     if (scene && IsEnabledEffective())
         subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(ParticleEmitter2D, HandleScenePostUpdate));
     else if (!scene)
-        UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
+        unsubscribe_from_event(E_SCENEPOSTUPDATE);
 }
 
 void ParticleEmitter2D::OnWorldBoundingBoxUpdate()

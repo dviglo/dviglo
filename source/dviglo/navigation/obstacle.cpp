@@ -93,7 +93,7 @@ void Obstacle::OnSceneSet(Scene* scene)
         if (obstacleId_ > 0 && ownerMesh_)
             ownerMesh_->RemoveObstacle(this);
 
-        UnsubscribeFromEvent(E_NAVIGATION_TILE_ADDED);
+        unsubscribe_from_event(E_NAVIGATION_TILE_ADDED);
         ownerMesh_.Reset();
     }
 }

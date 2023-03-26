@@ -234,9 +234,9 @@ void CrowdManager::SetMaxAgentRadius(float maxAgentRadius)
 
 void CrowdManager::SetNavigationMesh(NavigationMesh* navMesh)
 {
-    UnsubscribeFromEvent(E_COMPONENTADDED);
-    UnsubscribeFromEvent(E_NAVIGATION_MESH_REBUILT);
-    UnsubscribeFromEvent(E_COMPONENTREMOVED);
+    unsubscribe_from_event(E_COMPONENTADDED);
+    unsubscribe_from_event(E_NAVIGATION_MESH_REBUILT);
+    unsubscribe_from_event(E_COMPONENTREMOVED);
 
     if (navMesh != navigationMesh_)     // It is possible to reset navmesh pointer back to 0
     {
@@ -645,10 +645,10 @@ void CrowdManager::OnSceneSet(Scene* scene)
     }
     else
     {
-        UnsubscribeFromEvent(E_SCENESUBSYSTEMUPDATE);
-        UnsubscribeFromEvent(E_NAVIGATION_MESH_REBUILT);
-        UnsubscribeFromEvent(E_COMPONENTADDED);
-        UnsubscribeFromEvent(E_COMPONENTREMOVED);
+        unsubscribe_from_event(E_SCENESUBSYSTEMUPDATE);
+        unsubscribe_from_event(E_NAVIGATION_MESH_REBUILT);
+        unsubscribe_from_event(E_COMPONENTADDED);
+        unsubscribe_from_event(E_COMPONENTREMOVED);
 
         navigationMesh_ = nullptr;
     }

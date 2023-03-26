@@ -166,7 +166,7 @@ void Connection::SetScene(Scene* newScene)
 
     scene_ = newScene;
     sceneLoaded_ = false;
-    UnsubscribeFromEvent(E_ASYNCLOADFINISHED);
+    unsubscribe_from_event(E_ASYNCLOADFINISHED);
 
     if (!scene_)
         return;

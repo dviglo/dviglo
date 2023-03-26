@@ -153,7 +153,7 @@ void RibbonTrail::OnSetEnabled()
         if (IsEnabledEffective())
             subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(RibbonTrail, HandleScenePostUpdate));
         else
-            UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+            unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
     }
 }
 
@@ -404,7 +404,7 @@ void RibbonTrail::OnSceneSet(Scene* scene)
     if (scene && IsEnabledEffective())
         subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(RibbonTrail, HandleScenePostUpdate));
     else if (!scene)
-         UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
+         unsubscribe_from_event(E_SCENEPOSTUPDATE);
 }
 
 void RibbonTrail::OnWorldBoundingBoxUpdate()

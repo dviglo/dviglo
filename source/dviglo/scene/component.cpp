@@ -207,7 +207,7 @@ void Component::OnAttributeAnimationAdded()
 void Component::OnAttributeAnimationRemoved()
 {
     if (attributeAnimationInfos_.Empty())
-        UnsubscribeFromEvent(GetScene(), E_ATTRIBUTEANIMATIONUPDATE);
+        unsubscribe_from_event(GetScene(), E_ATTRIBUTEANIMATIONUPDATE);
 }
 
 void Component::OnNodeSet(Node* node)

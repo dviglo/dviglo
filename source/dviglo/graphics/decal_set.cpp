@@ -1129,7 +1129,7 @@ void DecalSet::UpdateEventSubscription(bool checkAllDecals)
     }
     else if (!enabled && subscribed_)
     {
-        UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+        unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
         subscribed_ = false;
     }
 }

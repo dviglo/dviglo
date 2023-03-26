@@ -324,7 +324,7 @@ void Text::SetAutoLocalizable(bool enable)
         {
             text_ = stringId_;
             stringId_ = "";
-            UnsubscribeFromEvent(E_CHANGELANGUAGE);
+            unsubscribe_from_event(E_CHANGELANGUAGE);
         }
         DecodeToUnicode();
         ValidateSelection();

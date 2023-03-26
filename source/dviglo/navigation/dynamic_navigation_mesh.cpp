@@ -1052,7 +1052,7 @@ void DynamicNavigationMesh::OnSceneSet(Scene* scene)
     if (scene)
         subscribe_to_event(scene, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(DynamicNavigationMesh, HandleSceneSubsystemUpdate));
     else
-        UnsubscribeFromEvent(E_SCENESUBSYSTEMUPDATE);
+        unsubscribe_from_event(E_SCENESUBSYSTEMUPDATE);
 }
 
 void DynamicNavigationMesh::AddObstacle(Obstacle* obstacle, bool silent)

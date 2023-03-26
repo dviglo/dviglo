@@ -174,7 +174,7 @@ void Object::subscribe_to_event(Object* sender, StringHash eventType, const std:
     subscribe_to_event(sender, eventType, new EventHandler11Impl(function, userData));
 }
 
-void Object::UnsubscribeFromEvent(StringHash eventType)
+void Object::unsubscribe_from_event(StringHash eventType)
 {
     for (;;)
     {
@@ -193,7 +193,7 @@ void Object::UnsubscribeFromEvent(StringHash eventType)
     }
 }
 
-void Object::UnsubscribeFromEvent(Object* sender, StringHash eventType)
+void Object::unsubscribe_from_event(Object* sender, StringHash eventType)
 {
     if (!sender)
         return;

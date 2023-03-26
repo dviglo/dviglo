@@ -766,7 +766,7 @@ void PhysicsWorld::OnSceneSet(Scene* scene)
         subscribe_to_event(scene_, E_SCENESUBSYSTEMUPDATE, DV_HANDLER(PhysicsWorld, HandleSceneSubsystemUpdate));
     }
     else
-        UnsubscribeFromEvent(E_SCENESUBSYSTEMUPDATE);
+        unsubscribe_from_event(E_SCENESUBSYSTEMUPDATE);
 }
 
 void PhysicsWorld::HandleSceneSubsystemUpdate(StringHash eventType, VariantMap& eventData)

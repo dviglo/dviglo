@@ -76,7 +76,7 @@ void HttpRequestDemo::handle_update(StringHash eventType, VariantMap& eventData)
         else if (httpRequest_->GetState() == HTTP_ERROR)
         {
             text_->SetText("An error has occurred: " + httpRequest_->GetError());
-            UnsubscribeFromEvent("Update");
+            unsubscribe_from_event("Update");
             DV_LOGERRORF("HttpRequest error: %s", httpRequest_->GetError().c_str());
         }
         // Get message data
@@ -102,7 +102,7 @@ void HttpRequestDemo::handle_update(StringHash eventType, VariantMap& eventData)
                 else
                     text_->SetText("Your IP is: " + val.GetString());
 
-                UnsubscribeFromEvent("Update");
+                unsubscribe_from_event("Update");
             }
         }
     }

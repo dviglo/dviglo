@@ -1090,8 +1090,8 @@ void Material::SetOcclusion(bool enable)
 
 void Material::SetScene(Scene* scene)
 {
-    UnsubscribeFromEvent(E_UPDATE);
-    UnsubscribeFromEvent(E_ATTRIBUTEANIMATIONUPDATE);
+    unsubscribe_from_event(E_UPDATE);
+    unsubscribe_from_event(E_ATTRIBUTEANIMATIONUPDATE);
     subscribed_ = false;
     scene_ = scene;
     UpdateEventSubscription();
@@ -1312,8 +1312,8 @@ void Material::UpdateEventSubscription()
     }
     else if (subscribed_ && shaderParameterAnimationInfos_.Empty())
     {
-        UnsubscribeFromEvent(E_UPDATE);
-        UnsubscribeFromEvent(E_ATTRIBUTEANIMATIONUPDATE);
+        unsubscribe_from_event(E_UPDATE);
+        unsubscribe_from_event(E_ATTRIBUTEANIMATIONUPDATE);
         subscribed_ = false;
     }
 }

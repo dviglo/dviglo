@@ -72,11 +72,11 @@ void LogicComponent::OnSceneSet(Scene* scene)
         UpdateEventSubscription();
     else
     {
-        UnsubscribeFromEvent(E_SCENEUPDATE);
-        UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
+        unsubscribe_from_event(E_SCENEUPDATE);
+        unsubscribe_from_event(E_SCENEPOSTUPDATE);
 #if defined(DV_BULLET) || defined(DV_BOX2D)
-        UnsubscribeFromEvent(E_PHYSICSPRESTEP);
-        UnsubscribeFromEvent(E_PHYSICSPOSTSTEP);
+        unsubscribe_from_event(E_PHYSICSPRESTEP);
+        unsubscribe_from_event(E_PHYSICSPOSTSTEP);
 #endif
         currentEventMask_ = LogicComponentEvents::None;
     }
@@ -98,7 +98,7 @@ void LogicComponent::UpdateEventSubscription()
     }
     else if (!needUpdate && !!(currentEventMask_ & LogicComponentEvents::Update))
     {
-        UnsubscribeFromEvent(scene, E_SCENEUPDATE);
+        unsubscribe_from_event(scene, E_SCENEUPDATE);
         currentEventMask_ &= ~LogicComponentEvents::Update;
     }
 
@@ -110,7 +110,7 @@ void LogicComponent::UpdateEventSubscription()
     }
     else if (!needPostUpdate && !!(currentEventMask_ & LogicComponentEvents::PostUpdate))
     {
-        UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+        unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
         currentEventMask_ &= ~LogicComponentEvents::PostUpdate;
     }
 
@@ -127,7 +127,7 @@ void LogicComponent::UpdateEventSubscription()
     }
     else if (!needFixedUpdate && !!(currentEventMask_ & LogicComponentEvents::FixedUpdate))
     {
-        UnsubscribeFromEvent(world, E_PHYSICSPRESTEP);
+        unsubscribe_from_event(world, E_PHYSICSPRESTEP);
         currentEventMask_ &= ~LogicComponentEvents::FixedUpdate;
     }
 
@@ -139,7 +139,7 @@ void LogicComponent::UpdateEventSubscription()
     }
     else if (!needFixedPostUpdate && !!(currentEventMask_ & LogicComponentEvents::FixedPostUpdate))
     {
-        UnsubscribeFromEvent(world, E_PHYSICSPOSTSTEP);
+        unsubscribe_from_event(world, E_PHYSICSPOSTSTEP);
         currentEventMask_ &= ~LogicComponentEvents::FixedPostUpdate;
     }
 #endif
@@ -158,7 +158,7 @@ void LogicComponent::HandleSceneUpdate(StringHash eventType, VariantMap& eventDa
         // If did not need actual update events, unsubscribe now
         if (!(updateEventMask_ & LogicComponentEvents::Update))
         {
-            UnsubscribeFromEvent(GetScene(), E_SCENEUPDATE);
+            unsubscribe_from_event(GetScene(), E_SCENEUPDATE);
             currentEventMask_ &= ~LogicComponentEvents::Update;
             return;
         }

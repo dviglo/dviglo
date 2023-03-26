@@ -249,7 +249,7 @@ void Terrain::SetNorthNeighbor(Terrain* north)
         return;
 
     if (north_ && north_->GetNode())
-        UnsubscribeFromEvent(north_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(north_->GetNode(), E_TERRAINCREATED);
 
     north_ = north;
     if (north_ && north_->GetNode())
@@ -268,7 +268,7 @@ void Terrain::SetSouthNeighbor(Terrain* south)
         return;
 
     if (south_ && south_->GetNode())
-        UnsubscribeFromEvent(south_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(south_->GetNode(), E_TERRAINCREATED);
 
     south_ = south;
     if (south_ && south_->GetNode())
@@ -287,7 +287,7 @@ void Terrain::SetWestNeighbor(Terrain* west)
         return;
 
     if (west_ && west_->GetNode())
-        UnsubscribeFromEvent(west_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(west_->GetNode(), E_TERRAINCREATED);
 
     west_ = west;
     if (west_ && west_->GetNode())
@@ -306,7 +306,7 @@ void Terrain::SetEastNeighbor(Terrain* east)
         return;
 
     if (east_ && east_->GetNode())
-        UnsubscribeFromEvent(east_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(east_->GetNode(), E_TERRAINCREATED);
 
     east_ = east;
     if (east_ && east_->GetNode())
@@ -322,13 +322,13 @@ void Terrain::SetEastNeighbor(Terrain* east)
 void Terrain::SetNeighbors(Terrain* north, Terrain* south, Terrain* west, Terrain* east)
 {
     if (north_ && north_->GetNode())
-        UnsubscribeFromEvent(north_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(north_->GetNode(), E_TERRAINCREATED);
     if (south_ && south_->GetNode())
-        UnsubscribeFromEvent(south_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(south_->GetNode(), E_TERRAINCREATED);
     if (west_ && west_->GetNode())
-        UnsubscribeFromEvent(west_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(west_->GetNode(), E_TERRAINCREATED);
     if (east_ && east_->GetNode())
-        UnsubscribeFromEvent(east_->GetNode(), E_TERRAINCREATED);
+        unsubscribe_from_event(east_->GetNode(), E_TERRAINCREATED);
 
     north_ = north;
     if (north_ && north_->GetNode())
@@ -1418,7 +1418,7 @@ bool Terrain::SetHeightMapInternal(Image* image, bool recreateNow)
 
     // Unsubscribe from the reload event of previous image (if any), then subscribe to the new
     if (heightMap_)
-        UnsubscribeFromEvent(heightMap_, E_RELOADFINISHED);
+        unsubscribe_from_event(heightMap_, E_RELOADFINISHED);
     if (image)
         subscribe_to_event(image, E_RELOADFINISHED, DV_HANDLER(Terrain, HandleHeightMapReloadFinished));
 

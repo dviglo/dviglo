@@ -60,7 +60,7 @@ void AnimationController::OnSetEnabled()
         if (IsEnabledEffective())
             subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(AnimationController, HandleScenePostUpdate));
         else
-            UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+            unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
     }
 }
 
@@ -820,7 +820,7 @@ void AnimationController::OnSceneSet(Scene* scene)
     if (scene && IsEnabledEffective())
         subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(AnimationController, HandleScenePostUpdate));
     else if (!scene)
-        UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
+        unsubscribe_from_event(E_SCENEPOSTUPDATE);
 }
 
 AnimationState* AnimationController::AddAnimationState(Animation* animation)

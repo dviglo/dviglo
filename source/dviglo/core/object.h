@@ -101,9 +101,9 @@ public:
     /// Subscribe to a specific sender's event.
     void subscribe_to_event(Object* sender, StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData = nullptr);
     /// Unsubscribe from an event.
-    void UnsubscribeFromEvent(StringHash eventType);
+    void unsubscribe_from_event(StringHash eventType);
     /// Unsubscribe from a specific sender's event.
-    void UnsubscribeFromEvent(Object* sender, StringHash eventType);
+    void unsubscribe_from_event(Object* sender, StringHash eventType);
     /// Unsubscribe from a specific sender's events.
     void UnsubscribeFromEvents(Object* sender);
     /// Unsubscribe from all events.

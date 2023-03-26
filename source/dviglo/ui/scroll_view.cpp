@@ -186,7 +186,7 @@ void ScrollView::SetContentElement(UiElement* element)
     if (contentElement_)
     {
         scrollPanel_->RemoveChild(contentElement_);
-        UnsubscribeFromEvent(contentElement_, E_RESIZED);
+        unsubscribe_from_event(contentElement_, E_RESIZED);
     }
     contentElement_ = element;
     if (contentElement_)

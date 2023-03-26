@@ -76,7 +76,7 @@ void AnimatedSprite2D::OnSetEnabled()
         if (enabled)
             subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(AnimatedSprite2D, HandleScenePostUpdate));
         else
-            UnsubscribeFromEvent(scene, E_SCENEPOSTUPDATE);
+            unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
     }
 }
 
@@ -201,7 +201,7 @@ void AnimatedSprite2D::OnSceneSet(Scene* scene)
             subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(AnimatedSprite2D, HandleScenePostUpdate));
     }
     else
-        UnsubscribeFromEvent(E_SCENEPOSTUPDATE);
+        unsubscribe_from_event(E_SCENEPOSTUPDATE);
 }
 
 void AnimatedSprite2D::SetAnimationAttr(const String& name)

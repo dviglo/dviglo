@@ -561,7 +561,7 @@ void CollisionShape::draw_debug_geometry(DebugRenderer* debug, bool depthTest)
 void CollisionShape::SetBox(const Vector3& size, const Vector3& position, const Quaternion& rotation)
 {
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_BOX;
     size_ = size;
@@ -578,7 +578,7 @@ void CollisionShape::SetBox(const Vector3& size, const Vector3& position, const 
 void CollisionShape::SetSphere(float diameter, const Vector3& position, const Quaternion& rotation)
 {
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_SPHERE;
     size_ = Vector3(diameter, diameter, diameter);
@@ -595,7 +595,7 @@ void CollisionShape::SetSphere(float diameter, const Vector3& position, const Qu
 void CollisionShape::SetStaticPlane(const Vector3& position, const Quaternion& rotation)
 {
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_STATICPLANE;
     position_ = position;
@@ -611,7 +611,7 @@ void CollisionShape::SetStaticPlane(const Vector3& position, const Quaternion& r
 void CollisionShape::SetCylinder(float diameter, float height, const Vector3& position, const Quaternion& rotation)
 {
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_CYLINDER;
     size_ = Vector3(diameter, height, diameter);
@@ -628,7 +628,7 @@ void CollisionShape::SetCylinder(float diameter, float height, const Vector3& po
 void CollisionShape::SetCapsule(float diameter, float height, const Vector3& position, const Quaternion& rotation)
 {
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_CAPSULE;
     size_ = Vector3(diameter, height, diameter);
@@ -645,7 +645,7 @@ void CollisionShape::SetCapsule(float diameter, float height, const Vector3& pos
 void CollisionShape::SetCone(float diameter, float height, const Vector3& position, const Quaternion& rotation)
 {
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_CONE;
     size_ = Vector3(diameter, height, diameter);
@@ -709,7 +709,7 @@ void CollisionShape::SetTerrain(i32 lodLevel)
     }
 
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = SHAPE_TERRAIN;
     lodLevel_ = lodLevel;
@@ -790,7 +790,7 @@ void CollisionShape::SetModel(Model* model)
     if (model != model_)
     {
         if (model_)
-            UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+            unsubscribe_from_event(model_, E_RELOADFINISHED);
 
         model_ = model;
         if (shapeType_ >= SHAPE_TRIANGLEMESH)
@@ -1145,7 +1145,7 @@ void CollisionShape::SetModelShape(ShapeType shapeType, Model* model, i32 lodLev
     }
 
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = shapeType;
     model_ = model;
@@ -1175,7 +1175,7 @@ void CollisionShape::SetCustomShape(ShapeType shapeType, CustomGeometry* custom,
     }
 
     if (model_)
-        UnsubscribeFromEvent(model_, E_RELOADFINISHED);
+        unsubscribe_from_event(model_, E_RELOADFINISHED);
 
     shapeType_ = shapeType;
     model_.Reset();
