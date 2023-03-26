@@ -59,7 +59,7 @@ void Sound::register_object()
     DV_CONTEXT.RegisterFactory<Sound>();
 }
 
-bool Sound::BeginLoad(Deserializer& source)
+bool Sound::begin_load(Deserializer& source)
 {
     DV_PROFILE(LoadSound);
 

@@ -101,7 +101,7 @@ void AnimationSet2D::register_object()
     DV_CONTEXT.RegisterFactory<AnimationSet2D>();
 }
 
-bool AnimationSet2D::BeginLoad(Deserializer& source)
+bool AnimationSet2D::begin_load(Deserializer& source)
 {
     Dispose();
 

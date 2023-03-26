@@ -111,7 +111,7 @@ void Animation::register_object()
     DV_CONTEXT.RegisterFactory<Animation>();
 }
 
-bool Animation::BeginLoad(Deserializer& source)
+bool Animation::begin_load(Deserializer& source)
 {
     unsigned memoryUse = sizeof(Animation);
 

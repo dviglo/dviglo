@@ -91,7 +91,7 @@ void ParticleEffect2D::register_object()
     DV_CONTEXT.RegisterFactory<ParticleEffect2D>();
 }
 
-bool ParticleEffect2D::BeginLoad(Deserializer& source)
+bool ParticleEffect2D::begin_load(Deserializer& source)
 {
     if (GetName().Empty())
         SetName(source.GetName());

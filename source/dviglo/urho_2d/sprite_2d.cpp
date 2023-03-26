@@ -29,7 +29,7 @@ void Sprite2D::register_object()
     DV_CONTEXT.RegisterFactory<Sprite2D>();
 }
 
-bool Sprite2D::BeginLoad(Deserializer& source)
+bool Sprite2D::begin_load(Deserializer& source)
 {
     if (GetName().Empty())
         SetName(source.GetName());
@@ -42,8 +42,8 @@ bool Sprite2D::BeginLoad(Deserializer& source)
         loadTexture_ = new Texture2D();
         loadTexture_->SetName(GetName());
     }
-    // In case we're async loading, only call BeginLoad() for the texture (load image but do not upload to GPU)
-    if (!loadTexture_->BeginLoad(source))
+    // In case we're async loading, only call begin_load() for the texture (load image but do not upload to GPU)
+    if (!loadTexture_->begin_load(source))
     {
         // Reload failed
         if (loadTexture_ == texture_)

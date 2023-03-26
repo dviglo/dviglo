@@ -37,7 +37,7 @@ void Texture2D::register_object()
     DV_CONTEXT.RegisterFactory<Texture2D>();
 }
 
-bool Texture2D::BeginLoad(Deserializer& source)
+bool Texture2D::begin_load(Deserializer& source)
 {
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless())

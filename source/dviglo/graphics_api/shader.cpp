@@ -60,7 +60,7 @@ void Shader::register_object()
     DV_CONTEXT.RegisterFactory<Shader>();
 }
 
-bool Shader::BeginLoad(Deserializer& source)
+bool Shader::begin_load(Deserializer& source)
 {
     if (GParams::is_headless())
         return false;

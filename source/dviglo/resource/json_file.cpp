@@ -90,7 +90,7 @@ static void ToJSONValue(JSONValue& jsonValue, const rapidjson::Value& rapidjsonV
     }
 }
 
-bool JSONFile::BeginLoad(Deserializer& source)
+bool JSONFile::begin_load(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
     if (!dataSize && !source.GetName().Empty())

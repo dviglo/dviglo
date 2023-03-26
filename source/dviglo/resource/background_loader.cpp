@@ -65,7 +65,7 @@ void BackgroundLoader::ThreadFunction()
             if (file)
             {
                 resource->SetAsyncLoadState(ASYNC_LOADING);
-                success = resource->BeginLoad(*file);
+                success = resource->begin_load(*file);
             }
 
             // Process dependencies now
@@ -243,7 +243,7 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
     Resource* resource = item.resource_;
 
     bool success = resource->GetAsyncLoadState() == ASYNC_SUCCESS;
-    // If BeginLoad() phase was successful, call EndLoad() and get the final success/failure result
+    // If begin_load() phase was successful, call EndLoad() and get the final success/failure result
     if (success)
     {
 #ifdef DV_TRACY_PROFILING

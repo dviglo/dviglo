@@ -100,7 +100,7 @@ public:
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    bool BeginLoad(Deserializer& source) override;
+    bool begin_load(Deserializer& source) override;
     /// Finish resource loading. Always called from the main thread. Return true if successful.
     bool EndLoad() override;
     /// Save resource. Return true if successful.
@@ -403,7 +403,7 @@ private:
     Vector<ColorFrame> colorFrames_;
     /// Texture animation frames.
     Vector<TextureFrame> textureFrames_;
-    /// Material name acquired during BeginLoad().
+    /// Material name acquired during begin_load().
     String loadMaterialName_;
     /// Particle rotation mode in relation to the camera.
     FaceCameraMode faceCameraMode_;

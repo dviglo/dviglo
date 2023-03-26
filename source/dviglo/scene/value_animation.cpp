@@ -45,7 +45,7 @@ void ValueAnimation::register_object()
     DV_CONTEXT.RegisterFactory<ValueAnimation>();
 }
 
-bool ValueAnimation::BeginLoad(Deserializer& source)
+bool ValueAnimation::begin_load(Deserializer& source)
 {
     XmlFile xmlFile;
     if (!xmlFile.Load(source))

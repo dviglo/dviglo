@@ -36,7 +36,7 @@ public:
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    bool BeginLoad(Deserializer& source) override;
+    bool begin_load(Deserializer& source) override;
     /// Finish resource loading. Always called from the main thread. Return true if successful.
     bool EndLoad() override;
     /// Save resource. Return true if successful.
@@ -308,7 +308,7 @@ private:
     float rotationEnd_;
     /// Rotation end variance.
     float rotationEndVariance_;
-    /// Sprite name acquired during BeginLoad().
+    /// Sprite name acquired during begin_load().
     String loadSpriteName_;
 };
 

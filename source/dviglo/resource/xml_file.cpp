@@ -59,7 +59,7 @@ void XmlFile::register_object()
     DV_CONTEXT.RegisterFactory<XmlFile>();
 }
 
-bool XmlFile::BeginLoad(Deserializer& source)
+bool XmlFile::begin_load(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
     if (!dataSize && !source.GetName().Empty())

@@ -28,7 +28,7 @@ public:
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    bool BeginLoad(Deserializer& source) override;
+    bool begin_load(Deserializer& source) override;
     /// Finish resource loading. Always called from the main thread. Return true if successful.
     bool EndLoad() override;
     /// Mark the GPU resource destroyed on context destruction.
@@ -81,9 +81,9 @@ private:
     SharedPtr<RenderSurface> renderSurface_;
     /// Memory use per layer.
     Vector<unsigned> layerMemoryUse_;
-    /// Layer image files acquired during BeginLoad.
+    /// Layer image files acquired during begin_load.
     Vector<SharedPtr<Image>> loadImages_;
-    /// Parameter file acquired during BeginLoad.
+    /// Parameter file acquired during begin_load.
     SharedPtr<XmlFile> loadParameters_;
 };
 

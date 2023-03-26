@@ -40,7 +40,7 @@ public:
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    bool BeginLoad(Deserializer& source) override;
+    bool begin_load(Deserializer& source) override;
     /// Save resource as a new bitmap font type in XML format. Return true if successful.
     bool save_xml(Serializer& dest, int pointSize, bool usedGlyphs = false, const String& indentation = "\t");
     /// Set absolute (in pixels) position adjustment for glyphs.

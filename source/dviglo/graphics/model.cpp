@@ -52,7 +52,7 @@ void Model::register_object()
     DV_CONTEXT.RegisterFactory<Model>();
 }
 
-bool Model::BeginLoad(Deserializer& source)
+bool Model::begin_load(Deserializer& source)
 {
     // Check ID
     String fileID = source.ReadFileID();

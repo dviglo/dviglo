@@ -21,7 +21,7 @@ Resource::Resource() :
 
 bool Resource::Load(Deserializer& source)
 {
-    // Because BeginLoad() / EndLoad() can be called from worker threads, where profiling would be a no-op,
+    // Because begin_load() / EndLoad() can be called from worker threads, where profiling would be a no-op,
     // create a type name -based profile block here
 #ifdef DV_TRACY_PROFILING
     DV_PROFILE_COLOR(Load, DV_PROFILE_RESOURCE_COLOR);
@@ -33,7 +33,7 @@ bool Resource::Load(Deserializer& source)
     // If we are loading synchronously in a non-main thread, behave as if async loading (for example use
     // GetTempResource() instead of GetResource() to load resource dependencies)
     SetAsyncLoadState(Thread::IsMainThread() ? ASYNC_DONE : ASYNC_LOADING);
-    bool success = BeginLoad(source);
+    bool success = begin_load(source);
     if (success)
         success &= EndLoad();
     SetAsyncLoadState(ASYNC_DONE);
@@ -41,7 +41,7 @@ bool Resource::Load(Deserializer& source)
     return success;
 }
 
-bool Resource::BeginLoad(Deserializer& source)
+bool Resource::begin_load(Deserializer& source)
 {
     // This always needs to be overridden by subclasses
     return false;

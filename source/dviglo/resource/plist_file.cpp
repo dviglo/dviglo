@@ -287,7 +287,7 @@ void PListFile::register_object()
     DV_CONTEXT.RegisterFactory<PListFile>();
 }
 
-bool PListFile::BeginLoad(Deserializer& source)
+bool PListFile::begin_load(Deserializer& source)
 {
     if (GetName().Empty())
         SetName(source.GetName());

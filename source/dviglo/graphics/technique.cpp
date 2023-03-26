@@ -235,7 +235,7 @@ void Technique::register_object()
     DV_CONTEXT.RegisterFactory<Technique>();
 }
 
-bool Technique::BeginLoad(Deserializer& source)
+bool Technique::begin_load(Deserializer& source)
 {
     passes_.Clear();
     cloneTechniques_.Clear();

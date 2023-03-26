@@ -34,7 +34,7 @@ void ObjectAnimation::register_object()
     DV_CONTEXT.RegisterFactory<ObjectAnimation>();
 }
 
-bool ObjectAnimation::BeginLoad(Deserializer& source)
+bool ObjectAnimation::begin_load(Deserializer& source)
 {
     XmlFile xmlFile;
     if (!xmlFile.Load(source))

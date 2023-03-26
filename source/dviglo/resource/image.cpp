@@ -246,7 +246,7 @@ void Image::register_object()
     DV_CONTEXT.RegisterFactory<Image>();
 }
 
-bool Image::BeginLoad(Deserializer& source)
+bool Image::begin_load(Deserializer& source)
 {
     // Check for DDS, KTX or PVR compressed format
     String fileID = source.ReadFileID();

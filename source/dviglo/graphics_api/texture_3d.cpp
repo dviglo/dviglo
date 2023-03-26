@@ -39,7 +39,7 @@ void Texture3D::register_object()
     DV_CONTEXT.RegisterFactory<Texture3D>();
 }
 
-bool Texture3D::BeginLoad(Deserializer& source)
+bool Texture3D::begin_load(Deserializer& source)
 {
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless())

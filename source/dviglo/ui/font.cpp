@@ -52,7 +52,7 @@ void Font::register_object()
     DV_CONTEXT.RegisterFactory<Font>();
 }
 
-bool Font::BeginLoad(Deserializer& source)
+bool Font::begin_load(Deserializer& source)
 {
     // In headless mode, do not actually load, just return success
     if (GParams::is_headless())

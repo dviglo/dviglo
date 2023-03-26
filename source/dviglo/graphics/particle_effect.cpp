@@ -77,7 +77,7 @@ void ParticleEffect::register_object()
     DV_CONTEXT.RegisterFactory<ParticleEffect>();
 }
 
-bool ParticleEffect::BeginLoad(Deserializer& source)
+bool ParticleEffect::begin_load(Deserializer& source)
 {
     loadMaterialName_.Clear();
 

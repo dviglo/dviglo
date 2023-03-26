@@ -43,7 +43,7 @@ void Texture2DArray::register_object()
     DV_CONTEXT.RegisterFactory<Texture2DArray>();
 }
 
-bool Texture2DArray::BeginLoad(Deserializer& source)
+bool Texture2DArray::begin_load(Deserializer& source)
 {
     ResourceCache& cache = DV_RES_CACHE;
 

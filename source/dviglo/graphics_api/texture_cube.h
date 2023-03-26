@@ -28,7 +28,7 @@ public:
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    bool BeginLoad(Deserializer& source) override;
+    bool begin_load(Deserializer& source) override;
     /// Finish resource loading. Always called from the main thread. Return true if successful.
     bool EndLoad() override;
     /// Mark the GPU resource destroyed on context destruction.
@@ -78,9 +78,9 @@ private:
     SharedPtr<RenderSurface> renderSurfaces_[MAX_CUBEMAP_FACES];
     /// Memory use per face.
     unsigned faceMemoryUse_[MAX_CUBEMAP_FACES]{};
-    /// Face image files acquired during BeginLoad.
+    /// Face image files acquired during begin_load.
     Vector<SharedPtr<Image>> loadImages_;
-    /// Parameter file acquired during BeginLoad.
+    /// Parameter file acquired during begin_load.
     SharedPtr<XmlFile> loadParameters_;
 };
 

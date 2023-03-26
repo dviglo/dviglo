@@ -367,7 +367,7 @@ void TmxFile2D::register_object()
     DV_CONTEXT.RegisterFactory<TmxFile2D>();
 }
 
-bool TmxFile2D::BeginLoad(Deserializer& source)
+bool TmxFile2D::begin_load(Deserializer& source)
 {
     if (GetName().Empty())
         SetName(source.GetName());

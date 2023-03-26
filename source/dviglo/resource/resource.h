@@ -24,11 +24,11 @@ enum AsyncLoadState
     ASYNC_DONE = 0,
     /// Queued for asynchronous loading.
     ASYNC_QUEUED = 1,
-    /// In progress of calling BeginLoad() in a worker thread.
+    /// In progress of calling begin_load() in a worker thread.
     ASYNC_LOADING = 2,
-    /// BeginLoad() succeeded. EndLoad() can be called in the main thread.
+    /// begin_load() succeeded. EndLoad() can be called in the main thread.
     ASYNC_SUCCESS = 3,
-    /// BeginLoad() failed.
+    /// begin_load() failed.
     ASYNC_FAIL = 4
 };
 
@@ -41,10 +41,10 @@ public:
     /// Construct.
     explicit Resource();
 
-    /// Load resource synchronously. Call both BeginLoad() & EndLoad() and return true if both succeeded.
+    /// Load resource synchronously. Call both begin_load() & EndLoad() and return true if both succeeded.
     bool Load(Deserializer& source);
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    virtual bool BeginLoad(Deserializer& source);
+    virtual bool begin_load(Deserializer& source);
     /// Finish resource loading. Always called from the main thread. Return true if successful.
     virtual bool EndLoad();
     /// Save resource. Return true if successful.

@@ -187,7 +187,7 @@ void Material::register_object()
     DV_CONTEXT.RegisterFactory<Material>();
 }
 
-bool Material::BeginLoad(Deserializer& source)
+bool Material::begin_load(Deserializer& source)
 {
     // In headless mode, do not actually load the material, just return success
     if (GParams::is_headless())

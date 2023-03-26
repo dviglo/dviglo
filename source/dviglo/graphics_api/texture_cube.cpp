@@ -61,7 +61,7 @@ void TextureCube::register_object()
     DV_CONTEXT.RegisterFactory<TextureCube>();
 }
 
-bool TextureCube::BeginLoad(Deserializer& source)
+bool TextureCube::begin_load(Deserializer& source)
 {
     ResourceCache& cache = DV_RES_CACHE;
 

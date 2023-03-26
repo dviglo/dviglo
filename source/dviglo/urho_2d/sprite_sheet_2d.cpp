@@ -31,7 +31,7 @@ void SpriteSheet2D::register_object()
     DV_CONTEXT.RegisterFactory<SpriteSheet2D>();
 }
 
-bool SpriteSheet2D::BeginLoad(Deserializer& source)
+bool SpriteSheet2D::begin_load(Deserializer& source)
 {
     if (GetName().Empty())
         SetName(source.GetName());

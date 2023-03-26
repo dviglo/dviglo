@@ -134,7 +134,7 @@ public:
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.
-    bool BeginLoad(Deserializer& source) override;
+    bool begin_load(Deserializer& source) override;
 
     /// Return root.
     const PListValueMap& GetRoot() const { return root_; }
