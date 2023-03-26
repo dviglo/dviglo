@@ -266,14 +266,14 @@ void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, con
     for (; i >= 0 && i < unicodeText.Size(); i += step)
     {
         const FontGlyph* glyph = face->GetGlyph(unicodeText[i]);
-        float gx = (float)glyph->x_;
-        float gy = (float)glyph->y_;
-        float gw = (float)glyph->width_;
-        float gh = (float)glyph->height_;
-        float gox = (float)glyph->offsetX_;
-        float goy = (float)glyph->offsetY_;
+        float gx = (float)glyph->x;
+        float gy = (float)glyph->y;
+        float gw = (float)glyph->width;
+        float gh = (float)glyph->height;
+        float gox = (float)glyph->offset_x;
+        float goy = (float)glyph->offset_y;
 
-        sprite_.texture = textures[glyph->page_];
+        sprite_.texture = textures[glyph->page];
         sprite_.destination = Rect(charPos.x, charPos.y, charPos.x + gw, charPos.y + gh);
         sprite_.source_uv = Rect(gx * pixelWidth, gy * pixelHeight, (gx + gw) * pixelWidth, (gy + gh) * pixelHeight);
 
@@ -282,7 +282,7 @@ void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, con
 
         DrawSpriteInternal();
 
-        charOrig.x -= (float)glyph->advanceX_;
+        charOrig.x -= (float)glyph->advance_x;
     }
 }
 

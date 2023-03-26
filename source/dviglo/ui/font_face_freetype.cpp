@@ -290,7 +290,7 @@ const FontGlyph* FontFaceFreeType::GetGlyph(c32 c)
     if (i != glyphMapping_.End())
     {
         FontGlyph& glyph = i->second_;
-        glyph.used_ = true;
+        glyph.used = true;
         return &glyph;
     }
 
@@ -300,7 +300,7 @@ const FontGlyph* FontFaceFreeType::GetGlyph(c32 c)
         if (i != glyphMapping_.End())
         {
             FontGlyph& glyph = i->second_;
-            glyph.used_ = true;
+            glyph.used = true;
             return &glyph;
         }
     }
@@ -400,45 +400,45 @@ bool FontFaceFreeType::LoadCharGlyph(c32 charCode, Image* image)
     {
         const char* family = face->family_name ? face->family_name : "NULL";
         DV_LOGERRORF("FT_Load_Char failed (family: %s, char code: %u)", family, charCode);
-        fontGlyph.texWidth_ = 0;
-        fontGlyph.texHeight_ = 0;
-        fontGlyph.width_ = 0;
-        fontGlyph.height_ = 0;
-        fontGlyph.offsetX_ = 0;
-        fontGlyph.offsetY_ = 0;
-        fontGlyph.advanceX_ = 0;
-        fontGlyph.page_ = 0;
+        fontGlyph.tex_width = 0;
+        fontGlyph.tex_height = 0;
+        fontGlyph.width = 0;
+        fontGlyph.height = 0;
+        fontGlyph.offset_x = 0;
+        fontGlyph.offset_y = 0;
+        fontGlyph.advance_x = 0;
+        fontGlyph.page = 0;
     }
     else
     {
         // Note: position within texture will be filled later
-        fontGlyph.texWidth_ = slot->bitmap.width + oversampling_ - 1;
-        fontGlyph.texHeight_ = slot->bitmap.rows;
-        fontGlyph.width_ = slot->bitmap.width + oversampling_ - 1;
-        fontGlyph.height_ = slot->bitmap.rows;
-        fontGlyph.offsetX_ = slot->bitmap_left - (oversampling_ - 1) / 2.0f;
-        fontGlyph.offsetY_ = floorf(ascender_ + 0.5f) - slot->bitmap_top;
+        fontGlyph.tex_width = slot->bitmap.width + oversampling_ - 1;
+        fontGlyph.tex_height = slot->bitmap.rows;
+        fontGlyph.width = slot->bitmap.width + oversampling_ - 1;
+        fontGlyph.height = slot->bitmap.rows;
+        fontGlyph.offset_x = slot->bitmap_left - (oversampling_ - 1) / 2.0f;
+        fontGlyph.offset_y = floorf(ascender_ + 0.5f) - slot->bitmap_top;
 
         if (subpixel_ && slot->linearHoriAdvance)
         {
             // linearHoriAdvance is stored in 16.16 fixed point, not the usual 26.6
-            fontGlyph.advanceX_ = slot->linearHoriAdvance / 65536.0;
+            fontGlyph.advance_x = slot->linearHoriAdvance / 65536.0;
         }
         else
         {
             // Round to nearest pixel (only necessary when hinting is disabled)
-            fontGlyph.advanceX_ = floorf(FixedToFloat(slot->metrics.horiAdvance) + 0.5f);
+            fontGlyph.advance_x = floorf(FixedToFloat(slot->metrics.horiAdvance) + 0.5f);
         }
 
-        fontGlyph.width_ /= oversampling_;
-        fontGlyph.offsetX_ /= oversampling_;
-        fontGlyph.advanceX_ /= oversampling_;
+        fontGlyph.width /= oversampling_;
+        fontGlyph.offset_x /= oversampling_;
+        fontGlyph.advance_x /= oversampling_;
     }
 
     int x = 0, y = 0;
-    if (fontGlyph.texWidth_ > 0 && fontGlyph.texHeight_ > 0)
+    if (fontGlyph.tex_width > 0 && fontGlyph.tex_height > 0)
     {
-        if (!allocator_.Allocate(fontGlyph.texWidth_ + 1, fontGlyph.texHeight_ + 1, x, y))
+        if (!allocator_.Allocate(fontGlyph.tex_width + 1, fontGlyph.tex_height + 1, x, y))
         {
             if (image)
             {
@@ -454,29 +454,29 @@ bool FontFaceFreeType::LoadCharGlyph(c32 charCode, Image* image)
                 return false;
             }
 
-            if (!allocator_.Allocate(fontGlyph.texWidth_ + 1, fontGlyph.texHeight_ + 1, x, y))
+            if (!allocator_.Allocate(fontGlyph.tex_width + 1, fontGlyph.tex_height + 1, x, y))
             {
                 DV_LOGWARNINGF("FontFaceFreeType::LoadCharGlyph: failed to position char code %u in blank page", charCode);
                 return false;
             }
         }
 
-        fontGlyph.x_ = (short)x;
-        fontGlyph.y_ = (short)y;
+        fontGlyph.x = (short)x;
+        fontGlyph.y = (short)y;
 
         unsigned char* dest = nullptr;
         unsigned pitch = 0;
         if (image)
         {
-            fontGlyph.page_ = 0;
-            dest = image->GetData() + fontGlyph.y_ * image->GetWidth() + fontGlyph.x_;
+            fontGlyph.page = 0;
+            dest = image->GetData() + fontGlyph.y * image->GetWidth() + fontGlyph.x;
             pitch = (unsigned)image->GetWidth();
         }
         else
         {
-            fontGlyph.page_ = textures_.Size() - 1;
-            dest = new unsigned char[fontGlyph.texWidth_ * fontGlyph.texHeight_];
-            pitch = (unsigned)fontGlyph.texWidth_;
+            fontGlyph.page = textures_.Size() - 1;
+            dest = new unsigned char[fontGlyph.tex_width * fontGlyph.tex_height];
+            pitch = (unsigned)fontGlyph.tex_width;
         }
 
         if (slot->bitmap.pixel_mode == FT_PIXEL_MODE_MONO)
@@ -497,21 +497,21 @@ bool FontFaceFreeType::LoadCharGlyph(c32 charCode, Image* image)
             {
                 unsigned char* src = slot->bitmap.buffer + slot->bitmap.pitch * y;
                 unsigned char* rowDest = dest + y * pitch;
-                BoxFilter(rowDest, fontGlyph.texWidth_, src, slot->bitmap.width);
+                BoxFilter(rowDest, fontGlyph.tex_width, src, slot->bitmap.width);
             }
         }
 
         if (!image)
         {
-            textures_.Back()->SetData(0, fontGlyph.x_, fontGlyph.y_, fontGlyph.texWidth_, fontGlyph.texHeight_, dest);
+            textures_.Back()->SetData(0, fontGlyph.x, fontGlyph.y, fontGlyph.tex_width, fontGlyph.tex_height, dest);
             delete[] dest;
         }
     }
     else
     {
-        fontGlyph.x_ = 0;
-        fontGlyph.y_ = 0;
-        fontGlyph.page_ = 0;
+        fontGlyph.x = 0;
+        fontGlyph.y = 0;
+        fontGlyph.page = 0;
     }
 
     glyphMapping_[charCode] = fontGlyph;

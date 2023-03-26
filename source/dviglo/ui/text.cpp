@@ -515,7 +515,7 @@ void Text::UpdateText(bool onResize)
                             const FontGlyph* glyph = face->GetGlyph(d);
                             if (glyph)
                             {
-                                futureRowWidth += glyph->advanceX_;
+                                futureRowWidth += glyph->advance_x;
                                 if (j < unicodeText_.Size() - 1)
                                     futureRowWidth += face->GetKerning(d, unicodeText_[j + 1]);
                             }
@@ -563,7 +563,7 @@ void Text::UpdateText(bool onResize)
                         const FontGlyph* glyph = face->GetGlyph(c);
                         if (glyph)
                         {
-                            rowWidth += glyph->advanceX_;
+                            rowWidth += glyph->advance_x;
                             if (i < unicodeText_.Size() - 1)
                                 rowWidth += face->GetKerning(c, unicodeText_[i + 1]);
                         }
@@ -595,7 +595,7 @@ void Text::UpdateText(bool onResize)
                 const FontGlyph* glyph = face->GetGlyph(c);
                 if (glyph)
                 {
-                    rowWidth += glyph->advanceX_;
+                    rowWidth += glyph->advance_x;
                     if (i < printText_.Size() - 1)
                         rowWidth += face->GetKerning(c, printText_[i + 1]);
                 }
@@ -684,13 +684,13 @@ void Text::UpdateCharLocations()
         if (c != '\n')
         {
             const FontGlyph* glyph = face->GetGlyph(c);
-            loc.size_ = Vector2(glyph ? glyph->advanceX_ : 0, rowHeight_);
+            loc.size_ = Vector2(glyph ? glyph->advance_x : 0, rowHeight_);
             if (glyph)
             {
                 // Store glyph's location for rendering. Verify that glyph page is valid
-                if (glyph->page_ != NINDEX && glyph->page_ < pageGlyphLocations_.Size())
-                    pageGlyphLocations_[glyph->page_].Push(GlyphLocation(x, y, glyph));
-                x += glyph->advanceX_;
+                if (glyph->page != NINDEX && glyph->page < pageGlyphLocations_.Size())
+                    pageGlyphLocations_[glyph->page].Push(GlyphLocation(x, y, glyph));
+                x += glyph->advance_x;
                 if (i < printText_.Size() - 1)
                     x += face->GetKerning(c, printText_[i + 1]);
             }
@@ -777,8 +777,8 @@ void Text::ConstructBatch(UIBatch& pageBatch, const Vector<GlyphLocation>& pageG
     {
         const GlyphLocation& glyphLocation = pageGlyphLocation[i];
         const FontGlyph& glyph = *glyphLocation.glyph_;
-        pageBatch.AddQuad(dx + glyphLocation.x_ + glyph.offsetX_, dy + glyphLocation.y_ + glyph.offsetY_, glyph.width_,
-            glyph.height_, glyph.x_, glyph.y_, glyph.texWidth_, glyph.texHeight_);
+        pageBatch.AddQuad(dx + glyphLocation.x_ + glyph.offset_x, dy + glyphLocation.y_ + glyph.offset_y, glyph.width,
+            glyph.height, glyph.x, glyph.y, glyph.tex_width, glyph.tex_height);
     }
 
     if (depthBias != 0.0f)

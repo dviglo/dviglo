@@ -37,7 +37,7 @@ const FontGlyph* FontFace::GetGlyph(c32 c)
     if (i != glyphMapping_.End())
     {
         FontGlyph& glyph = i->second_;
-        glyph.used_ = true;
+        glyph.used = true;
         return &glyph;
     }
     else

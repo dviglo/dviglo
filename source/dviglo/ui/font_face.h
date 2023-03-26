@@ -18,27 +18,27 @@ class Texture2D;
 struct DV_API FontGlyph
 {
     /// X position in texture.
-    short x_{};
+    short x{};
     /// Y position in texture.
-    short y_{};
+    short y{};
     /// Width in texture.
-    short texWidth_{};
+    short tex_width{};
     /// Height in texture.
-    short texHeight_{};
+    short tex_height{};
     /// Width on screen.
-    float width_{};
+    float width{};
     /// Height on screen.
-    float height_{};
+    float height{};
     /// Glyph X offset from origin.
-    float offsetX_{};
+    float offset_x{};
     /// Glyph Y offset from origin.
-    float offsetY_{};
+    float offset_y{};
     /// Horizontal advance.
-    float advanceX_{};
+    float advance_x{};
     /// Texture page. NINDEX if not yet resident on any texture.
-    i32 page_{NINDEX};
+    i32 page{NINDEX};
     /// Used flag.
-    bool used_{};
+    bool used{};
 };
 
 /// %Font face description.

@@ -109,15 +109,15 @@ bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, 
         int id = charElem.GetI32("id");
 
         FontGlyph glyph;
-        glyph.x_ = (short)charElem.GetI32("x");
-        glyph.y_ = (short)charElem.GetI32("y");
-        glyph.width_ = glyph.texWidth_ = (short)charElem.GetI32("width");
-        glyph.height_ = glyph.texHeight_ = (short)charElem.GetI32("height");
-        glyph.offsetX_ = (short)charElem.GetI32("xoffset");
-        glyph.offsetY_ = (short)charElem.GetI32("yoffset");
-        glyph.advanceX_ = (short)charElem.GetI32("xadvance");
-        glyph.page_ = charElem.GetI32("page");
-        assert(glyph.page_ >= 0);
+        glyph.x = (short)charElem.GetI32("x");
+        glyph.y = (short)charElem.GetI32("y");
+        glyph.width = glyph.tex_width = (short)charElem.GetI32("width");
+        glyph.height = glyph.tex_height = (short)charElem.GetI32("height");
+        glyph.offset_x = (short)charElem.GetI32("xoffset");
+        glyph.offset_y = (short)charElem.GetI32("yoffset");
+        glyph.advance_x = (short)charElem.GetI32("xadvance");
+        glyph.page = charElem.GetI32("page");
+        assert(glyph.page >= 0);
 
         glyphMapping_[id] = glyph;
 
@@ -171,22 +171,22 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     for (HashMap<c32, FontGlyph>::ConstIterator i = fontFace->glyphMapping_.Begin(); i != fontFace->glyphMapping_.End(); ++i)
     {
         FontGlyph fontGlyph = i->second_;
-        if (!fontGlyph.used_)
+        if (!fontGlyph.used)
             continue;
 
         int x, y;
-        if (!allocator.Allocate(fontGlyph.width_ + 1, fontGlyph.height_ + 1, x, y))
+        if (!allocator.Allocate(fontGlyph.width + 1, fontGlyph.height + 1, x, y))
         {
             ++numPages;
 
             allocator = AreaAllocator(FONT_TEXTURE_MIN_SIZE, FONT_TEXTURE_MIN_SIZE, maxTextureSize, maxTextureSize);
-            if (!allocator.Allocate(fontGlyph.width_ + 1, fontGlyph.height_ + 1, x, y))
+            if (!allocator.Allocate(fontGlyph.width + 1, fontGlyph.height + 1, x, y))
                 return false;
         }
 
-        fontGlyph.x_ = (short)x;
-        fontGlyph.y_ = (short)y;
-        fontGlyph.page_ = numPages - 1;
+        fontGlyph.x = (short)x;
+        fontGlyph.y = (short)y;
+        fontGlyph.page = numPages - 1;
 
         glyphMapping_[i->first_] = fontGlyph;
     }
@@ -222,8 +222,8 @@ bool FontFaceBitmap::Load(FontFace* fontFace, bool usedGlyphs)
     {
         FontGlyph& newGlyph = i->second_;
         const FontGlyph& oldGlyph = fontFace->glyphMapping_[i->first_];
-        Blit(newImages[newGlyph.page_], newGlyph.x_, newGlyph.y_, newGlyph.width_, newGlyph.height_, oldImages[oldGlyph.page_],
-            oldGlyph.x_, oldGlyph.y_, components);
+        Blit(newImages[newGlyph.page], newGlyph.x, newGlyph.y, newGlyph.width, newGlyph.height, oldImages[oldGlyph.page],
+            oldGlyph.x, oldGlyph.y, components);
     }
 
     textures_.Resize(newImages.Size());
@@ -293,14 +293,14 @@ bool FontFaceBitmap::Save(Serializer& dest, int pointSize, const String& indenta
         charElem.SetI32("id", i->first_);
 
         const FontGlyph& glyph = i->second_;
-        charElem.SetI32("x", glyph.x_);
-        charElem.SetI32("y", glyph.y_);
-        charElem.SetI32("width", glyph.width_);
-        charElem.SetI32("height", glyph.height_);
-        charElem.SetI32("xoffset", glyph.offsetX_);
-        charElem.SetI32("yoffset", glyph.offsetY_);
-        charElem.SetI32("xadvance", glyph.advanceX_);
-        charElem.SetI32("page", glyph.page_);
+        charElem.SetI32("x", glyph.x);
+        charElem.SetI32("y", glyph.y);
+        charElem.SetI32("width", glyph.width);
+        charElem.SetI32("height", glyph.height);
+        charElem.SetI32("xoffset", glyph.offset_x);
+        charElem.SetI32("yoffset", glyph.offset_y);
+        charElem.SetI32("xadvance", glyph.advance_x);
+        charElem.SetI32("page", glyph.page);
     }
 
     if (!kerningMapping_.Empty())
