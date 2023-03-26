@@ -64,7 +64,7 @@ void Urho2DConstraints::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Hook up to the frame update events
     SubscribeToEvents();
@@ -371,7 +371,7 @@ void Urho2DConstraints::CreateFlag(const String& text, float x, float y) // Used
     flag3D->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
 }
 
-void Urho2DConstraints::CreateInstructions()
+void Urho2DConstraints::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

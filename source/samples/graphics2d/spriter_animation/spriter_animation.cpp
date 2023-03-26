@@ -37,7 +37,7 @@ void Urho2DSpriterAnimation::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -75,7 +75,7 @@ void Urho2DSpriterAnimation::CreateScene()
     spriterAnimatedSprite->SetAnimation(spriterAnimationSet->GetAnimation(spriterAnimationIndex_));
 }
 
-void Urho2DSpriterAnimation::CreateInstructions()
+void Urho2DSpriterAnimation::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

@@ -57,7 +57,7 @@ void CharacterDemo::Start()
     CreateCharacter();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Subscribe to necessary events
     SubscribeToEvents();
@@ -201,7 +201,7 @@ void CharacterDemo::CreateCharacter()
     character_ = objectNode->create_component<Character>();
 }
 
-void CharacterDemo::CreateInstructions()
+void CharacterDemo::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

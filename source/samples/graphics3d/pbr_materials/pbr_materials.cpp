@@ -46,7 +46,7 @@ void PBRMaterials::Start()
 
     // Create the UI content
     CreateUI();
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -55,7 +55,7 @@ void PBRMaterials::Start()
     SubscribeToEvents();
 }
 
-void PBRMaterials::CreateInstructions()
+void PBRMaterials::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

@@ -42,7 +42,7 @@ void Billboards::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -190,7 +190,7 @@ void Billboards::CreateScene()
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 }
 
-void Billboards::CreateInstructions()
+void Billboards::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

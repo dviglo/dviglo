@@ -30,7 +30,7 @@ void UIDrag::Start()
 
     // Create the UI content
     CreateGUI();
-    CreateInstructions();
+    create_instructions();
 
     // Hook up to the frame update events
     SubscribeToEvents();
@@ -74,7 +74,7 @@ void UIDrag::CreateGUI()
     }
 }
 
-void UIDrag::CreateInstructions()
+void UIDrag::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

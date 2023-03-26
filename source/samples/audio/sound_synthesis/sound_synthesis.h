@@ -36,7 +36,7 @@ private:
     /// Buffer more sound data.
     void UpdateSound();
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
     /// Subscribe to application-wide logic update events.
     void SubscribeToEvents();
     /// Handle the logic update event.

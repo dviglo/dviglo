@@ -44,7 +44,7 @@ void SoundSynthesis::Start()
     CreateSound();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Hook up to the frame update events
     SubscribeToEvents();
@@ -97,7 +97,7 @@ void SoundSynthesis::UpdateSound()
     soundStream_->AddData(newData, numSamples * sizeof(signed short));
 }
 
-void SoundSynthesis::CreateInstructions()
+void SoundSynthesis::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     instructionText_ = DV_UI.GetRoot()->create_child<Text>();

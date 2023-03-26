@@ -51,7 +51,7 @@ void RaycastVehicleDemo::Start()
     // Create the controllable vehicle
     CreateVehicle();
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
     // Subscribe to necessary events
     SubscribeToEvents();
     // Set the mouse mode to use in the sample
@@ -137,7 +137,7 @@ void RaycastVehicleDemo::CreateVehicle()
     vehicle_->Init();
 }
 
-void RaycastVehicleDemo::CreateInstructions()
+void RaycastVehicleDemo::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

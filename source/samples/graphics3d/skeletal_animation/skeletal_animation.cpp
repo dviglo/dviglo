@@ -46,7 +46,7 @@ void SkeletalAnimation::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -175,7 +175,7 @@ void SkeletalAnimation::CreateLights() {
 }
 #endif
 
-void SkeletalAnimation::CreateInstructions()
+void SkeletalAnimation::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

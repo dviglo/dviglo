@@ -36,7 +36,7 @@ private:
     /// Construct the scene content.
     void CreateScene();
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
 #ifdef DV_GLES3
     /// Create additional lights fo scene
     void CreateLights();

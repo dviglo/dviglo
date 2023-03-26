@@ -47,7 +47,7 @@ private:
     /// Construct the scene content.
     void CreateScene();
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
     /// Create Tex3D flag.
     void CreateFlag(const String& text, float x, float y);
     /// Read input and moves the camera.

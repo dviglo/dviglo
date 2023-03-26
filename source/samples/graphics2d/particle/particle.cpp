@@ -39,7 +39,7 @@ void Urho2DParticle::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -84,7 +84,7 @@ void Urho2DParticle::CreateScene()
     greenSpiralEmitter->SetEffect(greenSpiralEffect);
 }
 
-void Urho2DParticle::CreateInstructions()
+void Urho2DParticle::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

@@ -47,7 +47,7 @@ private:
     /// Handle the logic update event.
     void handle_update(StringHash eventType, VariantMap& eventData);
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
     /// Handle the roughness slider drag event.
     void HandleRoughnessSliderChanged(StringHash eventType, VariantMap& eventData);
     /// Handle the metallic slider drag event.

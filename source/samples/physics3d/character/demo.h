@@ -42,7 +42,7 @@ private:
     /// Create controllable character.
     void CreateCharacter();
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
     /// Subscribe to necessary events.
     void SubscribeToEvents();
     /// Handle application update. Set controls to character.

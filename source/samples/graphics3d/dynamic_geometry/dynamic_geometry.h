@@ -34,7 +34,7 @@ private:
     /// Construct the scene content.
     void CreateScene();
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
     /// Set up a viewport for displaying the scene.
     void SetupViewport();
     /// Subscribe to application-wide logic update events.

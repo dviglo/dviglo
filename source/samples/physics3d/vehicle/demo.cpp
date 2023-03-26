@@ -53,7 +53,7 @@ void VehicleDemo::Start()
     CreateVehicle();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Subscribe to necessary events
     SubscribeToEvents();
@@ -150,7 +150,7 @@ void VehicleDemo::CreateVehicle()
     vehicle_->Init();
 }
 
-void VehicleDemo::CreateInstructions()
+void VehicleDemo::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

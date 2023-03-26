@@ -37,7 +37,7 @@ void StaticScene::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -105,7 +105,7 @@ void StaticScene::CreateScene()
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 }
 
-void StaticScene::CreateInstructions()
+void StaticScene::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

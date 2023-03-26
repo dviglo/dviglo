@@ -37,7 +37,7 @@ void LightAnimation::Start()
     Sample::Start();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Create the scene content
     CreateScene();
@@ -156,7 +156,7 @@ void LightAnimation::CreateScene()
     cameraNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
 }
 
-void LightAnimation::CreateInstructions()
+void LightAnimation::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

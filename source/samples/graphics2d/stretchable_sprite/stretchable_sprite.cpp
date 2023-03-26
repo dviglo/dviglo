@@ -36,7 +36,7 @@ void Urho2DStretchableSprite::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -80,7 +80,7 @@ void Urho2DStretchableSprite::CreateScene()
     }
 }
 
-void Urho2DStretchableSprite::CreateInstructions()
+void Urho2DStretchableSprite::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

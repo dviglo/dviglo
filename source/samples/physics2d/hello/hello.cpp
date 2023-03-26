@@ -44,7 +44,7 @@ void Urho2DPhysics::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -140,7 +140,7 @@ void Urho2DPhysics::CreateScene()
     }
 }
 
-void Urho2DPhysics::CreateInstructions()
+void Urho2DPhysics::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();

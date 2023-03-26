@@ -40,7 +40,7 @@ private:
     void CreateVehicle();
 
     /// Construct an instruction text to the UI.
-    void CreateInstructions();
+    void create_instructions();
 
     /// Subscribe to necessary events.
     void SubscribeToEvents();

@@ -40,7 +40,7 @@ void Urho2DTileMap::Start()
     CreateScene();
 
     // Create the UI content
-    CreateInstructions();
+    create_instructions();
 
     // Setup the viewport for displaying the scene
     SetupViewport();
@@ -87,7 +87,7 @@ void Urho2DTileMap::CreateScene()
     cameraNode_->SetPosition(Vector3(x, y, -10.0f));
 }
 
-void Urho2DTileMap::CreateInstructions()
+void Urho2DTileMap::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
