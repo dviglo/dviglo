@@ -152,8 +152,8 @@ void Urho2DPlatformer::HandleSceneRendered(StringHash eventType, VariantMap& eve
 
 void Urho2DPlatformer::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DPlatformer, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DPlatformer, handle_update));
 
     // Subscribe HandlePostUpdate() function for processing post update events
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Urho2DPlatformer, HandlePostUpdate));
@@ -314,7 +314,7 @@ void Urho2DPlatformer::HandleCollisionEnd(StringHash eventType, VariantMap& even
     }
 }
 
-void Urho2DPlatformer::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DPlatformer::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

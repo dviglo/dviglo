@@ -109,11 +109,11 @@ void Sprites::MoveSprites(float timeStep)
 
 void Sprites::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Sprites, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Sprites, handle_update));
 }
 
-void Sprites::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Sprites::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

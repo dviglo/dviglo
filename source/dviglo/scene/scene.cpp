@@ -54,7 +54,7 @@ Scene::Scene() :
     SetID(GetFreeNodeID(REPLICATED));
     NodeAdded(this);
 
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Scene, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Scene, handle_update));
     subscribe_to_event(E_RESOURCEBACKGROUNDLOADED, DV_HANDLER(Scene, HandleResourceBackgroundLoaded));
 }
 
@@ -1140,7 +1140,7 @@ void Scene::MarkReplicationDirty(Node* node)
     }
 }
 
-void Scene::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Scene::handle_update(StringHash eventType, VariantMap& eventData)
 {
     if (!updateEnabled_)
         return;

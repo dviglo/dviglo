@@ -30,7 +30,7 @@ private:
     // Init the user interface
     void CreateGUI();
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
     // Handle the change language event.
     void HandleChangeLanguage(StringHash eventType, VariantMap& eventData);
     // Hook up to the buttons pressing

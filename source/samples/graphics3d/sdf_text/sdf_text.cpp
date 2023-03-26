@@ -186,11 +186,11 @@ void SignedDistanceFieldText::MoveCamera(float timeStep)
 
 void SignedDistanceFieldText::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(SignedDistanceFieldText, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(SignedDistanceFieldText, handle_update));
 }
 
-void SignedDistanceFieldText::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void SignedDistanceFieldText::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

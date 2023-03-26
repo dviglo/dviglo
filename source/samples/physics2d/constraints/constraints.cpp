@@ -415,8 +415,8 @@ void Urho2DConstraints::MoveCamera(float timeStep)
 
 void Urho2DConstraints::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DConstraints, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DConstraints, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(Urho2DConstraints, HandlePostRenderUpdate));
@@ -428,7 +428,7 @@ void Urho2DConstraints::SubscribeToEvents()
     UnsubscribeFromEvent(E_SCENEUPDATE);
 }
 
-void Urho2DConstraints::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

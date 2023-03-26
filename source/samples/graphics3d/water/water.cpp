@@ -203,8 +203,8 @@ void Water::SetupViewport()
 
 void Water::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Water, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Water, handle_update));
 }
 
 void Water::MoveCamera(float timeStep)
@@ -244,7 +244,7 @@ void Water::MoveCamera(float timeStep)
     reflectionCamera->SetAspectRatio((float)DV_GRAPHICS.GetWidth() / (float)DV_GRAPHICS.GetHeight());
 }
 
-void Water::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Water::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

@@ -91,7 +91,7 @@ void UIDrag::CreateInstructions()
 
 void UIDrag::SubscribeToEvents()
 {
-    subscribe_to_event(E_UPDATE, DV_HANDLER(UIDrag, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(UIDrag, handle_update));
 }
 
 void UIDrag::HandleClick(StringHash eventType, VariantMap& eventData)
@@ -148,7 +148,7 @@ void UIDrag::HandleDragCancel(StringHash eventType, VariantMap& eventData)
     element->SetPosition(P);
 }
 
-void UIDrag::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void UIDrag::handle_update(StringHash eventType, VariantMap& eventData)
 {
     UiElement* root = DV_UI.GetRoot();
 

@@ -55,11 +55,11 @@ void HttpRequestDemo::CreateUI()
 
 void HttpRequestDemo::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing HTTP request
-    subscribe_to_event(E_UPDATE, DV_HANDLER(HttpRequestDemo, HandleUpdate));
+    // Subscribe handle_update() function for processing HTTP request
+    subscribe_to_event(E_UPDATE, DV_HANDLER(HttpRequestDemo, handle_update));
 }
 
-void HttpRequestDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void HttpRequestDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     if (httpRequest_.Null())
 #ifdef DV_SSL

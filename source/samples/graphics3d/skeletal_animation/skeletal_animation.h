@@ -48,7 +48,7 @@ private:
     /// Read input and moves the camera.
     void MoveCamera(float timeStep);
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
 

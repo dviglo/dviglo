@@ -217,11 +217,11 @@ void RibbonTrailDemo::MoveCamera(float timeStep)
 
 void RibbonTrailDemo::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(RibbonTrailDemo, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(RibbonTrailDemo, handle_update));
 }
 
-void RibbonTrailDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void RibbonTrailDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

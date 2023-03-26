@@ -171,7 +171,7 @@ void VehicleDemo::CreateInstructions()
 void VehicleDemo::SubscribeToEvents()
 {
     // Subscribe to Update event for setting the vehicle controls before physics simulation
-    subscribe_to_event(E_UPDATE, DV_HANDLER(VehicleDemo, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(VehicleDemo, handle_update));
 
     // Subscribe to PostUpdate event for updating the camera position after physics simulation
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(VehicleDemo, HandlePostUpdate));
@@ -180,7 +180,7 @@ void VehicleDemo::SubscribeToEvents()
     UnsubscribeFromEvent(E_SCENEUPDATE);
 }
 
-void VehicleDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void VehicleDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

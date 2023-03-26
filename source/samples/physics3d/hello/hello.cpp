@@ -183,8 +183,8 @@ void Physics::SetupViewport()
 
 void Physics::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Physics, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Physics, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
@@ -271,7 +271,7 @@ void Physics::SpawnObject()
     body->SetLinearVelocity(cameraNode_->GetRotation() * Vector3(0.0f, 0.25f, 1.0f) * OBJECT_VELOCITY);
 }
 
-void Physics::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Physics::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

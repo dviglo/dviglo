@@ -175,11 +175,11 @@ void MaterialAnimation::MoveCamera(float timeStep)
 
 void MaterialAnimation::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(MaterialAnimation, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(MaterialAnimation, handle_update));
 }
 
-void MaterialAnimation::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void MaterialAnimation::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

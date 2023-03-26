@@ -46,7 +46,7 @@ private:
     /// Handle close button pressed and released.
     void HandleClosePressed(StringHash eventType, VariantMap& eventData);
     /// Animate cube.
-    void HandleUpdate(StringHash, VariantMap& eventData);
+    void handle_update(StringHash, VariantMap& eventData);
     /// Create 3D UI.
     void Init3DUI();
 

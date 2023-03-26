@@ -196,7 +196,7 @@ public:
     /// Return a node user variable name, or empty if not registered.
     const String& GetVarName(StringHash hash) const;
 
-    /// Update scene. Called by HandleUpdate.
+    /// Update scene. Called by handle_update.
     void Update(float timeStep);
     /// Begin a threaded update. During threaded update components can choose to delay dirty processing.
     void BeginThreadedUpdate();
@@ -245,7 +245,7 @@ public:
 
 private:
     /// Handle the logic update event to update the scene, if active.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle a background loaded resource completing.
     void HandleResourceBackgroundLoaded(StringHash eventType, VariantMap& eventData);
     /// Update asynchronous loading.

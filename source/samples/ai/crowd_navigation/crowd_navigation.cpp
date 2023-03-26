@@ -213,8 +213,8 @@ void CrowdNavigation::SetupViewport()
 
 void CrowdNavigation::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(CrowdNavigation, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(CrowdNavigation, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request debug geometry
     subscribe_to_event(E_POSTRENDERUPDATE, DV_HANDLER(CrowdNavigation, HandlePostRenderUpdate));
@@ -519,7 +519,7 @@ void CrowdNavigation::SaveNavigationData()
         }
 }
 
-void CrowdNavigation::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void CrowdNavigation::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

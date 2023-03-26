@@ -68,7 +68,7 @@ private:
     /// Save navigation data for streaming.
     void SaveNavigationData();
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle the post-render update event.
     void HandlePostRenderUpdate(StringHash eventType, VariantMap& eventData);
     /// Handle problems with crowd agent placement.

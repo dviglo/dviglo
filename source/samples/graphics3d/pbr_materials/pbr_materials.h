@@ -45,7 +45,7 @@ private:
     /// Reads input and moves the camera.
     void MoveCamera(float timeStep);
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
     /// Construct an instruction text to the UI.
     void CreateInstructions();
     /// Handle the roughness slider drag event.

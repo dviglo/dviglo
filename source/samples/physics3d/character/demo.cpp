@@ -223,7 +223,7 @@ void CharacterDemo::CreateInstructions()
 void CharacterDemo::SubscribeToEvents()
 {
     // Subscribe to Update event for setting the character controls before physics simulation
-    subscribe_to_event(E_UPDATE, DV_HANDLER(CharacterDemo, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(CharacterDemo, handle_update));
 
     // Subscribe to PostUpdate event for updating the camera position after physics simulation
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(CharacterDemo, HandlePostUpdate));
@@ -232,7 +232,7 @@ void CharacterDemo::SubscribeToEvents()
     UnsubscribeFromEvent(E_SCENEUPDATE);
 }
 
-void CharacterDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void CharacterDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

@@ -188,8 +188,8 @@ void Decals::SetupViewport()
 
 void Decals::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Decals, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Decals, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
@@ -293,7 +293,7 @@ bool Decals::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable)
     return false;
 }
 
-void Decals::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Decals::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

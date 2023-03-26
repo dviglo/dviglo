@@ -194,8 +194,8 @@ void PBRMaterials::SetupViewport()
 
 void PBRMaterials::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for camera motion
-    subscribe_to_event(E_UPDATE, DV_HANDLER(PBRMaterials, HandleUpdate));
+    // Subscribe handle_update() function for camera motion
+    subscribe_to_event(E_UPDATE, DV_HANDLER(PBRMaterials, handle_update));
 }
 
 void PBRMaterials::MoveCamera(float timeStep)
@@ -237,7 +237,7 @@ void PBRMaterials::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 
-void PBRMaterials::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void PBRMaterials::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

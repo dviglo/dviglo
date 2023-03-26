@@ -47,7 +47,7 @@ void ConsoleInput::Start()
 
     // Subscribe to console commands and the frame update
     subscribe_to_event(E_CONSOLECOMMAND, DV_HANDLER(ConsoleInput, HandleConsoleCommand));
-    subscribe_to_event(E_UPDATE, DV_HANDLER(ConsoleInput, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(ConsoleInput, handle_update));
 
     // Subscribe key down event
     subscribe_to_event(E_KEYDOWN, DV_HANDLER(ConsoleInput, HandleEscKeyDown));
@@ -94,7 +94,7 @@ void ConsoleInput::HandleConsoleCommand(StringHash eventType, VariantMap& eventD
         HandleInput(eventData[P_COMMAND].GetString());
 }
 
-void ConsoleInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void ConsoleInput::handle_update(StringHash eventType, VariantMap& eventData)
 {
     // Check if there is input from stdin
     String input = GetConsoleInput();

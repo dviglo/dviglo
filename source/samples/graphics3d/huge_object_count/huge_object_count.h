@@ -46,7 +46,7 @@ private:
     /// Animate the scene.
     void AnimateObjects(float timeStep);
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Box scene nodes.
     Vector<SharedPtr<Node>> boxNodes_;

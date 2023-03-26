@@ -189,8 +189,8 @@ void PhysicsStressTest::SetupViewport()
 
 void PhysicsStressTest::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(PhysicsStressTest, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(PhysicsStressTest, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
@@ -276,7 +276,7 @@ void PhysicsStressTest::SpawnObject()
     body->SetLinearVelocity(cameraNode_->GetRotation() * Vector3(0.0f, 0.25f, 1.0f) * OBJECT_VELOCITY);
 }
 
-void PhysicsStressTest::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void PhysicsStressTest::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

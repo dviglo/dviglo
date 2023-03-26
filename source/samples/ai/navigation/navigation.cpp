@@ -188,8 +188,8 @@ void Navigation::SetupViewport()
 
 void Navigation::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Navigation, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Navigation, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
@@ -430,7 +430,7 @@ void Navigation::SaveNavigationData()
         }
 }
 
-void Navigation::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Navigation::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

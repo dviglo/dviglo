@@ -227,11 +227,11 @@ void LightAnimation::MoveCamera(float timeStep)
 
 void LightAnimation::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(LightAnimation, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(LightAnimation, handle_update));
 }
 
-void LightAnimation::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void LightAnimation::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

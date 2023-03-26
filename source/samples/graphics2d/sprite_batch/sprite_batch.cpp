@@ -139,11 +139,11 @@ public:
 
     void SubscribeToEvents()
     {
-        subscribe_to_event(E_UPDATE, DV_HANDLER(Game, HandleUpdate));
+        subscribe_to_event(E_UPDATE, DV_HANDLER(Game, handle_update));
         subscribe_to_event(E_ENDVIEWRENDER, DV_HANDLER(Game, HandleEndViewRender));
     }
 
-    void HandleUpdate(StringHash eventType, VariantMap& eventData)
+    void handle_update(StringHash eventType, VariantMap& eventData)
     {
         using namespace Update;
         float timeStep = eventData[P_TIMESTEP].GetFloat();

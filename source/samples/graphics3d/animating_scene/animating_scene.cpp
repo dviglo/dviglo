@@ -130,8 +130,8 @@ void AnimatingScene::SetupViewport()
 
 void AnimatingScene::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(AnimatingScene, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(AnimatingScene, handle_update));
 }
 
 void AnimatingScene::MoveCamera(float timeStep)
@@ -167,7 +167,7 @@ void AnimatingScene::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 
-void AnimatingScene::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void AnimatingScene::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

@@ -249,11 +249,11 @@ void RenderToTexture::MoveCamera(float timeStep)
 
 void RenderToTexture::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(RenderToTexture, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(RenderToTexture, handle_update));
 }
 
-void RenderToTexture::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void RenderToTexture::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

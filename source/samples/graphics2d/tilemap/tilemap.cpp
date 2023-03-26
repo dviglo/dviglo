@@ -143,8 +143,8 @@ void Urho2DTileMap::MoveCamera(float timeStep)
 
 void Urho2DTileMap::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DTileMap, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DTileMap, handle_update));
 
     // Listen to mouse clicks
     subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Urho2DTileMap, HandleMouseButtonDown));
@@ -153,7 +153,7 @@ void Urho2DTileMap::SubscribeToEvents()
     UnsubscribeFromEvent(E_SCENEUPDATE);
 }
 
-void Urho2DTileMap::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DTileMap::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

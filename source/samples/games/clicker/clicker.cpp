@@ -51,7 +51,7 @@ void Clicker::CreateUI()
 
 void Clicker::SubscribeToEvents()
 {
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Clicker, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Clicker, handle_update));
     subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Clicker, HandleMouseButtonDown));
 }
 
@@ -109,7 +109,7 @@ static String ShortNumberRepresentation(const BigInt& value)
     return str;
 }
 
-void Clicker::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Clicker::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

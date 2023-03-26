@@ -39,7 +39,7 @@ private:
     /// Subscribe to application-wide logic update events.
     void SubscribeToEvents();
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
     /// Handle KeyUp event.
     void OnKeyUp(StringHash eventType, VariantMap& eventData);
     /// Translate sprite nodes.

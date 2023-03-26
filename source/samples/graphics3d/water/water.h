@@ -43,7 +43,7 @@ private:
     /// Read input and moves the camera.
     void MoveCamera(float timeStep);
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Reflection camera scene node.
     SharedPtr<Node> reflectionCameraNode_;

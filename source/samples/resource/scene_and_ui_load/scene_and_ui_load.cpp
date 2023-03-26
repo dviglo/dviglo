@@ -97,8 +97,8 @@ void SceneAndUILoad::SetupViewport()
 
 void SceneAndUILoad::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for camera motion
-    subscribe_to_event(E_UPDATE, DV_HANDLER(SceneAndUILoad, HandleUpdate));
+    // Subscribe handle_update() function for camera motion
+    subscribe_to_event(E_UPDATE, DV_HANDLER(SceneAndUILoad, handle_update));
 }
 
 void SceneAndUILoad::MoveCamera(float timeStep)
@@ -140,7 +140,7 @@ void SceneAndUILoad::MoveCamera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 
-void SceneAndUILoad::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void SceneAndUILoad::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

@@ -112,7 +112,7 @@ public:
         CreateCamera();
         CreateOverlays();
 
-        subscribe_to_event(gameScene, E_SCENEUPDATE, DV_HANDLER(App, HandleUpdate));
+        subscribe_to_event(gameScene, E_SCENEUPDATE, DV_HANDLER(App, handle_update));
 
         PhysicsWorld* physicsWorld = gameScene->GetComponent<PhysicsWorld>();
         if (physicsWorld)
@@ -443,7 +443,7 @@ public:
         }
     }
 
-    void HandleUpdate(StringHash eventType, VariantMap& eventData)
+    void handle_update(StringHash eventType, VariantMap& eventData)
     {
         float timeStep = eventData["TimeStep"].GetFloat();
 

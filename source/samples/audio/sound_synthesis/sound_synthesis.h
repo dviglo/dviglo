@@ -40,7 +40,7 @@ private:
     /// Subscribe to application-wide logic update events.
     void SubscribeToEvents();
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Scene node for the sound component.
     SharedPtr<Node> node_;

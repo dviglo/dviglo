@@ -202,8 +202,8 @@ void Urho2DIsometricDemo::HandleSceneRendered(StringHash eventType, VariantMap& 
 
 void Urho2DIsometricDemo::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DIsometricDemo, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Urho2DIsometricDemo, handle_update));
 
     // Subscribe HandlePostUpdate() function for processing post update events
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Urho2DIsometricDemo, HandlePostUpdate));
@@ -218,7 +218,7 @@ void Urho2DIsometricDemo::SubscribeToEvents()
     subscribe_to_event(E_PHYSICSBEGINCONTACT2D, DV_HANDLER(Urho2DIsometricDemo, HandleCollisionBegin));
 }
 
-void Urho2DIsometricDemo::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Urho2DIsometricDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

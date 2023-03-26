@@ -31,7 +31,7 @@ private:
     /// Subscribe to application-wide logic update events.
     void SubscribeToEvents();
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Vector to store the sprites for iterating through them.
     Vector<SharedPtr<Sprite>> sprites_;

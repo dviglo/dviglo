@@ -170,8 +170,8 @@ void HugeObjectCount::SetupViewport()
 
 void HugeObjectCount::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(HugeObjectCount, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(HugeObjectCount, handle_update));
 }
 
 void HugeObjectCount::MoveCamera(float timeStep)
@@ -219,7 +219,7 @@ void HugeObjectCount::AnimateObjects(float timeStep)
         boxNode->Rotate(rotateQuat);
 }
 
-void HugeObjectCount::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void HugeObjectCount::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

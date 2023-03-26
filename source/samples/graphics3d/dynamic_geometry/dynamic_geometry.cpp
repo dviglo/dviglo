@@ -275,8 +275,8 @@ void DynamicGeometry::SetupViewport()
 
 void DynamicGeometry::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(DynamicGeometry, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(DynamicGeometry, handle_update));
 }
 
 void DynamicGeometry::MoveCamera(float timeStep)
@@ -347,7 +347,7 @@ void DynamicGeometry::AnimateObjects(float timeStep)
     }
 }
 
-void DynamicGeometry::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void DynamicGeometry::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

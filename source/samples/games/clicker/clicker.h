@@ -36,7 +36,7 @@ private:
     void SubscribeToEvents();
     
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Handle the mouse click event.
     void HandleMouseButtonDown(StringHash eventType, VariantMap& eventData);

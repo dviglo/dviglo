@@ -44,7 +44,7 @@ private:
     /// Animate the vertex data of the objects.
     void AnimateObjects(float timeStep);
     /// Handle the logic update event.
-    void HandleUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Cloned models' vertex buffers that we will animate.
     Vector<SharedPtr<VertexBuffer>> animatingBuffers_;

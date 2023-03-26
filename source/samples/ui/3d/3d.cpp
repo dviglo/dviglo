@@ -200,7 +200,7 @@ void Hello3DUI::InitScene()
     DV_RENDERER.SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Hello3DUI, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Hello3DUI, handle_update));
 }
 
 void Hello3DUI::CreateDraggableFish()
@@ -288,7 +288,7 @@ void Hello3DUI::Init3DUI()
     textureRoot_->SetSize(512, 512);
 }
 
-void Hello3DUI::HandleUpdate(StringHash, VariantMap& eventData)
+void Hello3DUI::handle_update(StringHash, VariantMap& eventData)
 {
     using namespace Update;
     float timeStep = eventData[P_TIMESTEP].GetFloat();

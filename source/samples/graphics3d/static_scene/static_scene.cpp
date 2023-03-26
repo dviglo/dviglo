@@ -163,11 +163,11 @@ void StaticScene::MoveCamera(float timeStep)
 
 void StaticScene::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(StaticScene, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(StaticScene, handle_update));
 }
 
-void StaticScene::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void StaticScene::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

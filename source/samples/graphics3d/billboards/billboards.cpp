@@ -217,8 +217,8 @@ void Billboards::SetupViewport()
 
 void Billboards::SubscribeToEvents()
 {
-    // Subscribe HandleUpdate() function for processing update events
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Billboards, HandleUpdate));
+    // Subscribe handle_update() function for processing update events
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Billboards, handle_update));
 
     // Subscribe HandlePostRenderUpdate() function for processing the post-render update event, during which we request
     // debug geometry
@@ -292,7 +292,7 @@ void Billboards::AnimateScene(float timeStep)
     }
 }
 
-void Billboards::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void Billboards::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 

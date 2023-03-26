@@ -166,10 +166,10 @@ void L10n::CreateScene()
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     DV_RENDERER.SetViewport(0, viewport);
 
-    subscribe_to_event(E_UPDATE, DV_HANDLER(L10n, HandleUpdate));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(L10n, handle_update));
 }
 
-void L10n::HandleUpdate(StringHash eventType, VariantMap& eventData)
+void L10n::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
     float timeStep = eventData[P_TIMESTEP].GetFloat();
