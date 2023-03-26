@@ -11,20 +11,14 @@
 namespace dviglo
 {
 
-/// Doubly-linked list node base class.
+/// Базовый класс узла двусвязного списка
 struct ListNodeBase
 {
-    /// Construct.
-    ListNodeBase() :
-        prev_(nullptr),
-        next_(nullptr)
-    {
-    }
+    /// Предыдущий узел
+    ListNodeBase* prev = nullptr;
 
-    /// Previous node.
-    ListNodeBase* prev_;
-    /// Next node.
-    ListNodeBase* next_;
+    /// Следующий узел
+    ListNodeBase* next = nullptr;
 };
 
 /// Doubly-linked list iterator base class.
@@ -52,14 +46,14 @@ struct ListIteratorBase
     void GotoNext()
     {
         if (ptr_)
-            ptr_ = ptr_->next_;
+            ptr_ = ptr_->next;
     }
 
     /// Go to the previous node.
     void GotoPrev()
     {
         if (ptr_)
-            ptr_ = ptr_->prev_;
+            ptr_ = ptr_->prev;
     }
 
     /// Node pointer.

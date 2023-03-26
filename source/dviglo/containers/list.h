@@ -31,10 +31,10 @@ public:
         T value_;
 
         /// Return next node.
-        Node* Next() const { return static_cast<Node*>(next_); }
+        Node* Next() const { return static_cast<Node*>(next); }
 
         /// Return previous node.
-        Node* Prev() { return static_cast<Node*>(prev_); }
+        Node* Prev() { return static_cast<Node*>(prev); }
     };
 
     /// %List iterator.
@@ -333,7 +333,7 @@ public:
             for (Iterator i = Begin(); i != End();)
             {
                 FreeNode(static_cast<Node*>(i++.ptr_));
-                i.ptr_->prev_ = 0;
+                i.ptr_->prev = nullptr;
             }
 
             head_ = tail_;
@@ -417,11 +417,11 @@ private:
 
         Node* newNode = ReserveNode(value);
         Node* prev = dest->Prev();
-        newNode->next_ = dest;
-        newNode->prev_ = prev;
+        newNode->next = dest;
+        newNode->prev = prev;
         if (prev)
-            prev->next_ = newNode;
-        dest->prev_ = newNode;
+            prev->next = newNode;
+        dest->prev = newNode;
 
         // Reassign the head node if necessary
         if (dest == Head())
@@ -440,8 +440,8 @@ private:
         Node* prev = node->Prev();
         Node* next = node->Next();
         if (prev)
-            prev->next_ = next;
-        next->prev_ = prev;
+            prev->next = next;
+        next->prev = prev;
 
         // Reassign the head node if necessary
         if (node == Head())
