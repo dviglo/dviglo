@@ -125,7 +125,7 @@ public:
     RenderSurface* GetRenderTarget() const { return renderTarget_; }
 
     /// Return whether should draw debug geometry.
-    bool GetDrawDebug() const { return drawDebug_; }
+    bool GetDrawDebug() const { return draw_debug_; }
 
     /// Return view rectangle.
     const IntRect& GetViewRect() const { return viewRect_; }
@@ -349,7 +349,7 @@ private:
     /// Whether is using a custom readable depth texture without a stencil channel.
     bool noStencil_{};
     /// Draw debug geometry flag. Copied from the viewport.
-    bool drawDebug_{};
+    bool draw_debug_{};
     /// Renderpath.
     RenderPath* renderPath_{};
     /// Per-thread octree query results.

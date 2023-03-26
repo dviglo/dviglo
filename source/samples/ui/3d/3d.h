@@ -67,7 +67,7 @@ private:
     /// Enable or disable rendering to texture.
     bool renderOnCube_;
     /// Draw debug information of last clicked element.
-    bool drawDebug_;
+    bool draw_debug_;
     /// Last clicked UI element.
     WeakPtr<UiElement> current_;
 };

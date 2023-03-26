@@ -29,7 +29,7 @@
 DV_DEFINE_APPLICATION_MAIN(Billboards)
 
 Billboards::Billboards() :
-    drawDebug_(false)
+    draw_debug_(false)
 {
 }
 
@@ -259,7 +259,7 @@ void Billboards::move_camera(float timeStep)
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 }
 
 void Billboards::AnimateScene(float timeStep)
@@ -308,6 +308,6 @@ void Billboards::handle_post_render_update(StringHash eventType, VariantMap& eve
 {
     // If draw debug mode is enabled, draw viewport debug geometry. This time use depth test, as otherwise the result becomes
     // hard to interpret due to large object count
-    if (drawDebug_)
+    if (draw_debug_)
         DV_RENDERER.draw_debug_geometry(true);
 }

@@ -58,7 +58,7 @@ private:
     /// The controllable character component.
     WeakPtr<Character2D> character2D_;
     /// Flag for drawing debug geometry.
-    bool drawDebug_{};
+    bool draw_debug_{};
     /// Scaling factor based on tiles' aspect ratio.
     float moveSpeedScale_{};
 

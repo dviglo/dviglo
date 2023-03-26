@@ -34,7 +34,7 @@ Hello3DUI::Hello3DUI() :
     dragBeginPosition_(IntVector2::ZERO),
     animateCube_(true),
     renderOnCube_(false),
-    drawDebug_(false)
+    draw_debug_(false)
 {
 }
 
@@ -295,7 +295,7 @@ void Hello3DUI::handle_update(StringHash, VariantMap& eventData)
     Input& input = DV_INPUT;
     Node* node = scene_->GetChild("Box");
 
-    if (current_.NotNull() && drawDebug_)
+    if (current_.NotNull() && draw_debug_)
         DV_UI.DebugDraw(current_);
 
     if (input.GetMouseButtonPress(MOUSEB_LEFT))
@@ -321,7 +321,7 @@ void Hello3DUI::handle_update(StringHash, VariantMap& eventData)
         animateCube_ = !animateCube_;
 
     if (input.GetKeyPress(KEY_F2))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 
     if (animateCube_)
     {

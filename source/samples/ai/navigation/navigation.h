@@ -73,7 +73,7 @@ private:
     /// Jack scene node.
     SharedPtr<Node> jackNode_;
     /// Flag for drawing debug geometry.
-    bool drawDebug_;
+    bool draw_debug_;
     /// Flag for using navigation mesh streaming.
     bool useStreaming_;
     /// Streaming distance.

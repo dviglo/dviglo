@@ -49,5 +49,5 @@ private:
     void handle_post_render_update(StringHash eventType, VariantMap& eventData);
 
     /// Flag for drawing debug geometry.
-    bool drawDebug_;
+    bool draw_debug_;
 };

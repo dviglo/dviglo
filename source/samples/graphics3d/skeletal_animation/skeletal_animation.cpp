@@ -31,7 +31,7 @@
 DV_DEFINE_APPLICATION_MAIN(SkeletalAnimation)
 
 SkeletalAnimation::SkeletalAnimation() :
-    drawDebug_(false)
+    draw_debug_(false)
 {
     // Register an object factory for our custom Mover component so that we can create them to scene nodes
     DV_CONTEXT.RegisterFactory<Mover>();
@@ -253,7 +253,7 @@ void SkeletalAnimation::move_camera(float timeStep)
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 }
 
 void SkeletalAnimation::handle_update(StringHash eventType, VariantMap& eventData)
@@ -272,6 +272,6 @@ void SkeletalAnimation::handle_post_render_update(StringHash eventType, VariantM
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Note that debug geometry has to be separately requested each frame. Disable depth test so that we can see the
     // bones properly
-    if (drawDebug_)
+    if (draw_debug_)
         DV_RENDERER.draw_debug_geometry(false);
 }

@@ -276,7 +276,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
         return false;
 
     renderTarget_ = renderTarget;
-    drawDebug_ = viewport->GetDrawDebug();
+    draw_debug_ = viewport->GetDrawDebug();
 
     Renderer& renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
@@ -603,7 +603,7 @@ void View::Render()
     graphics.SetStencilTest(false);
 
     // Draw the associated debug geometry now if enabled
-    if (drawDebug_ && octree_ && camera_)
+    if (draw_debug_ && octree_ && camera_)
     {
         auto* debug = octree_->GetComponent<DebugRenderer>();
         if (debug && debug->IsEnabledEffective() && debug->HasContent())

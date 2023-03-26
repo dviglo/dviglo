@@ -40,7 +40,7 @@
 
 Urho2DIsometricDemo::Urho2DIsometricDemo() :
     zoom_(2.0f),
-    drawDebug_(false)
+    draw_debug_(false)
 {
     // Register factory for the Character2D component so it can be created via create_component
     Character2D::register_object();
@@ -228,7 +228,7 @@ void Urho2DIsometricDemo::handle_update(StringHash eventType, VariantMap& eventD
 
     // Toggle debug geometry with 'Z' key
     if (DV_INPUT.GetKeyPress(KEY_Z))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 
     // Check for loading / saving the scene
     if (DV_INPUT.GetKeyPress(KEY_F5))
@@ -249,7 +249,7 @@ void Urho2DIsometricDemo::HandlePostUpdate(StringHash eventType, VariantMap& eve
 
 void Urho2DIsometricDemo::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
-    if (drawDebug_)
+    if (draw_debug_)
     {
         auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
         physicsWorld->draw_debug_geometry();

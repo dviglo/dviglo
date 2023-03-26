@@ -31,7 +31,7 @@
 DV_DEFINE_APPLICATION_MAIN(Decals)
 
 Decals::Decals() :
-    drawDebug_(false)
+    draw_debug_(false)
 {
 }
 
@@ -236,7 +236,7 @@ void Decals::move_camera(float timeStep)
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 
     // Paint decal with the left mousebutton; cursor must be visible
     if (DV_UI.GetCursor()->IsVisible() && input.GetMouseButtonPress(MOUSEB_LEFT))
@@ -307,6 +307,6 @@ void Decals::handle_update(StringHash eventType, VariantMap& eventData)
 void Decals::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw viewport debug geometry. Disable depth test so that we can see the effect of occlusion
-    if (drawDebug_)
+    if (draw_debug_)
         DV_RENDERER.draw_debug_geometry(false);
 }

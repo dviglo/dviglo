@@ -29,7 +29,7 @@
 DV_DEFINE_APPLICATION_MAIN(Navigation)
 
 Navigation::Navigation() :
-    drawDebug_(false),
+    draw_debug_(false),
     useStreaming_(false),
     streamingDistance_(2)
 {
@@ -243,7 +243,7 @@ void Navigation::move_camera(float timeStep)
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 }
 
 void Navigation::SetPathPoint()
@@ -457,7 +457,7 @@ void Navigation::handle_update(StringHash eventType, VariantMap& eventData)
 void Navigation::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw navigation mesh debug geometry
-    if (drawDebug_)
+    if (draw_debug_)
         scene_->GetComponent<NavigationMesh>()->draw_debug_geometry(true);
 
     if (currentPath_.Size())

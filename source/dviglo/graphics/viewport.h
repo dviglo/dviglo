@@ -63,7 +63,7 @@ public:
     RenderPath* GetRenderPath() const;
 
     /// Return whether to draw debug geometry.
-    bool GetDrawDebug() const { return drawDebug_; }
+    bool GetDrawDebug() const { return draw_debug_; }
 
     /// Return the culling camera. If null, the viewport camera will be used for culling (normal case).
     Camera* GetCullCamera() const;
@@ -92,7 +92,7 @@ private:
     /// Internal rendering structure.
     SharedPtr<View> view_;
     /// Debug draw flag.
-    bool drawDebug_;
+    bool draw_debug_;
 };
 
 }

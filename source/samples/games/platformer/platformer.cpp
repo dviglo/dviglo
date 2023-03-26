@@ -324,7 +324,7 @@ void Urho2DPlatformer::handle_update(StringHash eventType, VariantMap& eventData
 
     // Toggle debug geometry with 'Z' key
     if (DV_INPUT.GetKeyPress(KEY_Z))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 
     // Check for loading / saving the scene
     if (DV_INPUT.GetKeyPress(KEY_F5))
@@ -344,7 +344,7 @@ void Urho2DPlatformer::HandlePostUpdate(StringHash eventType, VariantMap& eventD
 
 void Urho2DPlatformer::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
-    if (drawDebug_)
+    if (draw_debug_)
     {
         auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
         physicsWorld->draw_debug_geometry();

@@ -29,7 +29,7 @@
 DV_DEFINE_APPLICATION_MAIN(MultipleViewports)
 
 MultipleViewports::MultipleViewports() :
-    drawDebug_(false)
+    draw_debug_(false)
 {
 }
 
@@ -239,7 +239,7 @@ void MultipleViewports::move_camera(float timeStep)
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 }
 
 void MultipleViewports::handle_update(StringHash eventType, VariantMap& eventData)
@@ -257,6 +257,6 @@ void MultipleViewports::handle_post_render_update(StringHash eventType, VariantM
 {
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Disable depth test so that we can see the effect of occlusion
-    if (drawDebug_)
+    if (draw_debug_)
         DV_RENDERER.draw_debug_geometry(false);
 }

@@ -80,7 +80,7 @@ void Urho2DConstraints::create_scene()
     scene_->create_component<DebugRenderer>();
     auto* physicsWorld = scene_->create_component<PhysicsWorld2D>(); // Create 2D physics world component
     physicsWorld->SetDrawJoint(true); // Display the joints (Note that draw_debug_geometry() must be set to true to acually draw the joints)
-    drawDebug_ = true; // Set draw_debug_geometry() to true
+    draw_debug_ = true; // Set draw_debug_geometry() to true
 
     // Create camera
     cameraNode_ = scene_->create_child("Camera");
@@ -440,7 +440,7 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
 
     // Toggle physics debug geometry with space
     if (DV_INPUT.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 
     // Save scene
     if (DV_INPUT.GetKeyPress(KEY_F5))
@@ -453,7 +453,7 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
 void Urho2DConstraints::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     auto* physicsWorld = scene_->GetComponent<PhysicsWorld2D>();
-    if (drawDebug_) physicsWorld->draw_debug_geometry();
+    if (draw_debug_) physicsWorld->draw_debug_geometry();
 }
 
 void Urho2DConstraints::HandleMouseButtonDown(StringHash eventType, VariantMap& eventData)

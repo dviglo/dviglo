@@ -33,7 +33,7 @@
 DV_DEFINE_APPLICATION_MAIN(Physics)
 
 Physics::Physics() :
-    drawDebug_(false)
+    draw_debug_(false)
 {
 }
 
@@ -242,7 +242,7 @@ void Physics::move_camera(float timeStep)
 
     // Toggle physics debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 }
 
 void Physics::SpawnObject()
@@ -285,6 +285,6 @@ void Physics::handle_update(StringHash eventType, VariantMap& eventData)
 void Physics::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw physics debug geometry. Use depth test to make the result easier to interpret
-    if (drawDebug_)
+    if (draw_debug_)
         scene_->GetComponent<PhysicsWorld>()->draw_debug_geometry(true);
 }

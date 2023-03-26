@@ -33,7 +33,7 @@
 DV_DEFINE_APPLICATION_MAIN(Ragdolls)
 
 Ragdolls::Ragdolls() :
-    drawDebug_(false)
+    draw_debug_(false)
 {
     // Register an object factory for our custom CreateRagdoll component so that we can create them to scene nodes
     DV_CONTEXT.RegisterFactory<CreateRagdoll>();
@@ -232,7 +232,7 @@ void Ragdolls::move_camera(float timeStep)
 
     // Toggle physics debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 }
 
 void Ragdolls::SpawnObject()
@@ -283,6 +283,6 @@ void Ragdolls::handle_update(StringHash eventType, VariantMap& eventData)
 void Ragdolls::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
     // If draw debug mode is enabled, draw physics debug geometry. Use depth test to make the result easier to interpret
-    if (drawDebug_)
+    if (draw_debug_)
         scene_->GetComponent<PhysicsWorld>()->draw_debug_geometry(true);
 }

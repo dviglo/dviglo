@@ -58,7 +58,7 @@ private:
     /// Camera's zoom (used to scale movement speed based on camera zoom).
     float zoom_;
     /// Flag for drawing debug geometry.
-    bool drawDebug_;
+    bool draw_debug_;
 
     /// Sample2D utility object.
     SharedPtr<Sample2D> sample2D_;

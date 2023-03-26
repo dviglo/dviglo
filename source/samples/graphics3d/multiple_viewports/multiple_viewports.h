@@ -48,5 +48,5 @@ private:
     /// Rear-facing camera scene node.
     SharedPtr<Node> rearCameraNode_;
     /// Flag for drawing debug geometry.
-    bool drawDebug_;
+    bool draw_debug_;
 };

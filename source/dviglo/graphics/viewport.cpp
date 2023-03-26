@@ -18,7 +18,7 @@ namespace dviglo
 
 Viewport::Viewport() :
     rect_(IntRect::ZERO),
-    drawDebug_(true)
+    draw_debug_(true)
 {
     SetRenderPath((RenderPath*)nullptr);
 }
@@ -27,7 +27,7 @@ Viewport::Viewport(Scene* scene, Camera* camera, RenderPath* renderPath) :
     scene_(scene),
     camera_(camera),
     rect_(IntRect::ZERO),
-    drawDebug_(true)
+    draw_debug_(true)
 {
     SetRenderPath(renderPath);
 }
@@ -36,7 +36,7 @@ Viewport::Viewport(Scene* scene, Camera* camera, const IntRect& rect, RenderPath
     scene_(scene),
     camera_(camera),
     rect_(rect),
-    drawDebug_(true)
+    draw_debug_(true)
 {
     SetRenderPath(renderPath);
 }
@@ -65,7 +65,7 @@ void Viewport::SetRect(const IntRect& rect)
 
 void Viewport::SetDrawDebug(bool enable)
 {
-    drawDebug_ = enable;
+    draw_debug_ = enable;
 }
 
 void Viewport::SetRenderPath(RenderPath* renderPath)

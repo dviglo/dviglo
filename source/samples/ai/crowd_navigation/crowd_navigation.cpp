@@ -436,7 +436,7 @@ void CrowdNavigation::move_camera(float timeStep)
 
     // Toggle debug geometry with space
     else if (input.GetKeyPress(KEY_SPACE))
-        drawDebug_ = !drawDebug_;
+        draw_debug_ = !draw_debug_;
 
     // Toggle instruction text with F12
     else if (input.GetKeyPress(KEY_F12))
@@ -543,7 +543,7 @@ void CrowdNavigation::handle_update(StringHash eventType, VariantMap& eventData)
 
 void CrowdNavigation::handle_post_render_update(StringHash eventType, VariantMap& eventData)
 {
-    if (drawDebug_)
+    if (draw_debug_)
     {
         // Visualize navigation mesh, obstacles and off-mesh connections
         scene_->GetComponent<DynamicNavigationMesh>()->draw_debug_geometry(true);
