@@ -62,6 +62,10 @@ void SkeletalAnimation::CreateScene()
 {
     ResourceCache& cache = DV_RES_CACHE;
 
+    // Включаем автоматическую перезагрузку изменённых ресурсов для тестирования FileWatcher.
+    // Пользователь может редактировать шейдеры и сразу видеть результат
+    cache.SetAutoReloadResources(true);
+
     scene_ = new Scene();
 
     // Create octree, use default volume (-1000, -1000, -1000) to (1000, 1000, 1000)
@@ -177,7 +181,10 @@ void SkeletalAnimation::CreateInstructions()
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
-        "Space to toggle debug geometry"
+        "Space to toggle debug geometry\n"
+        "\n"
+        "Для ResourceCache включён FileWatcher:\n"
+        "редактируйте шейдеры и сразу увидите результат"
     );
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
