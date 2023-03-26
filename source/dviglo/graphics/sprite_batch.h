@@ -82,19 +82,19 @@ private:
     // Данные для функции DrawSpriteInternal()
     struct
     {
-        Texture2D* texture_;
-        ShaderVariation* vs_;
-        ShaderVariation* ps_;
-        Rect destination_;
-        Rect sourceUV_; // Текстурные координаты в диапазоне [0, 1]
-        FlipModes flipModes_;
-        Vector2 scale_;
-        float rotation_;
-        Vector2 origin_;
-        u32 color0_;
-        u32 color1_;
-        u32 color2_;
-        u32 color3_;
+        Texture2D* texture;
+        ShaderVariation* vs;
+        ShaderVariation* ps;
+        Rect destination;
+        Rect source_uv; // Текстурные координаты в диапазоне [0, 1]
+        FlipModes flip_modes;
+        Vector2 scale;
+        float rotation;
+        Vector2 origin;
+        u32 color0;
+        u32 color1;
+        u32 color2;
+        u32 color3;
     } sprite_;
 
     // Перед вызовом этой функции нужно заполнить структуру sprite_

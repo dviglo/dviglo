@@ -78,19 +78,19 @@ void SpriteBatch::DrawSprite(Texture2D* texture, const Rect& destination, const 
     if (!texture)
         return;
 
-    sprite_.texture_ = texture;
-    sprite_.vs_ = spriteVS_;
-    sprite_.ps_ = spritePS_;
-    sprite_.destination_ = destination;
-    sprite_.sourceUV_ = SrcToUV(source, texture);
-    sprite_.flipModes_ = flipModes;
-    sprite_.scale_ = scale;
-    sprite_.rotation_ = rotation;
-    sprite_.origin_ = origin;
-    sprite_.color0_ = color;
-    sprite_.color1_ = color;
-    sprite_.color2_ = color;
-    sprite_.color3_ = color;
+    sprite_.texture = texture;
+    sprite_.vs = spriteVS_;
+    sprite_.ps = spritePS_;
+    sprite_.destination = destination;
+    sprite_.source_uv = SrcToUV(source, texture);
+    sprite_.flip_modes = flipModes;
+    sprite_.scale = scale;
+    sprite_.rotation = rotation;
+    sprite_.origin = origin;
+    sprite_.color0 = color;
+    sprite_.color1 = color;
+    sprite_.color2 = color;
+    sprite_.color3 = color;
 
     DrawSpriteInternal();
 }
@@ -101,34 +101,34 @@ void SpriteBatch::DrawSprite(Texture2D* texture, const Vector2& position, const 
     if (!texture)
         return;
 
-    sprite_.texture_ = texture;
-    sprite_.vs_ = spriteVS_;
-    sprite_.ps_ = spritePS_;
-    sprite_.destination_ = PosToDest(position, texture, source);
-    sprite_.sourceUV_ = SrcToUV(source, texture);
-    sprite_.flipModes_ = flipModes;
-    sprite_.scale_ = scale;
-    sprite_.rotation_ = rotation;
-    sprite_.origin_ = origin;
-    sprite_.color0_ = color;
-    sprite_.color1_ = color;
-    sprite_.color2_ = color;
-    sprite_.color3_ = color;
+    sprite_.texture = texture;
+    sprite_.vs = spriteVS_;
+    sprite_.ps = spritePS_;
+    sprite_.destination = PosToDest(position, texture, source);
+    sprite_.source_uv = SrcToUV(source, texture);
+    sprite_.flip_modes = flipModes;
+    sprite_.scale = scale;
+    sprite_.rotation = rotation;
+    sprite_.origin = origin;
+    sprite_.color0 = color;
+    sprite_.color1 = color;
+    sprite_.color2 = color;
+    sprite_.color3 = color;
 
     DrawSpriteInternal();
 }
 
 void SpriteBatch::DrawSpriteInternal()
 {
-    quad_.vs_ = sprite_.vs_;
-    quad_.ps_ = sprite_.ps_;
-    quad_.texture_ = sprite_.texture_;
+    quad_.vs_ = sprite_.vs;
+    quad_.ps_ = sprite_.ps;
+    quad_.texture_ = sprite_.texture;
 
     // Если спрайт не отмасштабирован и не повёрнут, то прорисовка очень проста
-    if (sprite_.rotation_ == 0.0f && sprite_.scale_ == Vector2::ONE)
+    if (sprite_.rotation == 0.0f && sprite_.scale == Vector2::ONE)
     {
         // Сдвигаем спрайт на -origin
-        Rect resultDest(sprite_.destination_.min_ - sprite_.origin_, sprite_.destination_.max_ - sprite_.origin_);
+        Rect resultDest(sprite_.destination.min_ - sprite_.origin, sprite_.destination.max_ - sprite_.origin);
 
         // Лицевая грань задаётся по часовой стрелке. Учитываем, что ось Y направлена вниз.
         // Но нет большой разницы, так как спрайты двусторонние
@@ -144,17 +144,17 @@ void SpriteBatch::DrawSpriteInternal()
         //    локальные координаты будут Rect(ноль, размерыСпрайта),
         //    то есть Rect(Vector2::ZERO, destination.max_ - destination.min_)
         // 2) При ненулевом origin нужно сдвинуть на -origin
-        Rect local(-sprite_.origin_, sprite_.destination_.max_ - sprite_.destination_.min_ - sprite_.origin_);
+        Rect local(-sprite_.origin, sprite_.destination.max_ - sprite_.destination.min_ - sprite_.origin);
 
         float sin, cos;
-        SinCos(sprite_.rotation_, sin, cos);
+        SinCos(sprite_.rotation, sin, cos);
 
         // Нам нужна матрица, которая масштабирует и поворачивает вершину в локальных координатах, а затем
         // смещает ее в требуемые мировые координаты.
         // Но в матрице 3x3 последняя строка "0 0 1", умножать на которую бессмысленно.
         // Поэтому вычисляем без матрицы для оптимизации
-        float m11 = cos * sprite_.scale_.x; float m12 = -sin * sprite_.scale_.y; float m13 = sprite_.destination_.min_.x;
-        float m21 = sin * sprite_.scale_.x; float m22 =  cos * sprite_.scale_.y; float m23 = sprite_.destination_.min_.y;
+        float m11 = cos * sprite_.scale.x; float m12 = -sin * sprite_.scale.y; float m13 = sprite_.destination.min_.x;
+        float m21 = sin * sprite_.scale.x; float m22 =  cos * sprite_.scale.y; float m23 = sprite_.destination.min_.y;
         //          0                                      0                                     1
 
         float minXm11 = local.min_.x * m11;
@@ -187,23 +187,23 @@ void SpriteBatch::DrawSpriteInternal()
                                       0.0f);
     }
 
-    if (!!(sprite_.flipModes_ & FlipModes::Horizontally))
-        std::swap(sprite_.sourceUV_.min_.x, sprite_.sourceUV_.max_.x);
+    if (!!(sprite_.flip_modes & FlipModes::Horizontally))
+        std::swap(sprite_.source_uv.min_.x, sprite_.source_uv.max_.x);
 
-    if (!!(sprite_.flipModes_ & FlipModes::Vertically))
-        std::swap(sprite_.sourceUV_.min_.y, sprite_.sourceUV_.max_.y);
+    if (!!(sprite_.flip_modes & FlipModes::Vertically))
+        std::swap(sprite_.source_uv.min_.y, sprite_.source_uv.max_.y);
 
-    quad_.v0_.color_ = sprite_.color0_;
-    quad_.v0_.uv_ = sprite_.sourceUV_.min_;
+    quad_.v0_.color_ = sprite_.color0;
+    quad_.v0_.uv_ = sprite_.source_uv.min_;
 
-    quad_.v1_.color_ = sprite_.color1_;
-    quad_.v1_.uv_ = Vector2(sprite_.sourceUV_.max_.x, sprite_.sourceUV_.min_.y);
+    quad_.v1_.color_ = sprite_.color1;
+    quad_.v1_.uv_ = Vector2(sprite_.source_uv.max_.x, sprite_.source_uv.min_.y);
 
-    quad_.v2_.color_ = sprite_.color2_;
-    quad_.v2_.uv_ = sprite_.sourceUV_.max_;
+    quad_.v2_.color_ = sprite_.color2;
+    quad_.v2_.uv_ = sprite_.source_uv.max_;
 
-    quad_.v3_.color_ = sprite_.color3_;
-    quad_.v3_.uv_ = Vector2(sprite_.sourceUV_.min_.x, sprite_.sourceUV_.max_.y);
+    quad_.v3_.color_ = sprite_.color3;
+    quad_.v3_.uv_ = Vector2(sprite_.source_uv.min_.x, sprite_.source_uv.max_.y);
 
     AddQuad();
 }
@@ -220,30 +220,30 @@ void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, con
 
     if (font->GetFontType() == FONT_FREETYPE)
     {
-        sprite_.vs_ = ttfTextVS_;
-        sprite_.ps_ = ttfTextPS_;
+        sprite_.vs = ttfTextVS_;
+        sprite_.ps = ttfTextPS_;
     }
     else // FONT_BITMAP
     {
         if (font->IsSDFFont())
         {
-            sprite_.vs_ = sdfTextVS_;
-            sprite_.ps_ = sdfTextPS_;
+            sprite_.vs = sdfTextVS_;
+            sprite_.ps = sdfTextPS_;
         }
         else
         {
-            sprite_.vs_ = spriteTextVS_;
-            sprite_.ps_ = spriteTextPS_;
+            sprite_.vs = spriteTextVS_;
+            sprite_.ps = spriteTextPS_;
         }
     }
 
-    sprite_.flipModes_ = flipModes;
-    sprite_.scale_ = scale;
-    sprite_.rotation_ = rotation;
-    sprite_.color0_ = color;
-    sprite_.color1_ = color;
-    sprite_.color2_ = color;
-    sprite_.color3_ = color;
+    sprite_.flip_modes = flipModes;
+    sprite_.scale = scale;
+    sprite_.rotation = rotation;
+    sprite_.color0 = color;
+    sprite_.color1 = color;
+    sprite_.color2 = color;
+    sprite_.color3 = color;
 
     FontFace* face = font->GetFace(fontSize);
     const Vector<SharedPtr<Texture2D>>& textures = face->GetTextures();
@@ -273,12 +273,12 @@ void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, con
         float gox = (float)glyph->offsetX_;
         float goy = (float)glyph->offsetY_;
 
-        sprite_.texture_ = textures[glyph->page_];
-        sprite_.destination_ = Rect(charPos.x, charPos.y, charPos.x + gw, charPos.y + gh);
-        sprite_.sourceUV_ = Rect(gx * pixelWidth, gy * pixelHeight, (gx + gw) * pixelWidth, (gy + gh) * pixelHeight);
+        sprite_.texture = textures[glyph->page_];
+        sprite_.destination = Rect(charPos.x, charPos.y, charPos.x + gw, charPos.y + gh);
+        sprite_.source_uv = Rect(gx * pixelWidth, gy * pixelHeight, (gx + gw) * pixelWidth, (gy + gh) * pixelHeight);
 
         // Модифицируем origin, а не позицию, чтобы было правильное вращение
-        sprite_.origin_ = !!(flipModes & FlipModes::Vertically) ? charOrig - Vector2(gox, face->GetRowHeight() - goy - gh) : charOrig - Vector2(gox, goy);
+        sprite_.origin = !!(flipModes & FlipModes::Vertically) ? charOrig - Vector2(gox, face->GetRowHeight() - goy - gh) : charOrig - Vector2(gox, goy);
 
         DrawSpriteInternal();
 
