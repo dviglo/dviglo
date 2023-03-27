@@ -92,7 +92,7 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Rect& destination, const
     sprite_.color2 = color;
     sprite_.color3 = color;
 
-    DrawSpriteInternal();
+    draw_sprite_internal();
 }
 
 void SpriteBatch::draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source, u32 color,
@@ -115,10 +115,10 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Vector2& position, const
     sprite_.color2 = color;
     sprite_.color3 = color;
 
-    DrawSpriteInternal();
+    draw_sprite_internal();
 }
 
-void SpriteBatch::DrawSpriteInternal()
+void SpriteBatch::draw_sprite_internal()
 {
     quad_.vs = sprite_.vs;
     quad_.ps = sprite_.ps;
@@ -280,7 +280,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
         // Модифицируем origin, а не позицию, чтобы было правильное вращение
         sprite_.origin = !!(flipModes & FlipModes::Vertically) ? charOrig - Vector2(gox, face->GetRowHeight() - goy - gh) : charOrig - Vector2(gox, goy);
 
-        DrawSpriteInternal();
+        draw_sprite_internal();
 
         charOrig.x -= (float)glyph->advance_x;
     }

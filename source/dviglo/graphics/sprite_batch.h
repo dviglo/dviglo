@@ -79,7 +79,7 @@ private:
     ShaderVariation* shapeVS_;
     ShaderVariation* shapePS_;
 
-    // Данные для функции DrawSpriteInternal()
+    // Данные для функции draw_sprite_internal()
     struct
     {
         Texture2D* texture;
@@ -98,7 +98,7 @@ private:
     } sprite_;
 
     // Перед вызовом этой функции нужно заполнить структуру sprite_
-    void DrawSpriteInternal();
+    void draw_sprite_internal();
 
     // ========================================= Остальное =========================================
 
