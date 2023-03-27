@@ -4,8 +4,8 @@
 
 #include "sprite_batch_base.h"
 
-#include "graphics.h"
 #include "camera.h"
+#include "graphics.h"
 
 namespace dviglo
 {
@@ -130,13 +130,13 @@ void SpriteBatchBase::update_view_proj_matrix()
         height = graphics.GetHeight();
     }
 
-    float pixelWidth = 2.0f / width; // Двойка, так как длина отрезка [-1, 1] равна двум
-    float pixelHeight = 2.0f / height;
+    float pixel_width = 2.f / width; // Двойка, так как длина отрезка [-1, 1] равна двум
+    float pixel_height = 2.f / height;
 
-    Matrix4 matrix = Matrix4(pixelWidth,  0.0f,         0.0f, -1.0f,
-                             0.0f,       -pixelHeight,  0.0f,  1.0f,
-                             0.0f,        0.0f,         1.0f,  0.0f,
-                             0.0f,        0.0f,         0.0f,  1.0f);
+    Matrix4 matrix = Matrix4(pixel_width,  0.f,           0.f, -1.f,
+                             0.f,         -pixel_height,  0.f,  1.f,
+                             0.f,          0.f,           1.f,  0.f,
+                             0.f,          0.f,           0.f,  1.f);
 
     graphics.SetShaderParameter(VSP_VIEWPROJ, matrix);
 }
@@ -247,12 +247,12 @@ void SpriteBatchBase::flush()
         q_vertex_buffer_->Unlock();
 
         // И отрисовываем её
-        i32 numQuads = q_num_vertices_ / vertices_per_quad_;
-        graphics.Draw(TRIANGLE_LIST, 0, numQuads * indices_per_quad_, 0, q_num_vertices_);
+        i32 num_quads = q_num_vertices_ / vertices_per_quad_;
+        graphics.Draw(TRIANGLE_LIST, 0, num_quads * indices_per_quad_, 0, q_num_vertices_);
 
         // Начинаем новую порцию
         q_num_vertices_ = 0;
     }
 }
 
-}
+} // namespace dviglo
