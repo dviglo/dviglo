@@ -51,11 +51,11 @@ void SpriteBatchBase::AddQuad()
         qCurrentTexture_ = quad_.texture;
     }
 
-    memcpy(qVertices_ + qNumVertices_, &(quad_.v0), sizeof(QVertex) * VERTICES_PER_QUAD);
-    qNumVertices_ += VERTICES_PER_QUAD;
+    memcpy(qVertices_ + qNumVertices_, &(quad_.v0), sizeof(QVertex) * vertices_per_quad_);
+    qNumVertices_ += vertices_per_quad_;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
-    if (qNumVertices_ == max_quads_in_portion_ * VERTICES_PER_QUAD)
+    if (qNumVertices_ == max_quads_in_portion_ * vertices_per_quad_)
         flush();
 }
 
@@ -154,19 +154,19 @@ SpriteBatchBase::SpriteBatchBase()
     for (i32 i = 0; i < max_quads_in_portion_; i++)
     {
         // Первый треугольник четырёхугольника
-        buffer[i * indices_per_quad_ + 0] = i * VERTICES_PER_QUAD + 0;
-        buffer[i * indices_per_quad_ + 1] = i * VERTICES_PER_QUAD + 1;
-        buffer[i * indices_per_quad_ + 2] = i * VERTICES_PER_QUAD + 2;
+        buffer[i * indices_per_quad_ + 0] = i * vertices_per_quad_ + 0;
+        buffer[i * indices_per_quad_ + 1] = i * vertices_per_quad_ + 1;
+        buffer[i * indices_per_quad_ + 2] = i * vertices_per_quad_ + 2;
 
         // Второй треугольник
-        buffer[i * indices_per_quad_ + 3] = i * VERTICES_PER_QUAD + 2;
-        buffer[i * indices_per_quad_ + 4] = i * VERTICES_PER_QUAD + 3;
-        buffer[i * indices_per_quad_ + 5] = i * VERTICES_PER_QUAD + 0;
+        buffer[i * indices_per_quad_ + 3] = i * vertices_per_quad_ + 2;
+        buffer[i * indices_per_quad_ + 4] = i * vertices_per_quad_ + 3;
+        buffer[i * indices_per_quad_ + 5] = i * vertices_per_quad_ + 0;
     }
     qIndexBuffer_->Unlock();
 
     qVertexBuffer_ = new VertexBuffer();
-    qVertexBuffer_->SetSize(max_quads_in_portion_ * VERTICES_PER_QUAD, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
+    qVertexBuffer_->SetSize(max_quads_in_portion_ * vertices_per_quad_, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
 
     Graphics& graphics = DV_GRAPHICS;
 
@@ -247,7 +247,7 @@ void SpriteBatchBase::flush()
         qVertexBuffer_->Unlock();
 
         // И отрисовываем её
-        i32 numQuads = qNumVertices_ / VERTICES_PER_QUAD;
+        i32 numQuads = qNumVertices_ / vertices_per_quad_;
         graphics.Draw(TRIANGLE_LIST, 0, numQuads * indices_per_quad_, 0, qNumVertices_);
 
         // Начинаем новую порцию

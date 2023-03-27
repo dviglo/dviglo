@@ -84,7 +84,7 @@ private:
 
     // Две вершины четырёхугольника идентичны для обоих треугольников, поэтому
     // в вершинном буфере каждый четырёхугольник занимает 4 элемента
-    inline static constexpr i32 VERTICES_PER_QUAD = 4;
+    inline static constexpr i32 vertices_per_quad_ = 4;
 
     // Атрибуты вершин четырёхугольников
     struct QVertex
@@ -95,7 +95,7 @@ private:
     };
 
     // Текущая порция четырёхугольников
-    QVertex qVertices_[max_quads_in_portion_ * VERTICES_PER_QUAD];
+    QVertex qVertices_[max_quads_in_portion_ * vertices_per_quad_];
 
     // Число вершин в массиве qVertices_
     i32 qNumVertices_ = 0;
