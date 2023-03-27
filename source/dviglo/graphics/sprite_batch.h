@@ -28,6 +28,10 @@ class DV_API SpriteBatch : public SpriteBatchBase
 {
     DV_OBJECT(SpriteBatch, SpriteBatchBase);
 
+public:
+
+    SpriteBatch();
+
     // ============================ Рисование фигур с помощью функции add_triangle() ============================
 
 public:
@@ -38,36 +42,23 @@ public:
     void draw_line(float startX, float startY, float endX, float endY, float width);
 
     void draw_aabb_solid(const Vector2& min, const Vector2& max);
+
     void draw_aabox_solid(const Vector2& centerPos, const Vector2& halfSize);
     void draw_aabox_solid(float centerX, float centerY, float halfWidth, float halfHeight);
 
-    void draw_circle(const Vector2& centerPos, float radius);
-    void draw_circle(float centerX, float centerY, float radius);
-
     // Граница рисуется по внутреннему периметру (не выходит за пределы AABox)
     void draw_aabox_border(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth);
+
+    void draw_circle(const Vector2& centerPos, float radius);
+    void draw_circle(float centerX, float centerY, float radius);
 
     void draw_arrow(const Vector2& start, const Vector2& end, float width);
 
     // ========================== Рисование спрайтов и текста с помощью функции add_quad() ==========================
 
-public:
-
-    /// color - цвет в формате 0xAABBGGRR
-    void draw_sprite(Texture2D* texture, const Rect& destination, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
-
-    /// color - цвет в формате 0xAABBGGRR
-    void draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
-
-    /// color - цвет в формате 0xAABBGGRR
-    void draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
-
 private:
 
-    // Кэширование шейдеров. Инициализируются в конструкторе
+    // Кэшированные шейдеры. Инициализируются в конструкторе
     ShaderVariation* sprite_vs_;
     ShaderVariation* sprite_ps_;
     ShaderVariation* ttf_text_vs_;
@@ -100,11 +91,19 @@ private:
     // Перед вызовом этой функции нужно заполнить структуру sprite_
     void draw_sprite_internal();
 
-    // ========================================= Остальное =========================================
-
 public:
 
-    SpriteBatch();
+    /// color - цвет в формате 0xAABBGGRR
+    void draw_sprite(Texture2D* texture, const Rect& destination, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
+        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
+
+    /// color - цвет в формате 0xAABBGGRR
+    void draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
+        float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
+
+    /// color - цвет в формате 0xAABBGGRR
+    void draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color = 0xFFFFFFFF,
+        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
 };
 
 } // namespace dviglo
