@@ -17,10 +17,10 @@ void SpriteBatchBase::AddTriangle()
         flush();
 
     memcpy(tVertices_ + tNumVertices_, &triangle_, sizeof(triangle_));
-    tNumVertices_ += VERTICES_PER_TRIANGLE;
+    tNumVertices_ += vertices_per_triangle_;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
-    if (tNumVertices_ == MAX_TRIANGLES_IN_PORTION * VERTICES_PER_TRIANGLE)
+    if (tNumVertices_ == MAX_TRIANGLES_IN_PORTION * vertices_per_triangle_)
         flush();
 }
 
@@ -171,7 +171,7 @@ SpriteBatchBase::SpriteBatchBase()
     Graphics& graphics = DV_GRAPHICS;
 
     tVertexBuffer_ = new VertexBuffer();
-    tVertexBuffer_->SetSize(MAX_TRIANGLES_IN_PORTION * VERTICES_PER_TRIANGLE, VertexElements::Position | VertexElements::Color, true);
+    tVertexBuffer_->SetSize(MAX_TRIANGLES_IN_PORTION * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
     tVertexShader_ = graphics.GetShader(VS, "TriangleBatch");
     tPixelShader_ = graphics.GetShader(PS, "TriangleBatch");
     SetShapeColor(Color::WHITE);

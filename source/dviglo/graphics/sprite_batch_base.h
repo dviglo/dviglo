@@ -28,7 +28,7 @@ private:
     inline static constexpr i32 MAX_TRIANGLES_IN_PORTION = 600;
 
     // Число вершин в треугольнике
-    inline static constexpr i32 VERTICES_PER_TRIANGLE = 3;
+    inline static constexpr i32 vertices_per_triangle_ = 3;
 
     // Атрибуты вершин треугольников
     struct TVertex
@@ -38,7 +38,7 @@ private:
     };
 
     // Текущая порция треугольников
-    TVertex tVertices_[MAX_TRIANGLES_IN_PORTION * VERTICES_PER_TRIANGLE];
+    TVertex tVertices_[MAX_TRIANGLES_IN_PORTION * vertices_per_triangle_];
 
     // Число вершин в массиве tVertices_
     i32 tNumVertices_ = 0;
