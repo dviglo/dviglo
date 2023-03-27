@@ -344,9 +344,9 @@ void SpriteBatch::draw_line(float startX, float startY, float endX, float endY, 
     draw_line(Vector2(startX, startY), Vector2(endX, endY), width);
 }
 
-void SpriteBatch::DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSize)
+void SpriteBatch::draw_aabox_solid(const Vector2& centerPos, const Vector2& halfSize)
 {
-    DrawAABoxSolid(centerPos.x, centerPos.y, halfSize.x, halfSize.y);
+    draw_aabox_solid(centerPos.x, centerPos.y, halfSize.x, halfSize.y);
 }
 
 void SpriteBatch::draw_aabb_solid(const Vector2& min, const Vector2& max)
@@ -358,7 +358,7 @@ void SpriteBatch::draw_aabb_solid(const Vector2& min, const Vector2& max)
     draw_triangle(leftBot, min, max);
 }
 
-void SpriteBatch::DrawAABoxSolid(float centerX, float centerY, float halfWidth, float halfHeight)
+void SpriteBatch::draw_aabox_solid(float centerX, float centerY, float halfWidth, float halfHeight)
 {
     if (halfWidth < M_EPSILON || halfHeight < M_EPSILON)
         return;
