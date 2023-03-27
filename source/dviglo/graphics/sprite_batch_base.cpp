@@ -96,11 +96,11 @@ Vector2 SpriteBatchBase::to_virtual_pos(const Vector2& real_pos)
     if (!VirtualScreenUsed())
         return real_pos;
 
-    IntRect viewportRect = GetViewportRect();
-    float factor = (float)virtualScreenSize_.x / viewportRect.Width();
+    IntRect viewport_rect = GetViewportRect();
+    float factor = (float)virtualScreenSize_.x / viewport_rect.Width();
 
-    float virtual_x = (real_pos.x - viewportRect.left_) * factor;
-    float virtual_y = (real_pos.y - viewportRect.top_) * factor;
+    float virtual_x = (real_pos.x - viewport_rect.left_) * factor;
+    float virtual_y = (real_pos.y - viewport_rect.top_) * factor;
 
     return Vector2(virtual_x, virtual_y);
 }
