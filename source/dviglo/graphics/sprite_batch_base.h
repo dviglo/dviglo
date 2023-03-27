@@ -105,7 +105,7 @@ private:
 
     // Текущие шейдеры
     ShaderVariation* q_current_vs_ = nullptr;
-    ShaderVariation* qCurrentPS_ = nullptr;
+    ShaderVariation* q_current_ps_ = nullptr;
 
     // Буферы
     SharedPtr<IndexBuffer> qIndexBuffer_;
