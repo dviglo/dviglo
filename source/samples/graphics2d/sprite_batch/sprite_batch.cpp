@@ -234,7 +234,7 @@ public:
         else if (currentTest_ == 3)
         {
             virtualSpriteBatch_->set_shape_color(0x90FF0000);
-            virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtual_screen_size);
+            virtualSpriteBatch_->draw_aabb_solid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtual_screen_size);
             virtualSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
             Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));

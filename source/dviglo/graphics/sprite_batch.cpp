@@ -349,7 +349,7 @@ void SpriteBatch::DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSi
     DrawAABoxSolid(centerPos.x, centerPos.y, halfSize.x, halfSize.y);
 }
 
-void SpriteBatch::DrawAABBSolid(const Vector2& min, const Vector2& max)
+void SpriteBatch::draw_aabb_solid(const Vector2& min, const Vector2& max)
 {
     Vector2 rightTop = Vector2(max.x, min.y); // Правый верхний угол
     Vector2 leftBot = Vector2(min.x, max.y); // Левый нижний

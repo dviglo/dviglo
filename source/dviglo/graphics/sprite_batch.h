@@ -37,7 +37,7 @@ public:
     void draw_line(const Vector2& start, const Vector2&end, float width);
     void draw_line(float startX, float startY, float endX, float endY, float width);
 
-    void DrawAABBSolid(const Vector2& min, const Vector2& max);
+    void draw_aabb_solid(const Vector2& min, const Vector2& max);
     void DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSize);
     void DrawAABoxSolid(float centerX, float centerY, float halfWidth, float halfHeight);
 
