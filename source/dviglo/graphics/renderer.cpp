@@ -1530,7 +1530,6 @@ void Renderer::UpdateQueuedViewport(i32 index)
 
     views_.Push(WeakPtr<View>(view));
 
-    const IntRect& viewRect = viewport->rect();
     Scene* scene = viewport->GetScene();
     if (!scene)
         return;
@@ -1542,7 +1541,7 @@ void Renderer::UpdateQueuedViewport(i32 index)
     if (!updatedOctrees_.Contains(octree))
     {
         frame_.camera_ = viewport->GetCamera();
-        frame_.viewSize_ = viewRect.Size();
+        frame_.viewSize_ = viewport->rect.Size();
         if (frame_.viewSize_ == IntVector2::ZERO)
             frame_.viewSize_ = IntVector2(DV_GRAPHICS.GetWidth(), DV_GRAPHICS.GetHeight());
         octree->Update(frame_);

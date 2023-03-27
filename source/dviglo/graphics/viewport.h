@@ -27,6 +27,10 @@ class DV_API Viewport : public Object
 public:
     bool draw_debug = true;
 
+    /// View rectangle. A zero rectangle (0 0 0 0) means to use the rendertarget's full dimensions.
+    /// In this case you could fetch the actual view rectangle from View object, though it will be valid only after the first frame
+    IntRect rect;
+
     /// Construct with defaults.
     explicit Viewport();
     /// Construct with a full rectangle.
@@ -40,8 +44,7 @@ public:
     void SetScene(Scene* scene);
     /// Set viewport camera.
     void SetCamera(Camera* camera);
-    /// Set view rectangle. A zero rectangle (0 0 0 0) means to use the rendertarget's full dimensions.
-    void SetRect(const IntRect& rect);
+
     /// Set rendering path.
     void SetRenderPath(RenderPath* renderPath);
     /// Set rendering path from an XML file.
@@ -56,9 +59,6 @@ public:
     Camera* GetCamera() const;
     /// Return the internal rendering structure. May be null if the viewport has not been rendered yet.
     View* GetView() const;
-
-    /// Return view rectangle. A zero rectangle (0 0 0 0) means to use the rendertarget's full dimensions. In this case you could fetch the actual view rectangle from View object, though it will be valid only after the first frame.
-    const IntRect& rect() const { return rect_; }
 
     /// Return rendering path.
     RenderPath* GetRenderPath() const;
@@ -83,8 +83,7 @@ private:
     WeakPtr<Camera> camera_;
     /// Culling camera pointer.
     WeakPtr<Camera> cullCamera_;
-    /// Viewport rectangle.
-    IntRect rect_;
+
     /// Rendering path.
     SharedPtr<RenderPath> renderPath_;
     /// Internal rendering structure.

@@ -284,7 +284,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     // Validate the rect and calculate size. If zero rect, use whole rendertarget size
     int rtWidth = renderTarget ? renderTarget->GetWidth() : graphics.GetWidth();
     int rtHeight = renderTarget ? renderTarget->GetHeight() : graphics.GetHeight();
-    const IntRect& rect = viewport->rect();
+    const IntRect& rect = viewport->rect;
 
     if (rect != IntRect::ZERO)
     {
@@ -294,7 +294,9 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
         viewRect_.bottom_ = Clamp(rect.bottom_, viewRect_.top_ + 1, rtHeight);
     }
     else
+    {
         viewRect_ = IntRect(0, 0, rtWidth, rtHeight);
+    }
 
     viewSize_ = viewRect_.Size();
     rtSize_ = IntVector2(rtWidth, rtHeight);

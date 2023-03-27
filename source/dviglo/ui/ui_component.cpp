@@ -83,7 +83,7 @@ public:
         if (camera == nullptr)
             return result;
 
-        IntRect rect = viewport_->rect();
+        IntRect rect = viewport_->rect;
         if (rect == IntRect::ZERO)
         {
             Graphics& graphics = DV_GRAPHICS;

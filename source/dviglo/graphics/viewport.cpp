@@ -16,16 +16,14 @@
 namespace dviglo
 {
 
-Viewport::Viewport() :
-    rect_(IntRect::ZERO)
+Viewport::Viewport()
 {
     SetRenderPath((RenderPath*)nullptr);
 }
 
 Viewport::Viewport(Scene* scene, Camera* camera, RenderPath* renderPath) :
     scene_(scene),
-    camera_(camera),
-    rect_(IntRect::ZERO)
+    camera_(camera)
 {
     SetRenderPath(renderPath);
 }
@@ -33,7 +31,7 @@ Viewport::Viewport(Scene* scene, Camera* camera, RenderPath* renderPath) :
 Viewport::Viewport(Scene* scene, Camera* camera, const IntRect& rect, RenderPath* renderPath) :   // NOLINT(modernize-pass-by-value)
     scene_(scene),
     camera_(camera),
-    rect_(rect)
+    rect(rect)
 {
     SetRenderPath(renderPath);
 }
@@ -53,11 +51,6 @@ void Viewport::SetCamera(Camera* camera)
 void Viewport::SetCullCamera(Camera* camera)
 {
     cullCamera_ = camera;
-}
-
-void Viewport::SetRect(const IntRect& rect)
-{
-    rect_ = rect;
 }
 
 void Viewport::SetRenderPath(RenderPath* renderPath)
@@ -115,7 +108,7 @@ Ray Viewport::GetScreenRay(int x, int y) const
     float screenX;
     float screenY;
 
-    if (rect_ == IntRect::ZERO)
+    if (rect == IntRect::ZERO)
     {
         Graphics& graphics = DV_GRAPHICS;
         screenX = (float)x / (float)graphics.GetWidth();
@@ -123,8 +116,8 @@ Ray Viewport::GetScreenRay(int x, int y) const
     }
     else
     {
-        screenX = float(x - rect_.left_) / (float)rect_.Width();
-        screenY = float(y - rect_.top_) / (float)rect_.Height();
+        screenX = float(x - rect.left_) / (float)rect.Width();
+        screenY = float(y - rect.top_) / (float)rect.Height();
     }
 
     return camera_->GetScreenRay(screenX, screenY);
@@ -139,7 +132,7 @@ IntVector2 Viewport::world_to_screen_point(const Vector3& worldPos) const
 
     int x;
     int y;
-    if (rect_ == IntRect::ZERO)
+    if (rect == IntRect::ZERO)
     {
         /// \todo This is incorrect if the viewport is used on a texture rendertarget instead of the backbuffer, as it may have different dimensions.
         Graphics& graphics = DV_GRAPHICS;
@@ -148,8 +141,8 @@ IntVector2 Viewport::world_to_screen_point(const Vector3& worldPos) const
     }
     else
     {
-        x = (int)(rect_.left_ + screenPoint.x * rect_.Width());
-        y = (int)(rect_.top_ + screenPoint.y * rect_.Height());
+        x = (int)(rect.left_ + screenPoint.x * rect.Width());
+        y = (int)(rect.top_ + screenPoint.y * rect.Height());
     }
 
     return IntVector2(x, y);
@@ -163,7 +156,7 @@ Vector3 Viewport::screen_to_world_point(int x, int y, float depth) const
     float screenX;
     float screenY;
 
-    if (rect_ == IntRect::ZERO)
+    if (rect == IntRect::ZERO)
     {
         /// \todo This is incorrect if the viewport is used on a texture rendertarget instead of the backbuffer, as it may have different dimensions.
         Graphics& graphics = DV_GRAPHICS;
@@ -172,8 +165,8 @@ Vector3 Viewport::screen_to_world_point(int x, int y, float depth) const
     }
     else
     {
-        screenX = float(x - rect_.left_) / (float)rect_.Width();
-        screenY = float(y - rect_.top_) / (float)rect_.Height();
+        screenX = float(x - rect.left_) / (float)rect.Width();
+        screenY = float(y - rect.top_) / (float)rect.Height();
     }
 
     return camera_->screen_to_world_point(Vector3(screenX, screenY, depth));
