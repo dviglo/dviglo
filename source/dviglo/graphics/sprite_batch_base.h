@@ -66,10 +66,10 @@ protected:
 public:
 
     /// Указывает цвет для следующих треугольников (в формате 0xAABBGGRR)
-    void SetShapeColor(u32 color);
+    void set_shape_color(u32 color);
 
     /// Указывает цвет для следующих треугольников
-    void SetShapeColor(const Color& color);
+    void set_shape_color(const Color& color);
 
     // ============================ Пакетный рендеринг четырехугольников ============================
 

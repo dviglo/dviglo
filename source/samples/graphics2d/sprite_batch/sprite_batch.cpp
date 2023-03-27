@@ -212,7 +212,7 @@ public:
 
         if (currentTest_ == 1)
         {
-            screenSpaceSpriteBatch_->SetShapeColor(0xFFFF0000);
+            screenSpaceSpriteBatch_->set_shape_color(0xFFFF0000);
             screenSpaceSpriteBatch_->DrawCircle(500.f, 200.f, 200.f);
 
             Vector2 origin = Vector2(head->GetWidth() * 0.5f, head->GetHeight() * 0.5f);
@@ -233,12 +233,12 @@ public:
         }
         else if (currentTest_ == 3)
         {
-            virtualSpriteBatch_->SetShapeColor(0x90FF0000);
+            virtualSpriteBatch_->set_shape_color(0x90FF0000);
             virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtual_screen_size);
             virtualSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
             Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));
-            virtualSpriteBatch_->SetShapeColor(0xFFFFFFFF);
+            virtualSpriteBatch_->set_shape_color(0xFFFFFFFF);
             virtualSpriteBatch_->DrawArrow({100.0f, 100.f}, virtualMousePos, 10);
             virtualSpriteBatch_->flush();
         }

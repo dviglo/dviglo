@@ -24,16 +24,16 @@ void SpriteBatchBase::add_triangle()
         flush();
 }
 
-void SpriteBatchBase::SetShapeColor(u32 color)
+void SpriteBatchBase::set_shape_color(u32 color)
 {
     triangle_.v0.color = color;
     triangle_.v1.color = color;
     triangle_.v2.color = color;
 }
 
-void SpriteBatchBase::SetShapeColor(const Color& color)
+void SpriteBatchBase::set_shape_color(const Color& color)
 {
-    SetShapeColor(color.ToU32());
+    set_shape_color(color.ToU32());
 }
 
 void SpriteBatchBase::AddQuad()
@@ -174,7 +174,7 @@ SpriteBatchBase::SpriteBatchBase()
     t_vertex_buffer_->SetSize(max_triangles_in_portion_ * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
     t_vertex_shader_ = graphics.GetShader(VS, "TriangleBatch");
     t_pixel_shader_ = graphics.GetShader(PS, "TriangleBatch");
-    SetShapeColor(Color::WHITE);
+    set_shape_color(Color::WHITE);
 }
 
 void SpriteBatchBase::flush()
