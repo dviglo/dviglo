@@ -48,7 +48,7 @@ private:
     ShaderVariation* t_pixel_shader_;
 
     // Вершинный буфер для треугольников (индексный буфер не используется)
-    SharedPtr<VertexBuffer> tVertexBuffer_;
+    SharedPtr<VertexBuffer> t_vertex_buffer_;
 
 protected:
 

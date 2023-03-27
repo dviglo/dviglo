@@ -170,8 +170,8 @@ SpriteBatchBase::SpriteBatchBase()
 
     Graphics& graphics = DV_GRAPHICS;
 
-    tVertexBuffer_ = new VertexBuffer();
-    tVertexBuffer_->SetSize(max_triangles_in_portion_ * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
+    t_vertex_buffer_ = new VertexBuffer();
+    t_vertex_buffer_->SetSize(max_triangles_in_portion_ * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
     t_vertex_shader_ = graphics.GetShader(VS, "TriangleBatch");
     t_pixel_shader_ = graphics.GetShader(PS, "TriangleBatch");
     SetShapeColor(Color::WHITE);
@@ -195,7 +195,7 @@ void SpriteBatchBase::flush()
         graphics.SetViewport(GetViewportRect());
 
         graphics.SetIndexBuffer(nullptr);
-        graphics.SetVertexBuffer(tVertexBuffer_);
+        graphics.SetVertexBuffer(t_vertex_buffer_);
         graphics.SetTexture(0, nullptr);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
@@ -204,9 +204,9 @@ void SpriteBatchBase::flush()
         UpdateViewProjMatrix();
 
         // Копируем накопленную геометрию в память видеокарты
-        TVertex* buffer = (TVertex*)tVertexBuffer_->Lock(0, t_num_vertices_, true);
+        TVertex* buffer = (TVertex*)t_vertex_buffer_->Lock(0, t_num_vertices_, true);
         memcpy(buffer, t_vertices_, t_num_vertices_ * sizeof(TVertex));
-        tVertexBuffer_->Unlock();
+        t_vertex_buffer_->Unlock();
 
         // И отрисовываем её
         graphics.Draw(TRIANGLE_LIST, 0, t_num_vertices_);
