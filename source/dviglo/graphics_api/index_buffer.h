@@ -73,7 +73,6 @@ private:
     bool UpdateToGPU();
 
 #ifdef DV_OPENGL
-    void* Lock_OGL(i32 start, i32 count, bool discard);
     void Unlock_OGL();
     bool Create_OGL();
 #endif // def DV_OPENGL

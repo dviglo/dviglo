@@ -259,14 +259,47 @@ bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool disc
 void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = GParams::get_gapi();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Lock_OGL(start, count, discard);
-#endif
+    if (lockState_ != LOCK_NONE)
+    {
+        DV_LOGERROR("Index buffer already locked");
+        return nullptr;
+    }
 
-    return {}; // Prevent warning
+    if (!indexSize_)
+    {
+        DV_LOGERROR("Index size not defined, can not lock index buffer");
+        return nullptr;
+    }
+
+    if (start + count > indexCount_)
+    {
+        DV_LOGERROR("Illegal range for locking index buffer");
+        return nullptr;
+    }
+
+    if (!count)
+        return nullptr;
+
+    lockStart_ = start;
+    lockCount_ = count;
+    discardLock_ = discard;
+
+    if (shadowData_)
+    {
+        lockState_ = LOCK_SHADOW;
+        return shadowData_.Get() + (intptr_t)start * indexSize_;
+    }
+    else if (!GParams::is_headless())
+    {
+        lockState_ = LOCK_SCRATCH;
+        lockScratchData_ = DV_GRAPHICS.ReserveScratchBuffer(count * indexSize_);
+        return lockScratchData_;
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void IndexBuffer::Unlock()
