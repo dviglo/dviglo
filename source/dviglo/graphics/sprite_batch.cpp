@@ -298,7 +298,7 @@ void SpriteBatch::DrawTriangle(const Vector2& v0, const Vector2& v1, const Vecto
     AddTriangle();
 }
 
-void SpriteBatch::DrawLine(const Vector2& start, const Vector2&end, float width)
+void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width)
 {
     float len = (end - start).Length();
     if (Equals(len, 0.0f))
@@ -339,9 +339,9 @@ void SpriteBatch::DrawLine(const Vector2& start, const Vector2&end, float width)
     DrawTriangle(v2, v3, v0);
 }
 
-void SpriteBatch::DrawLine(float startX, float startY, float endX, float endY, float width)
+void SpriteBatch::draw_line(float startX, float startY, float endX, float endY, float width)
 {
-    DrawLine(Vector2(startX, startY), Vector2(endX, endY), width);
+    draw_line(Vector2(startX, startY), Vector2(endX, endY), width);
 }
 
 void SpriteBatch::DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSize)
@@ -383,21 +383,21 @@ void SpriteBatch::DrawAABoxBorder(float centerX, float centerY, float halfWidth,
 
     // Верхняя граница
     float y = centerY - halfHeight + halfBorderWidth;
-    DrawLine(centerX - halfWidth, y, centerX + halfWidth, y, borderWidth);
+    draw_line(centerX - halfWidth, y, centerX + halfWidth, y, borderWidth);
 
     // Нижняя граница
     y = centerY + halfHeight - halfBorderWidth;
-    DrawLine(centerX - halfWidth, y, centerX + halfWidth, y, borderWidth);
+    draw_line(centerX - halfWidth, y, centerX + halfWidth, y, borderWidth);
 
     // При отрисовке боковых границ не перекрываем верхнюю и нижнюю, чтобы нормально отрисовывалось в случае полупрозрачного цвета
 
     // Левая граница
     float x = centerX - halfWidth + halfBorderWidth;
-    DrawLine(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
+    draw_line(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
 
     // Правая граница
     x = centerX + halfWidth - halfBorderWidth;
-    DrawLine(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
+    draw_line(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
 }
 
 void SpriteBatch::DrawCircle(const Vector2& centerPos, float radius)
@@ -457,7 +457,7 @@ void SpriteBatch::DrawArrow(const Vector2& start, const Vector2& end, float widt
     Vector2 head = dir * headLen; // Вектор от точки headStart до точки end
     Vector2 headTop = RotateMinus90(head) + headStart;
     Vector2 headBottom = RotatePlus90(head) + headStart;
-    DrawLine(start, headStart, width);
+    draw_line(start, headStart, width);
     DrawTriangle(headStart, headTop, end);
     DrawTriangle(headStart, headBottom, end);
 }

@@ -34,8 +34,8 @@ public:
 
     void DrawTriangle(const Vector2& v0, const Vector2& v1, const Vector2& v2);
 
-    void DrawLine(const Vector2& start, const Vector2&end, float width);
-    void DrawLine(float startX, float startY, float endX, float endY, float width);
+    void draw_line(const Vector2& start, const Vector2&end, float width);
+    void draw_line(float startX, float startY, float endX, float endY, float width);
 
     void DrawAABBSolid(const Vector2& min, const Vector2& max);
     void DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSize);
