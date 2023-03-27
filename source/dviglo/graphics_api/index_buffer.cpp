@@ -135,12 +135,15 @@ void IndexBuffer::OnDeviceLost()
 
 void IndexBuffer::OnDeviceReset()
 {
-    GAPI gapi = GParams::get_gapi();
+    if (!gpu_object_name_)
+    {
+        Create_OGL();
+        dataLost_ = !UpdateToGPU_OGL();
+    }
+    else if (dataPending_)
+        dataLost_ = !UpdateToGPU_OGL();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return OnDeviceReset_OGL();
-#endif
+    dataPending_ = false;
 }
 
 void IndexBuffer::Release()

@@ -13,19 +13,6 @@
 namespace dviglo
 {
 
-void IndexBuffer::OnDeviceReset_OGL()
-{
-    if (!gpu_object_name_)
-    {
-        Create_OGL();
-        dataLost_ = !UpdateToGPU_OGL();
-    }
-    else if (dataPending_)
-        dataLost_ = !UpdateToGPU_OGL();
-
-    dataPending_ = false;
-}
-
 void IndexBuffer::Release_OGL()
 {
     Unlock_OGL();

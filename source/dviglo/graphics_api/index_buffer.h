@@ -77,7 +77,6 @@ private:
     void UnmapBuffer();
 
 #ifdef DV_OPENGL
-    void OnDeviceReset_OGL();
     void Release_OGL();
     bool SetData_OGL(const void* data);
     bool SetDataRange_OGL(const void* data, i32 start, i32 count, bool discard = false);
