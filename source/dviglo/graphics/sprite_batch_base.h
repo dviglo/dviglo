@@ -134,7 +134,7 @@ protected:
 private:
 
     void update_view_proj_matrix();
-    IntRect GetViewportRect();
+    IntRect get_viewport_rect();
 
 public:
 

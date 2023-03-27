@@ -59,36 +59,36 @@ void SpriteBatchBase::add_quad()
         flush();
 }
 
-IntRect SpriteBatchBase::GetViewportRect()
+IntRect SpriteBatchBase::get_viewport_rect()
 {
     Graphics& graphics = DV_GRAPHICS;
 
     if (!VirtualScreenUsed())
         return IntRect(0, 0, graphics.GetWidth(), graphics.GetHeight());
 
-    float realAspect = (float)graphics.GetWidth() / graphics.GetHeight();
-    float virtualAspect = (float)virtual_screen_size.x / virtual_screen_size.y;
+    float real_aspect = (float)graphics.GetWidth() / graphics.GetHeight();
+    float virtual_aspect = (float)virtual_screen_size.x / virtual_screen_size.y;
 
-    float virtualScreenScale;
-    if (realAspect > virtualAspect)
+    float virtual_screen_scale;
+    if (real_aspect > virtual_aspect)
     {
         // Окно шире, чем надо. Будут пустые полосы по бокам
-        virtualScreenScale = (float)graphics.GetHeight() / virtual_screen_size.y;
+        virtual_screen_scale = (float)graphics.GetHeight() / virtual_screen_size.y;
     }
     else
     {
         // Высота окна больше, чем надо. Будут пустые полосы сверху и снизу
-        virtualScreenScale = (float)graphics.GetWidth() / virtual_screen_size.x;
+        virtual_screen_scale = (float)graphics.GetWidth() / virtual_screen_size.x;
     }
 
-    i32 viewportWidth = (i32)(virtual_screen_size.x * virtualScreenScale);
-    i32 viewportHeight = (i32)(virtual_screen_size.y * virtualScreenScale);
+    i32 viewport_width = (i32)(virtual_screen_size.x * virtual_screen_scale);
+    i32 viewport_height = (i32)(virtual_screen_size.y * virtual_screen_scale);
 
     // Центрируем вьюпорт
-    i32 viewportX = (graphics.GetWidth() - viewportWidth) / 2;
-    i32 viewportY = (graphics.GetHeight() - viewportHeight) / 2;
+    i32 viewport_x = (graphics.GetWidth() - viewport_width) / 2;
+    i32 viewport_y = (graphics.GetHeight() - viewport_height) / 2;
 
-    return IntRect(viewportX, viewportY, viewportWidth + viewportX, viewportHeight + viewportY);
+    return IntRect(viewport_x, viewport_y, viewport_width + viewport_x, viewport_height + viewport_y);
 }
 
 Vector2 SpriteBatchBase::to_virtual_pos(const Vector2& real_pos)
@@ -96,7 +96,7 @@ Vector2 SpriteBatchBase::to_virtual_pos(const Vector2& real_pos)
     if (!VirtualScreenUsed())
         return real_pos;
 
-    IntRect viewport_rect = GetViewportRect();
+    IntRect viewport_rect = get_viewport_rect();
     float factor = (float)virtual_screen_size.x / viewport_rect.Width();
 
     float virtual_x = (real_pos.x - viewport_rect.left_) * factor;
@@ -192,7 +192,7 @@ void SpriteBatchBase::flush()
         graphics.SetColorWrite(true);
         graphics.SetDepthTest(compare_mode);
         graphics.SetBlendMode(blend_mode);
-        graphics.SetViewport(GetViewportRect());
+        graphics.SetViewport(get_viewport_rect());
 
         graphics.SetIndexBuffer(nullptr);
         graphics.SetVertexBuffer(t_vertex_buffer_);
@@ -228,7 +228,7 @@ void SpriteBatchBase::flush()
         graphics.SetColorWrite(true);
         graphics.SetDepthTest(compare_mode);
         graphics.SetBlendMode(blend_mode);
-        graphics.SetViewport(GetViewportRect());
+        graphics.SetViewport(get_viewport_rect());
 
         graphics.SetIndexBuffer(q_index_buffer_);
         graphics.SetVertexBuffer(q_vertex_buffer_);
