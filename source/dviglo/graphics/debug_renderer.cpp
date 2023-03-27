@@ -449,7 +449,7 @@ void DebugRenderer::AddCross(const Vector3& center, float size, const Color& col
     }
 }
 
-void DebugRenderer::AddQuad(const Vector3& center, float width, float height, const Color& color, bool depthTest)
+void DebugRenderer::add_quad(const Vector3& center, float width, float height, const Color& color, bool depthTest)
 {
     color32 uintColor = color.ToU32();
 

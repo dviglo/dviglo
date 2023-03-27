@@ -53,7 +53,7 @@ void UIBatch::SetDefaultColor()
     }
 }
 
-void UIBatch::AddQuad(float x, float y, float width, float height, int texOffsetX, int texOffsetY, int texWidth, int texHeight)
+void UIBatch::add_quad(float x, float y, float width, float height, int texOffsetX, int texOffsetY, int texWidth, int texHeight)
 {
     unsigned topLeftColor, topRightColor, bottomLeftColor, bottomRightColor;
 
@@ -136,7 +136,7 @@ void UIBatch::AddQuad(float x, float y, float width, float height, int texOffset
     dest[35] = bottomUV;
 }
 
-void UIBatch::AddQuad(const Matrix3x4& transform, int x, int y, int width, int height, int texOffsetX, int texOffsetY,
+void UIBatch::add_quad(const Matrix3x4& transform, int x, int y, int width, int height, int texOffsetX, int texOffsetY,
     int texWidth, int texHeight)
 {
     unsigned topLeftColor, topRightColor, bottomLeftColor, bottomRightColor;
@@ -218,14 +218,14 @@ void UIBatch::AddQuad(const Matrix3x4& transform, int x, int y, int width, int h
     dest[35] = bottomUV;
 }
 
-void UIBatch::AddQuad(int x, int y, int width, int height, int texOffsetX, int texOffsetY, int texWidth, int texHeight, bool tiled)
+void UIBatch::add_quad(int x, int y, int width, int height, int texOffsetX, int texOffsetY, int texWidth, int texHeight, bool tiled)
 {
     if (!(element_->HasColorGradient() || element_->GetDerivedColor().ToU32() & 0xff000000))
         return; // No gradient and alpha is 0, so do not add the quad
 
     if (!tiled)
     {
-        AddQuad(x, y, width, height, texOffsetX, texOffsetY, texWidth, texHeight);
+        add_quad(x, y, width, height, texOffsetX, texOffsetY, texWidth, texHeight);
         return;
     }
 
@@ -243,7 +243,7 @@ void UIBatch::AddQuad(int x, int y, int width, int height, int texOffsetX, int t
         {
             tileW = Min(width - tileX, texWidth);
 
-            AddQuad(x + tileX, y + tileY, tileW, tileH, texOffsetX, texOffsetY, tileW, tileH);
+            add_quad(x + tileX, y + tileY, tileW, tileH, texOffsetX, texOffsetY, tileW, tileH);
 
             tileX += tileW;
         }
@@ -252,7 +252,7 @@ void UIBatch::AddQuad(int x, int y, int width, int height, int texOffsetX, int t
     }
 }
 
-void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
+void UIBatch::add_quad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
     const IntVector2& texA, const IntVector2& texB, const IntVector2& texC, const IntVector2& texD)
 {
     Vector3 v1 = (transform * Vector3((float)a.x, (float)a.y, 0.0f));
@@ -313,7 +313,7 @@ void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const Int
     dest[35] = uv4.y;
 }
 
-void UIBatch::AddQuad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
+void UIBatch::add_quad(const Matrix3x4& transform, const IntVector2& a, const IntVector2& b, const IntVector2& c, const IntVector2& d,
     const IntVector2& texA, const IntVector2& texB, const IntVector2& texC, const IntVector2& texD, const Color& colA,
     const Color& colB, const Color& colC, const Color& colD)
 {

@@ -130,7 +130,7 @@ void Text::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const
             {
                 if (charLocations_[i].position_.y != currentStart.y)
                 {
-                    batch.AddQuad(currentStart.x, currentStart.y, currentEnd.x - currentStart.x,
+                    batch.add_quad(currentStart.x, currentStart.y, currentEnd.x - currentStart.x,
                         currentEnd.y - currentStart.y, 0, 0);
                     currentStart = charLocations_[i].position_;
                     currentEnd = currentStart + charLocations_[i].size_;
@@ -144,7 +144,7 @@ void Text::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, const
         }
         if (currentEnd != currentStart)
         {
-            batch.AddQuad(currentStart.x, currentStart.y, currentEnd.x - currentStart.x, currentEnd.y - currentStart.y, 0, 0);
+            batch.add_quad(currentStart.x, currentStart.y, currentEnd.x - currentStart.x, currentEnd.y - currentStart.y, 0, 0);
         }
 
         UIBatch::AddOrMerge(batch, batches);
@@ -777,7 +777,7 @@ void Text::ConstructBatch(UIBatch& pageBatch, const Vector<GlyphLocation>& pageG
     {
         const GlyphLocation& glyphLocation = pageGlyphLocation[i];
         const FontGlyph& glyph = *glyphLocation.glyph_;
-        pageBatch.AddQuad(dx + glyphLocation.x_ + glyph.offset_x, dy + glyphLocation.y_ + glyph.offset_y, glyph.width,
+        pageBatch.add_quad(dx + glyphLocation.x_ + glyph.offset_x, dy + glyphLocation.y_ + glyph.offset_y, glyph.width,
             glyph.height, glyph.x, glyph.y, glyph.tex_width, glyph.tex_height);
     }
 

@@ -71,7 +71,7 @@ void Window::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
             const IntVector2& rootSize = rootElement->GetSize();
             UIBatch batch(rootElement, BLEND_ALPHA, IntRect(0, 0, rootSize.x, rootSize.y), nullptr, &vertexData);
             batch.SetColor(modalShadeColor_);
-            batch.AddQuad(0, 0, rootSize.x, rootSize.y, 0, 0);
+            batch.add_quad(0, 0, rootSize.x, rootSize.y, 0, 0);
             UIBatch::AddOrMerge(batch, batches);
         }
 
@@ -83,7 +83,7 @@ void Window::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
             IntVector2 size = GetSize();
             size.x -= x;
             batch.SetColor(modalFrameColor_);
-            batch.AddQuad(x - modalFrameSize_.x, -modalFrameSize_.y, size.x + 2 * modalFrameSize_.x,
+            batch.add_quad(x - modalFrameSize_.x, -modalFrameSize_.y, size.x + 2 * modalFrameSize_.x,
                 size.y + 2 * modalFrameSize_.y, 0, 0);
             UIBatch::AddOrMerge(batch, batches);
         }

@@ -97,7 +97,7 @@ void Sprite::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData, con
     UIBatch
         batch(this, blend_mode_ == BLEND_REPLACE && !allOpaque ? BLEND_ALPHA : blend_mode_, currentScissor, texture_, &vertexData);
 
-    batch.AddQuad(GetTransform(), 0, 0, size.x, size.y, imageRect_.left_, imageRect_.top_, imageRect_.right_ - imageRect_.left_,
+    batch.add_quad(GetTransform(), 0, 0, size.x, size.y, imageRect_.left_, imageRect_.top_, imageRect_.right_ - imageRect_.left_,
         imageRect_.bottom_ - imageRect_.top_);
 
     UIBatch::AddOrMerge(batch, batches);

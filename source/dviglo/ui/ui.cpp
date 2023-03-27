@@ -469,7 +469,7 @@ void UI::RenderUpdate()
             {
                 UIBatch batch(element, BLEND_REPLACE, scissor, nullptr, &data.vertexData_);
                 batch.SetColor(Color::BLACK);
-                batch.AddQuad(scissor.left_, scissor.top_, scissor.right_, scissor.bottom_, 0, 0);
+                batch.add_quad(scissor.left_, scissor.top_, scissor.right_, scissor.bottom_, 0, 0);
                 data.batches_.Push(batch);
             }
         }

@@ -350,13 +350,13 @@ void UiElement::GetDebugDrawBatches(Vector<UIBatch>& batches, Vector<float>& ver
 
     batch.SetColor(Color::BLUE, true);
     // Left
-    batch.AddQuad(0, 0, horizontalThickness, size_.y, 0, 0);
+    batch.add_quad(0, 0, horizontalThickness, size_.y, 0, 0);
     // Top
-    batch.AddQuad(0, 0, size_.x, verticalThickness, 0, 0);
+    batch.add_quad(0, 0, size_.x, verticalThickness, 0, 0);
     // Right
-    batch.AddQuad(size_.x - horizontalThickness, 0, horizontalThickness, size_.y, 0, 0);
+    batch.add_quad(size_.x - horizontalThickness, 0, horizontalThickness, size_.y, 0, 0);
     // Bottom
-    batch.AddQuad(0, size_.y - verticalThickness, size_.x, verticalThickness, 0, 0);
+    batch.add_quad(0, size_.y - verticalThickness, size_.x, verticalThickness, 0, 0);
 
     UIBatch::AddOrMerge(batch, batches);
 }

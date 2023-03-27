@@ -152,25 +152,25 @@ void BorderImage::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData
     if (border_.top_)
     {
         if (border_.left_)
-            batch.AddQuad(x, 0, border_.left_, border_.top_, uvTopLeft.x, uvTopLeft.y, uvBorder.left_, uvBorder.top_);
+            batch.add_quad(x, 0, border_.left_, border_.top_, uvTopLeft.x, uvTopLeft.y, uvBorder.left_, uvBorder.top_);
         if (innerSize.x)
-            batch.AddQuad(x + border_.left_, 0, innerSize.x, border_.top_, uvTopLeft.x + uvBorder.left_, uvTopLeft.y,
+            batch.add_quad(x + border_.left_, 0, innerSize.x, border_.top_, uvTopLeft.x + uvBorder.left_, uvTopLeft.y,
                 innerUvSize.x, uvBorder.top_, tiled_);
         if (border_.right_)
-            batch.AddQuad(x + border_.left_ + innerSize.x, 0, border_.right_, border_.top_,
+            batch.add_quad(x + border_.left_ + innerSize.x, 0, border_.right_, border_.top_,
                 uvTopLeft.x + uvBorder.left_ + innerUvSize.x, uvTopLeft.y, uvBorder.right_, uvBorder.top_);
     }
     // Middle
     if (innerSize.y)
     {
         if (border_.left_)
-            batch.AddQuad(x, border_.top_, border_.left_, innerSize.y, uvTopLeft.x, uvTopLeft.y + uvBorder.top_,
+            batch.add_quad(x, border_.top_, border_.left_, innerSize.y, uvTopLeft.x, uvTopLeft.y + uvBorder.top_,
                 uvBorder.left_, innerUvSize.y, tiled_);
         if (innerSize.x)
-            batch.AddQuad(x + border_.left_, border_.top_, innerSize.x, innerSize.y, uvTopLeft.x + uvBorder.left_,
+            batch.add_quad(x + border_.left_, border_.top_, innerSize.x, innerSize.y, uvTopLeft.x + uvBorder.left_,
                 uvTopLeft.y + uvBorder.top_, innerUvSize.x, innerUvSize.y, tiled_);
         if (border_.right_)
-            batch.AddQuad(x + border_.left_ + innerSize.x, border_.top_, border_.right_, innerSize.y,
+            batch.add_quad(x + border_.left_ + innerSize.x, border_.top_, border_.right_, innerSize.y,
                 uvTopLeft.x + uvBorder.left_ + innerUvSize.x, uvTopLeft.y + uvBorder.top_, uvBorder.right_, innerUvSize.y,
                 tiled_);
     }
@@ -178,14 +178,14 @@ void BorderImage::GetBatches(Vector<UIBatch>& batches, Vector<float>& vertexData
     if (border_.bottom_)
     {
         if (border_.left_)
-            batch.AddQuad(x, border_.top_ + innerSize.y, border_.left_, border_.bottom_, uvTopLeft.x,
+            batch.add_quad(x, border_.top_ + innerSize.y, border_.left_, border_.bottom_, uvTopLeft.x,
                 uvTopLeft.y + uvBorder.top_ + innerUvSize.y, uvBorder.left_, uvBorder.bottom_);
         if (innerSize.x)
-            batch.AddQuad(x + border_.left_, border_.top_ + innerSize.y, innerSize.x, border_.bottom_,
+            batch.add_quad(x + border_.left_, border_.top_ + innerSize.y, innerSize.x, border_.bottom_,
                 uvTopLeft.x + uvBorder.left_, uvTopLeft.y + uvBorder.top_ + innerUvSize.y, innerUvSize.x, uvBorder.bottom_,
                 tiled_);
         if (border_.right_)
-            batch.AddQuad(x + border_.left_ + innerSize.x, border_.top_ + innerSize.y, border_.right_, border_.bottom_,
+            batch.add_quad(x + border_.left_ + innerSize.x, border_.top_ + innerSize.y, border_.right_, border_.bottom_,
                 uvTopLeft.x + uvBorder.left_ + innerUvSize.x, uvTopLeft.y + uvBorder.top_ + innerUvSize.y, uvBorder.right_,
                 uvBorder.bottom_);
     }

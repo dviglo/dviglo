@@ -205,7 +205,7 @@ void SpriteBatch::DrawSpriteInternal()
     quad_.v3.color = sprite_.color3;
     quad_.v3.uv = Vector2(sprite_.source_uv.min_.x, sprite_.source_uv.max_.y);
 
-    AddQuad();
+    add_quad();
 }
 
 void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color,

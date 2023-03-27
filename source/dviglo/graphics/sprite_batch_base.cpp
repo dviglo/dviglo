@@ -36,7 +36,7 @@ void SpriteBatchBase::set_shape_color(const Color& color)
     set_shape_color(color.ToU32());
 }
 
-void SpriteBatchBase::AddQuad()
+void SpriteBatchBase::add_quad()
 {
     // Рендерили треугольники, а теперь нужно рендерить четырехугольники
     if (t_num_vertices_ > 0)
