@@ -42,11 +42,11 @@ void SpriteBatchBase::AddQuad()
     if (t_num_vertices_ > 0)
         flush();
 
-    if (quad_.texture != q_current_texture_ || quad_.vs != qCurrentVS_ || quad_.ps != qCurrentPS_)
+    if (quad_.texture != q_current_texture_ || quad_.vs != q_current_vs_ || quad_.ps != qCurrentPS_)
     {
         flush();
 
-        qCurrentVS_ = quad_.vs;
+        q_current_vs_ = quad_.vs;
         qCurrentPS_ = quad_.ps;
         q_current_texture_ = quad_.texture;
     }
@@ -235,7 +235,7 @@ void SpriteBatchBase::flush()
         graphics.SetTexture(0, q_current_texture_);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
-        graphics.SetShaders(qCurrentVS_, qCurrentPS_);
+        graphics.SetShaders(q_current_vs_, qCurrentPS_);
         graphics.SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
         UpdateViewProjMatrix();
         // Мы используем только цвета вершин. Но это значение требует шейдер Basic

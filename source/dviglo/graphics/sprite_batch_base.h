@@ -104,7 +104,7 @@ private:
     Texture2D* q_current_texture_ = nullptr;
 
     // Текущие шейдеры
-    ShaderVariation* qCurrentVS_ = nullptr;
+    ShaderVariation* q_current_vs_ = nullptr;
     ShaderVariation* qCurrentPS_ = nullptr;
 
     // Буферы
