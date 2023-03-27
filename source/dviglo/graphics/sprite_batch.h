@@ -41,8 +41,8 @@ public:
     void DrawAABoxSolid(const Vector2& centerPos, const Vector2& halfSize);
     void DrawAABoxSolid(float centerX, float centerY, float halfWidth, float halfHeight);
 
-    void DrawCircle(const Vector2& centerPos, float radius);
-    void DrawCircle(float centerX, float centerY, float radius);
+    void draw_circle(const Vector2& centerPos, float radius);
+    void draw_circle(float centerX, float centerY, float radius);
 
     // Граница рисуется по внутреннему периметру (не выходит за пределы AABox)
     void DrawAABoxBorder(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth);

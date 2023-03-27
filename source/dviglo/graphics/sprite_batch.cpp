@@ -400,7 +400,7 @@ void SpriteBatch::DrawAABoxBorder(float centerX, float centerY, float halfWidth,
     draw_line(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
 }
 
-void SpriteBatch::DrawCircle(const Vector2& centerPos, float radius)
+void SpriteBatch::draw_circle(const Vector2& centerPos, float radius)
 {
     const int numPoints = 40;
     Vector2 points[numPoints];
@@ -420,9 +420,9 @@ void SpriteBatch::DrawCircle(const Vector2& centerPos, float radius)
     draw_triangle(points[0], points[numPoints - 1], centerPos);
 }
 
-void SpriteBatch::DrawCircle(float centerX, float centerY, float radius)
+void SpriteBatch::draw_circle(float centerX, float centerY, float radius)
 {
-    DrawCircle(Vector2(centerX, centerY), radius);
+    draw_circle(Vector2(centerX, centerY), radius);
 }
 
 // Поворачивает вектор по часовой стрелке на 90 градусов

@@ -213,7 +213,7 @@ public:
         if (currentTest_ == 1)
         {
             screenSpaceSpriteBatch_->set_shape_color(0xFFFF0000);
-            screenSpaceSpriteBatch_->DrawCircle(500.f, 200.f, 200.f);
+            screenSpaceSpriteBatch_->draw_circle(500.f, 200.f, 200.f);
 
             Vector2 origin = Vector2(head->GetWidth() * 0.5f, head->GetHeight() * 0.5f);
             screenSpaceSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale_, scale_));
