@@ -439,7 +439,7 @@ static Vector2 RotateMinus90(const Vector2& v)
     return result;
 }
 
-void SpriteBatch::DrawArrow(const Vector2& start, const Vector2& end, float width)
+void SpriteBatch::draw_arrow(const Vector2& start, const Vector2& end, float width)
 {
     // TODO: настроить Doxygen на поддержку картинок и тут ссылку на картинку
     Vector2 vec = end - start;

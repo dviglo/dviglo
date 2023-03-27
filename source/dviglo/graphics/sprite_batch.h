@@ -47,7 +47,7 @@ public:
     // Граница рисуется по внутреннему периметру (не выходит за пределы AABox)
     void DrawAABoxBorder(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth);
 
-    void DrawArrow(const Vector2& start, const Vector2& end, float width);
+    void draw_arrow(const Vector2& start, const Vector2& end, float width);
 
     // ========================== Рисование спрайтов и текста с помощью функции add_quad() ==========================
 

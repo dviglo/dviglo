@@ -239,7 +239,7 @@ public:
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
             Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));
             virtualSpriteBatch_->set_shape_color(0xFFFFFFFF);
-            virtualSpriteBatch_->DrawArrow({100.0f, 100.f}, virtualMousePos, 10);
+            virtualSpriteBatch_->draw_arrow({100.0f, 100.f}, virtualMousePos, 10);
             virtualSpriteBatch_->flush();
         }
 
