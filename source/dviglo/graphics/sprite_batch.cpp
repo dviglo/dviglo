@@ -60,8 +60,8 @@ static Rect SrcToUV(const Rect* source, Texture2D* texture)
     else
     {
         // Проверки не производятся, текстура должна быть корректной
-        float inv_width = 1.0f / texture->GetWidth();
-        float inv_height = 1.0f / texture->GetHeight();
+        float inv_width = 1.f / texture->GetWidth();
+        float inv_height = 1.f / texture->GetHeight();
         return Rect
         (
             source->min_.x * inv_width,
@@ -166,25 +166,25 @@ void SpriteBatch::draw_sprite_internal()
         float maxYm12 = local.max_.y * m12;
         float maxYm22 = local.max_.y * m22;
 
-        // transform * Vector3(local.min_.x, local.min_.y, 1.0f);
+        // transform * Vector3(local.min_.x, local.min_.y, 1.f);
         quad_.v0.position = Vector3(minXm11 + minYm12 + m13,
                                     minXm21 + minYm22 + m23,
-                                    0.0f);
+                                    0.f);
 
-        // transform * Vector3(local.max_.x, local.min_.y, 1.0f).
+        // transform * Vector3(local.max_.x, local.min_.y, 1.f).
         quad_.v1.position = Vector3(maxXm11 + minYm12 + m13,
                                     maxXm21 + minYm22 + m23,
-                                    0.0f);
+                                    0.f);
 
-        // transform * Vector3(local.max_.x, local.max_.y, 1.0f).
+        // transform * Vector3(local.max_.x, local.max_.y, 1.f).
         quad_.v2.position = Vector3(maxXm11 + maxYm12 + m13,
                                     maxXm21 + maxYm22 + m23,
-                                    0.0f);
+                                    0.f);
 
-        // transform * Vector3(local.min_.x, local.max_.y, 1.0f).
+        // transform * Vector3(local.min_.x, local.max_.y, 1.f).
         quad_.v3.position = Vector3(minXm11 + maxYm12 + m13,
                                     minXm21 + maxYm22 + m23,
-                                    0.0f);
+                                    0.f);
     }
 
     if (!!(sprite_.flip_modes & FlipModes::horizontally))
@@ -288,7 +288,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float font_size, c
 
 // В отличие от Sign() никогда не возвращает ноль
 template <typename T>
-T MySign(T value) { return value >= 0.0f ? 1.0f : -1.0f; }
+T MySign(T value) { return value >= 0.0f ? 1.f : -1.f; }
 
 void SpriteBatch::draw_triangle(const Vector2& v0, const Vector2& v1, const Vector2& v2)
 {
@@ -426,14 +426,14 @@ void SpriteBatch::draw_circle(float center_x, float center_y, float radius)
 }
 
 // Поворачивает вектор по часовой стрелке на 90 градусов
-static Vector2 RotatePlus90(const Vector2& v)
+static Vector2 rotate_plus_90(const Vector2& v)
 {
     Vector2 result(-v.y, v.x);
     return result;
 }
 
 // Поворачивает вектор по часовой стрелке на -90 градусов
-static Vector2 RotateMinus90(const Vector2& v)
+static Vector2 rotate_minus_90(const Vector2& v)
 {
     Vector2 result(v.y, -v.x);
     return result;
@@ -455,8 +455,8 @@ void SpriteBatch::draw_arrow(const Vector2& start, const Vector2& end, float wid
     float shaft_len = len - head_len; // Длина древка
     Vector2 head_start = dir * shaft_len + start; // Начало наконечника
     Vector2 head = dir * head_len; // Вектор от точки head_start до точки end
-    Vector2 head_top = RotateMinus90(head) + head_start;
-    Vector2 head_bottom = RotatePlus90(head) + head_start;
+    Vector2 head_top = rotate_minus_90(head) + head_start;
+    Vector2 head_bottom = rotate_plus_90(head) + head_start;
     draw_line(start, head_start, width);
     draw_triangle(head_start, head_top, end);
     draw_triangle(head_start, head_bottom, end);
