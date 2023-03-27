@@ -95,9 +95,9 @@ private:
     };
 
     // Текущая порция четырёхугольников
-    QVertex qVertices_[max_quads_in_portion_ * vertices_per_quad_];
+    QVertex q_vertices_[max_quads_in_portion_ * vertices_per_quad_];
 
-    // Число вершин в массиве qVertices_
+    // Число вершин в массиве q_vertices_
     i32 qNumVertices_ = 0;
 
     // Текущая текстура

@@ -51,7 +51,7 @@ void SpriteBatchBase::AddQuad()
         qCurrentTexture_ = quad_.texture;
     }
 
-    memcpy(qVertices_ + qNumVertices_, &(quad_.v0), sizeof(QVertex) * vertices_per_quad_);
+    memcpy(q_vertices_ + qNumVertices_, &(quad_.v0), sizeof(QVertex) * vertices_per_quad_);
     qNumVertices_ += vertices_per_quad_;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
@@ -243,7 +243,7 @@ void SpriteBatchBase::flush()
 
         // Копируем накопленную геометрию в память видеокарты
         QVertex* buffer = (QVertex*)qVertexBuffer_->Lock(0, qNumVertices_, true);
-        memcpy(buffer, qVertices_, qNumVertices_ * sizeof(QVertex));
+        memcpy(buffer, q_vertices_, qNumVertices_ * sizeof(QVertex));
         qVertexBuffer_->Unlock();
 
         // И отрисовываем её
