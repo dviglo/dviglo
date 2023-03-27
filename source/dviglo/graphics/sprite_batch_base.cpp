@@ -173,7 +173,7 @@ SpriteBatchBase::SpriteBatchBase()
     tVertexBuffer_ = new VertexBuffer();
     tVertexBuffer_->SetSize(max_triangles_in_portion_ * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
     t_vertex_shader_ = graphics.GetShader(VS, "TriangleBatch");
-    tPixelShader_ = graphics.GetShader(PS, "TriangleBatch");
+    t_pixel_shader_ = graphics.GetShader(PS, "TriangleBatch");
     SetShapeColor(Color::WHITE);
 }
 
@@ -199,7 +199,7 @@ void SpriteBatchBase::flush()
         graphics.SetTexture(0, nullptr);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
-        graphics.SetShaders(t_vertex_shader_, tPixelShader_);
+        graphics.SetShaders(t_vertex_shader_, t_pixel_shader_);
         graphics.SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
         UpdateViewProjMatrix();
 

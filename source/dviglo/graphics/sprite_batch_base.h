@@ -45,7 +45,7 @@ private:
 
     // Шейдеры для рендеринга треугольников. Инициализируются в конструкторе
     ShaderVariation* t_vertex_shader_;
-    ShaderVariation* tPixelShader_;
+    ShaderVariation* t_pixel_shader_;
 
     // Вершинный буфер для треугольников (индексный буфер не используется)
     SharedPtr<VertexBuffer> tVertexBuffer_;
