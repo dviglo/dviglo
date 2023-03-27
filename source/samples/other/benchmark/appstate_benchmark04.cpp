@@ -81,5 +81,5 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
     spriteBatch_->DrawString("Некий текст", cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 40.0f,
         Vector2(400.0f, 300.0f), 0xFFFF0000, angle_, Vector2::ZERO, Vector2(scale, scale));
 
-    spriteBatch_->Flush();
+    spriteBatch_->flush();
 }

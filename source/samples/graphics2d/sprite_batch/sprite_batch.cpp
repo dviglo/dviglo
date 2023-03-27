@@ -224,12 +224,12 @@ public:
             screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically);
             screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(104.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically | FlipModes::Both);
 
-            // screenSpaceSpriteBatch_->Flush(); не вызываем, так как еще текст будем выводить
+            // screenSpaceSpriteBatch_->flush(); не вызываем, так как ещё текст будем выводить
         }
         else if (currentTest_ == 2)
         {
             worldSpaceSpriteBatch_->DrawSprite(head, Vector2(0.0f, 0.0f), nullptr, 0xFFFFFFFF, 0.0f, Vector2::ZERO, Vector2(0.01f, 0.01f));
-            worldSpaceSpriteBatch_->Flush();
+            worldSpaceSpriteBatch_->flush();
         }
         else if (currentTest_ == 3)
         {
@@ -240,7 +240,7 @@ public:
             Vector2 virtualMousePos = virtualSpriteBatch_->GetVirtualPos(Vector2(DV_INPUT.GetMousePosition()));
             virtualSpriteBatch_->SetShapeColor(0xFFFFFFFF);
             virtualSpriteBatch_->DrawArrow({100.0f, 100.f}, virtualMousePos, 10);
-            virtualSpriteBatch_->Flush();
+            virtualSpriteBatch_->flush();
         }
 
         // Выводим индекс текущего теста
@@ -280,7 +280,7 @@ public:
         pos = {10.f, graphics.GetHeight() - 56.f};
         screenSpaceSpriteBatch_->DrawString(str, font, 40.f, pos, 0xFF0000FF);
 
-        screenSpaceSpriteBatch_->Flush();
+        screenSpaceSpriteBatch_->flush();
     }
 };
 

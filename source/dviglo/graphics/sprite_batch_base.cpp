@@ -14,14 +14,14 @@ void SpriteBatchBase::AddTriangle()
 {
     // Рендерили четырёхугольники, а теперь нужно рендерить треугольники
     if (qNumVertices_ > 0)
-        Flush();
+        flush();
 
     memcpy(tVertices_ + tNumVertices_, &triangle_, sizeof(triangle_));
     tNumVertices_ += VERTICES_PER_TRIANGLE;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
     if (tNumVertices_ == MAX_TRIANGLES_IN_PORTION * VERTICES_PER_TRIANGLE)
-        Flush();
+        flush();
 }
 
 void SpriteBatchBase::SetShapeColor(u32 color)
@@ -40,11 +40,11 @@ void SpriteBatchBase::AddQuad()
 {
     // Рендерили треугольники, а теперь нужно рендерить четырехугольники
     if (tNumVertices_ > 0)
-        Flush();
+        flush();
 
     if (quad_.texture != qCurrentTexture_ || quad_.vs != qCurrentVS_ || quad_.ps != qCurrentPS_)
     {
-        Flush();
+        flush();
 
         qCurrentVS_ = quad_.vs;
         qCurrentPS_ = quad_.ps;
@@ -56,7 +56,7 @@ void SpriteBatchBase::AddQuad()
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
     if (qNumVertices_ == MAX_QUADS_IN_PORTION * VERTICES_PER_QUAD)
-        Flush();
+        flush();
 }
 
 IntRect SpriteBatchBase::GetViewportRect()
@@ -177,7 +177,7 @@ SpriteBatchBase::SpriteBatchBase()
     SetShapeColor(Color::WHITE);
 }
 
-void SpriteBatchBase::Flush()
+void SpriteBatchBase::flush()
 {
     if (tNumVertices_ > 0)
     {
