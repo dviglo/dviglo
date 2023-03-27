@@ -171,14 +171,37 @@ void IndexBuffer::Release()
 
 bool IndexBuffer::SetData(const void* data)
 {
-    GAPI gapi = GParams::get_gapi();
+    if (!data)
+    {
+        DV_LOGERROR("Null pointer for index buffer data");
+        return false;
+    }
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return SetData_OGL(data);
-#endif
+    if (!indexSize_)
+    {
+        DV_LOGERROR("Index size not defined, can not set index buffer data");
+        return false;
+    }
 
-    return {}; // Prevent warning
+    if (shadowData_ && data != shadowData_.Get())
+        memcpy(shadowData_.Get(), data, (size_t)indexCount_ * indexSize_);
+
+    if (gpu_object_name_)
+    {
+        if (!DV_GRAPHICS.IsDeviceLost())
+        {
+            DV_GRAPHICS.SetIndexBuffer(this);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)indexCount_ * indexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        }
+        else
+        {
+            DV_LOGWARNING("Index buffer data assignment while device is lost");
+            dataPending_ = true;
+        }
+    }
+
+    dataLost_ = false;
+    return true;
 }
 
 bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool discard)
@@ -232,7 +255,7 @@ bool IndexBuffer::Create()
 bool IndexBuffer::UpdateToGPU()
 {
     if (gpu_object_name_ && shadowData_)
-        return SetData_OGL(shadowData_.Get());
+        return SetData(shadowData_.Get());
     else
         return false;
 }

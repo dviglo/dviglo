@@ -13,47 +13,12 @@
 namespace dviglo
 {
 
-bool IndexBuffer::SetData_OGL(const void* data)
-{
-    if (!data)
-    {
-        DV_LOGERROR("Null pointer for index buffer data");
-        return false;
-    }
-
-    if (!indexSize_)
-    {
-        DV_LOGERROR("Index size not defined, can not set index buffer data");
-        return false;
-    }
-
-    if (shadowData_ && data != shadowData_.Get())
-        memcpy(shadowData_.Get(), data, (size_t)indexCount_ * indexSize_);
-
-    if (gpu_object_name_)
-    {
-        if (!DV_GRAPHICS.IsDeviceLost())
-        {
-            DV_GRAPHICS.SetIndexBuffer(this);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)indexCount_ * indexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
-        }
-        else
-        {
-            DV_LOGWARNING("Index buffer data assignment while device is lost");
-            dataPending_ = true;
-        }
-    }
-
-    dataLost_ = false;
-    return true;
-}
-
 bool IndexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
 
     if (start == 0 && count == indexCount_)
-        return SetData_OGL(data);
+        return SetData(data);
 
     if (!data)
     {
