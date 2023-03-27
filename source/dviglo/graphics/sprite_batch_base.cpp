@@ -165,8 +165,8 @@ SpriteBatchBase::SpriteBatchBase()
     }
     q_index_buffer_->Unlock();
 
-    qVertexBuffer_ = new VertexBuffer();
-    qVertexBuffer_->SetSize(max_quads_in_portion_ * vertices_per_quad_, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
+    q_vertex_buffer_ = new VertexBuffer();
+    q_vertex_buffer_->SetSize(max_quads_in_portion_ * vertices_per_quad_, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
 
     Graphics& graphics = DV_GRAPHICS;
 
@@ -231,7 +231,7 @@ void SpriteBatchBase::flush()
         graphics.SetViewport(GetViewportRect());
 
         graphics.SetIndexBuffer(q_index_buffer_);
-        graphics.SetVertexBuffer(qVertexBuffer_);
+        graphics.SetVertexBuffer(q_vertex_buffer_);
         graphics.SetTexture(0, q_current_texture_);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
@@ -242,9 +242,9 @@ void SpriteBatchBase::flush()
         graphics.SetShaderParameter(PSP_MATDIFFCOLOR, Color::WHITE);
 
         // Копируем накопленную геометрию в память видеокарты
-        QVertex* buffer = (QVertex*)qVertexBuffer_->Lock(0, q_num_vertices_, true);
+        QVertex* buffer = (QVertex*)q_vertex_buffer_->Lock(0, q_num_vertices_, true);
         memcpy(buffer, q_vertices_, q_num_vertices_ * sizeof(QVertex));
-        qVertexBuffer_->Unlock();
+        q_vertex_buffer_->Unlock();
 
         // И отрисовываем её
         i32 numQuads = q_num_vertices_ / vertices_per_quad_;

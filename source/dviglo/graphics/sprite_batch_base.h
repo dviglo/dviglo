@@ -109,7 +109,7 @@ private:
 
     // Буферы
     SharedPtr<IndexBuffer> q_index_buffer_;
-    SharedPtr<VertexBuffer> qVertexBuffer_;
+    SharedPtr<VertexBuffer> q_vertex_buffer_;
 
 protected:
 
