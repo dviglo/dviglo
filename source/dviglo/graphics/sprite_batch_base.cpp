@@ -13,7 +13,7 @@ namespace dviglo
 void SpriteBatchBase::AddTriangle()
 {
     // Рендерили четырёхугольники, а теперь нужно рендерить треугольники
-    if (qNumVertices_ > 0)
+    if (q_num_vertices_ > 0)
         flush();
 
     memcpy(t_vertices_ + t_num_vertices_, &triangle_, sizeof(triangle_));
@@ -51,11 +51,11 @@ void SpriteBatchBase::AddQuad()
         qCurrentTexture_ = quad_.texture;
     }
 
-    memcpy(q_vertices_ + qNumVertices_, &(quad_.v0), sizeof(QVertex) * vertices_per_quad_);
-    qNumVertices_ += vertices_per_quad_;
+    memcpy(q_vertices_ + q_num_vertices_, &(quad_.v0), sizeof(QVertex) * vertices_per_quad_);
+    q_num_vertices_ += vertices_per_quad_;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
-    if (qNumVertices_ == max_quads_in_portion_ * vertices_per_quad_)
+    if (q_num_vertices_ == max_quads_in_portion_ * vertices_per_quad_)
         flush();
 }
 
@@ -215,7 +215,7 @@ void SpriteBatchBase::flush()
         t_num_vertices_ = 0;
     }
 
-    else if (qNumVertices_ > 0)
+    else if (q_num_vertices_ > 0)
     {
         Graphics& graphics = DV_GRAPHICS;
 
@@ -242,16 +242,16 @@ void SpriteBatchBase::flush()
         graphics.SetShaderParameter(PSP_MATDIFFCOLOR, Color::WHITE);
 
         // Копируем накопленную геометрию в память видеокарты
-        QVertex* buffer = (QVertex*)qVertexBuffer_->Lock(0, qNumVertices_, true);
-        memcpy(buffer, q_vertices_, qNumVertices_ * sizeof(QVertex));
+        QVertex* buffer = (QVertex*)qVertexBuffer_->Lock(0, q_num_vertices_, true);
+        memcpy(buffer, q_vertices_, q_num_vertices_ * sizeof(QVertex));
         qVertexBuffer_->Unlock();
 
         // И отрисовываем её
-        i32 numQuads = qNumVertices_ / vertices_per_quad_;
-        graphics.Draw(TRIANGLE_LIST, 0, numQuads * indices_per_quad_, 0, qNumVertices_);
+        i32 numQuads = q_num_vertices_ / vertices_per_quad_;
+        graphics.Draw(TRIANGLE_LIST, 0, numQuads * indices_per_quad_, 0, q_num_vertices_);
 
         // Начинаем новую порцию
-        qNumVertices_ = 0;
+        q_num_vertices_ = 0;
     }
 }
 
