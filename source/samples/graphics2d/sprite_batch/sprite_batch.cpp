@@ -219,10 +219,10 @@ public:
             screenSpaceSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale_, scale_));
 
             str = "QqWЙйр";
-            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::None);
-            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(104.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Horizontally);
-            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically);
-            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(104.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically | FlipModes::Both);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::none);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(104.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::horizontally);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::vertically);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(104.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::both);
 
             // screenSpaceSpriteBatch_->flush(); не вызываем, так как ещё текст будем выводить
         }

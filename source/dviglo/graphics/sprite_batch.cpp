@@ -187,10 +187,10 @@ void SpriteBatch::draw_sprite_internal()
                                     0.0f);
     }
 
-    if (!!(sprite_.flip_modes & FlipModes::Horizontally))
+    if (!!(sprite_.flip_modes & FlipModes::horizontally))
         std::swap(sprite_.source_uv.min_.x, sprite_.source_uv.max_.x);
 
-    if (!!(sprite_.flip_modes & FlipModes::Vertically))
+    if (!!(sprite_.flip_modes & FlipModes::vertically))
         std::swap(sprite_.source_uv.min_.y, sprite_.source_uv.max_.y);
 
     quad_.v0.color = sprite_.color0;
@@ -257,7 +257,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
     i32 i = 0;
     i32 step = 1;
 
-    if (!!(flipModes & FlipModes::Horizontally))
+    if (!!(flipModes & FlipModes::horizontally))
     {
         i = unicodeText.Size() - 1;
         step = -1;
@@ -278,7 +278,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
         sprite_.source_uv = Rect(gx * pixelWidth, gy * pixelHeight, (gx + gw) * pixelWidth, (gy + gh) * pixelHeight);
 
         // Модифицируем origin, а не позицию, чтобы было правильное вращение
-        sprite_.origin = !!(flipModes & FlipModes::Vertically) ? charOrig - Vector2(gox, face->GetRowHeight() - goy - gh) : charOrig - Vector2(gox, goy);
+        sprite_.origin = !!(flipModes & FlipModes::vertically) ? charOrig - Vector2(gox, face->GetRowHeight() - goy - gh) : charOrig - Vector2(gox, goy);
 
         draw_sprite_internal();
 

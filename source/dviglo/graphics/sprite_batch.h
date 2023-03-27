@@ -17,10 +17,10 @@ namespace dviglo
 /// Режимы зеркального отображения спрайтов и текста
 enum class FlipModes : u32
 {
-    None = 0,
-    Horizontally = 1,
-    Vertically = 2,
-    Both = Horizontally | Vertically
+    none         = 0,
+    horizontally = 1 << 0,
+    vertically   = 1 << 1,
+    both = horizontally | vertically
 };
 DV_FLAGS(FlipModes);
 
@@ -55,15 +55,15 @@ public:
 
     /// color - цвет в формате 0xAABBGGRR
     void draw_sprite(Texture2D* texture, const Rect& destination, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::None);
+        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
 
     /// color - цвет в формате 0xAABBGGRR
     void draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::None);
+        float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
 
     /// color - цвет в формате 0xAABBGGRR
     void draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::None);
+        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
 
 private:
 

@@ -69,14 +69,14 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
             Vector2(Random(0.0f, (float)(DV_GRAPHICS.GetWidth() - ball->GetWidth())), Random(0.0f, (float)DV_GRAPHICS.GetHeight() - ball->GetHeight())), nullptr, 0xFFFFFFFF);
     }
 
-    spriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Both);
+    spriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::both);
 
     float scale = cos(scale_) + 1.0f; // cos возвращает значения в диапазоне [-1, 1], значит scale будет в диапазоне [0, 2].
     Vector2 origin = Vector2(head->GetWidth() * 0.5f, head->GetHeight() * 0.5f);
     spriteBatch_->draw_sprite(head, Vector2(400.0f, 300.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale, scale));
 
     spriteBatch_->draw_string("Отзеркаленный текст", cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 40.0f,
-        Vector2(250.0f, 200.0f), 0xFF0000FF, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Both);
+        Vector2(250.0f, 200.0f), 0xFF0000FF, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::both);
 
     spriteBatch_->draw_string("Некий текст", cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 40.0f,
         Vector2(400.0f, 300.0f), 0xFFFF0000, angle_, Vector2::ZERO, Vector2(scale, scale));
