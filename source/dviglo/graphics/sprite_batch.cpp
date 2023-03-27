@@ -208,7 +208,7 @@ void SpriteBatch::DrawSpriteInternal()
     AddQuad();
 }
 
-void SpriteBatch::DrawString(const String& text, Font* font, float fontSize, const Vector2& position, u32 color,
+void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color,
     float rotation, const Vector2& origin, const Vector2& scale, FlipModes flipModes)
 {
     if (text.Length() == 0)

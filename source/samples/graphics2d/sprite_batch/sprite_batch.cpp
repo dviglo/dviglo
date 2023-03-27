@@ -219,10 +219,10 @@ public:
             screenSpaceSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale_, scale_));
 
             str = "QqWЙйр";
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::None);
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(104.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Horizontally);
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically);
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(104.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically | FlipModes::Both);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::None);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(104.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Horizontally);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(104.0f, 100.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::Vertically | FlipModes::Both);
 
             // screenSpaceSpriteBatch_->flush(); не вызываем, так как ещё текст будем выводить
         }
@@ -245,40 +245,40 @@ public:
 
         // Выводим индекс текущего теста
         str = "Текущий тест: " + String(currentTest_) + " (используйте 1, 2, 3 для переключения)";
-        screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 0.f), 0xFFFFFFFF);
+        screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 0.f), 0xFFFFFFFF);
 
         // Выводим описание текущего теста
         if (currentTest_ == 1)
         {
             str = "Рисование в экранном пространстве";
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 24.f), 0xFFFFFFFF);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 24.f), 0xFFFFFFFF);
         }
         else if (currentTest_ == 2)
         {
             str = "Рисование в пространстве сцены";
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 24.f), 0xFFFFFFFF);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 24.f), 0xFFFFFFFF);
         }
         else if (currentTest_ == 3)
         {
             str = "Использование виртуальных координат";
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 24.f), 0xFFFFFFFF);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 24.f), 0xFFFFFFFF);
 
             str = "Синий прямоугольник - границы виртуального экрана (700x600 виртуальных пикселей)";
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 48.f), 0xFFFFFFFF);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 48.f), 0xFFFFFFFF);
 
             str = "Меняйте размеры окна, чтобы увидеть, как виртуальный экран вписывается в окно";
-            screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 72.f), 0xFFFFFFFF);
+            screenSpaceSpriteBatch_->draw_string(str, font, 20.f, Vector2(4.0f, 72.f), 0xFFFFFFFF);
         }
 
         // Выводим подсказку про ПКМ
         str = "Зажмите ПКМ для перемещения по сцене";
         Vector2 pos{graphics.GetWidth() - 550.f, graphics.GetHeight() - 36.f}; // TODO: Добавить MeasureString
-        screenSpaceSpriteBatch_->DrawString(str, font, 20.f, pos, 0xFFFFFFFF);
+        screenSpaceSpriteBatch_->draw_string(str, font, 20.f, pos, 0xFFFFFFFF);
 
         // Выводим FPS
         str = "FPS: " + String(fpsValue_);
         pos = {10.f, graphics.GetHeight() - 56.f};
-        screenSpaceSpriteBatch_->DrawString(str, font, 40.f, pos, 0xFF0000FF);
+        screenSpaceSpriteBatch_->draw_string(str, font, 40.f, pos, 0xFF0000FF);
 
         screenSpaceSpriteBatch_->flush();
     }

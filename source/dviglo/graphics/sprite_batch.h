@@ -62,7 +62,7 @@ public:
         float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::None);
 
     /// color - цвет в формате 0xAABBGGRR
-    void DrawString(const String& text, Font* font, float fontSize, const Vector2& position, u32 color = 0xFFFFFFFF,
+    void draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color = 0xFFFFFFFF,
         float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::None);
 
 private:
