@@ -67,22 +67,22 @@ IntRect SpriteBatchBase::GetViewportRect()
         return IntRect(0, 0, graphics.GetWidth(), graphics.GetHeight());
 
     float realAspect = (float)graphics.GetWidth() / graphics.GetHeight();
-    float virtualAspect = (float)virtualScreenSize_.x / virtualScreenSize_.y;
+    float virtualAspect = (float)virtual_screen_size_.x / virtual_screen_size_.y;
 
     float virtualScreenScale;
     if (realAspect > virtualAspect)
     {
         // Окно шире, чем надо. Будут пустые полосы по бокам
-        virtualScreenScale = (float)graphics.GetHeight() / virtualScreenSize_.y;
+        virtualScreenScale = (float)graphics.GetHeight() / virtual_screen_size_.y;
     }
     else
     {
         // Высота окна больше, чем надо. Будут пустые полосы сверху и снизу
-        virtualScreenScale = (float)graphics.GetWidth() / virtualScreenSize_.x;
+        virtualScreenScale = (float)graphics.GetWidth() / virtual_screen_size_.x;
     }
 
-    i32 viewportWidth = (i32)(virtualScreenSize_.x * virtualScreenScale);
-    i32 viewportHeight = (i32)(virtualScreenSize_.y * virtualScreenScale);
+    i32 viewportWidth = (i32)(virtual_screen_size_.x * virtualScreenScale);
+    i32 viewportHeight = (i32)(virtual_screen_size_.y * virtualScreenScale);
 
     // Центрируем вьюпорт
     i32 viewportX = (graphics.GetWidth() - viewportWidth) / 2;
@@ -97,7 +97,7 @@ Vector2 SpriteBatchBase::to_virtual_pos(const Vector2& real_pos)
         return real_pos;
 
     IntRect viewport_rect = GetViewportRect();
-    float factor = (float)virtualScreenSize_.x / viewport_rect.Width();
+    float factor = (float)virtual_screen_size_.x / viewport_rect.Width();
 
     float virtual_x = (real_pos.x - viewport_rect.left_) * factor;
     float virtual_y = (real_pos.y - viewport_rect.top_) * factor;
@@ -121,8 +121,8 @@ void SpriteBatchBase::UpdateViewProjMatrix()
 
     if (VirtualScreenUsed())
     {
-        width = virtualScreenSize_.x;
-        height = virtualScreenSize_.y;
+        width = virtual_screen_size_.x;
+        height = virtual_screen_size_.y;
     }
     else
     {

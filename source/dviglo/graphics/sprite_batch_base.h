@@ -150,9 +150,9 @@ public:
     Camera* camera_ = nullptr;
 
     // Размеры виртуального экрана. Если одна из координат <= 0, то используются реальные размеры экрана
-    IntVector2 virtualScreenSize_ = IntVector2(0, 0);
+    IntVector2 virtual_screen_size_ = IntVector2(0, 0);
 
-    bool VirtualScreenUsed() const { return virtualScreenSize_.x > 0 && virtualScreenSize_.y > 0; }
+    bool VirtualScreenUsed() const { return virtual_screen_size_.x > 0 && virtual_screen_size_.y > 0; }
 
     // Конструктор
     SpriteBatchBase();
