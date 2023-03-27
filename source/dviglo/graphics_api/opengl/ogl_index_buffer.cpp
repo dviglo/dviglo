@@ -13,29 +13,6 @@
 namespace dviglo
 {
 
-void IndexBuffer::Release_OGL()
-{
-    Unlock_OGL();
-
-    if (gpu_object_name_)
-    {
-        if (GParams::is_headless())
-            return;
-
-        Graphics& graphics = DV_GRAPHICS;
-
-        if (!graphics.IsDeviceLost())
-        {
-            if (graphics.GetIndexBuffer() == this)
-                graphics.SetIndexBuffer(nullptr);
-
-            glDeleteBuffers(1, &gpu_object_name_);
-        }
-
-        gpu_object_name_ = 0;
-    }
-}
-
 bool IndexBuffer::SetData_OGL(const void* data)
 {
     if (!data)
@@ -193,7 +170,7 @@ bool IndexBuffer::Create_OGL()
 {
     if (!indexCount_)
     {
-        Release_OGL();
+        Release();
         return true;
     }
 

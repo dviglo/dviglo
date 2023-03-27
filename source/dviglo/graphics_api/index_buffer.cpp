@@ -148,12 +148,25 @@ void IndexBuffer::OnDeviceReset()
 
 void IndexBuffer::Release()
 {
-    GAPI gapi = GParams::get_gapi();
+    Unlock_OGL();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Release_OGL();
-#endif
+    if (gpu_object_name_)
+    {
+        if (GParams::is_headless())
+            return;
+
+        Graphics& graphics = DV_GRAPHICS;
+
+        if (!graphics.IsDeviceLost())
+        {
+            if (graphics.GetIndexBuffer() == this)
+                graphics.SetIndexBuffer(nullptr);
+
+            glDeleteBuffers(1, &gpu_object_name_);
+        }
+
+        gpu_object_name_ = 0;
+    }
 }
 
 bool IndexBuffer::SetData(const void* data)
