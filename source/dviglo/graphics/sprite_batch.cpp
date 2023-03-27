@@ -166,22 +166,22 @@ void SpriteBatch::draw_sprite_internal()
         float maxYm12 = local.max_.y * m12;
         float maxYm22 = local.max_.y * m22;
 
-        // transform * Vector3(local.min_.x, local.min_.y, 1.f);
+        // transform * Vector3(local.min_.x, local.min_.y, 1.f)
         quad_.v0.position = Vector3(minXm11 + minYm12 + m13,
                                     minXm21 + minYm22 + m23,
                                     0.f);
 
-        // transform * Vector3(local.max_.x, local.min_.y, 1.f).
+        // transform * Vector3(local.max_.x, local.min_.y, 1.f)
         quad_.v1.position = Vector3(maxXm11 + minYm12 + m13,
                                     maxXm21 + minYm22 + m23,
                                     0.f);
 
-        // transform * Vector3(local.max_.x, local.max_.y, 1.f).
+        // transform * Vector3(local.max_.x, local.max_.y, 1.f)
         quad_.v2.position = Vector3(maxXm11 + maxYm12 + m13,
                                     maxXm21 + maxYm22 + m23,
                                     0.f);
 
-        // transform * Vector3(local.min_.x, local.max_.y, 1.f).
+        // transform * Vector3(local.min_.x, local.max_.y, 1.f)
         quad_.v3.position = Vector3(minXm11 + maxYm12 + m13,
                                     minXm21 + maxYm22 + m23,
                                     0.f);
@@ -309,7 +309,7 @@ void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width
     //   v3 └───────────────┘ v2
     // Пользователь задает координаты точек start и end, а нам нужно определить координаты вершин v0, v1, v2, v3.
     // Легче всего вычислить СМЕЩЕНИЯ вершин v0 и v3 от точки start и смещения вершин v1 и v2 от точки end,
-    // а потом прибавить эти смещения к координатам точек start и end.
+    // а потом прибавить эти смещения к координатам точек start и end
 
     // Когда линия горизонтальна, v0 имеет смещение (0, -half_width) относительно точки start,
     // а вершина v3 имеет смещение (0, half_width) относительно той же точки start.
