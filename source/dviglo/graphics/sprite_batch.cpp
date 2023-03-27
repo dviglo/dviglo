@@ -125,17 +125,17 @@ void SpriteBatch::draw_sprite_internal()
     quad_.texture = sprite_.texture;
 
     // Если спрайт не отмасштабирован и не повёрнут, то прорисовка очень проста
-    if (sprite_.rotation == 0.0f && sprite_.scale == Vector2::ONE)
+    if (sprite_.rotation == 0.f && sprite_.scale == Vector2::ONE)
     {
         // Сдвигаем спрайт на -origin
         Rect resultDest(sprite_.destination.min_ - sprite_.origin, sprite_.destination.max_ - sprite_.origin);
 
         // Лицевая грань задаётся по часовой стрелке. Учитываем, что ось Y направлена вниз.
         // Но нет большой разницы, так как спрайты двусторонние
-        quad_.v0.position = Vector3(resultDest.min_.x, resultDest.min_.y, 0); // Верхний левый угол спрайта
-        quad_.v1.position = Vector3(resultDest.max_.x, resultDest.min_.y, 0); // Верхний правый угол
-        quad_.v2.position = Vector3(resultDest.max_.x, resultDest.max_.y, 0); // Нижний правый угол
-        quad_.v3.position = Vector3(resultDest.min_.x, resultDest.max_.y, 0); // Нижний левый угол
+        quad_.v0.position = Vector3(resultDest.min_.x, resultDest.min_.y, 0.f); // Верхний левый угол спрайта
+        quad_.v1.position = Vector3(resultDest.max_.x, resultDest.min_.y, 0.f); // Верхний правый угол
+        quad_.v2.position = Vector3(resultDest.max_.x, resultDest.max_.y, 0.f); // Нижний правый угол
+        quad_.v3.position = Vector3(resultDest.min_.x, resultDest.max_.y, 0.f); // Нижний левый угол
     }
     else
     {
@@ -287,8 +287,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float font_size, c
 }
 
 // В отличие от Sign() никогда не возвращает ноль
-template <typename T>
-T MySign(T value) { return value >= 0.0f ? 1.f : -1.f; }
+float my_sign(float value) { return value >= 0.f ? 1.f : -1.f; }
 
 void SpriteBatch::draw_triangle(const Vector2& v0, const Vector2& v1, const Vector2& v2)
 {
@@ -301,7 +300,7 @@ void SpriteBatch::draw_triangle(const Vector2& v0, const Vector2& v1, const Vect
 void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width)
 {
     float len = (end - start).Length();
-    if (Equals(len, 0.0f))
+    if (Equals(len, 0.f))
         return;
 
     // Линия - это прямоугольный полигон. Когда линия не повернута (угол поворота равен нулю), она горизонтальна.
@@ -314,22 +313,22 @@ void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width
 
     // Когда линия горизонтальна, v0 имеет смещение (0, -half_width) относительно точки start,
     // а вершина v3 имеет смещение (0, half_width) относительно той же точки start.
-    // Аналогично v1 = (0, -half_width) и v2 = (0, half_width) относительно точки end.
+    // Аналогично v1 = (0, -half_width) и v2 = (0, half_width) относительно точки end
     float half_width = Abs(width * 0.5f);
 
     // Так как мы оперируем смещениями, то при повороте линии вершины v0 и v3 вращаются вокруг start, а v1 и v2 - вокруг end.
     // Итак, вращаем точку v0 с локальными координатами (0, half_width).
     // {newX = oldX * cos(deltaAngle) - oldY * sin(deltaAngle) = 0 * cos(deltaAngle) - half_width * sin(deltaAngle)
     // {newY = oldX * sin(deltaAngle) + oldY * cos(deltaAngle) = 0 * sin(deltaAngle) + half_width * cos(deltaAngle)
-    // Так как повернутая линия может оказаться в любом квадранте, при вычислениии синуса и косинуса нам важен знак.
-    len = len * MySign(end.x - start.x) * MySign(end.y - start.y);
-    float cos = (end.x - start.x) / len; // Прилежащий катет к гипотенузе.
-    float sin = (end.y - start.y) / len; // Противолежащий катет к гипотенузе.
+    // Так как повернутая линия может оказаться в любом квадранте, при вычислениии синуса и косинуса нам важен знак
+    len = len * my_sign(end.x - start.x) * my_sign(end.y - start.y);
+    float cos = (end.x - start.x) / len; // Прилежащий катет к гипотенузе
+    float sin = (end.y - start.y) / len; // Противолежащий катет к гипотенузе
     Vector2 offset = Vector2(-half_width * sin, half_width * cos);
 
     // Так как противоположные стороны параллельны, то можно не делать повторных вычислений:
     // смещение v0 всегда равно смещению v1, смещение v3 = смещению v2.
-    // К тому же смещения вершин v0, v1 отличаются от смещений вершин v3, v2 только знаком (противоположны).
+    // К тому же смещения вершин v0, v1 отличаются от смещений вершин v3, v2 только знаком (противоположны)
     Vector2 v0 = Vector2(start.x + offset.x, start.y + offset.y);
     Vector2 v1 = Vector2(end.x + offset.x, end.y + offset.y);
     Vector2 v2 = Vector2(end.x - offset.x, end.y - offset.y);
