@@ -237,7 +237,7 @@ public:
             virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtualScreenSize_);
             virtualSpriteBatch_->DrawSprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
-            Vector2 virtualMousePos = virtualSpriteBatch_->GetVirtualPos(Vector2(DV_INPUT.GetMousePosition()));
+            Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));
             virtualSpriteBatch_->SetShapeColor(0xFFFFFFFF);
             virtualSpriteBatch_->DrawArrow({100.0f, 100.f}, virtualMousePos, 10);
             virtualSpriteBatch_->flush();

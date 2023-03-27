@@ -161,7 +161,7 @@ public:
     void flush();
 
     // Переводит реальные координаты в виртуальные. Используется для курсора мыши
-    Vector2 GetVirtualPos(const Vector2& realPos);
+    Vector2 to_virtual_pos(const Vector2& real_pos);
 };
 
 } // namespace dviglo
