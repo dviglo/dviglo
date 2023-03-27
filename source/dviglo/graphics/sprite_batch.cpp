@@ -372,7 +372,7 @@ void SpriteBatch::draw_aabox_solid(float centerX, float centerY, float halfWidth
     draw_triangle(v2, v3, v0);
 }
 
-void SpriteBatch::DrawAABoxBorder(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth)
+void SpriteBatch::draw_aabox_border(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth)
 {
     if (borderWidth < M_EPSILON || halfWidth < M_EPSILON || halfHeight < M_EPSILON)
         return;
