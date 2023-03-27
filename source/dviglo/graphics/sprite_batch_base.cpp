@@ -42,13 +42,13 @@ void SpriteBatchBase::AddQuad()
     if (t_num_vertices_ > 0)
         flush();
 
-    if (quad_.texture != qCurrentTexture_ || quad_.vs != qCurrentVS_ || quad_.ps != qCurrentPS_)
+    if (quad_.texture != q_current_texture_ || quad_.vs != qCurrentVS_ || quad_.ps != qCurrentPS_)
     {
         flush();
 
         qCurrentVS_ = quad_.vs;
         qCurrentPS_ = quad_.ps;
-        qCurrentTexture_ = quad_.texture;
+        q_current_texture_ = quad_.texture;
     }
 
     memcpy(q_vertices_ + q_num_vertices_, &(quad_.v0), sizeof(QVertex) * vertices_per_quad_);
@@ -232,7 +232,7 @@ void SpriteBatchBase::flush()
 
         graphics.SetIndexBuffer(qIndexBuffer_);
         graphics.SetVertexBuffer(qVertexBuffer_);
-        graphics.SetTexture(0, qCurrentTexture_);
+        graphics.SetTexture(0, q_current_texture_);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
         graphics.SetShaders(qCurrentVS_, qCurrentPS_);

@@ -101,7 +101,7 @@ private:
     i32 q_num_vertices_ = 0;
 
     // Текущая текстура
-    Texture2D* qCurrentTexture_ = nullptr;
+    Texture2D* q_current_texture_ = nullptr;
 
     // Текущие шейдеры
     ShaderVariation* qCurrentVS_ = nullptr;
