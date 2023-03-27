@@ -144,7 +144,7 @@ private:
     /// Calculate viewport transform.
     void CalculateViewport();
     /// Draw a triangle.
-    void DrawTriangle(Vector4* vertices, i32 threadIndex);
+    void draw_triangle(Vector4* vertices, i32 threadIndex);
     /// Clip vertices against a plane.
     void ClipVertices(const Vector4& plane, Vector4* vertices, bool* triangles, unsigned& numTriangles);
     /// Draw a clipped triangle.

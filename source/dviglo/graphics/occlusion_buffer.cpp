@@ -478,7 +478,7 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, i32 threadIndex)
             vertices[0] = ModelTransform(modelViewProj, v0);
             vertices[1] = ModelTransform(modelViewProj, v1);
             vertices[2] = ModelTransform(modelViewProj, v2);
-            DrawTriangle(vertices, threadIndex);
+            draw_triangle(vertices, threadIndex);
 
             index += 3;
         }
@@ -502,7 +502,7 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, i32 threadIndex)
                 vertices[0] = ModelTransform(modelViewProj, v0);
                 vertices[1] = ModelTransform(modelViewProj, v1);
                 vertices[2] = ModelTransform(modelViewProj, v2);
-                DrawTriangle(vertices, threadIndex);
+                draw_triangle(vertices, threadIndex);
 
                 indices += 3;
             }
@@ -521,7 +521,7 @@ void OcclusionBuffer::DrawBatch(const OcclusionBatch& batch, i32 threadIndex)
                 vertices[0] = ModelTransform(modelViewProj, v0);
                 vertices[1] = ModelTransform(modelViewProj, v1);
                 vertices[2] = ModelTransform(modelViewProj, v2);
-                DrawTriangle(vertices, threadIndex);
+                draw_triangle(vertices, threadIndex);
 
                 indices += 3;
             }
@@ -575,7 +575,7 @@ void OcclusionBuffer::CalculateViewport()
     projOffsetScaleY_ = projection_.m11_ * scaleY_;
 }
 
-void OcclusionBuffer::DrawTriangle(Vector4* vertices, i32 threadIndex)
+void OcclusionBuffer::draw_triangle(Vector4* vertices, i32 threadIndex)
 {
     assert(threadIndex >= 0);
 

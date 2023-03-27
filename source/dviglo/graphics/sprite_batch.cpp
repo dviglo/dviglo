@@ -290,7 +290,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
 template <typename T>
 T MySign(T value) { return value >= 0.0f ? 1.0f : -1.0f; }
 
-void SpriteBatch::DrawTriangle(const Vector2& v0, const Vector2& v1, const Vector2& v2)
+void SpriteBatch::draw_triangle(const Vector2& v0, const Vector2& v1, const Vector2& v2)
 {
     triangle_.v0.position = Vector3(v0);
     triangle_.v1.position = Vector3(v1);
@@ -335,8 +335,8 @@ void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width
     Vector2 v2 = Vector2(end.x - offset.x, end.y - offset.y);
     Vector2 v3 = Vector2(start.x - offset.x, start.y - offset.y);
 
-    DrawTriangle(v0, v1, v2);
-    DrawTriangle(v2, v3, v0);
+    draw_triangle(v0, v1, v2);
+    draw_triangle(v2, v3, v0);
 }
 
 void SpriteBatch::draw_line(float startX, float startY, float endX, float endY, float width)
@@ -354,8 +354,8 @@ void SpriteBatch::DrawAABBSolid(const Vector2& min, const Vector2& max)
     Vector2 rightTop = Vector2(max.x, min.y); // Правый верхний угол
     Vector2 leftBot = Vector2(min.x, max.y); // Левый нижний
 
-    DrawTriangle(min, rightTop, max);
-    DrawTriangle(leftBot, min, max);
+    draw_triangle(min, rightTop, max);
+    draw_triangle(leftBot, min, max);
 }
 
 void SpriteBatch::DrawAABoxSolid(float centerX, float centerY, float halfWidth, float halfHeight)
@@ -368,8 +368,8 @@ void SpriteBatch::DrawAABoxSolid(float centerX, float centerY, float halfWidth, 
     Vector2 v2 = Vector2(centerX + halfWidth, centerY + halfHeight); // Правый нижний
     Vector2 v3 = Vector2(centerX - halfWidth, centerY + halfHeight); // Левый нижний
 
-    DrawTriangle(v0, v1, v2);
-    DrawTriangle(v2, v3, v0);
+    draw_triangle(v0, v1, v2);
+    draw_triangle(v2, v3, v0);
 }
 
 void SpriteBatch::DrawAABoxBorder(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth)
@@ -414,10 +414,10 @@ void SpriteBatch::DrawCircle(const Vector2& centerPos, float radius)
     }
 
     for (int i = 1; i < numPoints; ++i)
-        DrawTriangle(points[i], points[i - 1], centerPos);
+        draw_triangle(points[i], points[i - 1], centerPos);
 
     // Рисуем последний сегмент
-    DrawTriangle(points[0], points[numPoints - 1], centerPos);
+    draw_triangle(points[0], points[numPoints - 1], centerPos);
 }
 
 void SpriteBatch::DrawCircle(float centerX, float centerY, float radius)
@@ -458,8 +458,8 @@ void SpriteBatch::DrawArrow(const Vector2& start, const Vector2& end, float widt
     Vector2 headTop = RotateMinus90(head) + headStart;
     Vector2 headBottom = RotatePlus90(head) + headStart;
     draw_line(start, headStart, width);
-    DrawTriangle(headStart, headTop, end);
-    DrawTriangle(headStart, headBottom, end);
+    draw_triangle(headStart, headTop, end);
+    draw_triangle(headStart, headBottom, end);
 }
 
 }

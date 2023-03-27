@@ -32,7 +32,7 @@ class DV_API SpriteBatch : public SpriteBatchBase
 
 public:
 
-    void DrawTriangle(const Vector2& v0, const Vector2& v1, const Vector2& v2);
+    void draw_triangle(const Vector2& v0, const Vector2& v1, const Vector2& v2);
 
     void draw_line(const Vector2& start, const Vector2&end, float width);
     void draw_line(float startX, float startY, float endX, float endY, float width);
