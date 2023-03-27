@@ -207,14 +207,53 @@ bool IndexBuffer::SetData(const void* data)
 bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = GParams::get_gapi();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return SetDataRange_OGL(data, start, count, discard);
-#endif
+    if (start == 0 && count == indexCount_)
+        return SetData(data);
 
-    return {}; // Prevent warning
+    if (!data)
+    {
+        DV_LOGERROR("Null pointer for index buffer data");
+        return false;
+    }
+
+    if (!indexSize_)
+    {
+        DV_LOGERROR("Index size not defined, can not set index buffer data");
+        return false;
+    }
+
+    if (start + count > indexCount_)
+    {
+        DV_LOGERROR("Illegal range for setting new index buffer data");
+        return false;
+    }
+
+    if (!count)
+        return true;
+
+    byte* dst = shadowData_.Get() + (intptr_t)start * indexSize_;
+    if (shadowData_ && dst != data)
+        memcpy(dst, data, (size_t)count * indexSize_);
+
+    if (gpu_object_name_)
+    {
+        if (!DV_GRAPHICS.IsDeviceLost())
+        {
+            DV_GRAPHICS.SetIndexBuffer(this);
+            if (!discard || start != 0)
+                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)start * indexSize_, (GLsizeiptr)count * indexSize_, data);
+            else
+                glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)count * indexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        }
+        else
+        {
+            DV_LOGWARNING("Index buffer data assignment while device is lost");
+            dataPending_ = true;
+        }
+    }
+
+    return true;
 }
 
 void* IndexBuffer::Lock(i32 start, i32 count, bool discard)

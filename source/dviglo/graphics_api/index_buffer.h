@@ -73,7 +73,6 @@ private:
     bool UpdateToGPU();
 
 #ifdef DV_OPENGL
-    bool SetDataRange_OGL(const void* data, i32 start, i32 count, bool discard = false);
     void* Lock_OGL(i32 start, i32 count, bool discard);
     void Unlock_OGL();
     bool Create_OGL();

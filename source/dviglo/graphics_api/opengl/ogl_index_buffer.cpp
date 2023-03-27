@@ -13,58 +13,6 @@
 namespace dviglo
 {
 
-bool IndexBuffer::SetDataRange_OGL(const void* data, i32 start, i32 count, bool discard)
-{
-    assert(start >= 0 && count >= 0);
-
-    if (start == 0 && count == indexCount_)
-        return SetData(data);
-
-    if (!data)
-    {
-        DV_LOGERROR("Null pointer for index buffer data");
-        return false;
-    }
-
-    if (!indexSize_)
-    {
-        DV_LOGERROR("Index size not defined, can not set index buffer data");
-        return false;
-    }
-
-    if (start + count > indexCount_)
-    {
-        DV_LOGERROR("Illegal range for setting new index buffer data");
-        return false;
-    }
-
-    if (!count)
-        return true;
-
-    byte* dst = shadowData_.Get() + (intptr_t)start * indexSize_;
-    if (shadowData_ && dst != data)
-        memcpy(dst, data, (size_t)count * indexSize_);
-
-    if (gpu_object_name_)
-    {
-        if (!DV_GRAPHICS.IsDeviceLost())
-        {
-            DV_GRAPHICS.SetIndexBuffer(this);
-            if (!discard || start != 0)
-                glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)start * indexSize_, (GLsizeiptr)count * indexSize_, data);
-            else
-                glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)count * indexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
-        }
-        else
-        {
-            DV_LOGWARNING("Index buffer data assignment while device is lost");
-            dataPending_ = true;
-        }
-    }
-
-    return true;
-}
-
 void* IndexBuffer::Lock_OGL(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
@@ -114,12 +62,12 @@ void IndexBuffer::Unlock_OGL()
     switch (lockState_)
     {
     case LOCK_SHADOW:
-        SetDataRange_OGL(shadowData_.Get() + (intptr_t)lockStart_ * indexSize_, lockStart_, lockCount_, discardLock_);
+        SetDataRange(shadowData_.Get() + (intptr_t)lockStart_ * indexSize_, lockStart_, lockCount_, discardLock_);
         lockState_ = LOCK_NONE;
         break;
 
     case LOCK_SCRATCH:
-        SetDataRange_OGL(lockScratchData_, lockStart_, lockCount_, discardLock_);
+        SetDataRange(lockScratchData_, lockStart_, lockCount_, discardLock_);
         if (!GParams::is_headless())
             DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
         lockScratchData_ = nullptr;
