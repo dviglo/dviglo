@@ -60,20 +60,20 @@ static Rect SrcToUV(const Rect* source, Texture2D* texture)
     else
     {
         // Проверки не производятся, текстура должна быть корректной
-        float invWidth = 1.0f / texture->GetWidth();
-        float invHeight = 1.0f / texture->GetHeight();
+        float inv_width = 1.0f / texture->GetWidth();
+        float inv_height = 1.0f / texture->GetHeight();
         return Rect
         (
-            source->min_.x * invWidth,
-            source->min_.y * invHeight,
-            source->max_.x * invWidth,
-            source->max_.y * invHeight
+            source->min_.x * inv_width,
+            source->min_.y * inv_height,
+            source->max_.x * inv_width,
+            source->max_.y * inv_height
         );
     }
 }
 
 void SpriteBatch::draw_sprite(Texture2D* texture, const Rect& destination, const Rect* source, u32 color,
-    float rotation, const Vector2& origin, const Vector2& scale, FlipModes flipModes)
+    float rotation, const Vector2& origin, const Vector2& scale, FlipModes flip_modes)
 {
     if (!texture)
         return;
@@ -83,7 +83,7 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Rect& destination, const
     sprite_.ps = sprite_ps_;
     sprite_.destination = destination;
     sprite_.source_uv = SrcToUV(source, texture);
-    sprite_.flip_modes = flipModes;
+    sprite_.flip_modes = flip_modes;
     sprite_.scale = scale;
     sprite_.rotation = rotation;
     sprite_.origin = origin;
@@ -96,7 +96,7 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Rect& destination, const
 }
 
 void SpriteBatch::draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source, u32 color,
-    float rotation, const Vector2 &origin, const Vector2& scale, FlipModes flipModes)
+    float rotation, const Vector2 &origin, const Vector2& scale, FlipModes flip_modes)
 {
     if (!texture)
         return;
@@ -106,7 +106,7 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Vector2& position, const
     sprite_.ps = sprite_ps_;
     sprite_.destination = PosToDest(position, texture, source);
     sprite_.source_uv = SrcToUV(source, texture);
-    sprite_.flip_modes = flipModes;
+    sprite_.flip_modes = flip_modes;
     sprite_.scale = scale;
     sprite_.rotation = rotation;
     sprite_.origin = origin;
@@ -208,15 +208,15 @@ void SpriteBatch::draw_sprite_internal()
     add_quad();
 }
 
-void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color,
-    float rotation, const Vector2& origin, const Vector2& scale, FlipModes flipModes)
+void SpriteBatch::draw_string(const String& text, Font* font, float font_size, const Vector2& position, u32 color,
+    float rotation, const Vector2& origin, const Vector2& scale, FlipModes flip_modes)
 {
     if (text.Length() == 0)
         return;
 
-    Vector<c32> unicodeText;
+    Vector<c32> unicode_text;
     for (i32 i = 0; i < text.Length();)
-        unicodeText.Push(text.NextUTF8Char(i));
+        unicode_text.Push(text.NextUTF8Char(i));
 
     if (font->GetFontType() == FONT_FREETYPE)
     {
@@ -237,7 +237,7 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
         }
     }
 
-    sprite_.flip_modes = flipModes;
+    sprite_.flip_modes = flip_modes;
     sprite_.scale = scale;
     sprite_.rotation = rotation;
     sprite_.color0 = color;
@@ -245,27 +245,27 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
     sprite_.color2 = color;
     sprite_.color3 = color;
 
-    FontFace* face = font->GetFace(fontSize);
+    FontFace* face = font->GetFace(font_size);
     const Vector<SharedPtr<Texture2D>>& textures = face->GetTextures();
     // По идее все текстуры одинакового размера
-    float pixelWidth = 1.0f / textures[0]->GetWidth();
-    float pixelHeight = 1.0f / textures[0]->GetHeight();
+    float pixel_width = 1.f / textures[0]->GetWidth();
+    float pixel_height = 1.f / textures[0]->GetHeight();
 
-    Vector2 charPos = position;
-    Vector2 charOrig = origin;
+    Vector2 char_pos = position;
+    Vector2 char_orig = origin;
 
     i32 i = 0;
     i32 step = 1;
 
-    if (!!(flipModes & FlipModes::horizontally))
+    if (!!(flip_modes & FlipModes::horizontally))
     {
-        i = unicodeText.Size() - 1;
+        i = unicode_text.Size() - 1;
         step = -1;
     }
 
-    for (; i >= 0 && i < unicodeText.Size(); i += step)
+    for (; i >= 0 && i < unicode_text.Size(); i += step)
     {
-        const FontGlyph* glyph = face->GetGlyph(unicodeText[i]);
+        const FontGlyph* glyph = face->GetGlyph(unicode_text[i]);
         float gx = (float)glyph->x;
         float gy = (float)glyph->y;
         float gw = (float)glyph->width;
@@ -274,15 +274,15 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
         float goy = (float)glyph->offset_y;
 
         sprite_.texture = textures[glyph->page];
-        sprite_.destination = Rect(charPos.x, charPos.y, charPos.x + gw, charPos.y + gh);
-        sprite_.source_uv = Rect(gx * pixelWidth, gy * pixelHeight, (gx + gw) * pixelWidth, (gy + gh) * pixelHeight);
+        sprite_.destination = Rect(char_pos.x, char_pos.y, char_pos.x + gw, char_pos.y + gh);
+        sprite_.source_uv = Rect(gx * pixel_width, gy * pixel_height, (gx + gw) * pixel_width, (gy + gh) * pixel_height);
 
         // Модифицируем origin, а не позицию, чтобы было правильное вращение
-        sprite_.origin = !!(flipModes & FlipModes::vertically) ? charOrig - Vector2(gox, face->GetRowHeight() - goy - gh) : charOrig - Vector2(gox, goy);
+        sprite_.origin = !!(flip_modes & FlipModes::vertically) ? char_orig - Vector2(gox, face->GetRowHeight() - goy - gh) : char_orig - Vector2(gox, goy);
 
         draw_sprite_internal();
 
-        charOrig.x -= (float)glyph->advance_x;
+        char_orig.x -= (float)glyph->advance_x;
     }
 }
 
@@ -312,20 +312,20 @@ void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width
     // Легче всего вычислить СМЕЩЕНИЯ вершин v0 и v3 от точки start и смещения вершин v1 и v2 от точки end,
     // а потом прибавить эти смещения к координатам точек start и end.
 
-    // Когда линия горизонтальна, v0 имеет смещение (0, -halfWidth) относительно точки start,
-    // а вершина v3 имеет смещение (0, halfWidth) относительно той же точки start.
-    // Аналогично v1 = (0, -halfWidth) и v2 = (0, halfWidth) относительно точки end.
-    float halfWidth = Abs(width * 0.5f);
+    // Когда линия горизонтальна, v0 имеет смещение (0, -half_width) относительно точки start,
+    // а вершина v3 имеет смещение (0, half_width) относительно той же точки start.
+    // Аналогично v1 = (0, -half_width) и v2 = (0, half_width) относительно точки end.
+    float half_width = Abs(width * 0.5f);
 
     // Так как мы оперируем смещениями, то при повороте линии вершины v0 и v3 вращаются вокруг start, а v1 и v2 - вокруг end.
-    // Итак, вращаем точку v0 с локальными координатами (0, halfWidth).
-    // {newX = oldX * cos(deltaAngle) - oldY * sin(deltaAngle) = 0 * cos(deltaAngle) - halfWidth * sin(deltaAngle)
-    // {newY = oldX * sin(deltaAngle) + oldY * cos(deltaAngle) = 0 * sin(deltaAngle) + halfWidth * cos(deltaAngle)
+    // Итак, вращаем точку v0 с локальными координатами (0, half_width).
+    // {newX = oldX * cos(deltaAngle) - oldY * sin(deltaAngle) = 0 * cos(deltaAngle) - half_width * sin(deltaAngle)
+    // {newY = oldX * sin(deltaAngle) + oldY * cos(deltaAngle) = 0 * sin(deltaAngle) + half_width * cos(deltaAngle)
     // Так как повернутая линия может оказаться в любом квадранте, при вычислениии синуса и косинуса нам важен знак.
     len = len * MySign(end.x - start.x) * MySign(end.y - start.y);
     float cos = (end.x - start.x) / len; // Прилежащий катет к гипотенузе.
     float sin = (end.y - start.y) / len; // Противолежащий катет к гипотенузе.
-    Vector2 offset = Vector2(-halfWidth * sin, halfWidth * cos);
+    Vector2 offset = Vector2(-half_width * sin, half_width * cos);
 
     // Так как противоположные стороны параллельны, то можно не делать повторных вычислений:
     // смещение v0 всегда равно смещению v1, смещение v3 = смещению v2.
@@ -339,90 +339,90 @@ void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width
     draw_triangle(v2, v3, v0);
 }
 
-void SpriteBatch::draw_line(float startX, float startY, float endX, float endY, float width)
+void SpriteBatch::draw_line(float start_x, float start_y, float end_x, float end_y, float width)
 {
-    draw_line(Vector2(startX, startY), Vector2(endX, endY), width);
+    draw_line(Vector2(start_x, start_y), Vector2(end_x, end_y), width);
 }
 
-void SpriteBatch::draw_aabox_solid(const Vector2& centerPos, const Vector2& halfSize)
+void SpriteBatch::draw_aabox_solid(const Vector2& center_pos, const Vector2& half_size)
 {
-    draw_aabox_solid(centerPos.x, centerPos.y, halfSize.x, halfSize.y);
+    draw_aabox_solid(center_pos.x, center_pos.y, half_size.x, half_size.y);
 }
 
 void SpriteBatch::draw_aabb_solid(const Vector2& min, const Vector2& max)
 {
-    Vector2 rightTop = Vector2(max.x, min.y); // Правый верхний угол
-    Vector2 leftBot = Vector2(min.x, max.y); // Левый нижний
+    Vector2 right_top = Vector2(max.x, min.y); // Правый верхний угол
+    Vector2 left_bot = Vector2(min.x, max.y); // Левый нижний
 
-    draw_triangle(min, rightTop, max);
-    draw_triangle(leftBot, min, max);
+    draw_triangle(min, right_top, max);
+    draw_triangle(left_bot, min, max);
 }
 
-void SpriteBatch::draw_aabox_solid(float centerX, float centerY, float halfWidth, float halfHeight)
+void SpriteBatch::draw_aabox_solid(float center_x, float center_y, float half_width, float half_height)
 {
-    if (halfWidth < M_EPSILON || halfHeight < M_EPSILON)
+    if (half_width < M_EPSILON || half_height < M_EPSILON)
         return;
 
-    Vector2 v0 = Vector2(centerX - halfWidth, centerY - halfHeight); // Левый верхний угол
-    Vector2 v1 = Vector2(centerX + halfWidth, centerY - halfHeight); // Правый верхний
-    Vector2 v2 = Vector2(centerX + halfWidth, centerY + halfHeight); // Правый нижний
-    Vector2 v3 = Vector2(centerX - halfWidth, centerY + halfHeight); // Левый нижний
+    Vector2 v0 = Vector2(center_x - half_width, center_y - half_height); // Левый верхний угол
+    Vector2 v1 = Vector2(center_x + half_width, center_y - half_height); // Правый верхний
+    Vector2 v2 = Vector2(center_x + half_width, center_y + half_height); // Правый нижний
+    Vector2 v3 = Vector2(center_x - half_width, center_y + half_height); // Левый нижний
 
     draw_triangle(v0, v1, v2);
     draw_triangle(v2, v3, v0);
 }
 
-void SpriteBatch::draw_aabox_border(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth)
+void SpriteBatch::draw_aabox_border(float center_x, float center_y, float half_width, float half_height, float border_width)
 {
-    if (borderWidth < M_EPSILON || halfWidth < M_EPSILON || halfHeight < M_EPSILON)
+    if (border_width < M_EPSILON || half_width < M_EPSILON || half_height < M_EPSILON)
         return;
 
-    float halfBorderWidth = borderWidth * 0.5f;
+    float half_border_width = border_width * 0.5f;
 
     // Тут нужно обработать случай, когда толщина границы больше размера AABB
 
     // Верхняя граница
-    float y = centerY - halfHeight + halfBorderWidth;
-    draw_line(centerX - halfWidth, y, centerX + halfWidth, y, borderWidth);
+    float y = center_y - half_height + half_border_width;
+    draw_line(center_x - half_width, y, center_x + half_width, y, border_width);
 
     // Нижняя граница
-    y = centerY + halfHeight - halfBorderWidth;
-    draw_line(centerX - halfWidth, y, centerX + halfWidth, y, borderWidth);
+    y = center_y + half_height - half_border_width;
+    draw_line(center_x - half_width, y, center_x + half_width, y, border_width);
 
     // При отрисовке боковых границ не перекрываем верхнюю и нижнюю, чтобы нормально отрисовывалось в случае полупрозрачного цвета
 
     // Левая граница
-    float x = centerX - halfWidth + halfBorderWidth;
-    draw_line(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
+    float x = center_x - half_width + half_border_width;
+    draw_line(x, center_y - half_height + border_width, x, center_y + half_height - border_width, border_width);
 
     // Правая граница
-    x = centerX + halfWidth - halfBorderWidth;
-    draw_line(x, centerY - halfHeight + borderWidth, x, centerY + halfHeight - borderWidth, borderWidth);
+    x = center_x + half_width - half_border_width;
+    draw_line(x, center_y - half_height + border_width, x, center_y + half_height - border_width, border_width);
 }
 
-void SpriteBatch::draw_circle(const Vector2& centerPos, float radius)
+void SpriteBatch::draw_circle(const Vector2& center_pos, float radius)
 {
-    const int numPoints = 40;
-    Vector2 points[numPoints];
+    const int num_points = 40;
+    Vector2 points[num_points];
 
-    for (int i = 0; i < numPoints; ++i)
+    for (int i = 0; i < num_points; ++i)
     {
-        float angle = 360.0f * (float)i / (float)numPoints;
+        float angle = 360.f * (float)i / (float)num_points;
         float cos, sin;
         SinCos(angle, sin, cos);
-        points[i] = Vector2(cos, sin) * radius + centerPos;
+        points[i] = Vector2(cos, sin) * radius + center_pos;
     }
 
-    for (int i = 1; i < numPoints; ++i)
-        draw_triangle(points[i], points[i - 1], centerPos);
+    for (int i = 1; i < num_points; ++i)
+        draw_triangle(points[i], points[i - 1], center_pos);
 
     // Рисуем последний сегмент
-    draw_triangle(points[0], points[numPoints - 1], centerPos);
+    draw_triangle(points[0], points[num_points - 1], center_pos);
 }
 
-void SpriteBatch::draw_circle(float centerX, float centerY, float radius)
+void SpriteBatch::draw_circle(float center_x, float center_y, float radius)
 {
-    draw_circle(Vector2(centerX, centerY), radius);
+    draw_circle(Vector2(center_x, center_y), radius);
 }
 
 // Поворачивает вектор по часовой стрелке на 90 градусов
@@ -451,15 +451,15 @@ void SpriteBatch::draw_arrow(const Vector2& start, const Vector2& end, float wid
     Vector2 dir = vec.normalized();
 
     // TODO: Обработать случай, когда вектор короткий
-    float headLen = width * 2; // Длина наконечника
-    float shaftLen = len - headLen; // Длина древка
-    Vector2 headStart = dir * shaftLen + start; // Начало наконечника
-    Vector2 head = dir * headLen; // Вектор от точки headStart до точки end
-    Vector2 headTop = RotateMinus90(head) + headStart;
-    Vector2 headBottom = RotatePlus90(head) + headStart;
-    draw_line(start, headStart, width);
-    draw_triangle(headStart, headTop, end);
-    draw_triangle(headStart, headBottom, end);
+    float head_len = width * 2; // Длина наконечника
+    float shaft_len = len - head_len; // Длина древка
+    Vector2 head_start = dir * shaft_len + start; // Начало наконечника
+    Vector2 head = dir * head_len; // Вектор от точки head_start до точки end
+    Vector2 head_top = RotateMinus90(head) + head_start;
+    Vector2 head_bottom = RotatePlus90(head) + head_start;
+    draw_line(start, head_start, width);
+    draw_triangle(head_start, head_top, end);
+    draw_triangle(head_start, head_bottom, end);
 }
 
 } // namespace dviglo

@@ -39,18 +39,18 @@ public:
     void draw_triangle(const Vector2& v0, const Vector2& v1, const Vector2& v2);
 
     void draw_line(const Vector2& start, const Vector2&end, float width);
-    void draw_line(float startX, float startY, float endX, float endY, float width);
+    void draw_line(float start_x, float start_y, float end_x, float end_y, float width);
 
     void draw_aabb_solid(const Vector2& min, const Vector2& max);
 
-    void draw_aabox_solid(const Vector2& centerPos, const Vector2& halfSize);
-    void draw_aabox_solid(float centerX, float centerY, float halfWidth, float halfHeight);
+    void draw_aabox_solid(const Vector2& center_pos, const Vector2& half_size);
+    void draw_aabox_solid(float center_x, float center_y, float half_width, float half_height);
 
     // Граница рисуется по внутреннему периметру (не выходит за пределы AABox)
-    void draw_aabox_border(float centerX, float centerY, float halfWidth, float halfHeight, float borderWidth);
+    void draw_aabox_border(float center_x, float center_y, float half_width, float half_height, float border_width);
 
-    void draw_circle(const Vector2& centerPos, float radius);
-    void draw_circle(float centerX, float centerY, float radius);
+    void draw_circle(const Vector2& center_pos, float radius);
+    void draw_circle(float center_x, float center_y, float radius);
 
     void draw_arrow(const Vector2& start, const Vector2& end, float width);
 
@@ -95,15 +95,15 @@ public:
 
     /// color - цвет в формате 0xAABBGGRR
     void draw_sprite(Texture2D* texture, const Rect& destination, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
+        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flip_modes = FlipModes::none);
 
     /// color - цвет в формате 0xAABBGGRR
     void draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source = nullptr, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
+        float rotation = 0.0f, const Vector2 &origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flip_modes = FlipModes::none);
 
     /// color - цвет в формате 0xAABBGGRR
-    void draw_string(const String& text, Font* font, float fontSize, const Vector2& position, u32 color = 0xFFFFFFFF,
-        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flipModes = FlipModes::none);
+    void draw_string(const String& text, Font* font, float font_size, const Vector2& position, u32 color = 0xFFFFFFFF,
+        float rotation = 0.0f, const Vector2& origin = Vector2::ZERO, const Vector2& scale = Vector2::ONE, FlipModes flip_modes = FlipModes::none);
 };
 
 } // namespace dviglo
