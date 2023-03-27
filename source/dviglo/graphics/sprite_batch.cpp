@@ -13,16 +13,16 @@ SpriteBatch::SpriteBatch()
 {
     Graphics& graphics = DV_GRAPHICS;
 
-    spriteVS_ = graphics.GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
-    spritePS_ = graphics.GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");
-    ttfTextVS_ = graphics.GetShader(VS, "Text");
-    ttfTextPS_ = graphics.GetShader(PS, "Text", "ALPHAMAP");
-    spriteTextVS_ = graphics.GetShader(VS, "Text");
-    spriteTextPS_ = graphics.GetShader(PS, "Text");
-    sdfTextVS_ = graphics.GetShader(VS, "Text");
-    sdfTextPS_ = graphics.GetShader(PS, "Text", "SIGNED_DISTANCE_FIELD");
-    shapeVS_ = graphics.GetShader(VS, "Basic", "VERTEXCOLOR");
-    shapePS_ = graphics.GetShader(PS, "Basic", "VERTEXCOLOR");
+    sprite_vs_ = graphics.GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
+    sprite_ps_ = graphics.GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");
+    ttf_text_vs_ = graphics.GetShader(VS, "Text");
+    ttf_text_ps_ = graphics.GetShader(PS, "Text", "ALPHAMAP");
+    sprite_text_vs_ = graphics.GetShader(VS, "Text");
+    sprite_text_ps_ = graphics.GetShader(PS, "Text");
+    sdf_text_vs_ = graphics.GetShader(VS, "Text");
+    sdf_text_ps_ = graphics.GetShader(PS, "Text", "SIGNED_DISTANCE_FIELD");
+    shape_vs_ = graphics.GetShader(VS, "Basic", "VERTEXCOLOR");
+    shape_ps_ = graphics.GetShader(PS, "Basic", "VERTEXCOLOR");
 }
 
 static Rect PosToDest(const Vector2& position, Texture2D* texture, const Rect* src)
@@ -79,8 +79,8 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Rect& destination, const
         return;
 
     sprite_.texture = texture;
-    sprite_.vs = spriteVS_;
-    sprite_.ps = spritePS_;
+    sprite_.vs = sprite_vs_;
+    sprite_.ps = sprite_ps_;
     sprite_.destination = destination;
     sprite_.source_uv = SrcToUV(source, texture);
     sprite_.flip_modes = flipModes;
@@ -102,8 +102,8 @@ void SpriteBatch::draw_sprite(Texture2D* texture, const Vector2& position, const
         return;
 
     sprite_.texture = texture;
-    sprite_.vs = spriteVS_;
-    sprite_.ps = spritePS_;
+    sprite_.vs = sprite_vs_;
+    sprite_.ps = sprite_ps_;
     sprite_.destination = PosToDest(position, texture, source);
     sprite_.source_uv = SrcToUV(source, texture);
     sprite_.flip_modes = flipModes;
@@ -220,20 +220,20 @@ void SpriteBatch::draw_string(const String& text, Font* font, float fontSize, co
 
     if (font->GetFontType() == FONT_FREETYPE)
     {
-        sprite_.vs = ttfTextVS_;
-        sprite_.ps = ttfTextPS_;
+        sprite_.vs = ttf_text_vs_;
+        sprite_.ps = ttf_text_ps_;
     }
     else // FONT_BITMAP
     {
         if (font->IsSDFFont())
         {
-            sprite_.vs = sdfTextVS_;
-            sprite_.ps = sdfTextPS_;
+            sprite_.vs = sdf_text_vs_;
+            sprite_.ps = sdf_text_ps_;
         }
         else
         {
-            sprite_.vs = spriteTextVS_;
-            sprite_.ps = spriteTextPS_;
+            sprite_.vs = sprite_text_vs_;
+            sprite_.ps = sprite_text_ps_;
         }
     }
 
@@ -462,4 +462,4 @@ void SpriteBatch::draw_arrow(const Vector2& start, const Vector2& end, float wid
     draw_triangle(headStart, headBottom, end);
 }
 
-}
+} // namespace dviglo

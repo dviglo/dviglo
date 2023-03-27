@@ -68,16 +68,16 @@ public:
 private:
 
     // Кэширование шейдеров. Инициализируются в конструкторе
-    ShaderVariation* spriteVS_;
-    ShaderVariation* spritePS_;
-    ShaderVariation* ttfTextVS_;
-    ShaderVariation* ttfTextPS_;
-    ShaderVariation* spriteTextVS_;
-    ShaderVariation* spriteTextPS_;
-    ShaderVariation* sdfTextVS_;
-    ShaderVariation* sdfTextPS_;
-    ShaderVariation* shapeVS_;
-    ShaderVariation* shapePS_;
+    ShaderVariation* sprite_vs_;
+    ShaderVariation* sprite_ps_;
+    ShaderVariation* ttf_text_vs_;
+    ShaderVariation* ttf_text_ps_;
+    ShaderVariation* sprite_text_vs_;
+    ShaderVariation* sprite_text_ps_;
+    ShaderVariation* sdf_text_vs_;
+    ShaderVariation* sdf_text_ps_;
+    ShaderVariation* shape_vs_;
+    ShaderVariation* shape_ps_;
 
     // Данные для функции draw_sprite_internal()
     struct
@@ -107,4 +107,4 @@ public:
     SpriteBatch();
 };
 
-}
+} // namespace dviglo
