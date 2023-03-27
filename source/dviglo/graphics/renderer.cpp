@@ -1530,7 +1530,7 @@ void Renderer::UpdateQueuedViewport(i32 index)
 
     views_.Push(WeakPtr<View>(view));
 
-    const IntRect& viewRect = viewport->GetRect();
+    const IntRect& viewRect = viewport->rect();
     Scene* scene = viewport->GetScene();
     if (!scene)
         return;

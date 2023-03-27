@@ -58,7 +58,7 @@ public:
     View* GetView() const;
 
     /// Return view rectangle. A zero rectangle (0 0 0 0) means to use the rendertarget's full dimensions. In this case you could fetch the actual view rectangle from View object, though it will be valid only after the first frame.
-    const IntRect& GetRect() const { return rect_; }
+    const IntRect& rect() const { return rect_; }
 
     /// Return rendering path.
     RenderPath* GetRenderPath() const;
