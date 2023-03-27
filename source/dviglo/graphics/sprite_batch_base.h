@@ -76,7 +76,7 @@ public:
 private:
 
     // Максимальное число четырёхугольников в порции
-    inline static constexpr i32 MAX_QUADS_IN_PORTION = 500;
+    inline static constexpr i32 max_quads_in_portion_ = 500;
 
     // Четырёхугольник состоит из двух треугольников, а значит у него 6 вершин.
     // То есть каждый четырёхугольник занимает 6 элементов в индексном буфере
@@ -95,7 +95,7 @@ private:
     };
 
     // Текущая порция четырёхугольников
-    QVertex qVertices_[MAX_QUADS_IN_PORTION * VERTICES_PER_QUAD];
+    QVertex qVertices_[max_quads_in_portion_ * VERTICES_PER_QUAD];
 
     // Число вершин в массиве qVertices_
     i32 qNumVertices_ = 0;

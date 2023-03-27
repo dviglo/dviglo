@@ -55,7 +55,7 @@ void SpriteBatchBase::AddQuad()
     qNumVertices_ += VERTICES_PER_QUAD;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
-    if (qNumVertices_ == MAX_QUADS_IN_PORTION * VERTICES_PER_QUAD)
+    if (qNumVertices_ == max_quads_in_portion_ * VERTICES_PER_QUAD)
         flush();
 }
 
@@ -149,9 +149,9 @@ SpriteBatchBase::SpriteBatchBase()
     qIndexBuffer_->SetShadowed(true);
 
     // Индексный буфер всегда содержит набор четырёхугольников, поэтому его можно сразу заполнить
-    qIndexBuffer_->SetSize(MAX_QUADS_IN_PORTION * INDICES_PER_QUAD, false);
+    qIndexBuffer_->SetSize(max_quads_in_portion_ * INDICES_PER_QUAD, false);
     GpuIndex16* buffer = (GpuIndex16*)qIndexBuffer_->Lock(0, qIndexBuffer_->GetIndexCount());
-    for (i32 i = 0; i < MAX_QUADS_IN_PORTION; i++)
+    for (i32 i = 0; i < max_quads_in_portion_; i++)
     {
         // Первый треугольник четырёхугольника
         buffer[i * INDICES_PER_QUAD + 0] = i * VERTICES_PER_QUAD + 0;
@@ -166,7 +166,7 @@ SpriteBatchBase::SpriteBatchBase()
     qIndexBuffer_->Unlock();
 
     qVertexBuffer_ = new VertexBuffer();
-    qVertexBuffer_->SetSize(MAX_QUADS_IN_PORTION * VERTICES_PER_QUAD, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
+    qVertexBuffer_->SetSize(max_quads_in_portion_ * VERTICES_PER_QUAD, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
 
     Graphics& graphics = DV_GRAPHICS;
 
