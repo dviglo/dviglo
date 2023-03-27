@@ -105,7 +105,7 @@ Vector2 SpriteBatchBase::to_virtual_pos(const Vector2& real_pos)
     return Vector2(virtual_x, virtual_y);
 }
 
-void SpriteBatchBase::UpdateViewProjMatrix()
+void SpriteBatchBase::update_view_proj_matrix()
 {
     Graphics& graphics = DV_GRAPHICS;
 
@@ -201,7 +201,7 @@ void SpriteBatchBase::flush()
         // Параметры шейдеров нужно задавать после указания шейдеров
         graphics.SetShaders(t_vertex_shader_, t_pixel_shader_);
         graphics.SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
-        UpdateViewProjMatrix();
+        update_view_proj_matrix();
 
         // Копируем накопленную геометрию в память видеокарты
         TVertex* buffer = (TVertex*)t_vertex_buffer_->Lock(0, t_num_vertices_, true);
@@ -237,7 +237,7 @@ void SpriteBatchBase::flush()
         // Параметры шейдеров нужно задавать после указания шейдеров
         graphics.SetShaders(q_current_vs_, q_current_ps_);
         graphics.SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
-        UpdateViewProjMatrix();
+        update_view_proj_matrix();
         // Мы используем только цвета вершин. Но это значение требует шейдер Basic
         graphics.SetShaderParameter(PSP_MATDIFFCOLOR, Color::WHITE);
 
