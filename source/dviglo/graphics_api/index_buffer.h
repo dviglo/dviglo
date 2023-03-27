@@ -78,7 +78,6 @@ private:
     void* Lock_OGL(i32 start, i32 count, bool discard);
     void Unlock_OGL();
     bool Create_OGL();
-    bool UpdateToGPU_OGL();
 #endif // def DV_OPENGL
 
     /// Shadow data.

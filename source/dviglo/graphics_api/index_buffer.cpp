@@ -136,10 +136,12 @@ void IndexBuffer::OnDeviceReset()
     if (!gpu_object_name_)
     {
         Create_OGL();
-        dataLost_ = !UpdateToGPU_OGL();
+        dataLost_ = !UpdateToGPU();
     }
     else if (dataPending_)
-        dataLost_ = !UpdateToGPU_OGL();
+    {
+        dataLost_ = !UpdateToGPU();
+    }
 
     dataPending_ = false;
 }
@@ -229,14 +231,10 @@ bool IndexBuffer::Create()
 
 bool IndexBuffer::UpdateToGPU()
 {
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return UpdateToGPU_OGL();
-#endif
-
-    return {}; // Prevent warning
+    if (gpu_object_name_ && shadowData_)
+        return SetData_OGL(shadowData_.Get());
+    else
+        return false;
 }
 
 } // namespace dviglo

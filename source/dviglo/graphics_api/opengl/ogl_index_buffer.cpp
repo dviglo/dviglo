@@ -198,12 +198,4 @@ bool IndexBuffer::Create_OGL()
     return true;
 }
 
-bool IndexBuffer::UpdateToGPU_OGL()
-{
-    if (gpu_object_name_ && shadowData_)
-        return SetData_OGL(shadowData_.Get());
-    else
-        return false;
-}
-
 } // namespace dviglo
