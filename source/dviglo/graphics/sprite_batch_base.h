@@ -44,7 +44,7 @@ private:
     i32 t_num_vertices_ = 0;
 
     // Шейдеры для рендеринга треугольников. Инициализируются в конструкторе
-    ShaderVariation* tVertexShader_;
+    ShaderVariation* t_vertex_shader_;
     ShaderVariation* tPixelShader_;
 
     // Вершинный буфер для треугольников (индексный буфер не используется)
