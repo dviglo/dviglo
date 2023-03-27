@@ -4,9 +4,12 @@
 
 // This file contains IndexBuffer code common to all graphics APIs.
 
-#include "../graphics/graphics.h"
 #include "index_buffer.h"
+
+#include "../core/context.h"
+#include "../graphics/graphics.h"
 #include "../io/log.h"
+#include "graphics_impl.h"
 
 #include "../common/debug_new.h"
 
@@ -124,12 +127,10 @@ bool IndexBuffer::GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& 
 
 void IndexBuffer::OnDeviceLost()
 {
-    GAPI gapi = GParams::get_gapi();
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteBuffers(1, &gpu_object_name_);
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return OnDeviceLost_OGL();
-#endif
+    GpuObject::OnDeviceLost();
 }
 
 void IndexBuffer::OnDeviceReset()

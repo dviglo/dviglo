@@ -77,7 +77,6 @@ private:
     void UnmapBuffer();
 
 #ifdef DV_OPENGL
-    void OnDeviceLost_OGL();
     void OnDeviceReset_OGL();
     void Release_OGL();
     bool SetData_OGL(const void* data);
