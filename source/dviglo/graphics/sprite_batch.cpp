@@ -72,7 +72,7 @@ static Rect SrcToUV(const Rect* source, Texture2D* texture)
     }
 }
 
-void SpriteBatch::DrawSprite(Texture2D* texture, const Rect& destination, const Rect* source, u32 color,
+void SpriteBatch::draw_sprite(Texture2D* texture, const Rect& destination, const Rect* source, u32 color,
     float rotation, const Vector2& origin, const Vector2& scale, FlipModes flipModes)
 {
     if (!texture)
@@ -95,7 +95,7 @@ void SpriteBatch::DrawSprite(Texture2D* texture, const Rect& destination, const 
     DrawSpriteInternal();
 }
 
-void SpriteBatch::DrawSprite(Texture2D* texture, const Vector2& position, const Rect* source, u32 color,
+void SpriteBatch::draw_sprite(Texture2D* texture, const Vector2& position, const Rect* source, u32 color,
     float rotation, const Vector2 &origin, const Vector2& scale, FlipModes flipModes)
 {
     if (!texture)

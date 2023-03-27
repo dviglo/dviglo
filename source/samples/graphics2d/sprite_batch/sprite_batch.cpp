@@ -216,7 +216,7 @@ public:
             screenSpaceSpriteBatch_->DrawCircle(500.f, 200.f, 200.f);
 
             Vector2 origin = Vector2(head->GetWidth() * 0.5f, head->GetHeight() * 0.5f);
-            screenSpaceSpriteBatch_->DrawSprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale_, scale_));
+            screenSpaceSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale_, scale_));
 
             str = "QqWЙйр";
             screenSpaceSpriteBatch_->DrawString(str, font, 20.f, Vector2(4.0f, 60.f), 0xFF00FF00, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::None);
@@ -228,14 +228,14 @@ public:
         }
         else if (currentTest_ == 2)
         {
-            worldSpaceSpriteBatch_->DrawSprite(head, Vector2(0.0f, 0.0f), nullptr, 0xFFFFFFFF, 0.0f, Vector2::ZERO, Vector2(0.01f, 0.01f));
+            worldSpaceSpriteBatch_->draw_sprite(head, Vector2(0.0f, 0.0f), nullptr, 0xFFFFFFFF, 0.0f, Vector2::ZERO, Vector2(0.01f, 0.01f));
             worldSpaceSpriteBatch_->flush();
         }
         else if (currentTest_ == 3)
         {
             virtualSpriteBatch_->SetShapeColor(0x90FF0000);
             virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtual_screen_size);
-            virtualSpriteBatch_->DrawSprite(head, Vector2(200.0f, 200.0f));
+            virtualSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
             Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));
             virtualSpriteBatch_->SetShapeColor(0xFFFFFFFF);
