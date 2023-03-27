@@ -51,7 +51,7 @@ public:
         screenSpaceSpriteBatch_ = new SpriteBatch();
         
         worldSpaceSpriteBatch_ = new SpriteBatch();
-        worldSpaceSpriteBatch_->camera_ = cameraNode_->GetComponent<Camera>();
+        worldSpaceSpriteBatch_->camera = cameraNode_->GetComponent<Camera>();
         worldSpaceSpriteBatch_->compare_mode = CMP_LESSEQUAL;
 
         virtualSpriteBatch_ = new SpriteBatch();

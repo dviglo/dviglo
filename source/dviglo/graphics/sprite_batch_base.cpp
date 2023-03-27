@@ -109,9 +109,9 @@ void SpriteBatchBase::UpdateViewProjMatrix()
 {
     Graphics& graphics = DV_GRAPHICS;
 
-    if (camera_)
+    if (camera)
     {
-        Matrix4 matrix = camera_->GetGPUProjection() * camera_->GetView();
+        Matrix4 matrix = camera->GetGPUProjection() * camera->GetView();
         graphics.SetShaderParameter(VSP_VIEWPROJ, matrix);
         return;
     }

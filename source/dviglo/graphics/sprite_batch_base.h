@@ -147,7 +147,7 @@ public:
     CompareMode compare_mode = CMP_ALWAYS;
 
     // Если определена камера, то SpriteBatch рисует в мировых координатах
-    Camera* camera_ = nullptr;
+    Camera* camera = nullptr;
 
     // Размеры виртуального экрана. Если одна из координат <= 0, то используются реальные размеры экрана
     IntVector2 virtual_screen_size = IntVector2(0, 0);
