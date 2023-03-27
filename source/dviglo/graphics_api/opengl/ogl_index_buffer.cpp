@@ -206,15 +206,4 @@ bool IndexBuffer::UpdateToGPU_OGL()
         return false;
 }
 
-void* IndexBuffer::MapBuffer_OGL(i32 start, i32 count, bool discard)
-{
-    // Never called on OpenGL
-    return nullptr;
-}
-
-void IndexBuffer::UnmapBuffer_OGL()
-{
-    // Never called on OpenGL
-}
-
 } // namespace dviglo

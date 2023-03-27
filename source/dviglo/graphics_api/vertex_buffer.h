@@ -138,10 +138,6 @@ private:
     bool Create();
     /// Update the shadow data to the GPU buffer.
     bool UpdateToGPU();
-    /// Map the GPU buffer into CPU memory. Not used on OpenGL.
-    void* MapBuffer(i32 start, i32 count, bool discard);
-    /// Unmap the GPU buffer. Not used on OpenGL.
-    void UnmapBuffer();
 
 #ifdef DV_OPENGL
     void OnDeviceLost_OGL();
@@ -153,8 +149,6 @@ private:
     void Unlock_OGL();
     bool Create_OGL();
     bool UpdateToGPU_OGL();
-    void* MapBuffer_OGL(i32 start, i32 count, bool discard);
-    void UnmapBuffer_OGL();
 #endif // def DV_OPENGL
 
     /// Shadow data.
@@ -185,4 +179,4 @@ private:
     bool discardLock_{};
 };
 
-}
+} // namespace dviglo

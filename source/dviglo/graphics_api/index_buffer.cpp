@@ -2,8 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-// This file contains IndexBuffer code common to all graphics APIs.
-
 #include "index_buffer.h"
 
 #include "../core/context.h"
@@ -241,27 +239,4 @@ bool IndexBuffer::UpdateToGPU()
     return {}; // Prevent warning
 }
 
-void* IndexBuffer::MapBuffer(i32 start, i32 count, bool discard)
-{
-    assert(start >= 0 && count >= 0);
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return MapBuffer_OGL(start, count, discard);
-#endif
-
-    return {}; // Prevent warning
-}
-
-void IndexBuffer::UnmapBuffer()
-{
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return UnmapBuffer_OGL();
-#endif
-}
-
-}
+} // namespace dviglo

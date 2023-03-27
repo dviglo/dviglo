@@ -255,15 +255,4 @@ bool VertexBuffer::UpdateToGPU_OGL()
         return false;
 }
 
-void* VertexBuffer::MapBuffer_OGL(i32 start, i32 count, bool discard)
-{
-    // Never called on OpenGL
-    return nullptr;
-}
-
-void VertexBuffer::UnmapBuffer_OGL()
-{
-    // Never called on OpenGL
-}
-
 }
