@@ -108,7 +108,7 @@ private:
     ShaderVariation* q_current_ps_ = nullptr;
 
     // Буферы
-    SharedPtr<IndexBuffer> qIndexBuffer_;
+    SharedPtr<IndexBuffer> q_index_buffer_;
     SharedPtr<VertexBuffer> qVertexBuffer_;
 
 protected:

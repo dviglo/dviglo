@@ -145,12 +145,12 @@ using GpuIndex16 = u16;
 
 SpriteBatchBase::SpriteBatchBase()
 {
-    qIndexBuffer_ = new IndexBuffer();
-    qIndexBuffer_->SetShadowed(true);
+    q_index_buffer_ = new IndexBuffer();
+    q_index_buffer_->SetShadowed(true);
 
     // Индексный буфер всегда содержит набор четырёхугольников, поэтому его можно сразу заполнить
-    qIndexBuffer_->SetSize(max_quads_in_portion_ * indices_per_quad_, false);
-    GpuIndex16* buffer = (GpuIndex16*)qIndexBuffer_->Lock(0, qIndexBuffer_->GetIndexCount());
+    q_index_buffer_->SetSize(max_quads_in_portion_ * indices_per_quad_, false);
+    GpuIndex16* buffer = (GpuIndex16*)q_index_buffer_->Lock(0, q_index_buffer_->GetIndexCount());
     for (i32 i = 0; i < max_quads_in_portion_; i++)
     {
         // Первый треугольник четырёхугольника
@@ -163,7 +163,7 @@ SpriteBatchBase::SpriteBatchBase()
         buffer[i * indices_per_quad_ + 4] = i * vertices_per_quad_ + 3;
         buffer[i * indices_per_quad_ + 5] = i * vertices_per_quad_ + 0;
     }
-    qIndexBuffer_->Unlock();
+    q_index_buffer_->Unlock();
 
     qVertexBuffer_ = new VertexBuffer();
     qVertexBuffer_->SetSize(max_quads_in_portion_ * vertices_per_quad_, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
@@ -230,7 +230,7 @@ void SpriteBatchBase::flush()
         graphics.SetBlendMode(blend_mode_);
         graphics.SetViewport(GetViewportRect());
 
-        graphics.SetIndexBuffer(qIndexBuffer_);
+        graphics.SetIndexBuffer(q_index_buffer_);
         graphics.SetVertexBuffer(qVertexBuffer_);
         graphics.SetTexture(0, q_current_texture_);
 
