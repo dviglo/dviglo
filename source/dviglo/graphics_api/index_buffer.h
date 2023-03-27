@@ -71,8 +71,6 @@ private:
     bool Create();
     /// Update the shadow data to the GPU buffer.
     bool UpdateToGPU();
-    /// Map the GPU buffer into CPU memory. Not used on OpenGL.
-    void* MapBuffer(i32 start, i32 count, bool discard);
 
 #ifdef DV_OPENGL
     bool SetData_OGL(const void* data);
