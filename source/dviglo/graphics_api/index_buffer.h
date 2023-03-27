@@ -72,10 +72,6 @@ private:
     /// Update the shadow data to the GPU buffer.
     bool UpdateToGPU();
 
-#ifdef DV_OPENGL
-    bool Create_OGL();
-#endif // def DV_OPENGL
-
     /// Shadow data.
     SharedArrayPtr<byte> shadowData_;
     /// Number of indices.

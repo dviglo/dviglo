@@ -135,7 +135,7 @@ void IndexBuffer::OnDeviceReset()
 {
     if (!gpu_object_name_)
     {
-        Create_OGL();
+        Create();
         dataLost_ = !UpdateToGPU();
     }
     else if (dataPending_)
@@ -326,14 +326,34 @@ void IndexBuffer::Unlock()
 
 bool IndexBuffer::Create()
 {
-    GAPI gapi = GParams::get_gapi();
+    if (!indexCount_)
+    {
+        Release();
+        return true;
+    }
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Create_OGL();
-#endif
+    if (!GParams::is_headless())
+    {
+        if (DV_GRAPHICS.IsDeviceLost())
+        {
+            DV_LOGWARNING("Index buffer creation while device is lost");
+            return true;
+        }
 
-    return {}; // Prevent warning
+        if (!gpu_object_name_)
+            glGenBuffers(1, &gpu_object_name_);
+
+        if (!gpu_object_name_)
+        {
+            DV_LOGERROR("Failed to create index buffer");
+            return false;
+        }
+
+        DV_GRAPHICS.SetIndexBuffer(this);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)indexCount_ * indexSize_, nullptr, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+    }
+
+    return true;
 }
 
 bool IndexBuffer::UpdateToGPU()
