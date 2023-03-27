@@ -28,7 +28,7 @@ class DV_API SpriteBatch : public SpriteBatchBase
 {
     DV_OBJECT(SpriteBatch, SpriteBatchBase);
 
-    // ============================ Рисование фигур с помощью функции AddTriangle() ============================
+    // ============================ Рисование фигур с помощью функции add_triangle() ============================
 
 public:
 

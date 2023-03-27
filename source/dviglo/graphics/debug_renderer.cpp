@@ -79,12 +79,12 @@ void DebugRenderer::AddLine(const Vector3& start, const Vector3& end, unsigned c
         noDepthLines_.Push(DebugLine(start, end, color));
 }
 
-void DebugRenderer::AddTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Color& color, bool depthTest)
+void DebugRenderer::add_triangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Color& color, bool depthTest)
 {
-    AddTriangle(v1, v2, v3, color.ToU32(), depthTest);
+    add_triangle(v1, v2, v3, color.ToU32(), depthTest);
 }
 
-void DebugRenderer::AddTriangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, unsigned color, bool depthTest)
+void DebugRenderer::add_triangle(const Vector3& v1, const Vector3& v2, const Vector3& v3, unsigned color, bool depthTest)
 {
     if (triangles_.Size() + noDepthTriangles_.Size() >= MAX_TRIANGLES)
         return;
@@ -97,14 +97,14 @@ void DebugRenderer::AddTriangle(const Vector3& v1, const Vector3& v2, const Vect
 
 void DebugRenderer::AddPolygon(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Vector3& v4, const Color& color, bool depthTest)
 {
-    AddTriangle(v1, v2, v3, color, depthTest);
-    AddTriangle(v3, v4, v1, color, depthTest);
+    add_triangle(v1, v2, v3, color, depthTest);
+    add_triangle(v3, v4, v1, color, depthTest);
 }
 
 void DebugRenderer::AddPolygon(const Vector3& v1, const Vector3& v2, const Vector3& v3, const Vector3& v4, unsigned color, bool depthTest)
 {
-    AddTriangle(v1, v2, v3, color, depthTest);
-    AddTriangle(v3, v4, v1, color, depthTest);
+    add_triangle(v1, v2, v3, color, depthTest);
+    add_triangle(v3, v4, v1, color, depthTest);
 }
 
 void DebugRenderer::AddNode(Node* node, float scale, bool depthTest)

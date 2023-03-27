@@ -295,7 +295,7 @@ void SpriteBatch::DrawTriangle(const Vector2& v0, const Vector2& v1, const Vecto
     triangle_.v0.position = Vector3(v0);
     triangle_.v1.position = Vector3(v1);
     triangle_.v2.position = Vector3(v2);
-    AddTriangle();
+    add_triangle();
 }
 
 void SpriteBatch::draw_line(const Vector2& start, const Vector2&end, float width)

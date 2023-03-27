@@ -189,7 +189,7 @@ void PhysicsWorld2D::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount,
     Vector3 v = ToVector3(vertices[0]);
     Color c(color.r, color.g, color.b, 0.5f);
     for (int i = 1; i < vertexCount - 1; ++i)
-        debugRenderer_->AddTriangle(v, ToVector3(vertices[i]), ToVector3(vertices[i + 1]), c, debugDepthTest_);
+        debugRenderer_->add_triangle(v, ToVector3(vertices[i]), ToVector3(vertices[i + 1]), c, debugDepthTest_);
 }
 
 void PhysicsWorld2D::DrawCircle(const b2Vec2& center, float radius, const b2Color& color)
@@ -234,7 +234,7 @@ void PhysicsWorld2D::DrawSolidCircle(const b2Vec2& center, float radius, const b
         float x2 = radius * Cos((float)j);
         float y2 = radius * Sin((float)j);
 
-        debugRenderer_->AddTriangle(p, p + Vector3(x1, y1, 0.0f), p + Vector3(x2, y2, 0.0f), c, debugDepthTest_);
+        debugRenderer_->add_triangle(p, p + Vector3(x1, y1, 0.0f), p + Vector3(x2, y2, 0.0f), c, debugDepthTest_);
     }
 }
 

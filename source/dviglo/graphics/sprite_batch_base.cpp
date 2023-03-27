@@ -10,7 +10,7 @@
 namespace dviglo
 {
 
-void SpriteBatchBase::AddTriangle()
+void SpriteBatchBase::add_triangle()
 {
     // Рендерили четырёхугольники, а теперь нужно рендерить треугольники
     if (q_num_vertices_ > 0)
