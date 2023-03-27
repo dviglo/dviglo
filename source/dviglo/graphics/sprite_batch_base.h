@@ -139,7 +139,7 @@ private:
 public:
 
     // Режим наложения
-    BlendMode blend_mode_ = BLEND_ALPHA;
+    BlendMode blend_mode = BLEND_ALPHA;
 
     // Если использовать CMP_LESSEQUAL, то будет учитываться содержимое буфера глубины
     // (но сам SpriteBatch ничего не пишет в буфер глубины).
