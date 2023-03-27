@@ -41,7 +41,7 @@ private:
     TVertex t_vertices_[max_triangles_in_portion_ * vertices_per_triangle_];
 
     // Число вершин в массиве t_vertices_
-    i32 tNumVertices_ = 0;
+    i32 t_num_vertices_ = 0;
 
     // Шейдеры для рендеринга треугольников. Инициализируются в конструкторе
     ShaderVariation* tVertexShader_;

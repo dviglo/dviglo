@@ -16,11 +16,11 @@ void SpriteBatchBase::AddTriangle()
     if (qNumVertices_ > 0)
         flush();
 
-    memcpy(t_vertices_ + tNumVertices_, &triangle_, sizeof(triangle_));
-    tNumVertices_ += vertices_per_triangle_;
+    memcpy(t_vertices_ + t_num_vertices_, &triangle_, sizeof(triangle_));
+    t_num_vertices_ += vertices_per_triangle_;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
-    if (tNumVertices_ == max_triangles_in_portion_ * vertices_per_triangle_)
+    if (t_num_vertices_ == max_triangles_in_portion_ * vertices_per_triangle_)
         flush();
 }
 
@@ -39,7 +39,7 @@ void SpriteBatchBase::SetShapeColor(const Color& color)
 void SpriteBatchBase::AddQuad()
 {
     // Рендерили треугольники, а теперь нужно рендерить четырехугольники
-    if (tNumVertices_ > 0)
+    if (t_num_vertices_ > 0)
         flush();
 
     if (quad_.texture != qCurrentTexture_ || quad_.vs != qCurrentVS_ || quad_.ps != qCurrentPS_)
@@ -179,7 +179,7 @@ SpriteBatchBase::SpriteBatchBase()
 
 void SpriteBatchBase::flush()
 {
-    if (tNumVertices_ > 0)
+    if (t_num_vertices_ > 0)
     {
         Graphics& graphics = DV_GRAPHICS;
 
@@ -204,15 +204,15 @@ void SpriteBatchBase::flush()
         UpdateViewProjMatrix();
 
         // Копируем накопленную геометрию в память видеокарты
-        TVertex* buffer = (TVertex*)tVertexBuffer_->Lock(0, tNumVertices_, true);
-        memcpy(buffer, t_vertices_, tNumVertices_ * sizeof(TVertex));
+        TVertex* buffer = (TVertex*)tVertexBuffer_->Lock(0, t_num_vertices_, true);
+        memcpy(buffer, t_vertices_, t_num_vertices_ * sizeof(TVertex));
         tVertexBuffer_->Unlock();
 
         // И отрисовываем её
-        graphics.Draw(TRIANGLE_LIST, 0, tNumVertices_);
+        graphics.Draw(TRIANGLE_LIST, 0, t_num_vertices_);
 
         // Начинаем новую порцию
-        tNumVertices_ = 0;
+        t_num_vertices_ = 0;
     }
 
     else if (qNumVertices_ > 0)
