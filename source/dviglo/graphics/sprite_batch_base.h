@@ -25,7 +25,7 @@ class DV_API SpriteBatchBase : public Object
 private:
 
     // Максимальное число треугольников в порции
-    inline static constexpr i32 MAX_TRIANGLES_IN_PORTION = 600;
+    inline static constexpr i32 max_triangles_in_portion_ = 600;
 
     // Число вершин в треугольнике
     inline static constexpr i32 vertices_per_triangle_ = 3;
@@ -38,7 +38,7 @@ private:
     };
 
     // Текущая порция треугольников
-    TVertex tVertices_[MAX_TRIANGLES_IN_PORTION * vertices_per_triangle_];
+    TVertex tVertices_[max_triangles_in_portion_ * vertices_per_triangle_];
 
     // Число вершин в массиве tVertices_
     i32 tNumVertices_ = 0;
