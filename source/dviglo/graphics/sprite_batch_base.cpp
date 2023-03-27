@@ -149,19 +149,19 @@ SpriteBatchBase::SpriteBatchBase()
     qIndexBuffer_->SetShadowed(true);
 
     // Индексный буфер всегда содержит набор четырёхугольников, поэтому его можно сразу заполнить
-    qIndexBuffer_->SetSize(max_quads_in_portion_ * INDICES_PER_QUAD, false);
+    qIndexBuffer_->SetSize(max_quads_in_portion_ * indices_per_quad_, false);
     GpuIndex16* buffer = (GpuIndex16*)qIndexBuffer_->Lock(0, qIndexBuffer_->GetIndexCount());
     for (i32 i = 0; i < max_quads_in_portion_; i++)
     {
         // Первый треугольник четырёхугольника
-        buffer[i * INDICES_PER_QUAD + 0] = i * VERTICES_PER_QUAD + 0;
-        buffer[i * INDICES_PER_QUAD + 1] = i * VERTICES_PER_QUAD + 1;
-        buffer[i * INDICES_PER_QUAD + 2] = i * VERTICES_PER_QUAD + 2;
+        buffer[i * indices_per_quad_ + 0] = i * VERTICES_PER_QUAD + 0;
+        buffer[i * indices_per_quad_ + 1] = i * VERTICES_PER_QUAD + 1;
+        buffer[i * indices_per_quad_ + 2] = i * VERTICES_PER_QUAD + 2;
 
         // Второй треугольник
-        buffer[i * INDICES_PER_QUAD + 3] = i * VERTICES_PER_QUAD + 2;
-        buffer[i * INDICES_PER_QUAD + 4] = i * VERTICES_PER_QUAD + 3;
-        buffer[i * INDICES_PER_QUAD + 5] = i * VERTICES_PER_QUAD + 0;
+        buffer[i * indices_per_quad_ + 3] = i * VERTICES_PER_QUAD + 2;
+        buffer[i * indices_per_quad_ + 4] = i * VERTICES_PER_QUAD + 3;
+        buffer[i * indices_per_quad_ + 5] = i * VERTICES_PER_QUAD + 0;
     }
     qIndexBuffer_->Unlock();
 
@@ -248,7 +248,7 @@ void SpriteBatchBase::flush()
 
         // И отрисовываем её
         i32 numQuads = qNumVertices_ / VERTICES_PER_QUAD;
-        graphics.Draw(TRIANGLE_LIST, 0, numQuads * INDICES_PER_QUAD, 0, qNumVertices_);
+        graphics.Draw(TRIANGLE_LIST, 0, numQuads * indices_per_quad_, 0, qNumVertices_);
 
         // Начинаем новую порцию
         qNumVertices_ = 0;
