@@ -55,7 +55,7 @@ public:
         worldSpaceSpriteBatch_->compareMode_ = CMP_LESSEQUAL;
 
         virtualSpriteBatch_ = new SpriteBatch();
-        virtualSpriteBatch_->virtualScreenSize_ = IntVector2(700, 600);
+        virtualSpriteBatch_->virtual_screen_size = IntVector2(700, 600);
     }
 
     void setup_viewport()
@@ -234,7 +234,7 @@ public:
         else if (currentTest_ == 3)
         {
             virtualSpriteBatch_->SetShapeColor(0x90FF0000);
-            virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtualScreenSize_);
+            virtualSpriteBatch_->DrawAABBSolid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtual_screen_size);
             virtualSpriteBatch_->DrawSprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
             Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));
