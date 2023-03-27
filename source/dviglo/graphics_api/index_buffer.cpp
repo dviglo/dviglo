@@ -148,7 +148,7 @@ void IndexBuffer::OnDeviceReset()
 
 void IndexBuffer::Release()
 {
-    Unlock_OGL();
+    Unlock();
 
     if (gpu_object_name_)
     {
@@ -304,12 +304,24 @@ void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
 
 void IndexBuffer::Unlock()
 {
-    GAPI gapi = GParams::get_gapi();
+    switch (lockState_)
+    {
+    case LOCK_SHADOW:
+        SetDataRange(shadowData_.Get() + (intptr_t)lockStart_ * indexSize_, lockStart_, lockCount_, discardLock_);
+        lockState_ = LOCK_NONE;
+        break;
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Unlock_OGL();
-#endif
+    case LOCK_SCRATCH:
+        SetDataRange(lockScratchData_, lockStart_, lockCount_, discardLock_);
+        if (!GParams::is_headless())
+            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
+        lockScratchData_ = nullptr;
+        lockState_ = LOCK_NONE;
+        break;
+
+    default:
+        break;
+    }
 }
 
 bool IndexBuffer::Create()

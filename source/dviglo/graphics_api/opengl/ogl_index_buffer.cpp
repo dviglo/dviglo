@@ -13,28 +13,6 @@
 namespace dviglo
 {
 
-void IndexBuffer::Unlock_OGL()
-{
-    switch (lockState_)
-    {
-    case LOCK_SHADOW:
-        SetDataRange(shadowData_.Get() + (intptr_t)lockStart_ * indexSize_, lockStart_, lockCount_, discardLock_);
-        lockState_ = LOCK_NONE;
-        break;
-
-    case LOCK_SCRATCH:
-        SetDataRange(lockScratchData_, lockStart_, lockCount_, discardLock_);
-        if (!GParams::is_headless())
-            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
-        lockScratchData_ = nullptr;
-        lockState_ = LOCK_NONE;
-        break;
-
-    default:
-        break;
-    }
-}
-
 bool IndexBuffer::Create_OGL()
 {
     if (!indexCount_)
