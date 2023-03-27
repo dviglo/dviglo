@@ -16,7 +16,7 @@ void SpriteBatchBase::AddTriangle()
     if (qNumVertices_ > 0)
         flush();
 
-    memcpy(tVertices_ + tNumVertices_, &triangle_, sizeof(triangle_));
+    memcpy(t_vertices_ + tNumVertices_, &triangle_, sizeof(triangle_));
     tNumVertices_ += vertices_per_triangle_;
 
     // Если после добавления вершин мы заполнили массив до предела, то рендерим порцию
@@ -205,7 +205,7 @@ void SpriteBatchBase::flush()
 
         // Копируем накопленную геометрию в память видеокарты
         TVertex* buffer = (TVertex*)tVertexBuffer_->Lock(0, tNumVertices_, true);
-        memcpy(buffer, tVertices_, tNumVertices_ * sizeof(TVertex));
+        memcpy(buffer, t_vertices_, tNumVertices_ * sizeof(TVertex));
         tVertexBuffer_->Unlock();
 
         // И отрисовываем её

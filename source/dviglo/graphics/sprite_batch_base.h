@@ -38,9 +38,9 @@ private:
     };
 
     // Текущая порция треугольников
-    TVertex tVertices_[max_triangles_in_portion_ * vertices_per_triangle_];
+    TVertex t_vertices_[max_triangles_in_portion_ * vertices_per_triangle_];
 
-    // Число вершин в массиве tVertices_
+    // Число вершин в массиве t_vertices_
     i32 tNumVertices_ = 0;
 
     // Шейдеры для рендеринга треугольников. Инициализируются в конструкторе
@@ -59,7 +59,7 @@ protected:
         TVertex v0, v1, v2;
     } triangle_;
 
-    // Добавляет 3 вершины в массив tVertices_. Вызывает flush(), если массив полон.
+    // Добавляет 3 вершины в массив t_vertices_. Вызывает flush(), если массив полон.
     // Перед вызовом этой функции необходимо заполнить структуру triangle_
     void AddTriangle();
 
