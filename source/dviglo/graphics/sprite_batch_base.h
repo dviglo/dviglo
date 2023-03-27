@@ -7,11 +7,11 @@
 #pragma once
 
 #include "../core/object.h"
-#include "graphics.h"
 #include "../graphics_api/index_buffer.h"
 #include "../graphics_api/shader_variation.h"
 #include "../graphics_api/texture_2d.h"
 #include "../graphics_api/vertex_buffer.h"
+#include "graphics.h"
 
 namespace dviglo
 {
@@ -150,9 +150,9 @@ public:
     Camera* camera = nullptr;
 
     // Размеры виртуального экрана. Если одна из координат <= 0, то используются реальные размеры экрана
-    IntVector2 virtual_screen_size = IntVector2(0, 0);
+    IntVector2 virtual_screen_size{0, 0};
 
-    bool VirtualScreenUsed() const { return virtual_screen_size.x > 0 && virtual_screen_size.y > 0; }
+    bool is_virtual_screen_used() const { return virtual_screen_size.x > 0 && virtual_screen_size.y > 0; }
 
     // Конструктор
     SpriteBatchBase();

@@ -63,7 +63,7 @@ IntRect SpriteBatchBase::get_viewport_rect()
 {
     Graphics& graphics = DV_GRAPHICS;
 
-    if (!VirtualScreenUsed())
+    if (!is_virtual_screen_used())
         return IntRect(0, 0, graphics.GetWidth(), graphics.GetHeight());
 
     float real_aspect = (float)graphics.GetWidth() / graphics.GetHeight();
@@ -93,7 +93,7 @@ IntRect SpriteBatchBase::get_viewport_rect()
 
 Vector2 SpriteBatchBase::to_virtual_pos(const Vector2& real_pos)
 {
-    if (!VirtualScreenUsed())
+    if (!is_virtual_screen_used())
         return real_pos;
 
     IntRect viewport_rect = get_viewport_rect();
@@ -119,7 +119,7 @@ void SpriteBatchBase::update_view_proj_matrix()
     i32 width;
     i32 height;
 
-    if (VirtualScreenUsed())
+    if (is_virtual_screen_used())
     {
         width = virtual_screen_size.x;
         height = virtual_screen_size.y;
