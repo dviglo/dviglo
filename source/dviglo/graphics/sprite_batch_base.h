@@ -144,7 +144,7 @@ public:
     // Если использовать CMP_LESSEQUAL, то будет учитываться содержимое буфера глубины
     // (но сам SpriteBatch ничего не пишет в буфер глубины).
     // При CMP_ALWAYS каждый выводимый спрайт будет перекрывать прежде отрисованные пиксели
-    CompareMode compareMode_ = CMP_ALWAYS;
+    CompareMode compare_mode = CMP_ALWAYS;
 
     // Если определена камера, то SpriteBatch рисует в мировых координатах
     Camera* camera_ = nullptr;

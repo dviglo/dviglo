@@ -52,7 +52,7 @@ public:
         
         worldSpaceSpriteBatch_ = new SpriteBatch();
         worldSpaceSpriteBatch_->camera_ = cameraNode_->GetComponent<Camera>();
-        worldSpaceSpriteBatch_->compareMode_ = CMP_LESSEQUAL;
+        worldSpaceSpriteBatch_->compare_mode = CMP_LESSEQUAL;
 
         virtualSpriteBatch_ = new SpriteBatch();
         virtualSpriteBatch_->virtual_screen_size = IntVector2(700, 600);

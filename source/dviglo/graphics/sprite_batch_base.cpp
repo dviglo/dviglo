@@ -190,7 +190,7 @@ void SpriteBatchBase::flush()
         graphics.SetStencilTest(false);
         graphics.SetScissorTest(false);
         graphics.SetColorWrite(true);
-        graphics.SetDepthTest(compareMode_);
+        graphics.SetDepthTest(compare_mode);
         graphics.SetBlendMode(blend_mode_);
         graphics.SetViewport(GetViewportRect());
 
@@ -226,7 +226,7 @@ void SpriteBatchBase::flush()
         graphics.SetStencilTest(false);
         graphics.SetScissorTest(false);
         graphics.SetColorWrite(true);
-        graphics.SetDepthTest(compareMode_);
+        graphics.SetDepthTest(compare_mode);
         graphics.SetBlendMode(blend_mode_);
         graphics.SetViewport(GetViewportRect());
 
