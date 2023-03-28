@@ -139,18 +139,6 @@ private:
     /// Update the shadow data to the GPU buffer.
     bool UpdateToGPU();
 
-#ifdef DV_OPENGL
-    void OnDeviceLost_OGL();
-    void OnDeviceReset_OGL();
-    void Release_OGL();
-    bool SetData_OGL(const void* data);
-    bool SetDataRange_OGL(const void* data, i32 start, i32 count, bool discard = false);
-    void* Lock_OGL(i32 start, i32 count, bool discard);
-    void Unlock_OGL();
-    bool Create_OGL();
-    bool UpdateToGPU_OGL();
-#endif // def DV_OPENGL
-
     /// Shadow data.
     SharedArrayPtr<byte> shadowData_;
     /// Number of vertices.

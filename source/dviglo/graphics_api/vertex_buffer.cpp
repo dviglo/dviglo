@@ -5,14 +5,18 @@
 #include "vertex_buffer.h"
 
 #include "../graphics/graphics.h"
+#include "../io/log.h"
 #include "../math/math_defs.h"
+#include "graphics_impl.h"
+#include "vertex_buffer.h"
 
 #include "../common/debug_new.h"
 
 namespace dviglo
 {
 
-VertexBuffer::VertexBuffer(){
+VertexBuffer::VertexBuffer()
+{
     UpdateOffsets();
 
     // Force shadowing mode if graphics subsystem does not exist
@@ -192,104 +196,247 @@ void VertexBuffer::UpdateOffsets(Vector<VertexElement>& elements)
 
 void VertexBuffer::OnDeviceLost()
 {
-    GAPI gapi = GParams::get_gapi();
+    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+        glDeleteBuffers(1, &gpu_object_name_);
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return OnDeviceLost_OGL();
-#endif
+    GpuObject::OnDeviceLost();
 }
 
 void VertexBuffer::OnDeviceReset()
 {
-    GAPI gapi = GParams::get_gapi();
+    if (!gpu_object_name_)
+    {
+        Create();
+        dataLost_ = !UpdateToGPU();
+    }
+    else if (dataPending_)
+    {
+        dataLost_ = !UpdateToGPU();
+    }
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return OnDeviceReset_OGL();
-#endif
+    dataPending_ = false;
 }
 
 void VertexBuffer::Release()
 {
-    GAPI gapi = GParams::get_gapi();
+    Unlock();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Release_OGL();
-#endif
+    if (gpu_object_name_)
+    {
+        if (GParams::is_headless())
+            return;
+
+        Graphics& graphics = DV_GRAPHICS;
+
+        if (!graphics.IsDeviceLost())
+        {
+            for (i32 i = 0; i < MAX_VERTEX_STREAMS; ++i)
+            {
+                if (graphics.GetVertexBuffer(i) == this)
+                    graphics.SetVertexBuffer(nullptr);
+            }
+
+            graphics.SetVBO_OGL(0);
+            glDeleteBuffers(1, &gpu_object_name_);
+        }
+
+        gpu_object_name_ = 0;
+    }
 }
 
 bool VertexBuffer::SetData(const void* data)
 {
-    GAPI gapi = GParams::get_gapi();
+    if (!data)
+    {
+        DV_LOGERROR("Null pointer for vertex buffer data");
+        return false;
+    }
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return SetData_OGL(data);
-#endif
+    if (!vertexSize_)
+    {
+        DV_LOGERROR("Vertex elements not defined, can not set vertex buffer data");
+        return false;
+    }
 
-    return {}; // Prevent warning
+    if (shadowData_ && data != shadowData_.Get())
+        memcpy(shadowData_.Get(), data, (size_t)vertexCount_ * vertexSize_);
+
+    if (gpu_object_name_)
+    {
+        if (!DV_GRAPHICS.IsDeviceLost())
+        {
+            DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
+            glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        }
+        else
+        {
+            DV_LOGWARNING("Vertex buffer data assignment while device is lost");
+            dataPending_ = true;
+        }
+    }
+
+    dataLost_ = false;
+    return true;
 }
 
 bool VertexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = GParams::get_gapi();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return SetDataRange_OGL(data, start, count, discard);
-#endif
+    if (start == 0 && count == vertexCount_)
+        return SetData(data);
 
-    return {}; // Prevent warning
+    if (!data)
+    {
+        DV_LOGERROR("Null pointer for vertex buffer data");
+        return false;
+    }
+
+    if (!vertexSize_)
+    {
+        DV_LOGERROR("Vertex elements not defined, can not set vertex buffer data");
+        return false;
+    }
+
+    if (start + count > vertexCount_)
+    {
+        DV_LOGERROR("Illegal range for setting new vertex buffer data");
+        return false;
+    }
+
+    if (!count)
+        return true;
+
+    byte* dst = shadowData_.Get() + (intptr_t)start * vertexSize_;
+    if (shadowData_ && dst != data)
+        memcpy(dst, data, (size_t)count * vertexSize_);
+
+    if (gpu_object_name_)
+    {
+        if (!DV_GRAPHICS.IsDeviceLost())
+        {
+            DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
+            if (!discard || start != 0)
+                glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)start * vertexSize_, (GLsizeiptr)count * vertexSize_, data);
+            else
+                glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)count * vertexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+        }
+        else
+        {
+            DV_LOGWARNING("Vertex buffer data assignment while device is lost");
+            dataPending_ = true;
+        }
+    }
+
+    return true;
 }
 
 void* VertexBuffer::Lock(i32 start, i32 count, bool discard)
 {
     assert(start >= 0 && count >= 0);
-    GAPI gapi = GParams::get_gapi();
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Lock_OGL(start, count, discard);
-#endif
+    if (lockState_ != LOCK_NONE)
+    {
+        DV_LOGERROR("Vertex buffer already locked");
+        return nullptr;
+    }
 
-    return {}; // Prevent warning
+    if (!vertexSize_)
+    {
+        DV_LOGERROR("Vertex elements not defined, can not lock vertex buffer");
+        return nullptr;
+    }
+
+    if (start + count > vertexCount_)
+    {
+        DV_LOGERROR("Illegal range for locking vertex buffer");
+        return nullptr;
+    }
+
+    if (!count)
+        return nullptr;
+
+    lockStart_ = start;
+    lockCount_ = count;
+    discardLock_ = discard;
+
+    if (shadowData_)
+    {
+        lockState_ = LOCK_SHADOW;
+        return shadowData_.Get() + (intptr_t)start * vertexSize_;
+    }
+    else if (!GParams::is_headless())
+    {
+        lockState_ = LOCK_SCRATCH;
+        lockScratchData_ = DV_GRAPHICS.ReserveScratchBuffer(count * vertexSize_);
+        return lockScratchData_;
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void VertexBuffer::Unlock()
 {
-    GAPI gapi = GParams::get_gapi();
+    switch (lockState_)
+    {
+    case LOCK_SHADOW:
+        SetDataRange(shadowData_.Get() + (intptr_t)lockStart_ * vertexSize_, lockStart_, lockCount_, discardLock_);
+        lockState_ = LOCK_NONE;
+        break;
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Unlock_OGL();
-#endif
+    case LOCK_SCRATCH:
+        SetDataRange(lockScratchData_, lockStart_, lockCount_, discardLock_);
+        if (!GParams::is_headless())
+            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
+        lockScratchData_ = nullptr;
+        lockState_ = LOCK_NONE;
+        break;
+
+    default:
+        break;
+    }
 }
 
 bool VertexBuffer::Create()
 {
-    GAPI gapi = GParams::get_gapi();
+    if (!vertexCount_ || !elementMask_)
+    {
+        Release();
+        return true;
+    }
 
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return Create_OGL();
-#endif
+    if (!GParams::is_headless())
+    {
+        if (DV_GRAPHICS.IsDeviceLost())
+        {
+            DV_LOGWARNING("Vertex buffer creation while device is lost");
+            return true;
+        }
 
-    return {}; // Prevent warning
+        if (!gpu_object_name_)
+            glGenBuffers(1, &gpu_object_name_);
+
+        if (!gpu_object_name_)
+        {
+            DV_LOGERROR("Failed to create vertex buffer");
+            return false;
+        }
+
+        DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
+        glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, nullptr, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
+    }
+
+    return true;
 }
 
 bool VertexBuffer::UpdateToGPU()
 {
-    GAPI gapi = GParams::get_gapi();
-
-#ifdef DV_OPENGL
-    if (gapi == GAPI_OPENGL)
-        return UpdateToGPU_OGL();
-#endif
-
-    return {}; // Prevent warning
+    if (gpu_object_name_ && shadowData_)
+        return SetData(shadowData_.Get());
+    else
+        return false;
 }
 
 } // namespace dviglo
