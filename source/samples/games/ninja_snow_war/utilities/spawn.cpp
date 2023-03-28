@@ -11,7 +11,7 @@ namespace dviglo
 
 Node* SpawnObject(Scene* scene, const Vector3& position, const Quaternion& rotation, const String& className)
 {
-    XmlFile* xml = DV_RES_CACHE.GetResource<XmlFile>("native_objects/" + className + ".xml");
+    XmlFile* xml = DV_RES_CACHE.GetResource<XmlFile>("ninja_objects/" + className + ".xml");
     return scene->InstantiateXML(xml->GetRoot(), position, rotation);
 }
 
