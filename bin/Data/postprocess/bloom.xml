@@ -1,17 +1,17 @@
 <renderpath>
     <rendertarget name="BlurV" tag="bloom" sizedivisor="4 4" format="rgb" filter="true" />
     <rendertarget name="BlurH" tag="bloom" sizedivisor="4 4" format="rgb" filter="true" />
-    <command type="quad" tag="bloom" vs="Bloom" ps="Bloom" psdefines="BRIGHT" output="BlurV">
+    <command type="quad" tag="bloom" vs="bloom" ps="bloom" psdefines="BRIGHT" output="BlurV">
         <parameter name="BloomThreshold" value="0.3" />
         <texture unit="diffuse" name="viewport" />
     </command>
-    <command type="quad" tag="bloom" vs="Bloom" ps="Bloom" psdefines="BLURH" output="BlurH">
+    <command type="quad" tag="bloom" vs="bloom" ps="bloom" psdefines="BLURH" output="BlurH">
         <texture unit="diffuse" name="BlurV" />
     </command>
-    <command type="quad" tag="bloom" vs="Bloom" ps="Bloom" psdefines="BLURV" output="BlurV">
+    <command type="quad" tag="bloom" vs="bloom" ps="bloom" psdefines="BLURV" output="BlurV">
         <texture unit="diffuse" name="BlurH" />
     </command>
-    <command type="quad" tag="bloom" vs="Bloom" ps="Bloom" psdefines="COMBINE" output="viewport">
+    <command type="quad" tag="bloom" vs="bloom" ps="bloom" psdefines="COMBINE" output="viewport">
         <parameter name="BloomMix" value="0.9 0.4" />
         <texture unit="diffuse" name="viewport" />
         <texture unit="normal" name="BlurV" />

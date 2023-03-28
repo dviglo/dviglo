@@ -1569,7 +1569,7 @@ Scenepass, quad, forwardlights and lightvolumes commands all allow command-globa
 
 Note that it's legal for only one forwardlights or one lightvolumes command to exist in the renderpath.
 
-A render path can be loaded from a main XML file by calling \ref RenderPath::Load "Load()", after which other XML files (for example one for each postprocessing effect) can be appended to it by calling \ref RenderPath::Append "Append()". Rendertargets and commands can be enabled or disabled by calling \ref RenderPath::SetEnabled "SetEnabled()" to switch eg. a postprocessing effect on or off. To aid in this, both can be identified by tag names, for example the bloom effect uses the tag "Bloom" for all of its rendertargets and commands.
+A render path can be loaded from a main XML file by calling \ref RenderPath::Load "Load()", after which other XML files (for example one for each postprocessing effect) can be appended to it by calling \ref RenderPath::Append "Append()". Rendertargets and commands can be enabled or disabled by calling \ref RenderPath::SetEnabled "SetEnabled()" to switch eg. a postprocessing effect on or off. To aid in this, both can be identified by tag names, for example the bloom effect uses the tag "bloom" for all of its rendertargets and commands.
 
 It is legal to both write to the destination viewport and sample from it during the same command: pingpong copies of its contents will be made automatically. If the viewport has hardware multisampling on, the multisampled backbuffer will be resolved to a texture before sampling it.
 
