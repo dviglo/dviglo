@@ -6,7 +6,7 @@
 #include "Constants.glsl"
 #include "Fog.glsl"
 #include "PBR.glsl"
-#include "IBL.glsl"
+#include "ibl.glsl"
 #line 30010
 
 varying vec2 vTexCoord;
