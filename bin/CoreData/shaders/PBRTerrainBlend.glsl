@@ -5,7 +5,7 @@
 #include "Lighting.glsl"
 #include "Constants.glsl"
 #include "Fog.glsl"
-#include "PBR.glsl"
+#include "pbr.glsl"
 #include "ibl.glsl"
 #line 30010
 

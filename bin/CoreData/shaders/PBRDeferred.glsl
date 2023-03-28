@@ -4,7 +4,7 @@
 #include "ScreenPos.glsl"
 #include "Lighting.glsl"
 #include "Constants.glsl"
-#include "PBR.glsl"
+#include "pbr.glsl"
 #line 40007
 
 #ifdef DIRLIGHT
