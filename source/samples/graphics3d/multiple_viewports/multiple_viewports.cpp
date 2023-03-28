@@ -173,8 +173,8 @@ void MultipleViewports::SetupViewports()
     // for example with the effect name to allow easy toggling on and off. We start with the effects
     // disabled.
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/Bloom.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/FXAA2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/Bloom.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/FXAA2.xml"));
     // Make the bloom mixing parameter more pronounced
     effectRenderPath->SetShaderParameter("BloomMix", Vector2(0.9f, 0.6f));
     effectRenderPath->SetEnabled("Bloom", false);

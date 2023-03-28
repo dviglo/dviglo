@@ -2,7 +2,7 @@
 #include "Samplers.glsl"
 #include "Transform.glsl"
 #include "ScreenPos.glsl"
-#include "PostProcess.glsl"
+#include "postprocess.glsl"
 
 varying vec2 vTexCoord;
 varying vec2 vScreenPos;

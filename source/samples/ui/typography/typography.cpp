@@ -225,8 +225,8 @@ void Typography::HandleSRGB(StringHash eventType, VariantMap& eventData)
     {
         DV_LOGWARNING("Graphics::GetSRGBWriteSupport returned false");
 
-        // Note: PostProcess/GammaCorrection.xml implements SRGB conversion.
-        // However, post-processing filters don't affect the UI layer.
+        // Note: postprocess/GammaCorrection.xml implements SRGB conversion.
+        // However, postprocessing filters don't affect the UI layer.
     }
 }
 

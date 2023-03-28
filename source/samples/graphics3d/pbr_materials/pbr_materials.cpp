@@ -182,12 +182,12 @@ void PBRMaterials::setup_viewport()
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     DV_RENDERER.SetViewport(0, viewport);
 
-    // Add post-processing effects appropriate with the example scene
+    // Add postprocessing effects appropriate with the example scene
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/FXAA2.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/GammaCorrection.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/Tonemap.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("PostProcess/AutoExposure.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/FXAA2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/GammaCorrection.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/Tonemap.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/AutoExposure.xml"));
 
     viewport->SetRenderPath(effectRenderPath);
 }

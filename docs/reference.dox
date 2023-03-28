@@ -981,7 +981,7 @@ By default there is one viewport, but the amount can be increased with the funct
 
 Viewports can also be defined for rendertarget textures. See \ref AuxiliaryViews "Auxiliary views" for details.
 
-Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/CoreData/RenderPaths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA post-processing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
+Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/CoreData/RenderPaths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
 
 The steps for rendering each viewport on each frame are roughly the following:
 
@@ -1334,7 +1334,7 @@ For the layout definitions, see http://www.cgtextures.com/content.php?action=tut
 </texture3d>
 \endcode
 
-Using a 3D texture for color correction postprocess (see bin/Data/PostProcess/ColorCorrection.xml) requires the 3D texture to be assigned to the "volume" texture unit, so that the effect knows to load the texture as the correct type. The lookup for the corrected color happens by using the original color's red channel as the X coordinate, the green channel as the Y coordinate, and blue as the Z. Therefore the identity LUT's slices (which shouldn't transform the color at all) grow red from left to right and green from top to bottom, and finally the slices themselves turn blue from left to right.
+Using a 3D texture for color correction postprocess (see bin/Data/postprocess/ColorCorrection.xml) requires the 3D texture to be assigned to the "volume" texture unit, so that the effect knows to load the texture as the correct type. The lookup for the corrected color happens by using the original color's red channel as the X coordinate, the green channel as the Y coordinate, and blue as the Z. Therefore the identity LUT's slices (which shouldn't transform the color at all) grow red from left to right and green from top to bottom, and finally the slices themselves turn blue from left to right.
 
 \section Materials_2DArrayTextures 2D array textures
 
@@ -1393,7 +1393,7 @@ The purposes of the different passes are:
 - prepass: %Light pre-pass only - renders normals, specular power and depth to the G-buffer.
 - material: %Light pre-pass only - renders opaque geometry final color by combining ambient light, per-vertex lights and per-pixel light accumulation.
 - deferred: Deferred rendering only - renders ambient light and per-vertex lights to the output rendertarget, and diffuse albedo, normals, specular intensity + power and depth to the G-buffer.
-- depth: Renders linear depth to a rendertarget for post-processing effects.
+- depth: Renders linear depth to a rendertarget for postprocessing effects.
 - shadow: Renders to a hardware shadow map (depth only) for shadow map generation.
 
 More custom passes can be defined and referred to in the \ref RenderPaths "render path definition". For the built-in passes listed above, the lighting shader permutations to load (unlit, per-vertex or per-pixel) are recognized automatically, but for custom passes they need to be explicitly specified. The default is unlit.
@@ -1546,7 +1546,7 @@ Note that the used shader variations will vary with graphics settings, for examp
 
 \page RenderPaths Render path
 
-%Scene rendering and any post-processing on a Viewport is defined by its RenderPath object, which can either be read from an XML file or be created programmatically.
+%Scene rendering and any postprocessing on a Viewport is defined by its RenderPath object, which can either be read from an XML file or be created programmatically.
 
 The render path consists of rendertarget definitions and commands. The commands are executed in order to yield the rendering result. Each command outputs either to the destination rendertarget & viewport (default if output definition is omitted), or one of the named rendertargets. MRT output is also possible. If the rendertarget is a cube map,
 the face to render to (0-5) can also be specified.
@@ -1569,7 +1569,7 @@ Scenepass, quad, forwardlights and lightvolumes commands all allow command-globa
 
 Note that it's legal for only one forwardlights or one lightvolumes command to exist in the renderpath.
 
-A render path can be loaded from a main XML file by calling \ref RenderPath::Load "Load()", after which other XML files (for example one for each post-processing effect) can be appended to it by calling \ref RenderPath::Append "Append()". Rendertargets and commands can be enabled or disabled by calling \ref RenderPath::SetEnabled "SetEnabled()" to switch eg. a post-processing effect on or off. To aid in this, both can be identified by tag names, for example the bloom effect uses the tag "Bloom" for all of its rendertargets and commands.
+A render path can be loaded from a main XML file by calling \ref RenderPath::Load "Load()", after which other XML files (for example one for each postprocessing effect) can be appended to it by calling \ref RenderPath::Append "Append()". Rendertargets and commands can be enabled or disabled by calling \ref RenderPath::SetEnabled "SetEnabled()" to switch eg. a postprocessing effect on or off. To aid in this, both can be identified by tag names, for example the bloom effect uses the tag "Bloom" for all of its rendertargets and commands.
 
 It is legal to both write to the destination viewport and sample from it during the same command: pingpong copies of its contents will be made automatically. If the viewport has hardware multisampling on, the multisampled backbuffer will be resolved to a texture before sampling it.
 
@@ -1605,7 +1605,7 @@ The render path XML definition looks like this:
 </renderpath>
 \endcode
 
-For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/CoreData/RenderPaths directory, and the postprocess renderpath definitions in the bin/Data/PostProcess directory.
+For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/CoreData/RenderPaths directory, and the postprocess renderpath definitions in the bin/Data/postprocess directory.
 
 \section RenderPaths_Depth Depth-stencil handling and reading scene depth
 
@@ -1665,11 +1665,11 @@ Otherwise fully customized scene render passes can be specified, but there are a
 - Remember to mark the lighting mode (per-vertex / per-pixel) into the techniques which define custom passes, as the lighting mode can be guessed automatically only for the known default passes.
 - The forwardlights command can optionally disable the lit base pass optimization without having to touch the material techniques, if a separate opaque ambient-only base pass is needed. By default the optimization is enabled.
 
-\section RenderPaths_PostProcess Post-processing effects special considerations
+\section RenderPaths_Postprocess Postprocessing effects special considerations
 
-Post-processing effects are usually implemented by using the quad command. When using intermediate rendertargets that are of different size than the viewport rendertarget, it is often necessary in shaders to reference their (inverse) size and the half-pixel offset for Direct3D9. These shader uniforms are automatically attempted to be assigned for named rendertargets. For an example look at the bloom postprocess shaders: because there is a rendertarget called BlurH, each quad command in the renderpath will attempt to set the shader uniforms cBlurHInvSize and cBlurHOffsets (both Vector2.) Note that setting shader uniforms is case insensitive.
+Postprocessing effects are usually implemented by using the quad command. When using intermediate rendertargets that are of different size than the viewport rendertarget, it is often necessary in shaders to reference their (inverse) size and the half-pixel offset for Direct3D9. These shader uniforms are automatically attempted to be assigned for named rendertargets. For an example look at the bloom postprocess shaders: because there is a rendertarget called BlurH, each quad command in the renderpath will attempt to set the shader uniforms cBlurHInvSize and cBlurHOffsets (both Vector2.) Note that setting shader uniforms is case insensitive.
 
-In OpenGL post-processing shaders it is important to distinguish between sampling a rendertarget texture and a regular texture resource, because intermediate rendertargets (such as the G-buffer) may be vertically inverted. Use the GetScreenPos() or GetQuadTexCoord() functions to get rendertarget UV coordinates from the clip coordinates; this takes flipping into account automatically. For sampling a regular texture, use GetQuadTexCoordNoFlip() function, which requires world coordinates instead of clip coordinates.
+In OpenGL postprocessing shaders it is important to distinguish between sampling a rendertarget texture and a regular texture resource, because intermediate rendertargets (such as the G-buffer) may be vertically inverted. Use the GetScreenPos() or GetQuadTexCoord() functions to get rendertarget UV coordinates from the clip coordinates; this takes flipping into account automatically. For sampling a regular texture, use GetQuadTexCoordNoFlip() function, which requires world coordinates instead of clip coordinates.
 
 \section RenderPaths_MultiSample Multisampled rendertargets
 

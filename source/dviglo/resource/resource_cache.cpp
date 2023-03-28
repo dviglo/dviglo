@@ -35,7 +35,7 @@ static const char* checkDirs[] =
     "Music",
     "Objects",
     "Particle",
-    "PostProcess",
+    "postprocess",
     "RenderPaths",
     "Scenes",
     "Scripts",
