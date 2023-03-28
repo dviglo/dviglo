@@ -187,7 +187,7 @@ void PBRMaterials::setup_viewport()
     effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/FXAA2.xml"));
     effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/GammaCorrection.xml"));
     effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/Tonemap.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/AutoExposure.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/autoexposure.xml"));
 
     viewport->SetRenderPath(effectRenderPath);
 }

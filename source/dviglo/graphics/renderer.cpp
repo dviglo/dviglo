@@ -1074,7 +1074,7 @@ Texture* Renderer::GetScreenBuffer(int width, int height, unsigned format, int m
 
 #ifdef DV_OPENGL
             // OpenGL hack: clear persistent floating point screen buffers to ensure the initial contents aren't illegal (NaN)?
-            // Otherwise eg. the AutoExposure post process will not work correctly
+            // Otherwise eg. the autoexposure post process will not work correctly
             if (GParams::get_gapi() == GAPI_OPENGL && persistentKey && Texture::GetDataType_OGL(format) == GL_FLOAT)
             {
                 // Note: this loses current rendertarget assignment
