@@ -15,19 +15,17 @@
 namespace dviglo
 {
 
-#ifndef GL_ES_VERSION_2_0
-static GLenum gl3WrapModes[] =
-{
-    GL_REPEAT,
-    GL_MIRRORED_REPEAT,
-    GL_CLAMP_TO_EDGE,
-    GL_CLAMP_TO_BORDER
-};
-#endif
-
 static GLenum GetWrapMode(TextureAddressMode mode)
 {
-    return gl3WrapModes[mode];
+    static GLenum gl_wrap_modes[] =
+    {
+        GL_REPEAT,
+        GL_MIRRORED_REPEAT,
+        GL_CLAMP_TO_EDGE,
+        GL_CLAMP_TO_BORDER
+    };
+
+    return gl_wrap_modes[mode];
 }
 
 void Texture::SetSRGB_OGL(bool enable)
