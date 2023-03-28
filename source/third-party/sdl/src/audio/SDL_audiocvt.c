@@ -144,9 +144,9 @@ static int SDL_ConvertAudio(SDL_AudioCVT * cvt);
  * 8 channels (7.1) layout: FL+FR+FC+LFE+BL+BR+SL+SR
  */
 
-#if HAVE_SSE3_INTRINSICS
+#if SDL_SSE3_INTRINSICS
 /* Convert from stereo to mono. Average left and right. */
-static void SDLCALL SDL_ConvertStereoToMono_SSE3(SDL_AudioCVT *cvt, SDL_AudioFormat format)
+static void SDLCALL SDL_TARGETING("sse3") SDL_ConvertStereoToMono_SSE3(SDL_AudioCVT *cvt, SDL_AudioFormat format)
 {
     const __m128 divby2 = _mm_set1_ps(0.5f);
     float *dst = (float *)cvt->buf;
@@ -181,9 +181,9 @@ static void SDLCALL SDL_ConvertStereoToMono_SSE3(SDL_AudioCVT *cvt, SDL_AudioFor
 }
 #endif
 
-#if HAVE_SSE_INTRINSICS
+#if SDL_SSE_INTRINSICS
 /* Convert from mono to stereo. Duplicate to stereo left and right. */
-static void SDLCALL SDL_ConvertMonoToStereo_SSE(SDL_AudioCVT *cvt, SDL_AudioFormat format)
+static void SDLCALL SDL_TARGETING("sse") SDL_ConvertMonoToStereo_SSE(SDL_AudioCVT *cvt, SDL_AudioFormat format)
 {
     float *dst = ((float *)(cvt->buf + (cvt->len_cvt * 2))) - 8;
     const float *src = ((const float *)(cvt->buf + cvt->len_cvt)) - 4;
@@ -494,7 +494,7 @@ static int SDL_BuildAudioTypeCVTFromFloat(SDL_AudioCVT *cvt, const SDL_AudioForm
     return retval;
 }
 
-#ifdef HAVE_LIBSAMPLERATE_H
+#ifdef HAVE_LIBSAMPLERATE
 
 static void SDL_ResampleCVT_SRC(SDL_AudioCVT *cvt, const int chans, const SDL_AudioFormat format)
 {
@@ -533,7 +533,7 @@ static void SDL_ResampleCVT_SRC(SDL_AudioCVT *cvt, const int chans, const SDL_Au
     }
 }
 
-#endif /* HAVE_LIBSAMPLERATE_H */
+#endif /* HAVE_LIBSAMPLERATE */
 
 static int SDL_ResampleCVT(SDL_AudioCVT *cvt, const int chans, const SDL_AudioFormat format)
 {
@@ -595,7 +595,7 @@ RESAMPLER_FUNCS(6)
 RESAMPLER_FUNCS(8)
 #undef RESAMPLER_FUNCS
 
-#ifdef HAVE_LIBSAMPLERATE_H
+#ifdef HAVE_LIBSAMPLERATE
 #define RESAMPLER_FUNCS(chans)                                                  \
     static void SDLCALL                                                         \
         SDL_ResampleCVT_SRC_c##chans(SDL_AudioCVT *cvt, SDL_AudioFormat format) \
@@ -608,11 +608,11 @@ RESAMPLER_FUNCS(4)
 RESAMPLER_FUNCS(6)
 RESAMPLER_FUNCS(8)
 #undef RESAMPLER_FUNCS
-#endif /* HAVE_LIBSAMPLERATE_H */
+#endif /* HAVE_LIBSAMPLERATE */
 
 static SDL_AudioFilter ChooseCVTResampler(const int dst_channels)
 {
-#ifdef HAVE_LIBSAMPLERATE_H
+#ifdef HAVE_LIBSAMPLERATE
     if (SRC_available) {
         switch (dst_channels) {
         case 1:
@@ -629,7 +629,7 @@ static SDL_AudioFilter ChooseCVTResampler(const int dst_channels)
             break;
         }
     }
-#endif /* HAVE_LIBSAMPLERATE_H */
+#endif /* HAVE_LIBSAMPLERATE */
 
     switch (dst_channels) {
     case 1:
@@ -832,7 +832,7 @@ static int SDL_BuildAudioCVT(SDL_AudioCVT *cvt,
         /* swap in some SIMD versions for a few of these. */
         if (channel_converter == SDL_ConvertStereoToMono) {
             SDL_AudioFilter filter = NULL;
-#if HAVE_SSE3_INTRINSICS
+#if SDL_SSE3_INTRINSICS
             if (!filter && SDL_HasSSE3()) {
                 filter = SDL_ConvertStereoToMono_SSE3;
             }
@@ -842,7 +842,7 @@ static int SDL_BuildAudioCVT(SDL_AudioCVT *cvt,
             }
         } else if (channel_converter == SDL_ConvertMonoToStereo) {
             SDL_AudioFilter filter = NULL;
-#if HAVE_SSE_INTRINSICS
+#if SDL_SSE_INTRINSICS
             if (!filter && SDL_HasSSE()) {
                 filter = SDL_ConvertMonoToStereo_SSE;
             }
@@ -934,7 +934,7 @@ static Uint8 *EnsureStreamBufferSize(SDL_AudioStream *stream, int newlen)
     return offset ? ptr + (16 - offset) : ptr;
 }
 
-#ifdef HAVE_LIBSAMPLERATE_H
+#ifdef HAVE_LIBSAMPLERATE
 static int SDL_ResampleAudioStream_SRC(SDL_AudioStream *stream, const void *_inbuf, const int inbuflen, void *_outbuf, const int outbuflen)
 {
     const float *inbuf = (const float *)_inbuf;
@@ -1010,7 +1010,7 @@ static SDL_bool SetupLibSampleRateResampling(SDL_AudioStream *stream)
 
     return SDL_TRUE;
 }
-#endif /* HAVE_LIBSAMPLERATE_H */
+#endif /* HAVE_LIBSAMPLERATE */
 
 static int SDL_ResampleAudioStream(SDL_AudioStream *stream, const void *_inbuf, const int inbuflen, void *_outbuf, const int outbuflen)
 {
@@ -1141,7 +1141,7 @@ SDL_CreateAudioStream(SDL_AudioFormat src_format,
             return NULL; /* SDL_BuildAudioCVT should have called SDL_SetError. */
         }
 
-#ifdef HAVE_LIBSAMPLERATE_H
+#ifdef HAVE_LIBSAMPLERATE
         SetupLibSampleRateResampling(retval);
 #endif
 

@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 1997-2021 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,16 +18,40 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_internal.h"
 
-#ifndef SDL_x11events_h_
-#define SDL_x11events_h_
+#include "../../SDL_internal.h"
 
-extern void X11_PumpEvents(_THIS);
-extern int X11_WaitEventTimeout(_THIS, Sint64 timeoutNS);
-extern void X11_SendWakeupEvent(_THIS, SDL_Window *window);
-extern int X11_SuspendScreenSaver(_THIS);
-extern void X11_ReconcileKeyboardState(_THIS);
-extern void X11_GetBorderValues(SDL_WindowData *data);
+#ifndef __SDL_QSA_AUDIO_H__
+#define __SDL_QSA_AUDIO_H__
 
-#endif /* SDL_x11events_h_ */
+#include <sys/asoundlib.h>
+
+#include "../SDL_sysaudio.h"
+
+/* Hidden "this" pointer for the audio functions */
+#define _THIS SDL_AudioDevice* this
+
+struct SDL_PrivateAudioData
+{
+    /* SDL capture state */
+    SDL_bool iscapture;
+
+    /* The audio device handle */
+    int cardno;
+    int deviceno;
+    snd_pcm_t *audio_handle;
+
+    /* The audio file descriptor */
+    int audio_fd;
+
+    /* Select timeout status */
+    uint32_t timeout_on_wait;
+
+    /* Raw mixing buffer */
+    Uint8 *pcm_buf;
+    Uint32 pcm_len;
+};
+
+#endif /* __SDL_QSA_AUDIO_H__ */
+
+/* vi: set ts=4 sw=4 expandtab: */

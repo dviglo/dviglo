@@ -1,6 +1,6 @@
 /*
   Simple DirectMedia Layer
-  Copyright (C) 1997-2023 Sam Lantinga <slouken@libsdl.org>
+  Copyright (C) 2017 BlackBerry Limited
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -18,16 +18,31 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 */
-#include "SDL_internal.h"
 
-#ifndef SDL_x11events_h_
-#define SDL_x11events_h_
+#ifndef __SDL_QNX_H__
+#define __SDL_QNX_H__
 
-extern void X11_PumpEvents(_THIS);
-extern int X11_WaitEventTimeout(_THIS, Sint64 timeoutNS);
-extern void X11_SendWakeupEvent(_THIS, SDL_Window *window);
-extern int X11_SuspendScreenSaver(_THIS);
-extern void X11_ReconcileKeyboardState(_THIS);
-extern void X11_GetBorderValues(SDL_WindowData *data);
+#include "../SDL_sysvideo.h"
+#include <screen/screen.h>
+#include <EGL/egl.h>
 
-#endif /* SDL_x11events_h_ */
+typedef struct
+{
+    screen_window_t window;
+    EGLSurface      surface;
+    EGLConfig       conf;
+} window_impl_t;
+
+extern void handleKeyboardEvent(screen_event_t event);
+
+extern int glGetConfig(EGLConfig *pconf, int *pformat);
+extern int glLoadLibrary(_THIS, const char *name);
+extern SDL_FunctionPointer glGetProcAddress(_THIS, const char *proc);
+extern SDL_GLContext glCreateContext(_THIS, SDL_Window *window);
+extern int glSetSwapInterval(_THIS, int interval);
+extern int glSwapWindow(_THIS, SDL_Window *window);
+extern int glMakeCurrent(_THIS, SDL_Window * window, SDL_GLContext context);
+extern void glDeleteContext(_THIS, SDL_GLContext context);
+extern void glUnloadLibrary(_THIS);
+
+#endif
