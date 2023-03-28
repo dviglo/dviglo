@@ -29,7 +29,7 @@ endforeach()
 
 # Список файлов для копирования в bin
 if(WIN32)
-    set(file_names pbr_demo_deferred.bat pbr_demo_deferred_hw_depth.bat)
+    set(file_names convert_models.bat pbr_demo_deferred.bat pbr_demo_deferred_hw_depth.bat)
 else() # Linux
     set(file_names pbr_demo.sh)
 endif()
