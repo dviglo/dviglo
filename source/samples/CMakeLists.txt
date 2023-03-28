@@ -31,7 +31,7 @@ endforeach()
 if(WIN32)
     set(file_names convert_models.bat pbr_demo_deferred.bat pbr_demo_deferred_hw_depth.bat)
 else() # Linux
-    set(file_names pbr_demo.sh)
+    set(file_names pbr_demo_deferred.sh pbr_demo_deferred_hw_depth.sh)
 endif()
 
 # Копируем файлы в bin, если нужно
