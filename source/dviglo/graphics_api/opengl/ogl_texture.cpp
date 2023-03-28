@@ -12,10 +12,6 @@
 
 #include "../../common/debug_new.h"
 
-#if DV_GLES3
-#define GL_COMPARE_R_TO_TEXTURE GL_COMPARE_REF_TO_TEXTURE
-#endif
-
 namespace dviglo
 {
 
@@ -129,16 +125,16 @@ void Texture::UpdateParameters_OGL()
     glTexParameterfv(target_, GL_TEXTURE_BORDER_COLOR, borderColor_.Data());
 #endif
 
-#ifndef DV_GLES2
     // Shadow compare
     if (shadowCompare_)
     {
-        glTexParameteri(target_, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
+        glTexParameteri(target_, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
         glTexParameteri(target_, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
     }
     else
+    {
         glTexParameteri(target_, GL_TEXTURE_COMPARE_MODE, GL_NONE);
-#endif
+    }
 
     parametersDirty_ = false;
 }
