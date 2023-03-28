@@ -1334,7 +1334,7 @@ For the layout definitions, see http://www.cgtextures.com/content.php?action=tut
 </texture3d>
 \endcode
 
-Using a 3D texture for color correction postprocess (see bin/Data/postprocess/ColorCorrection.xml) requires the 3D texture to be assigned to the "volume" texture unit, so that the effect knows to load the texture as the correct type. The lookup for the corrected color happens by using the original color's red channel as the X coordinate, the green channel as the Y coordinate, and blue as the Z. Therefore the identity LUT's slices (which shouldn't transform the color at all) grow red from left to right and green from top to bottom, and finally the slices themselves turn blue from left to right.
+Using a 3D texture for color correction postprocess (see bin/Data/postprocess/color_correction.xml) requires the 3D texture to be assigned to the "volume" texture unit, so that the effect knows to load the texture as the correct type. The lookup for the corrected color happens by using the original color's red channel as the X coordinate, the green channel as the Y coordinate, and blue as the Z. Therefore the identity LUT's slices (which shouldn't transform the color at all) grow red from left to right and green from top to bottom, and finally the slices themselves turn blue from left to right.
 
 \section Materials_2DArrayTextures 2D array textures
 
