@@ -30,11 +30,6 @@ using namespace std;
 
 extern "C" int SDL_AddTouch(SDL_TouchID touchID, SDL_TouchDeviceType type, const char* name);
 
-// Use a "click inside window to focus" mechanism on desktop platforms when the mouse cursor is hidden
-#if defined(_WIN32) || (defined(__APPLE__) && !defined(IOS) && !defined(TVOS)) || (defined(__linux__) && !defined(__ANDROID__))
-#define REQUIRE_CLICK_TO_FOCUS
-#endif
-
 // TODO: После обновления SDL до 3й версии по индексам к джойстикам обращаться нельзя
 
 namespace dviglo
@@ -189,12 +184,7 @@ void Input::Update()
     unsigned flags = window ? SDL_GetWindowFlags(window) & (SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS) : 0;
     if (window)
     {
-#ifdef REQUIRE_CLICK_TO_FOCUS
-        // When using the "click to focus" mechanism, only focus automatically in fullscreen or non-hidden mouse mode
-        if (!inputFocus_ && ((mouseVisible_ || mouseMode_ == MM_FREE) || graphics.GetFullscreen()) && (flags & SDL_WINDOW_INPUT_FOCUS))
-#else
         if (!inputFocus_ && (flags & SDL_WINDOW_INPUT_FOCUS))
-#endif
             focusedThisFrame_ = true;
 
         if (focusedThisFrame_)
@@ -205,7 +195,9 @@ void Input::Update()
             LoseFocus();
     }
     else
+    {
         return;
+    }
 
     // Handle mouse mode MM_WRAP
     if (mouseVisible_ && mouseMode_ == MM_WRAP)
@@ -1090,26 +1082,7 @@ void Input::HandleSDLEvent(void* sdlEvent)
 
     // While not having input focus, skip key/mouse/touch/joystick events, except for the "click to focus" mechanism
     if (!inputFocus_ && evt.type >= SDL_EVENT_KEY_DOWN && evt.type <= SDL_EVENT_FINGER_MOTION)
-    {
-#ifdef REQUIRE_CLICK_TO_FOCUS
-        // Require the click to be at least 1 pixel inside the window to disregard clicks in the title bar
-        if (evt.type == SDL_EVENT_MOUSE_BUTTON_DOWN && evt.button.x > 0 && evt.button.y > 0 && evt.button.x < graphics.GetWidth() - 1 &&
-            evt.button.y < graphics.GetHeight() - 1)
-        {
-            focusedThisFrame_ = true;
-            // Do not cause the click to actually go throughfin
-            return;
-        }
-        else if (evt.type == SDL_EVENT_FINGER_DOWN)
-        {
-            // When focusing by touch, call GainFocus() immediately as it resets the state; a touch has sustained state
-            // which should be kept
-            GainFocus();
-        }
-        else
-#endif
-            return;
-    }
+        return;
 
     // Possibility for custom handling or suppression of default handling for the SDL event
     {
