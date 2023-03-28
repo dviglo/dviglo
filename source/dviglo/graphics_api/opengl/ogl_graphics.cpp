@@ -192,7 +192,7 @@ void Graphics::Constructor_OGL()
     position_ = IntVector2(SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED);
     shadowMapFormat_ = GL_DEPTH_COMPONENT16;
     hiresShadowMapFormat_ = GL_DEPTH_COMPONENT24;
-    shaderPath_ = "Shaders/GLSL/";
+    shaderPath_ = "shaders/";
     shaderExtension_ = ".glsl";
     orientations_ = "LandscapeLeft LandscapeRight";
 
