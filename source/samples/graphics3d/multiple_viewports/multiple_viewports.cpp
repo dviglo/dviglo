@@ -177,8 +177,8 @@ void MultipleViewports::SetupViewports()
     effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/fxaa2.xml"));
     // Make the bloom mixing parameter more pronounced
     effectRenderPath->SetShaderParameter("BloomMix", Vector2(0.9f, 0.6f));
-    effectRenderPath->SetEnabled("Bloom", false);
-    effectRenderPath->SetEnabled("FXAA2", false);
+    effectRenderPath->SetEnabled("bloom", false);
+    effectRenderPath->SetEnabled("fxaa2", false);
     viewport->SetRenderPath(effectRenderPath);
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
@@ -233,9 +233,9 @@ void MultipleViewports::move_camera(float timeStep)
     // Toggle post processing effects on the front viewport. Note that the rear viewport is unaffected
     RenderPath* effectRenderPath = DV_RENDERER.GetViewport(0)->GetRenderPath();
     if (input.GetKeyPress(KEY_B))
-        effectRenderPath->ToggleEnabled("Bloom");
+        effectRenderPath->ToggleEnabled("bloom");
     if (input.GetKeyPress(KEY_F))
-        effectRenderPath->ToggleEnabled("FXAA2");
+        effectRenderPath->ToggleEnabled("fxaa2");
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
