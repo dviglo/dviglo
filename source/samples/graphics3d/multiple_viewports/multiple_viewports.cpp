@@ -169,12 +169,12 @@ void MultipleViewports::SetupViewports()
     DV_RENDERER.SetViewport(0, viewport);
 
     // Clone the default render path so that we do not interfere with the other viewport, then add
-    // bloom and FXAA post process effects to the front viewport. Render path commands can be tagged
+    // bloom and FXAA postprocess effects to the front viewport. Render path commands can be tagged
     // for example with the effect name to allow easy toggling on and off. We start with the effects
     // disabled.
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/Bloom.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/FXAA2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/bloom.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/fxaa2.xml"));
     // Make the bloom mixing parameter more pronounced
     effectRenderPath->SetShaderParameter("BloomMix", Vector2(0.9f, 0.6f));
     effectRenderPath->SetEnabled("Bloom", false);
