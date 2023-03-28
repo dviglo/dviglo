@@ -244,7 +244,10 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
         // TODO: Временный костыль, чтобы не крэшилось при Alt-Enter, если курсор захвачен окном
         // https://github.com/libsdl-org/SDL/issues/7515
         if (window_)
+        {
+            SDL_SetRelativeMouseMode(SDL_FALSE);
             SDL_SetWindowGrab(window_, SDL_FALSE);
+        }
 
         // Close the existing window and OpenGL context, mark GPU objects as lost
         Release_OGL(false, true);
