@@ -3,7 +3,7 @@
 #include "transform.glsl"
 #include "screen_pos.glsl"
 #include "lighting.glsl"
-#include "Fog.glsl"
+#include "fog.glsl"
 
 #ifdef NORMALMAP
     varying vec4 vTexCoord;

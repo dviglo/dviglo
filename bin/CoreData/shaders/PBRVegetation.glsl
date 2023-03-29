@@ -4,7 +4,7 @@
 #include "screen_pos.glsl"
 #include "lighting.glsl"
 #include "Constants.glsl"
-#include "Fog.glsl"
+#include "fog.glsl"
 #include "pbr.glsl"
 #include "ibl.glsl"
 #line 30010

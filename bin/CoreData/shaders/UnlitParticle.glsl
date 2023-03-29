@@ -2,7 +2,7 @@
 #include "samplers.glsl"
 #include "transform.glsl"
 #include "screen_pos.glsl"
-#include "Fog.glsl"
+#include "fog.glsl"
 
 varying vec2 vTexCoord;
 varying vec4 vWorldPos;
