@@ -2,7 +2,7 @@
 #include "samplers.glsl"
 #include "transform.glsl"
 #include "screen_pos.glsl"
-#include "Lighting.glsl"
+#include "lighting.glsl"
 
 #ifdef DIRLIGHT
     varying vec2 vScreenPos;

@@ -1,7 +1,7 @@
 #include "uniforms.glsl"
 #include "transform.glsl"
 #include "screen_pos.glsl"
-#include "Lighting.glsl"
+#include "lighting.glsl"
 
 uniform float cWindHeightFactor;
 uniform float cWindHeightPivot;
