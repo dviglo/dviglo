@@ -3,7 +3,7 @@
 
 #include "Uniforms.glsl"
 #include "samplers.glsl"
-#include "Transform.glsl"
+#include "transform.glsl"
 
 varying vec2 vTexCoord;
 varying vec4 vColor;

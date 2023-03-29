@@ -1,5 +1,5 @@
 #include "Uniforms.glsl"
-#include "Transform.glsl"
+#include "transform.glsl"
 
 uniform float cWindHeightFactor;
 uniform float cWindHeightPivot;

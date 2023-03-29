@@ -1,6 +1,6 @@
 #include "Uniforms.glsl"
 #include "samplers.glsl"
-#include "Transform.glsl"
+#include "transform.glsl"
 #include "ScreenPos.glsl"
 #include "Lighting.glsl"
 #include "Fog.glsl"
