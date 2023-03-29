@@ -49,8 +49,8 @@ Renderer2D::Renderer2D() :
 
     auto* tech = new Technique();
     Pass* pass = tech->CreatePass("alpha");
-    pass->SetVertexShader("Urho2D");
-    pass->SetPixelShader("Urho2D");
+    pass->SetVertexShader("urho2d");
+    pass->SetPixelShader("urho2d");
     pass->SetDepthWrite(false);
     cachedTechniques_[BLEND_REPLACE] = tech;
 
@@ -269,8 +269,8 @@ SharedPtr<Material> Renderer2D::CreateMaterial(Texture2D* texture, BlendMode ble
     {
         SharedPtr<Technique> tech(new Technique());
         Pass* pass = tech->CreatePass("alpha");
-        pass->SetVertexShader("Urho2D");
-        pass->SetPixelShader("Urho2D");
+        pass->SetVertexShader("urho2d");
+        pass->SetPixelShader("urho2d");
         pass->SetDepthWrite(false);
         pass->SetBlendMode(blendMode);
         techIt = cachedTechniques_.Insert(MakePair((int)blendMode, tech));
