@@ -1,4 +1,4 @@
-<technique vs="PBRLitSolid" ps="PBRLitSolid" vsdefines="NORMALMAP" psdefines="DIFFMAP NORMALMAP PBR IBL">
+<technique vs="pbr_lit_solid" ps="pbr_lit_solid" vsdefines="NORMALMAP" psdefines="DIFFMAP NORMALMAP PBR IBL">
     <pass name="alpha" depthwrite="false" blend="alpha" />
     <pass name="litalpha" depthwrite="false" blend="addalpha" />
     <pass name="shadow" vs="shadow" ps="shadow" psexcludes="PACKEDNORMAL" />

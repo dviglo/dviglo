@@ -1,4 +1,4 @@
-<technique vs="PBRLitSolid" ps="PBRLitSolid" vsdefines="NORMALMAP" psdefines="NORMALMAP PBR IBL">
+<technique vs="pbr_lit_solid" ps="pbr_lit_solid" vsdefines="NORMALMAP" psdefines="NORMALMAP PBR IBL">
     <pass name="base" />
     <pass name="light" depthtest="equal" depthwrite="false" blend="add" />
     <pass name="material" psdefines="MATERIAL" depthtest="equal" depthwrite="false" />
