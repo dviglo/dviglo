@@ -4,6 +4,6 @@
     <pass name="prepass" psdefines="PREPASS" />
     <pass name="material" vsdefines="AO" psdefines="MATERIAL AO" depthtest="equal" depthwrite="false" />
     <pass name="deferred" vsdefines="AO" psdefines="DEFERRED AO" />
-    <pass name="depth" vs="Depth" ps="Depth" />
+    <pass name="depth" vs="depth" ps="depth" />
     <pass name="shadow" vs="shadow" ps="shadow" />
 </technique>

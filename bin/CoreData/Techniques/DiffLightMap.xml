@@ -4,6 +4,6 @@
     <pass name="prepass" psdefines="PREPASS" />
     <pass name="material" vsdefines="LIGHTMAP" psdefines="MATERIAL LIGHTMAP" depthtest="equal" depthwrite="false" />
     <pass name="deferred" vsdefines="LIGHTMAP" psdefines="DEFERRED LIGHTMAP" />
-    <pass name="depth" vs="Depth" ps="Depth" />
+    <pass name="depth" vs="depth" ps="depth" />
     <pass name="shadow" vs="shadow" ps="shadow" />
 </technique>

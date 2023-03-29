@@ -4,6 +4,6 @@
     <pass name="prepass" psdefines="PREPASS" />
     <pass name="material" vsdefines="ENVCUBEMAP" psdefines="MATERIAL ENVCUBEMAP" depthtest="equal" depthwrite="false" />
     <pass name="deferred" vsdefines="ENVCUBEMAP" psdefines="DEFERRED ENVCUBEMAP" />
-    <pass name="depth" vs="Depth" ps="Depth" />
+    <pass name="depth" vs="depth" ps="depth" />
     <pass name="shadow" vs="shadow" ps="shadow" />
 </technique>

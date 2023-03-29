@@ -5,6 +5,6 @@
     <pass name="prepass" psdefines="PREPASS SPECMAP" />
     <pass name="material" psdefines="MATERIAL SPECMAP" depthtest="equal" depthwrite="false" />
     <pass name="deferred" psdefines="DEFERRED SPECMAP" />
-    <pass name="depth" vs="Depth" ps="Depth" />
+    <pass name="depth" vs="depth" ps="depth" />
     <pass name="shadow" vs="shadow" ps="shadow" />
 </technique>
