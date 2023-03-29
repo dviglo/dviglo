@@ -1,5 +1,5 @@
 #include "Uniforms.glsl"
-#include "Samplers.glsl"
+#include "samplers.glsl"
 #include "Transform.glsl"
 
 #ifdef VSM_SHADOW

@@ -2,7 +2,7 @@
 #extension GL_OES_standard_derivatives : enable
 
 #include "Uniforms.glsl"
-#include "Samplers.glsl"
+#include "samplers.glsl"
 #include "Transform.glsl"
 
 varying vec2 vTexCoord;

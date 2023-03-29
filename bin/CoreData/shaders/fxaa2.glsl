@@ -7,7 +7,7 @@
 // Adapted for Urho3D from http://timothylottes.blogspot.com/2011/04/nvidia-fxaa-ii-for-console.html
 
 #include "Uniforms.glsl"
-#include "Samplers.glsl"
+#include "samplers.glsl"
 #include "Transform.glsl"
 #include "ScreenPos.glsl"
 
