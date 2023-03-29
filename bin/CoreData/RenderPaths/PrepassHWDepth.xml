@@ -5,7 +5,7 @@
     <command type="clear" color="fog" depth="1.0" stencil="0" depthstencil="depth" />
     <command type="scenepass" pass="prepass" marktostencil="true" metadata="gbuffer" output="normal" depthstencil="depth" />
     <command type="clear" color="0 0 0 0" output="light" depthstencil="depth" />
-    <command type="lightvolumes" vs="PrepassLight" ps="PrepassLight" psdefines="HWDEPTH" output="light" depthstencil="depth" >
+    <command type="lightvolumes" vs="prepass_light" ps="prepass_light" psdefines="HWDEPTH" output="light" depthstencil="depth" >
         <texture unit="normal" name="normal" />
         <texture unit="depth" name="depth" />
     </command>
