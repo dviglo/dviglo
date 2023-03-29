@@ -1,4 +1,4 @@
-#include "Uniforms.glsl"
+#include "uniforms.glsl"
 #include "transform.glsl"
 
 varying vec4 vColor;
