@@ -6,8 +6,8 @@
 	<shader vs="Unlit" vsdefines="" ps="Unlit" psdefines="DIFFMAP" />
 	<shader vs="basic" vsdefines="DIFFMAP VERTEXCOLOR" ps="basic" psdefines="ALPHAMASK DIFFMAP VERTEXCOLOR" />
 	<shader vs="basic" vsdefines="DIFFMAP VERTEXCOLOR" ps="basic" psdefines="ALPHAMAP VERTEXCOLOR" />
-	<shader vs="UnlitParticle" vsdefines="BILLBOARD VERTEXCOLOR" ps="UnlitParticle" psdefines="ADDITIVE DIFFMAP VERTEXCOLOR" />
-	<shader vs="UnlitParticle" vsdefines="BILLBOARD VERTEXCOLOR" ps="UnlitParticle" psdefines="DIFFMAP VERTEXCOLOR" />
+	<shader vs="unlit_particle" vsdefines="BILLBOARD VERTEXCOLOR" ps="unlit_particle" psdefines="ADDITIVE DIFFMAP VERTEXCOLOR" />
+	<shader vs="unlit_particle" vsdefines="BILLBOARD VERTEXCOLOR" ps="unlit_particle" psdefines="DIFFMAP VERTEXCOLOR" />
 	<shader vs="shadow" vsdefines="" ps="shadow" psdefines="" />
 	<shader vs="lit_solid" vsdefines="DIRLIGHT INSTANCED PERPIXEL SHADOW" ps="lit_solid" psdefines="AMBIENT DIFFMAP DIRLIGHT PCF_SHADOW PERPIXEL SHADOW" />
 	<shader vs="shadow" vsdefines="INSTANCED" ps="shadow" psdefines="" />
