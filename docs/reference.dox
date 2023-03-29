@@ -1138,7 +1138,7 @@ These differences need to be observed when using the low-level rendering functio
 
 - To ensure similar UV addressing for render-to-texture viewports on both APIs, on OpenGL texture viewports will be rendered upside down.
 
-- Direct3D11 is strict about vertex attributes referenced by shaders. A model will not render (input layout fails to create) if the shader for example asks for UV coordinates and the model does not have them. For this particular case, see the NOUV define in LitSolid shader, which is defined in the NoTexture family of techniques to prevent the attempted reading of UV coords.
+- Direct3D11 is strict about vertex attributes referenced by shaders. A model will not render (input layout fails to create) if the shader for example asks for UV coordinates and the model does not have them. For this particular case, see the NOUV define in lit_solid shader, which is defined in the NoTexture family of techniques to prevent the attempted reading of UV coords.
 
 - Nearest texture filtering with anisotropy is not supported properly on Direct3D11. Depending on the GPU, it may also fail on Direct3D9.
 
@@ -1372,7 +1372,7 @@ The "desktop" attribute in either technique or pass allows to specify it require
 
 A pass should normally not define culling mode, but it can optionally specify it to override the value in the material.
 
-Shaders are referred to by giving the name of a shader without path and file extension. For example "basic" or "lit_solid". The engine will add the correct path and file extension (Shaders/HLSL/LitSolid.hlsl for Direct3D, and Shaders/GLSL/LitSolid.glsl for OpenGL) automatically. The same shader source file contains both the vertex and pixel shader. In addition, compilation defines can be specified, which are passed to the shader compiler. For example the define "DIFFMAP" typically enables diffuse mapping in the pixel shader.
+Shaders are referred to by giving the name of a shader without path and file extension. For example "basic" or "lit_solid". The engine will add the correct path and file extension (shaders/lit_solid.glsl for OpenGL) automatically. The same shader source file contains both the vertex and pixel shader. In addition, compilation defines can be specified, which are passed to the shader compiler. For example the define "DIFFMAP" typically enables diffuse mapping in the pixel shader.
 
 Shaders and their compilation defines can be specified on both the technique and pass level. If a pass does not override the default shaders specified on the technique level, it still can specify additional compilation defines to be used. However, if a pass overrides the shaders, then the technique-level defines are not used.
 

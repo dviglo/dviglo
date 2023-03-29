@@ -1,4 +1,4 @@
-<technique vs="LitSolid" ps="LitSolid" psdefines="DIFFMAP">
+<technique vs="lit_solid" ps="lit_solid" psdefines="DIFFMAP">
     <pass name="base" />
     <pass name="litbase" vsdefines="NORMALMAP" psdefines="AMBIENT NORMALMAP SPECMAP" />
     <pass name="light" vsdefines="NORMALMAP" psdefines="NORMALMAP SPECMAP" depthtest="equal" depthwrite="false" blend="add" />
