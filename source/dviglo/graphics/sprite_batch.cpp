@@ -15,12 +15,12 @@ SpriteBatch::SpriteBatch()
 
     sprite_vs_ = graphics.GetShader(VS, "basic", "DIFFMAP VERTEXCOLOR");
     sprite_ps_ = graphics.GetShader(PS, "basic", "DIFFMAP VERTEXCOLOR");
-    ttf_text_vs_ = graphics.GetShader(VS, "Text");
-    ttf_text_ps_ = graphics.GetShader(PS, "Text", "ALPHAMAP");
-    sprite_text_vs_ = graphics.GetShader(VS, "Text");
-    sprite_text_ps_ = graphics.GetShader(PS, "Text");
-    sdf_text_vs_ = graphics.GetShader(VS, "Text");
-    sdf_text_ps_ = graphics.GetShader(PS, "Text", "SIGNED_DISTANCE_FIELD");
+    ttf_text_vs_ = graphics.GetShader(VS, "text");
+    ttf_text_ps_ = graphics.GetShader(PS, "text", "ALPHAMAP");
+    sprite_text_vs_ = graphics.GetShader(VS, "text");
+    sprite_text_ps_ = graphics.GetShader(PS, "text");
+    sdf_text_vs_ = graphics.GetShader(VS, "text");
+    sdf_text_ps_ = graphics.GetShader(PS, "text", "SIGNED_DISTANCE_FIELD");
     shape_vs_ = graphics.GetShader(VS, "basic", "VERTEXCOLOR");
     shape_ps_ = graphics.GetShader(PS, "basic", "VERTEXCOLOR");
 }

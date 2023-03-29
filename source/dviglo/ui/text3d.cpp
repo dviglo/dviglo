@@ -636,8 +636,8 @@ void Text3D::UpdateTextMaterials(bool forceUpdate)
                 auto* material = new Material();
                 auto* tech = new Technique();
                 Pass* pass = tech->CreatePass("alpha");
-                pass->SetVertexShader("Text");
-                pass->SetPixelShader("Text");
+                pass->SetVertexShader("text");
+                pass->SetPixelShader("text");
                 pass->SetBlendMode(BLEND_ALPHA);
                 pass->SetDepthWrite(false);
                 material->SetTechnique(0, tech);
