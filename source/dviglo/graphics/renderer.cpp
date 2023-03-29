@@ -2024,7 +2024,7 @@ void Renderer::BlurShadowMap(View* view, Texture2D* shadowMap, float blurScale)
     graphics.SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
 
     // Get shaders
-    static const char* shaderName = "ShadowBlur";
+    static const char* shaderName = "shadow_blur";
     ShaderVariation* vs = graphics.GetShader(VS, shaderName);
     ShaderVariation* ps = graphics.GetShader(PS, shaderName);
     graphics.SetShaders(vs, ps);
