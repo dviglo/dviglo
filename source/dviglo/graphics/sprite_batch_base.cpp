@@ -172,8 +172,8 @@ SpriteBatchBase::SpriteBatchBase()
 
     t_vertex_buffer_ = new VertexBuffer();
     t_vertex_buffer_->SetSize(max_triangles_in_portion_ * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
-    t_vertex_shader_ = graphics.GetShader(VS, "TriangleBatch");
-    t_pixel_shader_ = graphics.GetShader(PS, "TriangleBatch");
+    t_vertex_shader_ = graphics.GetShader(VS, "triangle_batch");
+    t_pixel_shader_ = graphics.GetShader(PS, "triangle_batch");
     set_shape_color(Color::WHITE);
 }
 
