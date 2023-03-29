@@ -3,7 +3,7 @@
 #include "transform.glsl"
 #include "screen_pos.glsl"
 #include "lighting.glsl"
-#include "Constants.glsl"
+#include "constants.glsl"
 #include "fog.glsl"
 #include "pbr.glsl"
 #include "ibl.glsl"
