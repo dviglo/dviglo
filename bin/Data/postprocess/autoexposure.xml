@@ -6,7 +6,7 @@
     <rendertarget name="Lum1" tag="autoexposure" size="1 1" format="rg16f" filter="false" />
     <rendertarget name="AdaptedLum" tag="autoexposure" size="1 1" format="rg16f" filter="false" persistent="true" />
     <rendertarget name="PrevAdaptedLum" tag="autoexposure" size="1 1" format="rg16f" filter="false" />
-    <command type="quad" tag="autoexposure" vs="CopyFramebuffer" ps="CopyFramebuffer" output="HDR128">
+    <command type="quad" tag="autoexposure" vs="copy_framebuffer" ps="copy_framebuffer" output="HDR128">
         <texture unit="diffuse" name="viewport" />
     </command>
     <command type="quad" tag="autoexposure" vs="autoexposure" ps="autoexposure" vsdefines="LUMINANCE64" psdefines="LUMINANCE64" output="Lum64">
@@ -21,7 +21,7 @@
     <command type="quad" tag="autoexposure" vs="autoexposure" ps="autoexposure" vsdefines="LUMINANCE1" psdefines="LUMINANCE1" output="Lum1">
         <texture unit="diffuse" name="Lum4" />
     </command>
-    <command type="quad" tag="autoexposure" vs="CopyFramebuffer" ps="CopyFramebuffer" output="PrevAdaptedLum">
+    <command type="quad" tag="autoexposure" vs="copy_framebuffer" ps="copy_framebuffer" output="PrevAdaptedLum">
         <texture unit="diffuse" name="AdaptedLum" />
     </command>
     <command type="quad" tag="autoexposure" vs="autoexposure" ps="autoexposure" vsdefines="ADAPTLUMINANCE" psdefines="ADAPTLUMINANCE" output="AdaptedLum">

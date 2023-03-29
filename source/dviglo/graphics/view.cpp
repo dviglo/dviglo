@@ -2110,7 +2110,7 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
     graphics.SetDepthStencil(GetDepthStencil(destination));
     graphics.SetViewport(destRect);
 
-    static const char* shaderName = "CopyFramebuffer";
+    static const char* shaderName = "copy_framebuffer";
     graphics.SetShaders(graphics.GetShader(VS, shaderName), graphics.GetShader(PS, shaderName));
 
     SetGBufferShaderParameters(srcSize, srcRect);
