@@ -4,5 +4,5 @@
     <pass name="material" psdefines="MATERIAL" depthtest="equal" depthwrite="false" />
     <pass name="deferred" psdefines="DEFERRED" blend="add" />
     <pass name="depth" vs="Depth" ps="Depth" />
-    <pass name="shadow" vs="Shadow" ps="Shadow" />
+    <pass name="shadow" vs="shadow" ps="shadow" />
 </technique>

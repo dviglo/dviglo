@@ -5,5 +5,5 @@
     <pass name="material" vsdefines="ENVCUBEMAP AO" psdefines="MATERIAL ENVCUBEMAP AO" depthtest="equal" depthwrite="false" />
     <pass name="deferred" vsdefines="ENVCUBEMAP AO" psdefines="DEFERRED ENVCUBEMAP AO" />
     <pass name="depth" vs="Depth" ps="Depth" />
-    <pass name="shadow" vs="Shadow" ps="Shadow" />
+    <pass name="shadow" vs="shadow" ps="shadow" />
 </technique>

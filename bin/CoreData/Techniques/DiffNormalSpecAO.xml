@@ -5,5 +5,5 @@
     <pass name="material" vsdefines="AO" psdefines="MATERIAL SPECMAP AO" depthtest="equal" depthwrite="false" />
     <pass name="deferred" vsdefines="NORMALMAP AO" psdefines="DEFERRED NORMALMAP SPECMAP AO" />
     <pass name="depth" vs="Depth" ps="Depth" psexcludes="PACKEDNORMAL" />
-    <pass name="shadow" vs="Shadow" ps="Shadow" psexcludes="PACKEDNORMAL" />
+    <pass name="shadow" vs="shadow" ps="shadow" psexcludes="PACKEDNORMAL" />
 </technique>
