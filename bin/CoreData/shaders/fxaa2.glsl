@@ -9,7 +9,7 @@
 #include "uniforms.glsl"
 #include "samplers.glsl"
 #include "transform.glsl"
-#include "ScreenPos.glsl"
+#include "screen_pos.glsl"
 
 varying vec2 vScreenPos;
 

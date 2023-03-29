@@ -1,7 +1,7 @@
 #include "uniforms.glsl"
 #include "samplers.glsl"
 #include "transform.glsl"
-#include "ScreenPos.glsl"
+#include "screen_pos.glsl"
 
 #ifdef COMPILEPS
 uniform vec2 cBlurOffsets;
