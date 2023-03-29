@@ -14,7 +14,7 @@
         <output index="1" name="albedo" />
         <output index="2" name="normal" />
     </command>
-    <command type="lightvolumes" vs="PBRDeferred" ps="PBRDeferred" psdefines="PBRDEFERRED PBR HWDEPTH" vsdefines="PBR" output="viewport" depthstencil="depth">
+    <command type="lightvolumes" vs="pbr_deferred" ps="pbr_deferred" psdefines="PBRDEFERRED PBR HWDEPTH" vsdefines="PBR" output="viewport" depthstencil="depth">
         <texture unit="specular" name="specular" />
         <texture unit="albedo" name="albedo" />
         <texture unit="normal" name="normal" />
