@@ -9,7 +9,7 @@
         <output index="1" name="albedo" />
         <output index="2" name="normal" />
     </command>
-    <command type="lightvolumes" vs="DeferredLight" ps="DeferredLight" psdefines="HWDEPTH" depthstencil="depth">
+    <command type="lightvolumes" vs="deferred_light" ps="deferred_light" psdefines="HWDEPTH" depthstencil="depth">
         <texture unit="albedo" name="albedo" />
         <texture unit="normal" name="normal" />
         <texture unit="depth" name="depth" />
