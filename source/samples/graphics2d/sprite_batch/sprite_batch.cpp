@@ -150,12 +150,14 @@ public:
 
         Input& input = DV_INPUT;
 
-        if (input.GetKeyDown(KEY_1))
+        if (input.GetKeyPress(KEY_1))
             currentTest_ = 1;
-        else if (input.GetKeyDown(KEY_2))
+        else if (input.GetKeyPress(KEY_2))
             currentTest_ = 2;
-        else if (input.GetKeyDown(KEY_3))
+        else if (input.GetKeyPress(KEY_3))
             currentTest_ = 3;
+        else if (input.GetKeyPress(KEY_ESCAPE))
+            DV_ENGINE.Exit();
 
         if (input.GetMouseButtonDown(MOUSEB_RIGHT))
         {
