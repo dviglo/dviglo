@@ -13,16 +13,16 @@ SpriteBatch::SpriteBatch()
 {
     Graphics& graphics = DV_GRAPHICS;
 
-    sprite_vs_ = graphics.GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
-    sprite_ps_ = graphics.GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");
+    sprite_vs_ = graphics.GetShader(VS, "basic", "DIFFMAP VERTEXCOLOR");
+    sprite_ps_ = graphics.GetShader(PS, "basic", "DIFFMAP VERTEXCOLOR");
     ttf_text_vs_ = graphics.GetShader(VS, "Text");
     ttf_text_ps_ = graphics.GetShader(PS, "Text", "ALPHAMAP");
     sprite_text_vs_ = graphics.GetShader(VS, "Text");
     sprite_text_ps_ = graphics.GetShader(PS, "Text");
     sdf_text_vs_ = graphics.GetShader(VS, "Text");
     sdf_text_ps_ = graphics.GetShader(PS, "Text", "SIGNED_DISTANCE_FIELD");
-    shape_vs_ = graphics.GetShader(VS, "Basic", "VERTEXCOLOR");
-    shape_ps_ = graphics.GetShader(PS, "Basic", "VERTEXCOLOR");
+    shape_vs_ = graphics.GetShader(VS, "basic", "VERTEXCOLOR");
+    shape_ps_ = graphics.GetShader(PS, "basic", "VERTEXCOLOR");
 }
 
 static Rect PosToDest(const Vector2& position, Texture2D* texture, const Rect* src)

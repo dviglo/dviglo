@@ -1031,12 +1031,12 @@ void UI::Render(VertexBuffer* buffer, const Vector<UIBatch>& batches, unsigned b
     graphics.SetStencilTest(false);
     graphics.SetVertexBuffer(buffer);
 
-    ShaderVariation* noTextureVS = graphics.GetShader(VS, "Basic", "VERTEXCOLOR");
-    ShaderVariation* diffTextureVS = graphics.GetShader(VS, "Basic", "DIFFMAP VERTEXCOLOR");
-    ShaderVariation* noTexturePS = graphics.GetShader(PS, "Basic", "VERTEXCOLOR");
-    ShaderVariation* diffTexturePS = graphics.GetShader(PS, "Basic", "DIFFMAP VERTEXCOLOR");
-    ShaderVariation* diffMaskTexturePS = graphics.GetShader(PS, "Basic", "DIFFMAP ALPHAMASK VERTEXCOLOR");
-    ShaderVariation* alphaTexturePS = graphics.GetShader(PS, "Basic", "ALPHAMAP VERTEXCOLOR");
+    ShaderVariation* noTextureVS = graphics.GetShader(VS, "basic", "VERTEXCOLOR");
+    ShaderVariation* diffTextureVS = graphics.GetShader(VS, "basic", "DIFFMAP VERTEXCOLOR");
+    ShaderVariation* noTexturePS = graphics.GetShader(PS, "basic", "VERTEXCOLOR");
+    ShaderVariation* diffTexturePS = graphics.GetShader(PS, "basic", "DIFFMAP VERTEXCOLOR");
+    ShaderVariation* diffMaskTexturePS = graphics.GetShader(PS, "basic", "DIFFMAP ALPHAMASK VERTEXCOLOR");
+    ShaderVariation* alphaTexturePS = graphics.GetShader(PS, "basic", "ALPHAMAP VERTEXCOLOR");
 
 
     for (unsigned i = batchStart; i < batchEnd; ++i)

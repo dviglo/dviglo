@@ -474,8 +474,8 @@ void DebugRenderer::Render()
 
     DV_PROFILE(RenderDebugGeometry);
 
-    ShaderVariation* vs = graphics.GetShader(VS, "Basic", "VERTEXCOLOR");
-    ShaderVariation* ps = graphics.GetShader(PS, "Basic", "VERTEXCOLOR");
+    ShaderVariation* vs = graphics.GetShader(VS, "basic", "VERTEXCOLOR");
+    ShaderVariation* ps = graphics.GetShader(PS, "basic", "VERTEXCOLOR");
 
     i32 numVertices = (lines_.Size() + noDepthLines_.Size()) * 2 + (triangles_.Size() + noDepthTriangles_.Size()) * 3;
     // Resize the vertex buffer if too small or much too large
