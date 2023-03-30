@@ -30,19 +30,19 @@ namespace dviglo
 static const char* check_dirs[] =
 {
     "fonts",
-    "Materials",
-    "Models",
+    "materials",
+    "models",
     "music",
     "objects",
-    "Particle",
+    "particle",
     "postprocess",
     "render_paths",
     "scenes",
-    "Sounds",
+    "sounds",
     "shaders",
-    "Techniques",
-    "Textures",
-    "UI",
+    "techniques",
+    "textures",
+    "ui",
     nullptr
 };
 
