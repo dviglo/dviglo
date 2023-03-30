@@ -1,4 +1,4 @@
-<technique vs="vegetation" ps="Unlit" psdefines="DIFFMAP" >
+<technique vs="vegetation" ps="unlit" psdefines="DIFFMAP" >
     <pass name="base" />
     <pass name="prepass" psdefines="PREPASS" />
     <pass name="material" />

@@ -3,7 +3,7 @@
 	<shader vs="shadow" vsdefines="SKINNED" ps="shadow" psdefines="" />
 	<shader vs="lit_solid" vsdefines="DIRLIGHT PERPIXEL SHADOW" ps="lit_solid" psdefines="AMBIENT DIFFMAP DIRLIGHT PCF_SHADOW PERPIXEL SHADOW" />
 	<shader vs="lit_solid" vsdefines="DIRLIGHT PERPIXEL SHADOW SKINNED" ps="lit_solid" psdefines="AMBIENT DIFFMAP DIRLIGHT PCF_SHADOW PERPIXEL SHADOW" />
-	<shader vs="Unlit" vsdefines="" ps="Unlit" psdefines="DIFFMAP" />
+	<shader vs="unlit" vsdefines="" ps="unlit" psdefines="DIFFMAP" />
 	<shader vs="basic" vsdefines="DIFFMAP VERTEXCOLOR" ps="basic" psdefines="ALPHAMASK DIFFMAP VERTEXCOLOR" />
 	<shader vs="basic" vsdefines="DIFFMAP VERTEXCOLOR" ps="basic" psdefines="ALPHAMAP VERTEXCOLOR" />
 	<shader vs="unlit_particle" vsdefines="BILLBOARD VERTEXCOLOR" ps="unlit_particle" psdefines="ADDITIVE DIFFMAP VERTEXCOLOR" />
