@@ -105,7 +105,7 @@ void Ninja::FixedUpdate(float timeStep)
     {
         // If landed, play a particle effect at feet (use the AnimatedModel node)
         if (inAirTime > 0.5)
-            SpawnParticleEffect(node_->GetScene(), node_->GetChild(0)->GetWorldPosition(), "Particle/SnowExplosion.xml", 1);
+            SpawnParticleEffect(node_->GetScene(), node_->GetChild(0)->GetWorldPosition(), "particle/snow_explosion.xml", 1);
 
         inAirTime = 0;
         onGroundTime += timeStep;
@@ -305,7 +305,7 @@ void Ninja::DeathUpdate(float timeStep)
     // Create smokecloud just before vanishing
     if (deathTime > NINJA_CORPSE_DURATION - 1.f && !smoke)
     {
-        SpawnParticleEffect(node_->GetScene(), node_->GetPosition() + Vector3(0.f, -0.4f, 0.f), "Particle/Smoke.xml", 8.f);
+        SpawnParticleEffect(node_->GetScene(), node_->GetPosition() + Vector3(0.f, -0.4f, 0.f), "particle/smoke.xml", 8.f);
         smoke = true;
     }
 

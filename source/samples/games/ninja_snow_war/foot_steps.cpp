@@ -39,7 +39,7 @@ void FootSteps::HandleAnimationTrigger(StringHash eventType, VariantMap& eventDa
     {
         Node* bone = node_->GetChild(eventData[P_DATA].GetString(), true);
         if (bone)
-            SpawnParticleEffect(bone->GetScene(), bone->GetWorldPosition(), "Particle/SnowExplosionFade.xml", 1, LOCAL);
+            SpawnParticleEffect(bone->GetScene(), bone->GetWorldPosition(), "particle/snow_explosion_fade.xml", 1, LOCAL);
     }
 }
 

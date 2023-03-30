@@ -30,7 +30,7 @@ void SnowCrate::FixedUpdate(float timeStep)
 {
     if (health <= 0)
     {
-        SpawnParticleEffect(node_->GetScene(), node_->GetPosition(), "Particle/SnowExplosionBig.xml", 2);
+        SpawnParticleEffect(node_->GetScene(), node_->GetPosition(), "particle/snow_explosion_big.xml", 2);
         SpawnObject(node_->GetScene(), node_->GetPosition(), Quaternion(), "potion");
 
         VariantMap eventData;

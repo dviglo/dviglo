@@ -48,7 +48,7 @@ void Snowball::FixedUpdate(float timeStep)
         duration -= timeStep;
         if (duration <= 0.f)
         {
-            SpawnParticleEffect(node_->GetScene(), node_->GetPosition(), "Particle/SnowExplosion.xml", 1);
+            SpawnParticleEffect(node_->GetScene(), node_->GetPosition(), "particle/snow_explosion.xml", 1);
             node_->Remove();
         }
     }
