@@ -227,16 +227,16 @@ void Physics::move_camera(float timeStep)
     if (input.GetMouseButtonPress(MOUSEB_LEFT))
         SpawnObject();
 
-    // Check for loading/saving the scene. Save the scene to the file Data/Scenes/Physics.xml relative to the executable
+    // Check for loading/saving the scene. Save the scene to the file data/scenes/physics.xml relative to the executable
     // directory
     if (input.GetKeyPress(KEY_F5))
     {
-        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/Physics.xml", FILE_WRITE);
+        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/physics.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
     if (input.GetKeyPress(KEY_F7))
     {
-        File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/Physics.xml", FILE_READ);
+        File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/physics.xml", FILE_READ);
         scene_->load_xml(loadFile);
     }
 

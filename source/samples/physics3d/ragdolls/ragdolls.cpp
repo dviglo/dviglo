@@ -221,12 +221,12 @@ void Ragdolls::move_camera(float timeStep)
     // Check for loading / saving the scene
     if (input.GetKeyPress(KEY_F5))
     {
-        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/Ragdolls.xml", FILE_WRITE);
+        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/ragdolls.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
     if (input.GetKeyPress(KEY_F7))
     {
-        File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "Data/Scenes/Ragdolls.xml", FILE_READ);
+        File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/ragdolls.xml", FILE_READ);
         scene_->load_xml(loadFile);
     }
 

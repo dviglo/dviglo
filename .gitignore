@@ -41,8 +41,8 @@ build/
 /Docs/qch/
 
 # Saved sample scenes
-/bin/Data/Scenes/Isometric2D.xml
-/bin/Data/Scenes/Platformer2D.xml
+/bin/data/scenes/Isometric2D.xml
+/bin/data/scenes/Platformer2D.xml
 
 # Eclipse project settings
 /.*project
