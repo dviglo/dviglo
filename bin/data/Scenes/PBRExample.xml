@@ -866,7 +866,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="Text3D" id="154">
-				<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+				<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="Low Roughness" />
 				<attribute name="Width" value="133" />
@@ -881,7 +881,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="Text3D" id="155">
-				<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+				<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="Tube Lighting" />
 				<attribute name="Width" value="117" />
@@ -896,7 +896,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="Text3D" id="185">
-				<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+				<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="Example Materials" />
 				<attribute name="Width" value="154" />
@@ -911,7 +911,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="Text3D" id="186">
-				<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+				<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="High Roughness" />
 				<attribute name="Width" value="136" />
@@ -926,7 +926,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="Text3D" id="214">
-				<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+				<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="Metallic" />
 				<attribute name="Width" value="66" />
@@ -941,7 +941,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="Text3D" id="215">
-				<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+				<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 				<attribute name="Font Size" value="15" />
 				<attribute name="Text" value="None Metallic" />
 				<attribute name="Width" value="116" />
@@ -1524,7 +1524,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="Text3D" id="232">
-			<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+			<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 			<attribute name="Font Size" value="15" />
 			<attribute name="Text" value="Roughness Value    &lt;-1.0  -&gt;0.0" />
 			<attribute name="Width" value="262" />
@@ -2678,7 +2678,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="Text3D" id="326">
-			<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+			<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 			<attribute name="Font Size" value="15" />
 			<attribute name="Text" value="Metallic Value    &lt;-0.0  -&gt;1.0" />
 			<attribute name="Width" value="236" />
@@ -3076,7 +3076,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="Text3D" id="357">
-			<attribute name="Font" value="Font;fonts/BlueHighway.ttf" />
+			<attribute name="Font" value="Font;fonts/blue_highway.ttf" />
 			<attribute name="Font Size" value="15" />
 			<attribute name="Text" value="Sphere Lighting" />
 			<attribute name="Width" value="134" />

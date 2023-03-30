@@ -99,7 +99,7 @@ void SignedDistanceFieldText::create_scene()
         mushroomTitleNode->SetPosition(Vector3(0.0f, 1.2f, 0.0f));
         auto* mushroomTitleText = mushroomTitleNode->create_component<Text3D>();
         mushroomTitleText->SetText("Mushroom " + String(i));
-        mushroomTitleText->SetFont(cache.GetResource<Font>("fonts/BlueHighway.sdf"), 24);
+        mushroomTitleText->SetFont(cache.GetResource<Font>("fonts/blue_highway.sdf"), 24);
 
         mushroomTitleText->SetColor(Color::RED);
 

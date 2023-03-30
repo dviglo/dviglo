@@ -273,7 +273,7 @@ public:
         sight->SetSize(height, height);
         ui.GetRoot()->AddChild(sight);
 
-        Font* font = cache.GetResource<Font>("fonts/BlueHighway.ttf");
+        Font* font = cache.GetResource<Font>("fonts/blue_highway.ttf");
 
         scoreText = new Text();
         scoreText->SetFont(font, 13.f);
@@ -433,7 +433,7 @@ public:
             Node* textNode = playerNode->create_child("NameTag");
             textNode->SetPosition(Vector3(0.f, 1.2f, 0.f));
             Text3D* text3D = textNode->create_component<Text3D>();
-            Font* font = DV_RES_CACHE.GetResource<Font>("fonts/BlueHighway.ttf");
+            Font* font = DV_RES_CACHE.GetResource<Font>("fonts/blue_highway.ttf");
             text3D->SetFont(font, 19.f);
             text3D->SetColor(Color(1.f, 1.f, 0.f));
             text3D->SetText(players[playerIndex].name);
