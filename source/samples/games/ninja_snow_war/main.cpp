@@ -196,8 +196,8 @@ public:
         }
 
         // Precache shaders if possible
-        if (!GParams::is_headless() && DV_RES_CACHE.Exists("NinjaSnowWarShaders.xml"))
-            DV_GRAPHICS.PrecacheShaders(*DV_RES_CACHE.GetFile("NinjaSnowWarShaders.xml"));
+        if (!GParams::is_headless() && DV_RES_CACHE.Exists("ninja_snow_war_shaders.xml"))
+            DV_GRAPHICS.PrecacheShaders(*DV_RES_CACHE.GetFile("ninja_snow_war_shaders.xml"));
     }
 
     void InitNetworking()
