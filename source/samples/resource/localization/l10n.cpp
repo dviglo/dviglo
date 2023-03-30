@@ -158,7 +158,7 @@ void L10n::create_scene()
     // Manually set text in the current language.
     text3D->SetText(DV_LOCALIZATION.Get("lang"));
 
-    text3D->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 30);
+    text3D->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 30);
     text3D->SetColor(Color::BLACK);
     text3D->SetAlignment(HA_CENTER, VA_BOTTOM);
     text3DNode->SetScale(15);

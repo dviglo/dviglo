@@ -157,7 +157,7 @@ void SceneReplication::create_ui()
     instructionsText_->SetText(
         "Use WASD keys to move and RMB to rotate view"
     );
-    instructionsText_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionsText_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     // Position the text relative to the screen center
     instructionsText_->SetHorizontalAlignment(HA_CENTER);
     instructionsText_->SetVerticalAlignment(VA_CENTER);
@@ -167,14 +167,14 @@ void SceneReplication::create_ui()
 
     packetsIn_ = ui.GetRoot()->create_child<Text>();
     packetsIn_->SetText("Packets in : 0");
-    packetsIn_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    packetsIn_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(10, -10);
 
     packetsOut_ = ui.GetRoot()->create_child<Text>();
     packetsOut_->SetText("Packets out: 0");
-    packetsOut_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    packetsOut_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     packetsOut_->SetHorizontalAlignment(HA_LEFT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(10, 10);
@@ -230,7 +230,7 @@ void SceneReplication::subscribe_to_events()
 
 Button* SceneReplication::CreateButton(const String& text, int width)
 {
-    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
 
     auto* button = buttonContainer_->create_child<Button>();
     button->SetStyleAuto();

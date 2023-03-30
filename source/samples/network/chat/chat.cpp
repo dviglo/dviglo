@@ -71,7 +71,7 @@ void Chat::create_ui()
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
-    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
     chatHistoryText_ = root->create_child<Text>();
     chatHistoryText_->SetFont(font, 12);
 
@@ -123,7 +123,7 @@ void Chat::subscribe_to_events()
 
 Button* Chat::CreateButton(const String& text, int width)
 {
-    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
 
     auto* button = buttonContainer_->create_child<Button>();
     button->SetStyleAuto();

@@ -99,7 +99,7 @@ void SignedDistanceFieldText::create_scene()
         mushroomTitleNode->SetPosition(Vector3(0.0f, 1.2f, 0.0f));
         auto* mushroomTitleText = mushroomTitleNode->create_component<Text3D>();
         mushroomTitleText->SetText("Mushroom " + String(i));
-        mushroomTitleText->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
+        mushroomTitleText->SetFont(cache.GetResource<Font>("fonts/BlueHighway.sdf"), 24);
 
         mushroomTitleText->SetColor(Color::RED);
 
@@ -133,7 +133,7 @@ void SignedDistanceFieldText::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

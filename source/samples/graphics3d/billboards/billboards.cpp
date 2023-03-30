@@ -198,7 +198,7 @@ void Billboards::create_instructions()
         "Use WASD keys and mouse to move\n"
         "Space to toggle debug geometry"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

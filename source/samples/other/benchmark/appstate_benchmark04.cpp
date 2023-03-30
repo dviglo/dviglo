@@ -75,10 +75,10 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
     Vector2 origin = Vector2(head->GetWidth() * 0.5f, head->GetHeight() * 0.5f);
     spriteBatch_->draw_sprite(head, Vector2(400.0f, 300.0f), nullptr, 0xFFFFFFFF, angle_, origin, Vector2(scale, scale));
 
-    spriteBatch_->draw_string("Отзеркаленный текст", cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 40.0f,
+    spriteBatch_->draw_string("Отзеркаленный текст", cache.GetResource<Font>("fonts/Anonymous Pro.ttf"), 40.0f,
         Vector2(250.0f, 200.0f), 0xFF0000FF, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::both);
 
-    spriteBatch_->draw_string("Некий текст", cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 40.0f,
+    spriteBatch_->draw_string("Некий текст", cache.GetResource<Font>("fonts/Anonymous Pro.ttf"), 40.0f,
         Vector2(400.0f, 300.0f), 0xFFFF0000, angle_, Vector2::ZERO, Vector2(scale, scale));
 
     spriteBatch_->flush();

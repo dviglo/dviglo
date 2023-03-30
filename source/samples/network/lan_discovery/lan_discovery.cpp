@@ -95,7 +95,7 @@ void LANDiscovery::subscribe_to_events()
 
 Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 position)
 {
-    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
 
     auto* button = DV_UI.GetRoot()->create_child<Button>();
     button->SetStyleAuto();
@@ -114,7 +114,7 @@ Button* LANDiscovery::CreateButton(const String& text, int width, IntVector2 pos
 Text* LANDiscovery::CreateLabel(const String& text, IntVector2 pos)
 {
     // Create log element to view latest logs from the system
-    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
     auto* label = DV_UI.GetRoot()->create_child<Text>();
     label->SetFont(font, 12);
     label->SetColor(Color(0.0f, 1.0f, 0.0f));

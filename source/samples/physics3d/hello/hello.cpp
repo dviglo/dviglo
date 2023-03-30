@@ -164,7 +164,7 @@ void Physics::create_instructions()
         "F5 to save scene, F7 to load\n"
         "Space to toggle physics debug geometry"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

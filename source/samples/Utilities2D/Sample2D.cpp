@@ -383,7 +383,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
 
     // Set the default UI style and font
     ui.GetRoot()->SetDefaultStyle(cache.GetResource<XmlFile>("UI/DefaultStyle.xml"));
-    auto* font = cache.GetResource<Font>("Fonts/Anonymous Pro.ttf");
+    auto* font = cache.GetResource<Font>("fonts/Anonymous Pro.ttf");
 
     // We create in-game UIs (coins and lifes) first so that they are hidden by the fullscreen UI (we could also temporary hide them using SetVisible)
 
@@ -465,7 +465,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     // Create the instructions
     auto* instructionText = ui.GetRoot()->create_child<Text>("Instructions");
     instructionText->SetText("Use WASD keys or Arrows to move\nPageUp/PageDown/MouseWheel to zoom\nF5/F7 to save/reload scene\n'Z' to toggle debug geometry\nSpace to fight");
-    instructionText->SetFont(cache.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(cache.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
     instructionText->SetAlignment(HA_CENTER, VA_CENTER);
     instructionText->SetPosition(0, ui.GetRoot()->GetHeight() / 4);

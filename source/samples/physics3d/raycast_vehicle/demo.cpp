@@ -144,7 +144,7 @@ void RaycastVehicleDemo::create_instructions()
     instructionText->SetText(
         "Use WASD keys to drive, F to brake, mouse to rotate camera\n"
         "F5 to save scene, F7 to load");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
     // Position the text relative to the screen center

@@ -137,19 +137,19 @@ void RibbonTrailDemo::create_scene()
     boxTextNode1->SetPosition(Vector3(-1.0f, 2.0f, 0.0f));
     auto* boxText1 = boxTextNode1->create_component<Text3D>();
     boxText1->SetText(String("Face Camera Trail (4 Column)"));
-    boxText1->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
+    boxText1->SetFont(cache.GetResource<Font>("fonts/BlueHighway.sdf"), 24);
 
     Node* boxTextNode2 = scene_->create_child("BoxText2");
     boxTextNode2->SetPosition(Vector3(-6.0f, 2.0f, 0.0f));
     auto* boxText2 = boxTextNode2->create_component<Text3D>();
     boxText2->SetText(String("Face Camera Trail (1 Column)"));
-    boxText2->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
+    boxText2->SetFont(cache.GetResource<Font>("fonts/BlueHighway.sdf"), 24);
 
     Node* ninjaTextNode2 = scene_->create_child("NinjaText");
     ninjaTextNode2->SetPosition(Vector3(4.0f, 2.5f, 0.0f));
     auto* ninjaText = ninjaTextNode2->create_component<Text3D>();
     ninjaText->SetText(String("Bone Trail (4 Column)"));
-    ninjaText->SetFont(cache.GetResource<Font>("Fonts/BlueHighway.sdf"), 24);
+    ninjaText->SetFont(cache.GetResource<Font>("fonts/BlueHighway.sdf"), 24);
 
     // Create the camera.
     cameraNode_ = scene_->create_child("Camera");
@@ -164,7 +164,7 @@ void RibbonTrailDemo::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

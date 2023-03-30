@@ -122,7 +122,7 @@ void Typography::CreateText()
     container->SetLayout(LM_VERTICAL);
     uielement_->AddChild(container);
 
-    auto* font = DV_RES_CACHE.GetResource<Font>("Fonts/BlueHighway.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/BlueHighway.ttf");
 
     for (auto size2x = 2; size2x <= 36; ++size2x)
     {

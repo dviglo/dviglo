@@ -89,7 +89,7 @@ void Urho2DStretchableSprite::create_instructions()
         "Scale, Rotate, and Translate transform modes. In Rotate\n"
         "mode, combine A/D keys with Ctrl key to rotate about\n"
         "the Z axis");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 12);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 12);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

@@ -1,6 +1,6 @@
-Docs/* linguist-documentation
-Source/ThirdParty/* linguist-vendored
-bin/Data/Fonts/* linguist-vendored
+docs/* linguist-documentation
+source/third-party/* linguist-vendored
+bin/data/fonts/* linguist-vendored
 *.h linguist-language=C++
 
 # Автоматически нормализуем концы строк, если у пользователя не настроен параметр autocrlf

@@ -61,7 +61,7 @@ void PBRMaterials::create_instructions()
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use sliders to change Roughness and Metallic\n"
         "Hold RMB and use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
 
     // Position the text relative to the screen center
@@ -113,17 +113,17 @@ void PBRMaterials::create_ui()
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     roughnessLabel_ = ui.GetRoot()->create_child<Text>();
-    roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     roughnessLabel_->SetPosition(370, 50);
     roughnessLabel_->SetTextEffect(TE_SHADOW);
 
     metallicLabel_ = ui.GetRoot()->create_child<Text>();
-    metallicLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    metallicLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     metallicLabel_->SetPosition(370, 100);
     metallicLabel_->SetTextEffect(TE_SHADOW);
 
     ambientLabel_ = ui.GetRoot()->create_child<Text>();
-    ambientLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("Fonts/Anonymous Pro.ttf"), 15);
+    ambientLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
     ambientLabel_->SetPosition(370, 150);
     ambientLabel_->SetTextEffect(TE_SHADOW);
 

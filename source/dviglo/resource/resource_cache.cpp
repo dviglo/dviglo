@@ -29,7 +29,7 @@ namespace dviglo
 
 static const char* checkDirs[] =
 {
-    "Fonts",
+    "fonts",
     "Materials",
     "Models",
     "Music",
@@ -40,7 +40,7 @@ static const char* checkDirs[] =
     "Scenes",
     "Scripts",
     "Sounds",
-    "Shaders",
+    "shaders",
     "Techniques",
     "Textures",
     "UI",
