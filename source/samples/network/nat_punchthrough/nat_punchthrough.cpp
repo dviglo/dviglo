@@ -59,7 +59,7 @@ void NATPunchtrough::create_ui()
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
     logHistoryText_ = root->create_child<Text>();
     logHistoryText_->SetFont(font, 12);
     logHistoryText_->SetPosition(20, -20);
@@ -114,7 +114,7 @@ void NATPunchtrough::subscribe_to_events()
 
 Button* NATPunchtrough::CreateButton(const String& text, int width, IntVector2 position)
 {
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
 
     auto* button = DV_UI.GetRoot()->create_child<Button>();
     button->SetStyleAuto();
@@ -144,7 +144,7 @@ LineEdit* NATPunchtrough::CreateLineEdit(const String& placeholder, int width, I
 void NATPunchtrough::CreateLabel(const String& text, IntVector2 pos)
 {
     // Create log element to view latest logs from the system
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf");
+    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
     auto* label = DV_UI.GetRoot()->create_child<Text>();
     label->SetFont(font, 12);
     label->SetColor(Color(0.0f, 1.0f, 0.0f));

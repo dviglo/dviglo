@@ -37,14 +37,14 @@ void Clicker::create_ui()
     // Text in the center of the screen will initially contain hint, and then score
     Text* scoreText = uiRoot->create_child<Text>("Score");
     scoreText->SetText("Hold LMB to play.\nClick RMB to upgrade power.");
-    scoreText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 30);
+    scoreText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 30);
     scoreText->SetColor(Color::GREEN);
     scoreText->SetHorizontalAlignment(HA_CENTER);
     scoreText->SetVerticalAlignment(VA_CENTER);
 
     Text* powerText = uiRoot->create_child<Text>("Power");
     powerText->SetText("Power: " + power_.ToString());
-    powerText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 30);
+    powerText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 30);
     powerText->SetColor(Color::WHITE);
     powerText->SetPosition({10, 10});
 }

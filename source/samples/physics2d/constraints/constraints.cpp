@@ -368,7 +368,7 @@ void Urho2DConstraints::CreateFlag(const String& text, float x, float y) // Used
     flagNode->SetPosition(Vector3(x, y, 0.0f));
     auto* flag3D = flagNode->create_component<Text3D>(); // We use Text3D in order to make the text affected by zoom (so that it sticks to 2D)
     flag3D->SetText(text);
-    flag3D->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
+    flag3D->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 }
 
 void Urho2DConstraints::create_instructions()
@@ -376,7 +376,7 @@ void Urho2DConstraints::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move, Use PageUp PageDown to zoom.\n Space to toggle debug geometry and joints - F5 to save the scene.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
 
     // Position the text relative to the screen center

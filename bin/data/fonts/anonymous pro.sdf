@@ -628,7 +628,7 @@
 	</chars>
 	<common lineHeight="66" pages="2" />
 	<pages>
-		<page id="0" file="Anonymous Pro_0.png" />
-		<page id="1" file="Anonymous Pro_1.png" />
+		<page id="0" file="anonymous pro_0.png" />
+		<page id="1" file="anonymous pro_1.png" />
 	</pages>
 </font>

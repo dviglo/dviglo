@@ -194,7 +194,7 @@ void CrowdNavigation::create_ui()
         "Space to toggle debug geometry\n"
         "F12 to toggle this instruction text"
     );
-    instructionText_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
+    instructionText_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText_->SetTextAlignment(HA_CENTER);
 

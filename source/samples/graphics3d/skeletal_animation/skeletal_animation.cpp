@@ -186,7 +186,7 @@ void SkeletalAnimation::create_instructions()
         "Для ResourceCache включён FileWatcher:\n"
         "редактируйте шейдеры и сразу увидите результат"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/Anonymous Pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
