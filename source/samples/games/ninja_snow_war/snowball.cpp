@@ -75,7 +75,7 @@ void Snowball::ObjectCollision(GameObject& otherObject, VariantMap& eventData)
             {
                 otherObject.Damage(*this, hitDamage);
                 // Create a temporary node for the hit sound
-                SpawnSound(node_->GetScene(), node_->GetPosition(), "Sounds/PlayerFistHit.wav", 0.2f);
+                SpawnSound(node_->GetScene(), node_->GetPosition(), "sounds/player_fist_hit.wav", 0.2f);
             }
 
             hitDamage = 0;

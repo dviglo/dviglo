@@ -33,9 +33,9 @@ static const char* soundNames[] = {
 };
 
 static const char* soundResourceNames[] = {
-    "Sounds/PlayerFistHit.wav",
-    "Sounds/BigExplosion.wav",
-    "Sounds/Powerup.wav"
+    "sounds/player_fist_hit.wav",
+    "sounds/big_explosion.wav",
+    "sounds/powerup.wav"
 };
 
 DV_DEFINE_APPLICATION_MAIN(SoundEffects)

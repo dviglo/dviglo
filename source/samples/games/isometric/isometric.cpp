@@ -153,7 +153,7 @@ void Urho2DIsometricDemo::HandleCollisionBegin(StringHash eventType, VariantMap&
         }
         Text* coinsText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("CoinsText", true));
         coinsText->SetText(String(character2D_->remainingCoins_)); // Update coins UI counter
-        sample2D_->PlaySoundEffect("Powerup.wav");
+        sample2D_->PlaySoundEffect("powerup.wav");
     }
 
     // Handle interactions with enemies
@@ -170,7 +170,7 @@ void Urho2DIsometricDemo::HandleCollisionBegin(StringHash eventType, VariantMap&
             {
                 hitNode->GetComponent("RigidBody2D")->Remove(); // Remove Orc's body
                 sample2D_->SpawnEffect(hitNode);
-                sample2D_->PlaySoundEffect("BigExplosion.wav");
+                sample2D_->PlaySoundEffect("big_explosion.wav");
             }
         }
         // Player killed if not fighting in the direction of the Orc when the contact occurs
@@ -185,7 +185,7 @@ void Urho2DIsometricDemo::HandleCollisionBegin(StringHash eventType, VariantMap&
                     orc->fightTimer_ = 1;
                 }
                 sample2D_->SpawnEffect(character2DNode);
-                sample2D_->PlaySoundEffect("BigExplosion.wav");
+                sample2D_->PlaySoundEffect("big_explosion.wav");
             }
         }
     }

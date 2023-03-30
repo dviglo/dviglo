@@ -235,7 +235,7 @@ void Ninja::FixedUpdate(float timeStep)
         snowballObject->side = side;
         snowballObject->creatorID = node_->GetID();
 
-        PlaySound("Sounds/NutThrow.wav");
+        PlaySound("sounds/nut_throw.wav");
 
         throwTime = NINJA_THROW_DELAY;
     }
@@ -269,7 +269,7 @@ void Ninja::DeathUpdate(float timeStep)
         else
             deathDir = 1.f;
 
-        PlaySound("Sounds/SmallExplosion.wav");
+        PlaySound("sounds/small_explosion.wav");
 
         VariantMap eventData;
         eventData["Points"] = NINJA_POINTS;
@@ -312,7 +312,7 @@ void Ninja::DeathUpdate(float timeStep)
     if (deathTime > NINJA_CORPSE_DURATION)
     {
         SpawnObject(node_->GetScene(), node_->GetPosition() + Vector3(0.f, -0.5f, 0.f), Quaternion(), "light_flash");
-        SpawnSound(node_->GetScene(), node_->GetPosition() + Vector3(0.f, -0.5f, 0.f), "Sounds/BigExplosion.wav", 2.f);
+        SpawnSound(node_->GetScene(), node_->GetPosition() + Vector3(0.f, -0.5f, 0.f), "sounds/big_explosion.wav", 2.f);
         node_->Remove();
     }
 }
@@ -327,7 +327,7 @@ bool Ninja::Heal(i32 amount)
         health = maxHealth;
     // If player, play the "powerup" sound
     if (side == SIDE_PLAYER)
-        PlaySound("Sounds/Powerup.wav");
+        PlaySound("sounds/powerup.wav");
 
     return true;
 }

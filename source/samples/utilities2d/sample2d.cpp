@@ -522,7 +522,7 @@ void Sample2D::SpawnEffect(Node* node)
 void Sample2D::PlaySoundEffect(const String& soundName)
 {
     auto* source = scene_->create_component<SoundSource>();
-    auto* sound = DV_RES_CACHE.GetResource<Sound>("Sounds/" + soundName);
+    auto* sound = DV_RES_CACHE.GetResource<Sound>("sounds/" + soundName);
 
     if (sound)
     {
