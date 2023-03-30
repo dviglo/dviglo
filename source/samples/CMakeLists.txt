@@ -18,7 +18,7 @@ set(CMAKE_FOLDER примеры)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Список папок для копирования в bin
-set(dir_names Autoload CoreData Data)
+set(dir_names autoload core_data data)
 
 # Копируем папки в bin, если нужно
 foreach(dir_name ${dir_names})

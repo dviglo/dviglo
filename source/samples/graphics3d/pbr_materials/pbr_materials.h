@@ -21,7 +21,7 @@ class Zone;
 ///      - Loading a scene that showcases physically based materials & shaders
 ///
 /// To use with deferred rendering, a PBR deferred renderpath should be chosen:
-/// CoreData/RenderPaths/PBRDeferred.xml or CoreData/RenderPaths/PBRDeferredHWDepth.xml
+/// core_data/render_paths/pbr_deferred.xml or core_data/render_paths/pbr_deferred_hw_depth.xml
 class PBRMaterials : public Sample
 {
     DV_OBJECT(PBRMaterials, Sample);

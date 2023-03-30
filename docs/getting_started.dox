@@ -188,7 +188,7 @@ To run from Xcode on Mac OS X, edit the Product Scheme to set "Run" setting to e
 
 \section Building_Android Android build process
 
-First, if you are building under Windows host then after checking out the project you need to prepare the "assets" directory of both the "urho3d-lib" and "launcher-app" modules. Due to a bug in Android plugin of the version we are currently using, where it does not honor custom source set with filter setting, we are forced to use asset symlink with the default source set. So in Windows host system, the asset symlinks must be replaced with an equivalent directory link created with MKLINK command. If your account does not allow you to use MKLINK command then use copy command instead to copy the content of the linked directory directly to the "assets" directory. Ensure you have preserved the directory structure, i.e. "urho3d-lib" assets directory has one subdir called "CoreData", while "launcher-app" assets directory has two subdirs: "Data" and "Autoload".
+First, if you are building under Windows host then after checking out the project you need to prepare the "assets" directory of both the "urho3d-lib" and "launcher-app" modules. Due to a bug in Android plugin of the version we are currently using, where it does not honor custom source set with filter setting, we are forced to use asset symlink with the default source set. So in Windows host system, the asset symlinks must be replaced with an equivalent directory link created with MKLINK command. If your account does not allow you to use MKLINK command then use copy command instead to copy the content of the linked directory directly to the "assets" directory. Ensure you have preserved the directory structure, i.e. "urho3d-lib" assets directory has one subdir called "core_data", while "launcher-app" assets directory has two subdirs: "data" and "autoload".
 
 Set the ANDROID_CCACHE environment variable to where your "ccache" build tool has been installed. It is highly recommended when it is available for your host system. Set the ANDROID_NDK environment variable to point to your Android NDK, if it is not installed in the default Android SDK location.
 
@@ -314,7 +314,7 @@ The Urho3D player application in the bin directory contains all the engine runti
 Urho3DPlayer <scriptfilename> [options]
 \endverbatim
 
-The scripting language supported by default is AngelScript (http://www.angelcode.com/angelscript); the script files have .as extension and need to be placed under either the bin/Data or bin/CoreData subdirectories so that Urho3DPlayer can find them. An application script is required to have the function void Start(), which will be executed before starting the engine main loop. It is this function's responsibility to initialize the application and to hook up to any necessary \ref Events "events", such as the update that happens every frame.
+The scripting language supported by default is AngelScript (http://www.angelcode.com/angelscript); the script files have .as extension and need to be placed under either the bin/Data or bin/core_data subdirectories so that Urho3DPlayer can find them. An application script is required to have the function void Start(), which will be executed before starting the engine main loop. It is this function's responsibility to initialize the application and to hook up to any necessary \ref Events "events", such as the update that happens every frame.
 
 Lua language support can optionally be built in, see \ref Build_Options.
 
@@ -338,9 +338,9 @@ The engine can be configured using the following command line options.
 -pp <paths>  Resource prefix path(s), separated by semicolons, default to executable path
              The resource prefix paths can also be defined using DV_PREFIX_PATH env-var
              When both are defined, the paths set by -pp takes higher precedence
--p <paths>   Resource path(s) to use, separated by semicolons, default to 'Data;CoreData'
+-p <paths>   Resource path(s) to use, separated by semicolons, default to 'data;core_data'
 -pf <files>  Resource package file to use, separated by semicolons, default to none
--ap <paths>  Resource autoload path(s), separated by semicolons, default to 'AutoLoad'
+-ap <paths>  Resource autoload path(s), separated by semicolons, default to 'autoLoad'
 -log <level> Change the log level, valid 'level' values: 'debug', 'info', 'warning', 'error'
 -ds <file>   Dump used shader variations to a file for precaching
 -mq <level>  Material quality level, default 2 (high)
@@ -503,8 +503,8 @@ First of all, structure your project similar to Urho3D project as below. Althoug
 \code
 <PROJECT_ROOT>/
  ├ bin/
- │  ├ Data/
- │  └ CoreData/
+ │  ├ data/
+ │  └ core_data/
  ├ CMake/
  │  ├ Modules/
  │  └ Toolchains/
@@ -513,7 +513,7 @@ First of all, structure your project similar to Urho3D project as below. Althoug
  └ *.bat or *.sh
 \endcode
 
-The physical project root directory is also the logical project source tree in CMake terminology where your project main CMakeLists.txt should reside. The 'bin' directory should contain the 'Data' and 'CoreData' resource subdirs for your own assets. You must copy (or symlink) the 'CMake' subdir from Urho3D project root directory (or from Urho3D SDK installation, which can be found in the 'share/Urho3D/CMake') to your project root directory. You may also want to copy (or symlink) the build scripts from Urho3D project root directory (or from Urho3D SDK installation, which can be found in the 'share/Urho3D/Scripts') to your project root directory, unless you just want to use cmake-gui for your own project configuration and generation. Alternatively, you can add the Urho3D project root directory into the PATH environment variable in your host system in order to make the build scripts available everywhere. The build scripts work together with the Urho3D CMake modules and toolchains to configure and generate your initial project build tree. Both out-of-source build tree (recommended) and non out-of-source build tree are supported. Note that when you configure your project (either via one of the build script or via cmake-gui), you can only pass the \ref Build_Options that are applicable to downstream projects. Be mindful that conflicting build options would be ignored.
+The physical project root directory is also the logical project source tree in CMake terminology where your project main CMakeLists.txt should reside. The 'bin' directory should contain the 'data' and 'core_data' resource subdirs for your own assets. You must copy (or symlink) the 'CMake' subdir from Urho3D project root directory (or from Urho3D SDK installation, which can be found in the 'share/Urho3D/CMake') to your project root directory. You may also want to copy (or symlink) the build scripts from Urho3D project root directory (or from Urho3D SDK installation, which can be found in the 'share/Urho3D/Scripts') to your project root directory, unless you just want to use cmake-gui for your own project configuration and generation. Alternatively, you can add the Urho3D project root directory into the PATH environment variable in your host system in order to make the build scripts available everywhere. The build scripts work together with the Urho3D CMake modules and toolchains to configure and generate your initial project build tree. Both out-of-source build tree (recommended) and non out-of-source build tree are supported. Note that when you configure your project (either via one of the build script or via cmake-gui), you can only pass the \ref Build_Options that are applicable to downstream projects. Be mindful that conflicting build options would be ignored.
 
 In your own project root directory, create a main CMakeLists.txt file and add the following lines: (replace MyProjectName and MyExecutableName with the actual names you want)
 
@@ -581,7 +581,7 @@ define_resource_dirs (GLOB_PATTERNS ${CMAKE_SOURCE_DIR}/bin/Scene* ${CMAKE_SOURC
 ...
 \endcode
 
-You also need to inform the Urho3D library that you have non-conventional resource directory paths. You do that by setting the EP_RESOURCE_PATHS engine parameter, either programmatically during compile time or via '-p' \ref Running_Commandline "command line option" during runtime. In this case you would set it to "Scene1;Scene2;Core" instead of the default "Data;CoreData".
+You also need to inform the Urho3D library that you have non-conventional resource directory paths. You do that by setting the EP_RESOURCE_PATHS engine parameter, either programmatically during compile time or via '-p' \ref Running_Commandline "command line option" during runtime. In this case you would set it to "Scene1;Scene2;Core" instead of the default "data;core_data".
 
 Your project may also want to store the resource directories in other location instead of the 'bin' directory where the executable binary resides. For example when creating macOS/iOS/tvOS bundle, all the assets are automatically bundled into another directory outside where the executable binary resides. In fact, you can have them in a few separate parent directories and not just one. That is where the EP_RESOURCE_PREFIX_PATHS engine parameter and '-pp' command line option come into picture. With this you can define an alternate resource prefix path where your resource path would be prepended before locating your assets.
 

@@ -70,17 +70,17 @@ static const String USAGE_STR =
     "     q - enable quiet mode\n"
     "     c - enable LZ4 compression\n"
     "   Base path is an optional prefix that will be added to the file entries.\n"
-    "   Example: package_tool -pqc CoreData CoreData.pak\n"
+    "   Example: package_tool -pqc core_data core_data.pak\n"
     "2) Unpacking: package_tool -u<options> <input package name> <output directory name>\n"
     "   Options:\n"
     "     q - enable quiet mode\n"
-    "   Example: package_tool -uq CoreData.pak CoreData\n"
+    "   Example: package_tool -uq core_data.pak core_data\n"
     "3) Print info: package_tool -<mode> <package name>\n"
     "   Modes:\n"
     "     i - print package file information\n"
     "     l - print file names (including their paths) contained in the package\n"
     "     L - similar to l but also output compression ratio (compressed package file only)\n"
-    "   Example: package_tool -i CoreData.pak";
+    "   Example: package_tool -i core_data.pak";
 
 void Pack(const Vector<String>& arguments)
 {

@@ -313,9 +313,9 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = add_trailing_slash(
             IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem.GetProgramDir() + resourcePrefixPaths[i]);
-    Vector<String> resourcePaths = GetParameter(parameters, EP_RESOURCE_PATHS, "Data;CoreData").GetString().Split(';');
+    Vector<String> resourcePaths = GetParameter(parameters, EP_RESOURCE_PATHS, "data;core_data").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, EP_RESOURCE_PACKAGES).GetString().Split(';');
-    Vector<String> autoLoadPaths = GetParameter(parameters, EP_AUTOLOAD_PATHS, "Autoload").GetString().Split(';');
+    Vector<String> autoLoadPaths = GetParameter(parameters, EP_AUTOLOAD_PATHS, "autoload").GetString().Split(';');
 
     for (unsigned i = 0; i < resourcePaths.Size(); ++i)
     {
@@ -431,9 +431,9 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         // The following debug message is confusing when user is not aware of the autoload feature
         // Especially because the autoload feature is enabled by default without user intervention
         // The following extra conditional check below is to suppress unnecessary debug log entry under such default situation
-        // The cleaner approach is to not enable the autoload by default, i.e. do not use 'Autoload' as default value for 'AutoloadPaths' engine parameter
+        // The cleaner approach is to not enable the autoload by default, i.e. do not use 'autoload' as default value for 'AutoloadPaths' engine parameter
         // However, doing so will break the existing applications that rely on this
-        if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "Autoload"))
+        if (!autoLoadPathExist && (autoLoadPaths.Size() > 1 || autoLoadPaths[0] != "autoload"))
             DV_LOGDEBUGF(
                 "Skipped autoload path '%s' as it does not exist, check the documentation on how to set the 'resource prefix path'",
                 autoLoadPaths[i].c_str());

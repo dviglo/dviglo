@@ -190,9 +190,9 @@ The full list of supported parameters, their datatypes and default values: (also
 - WorkerThreads (bool) Whether to create worker threads for the %WorkQueue subsystem according to available CPU cores. Default true.
 - %EventProfiler (bool) Whether to create the EventProfiler subsystem. Default true.
 - ResourcePrefixPaths (string) A semicolon-separated list of resource prefix paths to use. If not specified then the default prefix path is set to executable path. The resource prefix paths can also be defined using DV_PREFIX_PATH env-var. When both are defined, the paths set by -pp takes higher precedence.
-- ResourcePaths (string) A semicolon-separated list of resource paths to use. If corresponding packages (ie. Data.pak for Data directory) exist they will be used instead. Default "Data;CoreData".
+- ResourcePaths (string) A semicolon-separated list of resource paths to use. If corresponding packages (ie. Data.pak for Data directory) exist they will be used instead. Default "data;core_data".
 - ResourcePackages (string) A semicolon-separated list of resource packages to use. Default empty.
-- AutoloadPaths (string) A semicolon-separated list of autoload paths to use. Any resource packages and subdirectories inside an autoload path will be added to the resource system. Default "Autoload".
+- AutoloadPaths (string) A semicolon-separated list of autoload paths to use. Any resource packages and subdirectories inside an autoload path will be added to the resource system. Default "autoload".
 - ExternalWindow (void ptr) External window handle to use instead of creating an application window. Default null.
 - WindowIcon (string) %Window icon image resource name. Default empty (use application default icon.)
 - WindowTitle (string) %Window title. Default "Urho3D".
@@ -213,7 +213,7 @@ The full list of supported parameters, their datatypes and default values: (also
 - Monitor (int) Monitor number to use. 0 is the default (primary) monitor.
 - RefreshRate (int) Monitor refresh rate in Hz to use.
 - DumpShaders (string) Filename to dump used shader variations to for precaching.
-- %RenderPath (string) Default renderpath resource name. Default empty, which causes forward rendering (bin/CoreData/RenderPaths/Forward.xml) to be used.
+- %RenderPath (string) Default renderpath resource name. Default empty, which causes forward rendering (bin/core_data/RenderPaths/Forward.xml) to be used.
 - Shadows (bool) Shadow rendering enable. Default true.
 - LowQualityShadows (bool) Low-quality (1 sample) shadow mode. Default false.
 - MaterialQuality (int) %Material quality level. Default 2 (high)
@@ -432,7 +432,7 @@ Resources include most things in Urho3D that are loaded from mass storage during
 
 They are managed and loaded by the ResourceCache subsystem. Like with all other \ref ObjectTypes "typed objects", resource types are identified by 32-bit type name hashes (C++) or type names (script). An object factory must be registered for each resource type.
 
-The resources themselves are identified by their file paths, relative to the registered resource directories or \ref PackageFile "package files". By default, the engine registers the resource directories Data and CoreData, or the packages Data.pak and CoreData.pak if they exist.
+The resources themselves are identified by their file paths, relative to the registered resource directories or \ref PackageFile "package files". By default, the engine registers the resource directories data and core_data, or the packages data.pak and core_data.pak if they exist.
 
 If loading a resource fails, an error will be logged and a null pointer is returned.
 
@@ -981,7 +981,7 @@ By default there is one viewport, but the amount can be increased with the funct
 
 Viewports can also be defined for rendertarget textures. See \ref AuxiliaryViews "Auxiliary views" for details.
 
-Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/CoreData/RenderPaths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
+Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/core_data/RenderPaths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
 
 The steps for rendering each viewport on each frame are roughly the following:
 
@@ -1134,7 +1134,7 @@ These differences need to be observed when using the low-level rendering functio
 
 - Modifying an index buffer on OpenGL will similarly cause the existing index buffer assignment to be lost. Therefore, always set the vertex and index buffers before rendering.
 
-- %Shader resources are stored in different locations depending on the API: bin/CoreData/Shaders/HLSL for Direct3D, and bin/CoreData/Shaders/GLSL for OpenGL.
+- %Shader resources are stored in different locations depending on the API: bin/core_data/Shaders/HLSL for Direct3D, and bin/core_data/Shaders/GLSL for OpenGL.
 
 - To ensure similar UV addressing for render-to-texture viewports on both APIs, on OpenGL texture viewports will be rendered upside down.
 
@@ -1217,7 +1217,7 @@ A vertex buffer is often accompanied by an index buffer (IndexBuffer class) to a
 
 \page Materials Materials
 
-Material and Technique resources define how to render 3D scene geometry. On the disk, they are XML or JSON data. Default and example materials exist in the bin/CoreData/Materials & bin/Data/Materials subdirectories, and techniques exist in the bin/CoreData/Techniques subdirectory.
+Material and Technique resources define how to render 3D scene geometry. On the disk, they are XML or JSON data. Default and example materials exist in the bin/core_data/Materials & bin/data/Materials subdirectories, and techniques exist in the bin/core_data/Techniques subdirectory.
 
 A material defines the textures, shader parameters and culling & fill mode to use, and refers to one or several techniques. A technique defines the actual rendering passes, the shaders to use in each, and all other rendering states such as depth test, depth write, and blending.
 
@@ -1408,7 +1408,7 @@ Render order works well when you know a material is going to render only a singl
 render order combined with depth test manipulation to force some object to render in front of others, the pass order may not be obvious. "Base"
 pass would be rendered first, but objects often don't use it, rather they render later as part of the forward light loop using the "litbase" pass. This may throw off the depth test manipulation and cause a different result than expected.
 
-An easy fix is to simply disable the "litbase" optimization pass altogether, though this costs performance. This can be done globally from the forward renderpath (Bin/CoreData/RenderPaths/Forward.xml) by modifying the forwardlights command to read:
+An easy fix is to simply disable the "litbase" optimization pass altogether, though this costs performance. This can be done globally from the forward renderpath (bin/core_data/RenderPaths/Forward.xml) by modifying the forwardlights command to read:
 
 \code
 <command type="forwardlights" pass="light" uselitbase="false" />
@@ -1605,13 +1605,13 @@ The render path XML definition looks like this:
 </renderpath>
 \endcode
 
-For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/CoreData/RenderPaths directory, and the postprocess renderpath definitions in the bin/Data/postprocess directory.
+For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/core_data/RenderPaths directory, and the postprocess renderpath definitions in the bin/Data/postprocess directory.
 
 \section RenderPaths_Depth Depth-stencil handling and reading scene depth
 
 Normally needed depth-stencil surfaces are automatically allocated when the render path is executed.
 
-The special "lineardepth" (synonym "depth") format is intended for storing scene depth in deferred rendering. It is not an actual hardware depth-stencil texture, but a 32-bit single channel (R) float rendertarget. (On OpenGL2 it's RGBA instead, due to the limitation of all color buffers having to be the same format. The shader include file Samplers.glsl in bin/CoreData/Shaders/GLSL provides functions to encode and decode linear depth to RGB.)
+The special "lineardepth" (synonym "depth") format is intended for storing scene depth in deferred rendering. It is not an actual hardware depth-stencil texture, but a 32-bit single channel (R) float rendertarget. (On OpenGL2 it's RGBA instead, due to the limitation of all color buffers having to be the same format. The shader include file Samplers.glsl in bin/core_data/Shaders/GLSL provides functions to encode and decode linear depth to RGB.)
 
 Writing depth manually to a rendertarget, while using a non-readable depth-stencil surface ensures best compatibility and prevents any conflicts from using both depth test and manual depth sampling at the same time.
 
@@ -1621,7 +1621,7 @@ In the special case of a depth-only rendering pass you can set the readable dept
 
 After the readable depth texture has been filled, it can be bound to a texture unit in any subsequent commands. Pixel shaders should use the ReconstructDepth() helper function to reconstruct a linear depth value between 0-1 from the nonlinear hardware depth value. When the readable depth texture is bound for sampling, depth write is automatically disabled, as both modifying and sampling the depth would be undefined.
 
-An example render path for readable hardware depth exists in bin/CoreData/RenderPaths/ForwardHWDepth.xml:
+An example render path for readable hardware depth exists in bin/core_data/RenderPaths/ForwardHWDepth.xml:
 
 \code
 <renderpath>
@@ -3588,7 +3588,7 @@ Options:
 Example:
 
 \verbatim
-package_tool -uq CoreData.pak CoreData
+package_tool -uq core_data.pak core_data
 \endverbatim
 
 Print info:
@@ -3605,7 +3605,7 @@ Modes:
 Example:
 
 \verbatim
-package_tool -i CoreData.pak
+package_tool -i core_data.pak
 \endverbatim
 
 \section Tools_RampGenerator RampGenerator
