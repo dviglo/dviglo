@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../../Sample.h"
-#include "../../Utilities2D/Sample2D.h"
+#include "../../sample.h"
+#include "../../utilities2d/sample2d.h"
 
 class Character2D;
 class Sample2D;

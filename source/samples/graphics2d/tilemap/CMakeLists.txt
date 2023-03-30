@@ -11,7 +11,7 @@ set(TARGET_NAME graph2d_tilemap)
 
 # Создаём список файлов
 file(GLOB source_files *.cpp *.h)
-set(common_source_files ../../Sample.h ../../Sample.inl)
+set(common_source_files ../../sample.h ../../sample.inl)
 
 # Создаём приложение
 add_executable(${TARGET_NAME} ${source_files} ${common_source_files})

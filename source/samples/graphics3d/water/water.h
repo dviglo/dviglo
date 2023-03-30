@@ -6,7 +6,7 @@
 
 #include <dviglo/math/plane.h>
 
-#include "../../Sample.h"
+#include "../../sample.h"
 
 namespace dviglo
 {

@@ -85,4 +85,4 @@ private:
     bool paused_;
 };
 
-#include "Sample.inl"
+#include "sample.inl"

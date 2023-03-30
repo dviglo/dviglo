@@ -11,7 +11,7 @@
 
 #include <dviglo/common/debug_new.h>
 
-#include "Mover.h"
+#include "mover.h"
 
 Mover::Mover() :
     speed_(0.8f),

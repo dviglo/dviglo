@@ -6,7 +6,7 @@ set(TARGET_NAME audio_synthesis)
 
 # Создаём список файлов
 file(GLOB source_files *.cpp *.h)
-set(common_source_files ../../Sample.h ../../Sample.inl)
+set(common_source_files ../../sample.h ../../sample.inl)
 
 # Создаём приложение
 add_executable(${TARGET_NAME} ${source_files} ${common_source_files})

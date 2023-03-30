@@ -11,8 +11,8 @@ set(TARGET_NAME game_isometric)
 
 # Создаём список файлов
 file(GLOB source_files *.cpp *.h)
-set(common_source_files ../../Utilities2D/Sample2D.h ../../Utilities2D/Sample2D.cpp
-                        ../../Utilities2D/Mover.h ../../Utilities2D/Mover.cpp)
+set(common_source_files ../../utilities2d/sample2d.h ../../utilities2d/sample2d.cpp
+                        ../../utilities2d/mover.h ../../utilities2d/mover.cpp)
 
 # Создаём приложение
 add_executable(${TARGET_NAME} ${source_files} ${common_source_files})

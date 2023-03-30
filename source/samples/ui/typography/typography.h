@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../../Sample.h"
+#include "../../sample.h"
 
 /// Text rendering example.
 /// Displays text at various sizes, with checkboxes to change the rendering parameters.

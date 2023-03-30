@@ -35,8 +35,8 @@
 
 #include "character2d.h"
 #include "isometric.h"
-#include "../../Utilities2D/Sample2D.h"
-#include "../../Utilities2D/Mover.h"
+#include "../../utilities2d/sample2d.h"
+#include "../../utilities2d/mover.h"
 
 Urho2DIsometricDemo::Urho2DIsometricDemo() :
     zoom_(2.0f),

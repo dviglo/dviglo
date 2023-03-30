@@ -39,8 +39,8 @@
 
 #include "character2d.h"
 #include "platformer.h"
-#include "../../Utilities2D/Sample2D.h"
-#include "../../Utilities2D/Mover.h"
+#include "../../utilities2d/sample2d.h"
+#include "../../utilities2d/mover.h"
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DPlatformer)
 

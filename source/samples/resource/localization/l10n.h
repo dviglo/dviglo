@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../../Sample.h"
+#include "../../sample.h"
 
 /// Localization example.
 /// This sample demonstrates:
