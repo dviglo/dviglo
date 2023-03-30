@@ -15,7 +15,7 @@ using namespace dviglo;
 void AppState_Benchmark01::OnEnter()
 {
     assert(!scene_);
-    LoadSceneXml("99_Benchmark/Scenes/Benchmark01.xml");
+    LoadSceneXml("benchmark/scenes/benchmark01.xml");
 
     DV_INPUT.SetMouseVisible(false);
     setup_viewport();

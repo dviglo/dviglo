@@ -22,7 +22,7 @@ static const dv::String RESULT_WINDOW_STR = "Result Window";
 void AppState_ResultScreen::OnEnter()
 {
     assert(!scene_);
-    LoadSceneXml("99_Benchmark/Scenes/ResultScreen.xml");
+    LoadSceneXml("benchmark/scenes/result_screen.xml");
 
     DV_INPUT.SetMouseVisible(true);
     setup_viewport();

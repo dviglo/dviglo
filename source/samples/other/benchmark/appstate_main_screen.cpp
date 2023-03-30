@@ -81,7 +81,7 @@ void AppState_MainScreen::DestroyGui()
 void AppState_MainScreen::OnEnter()
 {
     assert(!scene_);
-    LoadSceneXml("99_Benchmark/Scenes/MainScreen.xml");
+    LoadSceneXml("benchmark/scenes/main_screen.xml");
 
     CreateGui();
     setup_viewport();

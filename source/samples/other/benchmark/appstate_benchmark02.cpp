@@ -31,7 +31,7 @@ AppState_Benchmark02::AppState_Benchmark02()
 void AppState_Benchmark02::OnEnter()
 {
     assert(!scene_);
-    LoadSceneXml("99_Benchmark/Scenes/Benchmark02.xml");
+    LoadSceneXml("benchmark/scenes/benchmark02.xml");
 
     Vector3 castlePos = scene_->GetChild("Castle")->GetPosition();
     BoundingBox castleTop(castlePos - Vector3(7.f, 0.f, 7.f), castlePos + Vector3(7.f, 0.f, 7.f));

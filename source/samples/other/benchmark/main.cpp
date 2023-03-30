@@ -31,8 +31,8 @@ public:
 
     void Setup() override
     {
-        engineParameters_[EP_WINDOW_TITLE] = "Urho3D Benchmark";
-        engineParameters_[EP_LOG_NAME] = get_pref_path("urho3d", "logs") + "99_Benchmark.log";
+        engineParameters_[EP_WINDOW_TITLE] = "Dviglo Benchmark";
+        engineParameters_[EP_LOG_NAME] = get_pref_path("dviglo", "logs") + "other_benchmark.log";
         engineParameters_[EP_FULL_SCREEN] = false;
         engineParameters_[EP_WINDOW_WIDTH] = 960;
         engineParameters_[EP_WINDOW_HEIGHT] = 720;
