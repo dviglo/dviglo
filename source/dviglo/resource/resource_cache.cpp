@@ -27,18 +27,17 @@
 namespace dviglo
 {
 
-static const char* checkDirs[] =
+static const char* check_dirs[] =
 {
     "fonts",
     "Materials",
     "Models",
     "Music",
-    "Objects",
+    "objects",
     "Particle",
     "postprocess",
     "RenderPaths",
     "Scenes",
-    "Scripts",
     "Sounds",
     "shaders",
     "Techniques",
@@ -826,9 +825,9 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
     bool pathHasKnownDirs = false;
     bool parentHasKnownDirs = false;
 
-    for (unsigned i = 0; checkDirs[i] != nullptr; ++i)
+    for (unsigned i = 0; check_dirs[i] != nullptr; ++i)
     {
-        if (dir_exists(fixedPath + checkDirs[i]))
+        if (dir_exists(fixedPath + check_dirs[i]))
         {
             pathHasKnownDirs = true;
             break;
@@ -837,9 +836,9 @@ String ResourceCache::GetPreferredResourceDir(const String& path) const
     if (!pathHasKnownDirs)
     {
         String parentPath = get_parent(fixedPath);
-        for (unsigned i = 0; checkDirs[i] != nullptr; ++i)
+        for (unsigned i = 0; check_dirs[i] != nullptr; ++i)
         {
-            if (dir_exists(parentPath + checkDirs[i]))
+            if (dir_exists(parentPath + check_dirs[i]))
             {
                 parentHasKnownDirs = true;
                 break;
