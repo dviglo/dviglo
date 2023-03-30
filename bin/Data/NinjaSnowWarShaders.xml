@@ -11,7 +11,7 @@
 	<shader vs="shadow" vsdefines="" ps="shadow" psdefines="" />
 	<shader vs="lit_solid" vsdefines="DIRLIGHT INSTANCED PERPIXEL SHADOW" ps="lit_solid" psdefines="AMBIENT DIFFMAP DIRLIGHT PCF_SHADOW PERPIXEL SHADOW" />
 	<shader vs="shadow" vsdefines="INSTANCED" ps="shadow" psdefines="" />
-	<shader vs="Stencil" vsdefines="" ps="Stencil" psdefines="" />
+	<shader vs="stencil" vsdefines="" ps="stencil" psdefines="" />
 	<shader vs="lit_solid" vsdefines="PERPIXEL POINTLIGHT" ps="lit_solid" psdefines="DIFFMAP PERPIXEL POINTLIGHT" />
 	<shader vs="lit_solid" vsdefines="DIRLIGHT PERPIXEL SHADOW" ps="lit_solid" psdefines="AMBIENT DIRLIGHT PCF_SHADOW PERPIXEL SHADOW" />
 	<shader vs="lit_solid" vsdefines="DIRLIGHT PERPIXEL SHADOW" ps="lit_solid" psdefines="AMBIENT DIFFMAP DIRLIGHT PERPIXEL SHADOW SIMPLE_SHADOW" />

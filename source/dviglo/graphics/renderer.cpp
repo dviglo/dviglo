@@ -1464,7 +1464,7 @@ void Renderer::OptimizeLightByStencil(Light* light, Camera* camera)
         graphics.SetColorWrite(false);
         graphics.SetDepthWrite(false);
         graphics.SetStencilTest(true, CMP_ALWAYS, OP_REF, OP_KEEP, OP_KEEP, lightStencilValue_);
-        graphics.SetShaders(graphics.GetShader(VS, "Stencil"), graphics.GetShader(PS, "Stencil"));
+        graphics.SetShaders(graphics.GetShader(VS, "stencil"), graphics.GetShader(PS, "stencil"));
         graphics.SetShaderParameter(VSP_VIEW, view);
         graphics.SetShaderParameter(VSP_VIEWINV, camera->GetEffectiveWorldTransform());
         graphics.SetShaderParameter(VSP_VIEWPROJ, projection * view);
