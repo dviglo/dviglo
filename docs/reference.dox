@@ -480,16 +480,16 @@ Before using the subsystem, the localization string collection(s) need to be loa
 \code
 Localization* l10n = GetSubsystem<Localization>();
 // 1st JSON file format
-l10n->LoadJSONFile("StringsEnRu.json");
-l10n->LoadJSONFile("StringsDe.json");
+l10n->LoadJSONFile("strings_en_ru.json");
+l10n->LoadJSONFile("strings_de.json");
 
 // 2nd JSON file format
-l10n->LoadJSONFile("StringsLv.json", "lv");
+l10n->LoadJSONFile("strings_lv.json", "lv");
 \endcode
 
-JSON files must be in UTF8 encoding without BOM. Sample files are in the bin/Data directory. The JSON files must have one of the following formats:
+JSON files must be in UTF8 encoding without BOM. Sample files are in the bin/data directory. The JSON files must have one of the following formats:
 
-1. `LoadJSONFile("StringsEnRu.json")` method will automatically pick the language from the JSON file
+1. `LoadJSONFile("strings_en_ru.json")` method will automatically pick the language from the JSON file
 \code
 {
     "string id 1":{
@@ -505,7 +505,7 @@ JSON files must be in UTF8 encoding without BOM. Sample files are in the bin/Dat
 }
 \endcode
 
-2. You must pass 2nd argument to the `LoadJSONFile("StringsLv.json", "lv")` method to tell the parser which language will be loaded
+2. You must pass 2nd argument to the `LoadJSONFile("strings_lv.json", "lv")` method to tell the parser which language will be loaded
 \code
 {
     "string id 1": "value 1",

@@ -54,10 +54,10 @@ void L10n::InitLocalizationSystem()
     Localization& l10n = DV_LOCALIZATION;
     // JSON files must be in UTF8 encoding without BOM
     // The first found language will be set as current
-    l10n.load_json_file("StringsEnRu.json");
+    l10n.load_json_file("strings_en_ru.json");
     // You can load multiple files
-    l10n.load_json_file("StringsDe.json");
-    l10n.load_json_file("StringsLv.json", "lv");
+    l10n.load_json_file("strings_de.json");
+    l10n.load_json_file("strings_lv.json", "lv");
     // Hook up to the change language
     subscribe_to_event(E_CHANGELANGUAGE, DV_HANDLER(L10n, HandleChangeLanguage));
 }
