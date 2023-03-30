@@ -143,7 +143,7 @@ public:
 
         if (!nobgm)
         {
-            Sound* musicFile = DV_RES_CACHE.GetResource<Sound>("Music/Ninja Gods.ogg");
+            Sound* musicFile = DV_RES_CACHE.GetResource<Sound>("music/ninja gods.ogg");
             musicFile->SetLooped(true);
 
             // Note: the non-positional sound source component need to be attached to a node to become effective

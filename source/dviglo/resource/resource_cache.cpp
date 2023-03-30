@@ -32,7 +32,7 @@ static const char* check_dirs[] =
     "fonts",
     "Materials",
     "Models",
-    "Music",
+    "music",
     "objects",
     "Particle",
     "postprocess",

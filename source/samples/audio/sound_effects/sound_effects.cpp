@@ -172,7 +172,7 @@ void SoundEffects::HandlePlaySound(StringHash eventType, VariantMap& eventData)
 
 void SoundEffects::HandlePlayMusic(StringHash eventType, VariantMap& eventData)
 {
-    auto* music = DV_RES_CACHE.GetResource<Sound>("Music/Ninja Gods.ogg");
+    auto* music = DV_RES_CACHE.GetResource<Sound>("music/ninja gods.ogg");
     // Set the song to loop
     music->SetLooped(true);
 
