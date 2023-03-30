@@ -62,7 +62,7 @@ void Urho2DIsometricDemo::Start()
     sample2D_ = new Sample2D();
 
     // Set filename for load/save functions
-    sample2D_->demoFilename_ = "Isometric2D";
+    sample2D_->demoFilename_ = "isometric2d";
 
     // Create the scene content
     create_scene();
@@ -264,7 +264,7 @@ void Urho2DIsometricDemo::ReloadScene(bool reInit)
 {
     String filename = sample2D_->demoFilename_;
     if (!reInit)
-        filename += "in_game";
+        filename += "_in_game";
 
     File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/" + filename + ".xml", FILE_READ);
     scene_->load_xml(loadFile);

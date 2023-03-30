@@ -40,9 +40,19 @@ build/
 /Docs/html/
 /Docs/qch/
 
-# Saved sample scenes
-/bin/data/scenes/Isometric2D.xml
-/bin/data/scenes/Platformer2D.xml
+# Сцены, сохранённые примерами
+/bin/data/scenes/isometric2d.xml
+/bin/data/scenes/isometric2d_in_game.xml
+/bin/data/scenes/platformer2d.xml
+/bin/data/scenes/platformer2d_in_game.xml
+/bin/data/scenes/crowd_navigation.xml
+/bin/data/scenes/constraints.xml
+/bin/data/scenes/character_demo.xml
+/bin/data/scenes/phys3d_hello.xml
+/bin/data/scenes/ragdolls.xml
+/bin/data/scenes/raycast_vehicle_demo.xml
+/bin/data/scenes/physics_stress_test.xml
+/bin/data/scenes/vehicle_demo.xml
 
 # Eclipse project settings
 /.*project

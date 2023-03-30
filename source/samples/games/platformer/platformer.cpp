@@ -66,7 +66,7 @@ void Urho2DPlatformer::Start()
     sample2D_ = new Sample2D();
 
     // Set filename for load/save functions
-    sample2D_->demoFilename_ = "Platformer2D";
+    sample2D_->demoFilename_ = "platformer2d";
 
     // Create the scene content
     create_scene();
@@ -359,7 +359,7 @@ void Urho2DPlatformer::ReloadScene(bool reInit)
 {
     String filename = sample2D_->demoFilename_;
     if (!reInit)
-        filename += "in_game";
+        filename += "_in_game";
 
     File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/" + filename + ".xml", FILE_READ);
     scene_->load_xml(loadFile);

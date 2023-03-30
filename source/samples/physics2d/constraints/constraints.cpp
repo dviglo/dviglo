@@ -448,6 +448,16 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
         File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/constraints.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
+
+    // Загрузка сцены
+    // TODO: Поломано после загрузки
+    /*
+    if (DV_INPUT.GetKeyPress(KEY_F7))
+    {
+        File load_file(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/constraints.xml", FILE_READ);
+        scene_->load_xml(load_file);
+    }
+    */
 }
 
 void Urho2DConstraints::handle_post_render_update(StringHash eventType, VariantMap& eventData)

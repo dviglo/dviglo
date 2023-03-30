@@ -194,7 +194,7 @@ void RaycastVehicleDemo::handle_update(StringHash eventType,
             }
             if (input.GetKeyPress(KEY_F7))
             {
-                File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/raycast_vehicled_emo.xml",
+                File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/raycast_vehicle_demo.xml",
                               FILE_READ);
                 scene_->load_xml(loadFile);
                 // After loading we have to reacquire the weak pointer to the Vehicle component, as it has been recreated
