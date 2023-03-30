@@ -1630,7 +1630,7 @@ void Renderer::Initialize()
     defaultMaterial_ = new Material();
 
     defaultRenderPath_ = new RenderPath();
-    defaultRenderPath_->Load(cache.GetResource<XmlFile>("RenderPaths/Forward.xml"));
+    defaultRenderPath_->Load(cache.GetResource<XmlFile>("render_paths/forward.xml"));
 
     CreateGeometries();
     CreateInstancingBuffer();

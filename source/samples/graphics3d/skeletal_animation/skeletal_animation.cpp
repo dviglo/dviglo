@@ -202,7 +202,7 @@ void SkeletalAnimation::setup_viewport()
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
 #ifdef DV_GLES3
         SharedPtr<RenderPath> rp(new RenderPath);
-        rp->Load(DV_RES_CACHE.GetResource<XmlFile>("RenderPaths/Deferred.xml"));
+        rp->Load(DV_RES_CACHE.GetResource<XmlFile>("render_paths/deferred.xml"));
         viewport->SetRenderPath(rp);
 #endif
     DV_RENDERER.SetViewport(0, viewport);

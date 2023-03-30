@@ -36,7 +36,7 @@ static const char* check_dirs[] =
     "objects",
     "Particle",
     "postprocess",
-    "RenderPaths",
+    "render_paths",
     "Scenes",
     "Sounds",
     "shaders",

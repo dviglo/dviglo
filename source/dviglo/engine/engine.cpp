@@ -747,9 +747,9 @@ VariantMap Engine::parse_parameters(const Vector<String>& arguments)
             else if (argument == "mono")
                 ret[EP_SOUND_STEREO] = false;
             else if (argument == "prepass")
-                ret[EP_RENDER_PATH] = "RenderPaths/Prepass.xml";
+                ret[EP_RENDER_PATH] = "render_paths/prepass.xml";
             else if (argument == "deferred")
-                ret[EP_RENDER_PATH] = "RenderPaths/Deferred.xml";
+                ret[EP_RENDER_PATH] = "render_paths/deferred.xml";
             else if (argument == "renderpath" && !value.Empty())
             {
                 ret[EP_RENDER_PATH] = value;

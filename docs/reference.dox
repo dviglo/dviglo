@@ -213,7 +213,7 @@ The full list of supported parameters, their datatypes and default values: (also
 - Monitor (int) Monitor number to use. 0 is the default (primary) monitor.
 - RefreshRate (int) Monitor refresh rate in Hz to use.
 - DumpShaders (string) Filename to dump used shader variations to for precaching.
-- %RenderPath (string) Default renderpath resource name. Default empty, which causes forward rendering (bin/core_data/RenderPaths/Forward.xml) to be used.
+- %RenderPath (string) Default renderpath resource name. Default empty, which causes forward rendering (bin/core_data/render_paths/forward.xml) to be used.
 - Shadows (bool) Shadow rendering enable. Default true.
 - LowQualityShadows (bool) Low-quality (1 sample) shadow mode. Default false.
 - MaterialQuality (int) %Material quality level. Default 2 (high)
@@ -981,7 +981,7 @@ By default there is one viewport, but the amount can be increased with the funct
 
 Viewports can also be defined for rendertarget textures. See \ref AuxiliaryViews "Auxiliary views" for details.
 
-Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/core_data/RenderPaths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
+Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/core_data/render_paths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
 
 The steps for rendering each viewport on each frame are roughly the following:
 
@@ -1408,7 +1408,7 @@ Render order works well when you know a material is going to render only a singl
 render order combined with depth test manipulation to force some object to render in front of others, the pass order may not be obvious. "Base"
 pass would be rendered first, but objects often don't use it, rather they render later as part of the forward light loop using the "litbase" pass. This may throw off the depth test manipulation and cause a different result than expected.
 
-An easy fix is to simply disable the "litbase" optimization pass altogether, though this costs performance. This can be done globally from the forward renderpath (bin/core_data/RenderPaths/Forward.xml) by modifying the forwardlights command to read:
+An easy fix is to simply disable the "litbase" optimization pass altogether, though this costs performance. This can be done globally from the forward renderpath (bin/core_data/render_paths/forward.xml) by modifying the forwardlights command to read:
 
 \code
 <command type="forwardlights" pass="light" uselitbase="false" />
@@ -1605,7 +1605,7 @@ The render path XML definition looks like this:
 </renderpath>
 \endcode
 
-For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/core_data/RenderPaths directory, and the postprocess renderpath definitions in the bin/Data/postprocess directory.
+For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/core_data/render_paths directory, and the postprocess renderpath definitions in the bin/Data/postprocess directory.
 
 \section RenderPaths_Depth Depth-stencil handling and reading scene depth
 
@@ -1621,7 +1621,7 @@ In the special case of a depth-only rendering pass you can set the readable dept
 
 After the readable depth texture has been filled, it can be bound to a texture unit in any subsequent commands. Pixel shaders should use the ReconstructDepth() helper function to reconstruct a linear depth value between 0-1 from the nonlinear hardware depth value. When the readable depth texture is bound for sampling, depth write is automatically disabled, as both modifying and sampling the depth would be undefined.
 
-An example render path for readable hardware depth exists in bin/core_data/RenderPaths/ForwardHWDepth.xml:
+An example render path for readable hardware depth exists in bin/core_data/render_paths/forward_hw_depth.xml:
 
 \code
 <renderpath>
