@@ -1056,7 +1056,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="188">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/HighRoughMetallic0.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/high_rough_metallic_0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1070,7 +1070,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="189">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/HighRoughMetallic3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/high_rough_metallic_3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1084,7 +1084,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="190">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/HighRoughMetallic5.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/high_rough_metallic_5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1098,7 +1098,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="191">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/HighRoughMetallic7.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/high_rough_metallic_7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1554,7 +1554,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="235">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/HighRoughMetallic10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/high_rough_metallic_10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
