@@ -718,7 +718,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="98">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/MetallicRough10.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic_rough_10.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -732,7 +732,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="104">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/MetallicRough3.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic_rough_3.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -816,7 +816,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="156">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/MetallicRough0.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic_rough_0.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -830,7 +830,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="175">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/MetallicRough7.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic_rough_7.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -844,7 +844,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="105">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/MetallicRough5.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic_rough_5.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -2451,7 +2451,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="310">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2465,7 +2465,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="311">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2479,7 +2479,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="312">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough0.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2493,7 +2493,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="313">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough7.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2507,7 +2507,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="314">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough5.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3007,7 +3007,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="352">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3021,7 +3021,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="353">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3035,7 +3035,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="354">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough0.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3049,7 +3049,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="355">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough7.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3063,7 +3063,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="356">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/MetallicRough5.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic_rough_5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
