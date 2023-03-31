@@ -246,11 +246,12 @@ void CharacterDemo::handle_update(StringHash eventType, VariantMap& eventData)
         // Update controls using keys
         if (!DV_UI.GetFocusElement())
         {
-            character_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
-            character_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));
-            character_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
-            character_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
-            character_->controls_.Set(CTRL_JUMP, input.GetKeyDown(KEY_SPACE));
+            // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
+            character_->controls_.Set(CTRL_FORWARD, input.GetScancodeDown(SCANCODE_W));
+            character_->controls_.Set(CTRL_BACK, input.GetScancodeDown(SCANCODE_S));
+            character_->controls_.Set(CTRL_LEFT, input.GetScancodeDown(SCANCODE_A));
+            character_->controls_.Set(CTRL_RIGHT, input.GetScancodeDown(SCANCODE_D));
+            character_->controls_.Set(CTRL_JUMP, input.GetScancodeDown(SCANCODE_SPACE));
 
             // Add character yaw & pitch from the mouse motion
             character_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
