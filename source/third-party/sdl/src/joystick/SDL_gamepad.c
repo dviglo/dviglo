@@ -30,11 +30,11 @@
 #include "usb_ids.h"
 #include "hidapi/SDL_hidapi_nintendo.h"
 
-#if !SDL_EVENTS_DISABLED
+#ifndef SDL_EVENTS_DISABLED
 #include "../events/SDL_events_c.h"
 #endif
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
 #endif
 
 /* Many gamepads turn the center button into an instantaneous button press */
@@ -814,7 +814,7 @@ static GamepadMapping_t *SDL_PrivateGetGamepadMappingForGUID(SDL_JoystickGUID gu
         }
     }
 
-#if SDL_JOYSTICK_XINPUT
+#ifdef SDL_JOYSTICK_XINPUT
     if (SDL_IsJoystickXInput(guid)) {
         /* This is an XInput device */
         return s_pXInputMapping;
@@ -1135,7 +1135,7 @@ static char *SDL_PrivateGetGamepadGUIDFromMappingString(const char *pMapping)
             SDL_memcpy(&pchGUID[8], &pchGUID[0], 4);
             SDL_memcpy(&pchGUID[0], "03000000", 8);
         }
-#elif __MACOS__
+#elif defined(__MACOS__)
         if (SDL_strlen(pchGUID) == 32 &&
             SDL_memcmp(&pchGUID[4], "000000000000", 12) == 0 &&
             SDL_memcmp(&pchGUID[20], "000000000000", 12) == 0) {
@@ -1472,14 +1472,15 @@ int SDL_AddGamepadMappingsFromRW(SDL_RWops *rw, int freerw)
     const char *platform = SDL_GetPlatform();
     int gamepads = 0;
     char *buf, *line, *line_end, *tmp, *comma, line_platform[64];
-    size_t db_size, platform_len;
+    Sint64 db_size;
+    size_t platform_len;
 
     if (rw == NULL) {
         return SDL_SetError("Invalid RWops");
     }
-    db_size = (size_t)SDL_RWsize(rw);
+    db_size = SDL_RWsize(rw);
 
-    buf = (char *)SDL_malloc(db_size + 1);
+    buf = (char *)SDL_malloc((size_t)db_size + 1);
     if (buf == NULL) {
         if (freerw) {
             SDL_RWclose(rw);
@@ -1845,7 +1846,7 @@ static SDL_bool SDL_GetGamepadMappingFilePath(char *path, size_t size)
         return SDL_strlcpy(path, hint, size) < size;
     }
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
     return SDL_snprintf(path, size, "%s/gamepad_map.txt", SDL_AndroidGetInternalStoragePath()) < size;
 #else
     return SDL_FALSE;
@@ -2055,7 +2056,7 @@ SDL_bool SDL_IsGamepad(SDL_JoystickID instance_id)
     return retval;
 }
 
-#if defined(__LINUX__)
+#ifdef __LINUX__
 static SDL_bool SDL_endswith(const char *string, const char *suffix)
 {
     size_t string_length = string ? SDL_strlen(string) : 0;
@@ -2081,7 +2082,7 @@ SDL_bool SDL_ShouldIgnoreGamepad(const char *name, SDL_JoystickGUID guid)
     Uint16 version;
     Uint32 vidpid;
 
-#if defined(__LINUX__)
+#ifdef __LINUX__
     if (SDL_endswith(name, " Motion Sensors")) {
         /* Don't treat the PS3 and PS4 motion controls as a separate gamepad */
         return SDL_TRUE;
@@ -2115,7 +2116,7 @@ SDL_bool SDL_ShouldIgnoreGamepad(const char *name, SDL_JoystickGUID guid)
         /* We shouldn't ignore Steam's virtual gamepad since it's using the hints to filter out the real gamepads so it can remap input for the virtual gamepad */
         /* https://partner.steamgames.com/doc/features/steam_gamepad/steam_input_gamepad_emulation_bestpractices */
         SDL_bool bSteamVirtualGamepad = SDL_FALSE;
-#if defined(__LINUX__)
+#ifdef __LINUX__
         bSteamVirtualGamepad = (vendor == USB_VENDOR_VALVE && product == USB_PRODUCT_STEAM_VIRTUAL_GAMEPAD);
 #elif defined(__MACOS__)
         bSteamVirtualGamepad = (vendor == USB_VENDOR_MICROSOFT && product == USB_PRODUCT_XBOX360_WIRED_CONTROLLER && version == 1);
@@ -3056,7 +3057,7 @@ static int SDL_SendGamepadAxis(Uint64 timestamp, SDL_Gamepad *gamepad, SDL_Gamep
 
     /* translate the event, if desired */
     posted = 0;
-#if !SDL_EVENTS_DISABLED
+#ifndef SDL_EVENTS_DISABLED
     if (SDL_EventEnabled(SDL_EVENT_GAMEPAD_AXIS_MOTION)) {
         SDL_Event event;
         event.type = SDL_EVENT_GAMEPAD_AXIS_MOTION;
@@ -3076,7 +3077,7 @@ static int SDL_SendGamepadAxis(Uint64 timestamp, SDL_Gamepad *gamepad, SDL_Gamep
 static int SDL_SendGamepadButton(Uint64 timestamp, SDL_Gamepad *gamepad, SDL_GamepadButton button, Uint8 state)
 {
     int posted;
-#if !SDL_EVENTS_DISABLED
+#ifndef SDL_EVENTS_DISABLED
     SDL_Event event;
 
     SDL_AssertJoysticksLocked();
@@ -3118,7 +3119,7 @@ static int SDL_SendGamepadButton(Uint64 timestamp, SDL_Gamepad *gamepad, SDL_Gam
 
     /* translate the event, if desired */
     posted = 0;
-#if !SDL_EVENTS_DISABLED
+#ifndef SDL_EVENTS_DISABLED
     if (SDL_EventEnabled(event.type)) {
         event.common.timestamp = timestamp;
         event.gbutton.which = gamepad->joystick->instance_id;
@@ -3130,6 +3131,7 @@ static int SDL_SendGamepadButton(Uint64 timestamp, SDL_Gamepad *gamepad, SDL_Gam
     return posted;
 }
 
+#ifndef SDL_EVENTS_DISABLED
 static const Uint32 SDL_gamepad_event_list[] = {
     SDL_EVENT_GAMEPAD_AXIS_MOTION,
     SDL_EVENT_GAMEPAD_BUTTON_DOWN,
@@ -3142,6 +3144,7 @@ static const Uint32 SDL_gamepad_event_list[] = {
     SDL_EVENT_GAMEPAD_TOUCHPAD_UP,
     SDL_EVENT_GAMEPAD_SENSOR_UPDATE,
 };
+#endif
 
 void SDL_SetGamepadEventsEnabled(SDL_bool enabled)
 {
@@ -3188,7 +3191,7 @@ void SDL_GamepadHandleDelayedGuideButton(SDL_Joystick *joystick)
 
 const char *SDL_GetGamepadAppleSFSymbolsNameForButton(SDL_Gamepad *gamepad, SDL_GamepadButton button)
 {
-#if defined(SDL_JOYSTICK_MFI)
+#ifdef SDL_JOYSTICK_MFI
     const char *IOS_GetAppleSFSymbolsNameForButton(SDL_Gamepad *gamepad, SDL_GamepadButton button);
     const char *retval;
 
@@ -3208,7 +3211,7 @@ const char *SDL_GetGamepadAppleSFSymbolsNameForButton(SDL_Gamepad *gamepad, SDL_
 
 const char *SDL_GetGamepadAppleSFSymbolsNameForAxis(SDL_Gamepad *gamepad, SDL_GamepadAxis axis)
 {
-#if defined(SDL_JOYSTICK_MFI)
+#ifdef SDL_JOYSTICK_MFI
     const char *IOS_GetAppleSFSymbolsNameForAxis(SDL_Gamepad *gamepad, SDL_GamepadAxis axis);
     const char *retval;
 

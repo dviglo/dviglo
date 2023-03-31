@@ -138,6 +138,7 @@ static void Blit1to2(SDL_BlitInfo *info)
             case 3:
                 *(Uint16 *)dst = map[*src++];
                 dst += 2;
+                SDL_FALLTHROUGH;
             case 2:
                 *(Uint32 *)dst = (map[src[HI]] << 16) | (map[src[LO]]);
                 src += 2;
@@ -167,6 +168,7 @@ static void Blit1to2(SDL_BlitInfo *info)
             case 3:
                 *(Uint16 *)dst = map[*src++];
                 dst += 2;
+                SDL_FALLTHROUGH;
             case 2:
                 *(Uint32 *)dst = (map[src[HI]] << 16) | (map[src[LO]]);
                 src += 2;
@@ -268,8 +270,10 @@ static void Blit1to4(SDL_BlitInfo *info)
         switch (width & 3) {
         case 3:
             *dst++ = map[*src++];
+            SDL_FALLTHROUGH;
         case 2:
             *dst++ = map[*src++];
+            SDL_FALLTHROUGH;
         case 1:
             *dst++ = map[*src++];
         }
@@ -488,7 +492,7 @@ static void Blit1toNAlphaKey(SDL_BlitInfo *info)
                 sB = srcpal[*src].b;
                 DISEMBLE_RGBA(dst, dstbpp, dstfmt, pixel, dR, dG, dB, dA);
                 ALPHA_BLEND_RGBA(sR, sG, sB, A, dR, dG, dB, dA);
-                  ASSEMBLE_RGBA(dst, dstbpp, dstfmt, dR, dG, dB, dA);
+                ASSEMBLE_RGBA(dst, dstbpp, dstfmt, dR, dG, dB, dA);
             }
             src++;
             dst += dstbpp;

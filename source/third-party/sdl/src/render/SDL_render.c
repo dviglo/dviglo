@@ -27,7 +27,7 @@
 #include "../video/SDL_pixels_c.h"
 #include "../video/SDL_video_c.h"
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
 #include "../core/android/SDL_android.h"
 #endif
 
@@ -87,33 +87,33 @@ this should probably be removed at some point in the future.  --ryan. */
     SDL_COMPOSE_BLENDMODE(SDL_BLENDFACTOR_DST_COLOR, SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA, SDL_BLENDOPERATION_ADD, \
                           SDL_BLENDFACTOR_ZERO, SDL_BLENDFACTOR_ONE, SDL_BLENDOPERATION_ADD)
 
-#if !SDL_RENDER_DISABLED
+#ifndef SDL_RENDER_DISABLED
 static const SDL_RenderDriver *render_drivers[] = {
-#if SDL_VIDEO_RENDER_D3D12
+#ifdef SDL_VIDEO_RENDER_D3D12
     &D3D12_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_D3D11
+#ifdef SDL_VIDEO_RENDER_D3D11
     &D3D11_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_D3D
+#ifdef SDL_VIDEO_RENDER_D3D
     &D3D_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_METAL
+#ifdef SDL_VIDEO_RENDER_METAL
     &METAL_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_OGL
+#ifdef SDL_VIDEO_RENDER_OGL
     &GL_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_OGL_ES2
+#ifdef SDL_VIDEO_RENDER_OGL_ES2
     &GLES2_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_PS2
+#ifdef SDL_VIDEO_RENDER_PS2
     &PS2_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_PSP
+#ifdef SDL_VIDEO_RENDER_PSP
     &PSP_RenderDriver,
 #endif
-#if SDL_VIDEO_RENDER_VITA_GXM
+#ifdef SDL_VIDEO_RENDER_VITA_GXM
     &VITA_GXM_RenderDriver,
 #endif
 #if SDL_VIDEO_RENDER_SW
@@ -668,7 +668,7 @@ static int UpdateLogicalPresentation(SDL_Renderer *renderer);
 
 int SDL_GetNumRenderDrivers(void)
 {
-#if !SDL_RENDER_DISABLED
+#ifndef SDL_RENDER_DISABLED
     return SDL_arraysize(render_drivers);
 #else
     return 0;
@@ -677,7 +677,7 @@ int SDL_GetNumRenderDrivers(void)
 
 const char *SDL_GetRenderDriver(int index)
 {
-#if !SDL_RENDER_DISABLED
+#ifndef SDL_RENDER_DISABLED
     if (index < 0 || index >= SDL_GetNumRenderDrivers()) {
         SDL_SetError("index must be in the range of 0 - %d",
                             SDL_GetNumRenderDrivers() - 1);
@@ -741,7 +741,7 @@ int SDL_CreateWindowAndRenderer(int width, int height, Uint32 window_flags, SDL_
     return 0;
 }
 
-#if !SDL_RENDER_DISABLED
+#ifndef SDL_RENDER_DISABLED
 static SDL_INLINE void VerifyDrawQueueFunctions(const SDL_Renderer *renderer)
 {
     /* all of these functions are required to be implemented, even as no-ops, so we don't
@@ -801,14 +801,14 @@ static void SDL_CalculateSimulatedVSyncInterval(SDL_Renderer *renderer, SDL_Wind
 
 SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, const char *name, Uint32 flags)
 {
-#if !SDL_RENDER_DISABLED
+#ifndef SDL_RENDER_DISABLED
     SDL_Renderer *renderer = NULL;
     const int n = SDL_GetNumRenderDrivers();
     SDL_bool batching = SDL_TRUE;
     const char *hint;
     int i;
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
     Android_ActivityMutex_Lock_Running();
 #endif
 
@@ -928,14 +928,14 @@ SDL_Renderer *SDL_CreateRenderer(SDL_Window *window, const char *name, Uint32 fl
     SDL_LogInfo(SDL_LOG_CATEGORY_RENDER,
                 "Created renderer: %s", renderer->info.name);
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
     Android_ActivityMutex_Unlock();
 #endif
     return renderer;
 
 error:
 
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
     Android_ActivityMutex_Unlock();
 #endif
     return NULL;
@@ -948,7 +948,7 @@ error:
 
 SDL_Renderer *SDL_CreateSoftwareRenderer(SDL_Surface *surface)
 {
-#if !SDL_RENDER_DISABLED && SDL_VIDEO_RENDER_SW
+#if !defined(SDL_RENDER_DISABLED) && SDL_VIDEO_RENDER_SW
     SDL_Renderer *renderer;
 
     renderer = SW_CreateRendererForSurface(surface);
@@ -3680,6 +3680,8 @@ static int SDLCALL SDL_SW_RenderGeometryRaw(SDL_Renderer *renderer,
                 s.y = uv0_[1] * texh;
                 s.w = uv1_[0] * texw - s.x;
                 s.h = uv1_[1] * texh - s.y;
+            } else {
+                s.x = s.y = s.w = s.h = 0;
             }
 
             d.x = xy0_[0];

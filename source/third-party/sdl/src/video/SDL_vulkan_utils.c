@@ -22,7 +22,7 @@
 
 #include "SDL_vulkan_internal.h"
 
-#if SDL_VIDEO_VULKAN
+#ifdef SDL_VIDEO_VULKAN
 
 const char *SDL_Vulkan_GetResultString(VkResult result)
 {
@@ -273,7 +273,7 @@ SDL_bool SDL_Vulkan_Display_CreateSurface(void *vkGetInstanceProcAddr_,
         VkDisplayKHR display;
         VkDisplayPlanePropertiesKHR *displayPlaneProperties = NULL;
         VkExtent2D extent;
-        VkDisplayPlaneCapabilitiesKHR planeCaps;
+        VkDisplayPlaneCapabilitiesKHR planeCaps = { 0 };
 
         /* Get information about the physical displays */
         result = vkGetPhysicalDeviceDisplayPropertiesKHR(physicalDevice, &displayPropertiesCount, NULL);

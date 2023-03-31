@@ -20,7 +20,7 @@
 */
 #include "SDL_internal.h"
 
-#if SDL_VIDEO_DRIVER_WINDOWS
+#ifdef SDL_VIDEO_DRIVER_WINDOWS
 
 #include "SDL_windowsvideo.h"
 #include "SDL_windowsshape.h"
@@ -38,7 +38,7 @@
 #include <windowsx.h>
 
 /* For WM_TABLET_QUERYSYSTEMGESTURESTATUS et. al. */
-#if HAVE_TPCSHRD_H
+#ifdef HAVE_TPCSHRD_H
 #include <tpcshrd.h>
 #endif /* HAVE_TPCSHRD_H */
 
@@ -587,7 +587,7 @@ static BOOL WIN_ConvertUTF32toUTF8(UINT32 codepoint, char *text)
 
 static BOOL WIN_ConvertUTF16toUTF8(UINT32 high_surrogate, UINT32 low_surrogate, char *text)
 {
-    const UINT32 SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00;
+    const UINT32 SURROGATE_OFFSET = 0x10000U - (0xD800 << 10) - 0xDC00;
     const UINT32 codepoint = (high_surrogate << 10) + low_surrogate + SURROGATE_OFFSET;
     return WIN_ConvertUTF32toUTF8(codepoint, text);
 }
@@ -1461,7 +1461,7 @@ WIN_WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         break;
 
-#if HAVE_TPCSHRD_H
+#ifdef HAVE_TPCSHRD_H
 
     case WM_TABLET_QUERYSYSTEMGESTURESTATUS:
         /* See https://msdn.microsoft.com/en-us/library/windows/desktop/bb969148(v=vs.85).aspx .

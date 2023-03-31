@@ -20,14 +20,14 @@
 */
 #include "SDL_internal.h"
 
-#if SDL_VIDEO_DRIVER_WINDOWS
+#ifdef SDL_VIDEO_DRIVER_WINDOWS
 
 #include "SDL_windowsvideo.h"
 #include "SDL_windowsopengles.h"
 
 /* WGL implementation of SDL OpenGL support */
 
-#if SDL_VIDEO_OPENGL_WGL
+#ifdef SDL_VIDEO_OPENGL_WGL
 #include <SDL3/SDL_opengl.h>
 
 #define DEFAULT_OPENGL "OPENGL32.DLL"
@@ -95,7 +95,7 @@ typedef HGLRC(APIENTRYP PFNWGLCREATECONTEXTATTRIBSARBPROC)(HDC hDC,
                                                            const int
                                                                *attribList);
 
-#if __XBOXONE__ || __XBOXSERIES__
+#if defined(__XBOXONE__) || defined(__XBOXSERIES__)
 #define GetDC(hwnd)          (HDC) hwnd
 #define ReleaseDC(hwnd, hdc) 1
 #define SwapBuffers          _this->gl_data->wglSwapBuffers
@@ -143,7 +143,7 @@ int WIN_GL_LoadLibrary(_THIS, const char *path)
         SDL_LoadFunction(handle, "wglShareLists");
     /* *INDENT-ON* */ /* clang-format on */
 
-#if __XBOXONE__ || __XBOXSERIES__
+#if defined(__XBOXONE__) || defined(__XBOXSERIES__)
     _this->gl_data->wglSwapBuffers = (BOOL(WINAPI *)(HDC))
         SDL_LoadFunction(handle, "wglSwapBuffers");
     _this->gl_data->wglDescribePixelFormat = (int(WINAPI *)(HDC, int, UINT, LPPIXELFORMATDESCRIPTOR))
@@ -160,7 +160,7 @@ int WIN_GL_LoadLibrary(_THIS, const char *path)
         !_this->gl_data->wglCreateContext ||
         !_this->gl_data->wglDeleteContext ||
         !_this->gl_data->wglMakeCurrent
-#if __XBOXONE__ || __XBOXSERIES__
+#if defined(__XBOXONE__) || defined(__XBOXSERIES__)
         || !_this->gl_data->wglSwapBuffers ||
         !_this->gl_data->wglDescribePixelFormat ||
         !_this->gl_data->wglChoosePixelFormat ||
@@ -249,25 +249,24 @@ static void WIN_GL_SetupPixelFormat(_THIS, PIXELFORMATDESCRIPTOR *pfd)
     }
     pfd->iLayerType = PFD_MAIN_PLANE;
     pfd->iPixelType = PFD_TYPE_RGBA;
-    pfd->cRedBits = _this->gl_config.red_size;
-    pfd->cGreenBits = _this->gl_config.green_size;
-    pfd->cBlueBits = _this->gl_config.blue_size;
-    pfd->cAlphaBits = _this->gl_config.alpha_size;
+    pfd->cRedBits = (BYTE)_this->gl_config.red_size;
+    pfd->cGreenBits = (BYTE)_this->gl_config.green_size;
+    pfd->cBlueBits = (BYTE)_this->gl_config.blue_size;
+    pfd->cAlphaBits = (BYTE)_this->gl_config.alpha_size;
     if (_this->gl_config.buffer_size) {
-        pfd->cColorBits =
-            _this->gl_config.buffer_size - _this->gl_config.alpha_size;
+        pfd->cColorBits = (BYTE)(_this->gl_config.buffer_size - _this->gl_config.alpha_size);
     } else {
         pfd->cColorBits = (pfd->cRedBits + pfd->cGreenBits + pfd->cBlueBits);
     }
-    pfd->cAccumRedBits = _this->gl_config.accum_red_size;
-    pfd->cAccumGreenBits = _this->gl_config.accum_green_size;
-    pfd->cAccumBlueBits = _this->gl_config.accum_blue_size;
-    pfd->cAccumAlphaBits = _this->gl_config.accum_alpha_size;
+    pfd->cAccumRedBits = (BYTE)_this->gl_config.accum_red_size;
+    pfd->cAccumGreenBits = (BYTE)_this->gl_config.accum_green_size;
+    pfd->cAccumBlueBits = (BYTE)_this->gl_config.accum_blue_size;
+    pfd->cAccumAlphaBits = (BYTE)_this->gl_config.accum_alpha_size;
     pfd->cAccumBits =
         (pfd->cAccumRedBits + pfd->cAccumGreenBits + pfd->cAccumBlueBits +
          pfd->cAccumAlphaBits);
-    pfd->cDepthBits = _this->gl_config.depth_size;
-    pfd->cStencilBits = _this->gl_config.stencil_size;
+    pfd->cDepthBits = (BYTE)_this->gl_config.depth_size;
+    pfd->cStencilBits = (BYTE)_this->gl_config.stencil_size;
 }
 
 /* Choose the closest pixel format that meets or exceeds the target.
@@ -702,7 +701,7 @@ SDL_GLContext WIN_GL_CreateContext(_THIS, SDL_Window *window)
     HGLRC context, share_context;
 
     if (_this->gl_config.profile_mask == SDL_GL_CONTEXT_PROFILE_ES && WIN_GL_UseEGL(_this)) {
-#if SDL_VIDEO_OPENGL_EGL
+#ifdef SDL_VIDEO_OPENGL_EGL
         /* Switch to EGL based functions */
         WIN_GL_UnloadLibrary(_this);
         _this->GL_LoadLibrary = WIN_GLES_LoadLibrary;

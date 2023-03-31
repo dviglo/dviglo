@@ -29,7 +29,7 @@
 */
 
 /* direct jump magic can use these, the rest needs special code. */
-#if !SDL_DYNAPI_PROC_NO_VARARGS
+#ifndef SDL_DYNAPI_PROC_NO_VARARGS
 SDL_DYNAPI_PROC(void,SDL_Log,(SDL_PRINTF_FORMAT_STRING const char *a, ...),(a),)
 SDL_DYNAPI_PROC(void,SDL_LogCritical,(int a, SDL_PRINTF_FORMAT_STRING const char *b, ...),(a,b),)
 SDL_DYNAPI_PROC(void,SDL_LogDebug,(int a, SDL_PRINTF_FORMAT_STRING const char *b, ...),(a,b),)
@@ -78,7 +78,7 @@ SDL_DYNAPI_PROC(ID3D11Device*,SDL_GetRenderD3D11Device,(SDL_Renderer *a),(a),ret
 SDL_DYNAPI_PROC(IDirect3DDevice9*,SDL_GetRenderD3D9Device,(SDL_Renderer *a),(a),return)
 #endif
 
-#if defined(__GDK__)
+#ifdef __GDK__
 SDL_DYNAPI_PROC(int,SDL_GDKGetTaskQueue,(XTaskQueueHandle *a),(a),return)
 SDL_DYNAPI_PROC(void,SDL_GDKSuspendComplete,(void),(),)
 #endif

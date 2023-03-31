@@ -183,7 +183,7 @@ static int SDL_UpperSoftStretch(SDL_Surface *src, const SDL_Rect *srcrect,
     left_pad_w = left_pad_w_init;                                      \
     middle = middle_init;
 
-#if defined(__clang__)
+#ifdef __clang__
 // Remove inlining of this function
 // Compiler crash with clang 9.0.8 / android-ndk-r21d
 // Compiler crash with clang 11.0.3 / Xcode
@@ -263,10 +263,10 @@ static SDL_INLINE void INTERPOL(const Uint32 *src_x0, const Uint32 *src_x1, int 
     cx->c = c0->c + INTEGER(frac0 * (c1->c - c0->c));
     cx->d = c0->d + INTEGER(frac0 * (c1->d - c0->d));
 #else
-    cx->a = INTEGER(frac1 * c0->a + frac0 * c1->a);
-    cx->b = INTEGER(frac1 * c0->b + frac0 * c1->b);
-    cx->c = INTEGER(frac1 * c0->c + frac0 * c1->c);
-    cx->d = INTEGER(frac1 * c0->d + frac0 * c1->d);
+    cx->a = (Uint8)INTEGER(frac1 * c0->a + frac0 * c1->a);
+    cx->b = (Uint8)INTEGER(frac1 * c0->b + frac0 * c1->b);
+    cx->c = (Uint8)INTEGER(frac1 * c0->c + frac0 * c1->c);
+    cx->d = (Uint8)INTEGER(frac1 * c0->d + frac0 * c1->d);
 #endif
 }
 
@@ -332,13 +332,13 @@ static int scale_mat(const Uint32 *src, int src_w, int src_h, int src_pitch,
     return 0;
 }
 
-#if SDL_NEON_INTRINSICS
+#ifdef SDL_NEON_INTRINSICS
 #define CAST_uint8x8_t       (uint8x8_t)
 #define CAST_uint32x2_t      (uint32x2_t)
 #endif
 
 #if defined(__WINRT__) || defined(_MSC_VER)
-#if SDL_NEON_INTRINSICS
+#ifdef SDL_NEON_INTRINSICS
 #undef CAST_uint8x8_t
 #undef CAST_uint32x2_t
 #define CAST_uint8x8_t
@@ -346,7 +346,7 @@ static int scale_mat(const Uint32 *src, int src_w, int src_h, int src_pitch,
 #endif
 #endif
 
-#if defined(SDL_SSE2_INTRINSICS)
+#ifdef SDL_SSE2_INTRINSICS
 
 #if 0
 static void SDL_TARGETING("sse2") printf_128(const char *str, __m128i var)
@@ -375,7 +375,7 @@ static SDL_INLINE void SDL_TARGETING("sse2") INTERPOL_BILINEAR_SSE(const Uint32 
     int f, f2;
     f = frac_w;
     f2 = FRAC_ONE - frac_w;
-    v_frac_w0 = _mm_set_epi16(f, f2, f, f2, f, f2, f, f2);
+    v_frac_w0 = _mm_set_epi16((short)f, (short)f2, (short)f, (short)f2, (short)f, (short)f2, (short)f, (short)f2);
 
     x_00_01 = _mm_loadl_epi64((const __m128i *)s0); /* Load x00 and x01 */
     x_10_11 = _mm_loadl_epi64((const __m128i *)s1);
@@ -418,8 +418,8 @@ static int SDL_TARGETING("sse2") scale_mat_SSE(const Uint32 *src, int src_w, int
 
         nb_block2 = middle / 2;
 
-        v_frac_h0 = _mm_set_epi16(frac_h0, frac_h0, frac_h0, frac_h0, frac_h0, frac_h0, frac_h0, frac_h0);
-        v_frac_h1 = _mm_set_epi16(frac_h1, frac_h1, frac_h1, frac_h1, frac_h1, frac_h1, frac_h1, frac_h1);
+        v_frac_h0 = _mm_set_epi16((short)frac_h0, (short)frac_h0, (short)frac_h0, (short)frac_h0, (short)frac_h0, (short)frac_h0, (short)frac_h0, (short)frac_h0);
+        v_frac_h1 = _mm_set_epi16((short)frac_h1, (short)frac_h1, (short)frac_h1, (short)frac_h1, (short)frac_h1, (short)frac_h1, (short)frac_h1, (short)frac_h1);
         zero = _mm_setzero_si128();
 
         while (left_pad_w--) {
@@ -460,11 +460,11 @@ static int SDL_TARGETING("sse2") scale_mat_SSE(const Uint32 *src, int src_w, int
 
             f = frac_w_0;
             f2 = FRAC_ONE - frac_w_0;
-            v_frac_w0 = _mm_set_epi16(f, f2, f, f2, f, f2, f, f2);
+            v_frac_w0 = _mm_set_epi16((short)f, (short)f2, (short)f, (short)f2, (short)f, (short)f2, (short)f, (short)f2);
 
             f = frac_w_1;
             f2 = FRAC_ONE - frac_w_1;
-            v_frac_w1 = _mm_set_epi16(f, f2, f, f2, f, f2, f, f2);
+            v_frac_w1 = _mm_set_epi16((short)f, (short)f2, (short)f, (short)f2, (short)f, (short)f2, (short)f, (short)f2);
 
             x_00_01 = _mm_loadl_epi64((const __m128i *)s_00_01); /* Load x00 and x01 */
             x_02_03 = _mm_loadl_epi64((const __m128i *)s_02_03);
@@ -524,7 +524,7 @@ static int SDL_TARGETING("sse2") scale_mat_SSE(const Uint32 *src, int src_w, int
 }
 #endif
 
-#if defined(SDL_NEON_INTRINSICS)
+#ifdef SDL_NEON_INTRINSICS
 
 static SDL_INLINE int hasNEON(void)
 {
@@ -800,13 +800,13 @@ int SDL_LowerSoftStretchLinear(SDL_Surface *s, const SDL_Rect *srcrect,
     Uint32 *src = (Uint32 *)((Uint8 *)s->pixels + srcrect->x * 4 + srcrect->y * src_pitch);
     Uint32 *dst = (Uint32 *)((Uint8 *)d->pixels + dstrect->x * 4 + dstrect->y * dst_pitch);
 
-#if defined(SDL_NEON_INTRINSICS)
+#ifdef SDL_NEON_INTRINSICS
     if (ret == -1 && hasNEON()) {
         ret = scale_mat_NEON(src, src_w, src_h, src_pitch, dst, dst_w, dst_h, dst_pitch);
     }
 #endif
 
-#if defined(SDL_SSE2_INTRINSICS)
+#ifdef SDL_SSE2_INTRINSICS
     if (ret == -1 && hasSSE2()) {
         ret = scale_mat_SSE(src, src_w, src_h, src_pitch, dst, dst_w, dst_h, dst_pitch);
     }

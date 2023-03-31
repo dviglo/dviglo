@@ -42,7 +42,7 @@
 #elif defined(__FreeBSD__) && defined(__powerpc__)
 #include <machine/cpu.h>
 #include <sys/auxv.h>
-#elif SDL_ALTIVEC_BLITTERS && HAVE_SETJMP
+#elif defined(SDL_ALTIVEC_BLITTERS) && defined(HAVE_SETJMP)
 #include <signal.h>
 #include <setjmp.h>
 #endif
@@ -106,7 +106,7 @@
 #define CPU_CFG2_LSX  (1 << 6)
 #define CPU_CFG2_LASX (1 << 7)
 
-#if SDL_ALTIVEC_BLITTERS && HAVE_SETJMP && !__MACOS__ && !__OpenBSD__ && !__FreeBSD__
+#if defined(SDL_ALTIVEC_BLITTERS) && defined(HAVE_SETJMP) && !defined(__MACOS__) && !defined(__OpenBSD__) && !defined(__FreeBSD__)
 /* This is the brute force way of detecting instruction sets...
    the idea is borrowed from the libmpeg2 library - thanks!
  */
@@ -335,7 +335,7 @@ static int CPU_haveAltiVec(void)
     elf_aux_info(AT_HWCAP, &cpufeatures, sizeof(cpufeatures));
     altivec = cpufeatures & PPC_FEATURE_HAS_ALTIVEC;
     return altivec;
-#elif SDL_ALTIVEC_BLITTERS && HAVE_SETJMP
+#elif defined(SDL_ALTIVEC_BLITTERS) && defined(HAVE_SETJMP)
     void (*handler)(int sig);
     handler = signal(SIGILL, illegal_instruction);
     if (setjmp(jmpbuf) == 0) {
@@ -439,21 +439,21 @@ static int CPU_haveNEON(void)
 {
 /* The way you detect NEON is a privileged instruction on ARM, so you have
    query the OS kernel in a platform-specific way. :/ */
-#if defined(SDL_CPUINFO_DISABLED)
+#ifdef SDL_CPUINFO_DISABLED
     return 0; /* disabled */
 #elif (defined(__WINDOWS__) || defined(__WINRT__) || defined(__GDK__)) && (defined(_M_ARM) || defined(_M_ARM64))
 /* Visual Studio, for ARM, doesn't define __ARM_ARCH. Handle this first. */
 /* Seems to have been removed */
-#if !defined(PF_ARM_NEON_INSTRUCTIONS_AVAILABLE)
+#ifndef PF_ARM_NEON_INSTRUCTIONS_AVAILABLE
 #define PF_ARM_NEON_INSTRUCTIONS_AVAILABLE 19
 #endif
     /* All WinRT ARM devices are required to support NEON, but just in case. */
     return IsProcessorFeaturePresent(PF_ARM_NEON_INSTRUCTIONS_AVAILABLE) != 0;
 #elif (defined(__ARM_ARCH) && (__ARM_ARCH >= 8)) || defined(__aarch64__)
     return 1; /* ARMv8 always has non-optional NEON support. */
-#elif __VITA__
+#elif defined(__VITA__)
     return 1;
-#elif __3DS__
+#elif defined(__3DS__)
     return 0;
 #elif defined(__APPLE__) && defined(__ARM_ARCH) && (__ARM_ARCH >= 7)
     /* (note that sysctlbyname("hw.optional.neon") doesn't work!) */
@@ -519,38 +519,38 @@ static int CPU_readCPUCFG(void)
 #define CPU_haveLSX()  (CPU_readCPUCFG() & CPU_CFG2_LSX)
 #define CPU_haveLASX() (CPU_readCPUCFG() & CPU_CFG2_LASX)
 
-#if defined(__e2k__)
-#if defined(__MMX__)
+#ifdef __e2k__
+#ifdef __MMX__
 #define CPU_haveMMX() (1)
 #else
 #define CPU_haveMMX() (0)
 #endif
-#if defined(__SSE__)
+#ifdef __SSE__
 #define CPU_haveSSE() (1)
 #else
 #define CPU_haveSSE() (0)
 #endif
-#if defined(__SSE2__)
+#ifdef __SSE2__
 #define CPU_haveSSE2() (1)
 #else
 #define CPU_haveSSE2() (0)
 #endif
-#if defined(__SSE3__)
+#ifdef __SSE3__
 #define CPU_haveSSE3() (1)
 #else
 #define CPU_haveSSE3() (0)
 #endif
-#if defined(__SSE4_1__)
+#ifdef __SSE4_1__
 #define CPU_haveSSE41() (1)
 #else
 #define CPU_haveSSE41() (0)
 #endif
-#if defined(__SSE4_2__)
+#ifdef __SSE4_2__
 #define CPU_haveSSE42() (1)
 #else
 #define CPU_haveSSE42() (0)
 #endif
-#if defined(__AVX__)
+#ifdef __AVX__
 #define CPU_haveAVX() (1)
 #else
 #define CPU_haveAVX() (0)
@@ -565,11 +565,11 @@ static int CPU_readCPUCFG(void)
 #define CPU_haveAVX()   (CPU_OSSavesYMM && (CPU_CPUIDFeatures[2] & 0x10000000))
 #endif
 
-#if defined(__e2k__)
+#ifdef __e2k__
 inline int
 CPU_haveAVX2(void)
 {
-#if defined(__AVX2__)
+#ifdef __AVX2__
     return 1;
 #else
     return 0;
@@ -591,7 +591,7 @@ static int CPU_haveAVX2(void)
 }
 #endif
 
-#if defined(__e2k__)
+#ifdef __e2k__
 inline int
 CPU_haveAVX512F(void)
 {
@@ -646,7 +646,7 @@ int SDL_GetCPUCount(void)
     return SDL_CPUCount;
 }
 
-#if defined(__e2k__)
+#ifdef __e2k__
 inline const char *
 SDL_GetCPUType(void)
 {
@@ -704,7 +704,7 @@ static const char *SDL_GetCPUType(void)
 
 #if 0
 !!! FIXME: Not used at the moment. */
-#if defined(__e2k__)
+#ifdef __e2k__
 inline const char *
 SDL_GetCPUName(void)
 {

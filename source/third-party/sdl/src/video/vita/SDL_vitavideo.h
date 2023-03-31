@@ -45,7 +45,7 @@ struct SDL_WindowData
     SDL_bool uses_gles;
     SceUID buffer_uid;
     void *buffer;
-#if defined(SDL_VIDEO_VITA_PVR)
+#ifdef SDL_VIDEO_VITA_PVR
     EGLSurface egl_surface;
     EGLContext egl_context;
 #endif
@@ -76,8 +76,8 @@ void VITA_RestoreWindow(_THIS, SDL_Window *window);
 void VITA_SetWindowGrab(_THIS, SDL_Window *window, SDL_bool grabbed);
 void VITA_DestroyWindow(_THIS, SDL_Window *window);
 
-#if SDL_VIDEO_DRIVER_VITA
-#if defined(SDL_VIDEO_VITA_PVR_OGL)
+#ifdef SDL_VIDEO_DRIVER_VITA
+#ifdef SDL_VIDEO_VITA_PVR_OGL
 /* OpenGL functions */
 int VITA_GL_LoadLibrary(_THIS, const char *path);
 SDL_GLContext VITA_GL_CreateContext(_THIS, SDL_Window *window);

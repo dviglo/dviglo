@@ -23,11 +23,11 @@
 #ifndef SDL_vivanteplatform_h_
 #define SDL_vivanteplatform_h_
 
-#if SDL_VIDEO_DRIVER_VIVANTE
+#ifdef SDL_VIDEO_DRIVER_VIVANTE
 
 #include "SDL_vivantevideo.h"
 
-#if defined(CAVIUM)
+#ifdef CAVIUM
 #define VIVANTE_PLATFORM_CAVIUM
 #elif defined(MARVELL)
 #define VIVANTE_PLATFORM_MARVELL

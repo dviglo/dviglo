@@ -34,70 +34,70 @@ static SDL_AudioDevice *open_devices[16];
 
 /* Available audio drivers */
 static const AudioBootStrap *const bootstrap[] = {
-#if SDL_AUDIO_DRIVER_PULSEAUDIO
+#ifdef SDL_AUDIO_DRIVER_PULSEAUDIO
     &PULSEAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_ALSA
+#ifdef SDL_AUDIO_DRIVER_ALSA
     &ALSA_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_SNDIO
+#ifdef SDL_AUDIO_DRIVER_SNDIO
     &SNDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_NETBSD
+#ifdef SDL_AUDIO_DRIVER_NETBSD
     &NETBSDAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_WASAPI
+#ifdef SDL_AUDIO_DRIVER_WASAPI
     &WASAPI_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_DSOUND
+#ifdef SDL_AUDIO_DRIVER_DSOUND
     &DSOUND_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_HAIKU
+#ifdef SDL_AUDIO_DRIVER_HAIKU
     &HAIKUAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_COREAUDIO
+#ifdef SDL_AUDIO_DRIVER_COREAUDIO
     &COREAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_AAUDIO
+#ifdef SDL_AUDIO_DRIVER_AAUDIO
     &aaudio_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_OPENSLES
+#ifdef SDL_AUDIO_DRIVER_OPENSLES
     &openslES_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_ANDROID
+#ifdef SDL_AUDIO_DRIVER_ANDROID
     &ANDROIDAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_PS2
+#ifdef SDL_AUDIO_DRIVER_PS2
     &PS2AUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_PSP
+#ifdef SDL_AUDIO_DRIVER_PSP
     &PSPAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_VITA
+#ifdef SDL_AUDIO_DRIVER_VITA
     &VITAAUD_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_N3DS
+#ifdef SDL_AUDIO_DRIVER_N3DS
     &N3DSAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_EMSCRIPTEN
+#ifdef SDL_AUDIO_DRIVER_EMSCRIPTEN
     &EMSCRIPTENAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_JACK
+#ifdef SDL_AUDIO_DRIVER_JACK
     &JACK_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_PIPEWIRE
+#ifdef SDL_AUDIO_DRIVER_PIPEWIRE
     &PIPEWIRE_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_OSS
+#ifdef SDL_AUDIO_DRIVER_OSS
     &DSP_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_QNX
+#ifdef SDL_AUDIO_DRIVER_QNX
     &QSAAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_DISK
+#ifdef SDL_AUDIO_DRIVER_DISK
     &DISKAUDIO_bootstrap,
 #endif
-#if SDL_AUDIO_DRIVER_DUMMY
+#ifdef SDL_AUDIO_DRIVER_DUMMY
     &DUMMYAUDIO_bootstrap,
 #endif
     NULL
@@ -631,7 +631,7 @@ int SDL_ClearQueuedAudio(SDL_AudioDeviceID devid)
     return 0;
 }
 
-#if SDL_AUDIO_DRIVER_ANDROID
+#ifdef SDL_AUDIO_DRIVER_ANDROID
 extern void Android_JNI_AudioSetThreadPriority(int, int);
 #endif
 
@@ -646,7 +646,7 @@ static int SDLCALL SDL_RunAudio(void *devicep)
 
     SDL_assert(!device->iscapture);
 
-#if SDL_AUDIO_DRIVER_ANDROID
+#ifdef SDL_AUDIO_DRIVER_ANDROID
     {
         /* Set thread priority to THREAD_PRIORITY_AUDIO */
         Android_JNI_AudioSetThreadPriority(device->iscapture, device->id);
@@ -666,7 +666,7 @@ static int SDLCALL SDL_RunAudio(void *devicep)
 
         /* Fill the current buffer with sound */
         if (!device->stream && SDL_AtomicGet(&device->enabled)) {
-            SDL_assert(data_len == device->spec.size);
+            SDL_assert((Uint32)data_len == device->spec.size);
             data = current_audio.impl.GetDeviceBuf(device);
         } else {
             /* if the device isn't enabled, we still write to the
@@ -700,13 +700,13 @@ static int SDLCALL SDL_RunAudio(void *devicep)
                 int got;
                 data = SDL_AtomicGet(&device->enabled) ? current_audio.impl.GetDeviceBuf(device) : NULL;
                 got = SDL_GetAudioStreamData(device->stream, data ? data : device->work_buffer, device->spec.size);
-                SDL_assert((got <= 0) || (got == device->spec.size));
+                SDL_assert((got <= 0) || ((Uint32)got == device->spec.size));
 
                 if (data == NULL) { /* device is having issues... */
                     const Uint32 delay = ((device->spec.samples * 1000) / device->spec.freq);
                     SDL_Delay(delay); /* wait for as long as this buffer would have played. Maybe device recovers later? */
                 } else {
-                    if (got != device->spec.size) {
+                    if ((Uint32)got != device->spec.size) {
                         SDL_memset(data, device->spec.silence, device->spec.size);
                     }
                     current_audio.impl.PlayDevice(device);
@@ -746,7 +746,7 @@ static int SDLCALL SDL_CaptureAudio(void *devicep)
 
     SDL_assert(device->iscapture);
 
-#if SDL_AUDIO_DRIVER_ANDROID
+#ifdef SDL_AUDIO_DRIVER_ANDROID
     {
         /* Set thread priority to THREAD_PRIORITY_AUDIO */
         Android_JNI_AudioSetThreadPriority(device->iscapture, device->id);
@@ -814,8 +814,8 @@ static int SDLCALL SDL_CaptureAudio(void *devicep)
 
             while (SDL_GetAudioStreamAvailable(device->stream) >= ((int)device->callbackspec.size)) {
                 const int got = SDL_GetAudioStreamData(device->stream, device->work_buffer, device->callbackspec.size);
-                SDL_assert((got < 0) || (got == device->callbackspec.size));
-                if (got != device->callbackspec.size) {
+                SDL_assert((got < 0) || ((Uint32)got == device->callbackspec.size));
+                if ((Uint32)got != device->callbackspec.size) {
                     SDL_memset(device->work_buffer, device->spec.silence, device->callbackspec.size);
                 }
 
@@ -901,7 +901,7 @@ int SDL_InitAudio(const char *driver_name)
             const char *driver_attempt_end = SDL_strchr(driver_attempt, ',');
             size_t driver_attempt_len = (driver_attempt_end != NULL) ? (driver_attempt_end - driver_attempt)
                                                                      : SDL_strlen(driver_attempt);
-#if SDL_AUDIO_DRIVER_DSOUND
+#ifdef SDL_AUDIO_DRIVER_DSOUND
             /* SDL 1.2 uses the name "dsound", so we'll support both. */
             if (driver_attempt_len == SDL_strlen("dsound") &&
                 (SDL_strncasecmp(driver_attempt, "dsound", driver_attempt_len) == 0)) {
@@ -910,7 +910,7 @@ int SDL_InitAudio(const char *driver_name)
             }
 #endif
 
-#if SDL_AUDIO_DRIVER_PULSEAUDIO
+#ifdef SDL_AUDIO_DRIVER_PULSEAUDIO
             /* SDL 1.2 uses the name "pulse", so we'll support both. */
             if (driver_attempt_len == SDL_strlen("pulse") &&
                 (SDL_strncasecmp(driver_attempt, "pulse", driver_attempt_len) == 0)) {
@@ -1162,7 +1162,7 @@ GetDefaultSamplesFromFreq(int freq)
 {
     /* Pick a default of ~46 ms at desired frequency */
     /* !!! FIXME: remove this when the non-Po2 resampling is in. */
-    const Uint16 max_sample = (freq / 1000) * 46;
+    const Uint16 max_sample = (Uint16)((freq / 1000) * 46);
     Uint16 current_sample = 1;
     while (current_sample < max_sample) {
         current_sample *= 2;
@@ -1373,7 +1373,13 @@ static SDL_AudioDeviceID open_audio_device(const char *devname, int iscapture,
      * value we got from 'desired' and round up to the nearest value
      */
     if (!current_audio.impl.SupportsNonPow2Samples && device->spec.samples > 0) {
-        device->spec.samples = SDL_powerof2(device->spec.samples);
+        int samples = SDL_powerof2(device->spec.samples);
+        if (samples <= SDL_MAX_UINT16) {
+            device->spec.samples = (Uint16)samples;
+        } else {
+            SDL_SetError("Couldn't hold sample count %d\n", samples);
+            return 0;
+        }
     }
 
     if (current_audio.impl.OpenDevice(device, devname) < 0) {

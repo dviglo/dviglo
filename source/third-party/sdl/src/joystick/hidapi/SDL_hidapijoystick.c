@@ -135,6 +135,13 @@ void HIDAPI_DumpPacket(const char *prefix, const Uint8 *data, int size)
 
 SDL_bool HIDAPI_SupportsPlaystationDetection(Uint16 vendor, Uint16 product)
 {
+    /* If we already know the controller is a different type, don't try to detect it.
+     * This fixes a hang with the HORIPAD for Nintendo Switch (0x0f0d/0x00c1)
+     */
+    if (SDL_GetGamepadTypeFromVIDPID(vendor, product, NULL, SDL_FALSE) != SDL_GAMEPAD_TYPE_UNKNOWN) {
+        return SDL_FALSE;
+    }
+
     switch (vendor) {
     case USB_VENDOR_DRAGONRISE:
         return SDL_TRUE;
@@ -554,7 +561,7 @@ static int HIDAPI_JoystickInit(void)
         return 0;
     }
 
-#if defined(SDL_USE_LIBUDEV)
+#ifdef SDL_USE_LIBUDEV
     if (linux_enumeration_method == ENUMERATION_UNSET) {
         if (SDL_getenv("SDL_HIDAPI_JOYSTICK_DISABLE_UDEV") != NULL) {
             SDL_LogDebug(SDL_LOG_CATEGORY_INPUT,
@@ -1373,14 +1380,14 @@ static SDL_JoystickGUID HIDAPI_JoystickGetDeviceGUID(int device_index)
 
 static SDL_JoystickID HIDAPI_JoystickGetDeviceInstanceID(int device_index)
 {
-    SDL_JoystickID joystickID = -1;
+    SDL_JoystickID joystickID = 0;
     HIDAPI_GetDeviceByIndex(device_index, &joystickID);
     return joystickID;
 }
 
 static int HIDAPI_JoystickOpen(SDL_Joystick *joystick, int device_index)
 {
-    SDL_JoystickID joystickID = -1;
+    SDL_JoystickID joystickID = 0;
     SDL_HIDAPI_Device *device = HIDAPI_GetDeviceByIndex(device_index, &joystickID);
     struct joystick_hwdata *hwdata;
 

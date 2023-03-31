@@ -28,7 +28,7 @@
 
 #include "SDL_mfijoystick_c.h"
 
-#if !SDL_EVENTS_DISABLED
+#ifndef SDL_EVENTS_DISABLED
 #include "../../events/SDL_events_c.h"
 #endif
 
@@ -37,7 +37,7 @@
 #import <CoreMotion/CoreMotion.h>
 #endif
 
-#if defined(__MACOS__)
+#ifdef __MACOS__
 #include <IOKit/hid/IOHIDManager.h>
 #include <AppKit/NSApplication.h>
 #ifndef NSAppKitVersionNumber10_15
@@ -54,6 +54,18 @@ static NSString *GCInputXboxShareButton = @"Button Share";
 
 #include <Availability.h>
 #include <objc/message.h>
+
+#ifndef __IPHONE_OS_VERSION_MAX_ALLOWED
+#define __IPHONE_OS_VERSION_MAX_ALLOWED 0
+#endif
+
+#ifndef __APPLETV_OS_VERSION_MAX_ALLOWED
+#define __APPLETV_OS_VERSION_MAX_ALLOWED 0
+#endif
+
+#ifndef __MAC_OS_VERSION_MAX_ALLOWED
+#define __MAC_OS_VERSION_MAX_ALLOWED 0
+#endif
 
 /* remove compilation warnings for strict builds by defining these selectors, even though
  * they are only ever used indirectly through objc_msgSend
@@ -648,7 +660,7 @@ static void SDLCALL SDL_AppleTVRemoteRotationHintChanged(void *udata, const char
 
 static int IOS_JoystickInit(void)
 {
-#if defined(__MACOS__)
+#ifdef __MACOS__
 #if SDL_HAS_BUILTIN(__builtin_available)
     if (@available(macOS 10.16, *)) {
         /* Continue with initialization on macOS 11+ */
@@ -929,7 +941,7 @@ static Uint8 IOS_MFIJoystickHatStateForDPad(GCControllerDirectionPad *dpad)
 
 static void IOS_MFIJoystickUpdate(SDL_Joystick *joystick)
 {
-#if SDL_JOYSTICK_MFI
+#ifdef SDL_JOYSTICK_MFI
     @autoreleasepool {
         GCController *controller = joystick->hwdata->controller;
         Uint8 hatstate = SDL_HAT_CENTERED;

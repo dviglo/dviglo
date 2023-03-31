@@ -25,7 +25,7 @@
 #define HAVE_MSC_ATOMICS 1
 #endif
 
-#if defined(__MACOS__) /* !!! FIXME: should we favor gcc atomics? */
+#ifdef __MACOS__ /* !!! FIXME: should we favor gcc atomics? */
 #include <libkern/OSAtomic.h>
 #endif
 
@@ -34,11 +34,11 @@
 #endif
 
 /* The __atomic_load_n() intrinsic showed up in different times for different compilers. */
-#if defined(__clang__)
+#ifdef __clang__
 #if __has_builtin(__atomic_load_n) || defined(HAVE_GCC_ATOMICS)
 /* !!! FIXME: this advertises as available in the NDK but uses an external symbol we don't have.
    It might be in a later NDK or we might need an extra library? --ryan. */
-#if !defined(__ANDROID__)
+#ifndef __ANDROID__
 #define HAVE_ATOMIC_LOAD_N 1
 #endif
 #endif
@@ -104,7 +104,7 @@ extern __inline int _SDL_xadd_watcom(volatile int *a, int v);
 #define EMULATE_CAS 1
 #endif
 
-#if EMULATE_CAS
+#ifdef EMULATE_CAS
 static SDL_SpinLock locks[32];
 
 static SDL_INLINE void enterLock(void *a)
@@ -136,7 +136,7 @@ SDL_AtomicCAS(SDL_AtomicInt *a, int oldval, int newval)
     return (SDL_bool)OSAtomicCompareAndSwap32Barrier(oldval, newval, &a->value);
 #elif defined(__SOLARIS__)
     return (SDL_bool)((int)atomic_cas_uint((volatile uint_t *)&a->value, (uint_t)oldval, (uint_t)newval) == oldval);
-#elif EMULATE_CAS
+#elif defined(EMULATE_CAS)
     SDL_bool retval = SDL_FALSE;
 
     enterLock(a);
@@ -155,7 +155,7 @@ SDL_AtomicCAS(SDL_AtomicInt *a, int oldval, int newval)
 SDL_bool
 SDL_AtomicCASPtr(void **a, void *oldval, void *newval)
 {
-#if defined(HAVE_MSC_ATOMICS)
+#ifdef HAVE_MSC_ATOMICS
     return _InterlockedCompareExchangePointer(a, newval, oldval) == oldval;
 #elif defined(HAVE_WATCOM_ATOMICS)
     return (SDL_bool)_SDL_cmpxchg_watcom((int *)a, (long)newval, (long)oldval);
@@ -167,7 +167,7 @@ SDL_AtomicCASPtr(void **a, void *oldval, void *newval)
     return (SDL_bool)OSAtomicCompareAndSwap32Barrier((int32_t)oldval, (int32_t)newval, (int32_t *)a);
 #elif defined(__SOLARIS__)
     return (SDL_bool)(atomic_cas_ptr(a, oldval, newval) == oldval);
-#elif EMULATE_CAS
+#elif defined(EMULATE_CAS)
     SDL_bool retval = SDL_FALSE;
 
     enterLock(a);
@@ -206,7 +206,7 @@ int SDL_AtomicSet(SDL_AtomicInt *a, int v)
 void *
 SDL_AtomicSetPtr(void **a, void *v)
 {
-#if defined(HAVE_MSC_ATOMICS)
+#ifdef HAVE_MSC_ATOMICS
     return _InterlockedExchangePointer(a, v);
 #elif defined(HAVE_WATCOM_ATOMICS)
     return (void *)_SDL_xchg_watcom((int *)a, (long)v);

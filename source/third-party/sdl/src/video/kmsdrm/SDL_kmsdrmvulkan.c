@@ -26,7 +26,7 @@
 
 #include "SDL_internal.h"
 
-#if SDL_VIDEO_VULKAN && SDL_VIDEO_DRIVER_KMSDRM
+#if defined(SDL_VIDEO_VULKAN) && defined(SDL_VIDEO_DRIVER_KMSDRM)
 
 #include "SDL_kmsdrmvideo.h"
 #include "SDL_kmsdrmdyn.h"
@@ -36,7 +36,7 @@
 
 #include <sys/ioctl.h>
 
-#if defined(__OpenBSD__)
+#ifdef __OpenBSD__
 #define DEFAULT_VULKAN "libvulkan.so"
 #else
 #define DEFAULT_VULKAN "libvulkan.so.1"

@@ -31,7 +31,7 @@
 */
 #include "SDL_internal.h"
 
-#if SDL_JOYSTICK_RAWINPUT
+#ifdef SDL_JOYSTICK_RAWINPUT
 
 #include "../usb_ids.h"
 #include "../SDL_sysjoystick.h"
@@ -1282,7 +1282,7 @@ static int RAWINPUT_JoystickRumble(SDL_Joystick *joystick, Uint16 low_frequency_
 
 static int RAWINPUT_JoystickRumbleTriggers(SDL_Joystick *joystick, Uint16 left_rumble, Uint16 right_rumble)
 {
-#if defined(SDL_JOYSTICK_RAWINPUT_WGI)
+#ifdef SDL_JOYSTICK_RAWINPUT_WGI
     RAWINPUT_DeviceContext *ctx = joystick->hwdata;
 
     if (ctx->wgi_correlated) {

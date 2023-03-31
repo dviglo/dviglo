@@ -21,7 +21,7 @@
 
 #include "SDL_internal.h"
 
-#if SDL_VIDEO_DRIVER_WAYLAND
+#ifdef SDL_VIDEO_DRIVER_WAYLAND
 
 #include "../SDL_sysvideo.h"
 #include "../../events/SDL_events_c.h"
@@ -737,7 +737,7 @@ static const struct zxdg_toplevel_decoration_v1_listener decoration_listener = {
  */
 static void OverrideLibdecorLimits(SDL_Window *window)
 {
-#if defined(SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_LIBDECOR)
+#ifdef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_LIBDECOR
     if (libdecor_frame_get_min_content_size == NULL) {
         SetMinMaxDimensions(window, SDL_FALSE);
     }
@@ -756,7 +756,7 @@ static void OverrideLibdecorLimits(SDL_Window *window)
  */
 static void LibdecorGetMinContentSize(struct libdecor_frame *frame, int *min_w, int *min_h)
 {
-#if defined(SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_LIBDECOR)
+#ifdef SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_LIBDECOR
     if (libdecor_frame_get_min_content_size != NULL) {
         libdecor_frame_get_min_content_size(frame, min_w, min_h);
     }
@@ -2026,7 +2026,7 @@ int Wayland_CreateWindow(_THIS, SDL_Window *window)
     if (window->flags & SDL_WINDOW_OPENGL) {
         data->egl_window = WAYLAND_wl_egl_window_create(data->surface, data->drawable_width, data->drawable_height);
 
-#if SDL_VIDEO_OPENGL_EGL
+#ifdef SDL_VIDEO_OPENGL_EGL
         /* Create the GLES window surface */
         data->egl_surface = SDL_EGL_CreateSurface(_this, window, (NativeWindowType)data->egl_window);
 
@@ -2167,7 +2167,7 @@ int Wayland_SuspendScreenSaver(_THIS)
 {
     SDL_VideoData *data = _this->driverdata;
 
-#if SDL_USE_LIBDBUS
+#ifdef SDL_USE_LIBDBUS
     if (SDL_DBus_ScreensaverInhibit(_this->suspend_screensaver)) {
         return 0;
     }
@@ -2208,7 +2208,7 @@ void Wayland_DestroyWindow(_THIS, SDL_Window *window)
     SDL_WindowData *wind = window->driverdata;
 
     if (data && wind) {
-#if SDL_VIDEO_OPENGL_EGL
+#ifdef SDL_VIDEO_OPENGL_EGL
         if (wind->egl_surface) {
             SDL_EGL_DestroySurface(_this, wind->egl_surface);
         }

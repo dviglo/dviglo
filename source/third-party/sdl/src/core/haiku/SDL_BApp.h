@@ -24,7 +24,7 @@
 #include <Path.h>
 #include <InterfaceKit.h>
 #include <LocaleRoster.h>
-#if SDL_VIDEO_OPENGL
+#ifdef SDL_VIDEO_OPENGL
 #include <OpenGLKit.h>
 #endif
 
@@ -47,6 +47,7 @@ extern "C" {
 #include <vector>
 
 /* Forward declarations */
+class SDL_BLooper;
 class SDL_BWin;
 
 /* Message constants */
@@ -72,29 +73,23 @@ enum ToSDL
     BAPP_SCREEN_CHANGED
 };
 
-/* Create a descendant of BApplication */
-class SDL_BApp : public BApplication
+
+extern "C" SDL_BLooper *SDL_Looper;
+
+
+/* Create a descendant of BLooper */
+class SDL_BLooper : public BLooper
 {
   public:
-    SDL_BApp(const char *signature) : BApplication(signature)
+    SDL_BLooper(const char* name) : BLooper(name)
     {
-#if SDL_VIDEO_OPENGL
+#ifdef SDL_VIDEO_OPENGL
         _current_context = NULL;
 #endif
     }
 
-    virtual ~SDL_BApp()
+    virtual ~SDL_BLooper()
     {
-    }
-
-    virtual void RefsReceived(BMessage *message)
-    {
-        entry_ref entryRef;
-        for (int32 i = 0; message->FindRef("refs", i, &entryRef) == B_OK; i++) {
-            BPath referencePath = BPath(&entryRef);
-            SDL_SendDropFile(NULL, referencePath.Path());
-        }
-        return;
     }
 
     /* Event-handling functions */
@@ -167,7 +162,7 @@ class SDL_BApp : public BApplication
             break;
 
         default:
-            BApplication::MessageReceived(message);
+            BLooper::MessageReceived(message);
             break;
         }
     }
@@ -202,7 +197,7 @@ class SDL_BApp : public BApplication
         return _window_map[winID];
     }
 
-#if SDL_VIDEO_OPENGL
+#ifdef SDL_VIDEO_OPENGL
     BGLView *GetCurrentContext()
     {
         return _current_context;
@@ -422,7 +417,7 @@ class SDL_BApp : public BApplication
     /* Members */
     std::vector<SDL_Window *> _window_map; /* Keeps track of SDL_Windows by index-id */
 
-#if SDL_VIDEO_OPENGL
+#ifdef SDL_VIDEO_OPENGL
     BGLView *_current_context;
 #endif
 };

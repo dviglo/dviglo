@@ -508,7 +508,7 @@ SDL_RWFromFile(const char *file, const char *mode)
         SDL_SetError("SDL_RWFromFile(): No file or no mode specified");
         return NULL;
     }
-#if defined(__ANDROID__)
+#ifdef __ANDROID__
 #ifdef HAVE_STDIO_H
     /* Try to open the file on the filesystem first */
     if (*file == '/') {
@@ -568,14 +568,14 @@ SDL_RWFromFile(const char *file, const char *mode)
     rwops->write = windows_file_write;
     rwops->close = windows_file_close;
     rwops->type = SDL_RWOPS_WINFILE;
-#elif HAVE_STDIO_H
+#elif defined(HAVE_STDIO_H)
     {
-#if __APPLE__ && !SDL_FILE_DISABLED // TODO: add dummy?
+#if defined(__APPLE__) && !defined(SDL_FILE_DISABLED) // TODO: add dummy?
         FILE *fp = SDL_OpenFPFromBundleOrFallback(file, mode);
-#elif __WINRT__
+#elif defined(__WINRT__)
         FILE *fp = NULL;
         fopen_s(&fp, file, mode);
-#elif __3DS__
+#elif defined(__3DS__)
         FILE *fp = N3DS_FileOpen(file, mode);
 #else
         FILE *fp = fopen(file, mode);
