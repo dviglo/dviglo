@@ -1014,7 +1014,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="183">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Lead.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1353,7 +1353,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="219">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Lead.xml;Materials/PBR/diamon_plate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/lead.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1610,7 +1610,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="239">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Lead.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1624,7 +1624,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="240">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Lead.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1638,7 +1638,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="241">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Lead.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
