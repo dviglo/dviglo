@@ -958,7 +958,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="163">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/EmissivePannel.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/emissive_pannel.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3907,7 +3907,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="418">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/EmissivePannel.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/emissive_pannel.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
