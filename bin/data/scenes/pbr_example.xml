@@ -684,7 +684,7 @@
 			<attribute name="Bounding Box Min" value="-1000 -1000 -1000" />
 			<attribute name="Bounding Box Max" value="1000 1000 1000" />
 			<attribute name="Ambient Color" value="0 0 0 0.2" />
-			<attribute name="Zone Texture" value="TextureCube;Textures/Skybox2.xml" />
+			<attribute name="Zone Texture" value="TextureCube;Textures/skybox2.xml" />
 		</component>
 	</node>
 	<node id="12">
@@ -697,7 +697,7 @@
 		<attribute name="Variables" />
 		<component type="Skybox" id="12">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/Skybox2.xml" />
+			<attribute name="Material" value="Material;Materials/skybox2.xml" />
 		</component>
 	</node>
 	<node id="58">
