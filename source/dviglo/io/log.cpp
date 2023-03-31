@@ -25,7 +25,7 @@ const char* logLevelPrefixes[] =
     "DEBUG",
     "INFO",
     "WARNING",
-    "ERROR",
+    "!!ERROR", // С восклицательными знаками, чтобы легче было заметить в консоли Linux среди кучи DEBUG
     nullptr
 };
 
