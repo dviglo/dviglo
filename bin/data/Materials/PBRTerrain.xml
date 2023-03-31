@@ -3,7 +3,7 @@
     <texture unit="0" name="Textures/TerrainWeights.dds" />
     <texture unit="1" name="Textures/PBR/sand/albedo.jpg" />
     <texture unit="2" name="Textures/PBR/mud/albedo.jpg" />
-    <texture unit="3" name="Textures/PBR/Concrete/Albedo.jpg" />
+    <texture unit="3" name="Textures/PBR/concrete/albedo.jpg" />
     <parameter name="MatSpecColor" value="0.0 0.0 0.0 0.0" />
     <parameter name="DetailTiling" value="32 32" />
     <parameter name="Roughness" value="1" />
