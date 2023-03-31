@@ -293,7 +293,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="84">
 				<attribute name="Model" value="Model;Models/Plane.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 			</component>
 		</node>
 		<node id="75">
@@ -332,7 +332,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="87">
 				<attribute name="Model" value="Model;Models/Plane.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 			</component>
 		</node>
 		<node id="79">
@@ -746,7 +746,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="107">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -760,7 +760,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="108">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic0.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic0.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -774,7 +774,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="109">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic3.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic3.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -788,7 +788,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="110">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic5.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic5.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -802,7 +802,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="111">
 				<attribute name="Model" value="Model;Models/Sphere.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Metallic7.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/metallic7.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -2158,7 +2158,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="280">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 		</component>
 	</node>
 	<node id="263">
@@ -3996,7 +3996,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="425">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 		</component>
 	</node>
 	<node id="406">
@@ -4009,7 +4009,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="426">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 		</component>
 	</node>
 	<node id="407">
@@ -4022,7 +4022,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="427">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Metallic10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/metallic10.xml" />
 		</component>
 	</node>
 	<node id="408">
