@@ -3893,7 +3893,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="417">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/ColorGrid.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/color_grid.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
