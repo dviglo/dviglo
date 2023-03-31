@@ -85,7 +85,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="27">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -239,7 +239,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="56">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -253,7 +253,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="94">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -345,7 +345,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="89">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -359,7 +359,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="90">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -373,7 +373,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="91">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -387,7 +387,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="92">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -401,7 +401,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="93">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -555,7 +555,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="153">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -569,7 +569,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="210">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -583,7 +583,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="211">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -597,7 +597,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="213">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -611,7 +611,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="285">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -625,7 +625,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="286">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -639,7 +639,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="289">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -653,7 +653,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="302">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -667,7 +667,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="303">
 				<attribute name="Model" value="Model;Models/Box.mdl" />
-				<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+				<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1269,7 +1269,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="204">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1283,7 +1283,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="205">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1297,7 +1297,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="206">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1311,7 +1311,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="207">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1325,7 +1325,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="209">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1497,7 +1497,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="230">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1511,7 +1511,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="231">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1836,7 +1836,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="256">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1850,7 +1850,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="257">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1942,7 +1942,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="264">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1956,7 +1956,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="265">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1970,7 +1970,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="266">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1984,7 +1984,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="267">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1998,7 +1998,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="268">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2051,7 +2051,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="272">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2065,7 +2065,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="273">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2079,7 +2079,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="274">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2171,7 +2171,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="283">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2185,7 +2185,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="284">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2199,7 +2199,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="290">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2213,7 +2213,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="291">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2227,7 +2227,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="292">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2241,7 +2241,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="293">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2255,7 +2255,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="294">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2269,7 +2269,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="295">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2283,7 +2283,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="296">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2297,7 +2297,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="297">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2311,7 +2311,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="298">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2325,7 +2325,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="299">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2339,7 +2339,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="300">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2353,7 +2353,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="301">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2367,7 +2367,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="304">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2381,7 +2381,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="305">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2395,7 +2395,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="306">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2409,7 +2409,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="307">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2423,7 +2423,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="308">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2437,7 +2437,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="309">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2591,7 +2591,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="320">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2605,7 +2605,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="321">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2619,7 +2619,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="322">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2633,7 +2633,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="323">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2665,7 +2665,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="325">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2733,7 +2733,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="330">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2747,7 +2747,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="331">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2761,7 +2761,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="332">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2853,7 +2853,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="340">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2867,7 +2867,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="341">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2881,7 +2881,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="342">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2895,7 +2895,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="343">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2909,7 +2909,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="344">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2923,7 +2923,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="346">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2937,7 +2937,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="347">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2951,7 +2951,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="348">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2965,7 +2965,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="349">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2979,7 +2979,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="350">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2993,7 +2993,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="351">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3162,7 +3162,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="363">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3176,7 +3176,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="364">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3190,7 +3190,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="365">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3204,7 +3204,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="366">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3296,7 +3296,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="373">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3310,7 +3310,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="375">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3324,7 +3324,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="376">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3338,7 +3338,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="377">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3352,7 +3352,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="378">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3366,7 +3366,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="379">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3380,7 +3380,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="380">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3394,7 +3394,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="381">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3408,7 +3408,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="382">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3422,7 +3422,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="383">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3436,7 +3436,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="384">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3450,7 +3450,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="385">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3464,7 +3464,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="386">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3478,7 +3478,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="387">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3492,7 +3492,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="388">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3506,7 +3506,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="389">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3520,7 +3520,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="390">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3534,7 +3534,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="391">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3548,7 +3548,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="392">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3562,7 +3562,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="393">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3576,7 +3576,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="394">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3674,7 +3674,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="401">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3688,7 +3688,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="402">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3702,7 +3702,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="403">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3716,7 +3716,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="404">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3730,7 +3730,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="405">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3744,7 +3744,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="406">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4575,7 +4575,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="467">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4589,7 +4589,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="468">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4603,7 +4603,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="469">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4617,7 +4617,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="470">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4631,7 +4631,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="471">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4645,7 +4645,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="472">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4659,7 +4659,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="473">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4673,7 +4673,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="474">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4687,7 +4687,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="475">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4701,7 +4701,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="476">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4715,7 +4715,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="477">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4729,7 +4729,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="478">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4743,7 +4743,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="479">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4757,7 +4757,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="480">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4771,7 +4771,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="481">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4785,7 +4785,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="482">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4799,7 +4799,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="483">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -4813,7 +4813,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="484">
 			<attribute name="Model" value="Model;Models/Box.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Tile.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/tile.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
