@@ -83,8 +83,8 @@
 		<attribute name="Scale" value="300 1 300" />
 		<attribute name="Variables" />
 		<component type="Skybox" id="16777224">
-			<attribute name="Model" value="Model;Models/NinjaSnowWar/CloudPlane.mdl" />
-			<attribute name="Material" value="Material;Materials/NinjaSnowWar/CloudPlane.xml" />
+			<attribute name="Model" value="Model;Models/NinjaSnowWar/cloud_plane.mdl" />
+			<attribute name="Material" value="Material;Materials/NinjaSnowWar/cloud_plane.xml" />
 		</component>
 	</node>
 </scene>
