@@ -7,9 +7,8 @@ set(SDL_SHARED OFF CACHE BOOL "" FORCE) # Нужна только статиче
 set(SDL_STATIC ON CACHE BOOL "" FORCE) # Нужна только статическая версия библиотеки
 set(SDL_TEST OFF CACHE BOOL "" FORCE) # Тесты не нужны
 
-# Dviglo: Добавлено. Отключаем встроенный 2D-рендерер. Значение переменной пишется прямиком
-# в SDL_build_config.h, поэтому нужно использовать 1, а не ON
-set(SDL_RENDER_DISABLED 1)
+# Dviglo: Добавлено. Отключаем встроенный 2D-рендерер
+set(SDL_RENDER_ENABLED_BY_DEFAULT OFF)
 
 # Dviglo: Добавлено. Нужно для компиляции динамической версии движка в GCC и Clang (добавляет -fPIC)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
