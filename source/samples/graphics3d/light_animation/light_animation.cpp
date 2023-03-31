@@ -71,7 +71,7 @@ void LightAnimation::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a point light to the world so that we can see something.
     Node* lightNode = scene_->create_child("PointLight");
@@ -144,7 +144,7 @@ void LightAnimation::create_scene()
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
+        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
     }
 
     // Create a scene node for the camera, which we will move around

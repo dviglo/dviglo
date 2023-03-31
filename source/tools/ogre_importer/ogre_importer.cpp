@@ -909,8 +909,8 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
         {
             for (unsigned i = 0; i < materialNames_.Size(); ++i)
             {
-                // Assume the materials will be located inside the standard Materials subdirectory
-                listFile.WriteLine("Materials/" + replace_extension(SanitateAssetName(materialNames_[i]), ".xml"));
+                // Assume the materials will be located inside the standard materials subdirectory
+                listFile.WriteLine("materials/" + replace_extension(SanitateAssetName(materialNames_[i]), ".xml"));
             }
         }
         else

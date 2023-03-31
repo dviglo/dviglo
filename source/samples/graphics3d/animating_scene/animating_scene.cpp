@@ -85,7 +85,7 @@ void AnimatingScene::create_scene()
         boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+        boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
 
         // Add our custom Rotator component which will rotate the scene node each frame, when the scene sends its update event.
         // The Rotator component derives from the base class LogicComponent, which has convenience functionality to subscribe

@@ -23,7 +23,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="3">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/StoneTiled.xml" />
+			<attribute name="Material" value="Material;materials/StoneTiled.xml" />
 		</component>
 	</node>
 	<node id="3">
@@ -62,7 +62,7 @@
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="6">
 			<attribute name="Model" value="Model;Models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;Models/Mutant/Materials/mutant_M.xml" />
+			<attribute name="Material" value="Material;Models/Mutant/materials/mutant_M.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -391,7 +391,7 @@
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="7">
 			<attribute name="Model" value="Model;Models/Kachujin/Kachujin.mdl" />
-			<attribute name="Material" value="Material;Models/Kachujin/Materials/Kachujin.xml" />
+			<attribute name="Material" value="Material;Models/Kachujin/materials/Kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />

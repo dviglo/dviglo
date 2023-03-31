@@ -78,7 +78,7 @@ void SkeletalAnimation::create_scene()
     planeNode->SetScale(Vector3(50.0f, 1.0f, 50.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -114,7 +114,7 @@ void SkeletalAnimation::create_scene()
 
         auto* modelObject = modelNode->create_component<AnimatedModel>();
         modelObject->SetModel(cache.GetResource<Model>("Models/Kachujin/Kachujin.mdl"));
-        modelObject->SetMaterial(cache.GetResource<Material>("Models/Kachujin/Materials/Kachujin.xml"));
+        modelObject->SetMaterial(cache.GetResource<Material>("Models/Kachujin/materials/Kachujin.xml"));
         modelObject->SetCastShadows(true);
 
         // Create an AnimationState for a walk animation. Its time position will need to be manually updated to advance the

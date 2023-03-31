@@ -23,7 +23,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="3">
 			<attribute name="Model" value="Model;Models/LinePrimitives/UnitX.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 		</component>
 	</node>
 	<node id="3">
@@ -36,7 +36,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="4">
 			<attribute name="Model" value="Model;Models/LinePrimitives/UnitY.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 		</component>
 	</node>
 	<node id="4">
@@ -49,7 +49,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="5">
 			<attribute name="Model" value="Model;Models/LinePrimitives/UnitZ.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 		</component>
 	</node>
 	<node id="5">
@@ -62,7 +62,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="6">
 			<attribute name="Model" value="Model;Models/LinePrimitives/Basis.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 		</component>
 	</node>
 	<node id="6">
@@ -75,7 +75,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="7">
 			<attribute name="Model" value="Model;Models/LinePrimitives/Box1x1x1.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 		</component>
 	</node>
 	<node id="7">
@@ -88,7 +88,7 @@
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="8">
 			<attribute name="Model" value="Model;Models/LinePrimitives/LinearBezier.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
 				<variant type="Bool" value="true" />
@@ -136,7 +136,7 @@
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="9">
 			<attribute name="Model" value="Model;Models/LinePrimitives/QuadraticBezier.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
 				<variant type="Bool" value="true" />
@@ -194,7 +194,7 @@
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="10">
 			<attribute name="Model" value="Model;Models/LinePrimitives/CubicBezier.mdl" />
-			<attribute name="Material" value="Material;Materials/VColUnlit.xml" />
+			<attribute name="Material" value="Material;materials/VColUnlit.xml" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
 				<variant type="Bool" value="true" />

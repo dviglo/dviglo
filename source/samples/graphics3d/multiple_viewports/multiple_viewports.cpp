@@ -70,7 +70,7 @@ void MultipleViewports::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -101,7 +101,7 @@ void MultipleViewports::create_scene()
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
+        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         mushroomObject->SetCastShadows(true);
     }
 
@@ -115,7 +115,7 @@ void MultipleViewports::create_scene()
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+        boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);

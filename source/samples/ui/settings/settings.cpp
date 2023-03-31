@@ -83,7 +83,7 @@ void WindowSettingsDemo::create_scene()
     objectNode->SetRotation(Quaternion(45.0f, 45.0f, 45.0f));
     auto* objectModel = objectNode->create_component<StaticModel>();
     objectModel->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
-    objectModel->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
+    objectModel->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
 
     // Create camera
     cameraNode_ = scene_->create_child("Camera");

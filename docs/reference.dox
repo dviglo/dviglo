@@ -774,14 +774,14 @@ RigidBody@ rigidBodyShared = rigidBodyWeak.Get(); // Is null if expired
 
 \code
 object.model = cache.GetResource("Model", "Models/Mushroom.mdl");
-object.material = cache.GetResource("Material", "Materials/Mushroom.xml");
+object.material = cache.GetResource("Material", "materials/Mushroom.xml");
 \endcode
 
 In unmodified AngelScript, this would have to be written as:
 
 \code
 @object.model = cache.GetResource("Model", "Models/Mushroom.mdl");
-@object.material = cache.GetResource("Material", "Materials/Mushroom.xml");
+@object.material = cache.GetResource("Material", "materials/Mushroom.xml");
 \endcode
 
 

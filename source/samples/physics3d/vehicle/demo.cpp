@@ -106,7 +106,7 @@ void VehicleDemo::create_scene()
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
     terrain->SetHeightMap(cache.GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(cache.GetResource<Material>("Materials/Terrain.xml"));
+    terrain->SetMaterial(cache.GetResource<Material>("materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -129,7 +129,7 @@ void VehicleDemo::create_scene()
         objectNode->SetScale(3.0f);
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();

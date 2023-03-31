@@ -68,7 +68,7 @@ void RibbonTrailDemo::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a directional light to the world.
     Node* lightNode = scene_->create_child("DirectionalLight");
@@ -86,7 +86,7 @@ void RibbonTrailDemo::create_scene()
     box1->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
     box1->SetCastShadows(true);
     auto* boxTrail1 = boxNode1_->create_component<RibbonTrail>();
-    boxTrail1->SetMaterial(cache.GetResource<Material>("Materials/RibbonTrail.xml"));
+    boxTrail1->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
     boxTrail1->SetStartColor(Color(1.0f, 0.5f, 0.0f, 1.0f));
     boxTrail1->SetEndColor(Color(1.0f, 1.0f, 0.0f, 0.0f));
     boxTrail1->SetWidth(0.5f);
@@ -99,7 +99,7 @@ void RibbonTrailDemo::create_scene()
     box2->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
     box2->SetCastShadows(true);
     auto* boxTrail2 = boxNode2_->create_component<RibbonTrail>();
-    boxTrail2->SetMaterial(cache.GetResource<Material>("Materials/RibbonTrail.xml"));
+    boxTrail2->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
     boxTrail2->SetStartColor(Color(1.0f, 0.5f, 0.0f, 1.0f));
     boxTrail2->SetEndColor(Color(1.0f, 1.0f, 0.0f, 0.0f));
     boxTrail2->SetWidth(0.5f);
@@ -112,7 +112,7 @@ void RibbonTrailDemo::create_scene()
     ninjaNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     auto* ninja = ninjaNode->create_component<AnimatedModel>();
     ninja->SetModel(cache.GetResource<Model>("Models/NinjaSnowWar/Ninja.mdl"));
-    ninja->SetMaterial(cache.GetResource<Material>("Materials/NinjaSnowWar/Ninja.xml"));
+    ninja->SetMaterial(cache.GetResource<Material>("materials/NinjaSnowWar/Ninja.xml"));
     ninja->SetCastShadows(true);
 
     // Create animation controller and play attack animation.
@@ -125,7 +125,7 @@ void RibbonTrailDemo::create_scene()
 
     // Set sword trail type to bone and set other parameters.
     swordTrail_->SetTrailType(TT_BONE);
-    swordTrail_->SetMaterial(cache.GetResource<Material>("Materials/SlashTrail.xml"));
+    swordTrail_->SetMaterial(cache.GetResource<Material>("materials/SlashTrail.xml"));
     swordTrail_->SetLifetime(0.22f);
     swordTrail_->SetStartColor(Color(1.0f, 1.0f, 1.0f, 0.75f));
     swordTrail_->SetEndColor(Color(0.2f, 0.5f, 1.0f, 0.0f));

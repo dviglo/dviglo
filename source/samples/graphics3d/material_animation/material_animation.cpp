@@ -69,7 +69,7 @@ void MaterialAnimation::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a directional light to the world so that we can see something. The light scene node's orientation controls the
     // light direction; we will use the SetDirection() function which calculates the orientation from a forward direction vector.
@@ -85,7 +85,7 @@ void MaterialAnimation::create_scene()
     // see the model get simpler as it moves further away). Finally, rendering a large number of the same object with the
     // same material allows instancing to be used, if the GPU supports it. This reduces the amount of CPU work in rendering the
     // scene.
-    auto* mushroomMat = cache.GetResource<Material>("Materials/Mushroom.xml");
+    auto* mushroomMat = cache.GetResource<Material>("materials/Mushroom.xml");
     // Apply shader parameter animation to material
     SharedPtr<ValueAnimation> specColorAnimation(new ValueAnimation());
     specColorAnimation->SetKeyFrame(0.0f, Color(0.1f, 0.1f, 0.1f, 16.0f));

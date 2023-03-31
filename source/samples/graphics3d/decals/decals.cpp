@@ -72,7 +72,7 @@ void Decals::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -103,7 +103,7 @@ void Decals::create_scene()
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
+        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         mushroomObject->SetCastShadows(true);
     }
 
@@ -118,7 +118,7 @@ void Decals::create_scene()
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+        boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -134,7 +134,7 @@ void Decals::create_scene()
         mutantNode->SetScale(0.5f + Random(2.0f));
         AnimatedModel* mutantObject = mutantNode->create_component<AnimatedModel>();
         mutantObject->SetModel(cache.GetResource<Model>("Models/Mutant/Mutant.mdl"));
-        mutantObject->SetMaterial(cache.GetResource<Material>("Models/Mutant/Materials/mutant_M.xml"));
+        mutantObject->SetMaterial(cache.GetResource<Material>("Models/Mutant/materials/mutant_M.xml"));
         mutantObject->SetCastShadows(true);
         AnimationController* animCtrl = mutantNode->create_component<AnimationController>();
         animCtrl->PlayExclusive("Models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
@@ -256,7 +256,7 @@ void Decals::PaintDecal()
         if (!decal)
         {
             decal = targetNode->create_component<DecalSet>();
-            decal->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/UrhoDecal.xml"));
+            decal->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/UrhoDecal.xml"));
         }
         // Add a square decal to the decal set using the geometry of the drawable that was hit, orient it to face the camera,
         // use full texture UV's (0,0) to (1,1). Note that if we create several decals to a large object (such as the ground

@@ -108,7 +108,7 @@ void CharacterDemo::create_scene()
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
     auto* object = floorNode->create_component<StaticModel>();
     object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-    object->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+    object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
 
     auto* body = floorNode->create_component<RigidBody>();
     // Use collision layer bit 2 to mark world scenery. This is what we will raycast against to prevent camera from going
@@ -127,7 +127,7 @@ void CharacterDemo::create_scene()
         objectNode->SetScale(2.0f + Random(5.0f));
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();
@@ -148,7 +148,7 @@ void CharacterDemo::create_scene()
         objectNode->SetScale(scale);
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();
@@ -172,7 +172,7 @@ void CharacterDemo::CreateCharacter()
     // Create the rendering component + animation controller
     auto* object = adjustNode->create_component<AnimatedModel>();
     object->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mutant/Mutant.mdl"));
-    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("Models/Mutant/Materials/mutant_M.xml"));
+    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("Models/Mutant/materials/mutant_M.xml"));
     object->SetCastShadows(true);
     adjustNode->create_component<AnimationController>();
 

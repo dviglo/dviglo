@@ -15,7 +15,7 @@
 	</component>
 	<component type="StaticModel" id="11">
 		<attribute name="Model" value="Model;Models/NinjaSnowWar/SnowCrate.mdl" />
-		<attribute name="Material" value="Material;Materials/NinjaSnowWar/SnowCrate.xml" />
+		<attribute name="Material" value="Material;materials/NinjaSnowWar/SnowCrate.xml" />
 		<attribute name="Is Occluder" value="false" />
 		<attribute name="Can Be Occluded" value="true" />
 		<attribute name="Cast Shadows" value="true" />

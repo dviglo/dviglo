@@ -69,7 +69,7 @@ void SignedDistanceFieldText::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a directional light to the world so that we can see something. The light scene node's orientation controls the
     // light direction; we will use the SetDirection() function which calculates the orientation from a forward direction vector.
@@ -93,7 +93,7 @@ void SignedDistanceFieldText::create_scene()
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("Materials/Mushroom.xml"));
+        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
 
         Node* mushroomTitleNode = mushroomNode->create_child("MushroomTitle");
         mushroomTitleNode->SetPosition(Vector3(0.0f, 1.2f, 0.0f));

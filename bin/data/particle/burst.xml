@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <particleeffect>
-	<material name="Materials/Particle.xml" />
+	<material name="materials/Particle.xml" />
 	<numparticles value="200" />
 	<updateinvisible enable="false" />
 	<relative enable="true" />

@@ -114,7 +114,7 @@ void SceneReplication::create_scene()
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.0f));
             auto* floorObject = floorNode->create_component<StaticModel>();
             floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-            floorObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+            floorObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
 
             auto* body = floorNode->create_component<RigidBody>();
             body->SetFriction(1.0f);
@@ -264,7 +264,7 @@ Node* SceneReplication::CreateControllableObject()
     ballNode->SetScale(0.5f);
     auto* ballObject = ballNode->create_component<StaticModel>();
     ballObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
-    ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneSmall.xml"));
+    ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneSmall.xml"));
 
     // Create the physics components
     auto* body = ballNode->create_component<RigidBody>();

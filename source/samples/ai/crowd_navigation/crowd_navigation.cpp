@@ -74,7 +74,7 @@ void CrowdNavigation::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -105,7 +105,7 @@ void CrowdNavigation::create_scene()
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+        boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -236,7 +236,7 @@ void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
     jackNode->SetPosition(pos);
     auto* modelObject = jackNode->create_component<AnimatedModel>();
     modelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Jack.mdl"));
-    modelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Jack.xml"));
+    modelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Jack.xml"));
     modelObject->SetCastShadows(true);
     jackNode->create_component<AnimationController>();
 
@@ -255,7 +255,7 @@ void CrowdNavigation::create_mushroom(const Vector3& pos)
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->create_component<StaticModel>();
     mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mushroom.mdl"));
-    mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Mushroom.xml"));
+    mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
     // Create the navigation Obstacle component and set its height & radius proportional to scale
@@ -289,7 +289,7 @@ void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
     Node* barrel = scene_->create_child("Barrel");
     auto* model = barrel->create_component<StaticModel>();
     model->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
-    auto* material = DV_RES_CACHE.GetResource<Material>("Materials/StoneTiled.xml");
+    auto* material = DV_RES_CACHE.GetResource<Material>("materials/StoneTiled.xml");
     model->SetMaterial(material);
     material->SetTexture(TU_DIFFUSE, DV_RES_CACHE.GetResource<Texture2D>("Textures/TerrainDetail2.dds"));
     model->SetCastShadows(true);

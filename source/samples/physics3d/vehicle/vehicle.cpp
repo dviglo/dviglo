@@ -108,7 +108,7 @@ void Vehicle::Init()
 
     node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
     hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
-    hullObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
+    hullObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
     hullBody_->SetMass(4.0f);
@@ -142,7 +142,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     auto* wheelConstraint = wheelNode->create_component<Constraint>();
 
     wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
-    wheelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/Stone.xml"));
+    wheelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
     wheelShape->SetSphere(1.0f);
     wheelBody->SetFriction(1.0f);

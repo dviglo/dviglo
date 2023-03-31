@@ -98,7 +98,7 @@ void Physics::create_scene()
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
     skybox->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-    skybox->SetMaterial(cache.GetResource<Material>("Materials/Skybox.xml"));
+    skybox->SetMaterial(cache.GetResource<Material>("materials/Skybox.xml"));
 
     {
         // Create a floor object, 1000 x 1000 world units. Adjust position so that the ground is at zero Y
@@ -107,7 +107,7 @@ void Physics::create_scene()
         floorNode->SetScale(Vector3(1000.0f, 1.0f, 1000.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
         floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        floorObject->SetMaterial(cache.GetResource<Material>("Materials/StoneTiled.xml"));
+        floorObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components. The RigidBody's default
         // parameters make the object static (zero mass.) Note that a CollisionShape by itself will not participate
@@ -129,7 +129,7 @@ void Physics::create_scene()
                 boxNode->SetPosition(Vector3((float)x, -(float)y + 8.0f, 0.0f));
                 auto* boxObject = boxNode->create_component<StaticModel>();
                 boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-                boxObject->SetMaterial(cache.GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+                boxObject->SetMaterial(cache.GetResource<Material>("materials/StoneEnvMapSmall.xml"));
                 boxObject->SetCastShadows(true);
 
                 // Create RigidBody and CollisionShape components like above. Give the RigidBody mass to make it movable
@@ -254,7 +254,7 @@ void Physics::SpawnObject()
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
     boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
-    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("Materials/StoneEnvMapSmall.xml"));
+    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneEnvMapSmall.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also

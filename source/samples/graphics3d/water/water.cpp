@@ -93,7 +93,7 @@ void Water::create_scene()
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
     skybox->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-    skybox->SetMaterial(cache.GetResource<Material>("Materials/Skybox.xml"));
+    skybox->SetMaterial(cache.GetResource<Material>("materials/Skybox.xml"));
 
     // Create heightmap terrain
     Node* terrainNode = scene_->create_child("Terrain");
@@ -103,7 +103,7 @@ void Water::create_scene()
     terrain->SetSpacing(Vector3(2.0f, 0.5f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
     terrain->SetHeightMap(cache.GetResource<Image>("Textures/HeightMap.png"));
-    terrain->SetMaterial(cache.GetResource<Material>("Materials/Terrain.xml"));
+    terrain->SetMaterial(cache.GetResource<Material>("materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -121,7 +121,7 @@ void Water::create_scene()
         objectNode->SetScale(5.0f);
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("Materials/Stone.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         object->SetCastShadows(true);
     }
 
@@ -131,7 +131,7 @@ void Water::create_scene()
     waterNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
     auto* water = waterNode_->create_component<StaticModel>();
     water->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
-    water->SetMaterial(cache.GetResource<Material>("Materials/Water.xml"));
+    water->SetMaterial(cache.GetResource<Material>("materials/Water.xml"));
     // Set a different viewmask on the water plane to be able to hide it from the reflection camera
     water->SetViewMask(0x80000000);
 
@@ -197,7 +197,7 @@ void Water::setup_viewport()
     RenderSurface* surface = renderTexture->GetRenderSurface();
     SharedPtr<Viewport> rttViewport(new Viewport(scene_, reflectionCamera));
     surface->SetViewport(0, rttViewport);
-    auto* waterMat = DV_RES_CACHE.GetResource<Material>("Materials/Water.xml");
+    auto* waterMat = DV_RES_CACHE.GetResource<Material>("materials/Water.xml");
     waterMat->SetTexture(TU_DIFFUSE, renderTexture);
 }
 
