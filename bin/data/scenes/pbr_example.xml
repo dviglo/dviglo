@@ -1042,7 +1042,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="187">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Dynamic.xml;Materials/PBR/diamon_plate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/dynamic.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
