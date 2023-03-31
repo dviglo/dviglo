@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <material>
-	<technique name="Techniques/PBR/PBRMetallicRoughDiffNormalSpec.xml" quality="0" loddistance="0" />
-	<texture unit="diffuse" name="Textures/PBR/HoverBike/Hull/Albedo.jpg" />
-	<texture unit="normal" name="Textures/PBR/HoverBike/Hull/Normal.jpg" />
-	<texture unit="specular" name="Textures/PBR/HoverBike/Hull/Properties.jpg" />
+	<technique name="Techniques/PBR/PBRMetallicRoughDiffSpecAlpha.xml" quality="0" loddistance="0" />
+	<texture unit="diffuse" name="Textures/PBR/hover_bike/glass/albedo.jpg" />
+	<texture unit="normal" name="Textures/PBR/hover_bike/glass/normal.jpg" />
+	<texture unit="specular" name="Textures/PBR/hover_bike/glass/properties.jpg" />
 	<parameter name="UOffset" value="1 0 0 0" />
 	<parameter name="VOffset" value="0 1 0 0" />
-	<parameter name="MatDiffColor" value="1 1 1 1" />
+	<parameter name="MatDiffColor" value="1 1 1 0.5" />
 	<parameter name="MatEmissiveColor" value="0 0 0" />
 	<parameter name="MatEnvMapColor" value="1 1 1" />
 	<parameter name="MatSpecColor" value="1 1 1 1" />

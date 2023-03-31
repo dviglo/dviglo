@@ -1539,8 +1539,8 @@
 		<attribute name="Scale" value="0.02 0.02 0.02" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="234">
-			<attribute name="Model" value="Model;Models/HoverBike.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/HoverBikeGlass.xml;Materials/PBR/HoverBikeHull.xml" />
+			<attribute name="Model" value="Model;Models/hover_bike.mdl" />
+			<attribute name="Material" value="Material;Materials/PBR/hover_bike_glass.xml;Materials/PBR/hover_bike_hull.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
