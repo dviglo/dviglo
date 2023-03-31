@@ -1042,7 +1042,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="187">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Dynamic.xml;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/Dynamic.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1353,7 +1353,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="219">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Lead.xml;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/Lead.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1367,7 +1367,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="220">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/sand.xml;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/sand.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1409,7 +1409,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="223">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/leather.xml;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/leather.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1455,7 +1455,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="227">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/mud.xml;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/mud.xml;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1469,7 +1469,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="228">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1483,7 +1483,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="229">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/DiamonPlate.xml;Materials/PBR/sand.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/diamon_plate.xml;Materials/PBR/sand.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1568,7 +1568,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="236">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1582,7 +1582,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="237">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1596,7 +1596,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="238">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
