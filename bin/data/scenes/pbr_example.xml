@@ -1395,7 +1395,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="222">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Leather.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1409,7 +1409,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="223">
 			<attribute name="Model" value="Model;Models/MaterialPreview.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Leather.xml;Materials/PBR/DiamonPlate.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/leather.xml;Materials/PBR/DiamonPlate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1736,7 +1736,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="248">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Leather.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1750,7 +1750,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="249">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Leather.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1764,7 +1764,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="250">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Leather.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
