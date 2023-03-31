@@ -972,7 +972,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="180">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -986,7 +986,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="181">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1000,7 +1000,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="182">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness5.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1028,7 +1028,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="184">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness7.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1339,7 +1339,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="218">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness0.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -1797,7 +1797,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="253">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="234">
@@ -1810,7 +1810,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="254">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="235">
@@ -1823,7 +1823,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="255">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="236">
@@ -1864,7 +1864,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="258">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="239">
@@ -1877,7 +1877,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="259">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="240">
@@ -1890,7 +1890,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="260">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="241">
@@ -1903,7 +1903,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="261">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="242">
@@ -1916,7 +1916,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="262">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="243">
@@ -1929,7 +1929,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="263">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="244">
@@ -2012,7 +2012,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="269">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="250">
@@ -2025,7 +2025,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="270">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="251">
@@ -2038,7 +2038,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="271">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="252">
@@ -2521,7 +2521,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="315">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2535,7 +2535,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="316">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2549,7 +2549,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="317">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness5.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2563,7 +2563,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="318">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness7.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -2577,7 +2577,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="319">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness0.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3092,7 +3092,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="358">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness10.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3106,7 +3106,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="359">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3120,7 +3120,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="360">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness5.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3134,7 +3134,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="361">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness7.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3148,7 +3148,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="362">
 			<attribute name="Model" value="Model;Models/Sphere.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness0.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
@@ -3758,7 +3758,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="407">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="388">
@@ -3771,7 +3771,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="408">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="389">
@@ -3784,7 +3784,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="409">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="390">
@@ -3797,7 +3797,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="410">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="391">
@@ -3810,7 +3810,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="411">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="392">
@@ -3823,7 +3823,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="412">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="393">
@@ -3836,7 +3836,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="413">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="394">
@@ -3849,7 +3849,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="414">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="395">
@@ -3862,7 +3862,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="415">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="396">
@@ -4497,7 +4497,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="461">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="442">
@@ -4510,7 +4510,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="462">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="443">
@@ -4523,7 +4523,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="463">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="444">
@@ -4536,7 +4536,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="464">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="445">
@@ -4549,7 +4549,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="465">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="446">
@@ -4562,7 +4562,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="466">
 			<attribute name="Model" value="Model;Models/Plane.mdl" />
-			<attribute name="Material" value="Material;Materials/PBR/Roughness3.xml" />
+			<attribute name="Material" value="Material;Materials/PBR/roughness3.xml" />
 		</component>
 	</node>
 	<node id="447">
