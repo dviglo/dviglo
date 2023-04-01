@@ -924,16 +924,17 @@ public:
             }
 
             // For the triggered actions (fire & jump) check also for press, in case the FPS is low
-            // and the key was already released
+            // and the key was already released.
+            // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
             if (!GParams::is_headless() && !DV_CONSOLE.IsVisible())
             {
-                if (input.GetKeyDown(KEY_W))
+                if (input.GetScancodeDown(SCANCODE_W))
                     playerControls.Set(CTRL_UP, true);
-                if (input.GetKeyDown(KEY_S))
+                if (input.GetScancodeDown(SCANCODE_S))
                     playerControls.Set(CTRL_DOWN, true);
-                if (input.GetKeyDown(KEY_A))
+                if (input.GetScancodeDown(SCANCODE_A))
                     playerControls.Set(CTRL_LEFT, true);
-                if (input.GetKeyDown(KEY_D))
+                if (input.GetScancodeDown(SCANCODE_D))
                     playerControls.Set(CTRL_RIGHT, true);
                 if (input.GetKeyDown(KEY_LCTRL) || input.GetKeyPress(KEY_LCTRL))
                     playerControls.Set(CTRL_FIRE, true);
@@ -1049,13 +1050,14 @@ public:
             if (input.GetKeyDown(KEY_LCTRL))
                 speedMultiplier = 0.1f;
 
-            if (input.GetKeyDown(KEY_W))
+            // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
+            if (input.GetScancodeDown(SCANCODE_W))
                 gameCameraNode->Translate(Vector3(0.f, 0.f, 10.f) * timeStep * speedMultiplier);
-            if (input.GetKeyDown(KEY_S))
+            if (input.GetScancodeDown(SCANCODE_S))
                 gameCameraNode->Translate(Vector3(0.f, 0.f, -10.f) * timeStep * speedMultiplier);
-            if (input.GetKeyDown(KEY_A))
+            if (input.GetScancodeDown(SCANCODE_A))
                 gameCameraNode->Translate(Vector3(-10.f, 0.f, 0.f) * timeStep * speedMultiplier);
-            if (input.GetKeyDown(KEY_D))
+            if (input.GetScancodeDown(SCANCODE_D))
                 gameCameraNode->Translate(Vector3(10.f, 0.f, 0.f) * timeStep * speedMultiplier);
 
             playerControls.yaw_ += MOUSE_SENSITIVITY * input.GetMouseMoveX();

@@ -226,8 +226,9 @@ void Urho2DIsometricDemo::handle_update(StringHash eventType, VariantMap& eventD
     if (cameraNode_)
         sample2D_->Zoom(cameraNode_->GetComponent<Camera>());
 
-    // Toggle debug geometry with 'Z' key
-    if (DV_INPUT.GetKeyPress(KEY_Z))
+    // Toggle debug geometry with 'Z' key.
+    // Используем скан-код, а не код клавиши, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
+    if (DV_INPUT.GetScancodePress(SCANCODE_Z))
         draw_debug_ = !draw_debug_;
 
     // Check for loading / saving the scene
