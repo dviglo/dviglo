@@ -152,7 +152,7 @@ void Navigation::create_ui()
 {
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
     DV_UI.SetCursor(cursor);

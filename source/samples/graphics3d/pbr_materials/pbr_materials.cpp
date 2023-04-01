@@ -101,7 +101,7 @@ void PBRMaterials::create_ui()
     UI& ui = DV_UI;
 
     // Set up global UI style into the root UI element
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
     ui.GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will

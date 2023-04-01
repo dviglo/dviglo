@@ -37,7 +37,7 @@ void HelloGUI::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
 
     uiRoot_ = DV_UI.GetRoot();
 

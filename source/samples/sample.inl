@@ -151,7 +151,7 @@ void Sample::SetWindowTitleAndIcon()
 void Sample::CreateConsoleAndDebugHud()
 {
     // Get default style
-    XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
+    XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
 
     // Create console
     DV_CONSOLE.SetDefaultStyle(xmlFile);

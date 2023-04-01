@@ -140,7 +140,7 @@ void SceneReplication::create_ui()
 {
     UI& ui = DV_UI;
     UiElement* root = ui.GetRoot();
-    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("UI/DefaultStyle.xml");
+    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 

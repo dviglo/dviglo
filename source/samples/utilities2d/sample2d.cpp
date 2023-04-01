@@ -382,7 +382,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     UI& ui = DV_UI;
 
     // Set the default UI style and font
-    ui.GetRoot()->SetDefaultStyle(cache.GetResource<XmlFile>("UI/DefaultStyle.xml"));
+    ui.GetRoot()->SetDefaultStyle(cache.GetResource<XmlFile>("ui/DefaultStyle.xml"));
     auto* font = cache.GetResource<Font>("fonts/anonymous pro.ttf");
 
     // We create in-game UIs (coins and lifes) first so that they are hidden by the fullscreen UI (we could also temporary hide them using SetVisible)
