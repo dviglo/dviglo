@@ -99,7 +99,7 @@ void Ragdolls::create_scene()
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
-        floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        floorObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
         floorObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components
@@ -122,7 +122,7 @@ void Ragdolls::create_scene()
             modelNode->SetPosition(Vector3(x * 5.0f, 0.0f, z * 5.0f));
             modelNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
             auto* modelObject = modelNode->create_component<AnimatedModel>();
-            modelObject->SetModel(cache.GetResource<Model>("Models/Jack.mdl"));
+            modelObject->SetModel(cache.GetResource<Model>("models/Jack.mdl"));
             modelObject->SetMaterial(cache.GetResource<Material>("materials/Jack.xml"));
             modelObject->SetCastShadows(true);
             // Set the model to also update when invisible to avoid staying invisible when the model should come into
@@ -242,7 +242,7 @@ void Ragdolls::SpawnObject()
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
-    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Sphere.mdl"));
+    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Sphere.mdl"));
     boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneSmall.xml"));
     boxObject->SetCastShadows(true);
 

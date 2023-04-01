@@ -44,7 +44,7 @@ void AppState_Benchmark02::OnEnter()
         mover->SetParameters(2.f, 100.f, castleTop);
 
         AnimatedModel* modelObject = woman->GetComponent<AnimatedModel>();
-        Animation* walkAnimation = DV_RES_CACHE.GetResource<Animation>("Models/Kachujin/Kachujin_Walk.ani");
+        Animation* walkAnimation = DV_RES_CACHE.GetResource<Animation>("models/Kachujin/Kachujin_Walk.ani");
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         if (state)
         {
@@ -59,14 +59,14 @@ void AppState_Benchmark02::OnEnter()
     for (Node* mutant : mutants)
     {
         AnimationController* animCtrl = mutant->create_component<AnimationController>();
-        animCtrl->PlayExclusive("Models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
-        animCtrl->SetTime("Models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("Models/Mutant/Mutant_Idle0.ani")));
+        animCtrl->PlayExclusive("models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
+        animCtrl->SetTime("models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("models/Mutant/Mutant_Idle0.ani")));
     }
 
     Node* mutantGeneral = scene_->GetChild("MutantGeneral");
     AnimationController* generalAnimCtrl = mutantGeneral->create_component<AnimationController>();
-    generalAnimCtrl->PlayExclusive("Models/Mutant/Mutant_Idle1.ani", 0, true, 0.f);
-    generalAnimCtrl->SetTime("Models/Mutant/Mutant_Idle1.ani", Random(generalAnimCtrl->GetLength("Models/Mutant/Mutant_Idle1.ani")));
+    generalAnimCtrl->PlayExclusive("models/Mutant/Mutant_Idle1.ani", 0, true, 0.f);
+    generalAnimCtrl->SetTime("models/Mutant/Mutant_Idle1.ani", Random(generalAnimCtrl->GetLength("models/Mutant/Mutant_Idle1.ani")));
 
     Node* cameraNode = scene_->GetChild("Camera");
     

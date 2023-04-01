@@ -77,7 +77,7 @@ void SkeletalAnimation::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(50.0f, 1.0f, 50.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
@@ -113,14 +113,14 @@ void SkeletalAnimation::create_scene()
         modelNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
 
         auto* modelObject = modelNode->create_component<AnimatedModel>();
-        modelObject->SetModel(cache.GetResource<Model>("Models/Kachujin/Kachujin.mdl"));
-        modelObject->SetMaterial(cache.GetResource<Material>("Models/Kachujin/materials/Kachujin.xml"));
+        modelObject->SetModel(cache.GetResource<Model>("models/Kachujin/Kachujin.mdl"));
+        modelObject->SetMaterial(cache.GetResource<Material>("models/Kachujin/materials/Kachujin.xml"));
         modelObject->SetCastShadows(true);
 
         // Create an AnimationState for a walk animation. Its time position will need to be manually updated to advance the
         // animation, The alternative would be to use an AnimationController component which updates the animation automatically,
         // but we need to update the model's position manually in any case
-        auto* walkAnimation = cache.GetResource<Animation>("Models/Kachujin/Kachujin_Walk.ani");
+        auto* walkAnimation = cache.GetResource<Animation>("models/Kachujin/Kachujin_Walk.ani");
 
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         // The state would fail to create (return null) if the animation was not found

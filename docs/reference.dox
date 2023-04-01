@@ -773,14 +773,14 @@ RigidBody@ rigidBodyShared = rigidBodyWeak.Get(); // Is null if expired
 - %Object handle assignment can be done without the @ symbol if the object in question does not support value assignment. All exposed Urho3D C++ classes that derive from RefCounted never support value assignment. For example, when assigning the Model and Material of a StaticModel component:
 
 \code
-object.model = cache.GetResource("Model", "Models/Mushroom.mdl");
+object.model = cache.GetResource("Model", "models/Mushroom.mdl");
 object.material = cache.GetResource("Material", "materials/Mushroom.xml");
 \endcode
 
 In unmodified AngelScript, this would have to be written as:
 
 \code
-@object.model = cache.GetResource("Model", "Models/Mushroom.mdl");
+@object.model = cache.GetResource("Model", "models/Mushroom.mdl");
 @object.material = cache.GetResource("Material", "materials/Mushroom.xml");
 \endcode
 
@@ -1785,7 +1785,7 @@ It is also possible to enable additive (difference) blending mode on an animatio
 
 Animations can be accompanied with trigger data that contains timestamped Variant data to be interpreted by the application. This trigger data is in XML format next to the animation file itself. When an animation contains triggers, the AnimatedModel's scene node sends the E_ANIMATIONTRIGGER event each time a trigger point is crossed. The event data contains the timestamp, the animation name, and the variant data. Triggers will fire when the animation is advanced using \ref AnimationState::AddTime "AddTime()", but not when setting the absolute animation time position.
 
-The trigger data definition is below. Either normalized (0 = animation start, 1 = animation end) or non-normalized (time in seconds) timestamps can be used. See bin/Data/Models/Ninja_Walk.xml and bin/Data/Models/Ninja_Stealth.xml for examples; NinjaSnowWar implements footstep particle effects using animation triggers.
+The trigger data definition is below. Either normalized (0 = animation start, 1 = animation end) or non-normalized (time in seconds) timestamps can be used. See bin/data/models/ninja_walk.xml and bin/data/models/ninja_stealth.xml for examples; NinjaSnowWar implements footstep particle effects using animation triggers.
 
 \code
 <animation>

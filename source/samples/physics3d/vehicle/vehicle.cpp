@@ -107,7 +107,7 @@ void Vehicle::Init()
     auto* hullShape = node_->create_component<CollisionShape>();
 
     node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
-    hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Box.mdl"));
+    hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Box.mdl"));
     hullObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);
@@ -141,7 +141,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     auto* wheelShape = wheelNode->create_component<CollisionShape>();
     auto* wheelConstraint = wheelNode->create_component<Constraint>();
 
-    wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
+    wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Cylinder.mdl"));
     wheelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
     wheelShape->SetSphere(1.0f);

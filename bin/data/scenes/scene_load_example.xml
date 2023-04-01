@@ -22,7 +22,7 @@
 		<attribute name="Scale" value="5 1 5" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="3">
-			<attribute name="Model" value="Model;Models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/Plane.mdl" />
 			<attribute name="Material" value="Material;materials/Stone.xml" />
 		</component>
 	</node>
@@ -35,7 +35,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="4">
-			<attribute name="Model" value="Model;Models/Box.mdl" />
+			<attribute name="Model" value="Model;models/Box.mdl" />
 			<attribute name="Material" value="Material;materials/Stone.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -49,7 +49,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="5">
-			<attribute name="Model" value="Model;Models/Box.mdl" />
+			<attribute name="Model" value="Model;models/Box.mdl" />
 			<attribute name="Material" value="Material;materials/Stone.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -79,7 +79,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="7">
-			<attribute name="Model" value="Model;Models/Box.mdl" />
+			<attribute name="Model" value="Model;models/Box.mdl" />
 			<attribute name="Material" value="Material;materials/Stone.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -109,7 +109,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="9">
-			<attribute name="Model" value="Model;Models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/Plane.mdl" />
 			<attribute name="Material" value="Material;materials/UrhoDecalAlphaMaskTwoSided.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>

@@ -71,7 +71,7 @@ void Decals::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
@@ -102,7 +102,7 @@ void Decals::create_scene()
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-        mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+        mushroomObject->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
         mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         mushroomObject->SetCastShadows(true);
     }
@@ -117,7 +117,7 @@ void Decals::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
@@ -133,12 +133,12 @@ void Decals::create_scene()
         mutantNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mutantNode->SetScale(0.5f + Random(2.0f));
         AnimatedModel* mutantObject = mutantNode->create_component<AnimatedModel>();
-        mutantObject->SetModel(cache.GetResource<Model>("Models/Mutant/Mutant.mdl"));
-        mutantObject->SetMaterial(cache.GetResource<Material>("Models/Mutant/materials/mutant_M.xml"));
+        mutantObject->SetModel(cache.GetResource<Model>("models/Mutant/Mutant.mdl"));
+        mutantObject->SetMaterial(cache.GetResource<Material>("models/Mutant/materials/mutant_M.xml"));
         mutantObject->SetCastShadows(true);
         AnimationController* animCtrl = mutantNode->create_component<AnimationController>();
-        animCtrl->PlayExclusive("Models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
-        animCtrl->SetTime("Models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("Models/Mutant/Mutant_Idle0.ani")));
+        animCtrl->PlayExclusive("models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
+        animCtrl->SetTime("models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("models/Mutant/Mutant_Idle0.ani")));
     }
 
     // Create the camera. Limit far clip distance to match the fog

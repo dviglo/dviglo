@@ -107,7 +107,7 @@ void CharacterDemo::create_scene()
     floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
     auto* object = floorNode->create_component<StaticModel>();
-    object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    object->SetModel(cache.GetResource<Model>("models/Box.mdl"));
     object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
 
     auto* body = floorNode->create_component<RigidBody>();
@@ -126,7 +126,7 @@ void CharacterDemo::create_scene()
         objectNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         objectNode->SetScale(2.0f + Random(5.0f));
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         object->SetCastShadows(true);
 
@@ -147,7 +147,7 @@ void CharacterDemo::create_scene()
         objectNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         objectNode->SetScale(scale);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/Box.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         object->SetCastShadows(true);
 
@@ -171,8 +171,8 @@ void CharacterDemo::CreateCharacter()
 
     // Create the rendering component + animation controller
     auto* object = adjustNode->create_component<AnimatedModel>();
-    object->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mutant/Mutant.mdl"));
-    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("Models/Mutant/materials/mutant_M.xml"));
+    object->SetModel(DV_RES_CACHE.GetResource<Model>("models/Mutant/Mutant.mdl"));
+    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("models/Mutant/materials/mutant_M.xml"));
     object->SetCastShadows(true);
     adjustNode->create_component<AnimationController>();
 

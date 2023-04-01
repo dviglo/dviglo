@@ -67,7 +67,7 @@ void RibbonTrailDemo::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a directional light to the world.
@@ -83,7 +83,7 @@ void RibbonTrailDemo::create_scene()
     // Create first box for face camera trail demo with 1 column.
     boxNode1_ = scene_->create_child("Box1");
     auto* box1 = boxNode1_->create_component<StaticModel>();
-    box1->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    box1->SetModel(cache.GetResource<Model>("models/Box.mdl"));
     box1->SetCastShadows(true);
     auto* boxTrail1 = boxNode1_->create_component<RibbonTrail>();
     boxTrail1->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
@@ -96,7 +96,7 @@ void RibbonTrailDemo::create_scene()
     // This will produce less distortion than first trail.
     boxNode2_ = scene_->create_child("Box2");
     auto* box2 = boxNode2_->create_component<StaticModel>();
-    box2->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    box2->SetModel(cache.GetResource<Model>("models/Box.mdl"));
     box2->SetCastShadows(true);
     auto* boxTrail2 = boxNode2_->create_component<RibbonTrail>();
     boxTrail2->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
@@ -111,13 +111,13 @@ void RibbonTrailDemo::create_scene()
     ninjaNode->SetPosition(Vector3(5.0f, 0.0f, 0.0f));
     ninjaNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     auto* ninja = ninjaNode->create_component<AnimatedModel>();
-    ninja->SetModel(cache.GetResource<Model>("Models/NinjaSnowWar/Ninja.mdl"));
+    ninja->SetModel(cache.GetResource<Model>("models/NinjaSnowWar/Ninja.mdl"));
     ninja->SetMaterial(cache.GetResource<Material>("materials/NinjaSnowWar/Ninja.xml"));
     ninja->SetCastShadows(true);
 
     // Create animation controller and play attack animation.
     ninjaAnimCtrl_ = ninjaNode->create_component<AnimationController>();
-    ninjaAnimCtrl_->PlayExclusive("Models/NinjaSnowWar/Ninja_Attack3.ani", 0, true, 0.0f);
+    ninjaAnimCtrl_->PlayExclusive("models/NinjaSnowWar/Ninja_Attack3.ani", 0, true, 0.0f);
 
     // Add ribbon trail to tip of sword.
     Node* swordTip = ninjaNode->GetChild("Joint29", true);
@@ -243,7 +243,7 @@ void RibbonTrailDemo::handle_update(StringHash eventType, VariantMap& eventData)
         Quaternion());
 
     // Get elapsed attack animation time.
-    float swordAnimTime = ninjaAnimCtrl_->GetAnimationState(String("Models/NinjaSnowWar/Ninja_Attack3.ani"))->GetTime();
+    float swordAnimTime = ninjaAnimCtrl_->GetAnimationState(String("models/NinjaSnowWar/Ninja_Attack3.ani"))->GetTime();
 
     // Stop emitting trail when sword is finished slashing.
     if (!swordTrail_->IsEmitting() && swordAnimTime > swordTrailStartTime_ && swordAnimTime < swordTrailEndTime_)

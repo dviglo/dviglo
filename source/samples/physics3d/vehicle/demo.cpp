@@ -128,7 +128,7 @@ void VehicleDemo::create_scene()
         objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));
         objectNode->SetScale(3.0f);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         object->SetCastShadows(true);
 

@@ -71,7 +71,7 @@ void Vehicle::Init()
     Vector3 v3BoxExtents = Vector3::ONE;
     hullColShape->SetBox(v3BoxExtents);
     node_->SetScale(Vector3(2.3f, 1.0f, 4.0f));
-    hullObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    hullObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
     hullObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     float connectionHeight = -0.4f;
@@ -109,7 +109,7 @@ void Vehicle::Init()
         vehicle->SetWheelRollInfluence(id, rollInfluence_);
         wheelNode->SetScale(Vector3(1.0f, 0.65f, 1.0f));
         auto* pWheel = wheelNode->create_component<StaticModel>();
-        pWheel->SetModel(cache.GetResource<Model>("Models/Cylinder.mdl"));
+        pWheel->SetModel(cache.GetResource<Model>("models/Cylinder.mdl"));
         pWheel->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         pWheel->SetCastShadows(true);
         CreateEmitter(connectionPoints_[id]);

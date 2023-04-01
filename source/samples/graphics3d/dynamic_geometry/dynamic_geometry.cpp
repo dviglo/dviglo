@@ -82,7 +82,7 @@ void DynamicGeometry::create_scene()
     light->SetSpecularIntensity(1.5f);
 
     // Get the original model and its unmodified vertices, which are used as source data for the animation
-    auto* originalModel = DV_RES_CACHE.GetResource<Model>("Models/Box.mdl");
+    auto* originalModel = DV_RES_CACHE.GetResource<Model>("models/Box.mdl");
     if (!originalModel)
     {
         DV_LOGERROR("Model not found, cannot initialize example scene");

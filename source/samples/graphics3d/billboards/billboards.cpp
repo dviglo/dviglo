@@ -90,7 +90,7 @@ void Billboards::create_scene()
             floorNode->SetPosition(Vector3(x * 20.5f, -0.5f, y * 20.5f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
             auto* floorObject = floorNode->create_component<StaticModel>();
-            floorObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+            floorObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
             floorObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         }
     }
@@ -112,7 +112,7 @@ void Billboards::create_scene()
             mushroomNode->SetRotation(Quaternion(0.0f, Random() * 360.0f, 0.0f));
             mushroomNode->SetScale(1.0f + Random() * 4.0f);
             auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-            mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+            mushroomObject->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
             mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }

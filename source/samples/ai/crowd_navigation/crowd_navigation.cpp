@@ -73,7 +73,7 @@ void CrowdNavigation::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
@@ -104,7 +104,7 @@ void CrowdNavigation::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
@@ -235,7 +235,7 @@ void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
     SharedPtr<Node> jackNode(jackGroup->create_child("Jack"));
     jackNode->SetPosition(pos);
     auto* modelObject = jackNode->create_component<AnimatedModel>();
-    modelObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Jack.mdl"));
+    modelObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Jack.mdl"));
     modelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Jack.xml"));
     modelObject->SetCastShadows(true);
     jackNode->create_component<AnimationController>();
@@ -254,7 +254,7 @@ void CrowdNavigation::create_mushroom(const Vector3& pos)
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mushroom.mdl"));
+    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Mushroom.mdl"));
     mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
@@ -288,7 +288,7 @@ void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
 {
     Node* barrel = scene_->create_child("Barrel");
     auto* model = barrel->create_component<StaticModel>();
-    model->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Cylinder.mdl"));
+    model->SetModel(DV_RES_CACHE.GetResource<Model>("models/Cylinder.mdl"));
     auto* material = DV_RES_CACHE.GetResource<Material>("materials/StoneTiled.xml");
     model->SetMaterial(material);
     material->SetTexture(TU_DIFFUSE, DV_RES_CACHE.GetResource<Texture2D>("Textures/TerrainDetail2.dds"));
@@ -572,7 +572,7 @@ void CrowdNavigation::HandleCrowdAgentFailure(StringHash eventType, VariantMap& 
 
 void CrowdNavigation::HandleCrowdAgentReposition(StringHash eventType, VariantMap& eventData)
 {
-    static const char* WALKING_ANI = "Models/Jack_Walk.ani";
+    static const char* WALKING_ANI = "models/Jack_Walk.ani";
 
     using namespace CrowdAgentReposition;
 

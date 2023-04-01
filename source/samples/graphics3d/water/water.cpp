@@ -92,7 +92,7 @@ void Water::create_scene()
     Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
-    skybox->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+    skybox->SetModel(cache.GetResource<Model>("models/Box.mdl"));
     skybox->SetMaterial(cache.GetResource<Material>("materials/Skybox.xml"));
 
     // Create heightmap terrain
@@ -120,7 +120,7 @@ void Water::create_scene()
         objectNode->SetRotation(Quaternion(Vector3(0.0f, 1.0f, 0.0f), terrain->GetNormal(position)));
         objectNode->SetScale(5.0f);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/Box.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         object->SetCastShadows(true);
     }
@@ -130,7 +130,7 @@ void Water::create_scene()
     waterNode_->SetScale(Vector3(2048.0f, 1.0f, 2048.0f));
     waterNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
     auto* water = waterNode_->create_component<StaticModel>();
-    water->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    water->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
     water->SetMaterial(cache.GetResource<Material>("materials/Water.xml"));
     // Set a different viewmask on the water plane to be able to hide it from the reflection camera
     water->SetViewMask(0x80000000);

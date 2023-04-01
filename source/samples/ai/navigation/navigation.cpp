@@ -71,7 +71,7 @@ void Navigation::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+    planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
@@ -107,7 +107,7 @@ void Navigation::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("Models/Box.mdl"));
+        boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
@@ -118,7 +118,7 @@ void Navigation::create_scene()
     jackNode_ = scene_->create_child("Jack");
     jackNode_->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
     auto* modelObject = jackNode_->create_component<AnimatedModel>();
-    modelObject->SetModel(cache.GetResource<Model>("Models/Jack.mdl"));
+    modelObject->SetModel(cache.GetResource<Model>("models/Jack.mdl"));
     modelObject->SetMaterial(cache.GetResource<Material>("materials/Jack.xml"));
     modelObject->SetCastShadows(true);
 
@@ -312,7 +312,7 @@ Node* Navigation::create_mushroom(const Vector3& pos)
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("Models/Mushroom.mdl"));
+    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Mushroom.mdl"));
     mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 

@@ -50,7 +50,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="6">
-			<attribute name="Model" value="Model;Models/NinjaSnowWar/Ninja.mdl" />
+			<attribute name="Model" value="Model;models/NinjaSnowWar/Ninja.mdl" />
 			<attribute name="Material" value="Material;materials/NinjaSnowWar/Ninja.xml;materials/NinjaSnowWar/Ninja.xml" />
 			<attribute name="Is Occluder" value="false" />
 			<attribute name="Can Be Occluded" value="true" />

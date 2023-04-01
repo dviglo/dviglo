@@ -74,7 +74,7 @@ public:
         Node* planeNode = scene_->create_child("Plane");
         planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
         StaticModel* planeObject = planeNode->create_component<StaticModel>();
-        planeObject->SetModel(cache.GetResource<Model>("Models/Plane.mdl"));
+        planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
         planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
         Node* lightNode = scene_->create_child("DirectionalLight");
@@ -103,7 +103,7 @@ public:
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(0.5f + Random(2.0f));
             StaticModel* mushroomObject = mushroomNode->create_component<StaticModel>();
-            mushroomObject->SetModel(cache.GetResource<Model>("Models/Mushroom.mdl"));
+            mushroomObject->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
             mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
