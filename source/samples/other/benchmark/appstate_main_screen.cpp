@@ -5,12 +5,13 @@
 #include "appstate_main_screen.h"
 #include "app_state_manager.h"
 
+#include <dviglo/engine/engine.h>
 #include <dviglo/input/input.h>
 #include <dviglo/scene/scene_events.h>
 #include <dviglo/ui/button.h>
 #include <dviglo/ui/text.h>
-#include <dviglo/ui/ui.h>
 #include <dviglo/ui/ui_events.h>
+#include <dviglo/ui/ui.h>
 #include <dviglo/ui/window.h>
 
 #include <dviglo/common/debug_new.h>
@@ -103,4 +104,7 @@ void AppState_MainScreen::HandleSceneUpdate(StringHash eventType, VariantMap& ev
 
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();
+
+    if (DV_INPUT.GetKeyPress(KEY_ESCAPE))
+        DV_ENGINE.Exit();
 }
