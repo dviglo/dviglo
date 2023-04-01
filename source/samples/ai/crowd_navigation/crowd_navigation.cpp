@@ -405,21 +405,22 @@ void CrowdNavigation::move_camera(float timeStep)
         cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
     }
 
-    // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input.GetKeyDown(KEY_W))
+    // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed.
+    // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
+    if (input.GetScancodeDown(SCANCODE_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_S))
+    if (input.GetScancodeDown(SCANCODE_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_A))
+    if (input.GetScancodeDown(SCANCODE_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_D))
+    if (input.GetScancodeDown(SCANCODE_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // Set destination or spawn a new jack with left mouse button
     if (input.GetMouseButtonPress(MOUSEB_LEFT))
         SetPathPoint(input.GetQualifierDown(QUAL_SHIFT));
     // Add new obstacle or remove existing obstacle/agent with middle mouse button
-    else if (input.GetMouseButtonPress(MOUSEB_MIDDLE) || input.GetKeyPress(KEY_O))
+    else if (input.GetMouseButtonPress(MOUSEB_MIDDLE) || input.GetScancodePress(SCANCODE_O))
         AddOrRemoveObject();
 
     // Check for loading/saving the scene from/to the file data/scenes/crowd_navigation.xml relative to the executable directory
