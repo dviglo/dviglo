@@ -163,7 +163,7 @@ void Billboards::create_scene()
 
         light->SetLightType(LIGHT_SPOT);
         light->SetRange(90.0f);
-        light->SetRampTexture(cache.GetResource<Texture2D>("Textures/RampExtreme.png"));
+        light->SetRampTexture(cache.GetResource<Texture2D>("textures/RampExtreme.png"));
         light->SetFov(45.0f);
         light->SetColor(color);
         light->SetSpecularIntensity(1.0f);

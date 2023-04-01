@@ -13,7 +13,7 @@
         <attribute name="Range" value="5" />
         <attribute name="Spot FOV" value="30" />
         <attribute name="Spot Aspect Ratio" value="1" />
-        <attribute name="Attenuation Texture" value="Texture2D;Textures/RampWide.png" />
+        <attribute name="Attenuation Texture" value="Texture2D;textures/RampWide.png" />
         <attribute name="Light Shape Texture" value="Texture2D;" />
         <attribute name="Can Be Occluded" value="true" />
         <attribute name="Cast Shadows" value="true" />

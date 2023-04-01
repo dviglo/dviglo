@@ -134,7 +134,7 @@ void HelloGUI::CreateDraggableFish()
 {
     // Create a draggable Fish button
     auto* draggableFish = new Button();
-    draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("Textures/UrhoDecal.dds")); // Set texture
+    draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("textures/UrhoDecal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
     draggableFish->SetPosition((DV_GRAPHICS.GetWidth() - draggableFish->GetWidth()) / 2, 200);

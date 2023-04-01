@@ -439,13 +439,13 @@ If loading a resource fails, an error will be logged and a null pointer is retur
 Typical C++ example of requesting a resource from the cache, in this case, a texture for a UI element. Note the use of a convenience template argument to specify the resource type, instead of using the type hash.
 
 \code
-healthBar->SetTexture(GetSubsystem<ResourceCache>()->GetResource<Texture2D>("Textures/HealthBarBorder.png"));
+healthBar->SetTexture(GetSubsystem<ResourceCache>()->GetResource<Texture2D>("textures/health_bar_border.png"));
 \endcode
 
 The same in script would look like this (note the use of a property instead of a setter function):
 
 \code
-healthBar.texture = cache.GetResource("Texture2D", "Textures/HealthBarBorder.png");
+healthBar.texture = cache.GetResource("Texture2D", "textures/health_bar_border.png");
 \endcode
 
 Resources can also be created manually and stored to the resource cache as if they had been loaded from disk.
@@ -1301,7 +1301,7 @@ Anisotropy level can be optionally specified. If omitted (or if the value 0 is s
 
 Using cube map textures requires an XML file to define the cube map face images, or a single image with layout. In this case the XML file *is* the texture resource name in material scripts or in LoadResource() calls.
 
-Individual face images are defined in the XML like this: (see bin/Data/Textures/Skybox.xml for an example)
+Individual face images are defined in the XML like this: (see bin/data/textures/skybox.xml for an example)
 
 \code
 <cubemap>
@@ -2605,13 +2605,13 @@ XML:
         <attribute name="Shapes">
             <variant type="VariantVector" >
                 <variant type="String" value="Normal" />
-                <variant type="ResourceRef" value="Image;Textures/UI.png" />
+                <variant type="ResourceRef" value="Image;textures/ui.png" />
                 <variant type="IntRect" value="0 0 12 24" />
                 <variant type="IntVector2" value="0 0" />
             </variant>
             <variant type="VariantVector" >
                 <variant type="String" value="Custom" />
-                <variant type="ResourceRef" value="Image;Textures/UI.png" />
+                <variant type="ResourceRef" value="Image;textures/ui.png" />
                 <variant type="IntRect" value="12 0 12 36" />
                 <variant type="IntVector2" value="0 0" />
             </variant>
@@ -2625,7 +2625,7 @@ C++:
     ResourceCache* rc = GetSubsystem<ResourceCache>();
 
     Cursor* cursor = new Cursor(context_);
-    Image* image = rc->GetResource<Image>("Textures/UI.png");
+    Image* image = rc->GetResource<Image>("textures/ui.png");
     if (image)
     {
         cursor->DefineShape(CS_NORMAL, image, IntRect(0, 0, 12, 24), IntVector2(0, 0));
@@ -2638,7 +2638,7 @@ C++:
 Angelcode:
 \code
     Cursor@ cursor = new Cursor();
-    Image@ image = cache.GetResource("Image", "Textures/UI.png");
+    Image@ image = cache.GetResource("Image", "textures/ui.png");
     if (image !is null)
     {
         cursor.DefineShape(CS_NORMAL, image, IntRect(0, 0, 12, 24), IntVector2(0, 0));
@@ -3932,7 +3932,7 @@ Third, there are requirements for new code that come from Urho3D striving to be 
 
 - Unless impossible due to missing bindings (see above) new examples should be implemented in all of C++, AngelScript and Lua.
 
-- For new Component or UIElement subclasses, \ref Serialization "attributes" should exist for serialization, network replication and editing. The classes should be possible to create from within the editor; check the component category and supply icons for them as necessary (see the files bin/Data/Textures/EditorIcons.png and bin/Data/UI/EditorIcons.xml.)
+- For new Component or UIElement subclasses, \ref Serialization "attributes" should exist for serialization, network replication and editing. The classes should be possible to create from within the editor; check the component category and supply icons for them as necessary (see the files bin/data/textures/editor_icons.png and bin/data/ui/editor_icons.xml.)
 
 - If the classes inherit attribute definitions from other classes, make sure that they are registered in the correct order on engine initialization.
 

@@ -1055,7 +1055,7 @@
 		<attribute name="Scale" value="10 1 10" />
 		<attribute name="Variables" />
 		<component type="Terrain" id="10">
-			<attribute name="Height Map" value="Image;Textures/HeightMap.png" />
+			<attribute name="Height Map" value="Image;textures/HeightMap.png" />
 			<attribute name="Material" value="Material;materials/Terrain.xml" />
 			<attribute name="Vertex Spacing" value="0.05 0.1 0.05" />
 			<attribute name="Patch Size" value="64" />

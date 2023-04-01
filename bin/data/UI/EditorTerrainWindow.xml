@@ -84,7 +84,7 @@
         <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="RaiseLowerHeight" />
             <element type="BorderImage">
-                <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
+                <attribute name="Texture" value="Texture2D;textures/Editor/EditorIcons.png" />
                 <attribute name="Image Rect" value="0 224 30 254" />
                 <attribute name="Position" value="2 2" />
                 <attribute name="Min Size" value="30 30" />
@@ -94,7 +94,7 @@
         <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="SetHeight"/>
             <element type="BorderImage">
-                <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
+                <attribute name="Texture" value="Texture2D;textures/Editor/EditorIcons.png" />
                 <attribute name="Image Rect" value="32 224 62 254" />
                 <attribute name="Position" value="2 2" />
                 <attribute name="Min Size" value="30 30" />
@@ -104,7 +104,7 @@
         <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="SmoothHeight" />
             <element type="BorderImage">
-                <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
+                <attribute name="Texture" value="Texture2D;textures/Editor/EditorIcons.png" />
                 <attribute name="Image Rect" value="64 224 94 254" />
                 <attribute name="Position" value="2 2" />
                 <attribute name="Min Size" value="30 30" />
@@ -115,7 +115,7 @@
         <!--<element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="PaintBrush" />
             <element type="BorderImage">
-                <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
+                <attribute name="Texture" value="Texture2D;textures/Editor/EditorIcons.png" />
                 <attribute name="Image Rect" value="96 224 126 254" />
                 <attribute name="Position" value="2 2" />
                 <attribute name="Min Size" value="30 30" />
@@ -125,7 +125,7 @@
         <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="PaintTrees" />
             <element type="BorderImage">
-                <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
+                <attribute name="Texture" value="Texture2D;textures/Editor/EditorIcons.png" />
                 <attribute name="Image Rect" value="96 224 126 254" />
                 <attribute name="Position" value="2 2" />
                 <attribute name="Min Size" value="30 30" />
@@ -135,7 +135,7 @@
         <element type="CheckBox" style="TerrainEditorCheckBox">
             <attribute name="Name" value="PaintFoliage" />
             <element type="BorderImage">
-                <attribute name="Texture" value="Texture2D;Textures/Editor/EditorIcons.png" />
+                <attribute name="Texture" value="Texture2D;textures/Editor/EditorIcons.png" />
                 <attribute name="Image Rect" value="96 224 126 254" />
                 <attribute name="Position" value="2 2" />
                 <attribute name="Min Size" value="30 30" />

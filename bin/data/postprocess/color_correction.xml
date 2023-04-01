@@ -1,6 +1,6 @@
 <renderpath>
     <command type="quad" tag="color_correction" vs="color_correction" ps="color_correction" output="viewport">
         <texture unit="diffuse" name="viewport" />
-        <texture unit="volume" name="Textures/LUTIdentity.xml" />
+        <texture unit="volume" name="textures/LUTIdentity.xml" />
     </command>
 </renderpath>

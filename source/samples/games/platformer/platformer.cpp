@@ -135,7 +135,7 @@ void Urho2DPlatformer::create_scene()
     sample2D_->PopulateTriggers(tileMap->GetLayer(tileMap->GetNumLayers() - 4));
 
     // Create background
-    sample2D_->CreateBackgroundSprite(info, 3.5, "Textures/HeightMap.png", true);
+    sample2D_->CreateBackgroundSprite(info, 3.5, "textures/HeightMap.png", true);
 
     // Check when scene is rendered
     subscribe_to_event(E_ENDRENDERING, DV_HANDLER(Urho2DPlatformer, HandleSceneRendered));

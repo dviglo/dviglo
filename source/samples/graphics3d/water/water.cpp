@@ -102,7 +102,7 @@ void Water::create_scene()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.5f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache.GetResource<Image>("Textures/HeightMap.png"));
+    terrain->SetHeightMap(cache.GetResource<Image>("textures/HeightMap.png"));
     terrain->SetMaterial(cache.GetResource<Material>("materials/Terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it

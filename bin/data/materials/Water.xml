@@ -2,7 +2,7 @@
     <!-- The water example will assign the reflection texture to the diffuse unit -->
     <!-- The engine will automatically assign the refraction (viewport) texture to the environment unit during refract pass -->
     <technique name="Techniques/Water.xml" />
-    <texture unit="normal" name="Textures/WaterNoise.dds" />
+    <texture unit="normal" name="textures/WaterNoise.dds" />
     <parameter name="NoiseSpeed" value="0.05 0.05" />
     <parameter name="NoiseTiling" value="50" />
     <parameter name="NoiseStrength" value="0.02" />

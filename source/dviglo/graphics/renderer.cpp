@@ -1625,8 +1625,8 @@ void Renderer::Initialize()
     // Validate the shadow quality level
     SetShadowQuality(shadowQuality_);
 
-    defaultLightRamp_ = cache.GetResource<Texture2D>("Textures/Ramp.png");
-    defaultLightSpot_ = cache.GetResource<Texture2D>("Textures/Spot.png");
+    defaultLightRamp_ = cache.GetResource<Texture2D>("textures/Ramp.png");
+    defaultLightSpot_ = cache.GetResource<Texture2D>("textures/Spot.png");
     defaultMaterial_ = new Material();
 
     defaultRenderPath_ = new RenderPath();
