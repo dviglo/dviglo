@@ -300,9 +300,7 @@ bool Graphics::SetScreenMode_OGL(int width, int height, const ScreenModeParams& 
                     SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
                 }
 
-                // TODO
-                //window_ = SDL_CreateWindow(windowTitle_.c_str(), x, y, width, height, flags);
-                window_ = SDL_CreateWindow(windowTitle_.c_str(), width, height, flags);
+                window_ = SDL_CreateWindowWithPosition(windowTitle_.c_str(), x, y, width, height, flags);
 
                 if (window_)
                 {
