@@ -26,7 +26,7 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
     // If layout file is not given, use the default message box layout
     if (!layoutFile)
     {
-        layoutFile = DV_RES_CACHE.GetResource<XmlFile>("ui/MessageBox.xml");
+        layoutFile = DV_RES_CACHE.GetResource<XmlFile>("ui/message_box.xml");
         if (!layoutFile)    // Error is already logged
             return;         // Note: windowless MessageBox should not be used!
     }
