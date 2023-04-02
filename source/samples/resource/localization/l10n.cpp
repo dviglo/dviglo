@@ -68,7 +68,7 @@ void L10n::CreateGUI()
     Localization& l10n = DV_LOCALIZATION;
 
     UiElement* root = DV_UI.GetRoot();
-    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml"));
+    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml"));
 
     auto* window = new Window();
     root->AddChild(window);

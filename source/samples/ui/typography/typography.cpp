@@ -40,7 +40,7 @@ void Typography::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
 
     // Set the loaded style as default style
     UiElement* root = DV_UI.GetRoot();

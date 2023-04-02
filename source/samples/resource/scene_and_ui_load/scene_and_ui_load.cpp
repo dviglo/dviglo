@@ -64,7 +64,7 @@ void SceneAndUILoad::create_scene()
 void SceneAndUILoad::create_ui()
 {
     // Set up global UI style into the root UI element
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
     DV_UI.GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will

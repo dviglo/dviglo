@@ -47,7 +47,7 @@ void Hello3DUI::Start()
     DV_INPUT.SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
+    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
 
     uiRoot_ = DV_UI.GetRoot();
 

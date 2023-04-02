@@ -55,7 +55,7 @@ void NATPunchtrough::create_ui()
     SetLogoVisible(true); // We need the full rendering window
 
     UiElement* root = DV_UI.GetRoot();
-    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/DefaultStyle.xml");
+    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
