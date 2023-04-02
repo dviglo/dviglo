@@ -125,7 +125,7 @@ void Urho2DConstraints::create_scene()
     Node* box  = scene_->create_child("Box");
     box->SetPosition(Vector3(0.8f, -2.0f, 0.0f));
     auto* boxSprite = box->create_component<StaticSprite2D>();
-    boxSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Box.png"));
+    boxSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Box.png"));
     auto* boxBody = box->create_component<RigidBody2D>();
     boxBody->SetBodyType(BT_DYNAMIC);
     boxBody->SetLinearDamping(0.0f);
@@ -140,7 +140,7 @@ void Urho2DConstraints::create_scene()
     Node* ball  = scene_->create_child("Ball");
     ball->SetPosition(Vector3(1.8f, -2.0f, 0.0f));
     auto* ballSprite = ball->create_component<StaticSprite2D>();
-    ballSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Ball.png"));
+    ballSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Ball.png"));
     auto* ballBody = ball->create_component<RigidBody2D>();
     ballBody->SetBodyType(BT_DYNAMIC);
     ballBody->SetLinearDamping(0.0f);
@@ -156,7 +156,7 @@ void Urho2DConstraints::create_scene()
     polygon->SetPosition(Vector3(1.6f, -2.0f, 0.0f));
     polygon->SetScale(0.7f);
     auto* polygonSprite = polygon->create_component<StaticSprite2D>();
-    polygonSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Aster.png"));
+    polygonSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Aster.png"));
     auto* polygonBody = polygon->create_component<RigidBody2D>();
     polygonBody->SetBodyType(BT_DYNAMIC);
     auto* polygonShape = polygon->create_component<CollisionPolygon2D>();

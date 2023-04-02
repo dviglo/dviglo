@@ -67,7 +67,7 @@ void Urho2DParticle::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
     camera->SetZoom(1.2f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
-    auto* particleEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("Urho2D/sun.pex");
+    auto* particleEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("sprites/sun.pex");
     if (!particleEffect)
         return;
 
@@ -75,7 +75,7 @@ void Urho2DParticle::create_scene()
     auto* particleEmitter = particleNode_->create_component<ParticleEmitter2D>();
     particleEmitter->SetEffect(particleEffect);
 
-    auto* greenSpiralEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("Urho2D/greenspiral.pex");
+    auto* greenSpiralEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("sprites/greenspiral.pex");
     if (!greenSpiralEffect)
         return;
 

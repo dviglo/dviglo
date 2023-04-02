@@ -2719,7 +2719,7 @@ So to prevent conflicts, scml and image files shouldn't have the exact same name
 A 2D particle emitter is built from a *.pex file (a format used by many 2D engines).
 A *.pex file is loaded using ParticleEffect2D class (Resource) and rendered using ParticleEmitter2D class (Drawable component):
 
-- ParticleEffect2D: a *.pex file defining the behavior and texture of a 2D particle (ParticleEmitter2D). For an example, see bin/Data/Urho2D/greenspiral.pex
+- ParticleEffect2D: a *.pex file defining the behavior and texture of a 2D particle (ParticleEmitter2D). For an example, see bin/data/sprites/greenspiral.pex
 - ParticleEmitter2D: used to display a ParticleEffect2D. Equivalent to a 3D ParticleEmitter.
 
 For a demonstration, check example 25_Urho2DParticle.
@@ -2737,7 +2737,7 @@ Spritesheets can be created using tools like ShoeBox (http://renderhjs.net/shoeb
 These tools will generate an image file and a xml file mapping coordinates and size for each individual image. Note that Urho2D uses same xml file format as Sparrow/Starling engines.
 
 You can assign a material to an image by creating a xml parameter file named as the image and located in the same folder.
-For example, to make the box sprite (bin/Data/Urho2D/Box.png) nearest filtered, create a file Box.xml next to it, with the following content:
+For example, to make the box sprite (bin/data/sprites/box.png) nearest filtered, create a file box.xml next to it, with the following content:
 
 \code
 <texture>
@@ -2896,21 +2896,21 @@ C++:
 \code
 SharedPtr<Node> tileMapNode(scene_->CreateChild("TileMap")); // Create a standard Urho3D node
 TileMap2D* tileMap = tileMapNode->CreateComponent<TileMap2D>(); // Create the TileMap2D component
-tileMap->SetTmxFile(cache->GetResource<TmxFile2D>("Urho2D/isometric_grass_and_water.tmx")); // Assign tmx resource file to component
+tileMap->SetTmxFile(cache->GetResource<TmxFile2D>("sprites/isometric_grass_and_water.tmx")); // Assign tmx resource file to component
 \endcode
 
 AngelScript:
 \code
 Node@ tileMapNode = scene_.CreateChild("TileMap"); // Create a standard Urho3D node
 TileMap2D@ tileMap = tileMapNode.CreateComponent("TileMap2D"); // Create the TileMap2D component
-tileMap.tmxFile = cache.GetResource("TmxFile2D", "Urho2D/isometric_grass_and_water.tmx"); // Assign the tmx resource file to component
+tileMap.tmxFile = cache.GetResource("TmxFile2D", "sprites/isometric_grass_and_water.tmx"); // Assign the tmx resource file to component
 \endcode
 
 Lua:
 \code
 local tileMapNode = scene_:CreateChild("TileMap") -- Create a standard Urho3D node
 local tileMap = tileMapNode:CreateComponent("TileMap2D") -- Create the TileMap2D component
-tileMap.tmxFile = cache:GetResource("TmxFile2D", "Urho2D/isometric_grass_and_water.tmx") -- Assign tmx resource file to component
+tileMap.tmxFile = cache:GetResource("TmxFile2D", "sprites/isometric_grass_and_water.tmx") -- Assign tmx resource file to component
 \endcode
 
 Note that:

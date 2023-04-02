@@ -65,7 +65,7 @@ void Urho2DSpriterAnimation::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
     camera->SetZoom(1.5f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.5) is set for full visibility at 1280x800 resolution)
 
-    auto* spriterAnimationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/imp/imp.scml");
+    auto* spriterAnimationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/imp/imp.scml");
     if (!spriterAnimationSet)
         return;
 

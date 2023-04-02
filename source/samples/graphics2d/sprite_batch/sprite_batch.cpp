@@ -194,15 +194,15 @@ public:
 
         // Размер текстуры должен быть степенью двойки (64, 128, 256, ...),
         // иначе она не будет работать в GL ES 1.0 (в вебе).
-        // В некоторых случаях (например для "Urho2D/Stretchable.png" - 200x200) может помочь
-        // Texture2D* head = cache->GetResource<Texture2D>("Urho2D/Stretchable.png");
+        // В некоторых случаях (например для "sprites/Stretchable.png" - 200x200) может помочь
+        // Texture2D* head = cache->GetResource<Texture2D>("sprites/Stretchable.png");
         // if (head->GetAddressMode(COORD_U) == ADDRESS_WRAP)
         // {
         //     head->SetAddressMode(COORD_U, ADDRESS_CLAMP);
         //     head->SetAddressMode(COORD_V, ADDRESS_CLAMP);
         // }
         // как это сделано в Sprite2D.cpp.
-        // В других случаях ("Urho2D/imp/imp_head.png" - 238x149) и это не помогает
+        // В других случаях ("sprites/imp/imp_head.png" - 238x149) и это не помогает
 
         Texture2D* head = cache.GetResource<Texture2D>("textures/FishBoneLogo.png");
         Font* font = cache.GetResource<Font>("fonts/anonymous pro.ttf");

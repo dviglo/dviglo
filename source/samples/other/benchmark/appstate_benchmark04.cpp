@@ -58,7 +58,7 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
     scale_ += timeStep;
 
     ResourceCache& cache = DV_RES_CACHE;
-    Texture2D* ball = cache.GetResource<Texture2D>("Urho2D/Ball.png");
+    Texture2D* ball = cache.GetResource<Texture2D>("sprites/Ball.png");
     Texture2D* head = cache.GetResource<Texture2D>("textures/FishBoneLogo.png");
 
     DV_GRAPHICS.Clear(CLEAR_COLOR, Color::GREEN);

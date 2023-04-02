@@ -69,7 +69,7 @@ void Urho2DTileMap::create_scene()
     camera->SetZoom(1.0f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.0) is set for full visibility at 1280x800 resolution)
 
     // Get tmx file
-    auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("Urho2D/isometric_grass_and_water.tmx");
+    auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("sprites/isometric_grass_and_water.tmx");
     if (!tmxFile)
         return;
 

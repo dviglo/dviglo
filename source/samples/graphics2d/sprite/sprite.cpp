@@ -70,7 +70,7 @@ void Urho2DSprite::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
 
     // Get sprite
-    Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("Urho2D/Aster.png");
+    Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/Aster.png");
     if (!sprite)
         return;
 
@@ -100,7 +100,7 @@ void Urho2DSprite::create_scene()
     }
 
     // Get animation set
-    AnimationSet2D* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("Urho2D/GoldIcon.scml");
+    AnimationSet2D* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/GoldIcon.scml");
     if (!animationSet)
         return;
 
