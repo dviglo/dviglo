@@ -1,5 +1,5 @@
 <material>
-    <technique name="techniques/pbr/PBRTerrainBlend.xml" />
+    <technique name="techniques/pbr/pbr_terrain_blend.xml" />
     <texture unit="0" name="textures/TerrainWeights.dds" />
     <texture unit="1" name="textures/pbr/sand/albedo.jpg" />
     <texture unit="2" name="textures/pbr/mud/albedo.jpg" />
