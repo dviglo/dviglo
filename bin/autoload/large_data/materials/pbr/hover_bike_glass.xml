@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <material>
-	<technique name="techniques/PBR/PBRMetallicRoughDiffSpecAlpha.xml" quality="0" loddistance="0" />
+	<technique name="techniques/pbr/PBRMetallicRoughDiffSpecAlpha.xml" quality="0" loddistance="0" />
 	<texture unit="diffuse" name="textures/pbr/hover_bike/glass/albedo.jpg" />
 	<texture unit="normal" name="textures/pbr/hover_bike/glass/normal.jpg" />
 	<texture unit="specular" name="textures/pbr/hover_bike/glass/properties.jpg" />

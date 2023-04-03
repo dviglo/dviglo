@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <material>
-	<technique name="techniques/PBR/PBRMetallicRoughDiffNormalSpec.xml" quality="0" loddistance="0" />
+	<technique name="techniques/pbr/PBRMetallicRoughDiffNormalSpec.xml" quality="0" loddistance="0" />
 	<texture unit="diffuse" name="textures/pbr/concrete/albedo.jpg" />
 	<texture unit="normal" name="textures/pbr/concrete/normal.jpg" />
 	<texture unit="specular" name="textures/pbr/concrete/pbr.jpg" />
