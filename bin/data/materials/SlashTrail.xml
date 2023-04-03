@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <material>
-    <technique name="Techniques/DiffVColUnlitAlpha.xml" quality="1" loddistance="0" />
+    <technique name="techniques/DiffVColUnlitAlpha.xml" quality="1" loddistance="0" />
     <texture unit="diffuse" name="textures/SlashTrail.png" />
 	<parameter name="UOffset" value="1 0 0 0" />
 	<parameter name="VOffset" value="0 1 0 0" />

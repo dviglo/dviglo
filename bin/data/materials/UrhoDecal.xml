@@ -1,5 +1,5 @@
 <material>
-    <technique name="Techniques/DiffAdd.xml" />
+    <technique name="techniques/DiffAdd.xml" />
     <texture unit="diffuse" name="textures/UrhoDecal.dds" />
     <parameter name="MatDiffColor" value="1 1 0 1" />
     <depthbias constant="-0.00001" slopescaled="0" />

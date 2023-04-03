@@ -1,5 +1,5 @@
 <material>
-    <technique name="Techniques/TerrainBlend.xml" />
+    <technique name="techniques/TerrainBlend.xml" />
     <texture unit="0" name="textures/TerrainWeights.dds" />
     <texture unit="1" name="textures/TerrainDetail1.dds" />
     <texture unit="2" name="textures/TerrainDetail2.dds" />

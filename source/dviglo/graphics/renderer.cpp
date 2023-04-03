@@ -572,7 +572,7 @@ Technique* Renderer::GetDefaultTechnique() const
 {
     // Assign default when first asked if not assigned yet
     if (!defaultTechnique_)
-        const_cast<SharedPtr<Technique>& >(defaultTechnique_) = DV_RES_CACHE.GetResource<Technique>("Techniques/NoTexture.xml");
+        const_cast<SharedPtr<Technique>& >(defaultTechnique_) = DV_RES_CACHE.GetResource<Technique>("techniques/NoTexture.xml");
 
     return defaultTechnique_;
 }

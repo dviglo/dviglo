@@ -168,7 +168,7 @@ void RenderToTexture::create_scene()
             // Create a new material from scratch, use the diffuse unlit technique, assign the render texture
             // as its diffuse texture, then assign the material to the screen plane object
             SharedPtr<Material> renderMaterial(new Material());
-            renderMaterial->SetTechnique(0, cache.GetResource<Technique>("Techniques/DiffUnlit.xml"));
+            renderMaterial->SetTechnique(0, cache.GetResource<Technique>("techniques/DiffUnlit.xml"));
             renderMaterial->SetTexture(TU_DIFFUSE, renderTexture);
             // Since the screen material is on top of the box model and may Z-fight, use negative depth bias
             // to push it forward (particularly necessary on mobiles with possibly less Z resolution)

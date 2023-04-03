@@ -1,4 +1,4 @@
 <material>
-    <technique name="Techniques/DiffUnlitParticleAdd.xml" />
+    <technique name="techniques/DiffUnlitParticleAdd.xml" />
     <texture unit="diffuse" name="textures/Flare.dds" />
 </material>

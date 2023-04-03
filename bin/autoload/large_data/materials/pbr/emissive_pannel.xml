@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <material>
-	<technique name="Techniques/PBR/PBRMetallicRoughDiffNormalSpecEmissive.xml" quality="0" loddistance="0" />
+	<technique name="techniques/PBR/PBRMetallicRoughDiffNormalSpecEmissive.xml" quality="0" loddistance="0" />
 	<texture unit="diffuse" name="textures/pbr/emissive pannel/albedo.jpg" />
 	<texture unit="normal" name="textures/pbr/emissive pannel/normal.jpg" />
 	<texture unit="specular" name="textures/pbr/emissive pannel/pbr.jpg" />

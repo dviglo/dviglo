@@ -1,5 +1,5 @@
 <material>
-    <technique name="Techniques/VegetationDiff.xml" />
+    <technique name="techniques/VegetationDiff.xml" />
     <texture unit="diffuse" name="textures/Mushroom.dds" />
     <parameter name="MatSpecColor" value="0.1 0.1 0.1 16" />
     <parameter name="WindPeriod" value="1" />
