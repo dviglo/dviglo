@@ -201,7 +201,7 @@ Node* Sample2D::CreateEnemy()
 {
     Node* node = scene_->create_child("Enemy");
     auto* staticSprite = node->create_component<StaticSprite2D>();
-    staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Aster.png"));
+    staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/aster.png"));
     auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
     auto* shape = node->create_component<CollisionCircle2D>(); // Create circle shape

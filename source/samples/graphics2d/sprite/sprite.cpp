@@ -70,7 +70,7 @@ void Urho2DSprite::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
 
     // Get sprite
-    Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/Aster.png");
+    Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/aster.png");
     if (!sprite)
         return;
 

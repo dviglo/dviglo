@@ -156,7 +156,7 @@ void Urho2DConstraints::create_scene()
     polygon->SetPosition(Vector3(1.6f, -2.0f, 0.0f));
     polygon->SetScale(0.7f);
     auto* polygonSprite = polygon->create_component<StaticSprite2D>();
-    polygonSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Aster.png"));
+    polygonSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/aster.png"));
     auto* polygonBody = polygon->create_component<RigidBody2D>();
     polygonBody->SetBodyType(BT_DYNAMIC);
     auto* polygonShape = polygon->create_component<CollisionPolygon2D>();
