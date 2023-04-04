@@ -106,7 +106,7 @@ void VehicleDemo::create_scene()
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
     terrain->SetHeightMap(cache.GetResource<Image>("textures/heightmap.png"));
-    terrain->SetMaterial(cache.GetResource<Material>("materials/Terrain.xml"));
+    terrain->SetMaterial(cache.GetResource<Material>("materials/terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);

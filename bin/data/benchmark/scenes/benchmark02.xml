@@ -1056,7 +1056,7 @@
 		<attribute name="Variables" />
 		<component type="Terrain" id="10">
 			<attribute name="Height Map" value="Image;textures/heightmap.png" />
-			<attribute name="Material" value="Material;materials/Terrain.xml" />
+			<attribute name="Material" value="Material;materials/terrain.xml" />
 			<attribute name="Vertex Spacing" value="0.05 0.1 0.05" />
 			<attribute name="Patch Size" value="64" />
 			<attribute name="Smooth Height Map" value="true" />
