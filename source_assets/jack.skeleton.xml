@@ -472,7 +472,7 @@
         <boneparent bone="Bip01_R_Toe0Nub" parent="Bip01_R_Toe0" />
     </bonehierarchy>
     <animations>
-        <animation name="Walk" length="1.06667">
+        <animation name="walk" length="1.06667">
             <tracks>
                 <track bone="Bip01">
                     <keyframes>

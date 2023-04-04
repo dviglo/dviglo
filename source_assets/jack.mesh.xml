@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <mesh>
   <submeshes>
     <submesh material="male/Body" usesharedvertices="false" use32bitindexes="false" operationtype="triangle_list">
@@ -58958,7 +58958,7 @@
       </boneassignments>
     </submesh>
   </submeshes>
-  <skeletonlink name="Jack.skeleton" />
+  <skeletonlink name="jack.skeleton" />
   <levelofdetail strategy="Distance" numlevels="7" manual="false">
     <lodgenerated value="15">
       <lodfacelist submeshindex="0" numfaces="2826">

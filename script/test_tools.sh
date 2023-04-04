@@ -22,7 +22,7 @@ build_dir=${build_dir%\\}
 # ================== ogre_importer ==================
 
 src_filenames=(
-    Jack.mesh.xml
+    jack.mesh.xml
     Level.mesh.xml
     Mushroom.mesh.xml
     Ninja.mesh.xml
@@ -32,7 +32,7 @@ src_filenames=(
 )
 
 result_filenames=(
-    Jack_Walk.ani
+    jack_walk.ani
     Ninja_Attack1.ani
     Ninja_Attack2.ani
     Ninja_Attack3.ani
@@ -53,7 +53,7 @@ result_filenames=(
     Ninja_Spin.ani
     Ninja_Stealth.ani
     Ninja_Walk.ani
-    Jack.mdl
+    jack.mdl
     Level.mdl
     Mushroom.mdl
     Ninja.mdl
@@ -65,7 +65,7 @@ result_filenames=(
 # This is not used because the result is compiler dependent.
 # Perhaps this is due to the calculation error when using float
 result_checksums=(
-    a07f69d23b84b0039d7e9159a494d7c5a587ae6d # Jack_Walk.ani
+    a07f69d23b84b0039d7e9159a494d7c5a587ae6d # jack_walk.ani
     5abfe9cee41a2d8c4d8af8af5baf879fc6ab36cb # Ninja_Attack1.ani
     f73548094148f9d18d6a93b66eac647db50672eb # Ninja_Attack2.ani
     0549824bcbf73ebaff17964ba81ae2ca813ad684 # Ninja_Attack3.ani
@@ -86,7 +86,7 @@ result_checksums=(
     63683537161f7352684bc50a44b753b5f9691af3 # Ninja_Spin.ani
     801383ba0ad30d4a0d401a69af5ca88bf5c6b39f # Ninja_Stealth.ani
     608a91452ff6980ef34ca68c4fd688fd719592c2 # Ninja_Walk.ani
-    c8b032146ccde40058af94d5578e61345f6fb648 # Jack.mdl
+    c8b032146ccde40058af94d5578e61345f6fb648 # jack.mdl
     cde0671fced710d666f15cd941c9f385359a45e9 # Level.mdl
     39afeecb472b8be081fddb59419db595ccae2105 # Mushroom.mdl
     ef5b6c831566f45cef0c7652fe16a7eec7f57f4c # Ninja.mdl
@@ -96,7 +96,7 @@ result_checksums=(
 )
 
 result_sizes=(
-    56410  # Jack_Walk.ani
+    56410  # jack_Walk.ani
     2916   # Ninja_Attack1.ani
     2788   # Ninja_Attack2.ani
     2628   # Ninja_Attack3.ani
@@ -117,7 +117,7 @@ result_sizes=(
     2625   # Ninja_Spin.ani
     2244   # Ninja_Stealth.ani
     3201   # Ninja_Walk.ani
-    433684 # Jack.mdl
+    433684 # jack.mdl
     26100  # Level.mdl
     74196  # Mushroom.mdl
     66895  # Ninja.mdl
