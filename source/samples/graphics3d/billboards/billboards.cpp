@@ -129,7 +129,7 @@ void Billboards::create_scene()
 
         auto* billboardObject = smokeNode->create_component<BillboardSet>();
         billboardObject->SetNumBillboards(NUM_BILLBOARDS);
-        billboardObject->SetMaterial(cache.GetResource<Material>("materials/LitSmoke.xml"));
+        billboardObject->SetMaterial(cache.GetResource<Material>("materials/lit_smoke.xml"));
         billboardObject->SetSorted(true);
 
         for (unsigned j = 0; j < NUM_BILLBOARDS; ++j)
