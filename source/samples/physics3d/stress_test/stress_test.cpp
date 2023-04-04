@@ -98,7 +98,7 @@ void PhysicsStressTest::create_scene()
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
         floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        floorObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
+        floorObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components
         /*RigidBody* body = */floorNode->create_component<RigidBody>();
@@ -136,7 +136,7 @@ void PhysicsStressTest::create_scene()
             boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
             auto* boxObject = boxNode->create_component<StaticModel>();
             boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            boxObject->SetMaterial(cache.GetResource<Material>("materials/StoneSmall.xml"));
+            boxObject->SetMaterial(cache.GetResource<Material>("materials/stone_small.xml"));
             boxObject->SetCastShadows(true);
 
             // Give the RigidBody mass to make it movable and also adjust friction
@@ -259,7 +259,7 @@ void PhysicsStressTest::SpawnObject()
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
     boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
-    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneSmall.xml"));
+    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_small.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also

@@ -71,7 +71,7 @@ void LightAnimation::create_scene()
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
+    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a point light to the world so that we can see something.
     Node* lightNode = scene_->create_child("PointLight");

@@ -75,7 +75,7 @@ public:
         planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
         StaticModel* planeObject = planeNode->create_component<StaticModel>();
         planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-        planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
+        planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
 
         Node* lightNode = scene_->create_child("DirectionalLight");
         lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));

@@ -264,7 +264,7 @@ Node* SceneReplication::CreateControllableObject()
     ballNode->SetScale(0.5f);
     auto* ballObject = ballNode->create_component<StaticModel>();
     ballObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/sphere.mdl"));
-    ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneSmall.xml"));
+    ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_small.xml"));
 
     // Create the physics components
     auto* body = ballNode->create_component<RigidBody>();

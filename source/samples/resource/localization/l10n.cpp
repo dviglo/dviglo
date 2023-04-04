@@ -139,7 +139,7 @@ void L10n::create_scene()
     planeNode->SetScale(Vector3(300.0f, 1.0f, 300.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
     planeObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneTiled.xml"));
+    planeObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_tiled.xml"));
 
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));

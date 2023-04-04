@@ -23,7 +23,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="3">
 			<attribute name="Model" value="Model;models/plane.mdl" />
-			<attribute name="Material" value="Material;materials/StoneTiled.xml" />
+			<attribute name="Material" value="Material;materials/stone_tiled.xml" />
 		</component>
 	</node>
 	<node id="3">

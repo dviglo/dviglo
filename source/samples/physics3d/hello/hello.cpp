@@ -107,7 +107,7 @@ void Physics::create_scene()
         floorNode->SetScale(Vector3(1000.0f, 1.0f, 1000.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
         floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        floorObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
+        floorObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components. The RigidBody's default
         // parameters make the object static (zero mass.) Note that a CollisionShape by itself will not participate

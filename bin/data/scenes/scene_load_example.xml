@@ -110,7 +110,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="9">
 			<attribute name="Model" value="Model;models/plane.mdl" />
-			<attribute name="Material" value="Material;materials/UrhoDecalAlphaMaskTwoSided.xml" />
+			<attribute name="Material" value="Material;materials/urho_decal_alpha_mask_two_sided.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
 	</node>
