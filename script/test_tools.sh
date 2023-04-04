@@ -26,7 +26,7 @@ src_filenames=(
     level.mesh.xml
     mushroom.mesh.xml
     Ninja.mesh.xml
-    Potion.mesh.xml
+    potion.mesh.xml
     SnowBall.mesh.xml
     SnowCrate.mesh.xml
 )
@@ -57,7 +57,7 @@ result_filenames=(
     level.mdl
     mushroom.mdl
     Ninja.mdl
-    Potion.mdl
+    potion.mdl
     SnowBall.mdl
     SnowCrate.mdl
 )
@@ -90,7 +90,7 @@ result_checksums=(
     cde0671fced710d666f15cd941c9f385359a45e9 # level.mdl
     39afeecb472b8be081fddb59419db595ccae2105 # mushroom.mdl
     ef5b6c831566f45cef0c7652fe16a7eec7f57f4c # Ninja.mdl
-    351044e86480d7ab0ee5bac2f557f800e6770925 # Potion.mdl
+    351044e86480d7ab0ee5bac2f557f800e6770925 # potion.mdl
     4c3c7b1c47f62c5c0a99e1f33bd20463a64d6b93 # SnowBall.mdl
     110a90536d58e0a57ef6070b2b372341cb97bdaa # SnowCrate.mdl
 )
@@ -121,7 +121,7 @@ result_sizes=(
     26100  # level.mdl
     74196  # mushroom.mdl
     66895  # Ninja.mdl
-    7092   # Potion.mdl
+    7092   # potion.mdl
     2484   # SnowBall.mdl
     11724  # SnowCrate.mdl
 )
