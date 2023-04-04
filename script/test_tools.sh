@@ -63,7 +63,8 @@ result_filenames=(
 )
 
 # This is not used because the result is compiler dependent.
-# Perhaps this is due to the calculation error when using float
+# Perhaps this is due to the calculation error when using float.
+# TODO: После переименования файлов поменялись контрольные суммы, так как в ani-файлах поменялись имена анимаций
 result_checksums=(
     a07f69d23b84b0039d7e9159a494d7c5a587ae6d # jack_walk.ani
     5abfe9cee41a2d8c4d8af8af5baf879fc6ab36cb # ninja_attack1.ani
@@ -106,14 +107,14 @@ result_sizes=(
     4003   # ninja_crouch.ani
     2307   # ninja_death1.ani
     2723   # ninja_death2.ani
-    5541   # ninja_high_jump.ani
+    5542   # ninja_high_jump.ani
     3682   # ninja_idle1.ani
     2434   # ninja_idle2.ani
     2658   # ninja_idle3.ani
     2785   # ninja_jump.ani
-    2857   # ninja_jump_no_height.ani
+    2859   # ninja_jump_no_height.ani
     3745   # ninja_kick.ani
-    2885   # ninja_side_kick.ani
+    2886   # ninja_side_kick.ani
     2625   # ninja_spin.ani
     2244   # ninja_stealth.ani
     3201   # ninja_walk.ani
