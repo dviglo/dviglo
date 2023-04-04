@@ -109,7 +109,7 @@ void Vehicle::Init()
         vehicle->SetWheelRollInfluence(id, rollInfluence_);
         wheelNode->SetScale(Vector3(1.0f, 0.65f, 1.0f));
         auto* pWheel = wheelNode->create_component<StaticModel>();
-        pWheel->SetModel(cache.GetResource<Model>("models/Cylinder.mdl"));
+        pWheel->SetModel(cache.GetResource<Model>("models/cylinder.mdl"));
         pWheel->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         pWheel->SetCastShadows(true);
         CreateEmitter(connectionPoints_[id]);

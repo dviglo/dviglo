@@ -141,7 +141,7 @@ void Vehicle::InitWheel(const String& name, const Vector3& offset, WeakPtr<Node>
     auto* wheelShape = wheelNode->create_component<CollisionShape>();
     auto* wheelConstraint = wheelNode->create_component<Constraint>();
 
-    wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Cylinder.mdl"));
+    wheelObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/cylinder.mdl"));
     wheelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
     wheelObject->SetCastShadows(true);
     wheelShape->SetSphere(1.0f);

@@ -288,7 +288,7 @@ void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
 {
     Node* barrel = scene_->create_child("Barrel");
     auto* model = barrel->create_component<StaticModel>();
-    model->SetModel(DV_RES_CACHE.GetResource<Model>("models/Cylinder.mdl"));
+    model->SetModel(DV_RES_CACHE.GetResource<Model>("models/cylinder.mdl"));
     auto* material = DV_RES_CACHE.GetResource<Material>("materials/StoneTiled.xml");
     model->SetMaterial(material);
     material->SetTexture(TU_DIFFUSE, DV_RES_CACHE.GetResource<Texture2D>("textures/TerrainDetail2.dds"));
