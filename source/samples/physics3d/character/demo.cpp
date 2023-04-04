@@ -108,7 +108,7 @@ void CharacterDemo::create_scene()
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
     auto* object = floorNode->create_component<StaticModel>();
     object->SetModel(cache.GetResource<Model>("models/box.mdl"));
-    object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+    object->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
 
     auto* body = floorNode->create_component<RigidBody>();
     // Use collision layer bit 2 to mark world scenery. This is what we will raycast against to prevent camera from going
@@ -148,7 +148,7 @@ void CharacterDemo::create_scene()
         objectNode->SetScale(scale);
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();

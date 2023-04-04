@@ -1095,7 +1095,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="40">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1109,7 +1109,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="42">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1123,7 +1123,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="44">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1137,7 +1137,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="46">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1151,7 +1151,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="36">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1165,7 +1165,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="38">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1179,7 +1179,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="48">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1193,7 +1193,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="49">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1207,7 +1207,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="50">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1221,7 +1221,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="51">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1235,7 +1235,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="52">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1249,7 +1249,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="53">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1263,7 +1263,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="54">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1277,7 +1277,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="55">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1291,7 +1291,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="56">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1305,7 +1305,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="57">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1319,7 +1319,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="58">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1333,7 +1333,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="59">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1347,7 +1347,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="60">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1361,7 +1361,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="61">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1375,7 +1375,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="62">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1389,7 +1389,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="63">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1403,7 +1403,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="64">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1417,7 +1417,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="65">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1431,7 +1431,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="66">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1445,7 +1445,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="67">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1459,7 +1459,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="68">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1473,7 +1473,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="69">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1487,7 +1487,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="70">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1501,7 +1501,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="71">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1515,7 +1515,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="72">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1529,7 +1529,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="73">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1543,7 +1543,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="74">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1557,7 +1557,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="75">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1571,7 +1571,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="76">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1585,7 +1585,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="77">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1599,7 +1599,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="78">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1613,7 +1613,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="79">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1627,7 +1627,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="80">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>
@@ -1641,7 +1641,7 @@
 			<attribute name="Variables" />
 			<component type="StaticModel" id="81">
 				<attribute name="Model" value="Model;models/box.mdl" />
-				<attribute name="Material" value="Material;materials/Stone.xml" />
+				<attribute name="Material" value="Material;materials/stone.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
 		</node>

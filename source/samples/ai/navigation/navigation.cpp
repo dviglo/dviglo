@@ -108,7 +108,7 @@ void Navigation::create_scene()
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
         boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+        boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);

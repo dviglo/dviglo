@@ -87,7 +87,7 @@ void RenderToTexture::create_scene()
             boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
             auto* boxObject = boxNode->create_component<StaticModel>();
             boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+            boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
 
             // Add our custom Rotator component which will rotate the scene node each frame, when the scene sends its update event.
             // Simply set same rotation speed for all objects
@@ -139,7 +139,7 @@ void RenderToTexture::create_scene()
                 floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
                 auto* floorObject = floorNode->create_component<StaticModel>();
                 floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-                floorObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+                floorObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
             }
         }
 
@@ -151,7 +151,7 @@ void RenderToTexture::create_scene()
             boxNode->SetScale(Vector3(21.0f, 16.0f, 0.5f));
             auto* boxObject = boxNode->create_component<StaticModel>();
             boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+            boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
 
             Node* screenNode = scene_->create_child("Screen");
             screenNode->SetPosition(Vector3(0.0f, 10.0f, -0.27f));

@@ -114,7 +114,7 @@ void SceneReplication::create_scene()
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.0f));
             auto* floorObject = floorNode->create_component<StaticModel>();
             floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            floorObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+            floorObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
 
             auto* body = floorNode->create_component<RigidBody>();
             body->SetFriction(1.0f);

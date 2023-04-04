@@ -121,7 +121,7 @@ void Water::create_scene()
         objectNode->SetScale(5.0f);
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
         object->SetCastShadows(true);
     }
 

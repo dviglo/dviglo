@@ -72,7 +72,7 @@ void Vehicle::Init()
     hullColShape->SetBox(v3BoxExtents);
     node_->SetScale(Vector3(2.3f, 1.0f, 4.0f));
     hullObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-    hullObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+    hullObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
     hullObject->SetCastShadows(true);
     float connectionHeight = -0.4f;
     bool isFrontWheel = true;
@@ -110,7 +110,7 @@ void Vehicle::Init()
         wheelNode->SetScale(Vector3(1.0f, 0.65f, 1.0f));
         auto* pWheel = wheelNode->create_component<StaticModel>();
         pWheel->SetModel(cache.GetResource<Model>("models/cylinder.mdl"));
-        pWheel->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
+        pWheel->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
         pWheel->SetCastShadows(true);
         CreateEmitter(connectionPoints_[id]);
     }
