@@ -98,7 +98,7 @@ void Physics::create_scene()
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
     skybox->SetModel(cache.GetResource<Model>("models/box.mdl"));
-    skybox->SetMaterial(cache.GetResource<Material>("materials/Skybox.xml"));
+    skybox->SetMaterial(cache.GetResource<Material>("materials/skybox.xml"));
 
     {
         // Create a floor object, 1000 x 1000 world units. Adjust position so that the ground is at zero Y

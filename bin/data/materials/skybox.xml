@@ -1,5 +1,5 @@
 <material>
     <technique name="techniques/diff_skybox.xml" />
-    <texture unit="diffuse" name="textures/Skybox.xml" />
+    <texture unit="diffuse" name="textures/skybox.xml" />
     <cull value="none" />
 </material>
