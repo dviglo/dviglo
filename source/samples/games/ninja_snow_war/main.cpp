@@ -268,7 +268,7 @@ public:
         UI& ui = DV_UI;
 
         sight = new BorderImage();
-        sight->SetTexture(cache.GetResource<Texture2D>("textures/NinjaSnowWar/Sight.png"));
+        sight->SetTexture(cache.GetResource<Texture2D>("textures/ninja_snow_war/Sight.png"));
         sight->SetAlignment(HA_CENTER, VA_CENTER);
         sight->SetSize(height, height);
         ui.GetRoot()->AddChild(sight);
@@ -299,14 +299,14 @@ public:
         ui.GetRoot()->AddChild(messageText);
 
         SharedPtr<BorderImage> healthBorder(new BorderImage());
-        healthBorder->SetTexture(cache.GetResource<Texture2D>("textures/NinjaSnowWar/HealthBarBorder.png"));
+        healthBorder->SetTexture(cache.GetResource<Texture2D>("textures/ninja_snow_war/HealthBarBorder.png"));
         healthBorder->SetAlignment(HA_CENTER, VA_TOP);
         healthBorder->SetPosition(0, 8);
         healthBorder->SetSize(120, 20);
         ui.GetRoot()->AddChild(healthBorder);
 
         healthBar = new BorderImage();
-        healthBar->SetTexture(cache.GetResource<Texture2D>("textures/NinjaSnowWar/HealthBarInside.png"));
+        healthBar->SetTexture(cache.GetResource<Texture2D>("textures/ninja_snow_war/HealthBarInside.png"));
         healthBar->SetPosition(2, 2);
         healthBar->SetSize(116, 16);
         healthBorder->AddChild(healthBar);

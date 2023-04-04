@@ -14,8 +14,8 @@
 		<attribute name="Always Update Owner" value="true" />
 	</component>
 	<component type="StaticModel" id="7">
-		<attribute name="Model" value="Model;models/NinjaSnowWar/Potion.mdl" />
-		<attribute name="Material" value="Material;materials/NinjaSnowWar/Potion.xml" />
+		<attribute name="Model" value="Model;models/ninja_snow_war/Potion.mdl" />
+		<attribute name="Material" value="Material;materials/ninja_snow_war/Potion.xml" />
 		<attribute name="Is Occluder" value="false" />
 		<attribute name="Can Be Occluded" value="true" />
 		<attribute name="Cast Shadows" value="true" />

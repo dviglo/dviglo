@@ -54,7 +54,7 @@ void Ninja::DelayedStart()
 
     // Start playing the idle animation immediately, even before the first physics update
     AnimationController* animCtrl = node_->GetChild(0)->GetComponent<AnimationController>();
-    animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_Idle3.ani", LAYER_MOVE, true);
+    animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_Idle3.ani", LAYER_MOVE, true);
 }
 
 void Ninja::SetControls(const Controls& newControls)
@@ -150,19 +150,19 @@ void Ninja::FixedUpdate(float timeStep)
             // Walk or sidestep animation
             if (sideMove)
             {
-                animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_Stealth.ani", LAYER_MOVE, true, 0.2f);
-                animCtrl->SetSpeed("models/NinjaSnowWar/Ninja_Stealth.ani", animDir * 2.2f);
+                animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_Stealth.ani", LAYER_MOVE, true, 0.2f);
+                animCtrl->SetSpeed("models/ninja_snow_war/Ninja_Stealth.ani", animDir * 2.2f);
             }
             else
             {
-                animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_Walk.ani", LAYER_MOVE, true, 0.2f);
-                animCtrl->SetSpeed("models/NinjaSnowWar/Ninja_Walk.ani", animDir * 1.6f);
+                animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_Walk.ani", LAYER_MOVE, true, 0.2f);
+                animCtrl->SetSpeed("models/ninja_snow_war/Ninja_Walk.ani", animDir * 1.6f);
             }
         }
         else
         {
             // Idle animation
-            animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_Idle3.ani", LAYER_MOVE, true, 0.2f);
+            animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_Idle3.ani", LAYER_MOVE, true, 0.2f);
         }
 
         // Overall damping to cap maximum speed
@@ -177,8 +177,8 @@ void Ninja::FixedUpdate(float timeStep)
                 body->SetPosition(body->GetPosition() + Vector3(0.f, 0.03f, 0.f));
                 body->ApplyImpulse(Vector3(0.f, NINJA_JUMP_FORCE, 0.f));
                 inAirTime = 1.0f;
-                animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_JumpNoHeight.ani", LAYER_MOVE, false, 0.1f);
-                animCtrl->SetTime("models/NinjaSnowWar/Ninja_JumpNoHeight.ani", 0.0f); // Always play from beginning
+                animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_JumpNoHeight.ani", LAYER_MOVE, false, 0.1f);
+                animCtrl->SetTime("models/ninja_snow_war/Ninja_JumpNoHeight.ani", 0.0f); // Always play from beginning
                 okToJump = false;
             }
         }
@@ -210,7 +210,7 @@ void Ninja::FixedUpdate(float timeStep)
 
         // Falling/jumping/sliding animation
         if (inAirTime > 0.1f)
-            animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_JumpNoHeight.ani", LAYER_MOVE, false, 0.1f);
+            animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_JumpNoHeight.ani", LAYER_MOVE, false, 0.1f);
     }
 
     // Shooting
@@ -218,15 +218,15 @@ void Ninja::FixedUpdate(float timeStep)
         throwTime -= timeStep;
 
     // Start fading the attack animation after it has progressed past a certain point
-    if (animCtrl->GetTime("models/NinjaSnowWar/Ninja_Attack1.ani") > 0.1f)
-        animCtrl->Fade("models/NinjaSnowWar/Ninja_Attack1.ani", 0.0f, 0.5f);
+    if (animCtrl->GetTime("models/ninja_snow_war/Ninja_Attack1.ani") > 0.1f)
+        animCtrl->Fade("models/ninja_snow_war/Ninja_Attack1.ani", 0.0f, 0.5f);
 
     if (controls.IsPressed(CTRL_FIRE, prevControls) && throwTime <= 0.f)
     {
         Vector3 projectileVel = GetAim() * NINJA_THROW_VELOCITY;
 
-        animCtrl->Play("models/NinjaSnowWar/Ninja_Attack1.ani", LAYER_ATTACK, false, 0.0f);
-        animCtrl->SetTime("models/NinjaSnowWar/Ninja_Attack1.ani", 0.0f); // Always play from beginning
+        animCtrl->Play("models/ninja_snow_war/Ninja_Attack1.ani", LAYER_ATTACK, false, 0.0f);
+        animCtrl->SetTime("models/ninja_snow_war/Ninja_Attack1.ani", 0.0f); // Always play from beginning
 
         Node* snowball = SpawnObject(node_->GetScene(), node_->GetPosition() + vel * timeStep + q * NINJA_THROW_POSITION, GetAim(), "snowball");
         RigidBody* snowballBody = snowball->GetComponent<RigidBody>();
@@ -287,8 +287,8 @@ void Ninja::DeathUpdate(float timeStep)
     {
         // Backward death
         animCtrl->StopLayer(LAYER_ATTACK, 0.1f);
-        animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_Death1.ani", LAYER_MOVE, false, 0.2f);
-        animCtrl->SetSpeed("models/NinjaSnowWar/Ninja_Death1.ani", 0.5f);
+        animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_Death1.ani", LAYER_MOVE, false, 0.2f);
+        animCtrl->SetSpeed("models/ninja_snow_war/Ninja_Death1.ani", 0.5f);
         if (deathTime >= 0.3f && deathTime < 0.8f)
             modelNode->Translate(Vector3(0.f, 0.f, 4.25f * timeStep));
     }
@@ -296,8 +296,8 @@ void Ninja::DeathUpdate(float timeStep)
     {
         // Forward death
         animCtrl->StopLayer(LAYER_ATTACK, 0.1f);
-        animCtrl->PlayExclusive("models/NinjaSnowWar/Ninja_Death2.ani", LAYER_MOVE, false, 0.2f);
-        animCtrl->SetSpeed("models/NinjaSnowWar/Ninja_Death2.ani", 0.5f);
+        animCtrl->PlayExclusive("models/ninja_snow_war/Ninja_Death2.ani", LAYER_MOVE, false, 0.2f);
+        animCtrl->SetSpeed("models/ninja_snow_war/Ninja_Death2.ani", 0.5f);
         if (deathTime >= 0.4f && deathTime < 0.8f)
             modelNode->Translate(Vector3(0.f, 0.f, -4.25f * timeStep));
     }
