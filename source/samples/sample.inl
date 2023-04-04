@@ -108,7 +108,7 @@ void Sample::SetLogoVisible(bool enable)
 void Sample::CreateLogo()
 {
     // Get logo texture
-    Texture2D* logoTexture = DV_RES_CACHE.GetResource<Texture2D>("textures/FishBoneLogo.png");
+    Texture2D* logoTexture = DV_RES_CACHE.GetResource<Texture2D>("textures/fish_bone_logo.png");
     if (!logoTexture)
         return;
 
@@ -143,7 +143,7 @@ void Sample::CreateLogo()
 void Sample::SetWindowTitleAndIcon()
 {
     Graphics& graphics = DV_GRAPHICS;
-    Image* icon = DV_RES_CACHE.GetResource<Image>("textures/UrhoIcon.png");
+    Image* icon = DV_RES_CACHE.GetResource<Image>("textures/urho_icon.png");
     graphics.SetWindowIcon(icon);
     graphics.SetWindowTitle("Urho3D Sample");
 }

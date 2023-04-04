@@ -204,7 +204,7 @@ public:
         // как это сделано в Sprite2D.cpp.
         // В других случаях ("sprites/imp/imp_head.png" - 238x149) и это не помогает
 
-        Texture2D* head = cache.GetResource<Texture2D>("textures/FishBoneLogo.png");
+        Texture2D* head = cache.GetResource<Texture2D>("textures/fish_bone_logo.png");
         Font* font = cache.GetResource<Font>("fonts/anonymous pro.ttf");
 
         // Очистка экрана. Если сцена пустая, то можно просто задать цвет зоны
