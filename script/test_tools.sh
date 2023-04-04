@@ -28,7 +28,7 @@ src_filenames=(
     Ninja.mesh.xml
     potion.mesh.xml
     snowball.mesh.xml
-    SnowCrate.mesh.xml
+    snow_crate.mesh.xml
 )
 
 result_filenames=(
@@ -59,7 +59,7 @@ result_filenames=(
     Ninja.mdl
     potion.mdl
     snowball.mdl
-    SnowCrate.mdl
+    snow_crate.mdl
 )
 
 # This is not used because the result is compiler dependent.
@@ -92,7 +92,7 @@ result_checksums=(
     ef5b6c831566f45cef0c7652fe16a7eec7f57f4c # Ninja.mdl
     351044e86480d7ab0ee5bac2f557f800e6770925 # potion.mdl
     4c3c7b1c47f62c5c0a99e1f33bd20463a64d6b93 # snowball.mdl
-    110a90536d58e0a57ef6070b2b372341cb97bdaa # SnowCrate.mdl
+    110a90536d58e0a57ef6070b2b372341cb97bdaa # snow_crate.mdl
 )
 
 result_sizes=(
@@ -123,7 +123,7 @@ result_sizes=(
     66895  # Ninja.mdl
     7092   # potion.mdl
     2484   # snowball.mdl
-    11724  # SnowCrate.mdl
+    11724  # snow_crate.mdl
 )
 
 # Если существует отладочная версия, то используем её
