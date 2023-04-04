@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <material>
     <technique name="techniques/diff_vcol_unlit_alpha.xml" quality="1" loddistance="0" />
-    <texture unit="diffuse" name="textures/SlashTrail.png" />
+    <texture unit="diffuse" name="textures/slash_trail.png" />
 	<parameter name="UOffset" value="1 0 0 0" />
 	<parameter name="VOffset" value="0 1 0 0" />
 	<parameter name="MatDiffColor" value="1 1 1 1" />
