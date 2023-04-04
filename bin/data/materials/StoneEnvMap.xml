@@ -1,6 +1,6 @@
 <material>
     <technique name="techniques/DiffNormalEnvCube.xml" quality="1" />
-    <technique name="techniques/DiffEnvCube.xml" quality="0" />
+    <technique name="techniques/diff_env_cube.xml" quality="0" />
     <texture unit="diffuse" name="textures/StoneDiffuse.dds" />
     <texture unit="normal" name="textures/StoneNormal.dds" />
     <texture unit="environment" name="textures/Skybox.xml" />
