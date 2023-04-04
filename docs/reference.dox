@@ -773,14 +773,14 @@ RigidBody@ rigidBodyShared = rigidBodyWeak.Get(); // Is null if expired
 - %Object handle assignment can be done without the @ symbol if the object in question does not support value assignment. All exposed Urho3D C++ classes that derive from RefCounted never support value assignment. For example, when assigning the Model and Material of a StaticModel component:
 
 \code
-object.model = cache.GetResource("Model", "models/Mushroom.mdl");
+object.model = cache.GetResource("Model", "models/mushroom.mdl");
 object.material = cache.GetResource("Material", "materials/Mushroom.xml");
 \endcode
 
 In unmodified AngelScript, this would have to be written as:
 
 \code
-@object.model = cache.GetResource("Model", "models/Mushroom.mdl");
+@object.model = cache.GetResource("Model", "models/mushroom.mdl");
 @object.material = cache.GetResource("Material", "materials/Mushroom.xml");
 \endcode
 

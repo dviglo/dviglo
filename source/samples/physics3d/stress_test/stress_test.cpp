@@ -116,7 +116,7 @@ void PhysicsStressTest::create_scene()
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(5.0f + Random(5.0f));
             auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-            mushroomObject->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
+            mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
             mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
             mushroomObject->SetCastShadows(true);
 

@@ -126,7 +126,7 @@ void CharacterDemo::create_scene()
         objectNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         objectNode->SetScale(2.0f + Random(5.0f));
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/Mushroom.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
         object->SetCastShadows(true);
 

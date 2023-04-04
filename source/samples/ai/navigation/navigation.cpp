@@ -312,7 +312,7 @@ Node* Navigation::create_mushroom(const Vector3& pos)
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Mushroom.mdl"));
+    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/mushroom.mdl"));
     mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
