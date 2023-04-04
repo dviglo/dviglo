@@ -97,7 +97,7 @@ void Physics::create_scene()
     Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
-    skybox->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+    skybox->SetModel(cache.GetResource<Model>("models/box.mdl"));
     skybox->SetMaterial(cache.GetResource<Material>("materials/Skybox.xml"));
 
     {
@@ -106,7 +106,7 @@ void Physics::create_scene()
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(1000.0f, 1.0f, 1000.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
-        floorObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+        floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
         floorObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components. The RigidBody's default
@@ -128,7 +128,7 @@ void Physics::create_scene()
                 Node* boxNode = scene_->create_child("Box");
                 boxNode->SetPosition(Vector3((float)x, -(float)y + 8.0f, 0.0f));
                 auto* boxObject = boxNode->create_component<StaticModel>();
-                boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+                boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
                 boxObject->SetMaterial(cache.GetResource<Material>("materials/StoneEnvMapSmall.xml"));
                 boxObject->SetCastShadows(true);
 
@@ -253,7 +253,7 @@ void Physics::SpawnObject()
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
-    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Box.mdl"));
+    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
     boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneEnvMapSmall.xml"));
     boxObject->SetCastShadows(true);
 

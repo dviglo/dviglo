@@ -107,7 +107,7 @@ void Vehicle::Init()
     auto* hullShape = node_->create_component<CollisionShape>();
 
     node_->SetScale(Vector3(1.5f, 1.0f, 3.0f));
-    hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Box.mdl"));
+    hullObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
     hullObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     hullShape->SetBox(Vector3::ONE);

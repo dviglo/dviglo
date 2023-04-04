@@ -185,7 +185,7 @@ void Hello3DUI::InitScene()
 
     // Create a box model and hide it initially.
     auto* boxModel = boxNode->create_component<StaticModel>();
-    boxModel->SetModel(DV_RES_CACHE.GetResource<Model>("models/Box.mdl"));
+    boxModel->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
     boxNode->SetEnabled(false);
 
     // Create a camera.

@@ -84,7 +84,7 @@ void AnimatingScene::create_scene()
         // Orient using random pitch, yaw and roll Euler angles
         boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+        boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
 
         // Add our custom Rotator component which will rotate the scene node each frame, when the scene sends its update event.

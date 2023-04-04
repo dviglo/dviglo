@@ -71,7 +71,7 @@ void Vehicle::Init()
     Vector3 v3BoxExtents = Vector3::ONE;
     hullColShape->SetBox(v3BoxExtents);
     node_->SetScale(Vector3(2.3f, 1.0f, 4.0f));
-    hullObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+    hullObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
     hullObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
     hullObject->SetCastShadows(true);
     float connectionHeight = -0.4f;

@@ -99,7 +99,7 @@ void Ragdolls::create_scene()
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
-        floorObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+        floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
         floorObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components

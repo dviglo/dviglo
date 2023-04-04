@@ -107,7 +107,7 @@ void CharacterDemo::create_scene()
     floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
     auto* object = floorNode->create_component<StaticModel>();
-    object->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+    object->SetModel(cache.GetResource<Model>("models/box.mdl"));
     object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
 
     auto* body = floorNode->create_component<RigidBody>();
@@ -147,7 +147,7 @@ void CharacterDemo::create_scene()
         objectNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         objectNode->SetScale(scale);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/box.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         object->SetCastShadows(true);
 

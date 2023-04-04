@@ -104,7 +104,7 @@ void CrowdNavigation::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+        boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
         boxObject->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)

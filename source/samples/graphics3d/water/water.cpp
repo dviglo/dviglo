@@ -92,7 +92,7 @@ void Water::create_scene()
     Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
-    skybox->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+    skybox->SetModel(cache.GetResource<Model>("models/box.mdl"));
     skybox->SetMaterial(cache.GetResource<Material>("materials/Skybox.xml"));
 
     // Create heightmap terrain
@@ -120,7 +120,7 @@ void Water::create_scene()
         objectNode->SetRotation(Quaternion(Vector3(0.0f, 1.0f, 0.0f), terrain->GetNormal(position)));
         objectNode->SetScale(5.0f);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+        object->SetModel(cache.GetResource<Model>("models/box.mdl"));
         object->SetMaterial(cache.GetResource<Material>("materials/Stone.xml"));
         object->SetCastShadows(true);
     }

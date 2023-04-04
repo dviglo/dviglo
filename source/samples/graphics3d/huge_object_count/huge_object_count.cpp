@@ -96,7 +96,7 @@ void HugeObjectCount::create_scene()
                 boxNode->SetPosition(Vector3(x * 0.3f, 0.0f, y * 0.3f));
                 boxNode->SetScale(0.25f);
                 auto* boxObject = boxNode->create_component<StaticModel>();
-                boxObject->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+                boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
                 boxNodes_.Push(SharedPtr<Node>(boxNode));
             }
         }
@@ -120,7 +120,7 @@ void HugeObjectCount::create_scene()
                 {
                     Node* boxGroupNode = scene_->create_child("BoxGroup");
                     lastGroup = boxGroupNode->create_component<StaticModelGroup>();
-                    lastGroup->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+                    lastGroup->SetModel(cache.GetResource<Model>("models/box.mdl"));
                 }
 
                 Node* boxNode = scene_->create_child("Box");

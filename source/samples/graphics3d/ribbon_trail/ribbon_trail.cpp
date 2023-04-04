@@ -83,7 +83,7 @@ void RibbonTrailDemo::create_scene()
     // Create first box for face camera trail demo with 1 column.
     boxNode1_ = scene_->create_child("Box1");
     auto* box1 = boxNode1_->create_component<StaticModel>();
-    box1->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+    box1->SetModel(cache.GetResource<Model>("models/box.mdl"));
     box1->SetCastShadows(true);
     auto* boxTrail1 = boxNode1_->create_component<RibbonTrail>();
     boxTrail1->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
@@ -96,7 +96,7 @@ void RibbonTrailDemo::create_scene()
     // This will produce less distortion than first trail.
     boxNode2_ = scene_->create_child("Box2");
     auto* box2 = boxNode2_->create_component<StaticModel>();
-    box2->SetModel(cache.GetResource<Model>("models/Box.mdl"));
+    box2->SetModel(cache.GetResource<Model>("models/box.mdl"));
     box2->SetCastShadows(true);
     auto* boxTrail2 = boxNode2_->create_component<RibbonTrail>();
     boxTrail2->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
