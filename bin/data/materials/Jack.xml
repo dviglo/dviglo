@@ -1,4 +1,4 @@
 <material>
-    <technique name="techniques/NoTexture.xml" />
+    <technique name="techniques/no_texture.xml" />
     <parameter name="MatSpecColor" value="0.5 0.5 0.5 16" />
 </material>
