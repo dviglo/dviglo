@@ -1,5 +1,5 @@
 <material>
     <technique name="techniques/diff_unlit_particle_alpha_soft.xml" />
     <parameter name="SoftParticleFadeScale" value="1" />
-    <texture unit="diffuse" name="textures/Smoke.dds" />
+    <texture unit="diffuse" name="textures/smoke.dds" />
 </material>
