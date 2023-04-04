@@ -122,7 +122,7 @@ void Ragdolls::create_scene()
             modelNode->SetPosition(Vector3(x * 5.0f, 0.0f, z * 5.0f));
             modelNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
             auto* modelObject = modelNode->create_component<AnimatedModel>();
-            modelObject->SetModel(cache.GetResource<Model>("models/Jack.mdl"));
+            modelObject->SetModel(cache.GetResource<Model>("models/jack.mdl"));
             modelObject->SetMaterial(cache.GetResource<Material>("materials/Jack.xml"));
             modelObject->SetCastShadows(true);
             // Set the model to also update when invisible to avoid staying invisible when the model should come into

@@ -118,7 +118,7 @@ void Navigation::create_scene()
     jackNode_ = scene_->create_child("Jack");
     jackNode_->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
     auto* modelObject = jackNode_->create_component<AnimatedModel>();
-    modelObject->SetModel(cache.GetResource<Model>("models/Jack.mdl"));
+    modelObject->SetModel(cache.GetResource<Model>("models/jack.mdl"));
     modelObject->SetMaterial(cache.GetResource<Material>("materials/Jack.xml"));
     modelObject->SetCastShadows(true);
 
