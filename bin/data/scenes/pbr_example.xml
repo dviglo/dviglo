@@ -1041,7 +1041,7 @@
 		<attribute name="Scale" value="2 2 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="187">
-			<attribute name="Model" value="Model;models/MaterialPreview.mdl" />
+			<attribute name="Model" value="Model;models/material_preview.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/dynamic.xml;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1352,7 +1352,7 @@
 		<attribute name="Scale" value="2 2 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="219">
-			<attribute name="Model" value="Model;models/MaterialPreview.mdl" />
+			<attribute name="Model" value="Model;models/material_preview.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/lead.xml;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1366,7 +1366,7 @@
 		<attribute name="Scale" value="2 2 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="220">
-			<attribute name="Model" value="Model;models/MaterialPreview.mdl" />
+			<attribute name="Model" value="Model;models/material_preview.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/sand.xml;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1408,7 +1408,7 @@
 		<attribute name="Scale" value="2 2 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="223">
-			<attribute name="Model" value="Model;models/MaterialPreview.mdl" />
+			<attribute name="Model" value="Model;models/material_preview.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/leather.xml;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1454,7 +1454,7 @@
 		<attribute name="Scale" value="2 2 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="227">
-			<attribute name="Model" value="Model;models/MaterialPreview.mdl" />
+			<attribute name="Model" value="Model;models/material_preview.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1482,7 +1482,7 @@
 		<attribute name="Scale" value="2 2 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="229">
-			<attribute name="Model" value="Model;models/MaterialPreview.mdl" />
+			<attribute name="Model" value="Model;models/material_preview.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/diamon_plate.xml;materials/pbr/sand.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
