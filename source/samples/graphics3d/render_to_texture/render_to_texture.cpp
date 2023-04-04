@@ -158,7 +158,7 @@ void RenderToTexture::create_scene()
             screenNode->SetRotation(Quaternion(-90.0f, 0.0f, 0.0f));
             screenNode->SetScale(Vector3(20.0f, 0.0f, 15.0f));
             auto* screenObject = screenNode->create_component<StaticModel>();
-            screenObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
+            screenObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
 
             // Create a renderable texture (1024x768, RGB format), enable bilinear filtering on it
             SharedPtr<Texture2D> renderTexture(new Texture2D());

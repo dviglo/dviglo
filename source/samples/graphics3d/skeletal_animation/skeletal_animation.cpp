@@ -77,7 +77,7 @@ void SkeletalAnimation::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(50.0f, 1.0f, 50.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
+    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
     planeObject->SetMaterial(cache.GetResource<Material>("materials/StoneTiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control

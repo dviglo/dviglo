@@ -22,7 +22,7 @@
 		<attribute name="Scale" value="10 1 10" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="3">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/StoneTiled.xml" />
 		</component>
 	</node>

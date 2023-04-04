@@ -31,7 +31,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="3">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -44,7 +44,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="33">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -57,7 +57,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="34">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -266,7 +266,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="82">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -279,7 +279,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="83">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -292,7 +292,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="84">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 			</component>
 		</node>
@@ -305,7 +305,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="85">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -318,7 +318,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="86">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			</component>
 		</node>
@@ -331,7 +331,7 @@
 			<attribute name="Scale" value="3 1 3" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="87">
-				<attribute name="Model" value="Model;models/Plane.mdl" />
+				<attribute name="Model" value="Model;models/plane.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 			</component>
 		</node>
@@ -1013,7 +1013,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="183">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1151,7 +1151,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="195">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1164,7 +1164,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="196">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1177,7 +1177,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="197">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1190,7 +1190,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="198">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1203,7 +1203,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="199">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1216,7 +1216,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="200">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1229,7 +1229,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="201">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1242,7 +1242,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="202">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1255,7 +1255,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="203">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/check.xml" />
 		</component>
 	</node>
@@ -1380,7 +1380,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="221">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/sand.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1394,7 +1394,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="222">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1440,7 +1440,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="226">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1468,7 +1468,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="228">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1567,7 +1567,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="236">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1581,7 +1581,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="237">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1595,7 +1595,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="238">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/diamon_plate.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1609,7 +1609,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="239">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1623,7 +1623,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="240">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1637,7 +1637,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="241">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/lead.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1651,7 +1651,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="242">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/sand.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1665,7 +1665,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="243">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/sand.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1679,7 +1679,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="244">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/sand.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1693,7 +1693,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="245">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1707,7 +1707,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="246">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1721,7 +1721,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="247">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1735,7 +1735,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="248">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1749,7 +1749,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="249">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1763,7 +1763,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="250">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/leather.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1796,7 +1796,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="253">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1809,7 +1809,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="254">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1822,7 +1822,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="255">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1863,7 +1863,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="258">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1876,7 +1876,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="259">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1889,7 +1889,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="260">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1902,7 +1902,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="261">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1915,7 +1915,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="262">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -1928,7 +1928,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="263">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -2011,7 +2011,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="269">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -2024,7 +2024,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="270">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -2037,7 +2037,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="271">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -2092,7 +2092,7 @@
 		<attribute name="Scale" value="3 1 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="275">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2105,7 +2105,7 @@
 		<attribute name="Scale" value="3 1 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="276">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2118,7 +2118,7 @@
 		<attribute name="Scale" value="3 1 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="277">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2131,7 +2131,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="278">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2144,7 +2144,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="279">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2157,7 +2157,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="280">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 		</component>
 	</node>
@@ -2693,7 +2693,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="327">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2706,7 +2706,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="328">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2719,7 +2719,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="329">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2774,7 +2774,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="334">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2787,7 +2787,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="335">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2800,7 +2800,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="336">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2813,7 +2813,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="337">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2826,7 +2826,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="338">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -2839,7 +2839,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="339">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3217,7 +3217,7 @@
 		<attribute name="Scale" value="3 1 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="367">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3230,7 +3230,7 @@
 		<attribute name="Scale" value="3 1 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="368">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3243,7 +3243,7 @@
 		<attribute name="Scale" value="3 1 2" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="369">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3256,7 +3256,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="370">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3269,7 +3269,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="371">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3282,7 +3282,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="372">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3757,7 +3757,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="407">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3770,7 +3770,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="408">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3783,7 +3783,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="409">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3796,7 +3796,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="410">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3809,7 +3809,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="411">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3822,7 +3822,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="412">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3835,7 +3835,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="413">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3848,7 +3848,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="414">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3861,7 +3861,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="415">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -3956,7 +3956,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="422">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3969,7 +3969,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="423">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3982,7 +3982,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="424">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/mud.xml" />
 		</component>
 	</node>
@@ -3995,7 +3995,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="425">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 		</component>
 	</node>
@@ -4008,7 +4008,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="426">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 		</component>
 	</node>
@@ -4021,7 +4021,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="427">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 		</component>
 	</node>
@@ -4496,7 +4496,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="461">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -4509,7 +4509,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="462">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -4522,7 +4522,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="463">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -4535,7 +4535,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="464">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -4548,7 +4548,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="465">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
@@ -4561,7 +4561,7 @@
 		<attribute name="Scale" value="3 1 3" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="466">
-			<attribute name="Model" value="Model;models/Plane.mdl" />
+			<attribute name="Model" value="Model;models/plane.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 		</component>
 	</node>
