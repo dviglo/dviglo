@@ -398,7 +398,7 @@ Just loading or saving whole scenes is not flexible enough for eg. games where n
 - In the editor, by selecting the node in the hierarchy window and choosing "Save node as" from the "File" menu.
 - Using the "node" command in AssetImporter, which will save the scene node hierarchy and any models contained in the input asset (eg. a Collada file)
 
-To instantiate the saved node into a scene, call \ref Scene::Instantiate "Instantiate()", \ref Scene::InstantiateJSON() or \ref Scene::InstantiateXML "InstantiateXML()" depending on the format. The node will be created as a child of the Scene but can be freely reparented after that. Position and rotation for placing the node need to be specified. The NinjaSnowWar example uses XML format for its object prefabs; these exist in the bin/Data/Objects directory.
+To instantiate the saved node into a scene, call \ref Scene::Instantiate "Instantiate()", \ref Scene::InstantiateJSON() or \ref Scene::InstantiateXML "InstantiateXML()" depending on the format. The node will be created as a child of the Scene but can be freely reparented after that. Position and rotation for placing the node need to be specified. The NinjaSnowWar example uses XML format for its object prefabs; these exist in the bin/data/objects directory.
 
 \section SceneModel_Events Scene graph events
 
@@ -916,7 +916,7 @@ print(myMap[hash]:Get():Length())
 
 There is also a generic Set() method for %Variant class to cope with Lua does not support assignment operator overload. The Set() method takes a single parameter which can be anything in Lua that is convertible into a %Variant, including nil value which is stored as an empty %Variant. Use this method when you need to assign a value into an existing %Variant object.
 
-For the rest of the functions and classes, see the generated \ref LuaScriptAPI "Lua script API reference". Also, look at the Lua counterparts of the sample applications in the bin/Data/LuaScripts directory and compare them to the C++ and AngelScript versions to familiarize yourself with how things are done on the Lua side.
+For the rest of the functions and classes, see the generated \ref LuaScriptAPI "Lua script API reference". Also, look at the Lua counterparts of the sample applications in the bin/data/LuaScripts directory and compare them to the C++ and AngelScript versions to familiarize yourself with how things are done on the Lua side.
 
 One more thing to note about our Lua scripting implementation is its two-way conversion between C++ collection containers (Vector and PODVector) and Lua arrays (table of non-POD and table of POD objects, respectively). The conversion is done automatically when the collection crosses the C++/Lua boundary. The generated Lua script API reference page does not reflect this fact correctly. When obtaining a collection of objects using the Lua script API, you should treat it as a Lua table despite the documentation page stated a %Vector or %PODVector user type is being returned.
 
@@ -981,7 +981,7 @@ By default there is one viewport, but the amount can be increased with the funct
 
 Viewports can also be defined for rendertarget textures. See \ref AuxiliaryViews "Auxiliary views" for details.
 
-Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/core_data/render_paths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/Data/Scripts/09_MultipleViewports.as) for an example of how to use.
+Each viewport defines a command sequence for rendering the scene, the \ref RenderPaths "render path". By default there exist forward, light pre-pass and deferred render paths in the bin/core_data/render_paths directory, see \ref Renderer::SetDefaultRenderPath "SetDefaultRenderPath()" to set the default for new viewports. If not overridden from the command line, forward rendering is the default. Deferred rendering modes will be advantageous once there is a large number of per-pixel lights affecting each object, but their disadvantages are the lack of hardware multisampling and inability to choose the lighting model per material. In place of multisample antialiasing, a FXAA postprocessing edge filter can be used, see the MultipleViewports sample application (bin/data/scripts/09_MultipleViewports.as) for an example of how to use.
 
 The steps for rendering each viewport on each frame are roughly the following:
 
@@ -1326,15 +1326,15 @@ For the layout definitions, see http://www.cgtextures.com/content.php?action=tut
 
 \section Materials_3DTextures 3D textures
 
-3D textures likewise require an XML file to describe how they should be loaded. The XML should contain either a "volume" or "colorlut" element, which defines the image to load with its "name" attribute. The "volume" mode requires that the image is in a format that supports 3D (volume) textures directly, for example DDS. The "colorlut" mode allows any format, and instead spreads out the Z slices of the volume image horizontally in a 2D image from the left to the right: for example LUTIdentity.png has 16 16x16 slices for a total image size 256x16.
+3D textures likewise require an XML file to describe how they should be loaded. The XML should contain either a "volume" or "colorlut" element, which defines the image to load with its "name" attribute. The "volume" mode requires that the image is in a format that supports 3D (volume) textures directly, for example DDS. The "colorlut" mode allows any format, and instead spreads out the Z slices of the volume image horizontally in a 2D image from the left to the right: for example lut_identity.png has 16 16x16 slices for a total image size 256x16.
 
 \code
 <texture3d>
-    <colorlut name="LUTIdentity.png" />
+    <colorlut name="lut_identity.png" />
 </texture3d>
 \endcode
 
-Using a 3D texture for color correction postprocess (see bin/Data/postprocess/color_correction.xml) requires the 3D texture to be assigned to the "volume" texture unit, so that the effect knows to load the texture as the correct type. The lookup for the corrected color happens by using the original color's red channel as the X coordinate, the green channel as the Y coordinate, and blue as the Z. Therefore the identity LUT's slices (which shouldn't transform the color at all) grow red from left to right and green from top to bottom, and finally the slices themselves turn blue from left to right.
+Using a 3D texture for color correction postprocess (see bin/data/postprocess/color_correction.xml) requires the 3D texture to be assigned to the "volume" texture unit, so that the effect knows to load the texture as the correct type. The lookup for the corrected color happens by using the original color's red channel as the X coordinate, the green channel as the Y coordinate, and blue as the Z. Therefore the identity LUT's slices (which shouldn't transform the color at all) grow red from left to right and green from top to bottom, and finally the slices themselves turn blue from left to right.
 
 \section Materials_2DArrayTextures 2D array textures
 
@@ -1605,13 +1605,13 @@ The render path XML definition looks like this:
 </renderpath>
 \endcode
 
-For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/core_data/render_paths directory, and the postprocess renderpath definitions in the bin/Data/postprocess directory.
+For examples of renderpath definitions, see the default forward, deferred and light pre-pass renderpaths in the bin/core_data/render_paths directory, and the postprocess renderpath definitions in the bin/data/postprocess directory.
 
 \section RenderPaths_Depth Depth-stencil handling and reading scene depth
 
 Normally needed depth-stencil surfaces are automatically allocated when the render path is executed.
 
-The special "lineardepth" (synonym "depth") format is intended for storing scene depth in deferred rendering. It is not an actual hardware depth-stencil texture, but a 32-bit single channel (R) float rendertarget. (On OpenGL2 it's RGBA instead, due to the limitation of all color buffers having to be the same format. The shader include file Samplers.glsl in bin/core_data/Shaders/GLSL provides functions to encode and decode linear depth to RGB.)
+The special "lineardepth" (synonym "depth") format is intended for storing scene depth in deferred rendering. It is not an actual hardware depth-stencil texture, but a 32-bit single channel (R) float rendertarget. (On OpenGL2 it's RGBA instead, due to the limitation of all color buffers having to be the same format. The shader include file Samplers.glsl in bin/core_data/shaders provides functions to encode and decode linear depth to RGB.)
 
 Writing depth manually to a rendertarget, while using a non-readable depth-stencil surface ensures best compatibility and prevents any conflicts from using both depth test and manual depth sampling at the same time.
 
@@ -2499,7 +2499,7 @@ The function \ref UI::LoadLayout "LoadLayout()" in UI will take an XML file and 
 
 Note that a style can not be easily applied recursively to the loaded elements afterward. Therefore remember to specify the style file already when loading, or alternatively \ref UIElement::SetDefaultStyle "assign a default style file" to the %UI root element, which will then be picked up by all loaded layouts. This works because the %UI subsystem searches the style file by going up the parental chain starting from target parent %UI element. The search stops immediately when a style file is found or when it has reached the root element. Also note that Urho3D does not limit the number of style files being used at the same time in an application. You may have different style file set along the %UI parental hierarchy, if your application needs that.
 
-See the elements' C++ code for all supported attributes, and look at the editor's user interface layouts in the bin/Data/UI directory for examples. You can also use the Editor application to create %UI layouts. The serialization format is similar to scene XML serialization, with three important differences:
+See the elements' C++ code for all supported attributes, and look at the editor's user interface layouts in the bin/data/ui directory for examples. You can also use the Editor application to create %UI layouts. The serialization format is similar to scene XML serialization, with three important differences:
 
 1) The element type to instantiate, and the style to use for it can be set separately. For example the following element definition
 
@@ -2696,7 +2696,7 @@ Urho2D provides a handful of classes for loading/drawing the kind of sprite requ
 
 \section Urho2D_Animated Animated sprites
 
-Workflow for creating animated sprites in Urho2D relies on Spriter (c). Spriter is a crossplatform tool for creating 2D animations. It comes both as an almost fully featured free version and a more advanced 'pro' version. Free version is available at http://www.brashmonkey.com/spriter.htm. To get started, scml files from bin/Data/Urho2D folder can be loaded in Spriter. Note that although currently Spriter doesn't support spritesheets/texture atlases, Urho2D does: you just have to use the same name for your scml file and your spritesheet's xml file (see \ref Urho2D_Static_Sprites "Static sprites" below for details on how to generate this file). Example 33_Urho2DSpriterAnimation is a good demonstration of this feature (scml file and xml spritesheet are both named 'imp' to instruct Urho2D to use the atlas instead of the individual files). You could remove every image files in the 'imp' folder and just keep 'imp_all.png' to test it out. However, keep your individual image files as they are still required if you want to later edit your scml project in Spriter.
+Workflow for creating animated sprites in Urho2D relies on Spriter (c). Spriter is a crossplatform tool for creating 2D animations. It comes both as an almost fully featured free version and a more advanced 'pro' version. Free version is available at http://www.brashmonkey.com/spriter.htm. To get started, scml files from bin/data/sprites folder can be loaded in Spriter. Note that although currently Spriter doesn't support spritesheets/texture atlases, Urho2D does: you just have to use the same name for your scml file and your spritesheet's xml file (see \ref Urho2D_Static_Sprites "Static sprites" below for details on how to generate this file). Example 33_Urho2DSpriterAnimation is a good demonstration of this feature (scml file and xml spritesheet are both named 'imp' to instruct Urho2D to use the atlas instead of the individual files). You could remove every image files in the 'imp' folder and just keep 'imp_all.png' to test it out. However, keep your individual image files as they are still required if you want to later edit your scml project in Spriter.
 
 A *.scml file is loaded using AnimationSet2D class (Resource) and rendered using AnimatedSprite2D class (Drawable component):
 
