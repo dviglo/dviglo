@@ -148,7 +148,7 @@ UIComponent::UIComponent()
     rootElement_->SetEnabled(true);
 
     material_ = DV_CONTEXT.CreateObject<Material>();
-    material_->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("techniques/Diff.xml"));
+    material_->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("techniques/diff.xml"));
     material_->SetTexture(TU_DIFFUSE, texture_);
 
     subscribe_to_event(rootElement_, E_RESIZED, DV_HANDLER(UIComponent, OnElementResized));
