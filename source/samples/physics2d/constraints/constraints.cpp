@@ -140,7 +140,7 @@ void Urho2DConstraints::create_scene()
     Node* ball  = scene_->create_child("Ball");
     ball->SetPosition(Vector3(1.8f, -2.0f, 0.0f));
     auto* ballSprite = ball->create_component<StaticSprite2D>();
-    ballSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Ball.png"));
+    ballSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/ball.png"));
     auto* ballBody = ball->create_component<RigidBody2D>();
     ballBody->SetBodyType(BT_DYNAMIC);
     ballBody->SetLinearDamping(0.0f);

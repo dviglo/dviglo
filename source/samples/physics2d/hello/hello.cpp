@@ -76,7 +76,7 @@ void Urho2DPhysics::create_scene()
     /*PhysicsWorld2D* physicsWorld = */scene_->create_component<PhysicsWorld2D>();
 
     auto* boxSprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/box.png");
-    auto* ballSprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/Ball.png");
+    auto* ballSprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/ball.png");
 
     // Create ground.
     Node* groundNode = scene_->create_child("Ground");
