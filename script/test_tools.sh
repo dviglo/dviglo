@@ -137,7 +137,7 @@ fi
 # Convert models
 for (( i = 0; i < ${#src_filenames[*]}; ++i ))
 do
-    src_filepath=${repo_dir}/SourceAssets/${src_filenames[$i]}
+    src_filepath=${repo_dir}/source_assets/${src_filenames[$i]}
 
     # Replace extension from .mesh.xml to .mdl
     output_filename=${src_filenames[$i]%.mesh.xml}.mdl
