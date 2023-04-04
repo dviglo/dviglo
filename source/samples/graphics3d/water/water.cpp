@@ -131,7 +131,7 @@ void Water::create_scene()
     waterNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
     auto* water = waterNode_->create_component<StaticModel>();
     water->SetModel(cache.GetResource<Model>("models/Plane.mdl"));
-    water->SetMaterial(cache.GetResource<Material>("materials/Water.xml"));
+    water->SetMaterial(cache.GetResource<Material>("materials/water.xml"));
     // Set a different viewmask on the water plane to be able to hide it from the reflection camera
     water->SetViewMask(0x80000000);
 
@@ -197,7 +197,7 @@ void Water::setup_viewport()
     RenderSurface* surface = renderTexture->GetRenderSurface();
     SharedPtr<Viewport> rttViewport(new Viewport(scene_, reflectionCamera));
     surface->SetViewport(0, rttViewport);
-    auto* waterMat = DV_RES_CACHE.GetResource<Material>("materials/Water.xml");
+    auto* waterMat = DV_RES_CACHE.GetResource<Material>("materials/water.xml");
     waterMat->SetTexture(TU_DIFFUSE, renderTexture);
 }
 
