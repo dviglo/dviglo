@@ -247,7 +247,7 @@ Node* Sample2D::CreateMovingPlatform()
     Node* node = scene_->create_child("MovingPlatform");
     node->SetScale(Vector3(3.0f, 1.0f, 0.0f));
     auto* staticSprite = node->create_component<StaticSprite2D>();
-    staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Box.png"));
+    staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/box.png"));
     auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
     auto* shape = node->create_component<CollisionBox2D>(); // Create box shape

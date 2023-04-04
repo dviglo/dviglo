@@ -125,7 +125,7 @@ void Urho2DConstraints::create_scene()
     Node* box  = scene_->create_child("Box");
     box->SetPosition(Vector3(0.8f, -2.0f, 0.0f));
     auto* boxSprite = box->create_component<StaticSprite2D>();
-    boxSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/Box.png"));
+    boxSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/box.png"));
     auto* boxBody = box->create_component<RigidBody2D>();
     boxBody->SetBodyType(BT_DYNAMIC);
     boxBody->SetLinearDamping(0.0f);
