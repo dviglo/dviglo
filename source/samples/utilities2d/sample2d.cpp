@@ -214,7 +214,7 @@ Node* Sample2D::CreateOrc()
     Node* node = scene_->create_child("Orc");
     node->SetScale(scene_->GetChild("Imp", true)->GetScale());
     auto* animatedSprite = node->create_component<AnimatedSprite2D>();
-    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/Orc/orc.scml");
+    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/orc/orc.scml");
     animatedSprite->SetAnimationSet(animationSet);
     animatedSprite->SetAnimation("run"); // Get scml file and Play "run" anim
     animatedSprite->SetLayer(2); // Make orc always visible
