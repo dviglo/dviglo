@@ -25,7 +25,7 @@ src_filenames=(
     jack.mesh.xml
     level.mesh.xml
     mushroom.mesh.xml
-    Ninja.mesh.xml
+    ninja.mesh.xml
     potion.mesh.xml
     snowball.mesh.xml
     snow_crate.mesh.xml
@@ -33,30 +33,30 @@ src_filenames=(
 
 result_filenames=(
     jack_walk.ani
-    Ninja_Attack1.ani
-    Ninja_Attack2.ani
-    Ninja_Attack3.ani
-    Ninja_Backflip.ani
-    Ninja_Block.ani
-    Ninja_Climb.ani
-    Ninja_Crouch.ani
-    Ninja_Death1.ani
-    Ninja_Death2.ani
-    Ninja_HighJump.ani
-    Ninja_Idle1.ani
-    Ninja_Idle2.ani
-    Ninja_Idle3.ani
-    Ninja_Jump.ani
-    Ninja_JumpNoHeight.ani
-    Ninja_Kick.ani
-    Ninja_SideKick.ani
-    Ninja_Spin.ani
-    Ninja_Stealth.ani
-    Ninja_Walk.ani
+    ninja_attack1.ani
+    ninja_attack2.ani
+    ninja_attack3.ani
+    ninja_backflip.ani
+    ninja_block.ani
+    ninja_climb.ani
+    ninja_crouch.ani
+    ninja_death1.ani
+    ninja_death2.ani
+    ninja_high_jump.ani
+    ninja_idle1.ani
+    ninja_idle2.ani
+    ninja_idle3.ani
+    ninja_jump.ani
+    ninja_jump_no_height.ani
+    ninja_kick.ani
+    ninja_side_kick.ani
+    ninja_spin.ani
+    ninja_stealth.ani
+    ninja_walk.ani
     jack.mdl
     level.mdl
     mushroom.mdl
-    Ninja.mdl
+    ninja.mdl
     potion.mdl
     snowball.mdl
     snow_crate.mdl
@@ -66,30 +66,30 @@ result_filenames=(
 # Perhaps this is due to the calculation error when using float
 result_checksums=(
     a07f69d23b84b0039d7e9159a494d7c5a587ae6d # jack_walk.ani
-    5abfe9cee41a2d8c4d8af8af5baf879fc6ab36cb # Ninja_Attack1.ani
-    f73548094148f9d18d6a93b66eac647db50672eb # Ninja_Attack2.ani
-    0549824bcbf73ebaff17964ba81ae2ca813ad684 # Ninja_Attack3.ani
-    a2aab4ad61b9de9038135abf9b1e459e17d6bb20 # Ninja_Backflip.ani
-    dec34fb0ec43f6fca8037328fc0dc8bd1e55d30d # Ninja_Block.ani
-    ae20b728ca1f2776ab6bb66ab4855f56710e8d14 # Ninja_Climb.ani
-    8f21ea4e1f999167a2b82a575c15de614f576a0f # Ninja_Crouch.ani
-    b3314a675d1a41f97f818f06b562e20ab072de5a # Ninja_Death1.ani
-    e3dd6aa2fb9b585180e3772b7c598828d935bf15 # Ninja_Death2.ani
-    ff6766e3d55855a240fc35ccf7395a6517911c99 # Ninja_HighJump.ani
-    d565fea93087a60df836637aad7f9c8184c28c6a # Ninja_Idle1.ani
-    065f7d89e032c18dedeae0b64975984ec80d3557 # Ninja_Idle2.ani
-    00b4d893b3cffbf58db4fb7f0e970990accb1155 # Ninja_Idle3.ani
-    bad0c363ec9cf9283ca08b8ca44a86dc09068603 # Ninja_Jump.ani
-    e55e9a21e635eb8a31b708fa009e9aca06ea9e7d # Ninja_JumpNoHeight.ani
-    82fcc8eda8929809fd771805466b8e287af3a3c7 # Ninja_Kick.ani
-    b09e8cc6e0fb58786c21184bcc0aa8dcd4b51b57 # Ninja_SideKick.ani
-    63683537161f7352684bc50a44b753b5f9691af3 # Ninja_Spin.ani
-    801383ba0ad30d4a0d401a69af5ca88bf5c6b39f # Ninja_Stealth.ani
-    608a91452ff6980ef34ca68c4fd688fd719592c2 # Ninja_Walk.ani
+    5abfe9cee41a2d8c4d8af8af5baf879fc6ab36cb # ninja_attack1.ani
+    f73548094148f9d18d6a93b66eac647db50672eb # ninja_attack2.ani
+    0549824bcbf73ebaff17964ba81ae2ca813ad684 # ninja_attack3.ani
+    a2aab4ad61b9de9038135abf9b1e459e17d6bb20 # ninja_backflip.ani
+    dec34fb0ec43f6fca8037328fc0dc8bd1e55d30d # ninja_block.ani
+    ae20b728ca1f2776ab6bb66ab4855f56710e8d14 # ninja_climb.ani
+    8f21ea4e1f999167a2b82a575c15de614f576a0f # ninja_crouch.ani
+    b3314a675d1a41f97f818f06b562e20ab072de5a # ninja_death1.ani
+    e3dd6aa2fb9b585180e3772b7c598828d935bf15 # ninja_death2.ani
+    ff6766e3d55855a240fc35ccf7395a6517911c99 # ninja_high_jump.ani
+    d565fea93087a60df836637aad7f9c8184c28c6a # ninja_idle1.ani
+    065f7d89e032c18dedeae0b64975984ec80d3557 # ninja_idle2.ani
+    00b4d893b3cffbf58db4fb7f0e970990accb1155 # ninja_idle3.ani
+    bad0c363ec9cf9283ca08b8ca44a86dc09068603 # ninja_jump.ani
+    e55e9a21e635eb8a31b708fa009e9aca06ea9e7d # ninja_jump_no_height.ani
+    82fcc8eda8929809fd771805466b8e287af3a3c7 # ninja_kick.ani
+    b09e8cc6e0fb58786c21184bcc0aa8dcd4b51b57 # ninja_side_kick.ani
+    63683537161f7352684bc50a44b753b5f9691af3 # ninja_spin.ani
+    801383ba0ad30d4a0d401a69af5ca88bf5c6b39f # ninja_stealth.ani
+    608a91452ff6980ef34ca68c4fd688fd719592c2 # ninja_walk.ani
     c8b032146ccde40058af94d5578e61345f6fb648 # jack.mdl
     cde0671fced710d666f15cd941c9f385359a45e9 # level.mdl
     39afeecb472b8be081fddb59419db595ccae2105 # mushroom.mdl
-    ef5b6c831566f45cef0c7652fe16a7eec7f57f4c # Ninja.mdl
+    ef5b6c831566f45cef0c7652fe16a7eec7f57f4c # ninja.mdl
     351044e86480d7ab0ee5bac2f557f800e6770925 # potion.mdl
     4c3c7b1c47f62c5c0a99e1f33bd20463a64d6b93 # snowball.mdl
     110a90536d58e0a57ef6070b2b372341cb97bdaa # snow_crate.mdl
@@ -97,30 +97,30 @@ result_checksums=(
 
 result_sizes=(
     56410  # jack_Walk.ani
-    2916   # Ninja_Attack1.ani
-    2788   # Ninja_Attack2.ani
-    2628   # Ninja_Attack3.ani
-    3141   # Ninja_Backflip.ani
-    1186   # Ninja_Block.ani
-    2466   # Ninja_Climb.ani
-    4003   # Ninja_Crouch.ani
-    2307   # Ninja_Death1.ani
-    2723   # Ninja_Death2.ani
-    5541   # Ninja_HighJump.ani
-    3682   # Ninja_Idle1.ani
-    2434   # Ninja_Idle2.ani
-    2658   # Ninja_Idle3.ani
-    2785   # Ninja_Jump.ani
-    2857   # Ninja_JumpNoHeight.ani
-    3745   # Ninja_Kick.ani
-    2885   # Ninja_SideKick.ani
-    2625   # Ninja_Spin.ani
-    2244   # Ninja_Stealth.ani
-    3201   # Ninja_Walk.ani
+    2916   # ninja_attack1.ani
+    2788   # ninja_attack2.ani
+    2628   # ninja_attack3.ani
+    3141   # ninja_backflip.ani
+    1186   # ninja_block.ani
+    2466   # ninja_climb.ani
+    4003   # ninja_crouch.ani
+    2307   # ninja_death1.ani
+    2723   # ninja_death2.ani
+    5541   # ninja_high_jump.ani
+    3682   # ninja_idle1.ani
+    2434   # ninja_idle2.ani
+    2658   # ninja_idle3.ani
+    2785   # ninja_jump.ani
+    2857   # ninja_jump_no_height.ani
+    3745   # ninja_kick.ani
+    2885   # ninja_side_kick.ani
+    2625   # ninja_spin.ani
+    2244   # ninja_stealth.ani
+    3201   # ninja_walk.ani
     433684 # jack.mdl
     26100  # level.mdl
     74196  # mushroom.mdl
-    66895  # Ninja.mdl
+    66895  # ninja.mdl
     7092   # potion.mdl
     2484   # snowball.mdl
     11724  # snow_crate.mdl

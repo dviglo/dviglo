@@ -199,7 +199,7 @@
         <boneparent bone="Joint27" parent="Joint26" />
     </bonehierarchy>
     <animations>
-        <animation name="Attack1" length="1">
+        <animation name="attack1" length="1">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -785,7 +785,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Attack2" length="1.16667">
+        <animation name="attack2" length="1.16667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -1347,7 +1347,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Attack3" length="0.666667">
+        <animation name="attack3" length="0.666667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -1879,7 +1879,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Backflip" length="1">
+        <animation name="backflip" length="1">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -2507,7 +2507,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Block" length="0.25">
+        <animation name="block" length="0.25">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -2769,7 +2769,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Climb" length="0.5">
+        <animation name="climb" length="0.5">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -3271,7 +3271,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Crouch" length="0.75">
+        <animation name="crouch" length="0.75">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -4061,7 +4061,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Death1" length="0.583333">
+        <animation name="death1" length="0.583333">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -4533,7 +4533,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Death2" length="0.666667">
+        <animation name="death2" length="0.666667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -5083,7 +5083,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="HighJump" length="1.08333">
+        <animation name="high_jump" length="1.08333">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -6161,7 +6161,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Idle1" length="1.75">
+        <animation name="idle1" length="1.75">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -6891,7 +6891,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Idle2" length="3.66667">
+        <animation name="idle2" length="3.66667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -7387,7 +7387,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Idle3" length="4.08333">
+        <animation name="idle3" length="4.08333">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -7925,7 +7925,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Jump" length="0.666667">
+        <animation name="jump" length="0.666667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -8487,7 +8487,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="JumpNoHeight" length="0.666667">
+        <animation name="jump_no_height" length="0.666667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -9061,7 +9061,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Kick" length="0.833333">
+        <animation name="kick" length="0.833333">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -9803,7 +9803,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="SideKick" length="0.583333">
+        <animation name="side_kick" length="0.583333">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -10383,7 +10383,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Spin" length="0.916667">
+        <animation name="spin" length="0.916667">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -10915,7 +10915,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Stealth" length="1.25">
+        <animation name="stealth" length="1.25">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
@@ -11375,7 +11375,7 @@
                 </track>
             </tracks>
         </animation>
-        <animation name="Walk" length="1.08333">
+        <animation name="walk" length="1.08333">
             <tracks>
                 <track bone="Joint1">
                     <keyframes>
