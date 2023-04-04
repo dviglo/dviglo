@@ -1,5 +1,5 @@
 <particleemitter>
-    <material name="materials/Smoke.xml" />
+    <material name="materials/smoke.xml" />
     <updateinvisible enable="true" />
     <relative enable="false" />
     <numparticles value="10" />

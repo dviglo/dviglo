@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <particleeffect>
-	<material name="materials/Smoke.xml" />
+	<material name="materials/smoke.xml" />
 	<numparticles value="200" />
 	<updateinvisible enable="true" />
 	<relative enable="false" />
