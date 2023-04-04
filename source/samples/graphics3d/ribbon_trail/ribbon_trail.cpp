@@ -112,7 +112,7 @@ void RibbonTrailDemo::create_scene()
     ninjaNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     auto* ninja = ninjaNode->create_component<AnimatedModel>();
     ninja->SetModel(cache.GetResource<Model>("models/ninja_snow_war/Ninja.mdl"));
-    ninja->SetMaterial(cache.GetResource<Material>("materials/ninja_snow_war/Ninja.xml"));
+    ninja->SetMaterial(cache.GetResource<Material>("materials/ninja_snow_war/ninja.xml"));
     ninja->SetCastShadows(true);
 
     // Create animation controller and play attack animation.

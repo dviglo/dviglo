@@ -51,7 +51,7 @@
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="6">
 			<attribute name="Model" value="Model;models/ninja_snow_war/Ninja.mdl" />
-			<attribute name="Material" value="Material;materials/ninja_snow_war/Ninja.xml;materials/ninja_snow_war/Ninja.xml" />
+			<attribute name="Material" value="Material;materials/ninja_snow_war/ninja.xml;materials/ninja_snow_war/ninja.xml" />
 			<attribute name="Is Occluder" value="false" />
 			<attribute name="Can Be Occluded" value="true" />
 			<attribute name="Cast Shadows" value="true" />

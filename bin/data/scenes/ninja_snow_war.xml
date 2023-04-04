@@ -63,7 +63,7 @@
 		<attribute name="Variables" />
 		<component type="StaticModel" id="16777221">
 			<attribute name="Model" value="Model;models/ninja_snow_war/Level.mdl" />
-			<attribute name="Material" value="Material;materials/ninja_snow_war/Snow.xml" />
+			<attribute name="Material" value="Material;materials/ninja_snow_war/snow.xml" />
 		</component>
 		<component type="CollisionShape" id="16777222">
 			<attribute name="Shape Type" value="TriangleMesh" />
