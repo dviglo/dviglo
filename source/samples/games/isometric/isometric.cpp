@@ -100,7 +100,7 @@ void Urho2DIsometricDemo::create_scene()
     DV_RENDERER.SetViewport(0, viewport);
 
     // Create tile map from tmx file
-    auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("sprites/Tilesets/atrium.tmx");
+    auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("sprites/tilesets/atrium.tmx");
     SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
     auto* tileMap = tileMapNode->create_component<TileMap2D>();
     tileMap->SetTmxFile(tmxFile);
