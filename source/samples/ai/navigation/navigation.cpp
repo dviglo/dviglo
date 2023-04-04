@@ -119,7 +119,7 @@ void Navigation::create_scene()
     jackNode_->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
     auto* modelObject = jackNode_->create_component<AnimatedModel>();
     modelObject->SetModel(cache.GetResource<Model>("models/jack.mdl"));
-    modelObject->SetMaterial(cache.GetResource<Material>("materials/Jack.xml"));
+    modelObject->SetMaterial(cache.GetResource<Material>("materials/jack.xml"));
     modelObject->SetCastShadows(true);
 
     // Create a NavigationMesh component to the scene root
