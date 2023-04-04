@@ -1,5 +1,5 @@
 <material>
-    <technique name="techniques/DiffSkyplane.xml" />
+    <technique name="techniques/diff_skyplane.xml" />
     <texture unit="diffuse" name="textures/ninja_snow_war/cloud_plane.dds" />
     <cull value="none" />
 </material>
