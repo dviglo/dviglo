@@ -256,7 +256,7 @@ void Decals::PaintDecal()
         if (!decal)
         {
             decal = targetNode->create_component<DecalSet>();
-            decal->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/UrhoDecal.xml"));
+            decal->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/urho_decal.xml"));
         }
         // Add a square decal to the decal set using the geometry of the drawable that was hit, orient it to face the camera,
         // use full texture UV's (0,0) to (1,1). Note that if we create several decals to a large object (such as the ground
