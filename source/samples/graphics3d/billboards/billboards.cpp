@@ -113,7 +113,7 @@ void Billboards::create_scene()
             mushroomNode->SetScale(1.0f + Random() * 4.0f);
             auto* mushroomObject = mushroomNode->create_component<StaticModel>();
             mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
+            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
     }

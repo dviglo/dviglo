@@ -127,7 +127,7 @@ void CharacterDemo::create_scene()
         objectNode->SetScale(2.0f + Random(5.0f));
         auto* object = objectNode->create_component<StaticModel>();
         object->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
+        object->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();

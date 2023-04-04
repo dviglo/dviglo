@@ -144,7 +144,7 @@ void LightAnimation::create_scene()
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
+        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
     }
 
     // Create a scene node for the camera, which we will move around

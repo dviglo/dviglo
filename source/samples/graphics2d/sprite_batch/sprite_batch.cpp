@@ -104,7 +104,7 @@ public:
             mushroomNode->SetScale(0.5f + Random(2.0f));
             StaticModel* mushroomObject = mushroomNode->create_component<StaticModel>();
             mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
+            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
 

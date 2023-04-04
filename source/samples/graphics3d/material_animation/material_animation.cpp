@@ -85,7 +85,7 @@ void MaterialAnimation::create_scene()
     // see the model get simpler as it moves further away). Finally, rendering a large number of the same object with the
     // same material allows instancing to be used, if the GPU supports it. This reduces the amount of CPU work in rendering the
     // scene.
-    auto* mushroomMat = cache.GetResource<Material>("materials/Mushroom.xml");
+    auto* mushroomMat = cache.GetResource<Material>("materials/mushroom.xml");
     // Apply shader parameter animation to material
     SharedPtr<ValueAnimation> specColorAnimation(new ValueAnimation());
     specColorAnimation->SetKeyFrame(0.0f, Color(0.1f, 0.1f, 0.1f, 16.0f));

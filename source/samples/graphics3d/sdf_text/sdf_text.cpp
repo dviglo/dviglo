@@ -93,7 +93,7 @@ void SignedDistanceFieldText::create_scene()
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
         mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/Mushroom.xml"));
+        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
 
         Node* mushroomTitleNode = mushroomNode->create_child("MushroomTitle");
         mushroomTitleNode->SetPosition(Vector3(0.0f, 1.2f, 0.0f));
