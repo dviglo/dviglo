@@ -66,7 +66,7 @@ void Urho2DStretchableSprite::create_scene()
     refSpriteNode_ = scene_->create_child("regular sprite");
     stretchSpriteNode_ = scene_->create_child("stretchable sprite");
 
-    auto* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/Stretchable.png");
+    auto* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/stretchable.png");
     if (sprite)
     {
         refSpriteNode_->create_component<StaticSprite2D>()->SetSprite(sprite);

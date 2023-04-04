@@ -194,8 +194,8 @@ public:
 
         // Размер текстуры должен быть степенью двойки (64, 128, 256, ...),
         // иначе она не будет работать в GL ES 1.0 (в вебе).
-        // В некоторых случаях (например для "sprites/Stretchable.png" - 200x200) может помочь
-        // Texture2D* head = cache->GetResource<Texture2D>("sprites/Stretchable.png");
+        // В некоторых случаях (например для "sprites/stretchable.png" - 200x200) может помочь
+        // Texture2D* head = cache->GetResource<Texture2D>("sprites/stretchable.png");
         // if (head->GetAddressMode(COORD_U) == ADDRESS_WRAP)
         // {
         //     head->SetAddressMode(COORD_U, ADDRESS_CLAMP);
