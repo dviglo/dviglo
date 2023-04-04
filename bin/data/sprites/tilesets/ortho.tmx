@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="38" height="27" tilewidth="64" tileheight="64" nextobjectid="166">
  <tileset firstgid="1" name="Ortho" tilewidth="64" tileheight="64" tilecount="64" columns="8">
-  <image source="Ortho.png" width="512" height="512"/>
+  <image source="ortho.png" width="512" height="512"/>
  </tileset>
  <layer name="Occludees" width="38" height="27">
   <data encoding="base64">

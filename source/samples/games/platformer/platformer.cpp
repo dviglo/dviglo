@@ -109,7 +109,7 @@ void Urho2DPlatformer::create_scene()
     // Create tile map from tmx file
     SharedPtr<Node> tileMapNode(scene_->create_child("TileMap"));
     auto* tileMap = tileMapNode->create_component<TileMap2D>();
-    tileMap->SetTmxFile(DV_RES_CACHE.GetResource<TmxFile2D>("sprites/tilesets/Ortho.tmx"));
+    tileMap->SetTmxFile(DV_RES_CACHE.GetResource<TmxFile2D>("sprites/tilesets/ortho.tmx"));
     const TileMapInfo2D& info = tileMap->GetInfo();
 
     // Create Spriter Imp character (from sample 33_SpriterAnimation)
