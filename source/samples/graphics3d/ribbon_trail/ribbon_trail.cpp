@@ -86,7 +86,7 @@ void RibbonTrailDemo::create_scene()
     box1->SetModel(cache.GetResource<Model>("models/box.mdl"));
     box1->SetCastShadows(true);
     auto* boxTrail1 = boxNode1_->create_component<RibbonTrail>();
-    boxTrail1->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
+    boxTrail1->SetMaterial(cache.GetResource<Material>("materials/ribbon_trail.xml"));
     boxTrail1->SetStartColor(Color(1.0f, 0.5f, 0.0f, 1.0f));
     boxTrail1->SetEndColor(Color(1.0f, 1.0f, 0.0f, 0.0f));
     boxTrail1->SetWidth(0.5f);
@@ -99,7 +99,7 @@ void RibbonTrailDemo::create_scene()
     box2->SetModel(cache.GetResource<Model>("models/box.mdl"));
     box2->SetCastShadows(true);
     auto* boxTrail2 = boxNode2_->create_component<RibbonTrail>();
-    boxTrail2->SetMaterial(cache.GetResource<Material>("materials/RibbonTrail.xml"));
+    boxTrail2->SetMaterial(cache.GetResource<Material>("materials/ribbon_trail.xml"));
     boxTrail2->SetStartColor(Color(1.0f, 0.5f, 0.0f, 1.0f));
     boxTrail2->SetEndColor(Color(1.0f, 1.0f, 0.0f, 0.0f));
     boxTrail2->SetWidth(0.5f);
