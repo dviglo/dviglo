@@ -129,7 +129,7 @@ void Physics::create_scene()
                 boxNode->SetPosition(Vector3((float)x, -(float)y + 8.0f, 0.0f));
                 auto* boxObject = boxNode->create_component<StaticModel>();
                 boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-                boxObject->SetMaterial(cache.GetResource<Material>("materials/StoneEnvMapSmall.xml"));
+                boxObject->SetMaterial(cache.GetResource<Material>("materials/stone_env_map_small.xml"));
                 boxObject->SetCastShadows(true);
 
                 // Create RigidBody and CollisionShape components like above. Give the RigidBody mass to make it movable
@@ -254,7 +254,7 @@ void Physics::SpawnObject()
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
     boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
-    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneEnvMapSmall.xml"));
+    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_env_map_small.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also
