@@ -23,7 +23,7 @@ build_dir=${build_dir%\\}
 
 src_filenames=(
     jack.mesh.xml
-    Level.mesh.xml
+    level.mesh.xml
     Mushroom.mesh.xml
     Ninja.mesh.xml
     Potion.mesh.xml
@@ -54,7 +54,7 @@ result_filenames=(
     Ninja_Stealth.ani
     Ninja_Walk.ani
     jack.mdl
-    Level.mdl
+    level.mdl
     Mushroom.mdl
     Ninja.mdl
     Potion.mdl
@@ -87,7 +87,7 @@ result_checksums=(
     801383ba0ad30d4a0d401a69af5ca88bf5c6b39f # Ninja_Stealth.ani
     608a91452ff6980ef34ca68c4fd688fd719592c2 # Ninja_Walk.ani
     c8b032146ccde40058af94d5578e61345f6fb648 # jack.mdl
-    cde0671fced710d666f15cd941c9f385359a45e9 # Level.mdl
+    cde0671fced710d666f15cd941c9f385359a45e9 # level.mdl
     39afeecb472b8be081fddb59419db595ccae2105 # Mushroom.mdl
     ef5b6c831566f45cef0c7652fe16a7eec7f57f4c # Ninja.mdl
     351044e86480d7ab0ee5bac2f557f800e6770925 # Potion.mdl
@@ -118,7 +118,7 @@ result_sizes=(
     2244   # Ninja_Stealth.ani
     3201   # Ninja_Walk.ani
     433684 # jack.mdl
-    26100  # Level.mdl
+    26100  # level.mdl
     74196  # Mushroom.mdl
     66895  # Ninja.mdl
     7092   # Potion.mdl
