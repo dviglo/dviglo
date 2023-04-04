@@ -281,7 +281,7 @@ void Hello3DUI::Init3DUI()
     // Create a component that sets up UI rendering. It sets material to StaticModel of the node.
     auto* component = boxNode->create_component<UIComponent>();
     // Optionally modify material. Technique is changed so object is visible without any lights.
-    component->GetMaterial()->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("techniques/DiffUnlit.xml"));
+    component->GetMaterial()->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("techniques/diff_unlit.xml"));
     // Save root element of texture UI for later use.
     textureRoot_ = component->GetRoot();
     // Set size of root element. This is size of texture as well.
