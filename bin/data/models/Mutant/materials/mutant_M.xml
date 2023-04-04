@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <material>
-	<technique name="techniques/DiffNormal.xml" />
+	<technique name="techniques/diff_normal.xml" />
 	<texture unit="diffuse" name="models/Mutant/textures/Mutant_diffuse.jpg" />
 	<texture unit="normal" name="models/Mutant/textures/Mutant_normal.jpg" />
 	<parameter name="MatDiffColor" value="1 1 1 1" />

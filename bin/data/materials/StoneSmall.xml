@@ -1,5 +1,5 @@
 <material>
-    <technique name="techniques/DiffNormal.xml" quality="1" />
+    <technique name="techniques/diff_normal.xml" quality="1" />
     <technique name="techniques/diff.xml" quality="0" />
     <texture unit="diffuse" name="textures/StoneDiffuse.dds" />
     <texture unit="normal" name="textures/StoneNormal.dds" />
