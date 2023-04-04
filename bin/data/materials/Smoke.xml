@@ -1,4 +1,4 @@
 <material>
-    <technique name="techniques/DiffUnlitParticleAlpha.xml" />
+    <technique name="techniques/diff_unlit_particle_alpha.xml" />
     <texture unit="diffuse" name="textures/Smoke.dds" />
 </material>
