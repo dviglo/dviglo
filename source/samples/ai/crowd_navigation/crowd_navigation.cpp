@@ -572,7 +572,7 @@ void CrowdNavigation::HandleCrowdAgentFailure(StringHash eventType, VariantMap& 
 
 void CrowdNavigation::HandleCrowdAgentReposition(StringHash eventType, VariantMap& eventData)
 {
-    static const char* WALKING_ANI = "models/Jack_Walk.ani";
+    static const char* WALKING_ANI = "models/jack_walk.ani";
 
     using namespace CrowdAgentReposition;
 
