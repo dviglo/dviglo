@@ -1652,7 +1652,7 @@ Soft particles can be implemented in two contrasting approaches: "shrinking" and
 
 For the expanding mode, see the "SoftExpand" family of particle techniques. Their downside is that performance can be lower due to not being able to use hardware depth test.
 
-Finally note the SoftParticleFadeScale shader parameter which is needed to control the distance over which the fade will take effect. This is defined in example materials using soft particles (SmokeSoft.xml & LitSmokeSoft.xml)
+Finally note the SoftParticleFadeScale shader parameter which is needed to control the distance over which the fade will take effect. This is defined in example materials using soft particles (smoke_soft.xml & lit_smoke_soft.xml)
 
 \section RenderPaths_ForwardLighting Forward lighting special considerations
 
