@@ -4826,7 +4826,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="Terrain" id="16778998">
-			<attribute name="Height Map" value="Image;textures/HeightMap.png" />
+			<attribute name="Height Map" value="Image;textures/heightmap.png" />
 			<attribute name="Material" value="Material;materials/pbr_terrain.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>

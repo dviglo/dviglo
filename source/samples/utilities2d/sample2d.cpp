@@ -421,7 +421,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     // Create the title
     auto* title = fullUI->create_child<BorderImage>("Title");
     title->SetMinSize(fullUI->GetWidth(), 50);
-    title->SetTexture(cache.GetResource<Texture2D>("textures/HeightMap.png"));
+    title->SetTexture(cache.GetResource<Texture2D>("textures/heightmap.png"));
     title->SetFullImageRect();
     title->SetAlignment(HA_CENTER, VA_TOP);
     auto* titleText = title->create_child<Text>("TitleText");
