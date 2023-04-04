@@ -125,7 +125,7 @@ void RibbonTrailDemo::create_scene()
 
     // Set sword trail type to bone and set other parameters.
     swordTrail_->SetTrailType(TT_BONE);
-    swordTrail_->SetMaterial(cache.GetResource<Material>("materials/SlashTrail.xml"));
+    swordTrail_->SetMaterial(cache.GetResource<Material>("materials/slash_trail.xml"));
     swordTrail_->SetLifetime(0.22f);
     swordTrail_->SetStartColor(Color(1.0f, 1.0f, 1.0f, 0.75f));
     swordTrail_->SetEndColor(Color(0.2f, 0.5f, 1.0f, 0.0f));
