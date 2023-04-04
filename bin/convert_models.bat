@@ -1,10 +1,10 @@
 @echo off
 set /p assetdir="Enter source assets dir: "
 cd /d "%~dp0"
-tool\ogre_importer.exe %assetdir%/Jack.mesh.xml data/models/Jack.mdl -t
-tool\ogre_importer.exe %assetdir%/Level.mesh.xml data/models/ninja_snow_war/Level.mdl -t
-tool\ogre_importer.exe %assetdir%/Mushroom.mesh.xml data/models/Mushroom.mdl -t
-tool\ogre_importer.exe %assetdir%/Ninja.mesh.xml data/models/ninja_snow_war/Ninja.mdl -t
-tool\ogre_importer.exe %assetdir%/Potion.mesh.xml data/models/ninja_snow_war/Potion.mdl -t
-tool\ogre_importer.exe %assetdir%/SnowBall.mesh.xml data/models/ninja_snow_war/SnowBall.mdl -t
-tool\ogre_importer.exe %assetdir%/SnowCrate.mesh.xml data/models/ninja_snow_war/SnowCrate.mdl -t
+tool\ogre_importer.exe %assetdir%/jack.mesh.xml data/models/jack.mdl -t
+tool\ogre_importer.exe %assetdir%/level.mesh.xml data/models/ninja_snow_war/level.mdl -t
+tool\ogre_importer.exe %assetdir%/mushroom.mesh.xml data/models/mushroom.mdl -t
+tool\ogre_importer.exe %assetdir%/ninja.mesh.xml data/models/ninja_snow_war/ninja.mdl -t
+tool\ogre_importer.exe %assetdir%/potion.mesh.xml data/models/ninja_snow_war/potion.mdl -t
+tool\ogre_importer.exe %assetdir%/snowball.mesh.xml data/models/ninja_snow_war/snowball.mdl -t
+tool\ogre_importer.exe %assetdir%/snow_crate.mesh.xml data/models/ninja_snow_war/snow_crate.mdl -t
