@@ -242,7 +242,7 @@ void Ragdolls::SpawnObject()
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
-    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/Sphere.mdl"));
+    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/sphere.mdl"));
     boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/StoneSmall.xml"));
     boxObject->SetCastShadows(true);
 

@@ -696,7 +696,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="Skybox" id="12">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/skybox2.xml" />
 		</component>
 	</node>
@@ -717,7 +717,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="98">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic_rough_10.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -731,7 +731,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="104">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic_rough_3.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -745,7 +745,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="107">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic10.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -759,7 +759,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="108">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic0.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -773,7 +773,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="109">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic3.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -787,7 +787,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="110">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic5.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -801,7 +801,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="111">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic7.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -815,7 +815,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="156">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic_rough_0.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -829,7 +829,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="175">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic_rough_7.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -843,7 +843,7 @@
 			<attribute name="Scale" value="1 1 1" />
 			<attribute name="Variables" />
 			<component type="StaticModel" id="105">
-				<attribute name="Model" value="Model;models/Sphere.mdl" />
+				<attribute name="Model" value="Model;models/sphere.mdl" />
 				<attribute name="Material" value="Material;materials/pbr/metallic_rough_5.xml" />
 				<attribute name="Cast Shadows" value="true" />
 			</component>
@@ -957,7 +957,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="163">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/emissive_pannel.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -971,7 +971,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="180">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -985,7 +985,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="181">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -999,7 +999,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="182">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1027,7 +1027,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="184">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1055,7 +1055,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="188">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/high_rough_metallic_0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1069,7 +1069,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="189">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/high_rough_metallic_3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1083,7 +1083,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="190">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/high_rough_metallic_5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1097,7 +1097,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="191">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/high_rough_metallic_7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1338,7 +1338,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="218">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -1553,7 +1553,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="235">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/high_rough_metallic_10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2450,7 +2450,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="310">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2464,7 +2464,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="311">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2478,7 +2478,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="312">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2492,7 +2492,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="313">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2506,7 +2506,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="314">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2520,7 +2520,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="315">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2534,7 +2534,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="316">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2548,7 +2548,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="317">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2562,7 +2562,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="318">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -2576,7 +2576,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="319">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3006,7 +3006,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="352">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3020,7 +3020,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="353">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3034,7 +3034,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="354">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3048,7 +3048,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="355">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3062,7 +3062,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="356">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/metallic_rough_5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3091,7 +3091,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="358">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness10.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3105,7 +3105,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="359">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness3.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3119,7 +3119,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="360">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness5.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3133,7 +3133,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="361">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness7.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>
@@ -3147,7 +3147,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="362">
-			<attribute name="Model" value="Model;models/Sphere.mdl" />
+			<attribute name="Model" value="Model;models/sphere.mdl" />
 			<attribute name="Material" value="Material;materials/pbr/roughness0.xml" />
 			<attribute name="Cast Shadows" value="true" />
 		</component>

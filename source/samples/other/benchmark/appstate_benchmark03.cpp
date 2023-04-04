@@ -108,7 +108,7 @@ void AppState_Benchmark03::CreateMolecule(const Vector2& pos, i32 type)
     node->SetPosition2D(pos);
     
     StaticModel* obj = node->create_component<StaticModel>();
-    obj->SetModel(DV_RES_CACHE.GetResource<Model>("models/Sphere.mdl"));
+    obj->SetModel(DV_RES_CACHE.GetResource<Model>("models/sphere.mdl"));
     obj->SetMaterial(DV_RES_CACHE.GetResource<Material>("Molecule" + String(type)));
 
     Benchmark03_MoleculeLogic* logic = node->create_component<Benchmark03_MoleculeLogic>();
