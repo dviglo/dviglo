@@ -1,6 +1,6 @@
 <material>
     <technique name="techniques/diff_env_cube.xml" />
-    <texture unit="diffuse" name="textures/Mushroom.dds" />
+    <texture unit="diffuse" name="textures/mushroom.dds" />
     <texture unit="environment" name="textures/Skybox.xml" />
     <parameter name="MatSpecColor" value="0.1 0.1 0.1 16" />
     <parameter name="MatEnvMapColor" value="0.2 0.1 0.1" />
