@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="b8_1">
-    <folder id="0" name="GoldIcon">
-        <file id="0" name="GoldIcon/1.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
-        <file id="1" name="GoldIcon/2.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
-        <file id="2" name="GoldIcon/3.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
-        <file id="3" name="GoldIcon/4.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
-        <file id="4" name="GoldIcon/5.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
+    <folder id="0" name="gold_icon">
+        <file id="0" name="gold_icon/1.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="1" name="gold_icon/2.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="2" name="gold_icon/3.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="3" name="gold_icon/4.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
+        <file id="4" name="gold_icon/5.png" width="64" height="64" pivot_x="0.5" pivot_y="0.5"/>
     </folder>
     <entity id="0" name="entity_000">
         <animation id="0" name="idle" length="500">

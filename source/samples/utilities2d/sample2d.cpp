@@ -230,7 +230,7 @@ Node* Sample2D::CreateCoin()
     Node* node = scene_->create_child("Coin");
     node->SetScale(0.5);
     auto* animatedSprite = node->create_component<AnimatedSprite2D>();
-    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/GoldIcon.scml");
+    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/gold_icon.scml");
     animatedSprite->SetAnimationSet(animationSet); // Get scml file and Play "idle" anim
     animatedSprite->SetAnimation("idle");
     animatedSprite->SetLayer(4);
@@ -389,7 +389,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
 
     // Create the UI for displaying the remaining coins
     auto* coinsUI = ui.GetRoot()->create_child<BorderImage>("Coins");
-    coinsUI->SetTexture(cache.GetResource<Texture2D>("sprites/GoldIcon.png"));
+    coinsUI->SetTexture(cache.GetResource<Texture2D>("sprites/gold_icon.png"));
     coinsUI->SetSize(50, 50);
     coinsUI->SetImageRect(IntRect(0, 64, 60, 128));
     coinsUI->SetAlignment(HA_LEFT, VA_TOP);

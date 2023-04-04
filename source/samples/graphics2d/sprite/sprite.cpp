@@ -100,7 +100,7 @@ void Urho2DSprite::create_scene()
     }
 
     // Get animation set
-    AnimationSet2D* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/GoldIcon.scml");
+    AnimationSet2D* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/gold_icon.scml");
     if (!animationSet)
         return;
 

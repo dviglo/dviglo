@@ -108,12 +108,12 @@ void LightAnimation::create_scene()
     // Create UI element animation
     // (note: a spritesheet and "Image Rect" attribute should be used in real use cases for better performance)
     SharedPtr<ValueAnimation> spriteAnimation(new ValueAnimation());
-    spriteAnimation->SetKeyFrame(0.0f, ResourceRef("Texture2D", "sprites/GoldIcon/1.png"));
-    spriteAnimation->SetKeyFrame(0.1f, ResourceRef("Texture2D", "sprites/GoldIcon/2.png"));
-    spriteAnimation->SetKeyFrame(0.2f, ResourceRef("Texture2D", "sprites/GoldIcon/3.png"));
-    spriteAnimation->SetKeyFrame(0.3f, ResourceRef("Texture2D", "sprites/GoldIcon/4.png"));
-    spriteAnimation->SetKeyFrame(0.4f, ResourceRef("Texture2D", "sprites/GoldIcon/5.png"));
-    spriteAnimation->SetKeyFrame(0.5f, ResourceRef("Texture2D", "sprites/GoldIcon/1.png"));
+    spriteAnimation->SetKeyFrame(0.0f, ResourceRef("Texture2D", "sprites/gold_icon/1.png"));
+    spriteAnimation->SetKeyFrame(0.1f, ResourceRef("Texture2D", "sprites/gold_icon/2.png"));
+    spriteAnimation->SetKeyFrame(0.2f, ResourceRef("Texture2D", "sprites/gold_icon/3.png"));
+    spriteAnimation->SetKeyFrame(0.3f, ResourceRef("Texture2D", "sprites/gold_icon/4.png"));
+    spriteAnimation->SetKeyFrame(0.4f, ResourceRef("Texture2D", "sprites/gold_icon/5.png"));
+    spriteAnimation->SetKeyFrame(0.5f, ResourceRef("Texture2D", "sprites/gold_icon/1.png"));
     DV_UI.GetRoot()->GetChild(String("animatingSprite"))->SetAttributeAnimation("Texture", spriteAnimation);
 
     // Create light color animation
