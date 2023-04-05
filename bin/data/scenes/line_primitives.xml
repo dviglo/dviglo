@@ -22,7 +22,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="3">
-			<attribute name="Model" value="Model;models/LinePrimitives/UnitX.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/unit_x.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 		</component>
 	</node>
@@ -35,7 +35,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="4">
-			<attribute name="Model" value="Model;models/LinePrimitives/UnitY.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/unit_y.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 		</component>
 	</node>
@@ -48,7 +48,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="5">
-			<attribute name="Model" value="Model;models/LinePrimitives/UnitZ.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/unit_z.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 		</component>
 	</node>
@@ -61,7 +61,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="6">
-			<attribute name="Model" value="Model;models/LinePrimitives/Basis.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/basis.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 		</component>
 	</node>
@@ -74,7 +74,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="7">
-			<attribute name="Model" value="Model;models/LinePrimitives/Box1x1x1.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/box_1x1x1.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 		</component>
 	</node>
@@ -87,7 +87,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="8">
-			<attribute name="Model" value="Model;models/LinePrimitives/LinearBezier.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/linear_bezier.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -135,7 +135,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="9">
-			<attribute name="Model" value="Model;models/LinePrimitives/QuadraticBezier.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/quadratic_bezier.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -193,7 +193,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="10">
-			<attribute name="Model" value="Model;models/LinePrimitives/CubicBezier.mdl" />
+			<attribute name="Model" value="Model;models/line_primitives/cubic_bezier.mdl" />
 			<attribute name="Material" value="Material;materials/vcol_unlit.xml" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
