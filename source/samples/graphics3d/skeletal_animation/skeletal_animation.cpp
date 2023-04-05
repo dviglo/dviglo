@@ -114,7 +114,7 @@ void SkeletalAnimation::create_scene()
 
         auto* modelObject = modelNode->create_component<AnimatedModel>();
         modelObject->SetModel(cache.GetResource<Model>("models/Kachujin/Kachujin.mdl"));
-        modelObject->SetMaterial(cache.GetResource<Material>("models/Kachujin/materials/Kachujin.xml"));
+        modelObject->SetMaterial(cache.GetResource<Material>("models/Kachujin/materials/kachujin.xml"));
         modelObject->SetCastShadows(true);
 
         // Create an AnimationState for a walk animation. Its time position will need to be manually updated to advance the
