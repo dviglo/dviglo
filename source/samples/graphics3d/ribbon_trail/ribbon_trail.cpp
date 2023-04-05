@@ -111,13 +111,13 @@ void RibbonTrailDemo::create_scene()
     ninjaNode->SetPosition(Vector3(5.0f, 0.0f, 0.0f));
     ninjaNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     auto* ninja = ninjaNode->create_component<AnimatedModel>();
-    ninja->SetModel(cache.GetResource<Model>("models/ninja_snow_war/Ninja.mdl"));
+    ninja->SetModel(cache.GetResource<Model>("models/ninja_snow_war/ninja.mdl"));
     ninja->SetMaterial(cache.GetResource<Material>("materials/ninja_snow_war/ninja.xml"));
     ninja->SetCastShadows(true);
 
     // Create animation controller and play attack animation.
     ninjaAnimCtrl_ = ninjaNode->create_component<AnimationController>();
-    ninjaAnimCtrl_->PlayExclusive("models/ninja_snow_war/Ninja_Attack3.ani", 0, true, 0.0f);
+    ninjaAnimCtrl_->PlayExclusive("models/ninja_snow_war/ninja_attack3.ani", 0, true, 0.0f);
 
     // Add ribbon trail to tip of sword.
     Node* swordTip = ninjaNode->GetChild("Joint29", true);
@@ -243,7 +243,7 @@ void RibbonTrailDemo::handle_update(StringHash eventType, VariantMap& eventData)
         Quaternion());
 
     // Get elapsed attack animation time.
-    float swordAnimTime = ninjaAnimCtrl_->GetAnimationState(String("models/ninja_snow_war/Ninja_Attack3.ani"))->GetTime();
+    float swordAnimTime = ninjaAnimCtrl_->GetAnimationState(String("models/ninja_snow_war/ninja_attack3.ani"))->GetTime();
 
     // Stop emitting trail when sword is finished slashing.
     if (!swordTrail_->IsEmitting() && swordAnimTime > swordTrailStartTime_ && swordAnimTime < swordTrailEndTime_)

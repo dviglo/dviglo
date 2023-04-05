@@ -62,12 +62,12 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="StaticModel" id="16777221">
-			<attribute name="Model" value="Model;models/ninja_snow_war/Level.mdl" />
+			<attribute name="Model" value="Model;models/ninja_snow_war/level.mdl" />
 			<attribute name="Material" value="Material;materials/ninja_snow_war/snow.xml" />
 		</component>
 		<component type="CollisionShape" id="16777222">
 			<attribute name="Shape Type" value="TriangleMesh" />
-			<attribute name="Model" value="Model;models/ninja_snow_war/Level.mdl" />
+			<attribute name="Model" value="Model;models/ninja_snow_war/level.mdl" />
 			<attribute name="Collision Margin" value="0.01" />
 		</component>
 		<component type="RigidBody" id="16777223">

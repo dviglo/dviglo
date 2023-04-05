@@ -14,7 +14,7 @@
 		<attribute name="Always Update Owner" value="true" />
 	</component>
 	<component type="StaticModel" id="11">
-		<attribute name="Model" value="Model;models/ninja_snow_war/SnowCrate.mdl" />
+		<attribute name="Model" value="Model;models/ninja_snow_war/snow_crate.mdl" />
 		<attribute name="Material" value="Material;materials/ninja_snow_war/snow_crate.xml" />
 		<attribute name="Is Occluder" value="false" />
 		<attribute name="Can Be Occluded" value="true" />
