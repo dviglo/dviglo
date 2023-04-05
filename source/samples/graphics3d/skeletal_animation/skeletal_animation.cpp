@@ -113,7 +113,7 @@ void SkeletalAnimation::create_scene()
         modelNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
 
         auto* modelObject = modelNode->create_component<AnimatedModel>();
-        modelObject->SetModel(cache.GetResource<Model>("models/Kachujin/Kachujin.mdl"));
+        modelObject->SetModel(cache.GetResource<Model>("models/Kachujin/kachujin.mdl"));
         modelObject->SetMaterial(cache.GetResource<Material>("models/Kachujin/materials/kachujin.xml"));
         modelObject->SetCastShadows(true);
 

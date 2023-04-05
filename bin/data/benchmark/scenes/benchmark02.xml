@@ -381,7 +381,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="7">
-			<attribute name="Model" value="Model;models/Kachujin/Kachujin.mdl" />
+			<attribute name="Model" value="Model;models/Kachujin/kachujin.mdl" />
 			<attribute name="Material" value="Material;models/Kachujin/materials/kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
@@ -1657,7 +1657,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="82">
-			<attribute name="Model" value="Model;models/Kachujin/Kachujin.mdl" />
+			<attribute name="Model" value="Model;models/Kachujin/kachujin.mdl" />
 			<attribute name="Material" value="Material;models/Kachujin/materials/kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
@@ -2318,7 +2318,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="83">
-			<attribute name="Model" value="Model;models/Kachujin/Kachujin.mdl" />
+			<attribute name="Model" value="Model;models/Kachujin/kachujin.mdl" />
 			<attribute name="Material" value="Material;models/Kachujin/materials/kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
@@ -2979,7 +2979,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="84">
-			<attribute name="Model" value="Model;models/Kachujin/Kachujin.mdl" />
+			<attribute name="Model" value="Model;models/Kachujin/kachujin.mdl" />
 			<attribute name="Material" value="Material;models/Kachujin/materials/kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
@@ -3640,7 +3640,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="85">
-			<attribute name="Model" value="Model;models/Kachujin/Kachujin.mdl" />
+			<attribute name="Model" value="Model;models/Kachujin/kachujin.mdl" />
 			<attribute name="Material" value="Material;models/Kachujin/materials/kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
@@ -4301,7 +4301,7 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="86">
-			<attribute name="Model" value="Model;models/Kachujin/Kachujin.mdl" />
+			<attribute name="Model" value="Model;models/Kachujin/kachujin.mdl" />
 			<attribute name="Material" value="Material;models/Kachujin/materials/kachujin.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
