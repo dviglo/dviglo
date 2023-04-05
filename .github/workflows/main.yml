@@ -362,7 +362,7 @@ jobs:
         DX_INC=/usr/x86_64-w64-mingw32/include
         DX_LIB=/usr/x86_64-w64-mingw32/lib
 
-        TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
+        TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/toolchains/mingw.cmake
 
         cmake engine_repo -B engine_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
@@ -385,7 +385,7 @@ jobs:
         DX_INC=/usr/x86_64-w64-mingw32/include
         DX_LIB=/usr/x86_64-w64-mingw32/lib
 
-        TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/Toolchains/MinGW.cmake
+        TOOLCHAIN=$GITHUB_WORKSPACE/engine_repo/cmake/toolchains/mingw.cmake
 
         cmake $HOME/projects/UrhoApp -B $HOME/projects/UrhoApp_build -D CMAKE_TOOLCHAIN_FILE=${TOOLCHAIN} -D MINGW=1 \
           -D DIRECTX_INC_SEARCH_PATHS=$DX_INC -D DIRECTX_LIB_SEARCH_PATHS=$DX_LIB \
