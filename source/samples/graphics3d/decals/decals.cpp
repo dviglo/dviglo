@@ -134,7 +134,7 @@ void Decals::create_scene()
         mutantNode->SetScale(0.5f + Random(2.0f));
         AnimatedModel* mutantObject = mutantNode->create_component<AnimatedModel>();
         mutantObject->SetModel(cache.GetResource<Model>("models/Mutant/Mutant.mdl"));
-        mutantObject->SetMaterial(cache.GetResource<Material>("models/Mutant/materials/mutant_M.xml"));
+        mutantObject->SetMaterial(cache.GetResource<Material>("models/Mutant/materials/mutant_m.xml"));
         mutantObject->SetCastShadows(true);
         AnimationController* animCtrl = mutantNode->create_component<AnimationController>();
         animCtrl->PlayExclusive("models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
