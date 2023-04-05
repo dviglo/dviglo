@@ -120,7 +120,7 @@ void SkeletalAnimation::create_scene()
         // Create an AnimationState for a walk animation. Its time position will need to be manually updated to advance the
         // animation, The alternative would be to use an AnimationController component which updates the animation automatically,
         // but we need to update the model's position manually in any case
-        auto* walkAnimation = cache.GetResource<Animation>("models/Kachujin/Kachujin_Walk.ani");
+        auto* walkAnimation = cache.GetResource<Animation>("models/Kachujin/kachujin_walk.ani");
 
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         // The state would fail to create (return null) if the animation was not found

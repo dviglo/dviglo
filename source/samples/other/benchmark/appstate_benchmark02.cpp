@@ -44,7 +44,7 @@ void AppState_Benchmark02::OnEnter()
         mover->SetParameters(2.f, 100.f, castleTop);
 
         AnimatedModel* modelObject = woman->GetComponent<AnimatedModel>();
-        Animation* walkAnimation = DV_RES_CACHE.GetResource<Animation>("models/Kachujin/Kachujin_Walk.ani");
+        Animation* walkAnimation = DV_RES_CACHE.GetResource<Animation>("models/Kachujin/kachujin_walk.ani");
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         if (state)
         {
