@@ -59,14 +59,14 @@ void AppState_Benchmark02::OnEnter()
     for (Node* mutant : mutants)
     {
         AnimationController* animCtrl = mutant->create_component<AnimationController>();
-        animCtrl->PlayExclusive("models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
-        animCtrl->SetTime("models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("models/Mutant/Mutant_Idle0.ani")));
+        animCtrl->PlayExclusive("models/mutant/mutant_idle0.ani", 0, true, 0.f);
+        animCtrl->SetTime("models/mutant/mutant_idle0.ani", Random(animCtrl->GetLength("models/mutant/mutant_idle0.ani")));
     }
 
     Node* mutantGeneral = scene_->GetChild("MutantGeneral");
     AnimationController* generalAnimCtrl = mutantGeneral->create_component<AnimationController>();
-    generalAnimCtrl->PlayExclusive("models/Mutant/Mutant_Idle1.ani", 0, true, 0.f);
-    generalAnimCtrl->SetTime("models/Mutant/Mutant_Idle1.ani", Random(generalAnimCtrl->GetLength("models/Mutant/Mutant_Idle1.ani")));
+    generalAnimCtrl->PlayExclusive("models/mutant/mutant_idle1.ani", 0, true, 0.f);
+    generalAnimCtrl->SetTime("models/mutant/mutant_idle1.ani", Random(generalAnimCtrl->GetLength("models/mutant/mutant_idle1.ani")));
 
     Node* cameraNode = scene_->GetChild("Camera");
     

@@ -133,12 +133,12 @@ void Decals::create_scene()
         mutantNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mutantNode->SetScale(0.5f + Random(2.0f));
         AnimatedModel* mutantObject = mutantNode->create_component<AnimatedModel>();
-        mutantObject->SetModel(cache.GetResource<Model>("models/Mutant/Mutant.mdl"));
-        mutantObject->SetMaterial(cache.GetResource<Material>("models/Mutant/materials/mutant_m.xml"));
+        mutantObject->SetModel(cache.GetResource<Model>("models/mutant/mutant.mdl"));
+        mutantObject->SetMaterial(cache.GetResource<Material>("models/mutant/materials/mutant_m.xml"));
         mutantObject->SetCastShadows(true);
         AnimationController* animCtrl = mutantNode->create_component<AnimationController>();
-        animCtrl->PlayExclusive("models/Mutant/Mutant_Idle0.ani", 0, true, 0.f);
-        animCtrl->SetTime("models/Mutant/Mutant_Idle0.ani", Random(animCtrl->GetLength("models/Mutant/Mutant_Idle0.ani")));
+        animCtrl->PlayExclusive("models/mutant/mutant_idle0.ani", 0, true, 0.f);
+        animCtrl->SetTime("models/mutant/mutant_idle0.ani", Random(animCtrl->GetLength("models/mutant/mutant_idle0.ani")));
     }
 
     // Create the camera. Limit far clip distance to match the fog

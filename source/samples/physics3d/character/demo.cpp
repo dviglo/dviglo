@@ -171,8 +171,8 @@ void CharacterDemo::CreateCharacter()
 
     // Create the rendering component + animation controller
     auto* object = adjustNode->create_component<AnimatedModel>();
-    object->SetModel(DV_RES_CACHE.GetResource<Model>("models/Mutant/Mutant.mdl"));
-    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("models/Mutant/materials/mutant_m.xml"));
+    object->SetModel(DV_RES_CACHE.GetResource<Model>("models/mutant/mutant.mdl"));
+    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("models/mutant/materials/mutant_m.xml"));
     object->SetCastShadows(true);
     adjustNode->create_component<AnimationController>();
 

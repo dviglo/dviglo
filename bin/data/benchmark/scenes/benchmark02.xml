@@ -50,8 +50,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="6">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -4962,8 +4962,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="87">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -5293,8 +5293,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="88">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -5624,8 +5624,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="89">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -5955,8 +5955,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="90">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -6286,8 +6286,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="91">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -6617,8 +6617,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="92">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -6948,8 +6948,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="93">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -7279,8 +7279,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="94">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
@@ -7700,8 +7700,8 @@
 		<attribute name="Scale" value="1 1 1" />
 		<attribute name="Variables" />
 		<component type="AnimatedModel" id="96">
-			<attribute name="Model" value="Model;models/Mutant/Mutant.mdl" />
-			<attribute name="Material" value="Material;models/Mutant/materials/mutant_m.xml" />
+			<attribute name="Model" value="Model;models/mutant/mutant.mdl" />
+			<attribute name="Material" value="Material;models/mutant/materials/mutant_m.xml" />
 			<attribute name="Cast Shadows" value="true" />
 			<attribute name="Bone Animation Enabled">
 				<variant type="Bool" value="true" />
