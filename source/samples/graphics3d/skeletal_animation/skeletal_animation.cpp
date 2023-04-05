@@ -113,14 +113,14 @@ void SkeletalAnimation::create_scene()
         modelNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
 
         auto* modelObject = modelNode->create_component<AnimatedModel>();
-        modelObject->SetModel(cache.GetResource<Model>("models/Kachujin/kachujin.mdl"));
-        modelObject->SetMaterial(cache.GetResource<Material>("models/Kachujin/materials/kachujin.xml"));
+        modelObject->SetModel(cache.GetResource<Model>("models/kachujin/kachujin.mdl"));
+        modelObject->SetMaterial(cache.GetResource<Material>("models/kachujin/materials/kachujin.xml"));
         modelObject->SetCastShadows(true);
 
         // Create an AnimationState for a walk animation. Its time position will need to be manually updated to advance the
         // animation, The alternative would be to use an AnimationController component which updates the animation automatically,
         // but we need to update the model's position manually in any case
-        auto* walkAnimation = cache.GetResource<Animation>("models/Kachujin/kachujin_walk.ani");
+        auto* walkAnimation = cache.GetResource<Animation>("models/kachujin/kachujin_walk.ani");
 
         AnimationState* state = modelObject->AddAnimationState(walkAnimation);
         // The state would fail to create (return null) if the animation was not found

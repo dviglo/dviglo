@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <material>
 	<technique name="techniques/diff_normal_spec.xml" />
-	<texture unit="diffuse" name="models/Kachujin/textures/kachujin_diffuse.png" />
-	<texture unit="normal" name="models/Kachujin/textures/kachujin_normal.png" />
-	<texture unit="specular" name="models/Kachujin/textures/kachujin_specular.png" />
+	<texture unit="diffuse" name="models/kachujin/textures/kachujin_diffuse.png" />
+	<texture unit="normal" name="models/kachujin/textures/kachujin_normal.png" />
+	<texture unit="specular" name="models/kachujin/textures/kachujin_specular.png" />
 	<parameter name="MatDiffColor" value="1.0 1.0 1.0 1" />
 	<parameter name="MatSpecColor" value="1.0 1.0 1.0 50" />
 	<parameter name="MatEmissiveColor" value="0 0 0 1" />
