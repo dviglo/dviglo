@@ -73,7 +73,7 @@ vec3 Uncharted2Tonemap(vec3 x)
 #if !defined(GL_ES) || __VERSION__ >= 300
 vec3 ColorCorrection(vec3 color, defprec sampler3D lut)
 {
-    float lutSize = 16.0;
+    float lutSize = 16.0; // Высота текстуры lut_identity.png
     float scale = (lutSize - 1.0) / lutSize;
     float offset = 1.0 / (2.0 * lutSize);
     return texture3D(lut, clamp(color, 0.0, 1.0) * scale + offset).rgb;
