@@ -1,4 +1,5 @@
 #ifdef COMPILEVS
+
 mat3 GetCameraRot()
 {
     return mat3(cViewInv[0][0], cViewInv[0][1], cViewInv[0][2],
@@ -55,4 +56,5 @@ vec3 GetNearRay(vec4 clipPos)
 
     return (viewRay * GetCameraRot()) * cDepthMode.x;
 }
-#endif
+
+#endif // def COMPILEVS
