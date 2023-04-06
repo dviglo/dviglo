@@ -1,5 +1,5 @@
 /**
- * pugixml parser - version 1.12
+ * pugixml parser - version 1.13
  * --------------------------------------------------------
  * Copyright (C) 2006-2022, by Arseny Kapoulkine (arseny.kapoulkine@gmail.com)
  * Report bugs and download new versions at https://pugixml.org/
@@ -11,7 +11,7 @@
  * Copyright (C) 2003, by Kristen Wegner (kristen@tima.net)
  */
 
-// Modified for Urho3D
+// Модифицировано для Dviglo
 
 #ifndef HEADER_PUGICONFIG_HPP
 #define HEADER_PUGICONFIG_HPP
@@ -29,7 +29,7 @@
 // #define PUGIXML_NO_STL
 
 // Uncomment this to disable exceptions
-#define PUGIXML_NO_EXCEPTIONS // Urho3D: uncommented
+#define PUGIXML_NO_EXCEPTIONS // Dviglo: Раскомментировано
 
 // Set this to control attributes for public classes/functions, i.e.:
 // #define PUGIXML_API __declspec(dllexport) // to export all public symbols from DLL

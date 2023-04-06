@@ -1,3 +1,0 @@
-URL: https://github.com/zeux/pugixml
-Date: 13.07.2022
-Latest commit: https://github.com/zeux/pugixml/commit/2639dfd053221d3e8c9e9ff013e58699d9c1af15

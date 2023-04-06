@@ -6,7 +6,7 @@
 #include "../io/log.h"
 #include "xml_file.h"
 
-#include <pugixml/pugixml.hpp>
+#include <pugixml.hpp>
 
 #include "../common/debug_new.h"
 

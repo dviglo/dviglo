@@ -5,7 +5,7 @@
 #include "../math/math_defs.h"
 #include "spriter_data_2d.h"
 
-#include <pugixml/pugixml.hpp>
+#include <pugixml.hpp>
 
 #include <cstring>
 
