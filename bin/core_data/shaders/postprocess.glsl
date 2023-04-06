@@ -1,4 +1,5 @@
 #ifdef COMPILEPS
+
 const float PI = 3.14159265;
 
 vec2 Noise(vec2 coord)
@@ -84,4 +85,5 @@ vec3 ToInverseGamma(vec3 color)
 {
     return vec3(pow(color.r, InverseGamma), pow(color.g, InverseGamma), pow(color.b, InverseGamma));
 }
-#endif
+
+#endif // #ifdef COMPILEPS
