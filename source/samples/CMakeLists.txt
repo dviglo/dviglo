@@ -23,7 +23,7 @@ set(dir_names autoload core_data data)
 # Копируем папки в bin, если нужно
 foreach(dir_name ${dir_names})
     if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/${dir_name})
-        dv_create_symlink(${CMAKE_SOURCE_DIR}/bin/${dir_name} ${CMAKE_BINARY_DIR}/bin/${dir_name})
+        dv_create_dir_link(${CMAKE_SOURCE_DIR}/bin/${dir_name} ${CMAKE_BINARY_DIR}/bin/${dir_name})
     endif()
 endforeach()
 

@@ -99,7 +99,7 @@ endfunction()
 # ссылку не удалось, то копирует папку.
 # Существует функция file(CREATE_LINK ${from} ${to} COPY_ON_ERROR SYMBOLIC), однако в случае
 # неудачи она копирует папку без содержимого
-function(dv_create_symlink from to)
+function(dv_create_dir_link from to)
     execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${from} ${to}
                     OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE RESULT)
 
