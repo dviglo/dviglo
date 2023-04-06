@@ -244,7 +244,7 @@ float GetShadow(vec4 shadowPos)
     #endif
 }
 #else
-float GetShadow(highp vec4 shadowPos)
+float GetShadow(vec4 shadowPos)
 {
     #if defined(SIMPLE_SHADOW)
         // Take one sample
@@ -311,7 +311,7 @@ float GetDirShadow(const vec4 iShadowPos[NUMCASCADES], float depth)
     return GetDirShadowFade(GetShadow(shadowPos), depth);
 }
 #else
-float GetDirShadow(const highp vec4 iShadowPos[NUMCASCADES], float depth)
+float GetDirShadow(const vec4 iShadowPos[NUMCASCADES], float depth)
 {
     return GetDirShadowFade(GetShadow(iShadowPos[0]), depth);
 }
@@ -348,11 +348,7 @@ float GetDirShadowDeferred(vec4 projWorldPos, vec3 normal, float depth)
 #endif
 #endif
 
-#if !defined(GL_ES) || __VERSION__>=300
 float GetShadow(const vec4 iShadowPos[NUMCASCADES], float depth)
-#else
-float GetShadow(const highp vec4 iShadowPos[NUMCASCADES], float depth)
-#endif
 {
     #if defined(DIRLIGHT)
         return GetDirShadow(iShadowPos, depth);
