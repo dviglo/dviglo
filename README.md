@@ -25,5 +25,4 @@ Dviglo распространяется под лицензией MIT.
 * [Форум](https://github.com/dviglo-community/discussions/discussions)
 * [Wiki](https://github.com/urho3d-community/wiki/wiki)
 * [Архив англоязычной Wiki](https://github.com/urho3d-community/wiki-archive/wiki)
- [Инструменты и утилиты](https://github.com/urho3d-tools)
- 
+* [Инструменты и утилиты](https://github.com/urho3d-tools)
