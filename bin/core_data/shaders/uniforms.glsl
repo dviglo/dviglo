@@ -48,11 +48,6 @@ uniform mat4 cZone;
 #ifdef COMPILEPS
 
 // Fragment shader uniforms
-#if defined(MOBILE_GRAPHICS)
-    precision mediump float;
-#elif defined(WEBGL)
-    precision highp float;
-#endif
 uniform vec4 cAmbientColor;
 uniform vec3 cCameraPosPS;
 uniform float cDeltaTimePS;
@@ -159,12 +154,7 @@ uniform ObjectVS
 #ifdef COMPILEPS
 
 // Fragment shader uniforms
-#if defined(MOBILE_GRAPHICS)
-    precision mediump float;
-#elif defined(WEBGL)
-    precision highp float;
-#endif
-// Pixel shader uniforms
+
 uniform FramePS
 {
     float cDeltaTimePS;
