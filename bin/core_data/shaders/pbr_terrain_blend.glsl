@@ -11,11 +11,7 @@
 
 varying vec2 vTexCoord;
 
-#ifndef GL_ES
 varying vec2 vDetailTexCoord;
-#else
-varying mediump vec2 vDetailTexCoord;
-#endif
 varying vec3 vNormal;
 varying vec4 vWorldPos;
 #ifdef PERPIXEL
@@ -48,12 +44,7 @@ uniform sampler2D sDetailMap1;
 uniform sampler2D sDetailMap2;
 uniform sampler2D sDetailMap3;
 
-#ifndef GL_ES
 uniform vec2 cDetailTiling;
-#else
-uniform mediump vec2 cDetailTiling;
-#endif
-
 
 void VS()
 {
