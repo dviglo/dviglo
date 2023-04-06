@@ -43,11 +43,7 @@ void PS()
         gl_FragColor = diffColor * diffInput;
     #endif
     #ifdef ALPHAMAP
-        #if defined(GL3) && !defined(GL_ES)
-            float alphaInput = texture2D(sDiffMap, vTexCoord).r;
-        #else
-            float alphaInput = texture2D(sDiffMap, vTexCoord).a;
-        #endif
+        float alphaInput = texture2D(sDiffMap, vTexCoord).r;
         gl_FragColor = vec4(diffColor.rgb, diffColor.a * alphaInput);
     #endif
 }
