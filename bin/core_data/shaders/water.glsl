@@ -4,17 +4,10 @@
 #include "screen_pos.glsl"
 #include "fog.glsl"
 
-#ifndef GL_ES
 varying vec4 vScreenPos;
 varying vec2 vReflectUV;
 varying vec2 vWaterUV;
 varying vec4 vEyeVec;
-#else
-varying highp vec4 vScreenPos;
-varying highp vec2 vReflectUV;
-varying highp vec2 vWaterUV;
-varying highp vec4 vEyeVec;
-#endif
 varying vec3 vNormal;
 
 #ifdef COMPILEVS
