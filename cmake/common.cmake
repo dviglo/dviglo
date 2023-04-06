@@ -95,16 +95,24 @@ function(dv_add_all_subdirs)
     endforeach()
 endfunction()
 
-# Создаёт символическую ссылку для папки. Требует админских прав в Windows. Если создать символическую
-# ссылку не удалось, то копирует папку.
-# Существует функция file(CREATE_LINK ${from} ${to} COPY_ON_ERROR SYMBOLIC), однако в случае
-# неудачи она копирует папку без содержимого
+# Создаёт ссылку для папки. Если ссылку создать не удалось, то копирует папку
 function(dv_create_dir_link from to)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${from} ${to}
-                    OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE RESULT)
+    if(NOT CMAKE_HOST_WIN32)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${from} ${to}
+                        OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE RESULT)
+    else()
+        # Не используем create_symlink в Windows, так как создание symbolic links
+        # [требует админских прав](https://ss64.com/nt/mklink.html),
+        # а поддержка junctions из CMake
+        # [была удалена](https://gitlab.kitware.com/cmake/cmake/-/merge_requests/7530)
+        string(REPLACE / \\ from ${from})
+        string(REPLACE / \\ to ${to})
+        execute_process(COMMAND cmd /C mklink /J ${to} ${from}
+                        OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE RESULT)
+    endif()
 
-    if(NOT RESULT EQUAL "0")
-        message("Не удалось создать символическую ссылку. Нужно запускать cmake от Админа. Копируем вместо создания ссылки")
+    if(NOT RESULT EQUAL 0)
+        message("Не удалось создать ссылку для папки, поэтому копируем папку")
         execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory  ${from} ${to})
     endif()
 endfunction()
