@@ -1,4 +1,5 @@
 #ifdef COMPILEPS
+
 uniform sampler2D sDiffMap;
 uniform samplerCube sDiffCubeMap;
 uniform sampler2D sNormalMap;
@@ -81,4 +82,5 @@ float ReconstructDepth(float hwDepth)
 {
     return dot(vec2(hwDepth, cDepthReconstruct.y / (hwDepth - cDepthReconstruct.x)), cDepthReconstruct.zw);
 }
-#endif
+
+#endif // def COMPILEPS
