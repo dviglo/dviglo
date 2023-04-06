@@ -30,7 +30,6 @@ static const String EP_REFRESH_RATE = "RefreshRate";
 static const String EP_RESOURCE_PACKAGES = "ResourcePackages";
 static const String EP_RESOURCE_PATHS = "ResourcePaths";
 static const String EP_RESOURCE_PREFIX_PATHS = "ResourcePrefixPaths";
-static const String EP_SHADER_CACHE_DIR = "ShaderCacheDir";
 static const String EP_SHADOWS = "Shadows";
 static const String EP_SOUND = "Sound";
 static const String EP_SOUND_BUFFER = "SoundBuffer";

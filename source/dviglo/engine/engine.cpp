@@ -241,8 +241,6 @@ bool Engine::Initialize(const VariantMap& parameters)
         ))
             return false;
 
-        graphics.SetShaderCacheDir(GetParameter(parameters, EP_SHADER_CACHE_DIR, get_pref_path("urho3d", "shadercache")).GetString());
-
         if (HasParameter(parameters, EP_DUMP_SHADERS))
             graphics.BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))

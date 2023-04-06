@@ -377,13 +377,6 @@ void Graphics::PrecacheShaders(Deserializer& source)
     ShaderPrecache::load_shaders(this, source);
 }
 
-void Graphics::SetShaderCacheDir(const String& path)
-{
-    String trimmedPath = path.Trimmed();
-    if (trimmedPath.Length())
-        shaderCacheDir_ = add_trailing_slash(trimmedPath);
-}
-
 void Graphics::AddGPUObject(GpuObject* object)
 {
     std::scoped_lock lock(gpuObjectMutex_);
