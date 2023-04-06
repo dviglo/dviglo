@@ -64,21 +64,13 @@ vec3 Uncharted2Tonemap(vec3 x)
    return ((x*(A*x+C*B)+D*E)/(x*(A*x+B)+D*F))-E/F;
 }
 
-#if defined(GL_ES) && __VERSION__ >= 300
-#define defprec mediump
-#else
-#define defprec
-#endif
-
-#if !defined(GL_ES) || __VERSION__ >= 300
-vec3 ColorCorrection(vec3 color, defprec sampler3D lut)
+vec3 ColorCorrection(vec3 color, sampler3D lut)
 {
     float lutSize = 16.0; // Высота текстуры lut_identity.png
     float scale = (lutSize - 1.0) / lutSize;
     float offset = 1.0 / (2.0 * lutSize);
     return texture3D(lut, clamp(color, 0.0, 1.0) * scale + offset).rgb;
 }
-#endif
 
 const float Gamma = 2.2;
 const float InverseGamma = 1.0 / 2.2;
