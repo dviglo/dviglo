@@ -100,7 +100,8 @@ endfunction()
 # Существует функция file(CREATE_LINK ${from} ${to} COPY_ON_ERROR SYMBOLIC), однако в случае
 # неудачи она копирует папку без содержимого
 function(dv_create_symlink from to)
-    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${from} ${to} RESULT_VARIABLE RESULT)
+    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${from} ${to}
+                    OUTPUT_QUIET ERROR_QUIET RESULT_VARIABLE RESULT)
 
     if(NOT RESULT EQUAL "0")
         message("Не удалось создать символическую ссылку. Нужно запускать cmake от Админа. Копируем вместо создания ссылки")
