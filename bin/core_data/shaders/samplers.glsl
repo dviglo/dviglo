@@ -10,22 +10,22 @@ uniform sampler2D sLightRampMap;
 uniform sampler2D sLightSpotMap;
 uniform samplerCube sLightCubeMap;
 #if !defined(GL_ES) || __VERSION__ >= 300
-    uniform highp sampler3D sVolumeMap;
+    uniform sampler3D sVolumeMap;
     uniform sampler2D sAlbedoBuffer;
     uniform sampler2D sNormalBuffer;
     uniform sampler2D sDepthBuffer;
     uniform sampler2D sLightBuffer;
     #ifdef VSM_SHADOW
-        uniform highp sampler2D sShadowMap;
+        uniform sampler2D sShadowMap;
     #else
-        uniform highp sampler2DShadow sShadowMap;
+        uniform sampler2DShadow sShadowMap;
     #endif
     uniform samplerCube sFaceSelectCubeMap;
     uniform samplerCube sIndirectionCubeMap;
     uniform samplerCube sZoneCubeMap;
-    uniform highp sampler3D sZoneVolumeMap;
+    uniform sampler3D sZoneVolumeMap;
 #else
-    uniform highp sampler2D sShadowMap;
+    uniform sampler2D sShadowMap;
 #endif
 
 #ifdef GL3

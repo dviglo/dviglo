@@ -32,7 +32,7 @@ uniform mat4 cZone;
 #if !defined(GL_ES) || defined(WEBGL) || __VERSION__>=300
     uniform mat4 cLightMatrices[4];
 #else
-    uniform highp mat4 cLightMatrices[2];
+    uniform mat4 cLightMatrices[2];
 #endif
 #ifdef SKINNED
     uniform vec4 cSkinMatrices[MAXBONES*3];
