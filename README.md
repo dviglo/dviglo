@@ -19,10 +19,11 @@ Dviglo распространяется под лицензией MIT.
 
 ## Важные ссылки:
 
+* [Использование движка](https://github.com/dviglo-learn/minimal_app)
+* [Обучающие материалы](https://github.com/dviglo-learn)
 * [Документация, сгенерированная Doxygen](https://urho3d-doxygen.github.io)
 * [Форум](https://github.com/dviglo-community/discussions/discussions)
 * [Wiki](https://github.com/urho3d-community/wiki/wiki)
 * [Архив англоязычной Wiki](https://github.com/urho3d-community/wiki-archive/wiki)
-* [Обучающие материалы](https://github.com/dviglo-learn)
-* [Инструменты и утилиты](https://github.com/urho3d-tools)
-
+ [Инструменты и утилиты](https://github.com/urho3d-tools)
+ 
