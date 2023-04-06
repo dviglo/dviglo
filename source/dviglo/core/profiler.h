@@ -4,7 +4,7 @@
 
 #pragma once
 
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
     #define TRACY_ENABLE 1
     #include "tracy/Tracy.hpp"
 #else
@@ -14,14 +14,14 @@
 namespace dviglo
 {
 
-#ifdef DV_TRACY_PROFILING // Use Tracy profiler
+#ifdef DV_TRACY // Use Tracy profiler
     /// Macro for scoped profiling with a name.
     #define DV_PROFILE(name) ZoneScopedN(#name)
 #else // Profiling off
     #define DV_PROFILE(name)
 #endif
 
-#ifdef DV_TRACY_PROFILING // Use Tracy profiler
+#ifdef DV_TRACY // Use Tracy profiler
     /// Macro for scoped profiling with a name and color.
     #define DV_PROFILE_COLOR(name, color) ZoneScopedNC(#name, color)
     /// Macro for scoped profiling with a dynamic string name.

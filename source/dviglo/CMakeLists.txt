@@ -166,8 +166,8 @@ if(DV_BOX2D)
     target_link_libraries(${TARGET_NAME} PUBLIC box2d)
 endif()
 
-if(DV_TRACY_PROFILING)
-    target_compile_definitions(${TARGET_NAME} PUBLIC DV_TRACY_PROFILING=1)
+if(DV_TRACY)
+    target_compile_definitions(${TARGET_NAME} PUBLIC DV_TRACY=1)
     target_link_libraries(${TARGET_NAME} PUBLIC tracy)
 endif()
 

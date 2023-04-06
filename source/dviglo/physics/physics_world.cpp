@@ -778,7 +778,7 @@ void PhysicsWorld::HandleSceneSubsystemUpdate(StringHash eventType, VariantMap& 
     Update(eventData[P_TIMESTEP].GetFloat());
 }
 
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
 // Tracy сравнивает не значения строк, а адреса
 static const char* STR_STEP_SIMULATION = "StepSimulation";
 #endif
@@ -794,14 +794,14 @@ void PhysicsWorld::PreStep(float timeStep)
     SendEvent(E_PHYSICSPRESTEP, eventData);
 
     // Start profiling block for the actual simulation step
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
     FrameMarkStart(STR_STEP_SIMULATION);
 #endif
 }
 
 void PhysicsWorld::PostStep(float timeStep)
 {
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
     FrameMarkEnd(STR_STEP_SIMULATION);
 #endif
 

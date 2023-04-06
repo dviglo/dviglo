@@ -114,7 +114,7 @@ A number of build options can be defined when invoking the build scripts or when
 |DV_HASH_DEBUG    |0|Enable %StringHash reversing and hash collision detection at the expense of memory and performance penalty|
 |DV_PACKAGING     |0|Enable resources packaging support|
 |DV_PROFILING     |1|Enable default profiling support|
-|DV_TRACY_PROFILING|0|Enable extended profiling support using Tracy Profiler; overrides DV_PROFILING option|
+|DV_TRACY         |0|Enable extended profiling support using Tracy Profiler; overrides DV_PROFILING option|
 |DV_LOGGING       |1|Enable logging support|
 |DV_THREADING     |*|Enable thread support, on Web platform default to 0, on other platforms default to 1|
 |DV_TESTING       |0|Enable testing support|

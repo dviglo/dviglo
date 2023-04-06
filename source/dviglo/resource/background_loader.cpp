@@ -246,7 +246,7 @@ void BackgroundLoader::FinishBackgroundLoading(BackgroundLoadItem& item)
     // If begin_load() phase was successful, call end_load() and get the final success/failure result
     if (success)
     {
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
         DV_PROFILE_COLOR(FinishBackgroundLoading, DV_PROFILE_RESOURCE_COLOR);
 
         String profileBlockName("Finish" + resource->GetTypeName());

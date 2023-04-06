@@ -29,7 +29,7 @@ public:
     /// Process work items until stopped.
     void ThreadFunction() override
     {
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
         String name;
         name.AppendWithFormat("WorkerThread #%d", index_);
         DV_PROFILE_THREAD(name.c_str());

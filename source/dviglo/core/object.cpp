@@ -287,7 +287,7 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
     if (blockEvents_)
         return;
 
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
     DV_PROFILE_COLOR(SendEvent, DV_PROFILE_EVENT_COLOR);
 
     const String& eventName = GetEventNameRegister().GetString(eventType);

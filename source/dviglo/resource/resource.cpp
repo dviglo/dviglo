@@ -23,7 +23,7 @@ bool Resource::Load(Deserializer& source)
 {
     // Because begin_load() / end_load() can be called from worker threads, where profiling would be a no-op,
     // create a type name -based profile block here
-#ifdef DV_TRACY_PROFILING
+#ifdef DV_TRACY
     DV_PROFILE_COLOR(Load, DV_PROFILE_RESOURCE_COLOR);
 
     String profileBlockName("Load" + GetTypeName());
