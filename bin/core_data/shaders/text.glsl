@@ -1,9 +1,9 @@
 // https://www.khronos.org/registry/OpenGL/extensions/OES/OES_standard_derivatives.txt
 #extension GL_OES_standard_derivatives : enable
 
-#include "uniforms.glsl"
-#include "samplers.glsl"
-#include "transform.glsl"
+#include "uniforms.inc"
+#include "samplers.inc"
+#include "transform.inc"
 
 varying vec2 vTexCoord;
 varying vec4 vColor;

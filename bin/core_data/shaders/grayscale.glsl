@@ -1,8 +1,8 @@
-#include "uniforms.glsl"
-#include "samplers.glsl"
-#include "transform.glsl"
-#include "screen_pos.glsl"
-#include "lighting.glsl"
+#include "uniforms.inc"
+#include "samplers.inc"
+#include "transform.inc"
+#include "screen_pos.inc"
+#include "lighting.inc"
 
 varying vec2 vScreenPos;
 

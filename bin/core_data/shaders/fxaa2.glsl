@@ -6,10 +6,10 @@
 
 // Adapted for Urho3D from http://timothylottes.blogspot.com/2011/04/nvidia-fxaa-ii-for-console.html
 
-#include "uniforms.glsl"
-#include "samplers.glsl"
-#include "transform.glsl"
-#include "screen_pos.glsl"
+#include "uniforms.inc"
+#include "samplers.inc"
+#include "transform.inc"
+#include "screen_pos.inc"
 
 varying vec2 vScreenPos;
 

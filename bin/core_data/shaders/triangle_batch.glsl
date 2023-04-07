@@ -1,5 +1,5 @@
-#include "uniforms.glsl"
-#include "transform.glsl"
+#include "uniforms.inc"
+#include "transform.inc"
 
 varying vec4 vColor;
 

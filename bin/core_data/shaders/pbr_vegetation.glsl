@@ -1,12 +1,12 @@
-#include "uniforms.glsl"
-#include "samplers.glsl"
-#include "transform.glsl"
-#include "screen_pos.glsl"
-#include "lighting.glsl"
-#include "constants.glsl"
-#include "fog.glsl"
-#include "pbr.glsl"
-#include "ibl.glsl"
+#include "uniforms.inc"
+#include "samplers.inc"
+#include "transform.inc"
+#include "screen_pos.inc"
+#include "lighting.inc"
+#include "constants.inc"
+#include "fog.inc"
+#include "pbr.inc"
+#include "ibl.inc"
 #line 30010
 
 uniform float cWindHeightFactor;

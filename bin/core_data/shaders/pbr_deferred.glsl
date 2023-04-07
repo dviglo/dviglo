@@ -1,10 +1,10 @@
-#include "uniforms.glsl"
-#include "samplers.glsl"
-#include "transform.glsl"
-#include "screen_pos.glsl"
-#include "lighting.glsl"
-#include "constants.glsl"
-#include "pbr.glsl"
+#include "uniforms.inc"
+#include "samplers.inc"
+#include "transform.inc"
+#include "screen_pos.inc"
+#include "lighting.inc"
+#include "constants.inc"
+#include "pbr.inc"
 #line 40007
 
 #ifdef DIRLIGHT

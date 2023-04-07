@@ -1,8 +1,8 @@
-#include "uniforms.glsl"
-#include "samplers.glsl"
-#include "transform.glsl"
-#include "screen_pos.glsl"
-#include "fog.glsl"
+#include "uniforms.inc"
+#include "samplers.inc"
+#include "transform.inc"
+#include "screen_pos.inc"
+#include "fog.inc"
 
 varying vec4 vScreenPos;
 varying vec2 vReflectUV;
