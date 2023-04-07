@@ -86,4 +86,4 @@ vec3 ToInverseGamma(vec3 color)
     return vec3(pow(color.r, InverseGamma), pow(color.g, InverseGamma), pow(color.b, InverseGamma));
 }
 
-#endif // #ifdef COMPILEPS
+#endif // def COMPILEPS
