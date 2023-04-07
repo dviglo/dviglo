@@ -1,6 +1,6 @@
-#include "uniforms.inc"
-#include "samplers.inc"
-#include "transform.inc"
+#dv_include "uniforms.inc"
+#dv_include "samplers.inc"
+#dv_include "transform.inc"
 
 #ifdef VSM_SHADOW
     varying vec4 vTexCoord;

@@ -158,9 +158,9 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
     {
         String line = source.ReadLine();
 
-        if (line.StartsWith("#include"))
+        if (line.StartsWith("#dv_include"))
         {
-            String includeFileName = GetPath(source.GetName()) + line.Substring(9).Replaced("\"", "").Trimmed();
+            String includeFileName = GetPath(source.GetName()) + line.Substring(12).Replaced("\"", "").Trimmed();
 
             SharedPtr<File> includeFile = cache.GetFile(includeFileName);
             if (!includeFile)

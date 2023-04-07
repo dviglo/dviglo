@@ -1,9 +1,9 @@
-#include "uniforms.inc"
-#include "samplers.inc"
-#include "transform.inc"
-#include "screen_pos.inc"
-#include "lighting.inc"
-#include "fog.inc"
+#dv_include "uniforms.inc"
+#dv_include "samplers.inc"
+#dv_include "transform.inc"
+#dv_include "screen_pos.inc"
+#dv_include "lighting.inc"
+#dv_include "fog.inc"
 
 #ifdef NORMALMAP
     varying vec4 vTexCoord;

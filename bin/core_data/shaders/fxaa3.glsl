@@ -44,10 +44,10 @@
 //
 /*--------------------------------------------------------------------------*/
 
-#include "uniforms.inc"
-#include "samplers.inc"
-#include "transform.inc"
-#include "screen_pos.inc"
+#dv_include "uniforms.inc"
+#dv_include "samplers.inc"
+#dv_include "transform.inc"
+#dv_include "screen_pos.inc"
 
 varying vec2 vScreenPos;
 

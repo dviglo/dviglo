@@ -1,5 +1,5 @@
-#include "uniforms.inc"
-#include "transform.inc"
+#dv_include "uniforms.inc"
+#dv_include "transform.inc"
 
 varying vec4 vColor;
 

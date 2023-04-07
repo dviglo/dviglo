@@ -1,7 +1,7 @@
-#include "uniforms.inc"
-#include "transform.inc"
-#include "screen_pos.inc"
-#include "lighting.inc"
+#dv_include "uniforms.inc"
+#dv_include "transform.inc"
+#dv_include "screen_pos.inc"
+#dv_include "lighting.inc"
 
 uniform float cWindHeightFactor;
 uniform float cWindHeightPivot;
