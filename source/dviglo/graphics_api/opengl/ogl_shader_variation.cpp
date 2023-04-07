@@ -87,36 +87,12 @@ bool ShaderVariation::Create_OGL()
     }
 
     const String& originalShaderCode = owner_->GetSourceCode(type_);
-    String shaderCode;
 
-    // Директива #version должна находиться в начале файла:
+    // В начале файла должна находиться директива #version:
     // https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)#Version
-    // Нельзя просто добавить в начало шейдера свои дефайны
+    String shaderCode = "#version 150\n";
 
-    // Ищем версию GLSL в файле
-    i32 verStart = originalShaderCode.Find('#');
-    i32 verEnd = 0;
-    if (verStart != String::NPOS)
-    {
-        if (originalShaderCode.Substring(verStart + 1, 7) == "version")
-        {
-            verEnd = verStart + 9;
-            while (verEnd < originalShaderCode.Length())
-            {
-                if (IsDigit((unsigned)originalShaderCode[verEnd]))
-                    ++verEnd;
-                else
-                    break;
-            }
-            // If version define found, insert it first
-            String versionDefine = originalShaderCode.Substring(verStart, verEnd - verStart);
-            shaderCode += versionDefine + "\n";
-        }
-    }
-
-    // Если версия GLSL не найдена в файле, то добавляем её самостоятельно
-    if (!verEnd)
-        shaderCode += "#version 150\n"; 
+    // После версии добавляем свои дефайны
 
 #if defined(DESKTOP_GRAPHICS)
     shaderCode += "#define DESKTOP_GRAPHICS\n";
@@ -148,11 +124,7 @@ bool ShaderVariation::Create_OGL()
 
     shaderCode += "#define GL3\n";
 
-    // When version define found, do not insert it a second time
-    if (verEnd > 0)
-        shaderCode += (originalShaderCode.c_str() + verEnd);
-    else
-        shaderCode += originalShaderCode;
+    shaderCode += originalShaderCode;
 
     const char* shaderCStr = shaderCode.c_str();
     glShaderSource(gpu_object_name_, 1, &shaderCStr, nullptr);
