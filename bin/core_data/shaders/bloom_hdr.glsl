@@ -21,7 +21,9 @@ uniform vec2 cBright16InvSize;
 const int BlurKernelSize = 5;
 #endif
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -30,7 +32,9 @@ void VS()
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
 
-void PS()
+#elif defined COMPILEFS
+
+void main()
 {
     #ifdef BRIGHT
     vec3 color = texture(sDiffMap, vScreenPos).rgb;
@@ -71,3 +75,5 @@ void PS()
     gl_FragColor = vec4(color + bloom, 1.0);
     #endif
 }
+
+#endif // defined COMPILEVS

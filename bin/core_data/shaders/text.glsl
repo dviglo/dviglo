@@ -17,7 +17,9 @@ uniform vec4 cShadowColor;
 uniform vec4 cStrokeColor;
 #endif
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -26,6 +28,8 @@ void VS()
     vTexCoord = iTexCoord;
     vColor = iColor;
 }
+
+#endif // defined COMPILEVS
 
 /*
     1) Simplest SDF shader:
@@ -60,7 +64,9 @@ void VS()
     #define SUPERSAMPLING
 #endif
 
-void PS()
+#if defined COMPILEFS
+
+void main()
 {
 #ifdef SIGNED_DISTANCE_FIELD
     gl_FragColor.rgb = vColor.rgb;
@@ -119,3 +125,5 @@ void PS()
     #endif
 #endif
 }
+
+#endif // defined COMPILEFS

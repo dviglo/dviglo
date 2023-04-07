@@ -4,7 +4,9 @@
 
 varying vec3 vTexCoord;
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
 #ifdef IGNORENODETRANSFORM
     mat4 modelMatrix = mat4(
@@ -21,7 +23,9 @@ void VS()
     vTexCoord = iPos.xyz;
 }
 
-void PS()
+#elif defined COMPILEFS
+
+void main()
 {
     vec4 sky = cMatDiffColor * texture(sDiffCubeMap, vTexCoord);
     #ifdef HDRSCALE
@@ -29,3 +33,5 @@ void PS()
     #endif
     gl_FragColor = sky;
 }
+
+#endif // defined COMPILEVS

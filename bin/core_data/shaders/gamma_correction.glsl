@@ -6,7 +6,9 @@
 
 varying vec2 vScreenPos;
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -14,8 +16,12 @@ void VS()
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
 
-void PS()
+#elif defined COMPILEFS
+
+void main()
 {
     vec3 color = texture(sDiffMap, vScreenPos).rgb;
     gl_FragColor = vec4(ToInverseGamma(color), 1.0);
 }
+
+#endif // defined COMPILEVS

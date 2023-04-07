@@ -17,7 +17,9 @@ varying vec3 vFarRay;
     varying vec3 vNearRay;
 #endif
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -37,8 +39,9 @@ void VS()
     #endif
 }
 
+#elif defined COMPILEFS
 
-void PS()
+void main()
 {
     // If rendering a directional light quad, optimize out the w divide
     #ifdef DIRLIGHT
@@ -119,5 +122,6 @@ void PS()
 
     gl_FragColor.a = 1.0;
     gl_FragColor.rgb = BRDF * lightColor * (atten * shadow) / M_PI;
-
 }
+
+#endif // defined COMPILEVS

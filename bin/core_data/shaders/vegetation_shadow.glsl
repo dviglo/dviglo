@@ -15,7 +15,9 @@ uniform vec2 cWindWorldSpacing;
     varying vec2 vTexCoord;
 #endif
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -37,3 +39,5 @@ void VS()
         vTexCoord = GetTexCoord(iTexCoord);
     #endif
 }
+
+#endif // defined COMPILEVS

@@ -4,7 +4,9 @@
 
 varying vec3 vTexCoord;
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -12,7 +14,9 @@ void VS()
     vTexCoord = vec3(GetTexCoord(iTexCoord), GetDepth(gl_Position));
 }
 
-void PS()
+#elif defined COMPILEFS
+
+void main()
 {
     #ifdef ALPHAMASK
         float alpha = texture(sDiffMap, vTexCoord.xy).a;
@@ -22,3 +26,5 @@ void PS()
 
     gl_FragColor = vec4(EncodeDepth(vTexCoord.z), 1.0);
 }
+
+#endif // defined COMPILEVS

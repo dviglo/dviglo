@@ -37,7 +37,9 @@ varying vec4 vWorldPos;
     #endif
 #endif
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -80,7 +82,7 @@ void VS()
         // Ambient & per-vertex lighting
         #if defined(LIGHTMAP) || defined(AO)
             // If using lightmap, disregard zone ambient light
-            // If using AO, calculate ambient in the PS
+            // If using AO, calculate ambient in the FS
             vVertexLight = vec3(0.0, 0.0, 0.0);
             vTexCoord2 = iTexCoord1;
         #else
@@ -100,7 +102,9 @@ void VS()
     #endif
 }
 
-void PS()
+#elif defined COMPILEFS
+
+void main()
 {
     // Get material diffuse albedo
     #ifdef DIFFMAP
@@ -241,3 +245,5 @@ void PS()
         gl_FragColor = vec4(GetFog(finalColor, fogFactor), diffColor.a);
     #endif
 }
+
+#endif // defined COMPILEVS

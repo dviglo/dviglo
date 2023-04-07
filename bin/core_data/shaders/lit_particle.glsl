@@ -28,7 +28,9 @@ varying vec4 vWorldPos;
     varying vec3 vVertexLight;
 #endif
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -73,7 +75,9 @@ void VS()
     #endif
 }
 
-void PS()
+#elif defined COMPILEFS
+
+void main()
 {
     // Get material diffuse albedo
     #ifdef DIFFMAP
@@ -153,3 +157,5 @@ void PS()
         gl_FragColor = vec4(GetFog(finalColor, fogFactor), diffColor.a);
     #endif
 }
+
+#endif // defined COMPILEVS

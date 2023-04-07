@@ -11,7 +11,9 @@ uniform vec2 cWindWorldSpacing;
 
 varying vec3 vTexCoord;
 
-void VS()
+#if defined COMPILEVS
+
+void main()
 {
     mat4 modelMatrix = iModelMatrix;
     vec3 worldPos = GetWorldPos(modelMatrix);
@@ -29,3 +31,5 @@ void VS()
     gl_Position = GetClipPos(worldPos);
     vTexCoord = vec3(GetTexCoord(iTexCoord), GetDepth(gl_Position));
 }
+
+#endif // defined COMPILEVS
