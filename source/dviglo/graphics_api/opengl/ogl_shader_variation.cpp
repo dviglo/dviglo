@@ -146,13 +146,6 @@ bool ShaderVariation::Create_OGL()
 #endif
     }
 
-#ifdef RPI
-    if (type_ == VS)
-        shaderCode += "#define RPI\n";
-#endif
-#ifdef __EMSCRIPTEN__
-    shaderCode += "#define WEBGL\n";
-#endif
     shaderCode += "#define GL3\n";
 
     // When version define found, do not insert it a second time
