@@ -37,7 +37,7 @@ public:
     ShaderVariation* GetVariation(ShaderType type, const char* defines);
 
     /// Return either vertex or pixel shader source code.
-    const String& GetSourceCode(ShaderType type) const { return type == VS ? vsSourceCode_ : psSourceCode_; }
+    const String& GetSourceCode() const { return source_code_; }
 
     /// Return the latest timestamp of the shader code and its includes.
     unsigned GetTimeStamp() const { return timeStamp_; }
@@ -50,10 +50,8 @@ private:
     /// Recalculate the memory used by the shader.
     void RefreshMemoryUse();
 
-    /// Source code adapted for vertex shader.
-    String vsSourceCode_;
-    /// Source code adapted for pixel shader.
-    String psSourceCode_;
+    String source_code_;
+
     /// Vertex shader variations.
     HashMap<StringHash, SharedPtr<ShaderVariation>> vsVariations_;
     /// Pixel shader variations.

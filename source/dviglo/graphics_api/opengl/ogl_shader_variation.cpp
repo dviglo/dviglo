@@ -86,7 +86,7 @@ bool ShaderVariation::Create_OGL()
         return false;
     }
 
-    const String& originalShaderCode = owner_->GetSourceCode(type_);
+    const String& originalShaderCode = owner_->GetSourceCode();
 
     // В начале файла должна находиться директива #version:
     // https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)#Version

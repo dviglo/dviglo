@@ -16,31 +16,6 @@
 namespace dviglo
 {
 
-void CommentOutFunction(String& code, const String& signature)
-{
-    i32 startPos = code.Find(signature);
-    unsigned braceLevel = 0;
-    if (startPos == String::NPOS)
-        return;
-
-    code.Insert(startPos, "/*");
-
-    for (i32 i = startPos + 2 + signature.Length(); i < code.Length(); ++i)
-    {
-        if (code[i] == '{')
-            ++braceLevel;
-        else if (code[i] == '}')
-        {
-            --braceLevel;
-            if (braceLevel == 0)
-            {
-                code.Insert(i + 1, "*/");
-                return;
-            }
-        }
-    }
-}
-
 Shader::Shader() :
     timeStamp_(0),
     numVariations_(0)
@@ -71,18 +46,7 @@ bool Shader::begin_load(Deserializer& source)
     if (!ProcessSource(shaderCode, source))
         return false;
 
-    // Comment out the unneeded shader function
-    vsSourceCode_ = shaderCode;
-    psSourceCode_ = shaderCode;
-    CommentOutFunction(vsSourceCode_, "void PS(");
-    CommentOutFunction(psSourceCode_, "void VS(");
-
-    // OpenGL: rename either VS() or PS() to main()
-    if (GParams::get_gapi() == GAPI_OPENGL)
-    {
-        vsSourceCode_.Replace("void VS(", "void main(");
-        psSourceCode_.Replace("void PS(", "void main(");
-    }
+    source_code_ = shaderCode;
 
     RefreshMemoryUse();
     return true;
@@ -193,7 +157,7 @@ String Shader::NormalizeDefines(const String& defines)
 void Shader::RefreshMemoryUse()
 {
     SetMemoryUse(
-        (unsigned)(sizeof(Shader) + vsSourceCode_.Length() + psSourceCode_.Length() + numVariations_ * sizeof(ShaderVariation)));
+        (unsigned)(sizeof(Shader) + source_code_.Length() + numVariations_ * sizeof(ShaderVariation)));
 }
 
 }
