@@ -730,4 +730,3 @@ void PS()
         0.0833                              // float fxaaQualityEdgeThresholdMin
     );
 }
-

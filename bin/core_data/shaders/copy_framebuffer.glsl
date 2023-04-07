@@ -17,4 +17,3 @@ void PS()
 {
     gl_FragColor = texture(sDiffMap, vScreenPos);
 }
-

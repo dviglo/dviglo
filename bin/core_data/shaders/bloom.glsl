@@ -54,4 +54,3 @@ void PS()
     gl_FragColor = vec4(original + bloom, 1.0);
     #endif
 }
-
