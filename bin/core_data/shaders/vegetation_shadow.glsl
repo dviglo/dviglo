@@ -37,4 +37,3 @@ void VS()
         vTexCoord = GetTexCoord(iTexCoord);
     #endif
 }
-
