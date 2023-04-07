@@ -213,11 +213,7 @@ float GetShadow(vec4 shadowPos)
 {
     #if defined(SIMPLE_SHADOW)
         // Take one sample
-        #ifndef GL3
-            float inLight = shadow2DProj(sShadowMap, shadowPos).r;
-        #else
-            float inLight = textureProj(sShadowMap, shadowPos);
-        #endif
+        float inLight = textureProj(sShadowMap, shadowPos);
         return cShadowIntensity.y + cShadowIntensity.x * inLight;
     #elif defined(PCF_SHADOW)
         // Take four samples and average them
@@ -227,17 +223,12 @@ float GetShadow(vec4 shadowPos)
         #else
             vec2 offsets = cShadowMapInvSize;
         #endif
-        #ifndef GL3
-            return cShadowIntensity.y + cShadowIntensity.x * (shadow2DProj(sShadowMap, shadowPos).r +
-                shadow2DProj(sShadowMap, vec4(shadowPos.x + offsets.x, shadowPos.yzw)).r +
-                shadow2DProj(sShadowMap, vec4(shadowPos.x, shadowPos.y + offsets.y, shadowPos.zw)).r +
-                shadow2DProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)).r);
-        #else
-            return cShadowIntensity.y + cShadowIntensity.x * (textureProj(sShadowMap, shadowPos) +
-                textureProj(sShadowMap, vec4(shadowPos.x + offsets.x, shadowPos.yzw)) +
-                textureProj(sShadowMap, vec4(shadowPos.x, shadowPos.y + offsets.y, shadowPos.zw)) +
-                textureProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)));
-        #endif
+
+        return cShadowIntensity.y + cShadowIntensity.x * (textureProj(sShadowMap, shadowPos) +
+            textureProj(sShadowMap, vec4(shadowPos.x + offsets.x, shadowPos.yzw)) +
+            textureProj(sShadowMap, vec4(shadowPos.x, shadowPos.y + offsets.y, shadowPos.zw)) +
+            textureProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)));
+
     #elif defined(VSM_SHADOW)
         vec2 samples = texture(sShadowMap, shadowPos.xy / shadowPos.w).rg;
         return cShadowIntensity.y + cShadowIntensity.x * Chebyshev(samples, shadowPos.z / shadowPos.w);
