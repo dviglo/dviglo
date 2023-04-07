@@ -6,26 +6,25 @@
 
 // Silence GLSL 150 deprecation warnings
 #ifdef GL3
-#define attribute in
 #define varying out
 #endif
 
-attribute vec4 iPos;
-attribute vec3 iNormal;
-attribute vec4 iColor;
-attribute vec2 iTexCoord;
-attribute vec2 iTexCoord1;
-attribute vec4 iTangent;
-attribute vec4 iBlendWeights;
-attribute vec4 iBlendIndices;
-attribute vec3 iCubeTexCoord;
-attribute vec4 iCubeTexCoord1;
+in vec4 iPos;
+in vec3 iNormal;
+in vec4 iColor;
+in vec2 iTexCoord;
+in vec2 iTexCoord1;
+in vec4 iTangent;
+in vec4 iBlendWeights;
+in vec4 iBlendIndices;
+in vec3 iCubeTexCoord;
+in vec4 iCubeTexCoord1;
 #ifdef INSTANCED
-    attribute vec4 iTexCoord4;
-    attribute vec4 iTexCoord5;
-    attribute vec4 iTexCoord6;
+    in vec4 iTexCoord4;
+    in vec4 iTexCoord5;
+    in vec4 iTexCoord6;
 #endif
-attribute float iObjectIndex;
+in float iObjectIndex;
 
 #ifdef SKINNED
 mat4 GetSkinMatrix(vec4 blendWeights, vec4 blendIndices)
