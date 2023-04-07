@@ -823,7 +823,13 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
 
             bool success = vs->Create();
             if (success)
+            {
                 DV_LOGDEBUG("Compiled vertex shader " + vs->GetFullName());
+
+                // Компилятор может выдать предупреждения
+                if (!vs->GetCompilerOutput().Empty())
+                    DV_LOGWARNING("When compile vertex shader " + vs->GetFullName() + ":\n" + vs->GetCompilerOutput());
+            }
             else
             {
                 DV_LOGERROR("Failed to compile vertex shader " + vs->GetFullName() + ":\n" + vs->GetCompilerOutput());
@@ -842,10 +848,16 @@ void Graphics::SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps)
 
             bool success = ps->Create();
             if (success)
-                DV_LOGDEBUG("Compiled pixel shader " + ps->GetFullName());
+            {
+                DV_LOGDEBUG("Compiled fragment shader " + ps->GetFullName());
+
+                // Компилятор может выдать предупреждения
+                if (!ps->GetCompilerOutput().Empty())
+                    DV_LOGWARNING("When compile fragment shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
+            }
             else
             {
-                DV_LOGERROR("Failed to compile pixel shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
+                DV_LOGERROR("Failed to compile fragment shader " + ps->GetFullName() + ":\n" + ps->GetCompilerOutput());
                 ps = nullptr;
             }
         }

@@ -158,20 +158,33 @@ bool ShaderVariation::Create_OGL()
     glShaderSource(gpu_object_name_, 1, &shaderCStr, nullptr);
     glCompileShader(gpu_object_name_);
 
-    int compiled, length;
+    GLint compiled;
     glGetShaderiv(gpu_object_name_, GL_COMPILE_STATUS, &compiled);
-    if (!compiled)
+
+    // Компилятор может выдавать предупреждения, поэтому проверяем лог даже при успешной компиляции
+    GLint log_buffer_size;
+    glGetShaderiv(gpu_object_name_, GL_INFO_LOG_LENGTH, &log_buffer_size);
+
+    if (!log_buffer_size)
     {
-        glGetShaderiv(gpu_object_name_, GL_INFO_LOG_LENGTH, &length);
-        compilerOutput_.Resize((unsigned)length);
-        int outLength;
-        glGetShaderInfoLog(gpu_object_name_, length, &outLength, &compilerOutput_[0]);
-        glDeleteShader(gpu_object_name_);
-        gpu_object_name_ = 0;
+        compilerOutput_.Clear();
     }
     else
     {
-        compilerOutput_.Clear();
+        // glGetShaderiv возвращает длину лога вместе с конечным нулём
+        compilerOutput_.Resize(log_buffer_size - 1);
+
+        glGetShaderInfoLog(gpu_object_name_, log_buffer_size, nullptr, &compilerOutput_[0]);
+
+        // Удаляем перевод строки в конце
+        if (compilerOutput_.EndsWith("\n"))
+            compilerOutput_.Resize(compilerOutput_.Length() - 1);
+    }
+
+    if (!compiled)
+    {
+        glDeleteShader(gpu_object_name_);
+        gpu_object_name_ = 0;
     }
 
     return gpu_object_name_ != 0;
