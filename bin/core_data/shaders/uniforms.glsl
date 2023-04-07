@@ -29,11 +29,7 @@ uniform mat4 cViewProj;
 uniform vec4 cUOffset;
 uniform vec4 cVOffset;
 uniform mat4 cZone;
-#if !defined(GL_ES) || defined(WEBGL) || __VERSION__>=300
-    uniform mat4 cLightMatrices[4];
-#else
-    uniform mat4 cLightMatrices[2];
-#endif
+uniform mat4 cLightMatrices[4];
 #ifdef SKINNED
     uniform vec4 cSkinMatrices[MAXBONES*3];
 #endif

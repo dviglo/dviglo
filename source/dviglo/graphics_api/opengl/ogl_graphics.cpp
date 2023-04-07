@@ -968,6 +968,10 @@ void Graphics::SetShaderParameter_OGL(StringHash param, const float* data, unsig
                 return;
             }
 
+            // Если испольузется массив, то в шейдере указывается максимальный размер,
+            // а функции glUniform*v могут заполнять только часть массива:
+            // https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniform.xhtml
+
             switch (info->glType_)
             {
             case GL_FLOAT:
