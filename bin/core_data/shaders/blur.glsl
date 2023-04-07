@@ -7,7 +7,7 @@
 varying vec2 vTexCoord;
 varying vec2 vScreenPos;
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform vec2 cBlurDir;
 uniform float cBlurRadius;
 uniform float cBlurSigma;

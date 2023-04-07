@@ -14,7 +14,7 @@ varying vec3 vNormal;
 uniform vec2 cNoiseSpeed;
 uniform float cNoiseTiling;
 #endif
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform float cNoiseStrength;
 uniform float cFresnelPower;
 uniform vec3 cWaterTint;

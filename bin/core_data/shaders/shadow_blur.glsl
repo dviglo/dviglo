@@ -3,7 +3,7 @@
 #dv_include "transform.inc"
 #dv_include "screen_pos.inc"
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform vec2 cBlurOffsets;
 #endif
 

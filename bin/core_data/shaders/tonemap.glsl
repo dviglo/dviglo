@@ -6,7 +6,7 @@
 
 varying vec2 vScreenPos;
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform float cTonemapExposureBias;
 uniform float cTonemapMaxWhite;
 #endif

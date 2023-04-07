@@ -41,7 +41,7 @@ uniform mat4 cLightMatrices[4];
 #endif
 #endif
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 
 // Fragment shader uniforms
 uniform vec4 cAmbientColor;
@@ -147,7 +147,7 @@ uniform ObjectVS
 
 #endif
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 
 // Fragment shader uniforms
 

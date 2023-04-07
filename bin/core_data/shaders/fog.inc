@@ -1,4 +1,4 @@
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 
 vec3 GetFog(vec3 color, float fogFactor)
 {
@@ -23,4 +23,4 @@ float GetHeightFogFactor(float depth, float height)
     return min(heightFogFactor, fogFactor);
 }
 
-#endif // def COMPILEPS
+#endif // def COMPILEFS

@@ -50,7 +50,7 @@ void VS()
     gl_FragColor.a = vColor.a * smoothstep(0.5 - width, 0.5 + width, distance);
 */
 
-#if defined(COMPILEPS) && defined(SIGNED_DISTANCE_FIELD)
+#if defined(COMPILEFS) && defined(SIGNED_DISTANCE_FIELD)
     float GetAlpha(float distance, float width)
     {
         return smoothstep(0.5 - width, 0.5 + width, distance);

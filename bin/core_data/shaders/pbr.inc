@@ -1,5 +1,5 @@
 #dv_include "brdf.inc"
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 #line 100
     vec3 GetSpecularDominantDir(vec3 normal, vec3 reflection, float roughness)
     {

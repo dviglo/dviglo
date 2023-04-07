@@ -1,5 +1,5 @@
 #line 20001
-#ifdef COMPILEPS
+#ifdef COMPILEFS
   #ifdef PBR
     // Following BRDF methods are based upon research Frostbite EA
     //[Lagrade et al. 2014, "Moving Frostbite to Physically Based Rendering"]

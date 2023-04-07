@@ -103,7 +103,7 @@ vec4 GetShadowPos(int index, vec3 normal, vec4 projWorldPos)
 #endif
 #endif
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 float GetDiffuse(vec3 normal, vec3 worldPos, out vec3 lightDir)
 {
     #ifdef DIRLIGHT

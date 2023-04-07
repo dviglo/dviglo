@@ -6,7 +6,7 @@
 varying vec2 vTexCoord;
 varying vec2 vScreenPos;
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform float cBloomThreshold;
 uniform vec2 cBloomMix;
 uniform vec2 cBlurHInvSize;

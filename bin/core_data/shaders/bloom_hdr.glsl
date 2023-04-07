@@ -7,7 +7,7 @@
 varying vec2 vTexCoord;
 varying vec2 vScreenPos;
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform float cBloomHDRThreshold;
 uniform float cBloomHDRBlurSigma;
 uniform float cBloomHDRBlurRadius;

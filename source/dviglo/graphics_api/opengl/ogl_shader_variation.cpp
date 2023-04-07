@@ -100,8 +100,8 @@ bool ShaderVariation::Create_OGL()
     shaderCode += "#define MOBILE_GRAPHICS\n";
 #endif
 
-    // Distinguish between VS and PS compile in case the shader code wants to include/omit different things
-    shaderCode += type_ == VS ? "#define COMPILEVS\n" : "#define COMPILEPS\n";
+    // Distinguish between VS and FS compile in case the shader code wants to include/omit different things
+    shaderCode += type_ == VS ? "#define COMPILEVS\n" : "#define COMPILEFS\n";
 
     // Add define for the maximum number of supported bones
     shaderCode += "#define MAXBONES " + String(Graphics::GetMaxBones()) + "\n";

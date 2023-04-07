@@ -13,7 +13,7 @@
 
 varying vec2 vScreenPos;
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform vec3 cFXAAParams;
 #endif
 

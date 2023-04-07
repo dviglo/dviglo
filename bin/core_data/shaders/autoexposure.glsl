@@ -7,7 +7,7 @@
 varying vec2 vTexCoord;
 varying vec2 vScreenPos;
 
-#ifdef COMPILEPS
+#ifdef COMPILEFS
 uniform float cAutoExposureAdaptRate;
 uniform vec2 cAutoExposureLumRange;
 uniform float cAutoExposureMiddleGrey;
