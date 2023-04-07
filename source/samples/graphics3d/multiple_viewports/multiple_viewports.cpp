@@ -148,6 +148,7 @@ void MultipleViewports::create_instructions()
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "B to toggle bloom, F to toggle FXAA\n"
+        "G для переключения grayscale\n"
         "Space to toggle debug geometry\n"
     );
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
@@ -175,10 +176,12 @@ void MultipleViewports::SetupViewports()
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
     effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/bloom.xml"));
     effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/fxaa2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/grayscale.xml"));
     // Make the bloom mixing parameter more pronounced
     effectRenderPath->SetShaderParameter("BloomMix", Vector2(0.9f, 0.6f));
     effectRenderPath->SetEnabled("bloom", false);
     effectRenderPath->SetEnabled("fxaa2", false);
+    effectRenderPath->SetEnabled("grayscale", false);
     viewport->SetRenderPath(effectRenderPath);
 
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
@@ -232,10 +235,15 @@ void MultipleViewports::move_camera(float timeStep)
 
     // Toggle post processing effects on the front viewport. Note that the rear viewport is unaffected
     RenderPath* effectRenderPath = DV_RENDERER.GetViewport(0)->GetRenderPath();
+
     if (input.GetKeyPress(KEY_B))
         effectRenderPath->ToggleEnabled("bloom");
+
     if (input.GetKeyPress(KEY_F))
         effectRenderPath->ToggleEnabled("fxaa2");
+
+    if (input.GetKeyPress(KEY_G))
+        effectRenderPath->ToggleEnabled("grayscale");
 
     // Toggle debug geometry with space
     if (input.GetKeyPress(KEY_SPACE))
