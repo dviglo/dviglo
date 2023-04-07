@@ -15,6 +15,6 @@ void VS()
 
 void PS()
 {
-    gl_FragColor = texture2D(sDiffMap, vScreenPos);
+    gl_FragColor = texture(sDiffMap, vScreenPos);
 }
 

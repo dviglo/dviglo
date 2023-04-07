@@ -118,9 +118,9 @@ float GetDiffuse(vec3 normal, vec3 worldPos, out vec3 lightDir)
         float lightDist = length(lightVec);
         lightDir = lightVec / lightDist;
         #ifdef TRANSLUCENT
-            return abs(dot(normal, lightDir)) * texture2D(sLightRampMap, vec2(lightDist, 0.0)).r;
+            return abs(dot(normal, lightDir)) * texture(sLightRampMap, vec2(lightDist, 0.0)).r;
         #else
-            return max(dot(normal, lightDir), 0.0) * texture2D(sLightRampMap, vec2(lightDist, 0.0)).r;
+            return max(dot(normal, lightDir), 0.0) * texture(sLightRampMap, vec2(lightDist, 0.0)).r;
         #endif
     #endif
 }
@@ -159,7 +159,7 @@ float GetDiffuseVolumetric(vec3 worldPos)
     #else
         vec3 lightVec = (cLightPosPS.xyz - worldPos) * cLightPosPS.w;
         float lightDist = length(lightVec);
-        return texture2D(sLightRampMap, vec2(lightDist, 0.0)).r;
+        return texture(sLightRampMap, vec2(lightDist, 0.0)).r;
     #endif
 }
 
@@ -239,7 +239,7 @@ float GetShadow(vec4 shadowPos)
                 textureProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)));
         #endif
     #elif defined(VSM_SHADOW)
-        vec2 samples = texture2D(sShadowMap, shadowPos.xy / shadowPos.w).rg;
+        vec2 samples = texture(sShadowMap, shadowPos.xy / shadowPos.w).rg;
         return cShadowIntensity.y + cShadowIntensity.x * Chebyshev(samples, shadowPos.z / shadowPos.w);
     #endif
 }
@@ -248,19 +248,19 @@ float GetShadow(vec4 shadowPos)
 {
     #if defined(SIMPLE_SHADOW)
         // Take one sample
-        return cShadowIntensity.y + (texture2DProj(sShadowMap, shadowPos).r * shadowPos.w > shadowPos.z ? cShadowIntensity.x : 0.0);
+        return cShadowIntensity.y + (textureProj(sShadowMap, shadowPos).r * shadowPos.w > shadowPos.z ? cShadowIntensity.x : 0.0);
     #elif defined(PCF_SHADOW)
         // Take four samples and average them
         vec2 offsets = cShadowMapInvSize * shadowPos.w;
         vec4 inLight = vec4(
-            texture2DProj(sShadowMap, shadowPos).r * shadowPos.w > shadowPos.z,
-            texture2DProj(sShadowMap, vec4(shadowPos.x + offsets.x, shadowPos.yzw)).r * shadowPos.w > shadowPos.z,
-            texture2DProj(sShadowMap, vec4(shadowPos.x, shadowPos.y + offsets.y, shadowPos.zw)).r * shadowPos.w > shadowPos.z,
-            texture2DProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)).r * shadowPos.w > shadowPos.z
+            textureProj(sShadowMap, shadowPos).r * shadowPos.w > shadowPos.z,
+            textureProj(sShadowMap, vec4(shadowPos.x + offsets.x, shadowPos.yzw)).r * shadowPos.w > shadowPos.z,
+            textureProj(sShadowMap, vec4(shadowPos.x, shadowPos.y + offsets.y, shadowPos.zw)).r * shadowPos.w > shadowPos.z,
+            textureProj(sShadowMap, vec4(shadowPos.xy + offsets.xy, shadowPos.zw)).r * shadowPos.w > shadowPos.z
         );
         return cShadowIntensity.y + dot(inLight, vec4(cShadowIntensity.x));
     #elif defined(VSM_SHADOW)
-        vec2 samples = texture2D(sShadowMap, shadowPos.xy / shadowPos.w).rg;
+        vec2 samples = texture(sShadowMap, shadowPos.xy / shadowPos.w).rg;
         return cShadowIntensity.y + cShadowIntensity.x * Chebyshev(samples, shadowPos.z / shadowPos.w);
     #endif
 }
@@ -269,7 +269,7 @@ float GetShadow(vec4 shadowPos)
 #ifdef POINTLIGHT
 float GetPointShadow(vec3 lightVec)
 {
-    vec3 axis = textureCube(sFaceSelectCubeMap, lightVec).rgb;
+    vec3 axis = texture(sFaceSelectCubeMap, lightVec).rgb;
     float depth = abs(dot(lightVec, axis));
 
     // Expand the maximum component of the light vector to get full 0.0 - 1.0 UV range from the cube map,
@@ -279,7 +279,7 @@ float GetPointShadow(vec3 lightVec)
     lightVec += factor * axis * lightVec;
 
     // Read the 2D UV coordinates, adjust according to shadow map size and add face offset
-    vec4 indirectPos = textureCube(sIndirectionCubeMap, lightVec);
+    vec4 indirectPos = texture(sIndirectionCubeMap, lightVec);
     indirectPos.xy *= cShadowCubeAdjust.xy;
     indirectPos.xy += vec2(cShadowCubeAdjust.z + indirectPos.z * 0.5, cShadowCubeAdjust.w + indirectPos.w);
 

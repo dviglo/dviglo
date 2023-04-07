@@ -24,14 +24,14 @@ vec4 GaussianBlur(int blurKernelSize, vec2 blurDir, vec2 blurRadius, float sigma
     vec4 avgValue = vec4(0.0);
     float gaussCoeffSum = 0.0;
 
-    avgValue += texture2D(texSampler, texCoord) * gaussCoeff.x;
+    avgValue += texture(texSampler, texCoord) * gaussCoeff.x;
     gaussCoeffSum += gaussCoeff.x;
     gaussCoeff.xy *= gaussCoeff.yz;
 
     for (int i = 1; i <= blurKernelSizeHalfSize; i++)
     {
-        avgValue += texture2D(texSampler, texCoord - float(i) * blurVec) * gaussCoeff.x;
-        avgValue += texture2D(texSampler, texCoord + float(i) * blurVec) * gaussCoeff.x;
+        avgValue += texture(texSampler, texCoord - float(i) * blurVec) * gaussCoeff.x;
+        avgValue += texture(texSampler, texCoord + float(i) * blurVec) * gaussCoeff.x;
 
         gaussCoeffSum += 2.0 * gaussCoeff.x;
         gaussCoeff.xy *= gaussCoeff.yz;
@@ -70,7 +70,7 @@ vec3 ColorCorrection(vec3 color, sampler3D lut)
     float lutSize = 16.0; // Высота текстуры lut_identity.png
     float scale = (lutSize - 1.0) / lutSize;
     float offset = 1.0 / (2.0 * lutSize);
-    return texture3D(lut, clamp(color, 0.0, 1.0) * scale + offset).rgb;
+    return texture(lut, clamp(color, 0.0, 1.0) * scale + offset).rgb;
 }
 
 const float Gamma = 2.2;

@@ -33,7 +33,7 @@ void VS()
 void PS()
 {
     #ifdef BRIGHT
-    vec3 color = texture2D(sDiffMap, vScreenPos).rgb;
+    vec3 color = texture(sDiffMap, vScreenPos).rgb;
     gl_FragColor = vec4(max(color - cBloomHDRThreshold, 0.0), 1.0);
     #endif
 
@@ -54,20 +54,20 @@ void PS()
     #endif
 
     #ifdef COMBINE16
-    gl_FragColor = texture2D(sDiffMap, vScreenPos) + texture2D(sNormalMap, vTexCoord);
+    gl_FragColor = texture(sDiffMap, vScreenPos) + texture(sNormalMap, vTexCoord);
     #endif
 
     #ifdef COMBINE8
-    gl_FragColor = texture2D(sDiffMap, vScreenPos) + texture2D(sNormalMap, vTexCoord);
+    gl_FragColor = texture(sDiffMap, vScreenPos) + texture(sNormalMap, vTexCoord);
     #endif
 
     #ifdef COMBINE4
-    gl_FragColor = texture2D(sDiffMap, vScreenPos) + texture2D(sNormalMap, vTexCoord);
+    gl_FragColor = texture(sDiffMap, vScreenPos) + texture(sNormalMap, vTexCoord);
     #endif
 
     #ifdef COMBINE2
-    vec3 color = texture2D(sDiffMap, vScreenPos).rgb * cBloomHDRMix.x;
-    vec3 bloom = texture2D(sNormalMap, vTexCoord).rgb * cBloomHDRMix.y;
+    vec3 color = texture(sDiffMap, vScreenPos).rgb * cBloomHDRMix.x;
+    vec3 bloom = texture(sNormalMap, vTexCoord).rgb * cBloomHDRMix.y;
     gl_FragColor = vec4(color + bloom, 1.0);
     #endif
 }

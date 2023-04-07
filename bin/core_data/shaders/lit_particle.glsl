@@ -77,7 +77,7 @@ void PS()
 {
     // Get material diffuse albedo
     #ifdef DIFFMAP
-        vec4 diffInput = texture2D(sDiffMap, vTexCoord);
+        vec4 diffInput = texture(sDiffMap, vTexCoord);
         #ifdef ALPHAMASK
             if (diffInput.a < 0.5)
                 discard;
@@ -108,9 +108,9 @@ void PS()
 
         float particleDepth = vWorldPos.w;
         #ifdef HWDEPTH
-            float depth = ReconstructDepth(texture2DProj(sDepthBuffer, vScreenPos).r);
+            float depth = ReconstructDepth(textureProj(sDepthBuffer, vScreenPos).r);
         #else
-            float depth = DecodeDepth(texture2DProj(sDepthBuffer, vScreenPos).rgb);
+            float depth = DecodeDepth(textureProj(sDepthBuffer, vScreenPos).rgb);
         #endif
 
         #ifdef EXPAND
@@ -137,9 +137,9 @@ void PS()
         #endif
 
         #if defined(SPOTLIGHT)
-            lightColor = vSpotPos.w > 0.0 ? texture2DProj(sLightSpotMap, vSpotPos).rgb * cLightColor.rgb : vec3(0.0, 0.0, 0.0);
+            lightColor = vSpotPos.w > 0.0 ? textureProj(sLightSpotMap, vSpotPos).rgb * cLightColor.rgb : vec3(0.0, 0.0, 0.0);
         #elif defined(CUBEMASK)
-            lightColor = textureCube(sLightCubeMap, vCubeMaskVec).rgb * cLightColor.rgb;
+            lightColor = texture(sLightCubeMap, vCubeMaskVec).rgb * cLightColor.rgb;
         #else
             lightColor = cLightColor.rgb;
         #endif

@@ -15,5 +15,5 @@ void VS()
 
 void PS()
 {
-    gl_FragColor = texture2D(sDiffMap, vTexCoord);
+    gl_FragColor = texture(sDiffMap, vTexCoord);
 }

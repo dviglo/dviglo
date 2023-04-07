@@ -42,7 +42,7 @@ void PS()
 {
     // If rendering a directional light quad, optimize out the w divide
     #ifdef DIRLIGHT
-        vec4 depthInput = texture2D(sDepthBuffer, vScreenPos);
+        vec4 depthInput = texture(sDepthBuffer, vScreenPos);
         #ifdef HWDEPTH
             float depth = ReconstructDepth(depthInput.r);
         #else
@@ -53,11 +53,11 @@ void PS()
         #else
             vec3 worldPos = vFarRay * depth;
         #endif
-        vec4 albedoInput = texture2D(sAlbedoBuffer, vScreenPos);
-        vec4 normalInput = texture2D(sNormalBuffer, vScreenPos);
-        vec4 specularInput = texture2D(sSpecMap, vScreenPos);
+        vec4 albedoInput = texture(sAlbedoBuffer, vScreenPos);
+        vec4 normalInput = texture(sNormalBuffer, vScreenPos);
+        vec4 specularInput = texture(sSpecMap, vScreenPos);
     #else
-        vec4 depthInput = texture2DProj(sDepthBuffer, vScreenPos);
+        vec4 depthInput = textureProj(sDepthBuffer, vScreenPos);
         #ifdef HWDEPTH
             float depth = ReconstructDepth(depthInput.r);
         #else
@@ -68,9 +68,9 @@ void PS()
         #else
             vec3 worldPos = vFarRay * depth / vScreenPos.w;
         #endif
-        vec4 albedoInput = texture2DProj(sAlbedoBuffer, vScreenPos);
-        vec4 normalInput = texture2DProj(sNormalBuffer, vScreenPos);
-        vec4 specularInput = texture2DProj(sSpecMap, vScreenPos);
+        vec4 albedoInput = textureProj(sAlbedoBuffer, vScreenPos);
+        vec4 normalInput = textureProj(sNormalBuffer, vScreenPos);
+        vec4 specularInput = textureProj(sSpecMap, vScreenPos);
     #endif
 
     // Position acquired via near/far ray is relative to camera. Bring position to world space
@@ -102,10 +102,10 @@ void PS()
 
     #if defined(SPOTLIGHT)
         vec4 spotPos = projWorldPos * cLightMatricesPS[0];
-        vec3 lightColor = spotPos.w > 0.0 ? texture2DProj(sLightSpotMap, spotPos).rgb * cLightColor.rgb : vec3(0.0);
+        vec3 lightColor = spotPos.w > 0.0 ? textureProj(sLightSpotMap, spotPos).rgb * cLightColor.rgb : vec3(0.0);
     #elif defined(CUBEMASK)
         mat3 lightVecRot = mat3(cLightMatricesPS[0][0].xyz, cLightMatricesPS[0][1].xyz, cLightMatricesPS[0][2].xyz);
-        vec3 lightColor = textureCube(sLightCubeMap, (worldPos - cLightPosPS.xyz) * lightVecRot).rgb * cLightColor.rgb;
+        vec3 lightColor = texture(sLightCubeMap, (worldPos - cLightPosPS.xyz) * lightVecRot).rgb * cLightColor.rgb;
     #else
         vec3 lightColor = cLightColor.rgb;
     #endif

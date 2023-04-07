@@ -110,7 +110,7 @@ void PS()
 {
     // Get material diffuse albedo
     #ifdef DIFFMAP
-        vec4 diffInput = texture2D(sDiffMap, vTexCoord.xy);
+        vec4 diffInput = texture(sDiffMap, vTexCoord.xy);
         #ifdef ALPHAMASK
             if (diffInput.a < 0.5)
                 discard;
@@ -125,7 +125,7 @@ void PS()
     #endif
 
     #ifdef METALLIC
-        vec4 roughMetalSrc = texture2D(sSpecMap, vTexCoord.xy);
+        vec4 roughMetalSrc = texture(sSpecMap, vTexCoord.xy);
 
         float roughness = roughMetalSrc.r + cRoughness;
         float metalness = roughMetalSrc.g + cMetallic;
@@ -150,7 +150,7 @@ void PS()
     #endif
 
     #ifdef NORMALMAP
-        vec3 nn = DecodeNormal(texture2D(sNormalMap, vTexCoord.xy));
+        vec3 nn = DecodeNormal(texture(sNormalMap, vTexCoord.xy));
         //nn.rg *= 2.0;
         vec3 normal = normalize(tbn * nn);
     #else
@@ -184,9 +184,9 @@ void PS()
         #endif
 
         #if defined(SPOTLIGHT)
-            lightColor = vSpotPos.w > 0.0 ? texture2DProj(sLightSpotMap, vSpotPos).rgb * cLightColor.rgb : vec3(0.0, 0.0, 0.0);
+            lightColor = vSpotPos.w > 0.0 ? textureProj(sLightSpotMap, vSpotPos).rgb * cLightColor.rgb : vec3(0.0, 0.0, 0.0);
         #elif defined(CUBEMASK)
-            lightColor = textureCube(sLightCubeMap, vCubeMaskVec).rgb * cLightColor.rgb;
+            lightColor = texture(sLightCubeMap, vCubeMaskVec).rgb * cLightColor.rgb;
         #else
             lightColor = cLightColor.rgb;
         #endif
@@ -218,14 +218,14 @@ void PS()
         vec3 ambientOcclusion = vec3(1.0, 1.0, 1.0);
         #ifdef AO
             // If using AO, the vertex light ambient is black, calculate occluded ambient here
-            ambientOcclusion = texture2D(sEmissiveMap, vTexCoord.xy).rgb;
+            ambientOcclusion = texture(sEmissiveMap, vTexCoord.xy).rgb;
             finalColor += ambientOcclusion * cAmbientColor.rgb * diffColor.rgb;
         #endif
 
         #ifdef MATERIAL
             // Add light pre-pass accumulation result
             // Lights are accumulated at half intensity. Bring back to full intensity now
-            vec4 lightInput = 2.0 * texture2DProj(sLightBuffer, vScreenPos);
+            vec4 lightInput = 2.0 * textureProj(sLightBuffer, vScreenPos);
             vec3 lightSpecColor = lightInput.a * lightInput.rgb / max(GetIntensity(lightInput.rgb), 0.001);
 
             finalColor += lightInput.rgb * diffColor.rgb + lightSpecColor * specColor;
@@ -242,13 +242,13 @@ void PS()
         #endif
 
         #ifdef ENVCUBEMAP
-            finalColor += cMatEnvMapColor * textureCube(sEnvCubeMap, reflect(vReflectionVec, normal)).rgb;
+            finalColor += cMatEnvMapColor * texture(sEnvCubeMap, reflect(vReflectionVec, normal)).rgb;
         #endif
         #ifdef LIGHTMAP
-            finalColor += texture2D(sEmissiveMap, vTexCoord2).rgb * diffColor.rgb;
+            finalColor += texture(sEmissiveMap, vTexCoord2).rgb * diffColor.rgb;
         #endif
         #ifdef EMISSIVEMAP
-            finalColor += cMatEmissiveColor * texture2D(sEmissiveMap, vTexCoord.xy).rgb;
+            finalColor += cMatEmissiveColor * texture(sEmissiveMap, vTexCoord.xy).rgb;
         #else
             finalColor += cMatEmissiveColor;
         #endif

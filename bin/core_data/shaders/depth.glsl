@@ -15,7 +15,7 @@ void VS()
 void PS()
 {
     #ifdef ALPHAMASK
-        float alpha = texture2D(sDiffMap, vTexCoord.xy).a;
+        float alpha = texture(sDiffMap, vTexCoord.xy).a;
         if (alpha < 0.5)
             discard;
     #endif

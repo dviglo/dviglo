@@ -93,13 +93,13 @@ void VS()
 void PS()
 {
     // Get material diffuse albedo
-    vec3 weights = texture2D(sWeightMap0, vTexCoord).rgb;
+    vec3 weights = texture(sWeightMap0, vTexCoord).rgb;
     float sumWeights = weights.r + weights.g + weights.b;
     weights /= sumWeights;
     vec4 diffColor = cMatDiffColor * (
-        weights.r * texture2D(sDetailMap1, vDetailTexCoord) +
-        weights.g * texture2D(sDetailMap2, vDetailTexCoord) +
-        weights.b * texture2D(sDetailMap3, vDetailTexCoord)
+        weights.r * texture(sDetailMap1, vDetailTexCoord) +
+        weights.g * texture(sDetailMap2, vDetailTexCoord) +
+        weights.b * texture(sDetailMap3, vDetailTexCoord)
     );
 
     // Get material specular albedo
@@ -128,9 +128,9 @@ void PS()
         #endif
 
         #if defined(SPOTLIGHT)
-            lightColor = vSpotPos.w > 0.0 ? texture2DProj(sLightSpotMap, vSpotPos).rgb * cLightColor.rgb : vec3(0.0, 0.0, 0.0);
+            lightColor = vSpotPos.w > 0.0 ? textureProj(sLightSpotMap, vSpotPos).rgb * cLightColor.rgb : vec3(0.0, 0.0, 0.0);
         #elif defined(CUBEMASK)
-            lightColor = textureCube(sLightCubeMap, vCubeMaskVec).rgb * cLightColor.rgb;
+            lightColor = texture(sLightCubeMap, vCubeMaskVec).rgb * cLightColor.rgb;
         #else
             lightColor = cLightColor.rgb;
         #endif
@@ -171,7 +171,7 @@ void PS()
         #ifdef MATERIAL
             // Add light pre-pass accumulation result
             // Lights are accumulated at half intensity. Bring back to full intensity now
-            vec4 lightInput = 2.0 * texture2DProj(sLightBuffer, vScreenPos);
+            vec4 lightInput = 2.0 * textureProj(sLightBuffer, vScreenPos);
             vec3 lightSpecColor = lightInput.a * lightInput.rgb / max(GetIntensity(lightInput.rgb), 0.001);
 
             finalColor += lightInput.rgb * diffColor.rgb + lightSpecColor * specColor;
