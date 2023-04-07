@@ -199,7 +199,7 @@ vec4 GetWorldTangent(mat4 modelMatrix)
     #endif
 }
 
-#else
+#else // !def COMPILEVS
 
 // Silence GLSL 150 deprecation warnings
 #ifdef GL3
@@ -224,4 +224,4 @@ out vec4 fragData[MRT_COUNT];
 #define gl_FragData fragData
 #endif
 
-#endif
+#endif // def COMPILEVS
