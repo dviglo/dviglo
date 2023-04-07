@@ -89,7 +89,11 @@ bool ShaderVariation::Create_OGL()
     const String& originalShaderCode = owner_->GetSourceCode(type_);
     String shaderCode;
 
-    // Check if the shader code contains a version define
+    // Директива #version должна находиться в начале файла:
+    // https://www.khronos.org/opengl/wiki/Core_Language_(GLSL)#Version
+    // Нельзя просто добавить в начало шейдера свои дефайны
+
+    // Ищем версию GLSL в файле
     i32 verStart = originalShaderCode.Find('#');
     i32 verEnd = 0;
     if (verStart != String::NPOS)
@@ -109,15 +113,11 @@ bool ShaderVariation::Create_OGL()
             shaderCode += versionDefine + "\n";
         }
     }
-    // Force GLSL version 150 if no version define and GL3 is being used
+
+    // Если версия GLSL не найдена в файле, то добавляем её самостоятельно
     if (!verEnd)
-    {
-#if defined(MOBILE_GRAPHICS) || DV_GLES3
-        shaderCode += "#version 300 es\n";
-#else
-        shaderCode += "#version 150\n";
-#endif
-    }
+        shaderCode += "#version 150\n"; 
+
 #if defined(DESKTOP_GRAPHICS)
     shaderCode += "#define DESKTOP_GRAPHICS\n";
 #elif defined(MOBILE_GRAPHICS)
