@@ -36,7 +36,7 @@ endif()
 
 # Копируем файлы в bin, если нужно
 foreach(file_name ${file_names})
-    if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/file_name)
+    if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/${file_name})
         execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/bin/${file_name} ${CMAKE_BINARY_DIR}/bin/${file_name})
     endif()
 endforeach()
