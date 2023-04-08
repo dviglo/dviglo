@@ -12,8 +12,8 @@ uniform vec2 cBloomMix;
 uniform vec2 cBlurHInvSize;
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -22,9 +22,10 @@ void main()
     vTexCoord = GetQuadTexCoord(gl_Position);
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     #ifdef BRIGHT
@@ -58,5 +59,4 @@ void main()
     gl_FragColor = vec4(original + bloom, 1.0);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

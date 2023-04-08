@@ -17,8 +17,8 @@ uniform vec4 cShadowColor;
 uniform vec4 cStrokeColor;
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -28,8 +28,8 @@ void main()
     vTexCoord = iTexCoord;
     vColor = iColor;
 }
+#endif // def COMPILEVS
 
-#endif // defined COMPILEVS
 
 /*
     1) Simplest SDF shader:
@@ -64,8 +64,8 @@ void main()
     #define SUPERSAMPLING
 #endif
 
-#if defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
 #ifdef SIGNED_DISTANCE_FIELD
@@ -125,5 +125,4 @@ void main()
     #endif
 #endif
 }
-
-#endif // defined COMPILEFS
+#endif // def COMPILEFS

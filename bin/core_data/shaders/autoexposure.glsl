@@ -27,8 +27,8 @@ float GatherAvgLum(sampler2D texSampler, vec2 texCoord, vec2 texelSize)
 }
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -37,9 +37,10 @@ void main()
     vTexCoord = GetQuadTexCoord(gl_Position);
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     #ifdef LUMINANCE64
@@ -75,5 +76,4 @@ void main()
     gl_FragColor = vec4(color * (cAutoExposureMiddleGrey / adaptedLum), 1.0);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

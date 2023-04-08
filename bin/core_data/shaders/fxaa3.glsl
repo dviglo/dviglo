@@ -709,8 +709,8 @@ vec4 FxaaPixelShader(
 
 ============================================================================*/
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -718,9 +718,10 @@ void main()
     gl_Position = GetClipPos(worldPos);
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     vec2 rcpFrame = vec2(cGBufferInvSize.x, cGBufferInvSize.y);
@@ -734,5 +735,4 @@ void main()
         0.0833                              // float fxaaQualityEdgeThresholdMin
     );
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

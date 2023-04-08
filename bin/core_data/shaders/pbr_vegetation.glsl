@@ -49,8 +49,8 @@ VS_OUT_FS_IN(vec4 vWorldPos)
     #endif
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -124,5 +124,4 @@ void main()
         #endif
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEVS

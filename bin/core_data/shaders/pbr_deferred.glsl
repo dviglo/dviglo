@@ -17,8 +17,8 @@ VS_OUT_FS_IN(vec3 vFarRay)
     VS_OUT_FS_IN(vec3 vNearRay)
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -38,9 +38,10 @@ void main()
         #endif
     #endif
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     // If rendering a directional light quad, optimize out the w divide
@@ -123,5 +124,4 @@ void main()
     gl_FragColor.a = 1.0;
     gl_FragColor.rgb = BRDF * lightColor * (atten * shadow) / M_PI;
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

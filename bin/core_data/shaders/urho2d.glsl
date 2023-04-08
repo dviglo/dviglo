@@ -5,8 +5,8 @@
 VS_OUT_FS_IN(vec2 vTexCoord)
 VS_OUT_FS_IN(vec4 vColor)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -16,14 +16,14 @@ void main()
     vTexCoord = iTexCoord;
     vColor = iColor;
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     vec4 diffColor = cMatDiffColor * vColor;
     vec4 diffInput = texture(sDiffMap, vTexCoord);
     gl_FragColor = diffColor * diffInput;
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

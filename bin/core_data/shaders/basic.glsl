@@ -9,8 +9,8 @@
     VS_OUT_FS_IN(vec4 vColor)
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -24,9 +24,10 @@ void main()
         vColor = iColor;
     #endif
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     vec4 diffColor = cMatDiffColor;
@@ -51,5 +52,4 @@ void main()
         gl_FragColor = vec4(diffColor.rgb, diffColor.a * alphaInput);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

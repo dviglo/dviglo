@@ -38,8 +38,8 @@ uniform sampler2D sDetailMap3;
 
 uniform vec2 cDetailTiling;
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -91,9 +91,10 @@ void main()
         #endif
     #endif
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     // Get material diffuse albedo
@@ -184,5 +185,4 @@ void main()
         gl_FragColor = vec4(GetFog(finalColor, fogFactor), diffColor.a);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

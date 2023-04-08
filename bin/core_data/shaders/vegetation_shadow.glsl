@@ -15,8 +15,8 @@ uniform vec2 cWindWorldSpacing;
     VS_OUT_FS_IN(vec2 vTexCoord)
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -39,5 +39,4 @@ void main()
         vTexCoord = GetTexCoord(iTexCoord);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEVS

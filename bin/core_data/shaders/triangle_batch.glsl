@@ -3,8 +3,8 @@
 
 VS_OUT_FS_IN(vec4 vColor)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -12,12 +12,12 @@ void main()
     gl_Position = GetClipPos(worldPos);
     vColor = iColor;
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     gl_FragColor = vColor;
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

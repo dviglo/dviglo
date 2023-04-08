@@ -9,8 +9,8 @@ uniform vec2 cBlurOffsets;
 
 VS_OUT_FS_IN(vec2 vScreenPos)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -18,9 +18,10 @@ void main()
     gl_Position = GetClipPos(worldPos);
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     vec2 color = vec2(0.0);
@@ -35,5 +36,4 @@ void main()
 
     gl_FragColor = vec4(color, 0.0, 0.0);
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

@@ -8,8 +8,8 @@
     VS_OUT_FS_IN(vec2 vTexCoord)
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -21,9 +21,10 @@ void main()
         vTexCoord = GetTexCoord(iTexCoord);
     #endif
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     #ifdef ALPHAMASK
@@ -39,5 +40,4 @@ void main()
         gl_FragColor = vec4(1.0);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

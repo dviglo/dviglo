@@ -28,8 +28,8 @@ VS_OUT_FS_IN(vec4 vWorldPos)
     VS_OUT_FS_IN(vec3 vVertexLight)
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -74,9 +74,10 @@ void main()
         #endif
     #endif
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     // Get material diffuse albedo
@@ -157,5 +158,4 @@ void main()
         gl_FragColor = vec4(GetFog(finalColor, fogFactor), diffColor.a);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

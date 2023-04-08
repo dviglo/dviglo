@@ -4,8 +4,8 @@
 
 VS_OUT_FS_IN(vec3 vTexCoord)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -13,9 +13,10 @@ void main()
     gl_Position = GetClipPos(worldPos);
     vTexCoord = vec3(GetTexCoord(iTexCoord), GetDepth(gl_Position));
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     #ifdef ALPHAMASK
@@ -26,5 +27,4 @@ void main()
 
     gl_FragColor = vec4(EncodeDepth(vTexCoord.z), 1.0);
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

@@ -11,8 +11,8 @@ uniform float cTonemapExposureBias;
 uniform float cTonemapMaxWhite;
 #endif
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -20,9 +20,10 @@ void main()
     gl_Position = GetClipPos(worldPos);
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     #ifdef REINHARDEQ3
@@ -41,5 +42,4 @@ void main()
     gl_FragColor = vec4(color, 1.0);
     #endif
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

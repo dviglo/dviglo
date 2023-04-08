@@ -4,8 +4,8 @@
 
 VS_OUT_FS_IN(vec3 vTexCoord)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
 #ifdef IGNORENODETRANSFORM
@@ -22,9 +22,10 @@ void main()
     gl_Position.z = gl_Position.w;
     vTexCoord = iPos.xyz;
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     vec4 sky = cMatDiffColor * texture(sDiffCubeMap, vTexCoord);
@@ -33,5 +34,4 @@ void main()
     #endif
     gl_FragColor = sky;
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

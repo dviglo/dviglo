@@ -6,8 +6,8 @@
 
 VS_OUT_FS_IN(vec2 vScreenPos)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -15,14 +15,14 @@ void main()
     gl_Position = GetClipPos(worldPos);
     vScreenPos = GetScreenPosPreDiv(gl_Position);
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     vec3 rgb = texture(sDiffMap, vScreenPos).rgb;
     float intensity = GetIntensity(rgb);
     gl_FragColor = vec4(intensity, intensity, intensity, 1.0);
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS

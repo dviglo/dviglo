@@ -4,8 +4,8 @@
 
 VS_OUT_FS_IN(vec2 vTexCoord)
 
-#if defined COMPILEVS
 
+#ifdef COMPILEVS
 void main()
 {
     mat4 modelMatrix = iModelMatrix;
@@ -14,12 +14,12 @@ void main()
     gl_Position.z = gl_Position.w;
     vTexCoord = iTexCoord.xy;
 }
+#endif // def COMPILEVS
 
-#elif defined COMPILEFS
 
+#ifdef COMPILEFS
 void main()
 {
     gl_FragColor = texture(sDiffMap, vTexCoord);
 }
-
-#endif // defined COMPILEVS
+#endif // def COMPILEFS
