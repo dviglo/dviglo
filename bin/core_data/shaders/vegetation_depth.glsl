@@ -9,7 +9,7 @@ uniform vec2 cWindWorldSpacing;
     uniform vec3 cWindStemAxis;
 #endif
 
-varying vec3 vTexCoord;
+VS_OUT_FS_IN(vec3 vTexCoord)
 
 #if defined COMPILEVS
 

@@ -3,9 +3,9 @@
 #dv_include "transform.inc"
 
 #ifdef VSM_SHADOW
-    varying vec4 vTexCoord;
+    VS_OUT_FS_IN(vec4 vTexCoord)
 #else
-    varying vec2 vTexCoord;
+    VS_OUT_FS_IN(vec2 vTexCoord)
 #endif
 
 #if defined COMPILEVS

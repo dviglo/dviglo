@@ -2,8 +2,8 @@
 #dv_include "samplers.inc"
 #dv_include "transform.inc"
 
-varying vec2 vTexCoord;
-varying vec4 vColor;
+VS_OUT_FS_IN(vec2 vTexCoord)
+VS_OUT_FS_IN(vec4 vColor)
 
 #if defined COMPILEVS
 

@@ -1,12 +1,16 @@
+#if defined COMPILEVS
+    #define VS_OUT_FS_IN(decl) out decl;
+#elif defined COMPILEFS
+    #define VS_OUT_FS_IN(decl) in decl;
+#endif
+
+// У переменных, объявленных с помощью макроса VS_OUT_FS_IN(), префикс v (varying)
+// https://ru.stackoverflow.com/questions/766483/
+
 #ifdef COMPILEVS
 
 // Silence WARNING: Shader ... does not use the define NOUV
 #ifdef NOUV
-#endif
-
-// Silence GLSL 150 deprecation warnings
-#ifdef GL3
-#define varying out
 #endif
 
 in vec4 iPos;
@@ -200,9 +204,7 @@ vec4 GetWorldTangent(mat4 modelMatrix)
 
 #else // !def COMPILEVS
 
-// Silence GLSL 150 deprecation warnings
 #ifdef GL3
-#define varying in
 
 #ifndef MRT_COUNT
 

@@ -8,13 +8,13 @@
 #line 40007
 
 #ifdef DIRLIGHT
-    varying vec2 vScreenPos;
+    VS_OUT_FS_IN(vec2 vScreenPos)
 #else
-    varying vec4 vScreenPos;
+    VS_OUT_FS_IN(vec4 vScreenPos)
 #endif
-varying vec3 vFarRay;
+VS_OUT_FS_IN(vec3 vFarRay)
 #ifdef ORTHO
-    varying vec3 vNearRay;
+    VS_OUT_FS_IN(vec3 vNearRay)
 #endif
 
 #if defined COMPILEVS

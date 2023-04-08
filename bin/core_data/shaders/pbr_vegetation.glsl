@@ -18,34 +18,34 @@ uniform vec2 cWindWorldSpacing;
 #endif
 
 #if defined(NORMALMAP)
-    varying vec4 vTexCoord;
-    varying vec4 vTangent;
+    VS_OUT_FS_IN(vec4 vTexCoord)
+    VS_OUT_FS_IN(vec4 vTangent)
 #else
-    varying vec2 vTexCoord;
+    VS_OUT_FS_IN(vec2 vTexCoord)
 #endif
-varying vec3 vNormal;
-varying vec4 vWorldPos;
+VS_OUT_FS_IN(vec3 vNormal)
+VS_OUT_FS_IN(vec4 vWorldPos)
 #ifdef VERTEXCOLOR
-    varying vec4 vColor;
+    VS_OUT_FS_IN(vec4 vColor)
 #endif
 #ifdef PERPIXEL
     #ifdef SHADOW
-        varying vec4 vShadowPos[NUMCASCADES];
+        VS_OUT_FS_IN(vec4 vShadowPos[NUMCASCADES])
     #endif
     #ifdef SPOTLIGHT
-        varying vec4 vSpotPos;
+        VS_OUT_FS_IN(vec4 vSpotPos)
     #endif
     #ifdef POINTLIGHT
-        varying vec3 vCubeMaskVec;
+        VS_OUT_FS_IN(vec3 vCubeMaskVec)
     #endif
 #else
-    varying vec3 vVertexLight;
-    varying vec4 vScreenPos;
+    VS_OUT_FS_IN(vec3 vVertexLight)
+    VS_OUT_FS_IN(vec4 vScreenPos)
     #ifdef ENVCUBEMAP
-        varying vec3 vReflectionVec;
+        VS_OUT_FS_IN(vec3 vReflectionVec)
     #endif
     #if defined(LIGHTMAP) || defined(AO)
-        varying vec2 vTexCoord2;
+        VS_OUT_FS_IN(vec2 vTexCoord2)
     #endif
 #endif
 

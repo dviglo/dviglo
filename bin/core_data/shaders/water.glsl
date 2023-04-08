@@ -4,11 +4,11 @@
 #dv_include "screen_pos.inc"
 #dv_include "fog.inc"
 
-varying vec4 vScreenPos;
-varying vec2 vReflectUV;
-varying vec2 vWaterUV;
-varying vec4 vEyeVec;
-varying vec3 vNormal;
+VS_OUT_FS_IN(vec4 vScreenPos)
+VS_OUT_FS_IN(vec2 vReflectUV)
+VS_OUT_FS_IN(vec2 vWaterUV)
+VS_OUT_FS_IN(vec4 vEyeVec)
+VS_OUT_FS_IN(vec3 vNormal)
 
 #ifdef COMPILEVS
 uniform vec2 cNoiseSpeed;

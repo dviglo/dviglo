@@ -4,7 +4,7 @@
 #dv_include "screen_pos.inc"
 #dv_include "postprocess.inc"
 
-varying vec2 vScreenPos;
+VS_OUT_FS_IN(vec2 vScreenPos)
 
 #ifdef COMPILEFS
 uniform float cTonemapExposureBias;

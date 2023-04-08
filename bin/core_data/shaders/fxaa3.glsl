@@ -49,7 +49,7 @@
 #dv_include "transform.inc"
 #dv_include "screen_pos.inc"
 
-varying vec2 vScreenPos;
+VS_OUT_FS_IN(vec2 vScreenPos)
 
 /*==========================================================================*/
 //

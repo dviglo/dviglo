@@ -2,7 +2,7 @@
 #dv_include "samplers.inc"
 #dv_include "transform.inc"
 
-varying vec2 vTexCoord;
+VS_OUT_FS_IN(vec2 vTexCoord)
 
 #if defined COMPILEVS
 

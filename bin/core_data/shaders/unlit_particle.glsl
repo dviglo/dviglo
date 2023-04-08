@@ -4,13 +4,13 @@
 #dv_include "screen_pos.inc"
 #dv_include "fog.inc"
 
-varying vec2 vTexCoord;
-varying vec4 vWorldPos;
+VS_OUT_FS_IN(vec2 vTexCoord)
+VS_OUT_FS_IN(vec4 vWorldPos)
 #ifdef VERTEXCOLOR
-    varying vec4 vColor;
+    VS_OUT_FS_IN(vec4 vColor)
 #endif
 #ifdef SOFTPARTICLES
-    varying vec4 vScreenPos;
+    VS_OUT_FS_IN(vec4 vScreenPos)
     uniform float cSoftParticleFadeScale;
 #endif
 

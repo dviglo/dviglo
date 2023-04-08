@@ -4,10 +4,10 @@
 #dv_include "screen_pos.inc"
 #dv_include "fog.inc"
 
-varying vec2 vTexCoord;
-varying vec4 vWorldPos;
+VS_OUT_FS_IN(vec2 vTexCoord)
+VS_OUT_FS_IN(vec4 vWorldPos)
 #ifdef VERTEXCOLOR
-    varying vec4 vColor;
+    VS_OUT_FS_IN(vec4 vColor)
 #endif
 
 #if defined COMPILEVS
@@ -23,7 +23,6 @@ void main()
     #ifdef VERTEXCOLOR
         vColor = iColor;
     #endif
-
 }
 
 #elif defined COMPILEFS

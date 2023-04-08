@@ -1,7 +1,7 @@
 #dv_include "uniforms.inc"
 #dv_include "transform.inc"
 
-varying vec4 vColor;
+VS_OUT_FS_IN(vec4 vColor)
 
 #if defined COMPILEVS
 

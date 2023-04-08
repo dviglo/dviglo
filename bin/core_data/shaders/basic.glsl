@@ -3,10 +3,10 @@
 #dv_include "transform.inc"
 
 #if defined(DIFFMAP) || defined(ALPHAMAP)
-    varying vec2 vTexCoord;
+    VS_OUT_FS_IN(vec2 vTexCoord)
 #endif
 #ifdef VERTEXCOLOR
-    varying vec4 vColor;
+    VS_OUT_FS_IN(vec4 vColor)
 #endif
 
 #if defined COMPILEVS

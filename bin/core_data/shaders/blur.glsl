@@ -4,8 +4,8 @@
 #dv_include "screen_pos.inc"
 #dv_include "postprocess.inc"
 
-varying vec2 vTexCoord;
-varying vec2 vScreenPos;
+VS_OUT_FS_IN(vec2 vTexCoord)
+VS_OUT_FS_IN(vec2 vScreenPos)
 
 #ifdef COMPILEFS
 uniform vec2 cBlurDir;
