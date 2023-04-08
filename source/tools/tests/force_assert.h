@@ -4,8 +4,14 @@
 
 #pragma once
 
-// This is defined in the release version and disables assert().
-// We need assert() to work even in the release version
+#ifdef assert
+    #error "Don't include force_assert.h after cassert"
+#endif
+
+// Макрос NDEBUG определён в конфигурациях Release, RelWithDebInfo, MinSizeRel
+// и не определён в конфигурации Debug.
+// Макрос NDEBUG отключает assert(): https://en.cppreference.com/w/cpp/error/assert
+// Нам же нужно, чтобы assert() был доступен даже в релизных конфигурациях
 #ifdef NDEBUG
     #undef NDEBUG
 #endif
