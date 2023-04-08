@@ -4,6 +4,22 @@
 # Аналог #pragma once
 include_guard(GLOBAL)
 
+# Если используется одноконфигурационный генератор
+# и конфигурация не указана 
+if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
+    # то конфигурацией по умолчанию будет Release
+    set(CMAKE_BUILD_TYPE Release)
+
+    # Нельзя оставлять переменную CMAKE_BUILD_TYPE пустой,
+    # так как при этом не будут заданы флаги GCC и MinGW:
+    # * Пустая строка: CXX_FLAGS = -std=c++20
+    # * Release: CXX_FLAGS = -O3 -DNDEBUG -std=c++20
+    # * Debug: CXX_FLAGS = -g -std=c++20
+    # * RelWithDebInfo: CXX_FLAGS = -O2 -g -DNDEBUG -std=c++20
+    # * MinSizeRel: CXX_FLAGS = -Os -DNDEBUG -std=c++20
+    # Флаги можно посмотреть в файле build/source/dviglo/CMakeFiles/dviglo.dir/flags.make
+endif()
+
 # Предупреждаем об in-source build
 if(CMAKE_BINARY_DIR MATCHES "^${CMAKE_SOURCE_DIR}")
     message(WARNING "Генерировать проекты в папке с иходниками - плохая идея")
