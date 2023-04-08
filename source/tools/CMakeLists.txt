@@ -38,7 +38,7 @@ set(CMAKE_FOLDER инструменты)
 #endif ()
 
 # Папка для экзешников и динамических библиотек
-dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin/tool)
+dv_set_bin_dir(${dviglo_BINARY_DIR}/bin/tool)
 
 if (DV_TOOLS)
     # Urho3D tools

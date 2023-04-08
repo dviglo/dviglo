@@ -21,20 +21,20 @@ set_property(TARGET ${target_name} PROPERTY DEBUG_POSTFIX _d)
 # Подключаем библиотеку-движок к приложению
 target_link_libraries(${target_name} PRIVATE dviglo)
 
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+file(MAKE_DIRECTORY ${dviglo_BINARY_DIR}/bin)
 
 # Список папок для копирования в bin
 set(dir_names autoload core_data data)
 
 # Копируем папки в bin, если нужно
 foreach(dir_name ${dir_names})
-    if(NOT EXISTS ${CMAKE_BINARY_DIR}/bin/${dir_name})
-        dv_create_dir_link(${CMAKE_SOURCE_DIR}/bin/${dir_name} ${CMAKE_BINARY_DIR}/bin/${dir_name})
+    if(NOT EXISTS ${dviglo_BINARY_DIR}/bin/${dir_name})
+        dv_create_dir_link(${dviglo_SOURCE_DIR}/bin/${dir_name} ${dviglo_BINARY_DIR}/bin/${dir_name})
     endif()
 endforeach()
 
 # Копируем динамические библиотеки в папку с приложением
-dv_copy_shared_libs_to_bin_dir(${target_name} "${CMAKE_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)
+dv_copy_shared_libs_to_bin_dir(${target_name} "${dviglo_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)
 
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})

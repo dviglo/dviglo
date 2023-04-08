@@ -23,7 +23,7 @@ set_property(TARGET ${TARGET_NAME} PROPERTY DEBUG_POSTFIX _d)
 target_link_libraries(${TARGET_NAME} PRIVATE dviglo)
 
 # Копируем динамические библиотеки в папку с приложением
-dv_copy_shared_libs_to_bin_dir(${TARGET_NAME} "${CMAKE_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)
+dv_copy_shared_libs_to_bin_dir(${TARGET_NAME} "${dviglo_BINARY_DIR}/bin" copy_shared_libs_to_bin_dir)
 
 # Заставляем VS отображать дерево каталогов
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files})

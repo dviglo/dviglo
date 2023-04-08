@@ -21,7 +21,7 @@ include(cmake/common.cmake)
 set(CMAKE_BUILD_RPATH_USE_ORIGIN ON)
 
 # Папка для экзешников и динамических библиотек
-dv_set_bin_dir(${CMAKE_BINARY_DIR}/bin)
+dv_set_bin_dir(${dviglo_BINARY_DIR}/bin)
 
 add_subdirectory(source)
 add_subdirectory(docs)
