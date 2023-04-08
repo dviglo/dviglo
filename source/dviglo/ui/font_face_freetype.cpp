@@ -28,7 +28,7 @@ inline float FixedToFloat(FT_Pos value)
     return value / 64.0f;
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool free_type_lib_destructed = false;
 #endif
@@ -64,7 +64,7 @@ private:
 
         DV_LOGDEBUG("Singleton FreeTypeLibrary destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
         free_type_lib_destructed = true;
 #endif
     }

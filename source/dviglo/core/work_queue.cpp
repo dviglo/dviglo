@@ -49,7 +49,7 @@ private:
     i32 index_;
 };
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool work_queue_destructed = false;
 #endif
@@ -88,7 +88,7 @@ WorkQueue::~WorkQueue()
 
     DV_LOGDEBUG("Singleton WorkQueue destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     work_queue_destructed = true;
 #endif
 }

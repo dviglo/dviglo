@@ -17,7 +17,7 @@
 
 using namespace dviglo;
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool app_state_manager_destructed = false;
 #endif
@@ -48,7 +48,7 @@ AppStateManager::~AppStateManager()
 {
     DV_LOGDEBUG("Singleton AppStateManager destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     app_state_manager_destructed = true;
 #endif
 }

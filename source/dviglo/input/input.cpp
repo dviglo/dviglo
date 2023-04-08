@@ -99,7 +99,7 @@ void JoystickState::Reset()
         hats_[i] = HAT_CENTER;
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool input_destructed = false;
 #endif
@@ -153,7 +153,8 @@ Input::Input() :
 Input::~Input()
 {
     DV_LOGDEBUG("Singleton Input destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     input_destructed = true;
 #endif
 }

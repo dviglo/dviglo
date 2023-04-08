@@ -12,7 +12,7 @@
 namespace dviglo
 {
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool sdl_helper_destructed = false;
 #endif
@@ -40,7 +40,8 @@ void SdlHelper::manual_destruct()
     DV_LOGDEBUG("Quitting SDL");
     SDL_Quit();
     DV_LOGDEBUG("Singleton SdlHelper destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     sdl_helper_destructed = true;
 #endif
 }
@@ -52,7 +53,8 @@ SdlHelper::~SdlHelper()
     DV_LOGDEBUG("Quitting SDL");
     SDL_Quit();
     DV_LOGDEBUG("Singleton SdlHelper destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     sdl_helper_destructed = true;
 #endif
     */

@@ -78,7 +78,7 @@ void RemoveNamedAttribute(HashMap<StringHash, Vector<AttributeInfo>>& attributes
         attributes.Erase(i);
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool context_destructed = false;
 #endif
@@ -118,7 +118,7 @@ Context::~Context()
 
     // Контекст разрушается после лога, поэтому в лог вывести ничего не можем
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     context_destructed = true;
 #endif
 }

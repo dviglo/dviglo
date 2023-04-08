@@ -40,7 +40,7 @@ const char* logStyles[] =
     "ConsoleText"
 };
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool console_destructed = false;
 #endif
@@ -116,7 +116,7 @@ Console::~Console()
 
     DV_LOGDEBUG("Singleton Console destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     console_destructed = true;
 #endif
 }

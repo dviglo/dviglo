@@ -31,7 +31,7 @@ const char* logLevelPrefixes[] =
 
 static bool threadErrorDisplayed = false;
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool log_destructed = false;
 #endif
@@ -67,7 +67,7 @@ Log::~Log()
         Close();
     }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     log_destructed = true;
 #endif
 }

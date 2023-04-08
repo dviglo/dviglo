@@ -30,7 +30,7 @@ static const StringHash SOUND_MASTER_HASH("Master");
 
 static void SDLAudioCallback(void* userdata, Uint8* stream, i32 len);
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool audio_destructed = false;
 #endif
@@ -64,7 +64,8 @@ Audio::~Audio()
 {
     Release();
     DV_LOGDEBUG("Singleton Audio destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     audio_destructed = true;
 #endif
 }

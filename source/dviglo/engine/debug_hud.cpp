@@ -39,7 +39,7 @@ static const char* shadowQualityTexts[] =
 };
 
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool debug_hud_destructed = false;
 #endif
@@ -93,7 +93,7 @@ DebugHud::~DebugHud()
 
     DV_LOGDEBUG("Singleton DebugHud destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     debug_hud_destructed = true;
 #endif
 }

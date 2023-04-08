@@ -235,7 +235,7 @@ private:
     const Vector<String>& arguments_;
 };
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool file_system_destructed = false;
 #endif
@@ -273,7 +273,7 @@ FileSystem::~FileSystem()
 
     DV_LOGDEBUG("Singleton FileSystem destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     file_system_destructed = true;
 #endif
 }

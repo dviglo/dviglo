@@ -69,7 +69,7 @@ const int DEFAULT_FONT_TEXTURE_MAX_SIZE = 2048;
 
 const char* UI_CATEGORY = "UI";
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool ui_destructed = false;
 #endif
@@ -143,7 +143,8 @@ UI::UI() :
 UI::~UI()
 {
     DV_LOGDEBUG("Singleton UI destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     ui_destructed = true;
 #endif
 }

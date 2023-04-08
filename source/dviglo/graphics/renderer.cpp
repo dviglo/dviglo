@@ -241,7 +241,7 @@ inline Vector<VertexElement> CreateInstancingBufferElements(unsigned numExtraEle
     return elements;
 }
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool renderer_destructed = false;
 #endif
@@ -273,7 +273,7 @@ Renderer::~Renderer()
 {
     DV_LOGDEBUG("Singleton Renderer destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     renderer_destructed = true;
 #endif
 }

@@ -28,7 +28,7 @@ namespace dviglo
 bool HiresTimer::supported(false);
 long long HiresTimer::frequency(1000);
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool timer_destructed = false;
 #endif
@@ -67,7 +67,8 @@ Time::~Time()
 {
     SetTimerPeriod(0);
     DV_LOGDEBUG("Singleton Time destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     timer_destructed = true;
 #endif
 }

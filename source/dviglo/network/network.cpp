@@ -175,7 +175,7 @@ static const char* RAKNET_MESSAGEID_STRINGS[] = {
 static const int DEFAULT_UPDATE_FPS = 30;
 static const int SERVER_TIMEOUT_TIME = 10000;
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool network_destructed = false;
 #endif
@@ -287,7 +287,7 @@ Network::~Network()
 
     DV_LOGDEBUG("Singleton Network destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     network_destructed = true;
 #endif
 }

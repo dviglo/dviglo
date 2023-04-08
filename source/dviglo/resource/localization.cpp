@@ -13,7 +13,7 @@
 namespace dviglo
 {
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool localization_destructed = false;
 #endif
@@ -37,7 +37,8 @@ Localization::Localization() :
 Localization::~Localization()
 {
     DV_LOGDEBUG("Singleton Localization destructed");
-#ifdef _DEBUG
+
+#ifndef NDEBUG
     localization_destructed = true;
 #endif
 }

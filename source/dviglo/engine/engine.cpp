@@ -75,7 +75,7 @@ namespace dviglo
 
 extern const char* logLevelPrefixes[];
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool engine_destructed = false;
 #endif
@@ -146,7 +146,7 @@ Engine::~Engine()
 {
     DV_LOGDEBUG("Singleton Engine destructed");
 
-#ifdef _DEBUG
+#ifndef NDEBUG
     engine_destructed = true;
 #endif
 }
