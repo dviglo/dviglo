@@ -1,5 +1,5 @@
 <renderpath>
-    <command type="quad" tag="color_correction" vs="color_correction" ps="color_correction" output="viewport">
+    <command type="quad" tag="color_correction" vs="p_color_correction" ps="p_color_correction" output="viewport">
         <texture unit="diffuse" name="viewport" />
         <texture unit="volume" name="textures/lut_identity.xml" />
     </command>
