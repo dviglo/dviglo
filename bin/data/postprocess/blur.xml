@@ -1,25 +1,25 @@
 <renderpath>
     <rendertarget name="BlurH" tag="blur" sizedivisor="2 2" format="rgba" filter="true" />
     <rendertarget name="BlurV" tag="blur" sizedivisor="2 2" format="rgba" filter="true" />
-    <command type="quad" tag="blur" vs="blur" ps="blur" psdefines="BLUR3" output="BlurH">
+    <command type="quad" tag="blur" vs="p_blur" ps="p_blur" psdefines="BLUR3" output="BlurH">
         <parameter name="BlurDir" value="1.0 0.0" />
         <parameter name="BlurRadius" value="2.0" />
         <parameter name="BlurSigma" value="2.0" />
         <texture unit="diffuse" name="viewport" />
     </command>
-    <command type="quad" tag="blur" vs="blur" ps="blur" psdefines="BLUR3" output="BlurV">
+    <command type="quad" tag="blur" vs="p_blur" ps="p_blur" psdefines="BLUR3" output="BlurV">
         <parameter name="BlurDir" value="0.0 1.0" />
         <parameter name="BlurRadius" value="2.0" />
         <parameter name="BlurSigma" value="2.0" />
         <texture unit="diffuse" name="BlurH" />
     </command>
-    <command type="quad" tag="blur" vs="blur" ps="blur" psdefines="BLUR3" output="BlurH">
+    <command type="quad" tag="blur" vs="p_blur" ps="p_blur" psdefines="BLUR3" output="BlurH">
         <parameter name="BlurDir" value="1.0 0.0" />
         <parameter name="BlurRadius" value="1.0" />
         <parameter name="BlurSigma" value="2.0" />
         <texture unit="diffuse" name="BlurV" />
     </command>
-    <command type="quad" tag="blur" vs="blur" ps="blur" psdefines="BLUR3" output="BlurV">
+    <command type="quad" tag="blur" vs="p_blur" ps="p_blur" psdefines="BLUR3" output="BlurV">
         <parameter name="BlurDir" value="0.0 1.0" />
         <parameter name="BlurRadius" value="1.0" />
         <parameter name="BlurSigma" value="2.0" />
