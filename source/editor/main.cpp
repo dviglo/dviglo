@@ -5,6 +5,8 @@
 
 #include <dviglo/dviglo_all.h>
 
+#include "material_editor.h"
+
 using namespace dviglo;
 
 class App : public Application
@@ -28,6 +30,11 @@ public:
     {
         Input& input = DV_INPUT;
         input.SetMouseVisible(true);
+
+        XmlFile* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+        DV_UI.GetRoot()->SetDefaultStyle(style);
+
+        create_material_editor_window();
     }
 };
 
