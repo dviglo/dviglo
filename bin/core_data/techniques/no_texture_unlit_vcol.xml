@@ -1,4 +1,4 @@
-<technique vs="unlit" ps="unlit" vsdefines="VERTEXCOLOR NOUV" psdefines="VERTEXCOLOR">
+<technique vs="m_unlit" ps="m_unlit" vsdefines="VERTEXCOLOR NOUV" psdefines="VERTEXCOLOR">
     <pass name="base" />
     <pass name="prepass" psdefines="PREPASS" />
     <pass name="material" />
