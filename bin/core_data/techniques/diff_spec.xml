@@ -1,4 +1,4 @@
-<technique vs="lit_solid" ps="lit_solid" psdefines="DIFFMAP">
+<technique vs="m_lit_solid" ps="m_lit_solid" psdefines="DIFFMAP">
     <pass name="base" />
     <pass name="litbase" psdefines="AMBIENT SPECMAP" />
     <pass name="light" psdefines="SPECMAP" depthtest="equal" depthwrite="false" blend="add" />

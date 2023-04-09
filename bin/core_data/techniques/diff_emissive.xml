@@ -1,4 +1,4 @@
-<technique vs="lit_solid" ps="lit_solid" psdefines="DIFFMAP">
+<technique vs="m_lit_solid" ps="m_lit_solid" psdefines="DIFFMAP">
     <pass name="base" psdefines="EMISSIVEMAP" />
     <pass name="light" depthtest="equal" depthwrite="false" blend="add" />
     <pass name="prepass" psdefines="PREPASS" />

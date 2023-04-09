@@ -1,4 +1,4 @@
-<technique vs="lit_solid" ps="lit_solid" psdefines="DIFFMAP">
+<technique vs="m_lit_solid" ps="m_lit_solid" psdefines="DIFFMAP">
     <pass name="alpha" psdefines="EMISSIVEMAP" depthwrite="false" blend="alpha" />
     <pass name="litalpha" depthwrite="false" blend="addalpha" />
     <pass name="shadow" vs="shadow" ps="shadow" />
