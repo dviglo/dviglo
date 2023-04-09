@@ -1,5 +1,5 @@
 <renderpath>
-    <command type="quad" tag="fxaa3" vs="fxaa3" ps="fxaa3" psdefines="FXAA_QUALITY_PRESET=12" output="viewport">
+    <command type="quad" tag="fxaa3" vs="p_fxaa3" ps="p_fxaa3" psdefines="FXAA_QUALITY_PRESET=12" output="viewport">
         <texture unit="diffuse" name="viewport" />
     </command>
 </renderpath>
