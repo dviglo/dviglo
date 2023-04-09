@@ -1,5 +1,5 @@
 <renderpath>
-    <command type="quad" tag="grayscale" vs="grayscale" ps="grayscale" output="viewport">
+    <command type="quad" tag="grayscale" vs="p_grayscale" ps="p_grayscale" output="viewport">
         <texture unit="diffuse" name="viewport" />
     </command>
 </renderpath>
