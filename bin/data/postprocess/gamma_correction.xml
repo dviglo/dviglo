@@ -1,5 +1,5 @@
 <renderpath>
-    <command type="quad" tag="gamma_correction" vs="gamma_correction" ps="gamma_correction" output="viewport">
+    <command type="quad" tag="gamma_correction" vs="p_gamma_correction" ps="p_gamma_correction" output="viewport">
         <texture unit="diffuse" name="viewport" />
     </command>
 </renderpath>
