@@ -5,7 +5,7 @@
 include_guard(GLOBAL)
 
 # Если используется одноконфигурационный генератор
-# и конфигурация не указана 
+# и конфигурация не указана
 if(NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
     # то конфигурацией по умолчанию будет Release
     set(CMAKE_BUILD_TYPE Release)
