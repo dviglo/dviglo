@@ -1,4 +1,4 @@
-<technique vs="pbr_vegetation" ps="pbr_lit_solid" psdefines="DIFFMAP PBR IBL">
+<technique vs="pbr_vegetation" ps="m_pbr_lit_solid" psdefines="DIFFMAP PBR IBL">
     <pass name="base" />
     <pass name="light" depthtest="equal" depthwrite="false" blend="add" />
     <pass name="material" psdefines="MATERIAL" depthtest="equal" depthwrite="false" />
