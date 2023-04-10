@@ -28,11 +28,13 @@ public:
 
     void Start() override
     {
-        Input& input = DV_INPUT;
-        input.SetMouseVisible(true);
-
         XmlFile* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
         DV_UI.GetRoot()->SetDefaultStyle(style);
+
+        SharedPtr<Cursor> cursor(new Cursor());
+        cursor->SetStyleAuto();
+        DV_UI.SetCursor(cursor);
+        DV_INPUT.SetMouseVisible(true);
 
         create_material_editor_window();
     }

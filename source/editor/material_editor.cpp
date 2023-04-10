@@ -7,12 +7,10 @@
 
 using namespace dviglo;
 
-SharedPtr<Window> window;
-
 void create_material_editor_window()
 {
     // Создаём окно
-    window = DV_UI.GetRoot()->create_child<Window>("material editor");
+    Window* window = DV_UI.GetRoot()->create_child<Window>("material editor");
     window->SetStyleAuto();
     window->SetMinSize(400, 400);
     window->SetPosition(40, 40);
@@ -23,7 +21,6 @@ void create_material_editor_window()
     // Создаём область заголовка
     UiElement* title_bar = window->create_child<UiElement>();
     title_bar->SetFixedHeight(24);
-    title_bar->SetVerticalAlignment(VA_TOP);
     title_bar->SetLayoutMode(LM_HORIZONTAL);
 
     // Создаём текст в области заголовка
@@ -52,12 +49,27 @@ void create_material_editor_window()
     // Создаём элемент с 3D-моделью
     View3D* view3d = window->create_child<View3D>();
     view3d->SetView(scene, camera_component);
+    view3d->SetResizable(true);
+    view3d->SetResizeBorder(IntRect(0, 6, 0, 6));
+    view3d->SetFixedHeightResizing(true);
 
-    // Создаём разделитель между 3D-моделью и настройками материала
-    BorderImage* divider = window->create_child<BorderImage>();
-    divider->SetStyle("EditorDivider");
+    // Создаём скроллируемый элемент
+    ListView* scrollable = window->create_child<ListView>();
+    scrollable->SetStyleAuto();
 
-    // Настройки материала
-    ListView* settings = window->create_child<ListView>();
-    settings->SetStyle("PanelView");
+    // Файл материала
+    UiElement* material_file = new UiElement();
+    material_file->SetStyleAuto();
+    material_file->SetFixedHeight(24);
+    material_file->SetLayoutMode(LM_HORIZONTAL);
+    LineEdit* material_path = material_file->create_child<LineEdit>();
+    material_path->SetStyleAuto();
+    Button* pick_material_button = material_file->create_child<Button>();
+    pick_material_button->SetStyleAuto();
+    pick_material_button->SetFixedWidth(70);
+    Text* pick_material_button_text = pick_material_button->create_child<Text>();
+    pick_material_button_text->SetStyleAuto();
+    pick_material_button_text->SetText("Выбрать");
+    pick_material_button_text->SetAlignment(HorizontalAlignment::HA_CENTER, VerticalAlignment::VA_CENTER);
+    scrollable->AddItem(material_file);
 }
