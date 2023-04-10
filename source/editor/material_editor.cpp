@@ -102,14 +102,37 @@ void MaterialEditor::init()
     scrollable->AddItem(material_file_io);
 }
 
-void MaterialEditor::handle_button_pressed(StringHash eventType, VariantMap& eventData)
+void MaterialEditor::handle_file_selected(StringHash event_type, VariantMap& event_data)
 {
-    Button* pressed_button = static_cast<Button*>(eventData["Element"].GetPtr());
+    using namespace FileSelected;
+    String file_name = event_data[P_FILENAME].GetString();
+    bool ok = event_data[P_OK].GetBool();
+
+    if (ok)
+    {
+        LineEdit* material_file_path = window_->GetChildStaticCast<LineEdit>(str_material_file_path, true);
+        material_file_path->SetText(file_name);
+    }
+
+    file_selector_ = nullptr;
+}
+
+void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& event_data)
+{
+    using namespace Released;
+    Button* pressed_button = static_cast<Button*>(event_data[P_ELEMENT].GetPtr());
 
     if (pressed_button->GetName() == str_pick_material)
     {
-        LineEdit* material_file_path = window_->GetChildStaticCast<LineEdit>(str_material_file_path, true);
-        material_file_path->SetText("SSSSS");
+        if (!file_selector_)
+        {
+            file_selector_ = new FileSelector();
+            file_selector_->SetDefaultStyle(DV_UI.GetRoot()->GetDefaultStyle());
+            file_selector_->SetTitle("Выберите материал");
+            file_selector_->SetButtonTexts("Выбрать", "Отмена");
+            file_selector_->SetFilters({"*.xml", "*.mater", "*.json", "*.*"}, 0);
+            subscribe_to_event(file_selector_, E_FILESELECTED, DV_HANDLER(MaterialEditor, handle_file_selected));
+        }
     }
 
     else if (pressed_button->GetName() == str_new_material)

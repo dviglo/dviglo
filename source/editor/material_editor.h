@@ -15,12 +15,15 @@ class MaterialEditor : public dv::Object
 
 private:
     dv::Window* window_ = nullptr;
+    dv::SharedPtr<dv::FileSelector> file_selector_;
 
     // Создаёт кнопку с текстом
     dv::Button* create_button(dv::UiElement* parent, const dv::String& name, const dv::String& text);
 
+    void handle_file_selected(dv::StringHash event_type, dv::VariantMap& event_data);
+
     // Обрабатывает нажатие любой кнопки в окне редактора
-    void handle_button_pressed(dv::StringHash eventType, dv::VariantMap& eventData);
+    void handle_button_pressed(dv::StringHash event_type, dv::VariantMap& event_data);
 
 public:
     MaterialEditor()
