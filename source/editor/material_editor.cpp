@@ -7,19 +7,41 @@
 
 using namespace dviglo;
 
-void create_material_editor_window()
+const String str_pick_material("pick material");
+const String str_new_material("new material");
+const String str_reload_material("reload material");
+const String str_save_material("save material");
+const String str_save_material_as("save material as");
+const String str_material_file_path("material file path");
+
+Button* MaterialEditor::create_button(UiElement* parent, const String& name, const String& text)
+{
+    Button* button = parent->create_child<Button>(name);
+    button->SetStyleAuto();
+
+    Text* text_element = button->create_child<Text>();
+    text_element->SetStyleAuto();
+    text_element->SetText(text);
+    text_element->SetAlignment(HorizontalAlignment::HA_CENTER, VerticalAlignment::VA_CENTER);
+
+    subscribe_to_event(button, E_RELEASED, DV_HANDLER(MaterialEditor, handle_button_pressed));
+
+    return button;
+}
+
+void MaterialEditor::init()
 {
     // Создаём окно
-    Window* window = DV_UI.GetRoot()->create_child<Window>("material editor");
-    window->SetStyleAuto();
-    window->SetMinSize(400, 400);
-    window->SetPosition(40, 40);
-    window->SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6));
-    window->SetResizable(true);
-    window->SetMovable(true);
+    window_ = DV_UI.GetRoot()->create_child<Window>("material editor");
+    window_->SetStyleAuto();
+    window_->SetMinSize(400, 400);
+    window_->SetPosition(40, 40);
+    window_->SetLayout(LM_VERTICAL, 6, IntRect(6, 6, 6, 6));
+    window_->SetResizable(true);
+    window_->SetMovable(true);
 
     // Создаём область заголовка
-    UiElement* title_bar = window->create_child<UiElement>();
+    UiElement* title_bar = window_->create_child<UiElement>();
     title_bar->SetFixedHeight(24);
     title_bar->SetLayoutMode(LM_HORIZONTAL);
 
@@ -47,14 +69,14 @@ void create_material_editor_window()
     Camera* camera_component = camera_node->create_component<Camera>();
 
     // Создаём элемент с 3D-моделью
-    View3D* view3d = window->create_child<View3D>();
+    View3D* view3d = window_->create_child<View3D>();
     view3d->SetView(scene, camera_component);
     view3d->SetResizable(true);
     view3d->SetResizeBorder(IntRect(0, 6, 0, 6));
     view3d->SetFixedHeightResizing(true);
 
     // Создаём скроллируемый элемент
-    ListView* scrollable = window->create_child<ListView>();
+    ListView* scrollable = window_->create_child<ListView>();
     scrollable->SetStyleAuto();
 
     // Файл материала
@@ -62,14 +84,51 @@ void create_material_editor_window()
     material_file->SetStyleAuto();
     material_file->SetFixedHeight(24);
     material_file->SetLayoutMode(LM_HORIZONTAL);
-    LineEdit* material_path = material_file->create_child<LineEdit>();
-    material_path->SetStyleAuto();
-    Button* pick_material_button = material_file->create_child<Button>();
-    pick_material_button->SetStyleAuto();
+    LineEdit* material_file_path = material_file->create_child<LineEdit>(str_material_file_path);
+    material_file_path->SetStyleAuto();
+    Button* pick_material_button = create_button(material_file, str_pick_material, "Выбрать");
     pick_material_button->SetFixedWidth(70);
-    Text* pick_material_button_text = pick_material_button->create_child<Text>();
-    pick_material_button_text->SetStyleAuto();
-    pick_material_button_text->SetText("Выбрать");
-    pick_material_button_text->SetAlignment(HorizontalAlignment::HA_CENTER, VerticalAlignment::VA_CENTER);
     scrollable->AddItem(material_file);
+
+    // Кнопки создания/загрузки/сохранения файла
+    UiElement* material_file_io = new UiElement();
+    material_file_io->SetStyleAuto();
+    material_file_io->SetFixedHeight(24);
+    material_file_io->SetLayoutMode(LM_HORIZONTAL);
+    Button* new_button = create_button(material_file_io, str_new_material, "Новый");
+    Button* reload_button = create_button(material_file_io, str_reload_material, "Перезагр.");
+    Button* save_button = create_button(material_file_io, str_save_material, "Сохранить");
+    Button* save_as_button = create_button(material_file_io, str_save_material_as, "Сохр. как…");
+    scrollable->AddItem(material_file_io);
+}
+
+void MaterialEditor::handle_button_pressed(StringHash eventType, VariantMap& eventData)
+{
+    Button* pressed_button = static_cast<Button*>(eventData["Element"].GetPtr());
+
+    if (pressed_button->GetName() == str_pick_material)
+    {
+        LineEdit* material_file_path = window_->GetChildStaticCast<LineEdit>(str_material_file_path, true);
+        material_file_path->SetText("SSSSS");
+    }
+
+    else if (pressed_button->GetName() == str_new_material)
+    {
+
+    }
+
+    else if (pressed_button->GetName() == str_reload_material)
+    {
+
+    }
+
+    else if (pressed_button->GetName() == str_save_material)
+    {
+
+    }
+
+    else if (pressed_button->GetName() == str_save_material_as)
+    {
+
+    }
 }

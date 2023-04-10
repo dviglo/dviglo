@@ -13,6 +13,9 @@ class App : public Application
 {
     DV_OBJECT(App, Application);
 
+private:
+    std::unique_ptr<MaterialEditor> material_editor_;
+
 public:
     App()
     {
@@ -36,7 +39,8 @@ public:
         DV_UI.SetCursor(cursor);
         DV_INPUT.SetMouseVisible(true);
 
-        create_material_editor_window();
+        material_editor_ = std::make_unique<MaterialEditor>();
+        material_editor_->init();
     }
 };
 
