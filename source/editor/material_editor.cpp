@@ -57,9 +57,11 @@ MaterialEditor::MaterialEditor()
     // Создаём сцену для элемента с 3D-моделью
     SharedPtr<Scene> scene = MakeShared<Scene>();
     scene->create_component<Octree>();
-    Node* model_node = scene->create_child();
+    Node* model_node = scene->create_child("model");
     StaticModel* model_component = model_node->create_component<StaticModel>();
     model_component->SetModel(DV_RES_CACHE.GetResource<Model>("models/sphere.mdl"));
+    material_ = new Material();
+    model_component->SetMaterial(material_);
     Node* light_node = scene->create_child();
     Light* light_component = light_node->create_component<Light>();
     light_component->SetLightType(LightType::LIGHT_DIRECTIONAL);
@@ -69,7 +71,7 @@ MaterialEditor::MaterialEditor()
     Camera* camera_component = camera_node->create_component<Camera>();
 
     // Создаём элемент с 3D-моделью
-    View3D* view3d = window_->create_child<View3D>();
+    View3D* view3d = window_->create_child<View3D>("view3d");
     view3d->SetView(scene, camera_component);
     view3d->SetResizable(true);
     view3d->SetResizeBorder(IntRect(0, 6, 0, 6));
@@ -128,7 +130,7 @@ Button* MaterialEditor::create_button(UiElement* parent, const String& name, con
     return button;
 }
 
-void MaterialEditor::handle_file_selected(StringHash event_type, VariantMap& event_data)
+void MaterialEditor::handle_pick_file_selected(StringHash event_type, VariantMap& event_data)
 {
     using namespace FileSelected;
     String file_name = event_data[P_FILENAME].GetString();
@@ -138,6 +140,38 @@ void MaterialEditor::handle_file_selected(StringHash event_type, VariantMap& eve
     {
         LineEdit* material_file_path = window_->GetChildStaticCast<LineEdit>(str_material_file_path, true);
         material_file_path->SetText(file_name);
+        material_ = DV_RES_CACHE.GetResource<Material>(file_name);
+
+        if (material_)
+        {
+            View3D* view3d = window_->GetChildStaticCast<View3D>("view3d", false);
+            StaticModel* model = view3d->GetScene()->GetChild("model")->GetComponent<StaticModel>();
+            model->SetMaterial(material_);
+        }
+    }
+
+    file_selector_ = nullptr;
+}
+
+void MaterialEditor::handle_save_file_as_selected(StringHash event_type, VariantMap& event_data)
+{
+    using namespace FileSelected;
+    String file_name = event_data[P_FILENAME].GetString();
+    bool ok = event_data[P_OK].GetBool();
+
+    if (ok)
+    {
+        if (GetExtension(file_name) == ".json")
+        {
+            JSONFile json;
+            material_->Save(json.GetRoot());
+            File file(file_name, FILE_WRITE);
+            json.Save(file);
+        }
+        else
+        {
+            material_->SaveFile(file_name);
+        }
     }
 
     file_selector_ = nullptr;
@@ -157,7 +191,7 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
             file_selector_->SetTitle("Выберите материал");
             file_selector_->SetButtonTexts("Выбрать", "Отмена");
             file_selector_->SetFilters({"*.xml", "*.mater", "*.json", "*.*"}, 0);
-            subscribe_to_event(file_selector_, E_FILESELECTED, DV_HANDLER(MaterialEditor, handle_file_selected));
+            subscribe_to_event(file_selector_, E_FILESELECTED, DV_HANDLER(MaterialEditor, handle_pick_file_selected));
         }
     }
 
@@ -173,12 +207,19 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
 
     else if (pressed_button->GetName() == str_save_material)
     {
-
     }
 
     else if (pressed_button->GetName() == str_save_material_as)
     {
-
+        if (!file_selector_)
+        {
+            file_selector_ = new FileSelector();
+            file_selector_->SetDefaultStyle(DV_UI.GetRoot()->GetDefaultStyle());
+            file_selector_->SetTitle("Сохранить материал как…");
+            file_selector_->SetButtonTexts("Сохранить", "Отмена");
+            file_selector_->SetFilters({"*.xml", "*.mater", "*.json", "*.*"}, 0);
+            subscribe_to_event(file_selector_, E_FILESELECTED, DV_HANDLER(MaterialEditor, handle_save_file_as_selected));
+        }
     }
 }
 
