@@ -14,22 +14,22 @@ const String str_save_material("save material");
 const String str_save_material_as("save material as");
 const String str_material_file_path("material file path");
 
-Button* MaterialEditor::create_button(UiElement* parent, const String& name, const String& text)
+#ifndef NDEBUG
+// Проверяем, что не происходит обращения к синглтону после вызова деструктора
+static bool material_editor_destructed = false;
+#endif
+
+// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
+// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
+// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
+MaterialEditor& MaterialEditor::get_instance()
 {
-    Button* button = parent->create_child<Button>(name);
-    button->SetStyleAuto();
-
-    Text* text_element = button->create_child<Text>();
-    text_element->SetStyleAuto();
-    text_element->SetText(text);
-    text_element->SetAlignment(HorizontalAlignment::HA_CENTER, VerticalAlignment::VA_CENTER);
-
-    subscribe_to_event(button, E_RELEASED, DV_HANDLER(MaterialEditor, handle_button_pressed));
-
-    return button;
+    assert(!material_editor_destructed);
+    static MaterialEditor instance;
+    return instance;
 }
 
-void MaterialEditor::init()
+MaterialEditor::MaterialEditor()
 {
     // Создаём окно
     window_ = DV_UI.GetRoot()->create_child<Window>("material editor");
@@ -100,6 +100,32 @@ void MaterialEditor::init()
     Button* save_button = create_button(material_file_io, str_save_material, "Сохранить");
     Button* save_as_button = create_button(material_file_io, str_save_material_as, "Сохр. как…");
     scrollable->AddItem(material_file_io);
+
+    DV_LOGDEBUG("Singleton MaterialEditor constructed");
+}
+
+MaterialEditor::~MaterialEditor()
+{
+    DV_LOGDEBUG("Singleton MaterialEditor destructed");
+
+#ifndef NDEBUG
+    material_editor_destructed = true;
+#endif
+}
+
+Button* MaterialEditor::create_button(UiElement* parent, const String& name, const String& text)
+{
+    Button* button = parent->create_child<Button>(name);
+    button->SetStyleAuto();
+
+    Text* text_element = button->create_child<Text>();
+    text_element->SetStyleAuto();
+    text_element->SetText(text);
+    text_element->SetAlignment(HorizontalAlignment::HA_CENTER, VerticalAlignment::VA_CENTER);
+
+    subscribe_to_event(button, E_RELEASED, DV_HANDLER(MaterialEditor, handle_button_pressed));
+
+    return button;
 }
 
 void MaterialEditor::handle_file_selected(StringHash event_type, VariantMap& event_data)
@@ -155,3 +181,5 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
 
     }
 }
+
+#define MATERIAL_EDITOR (MaterialEditor::get_instance())

@@ -13,9 +13,15 @@ class MaterialEditor : public dv::Object
 {
     DV_OBJECT(MaterialEditor, Object);
 
+public:
+    static MaterialEditor& get_instance();
+
 private:
     dv::Window* window_ = nullptr;
     dv::SharedPtr<dv::FileSelector> file_selector_;
+
+    MaterialEditor();
+    ~MaterialEditor();
 
     // Создаёт кнопку с текстом
     dv::Button* create_button(dv::UiElement* parent, const dv::String& name, const dv::String& text);
@@ -26,9 +32,4 @@ private:
     void handle_button_pressed(dv::StringHash event_type, dv::VariantMap& event_data);
 
 public:
-    MaterialEditor()
-    {
-    }
-
-    void init();
 };
