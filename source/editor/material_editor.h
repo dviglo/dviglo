@@ -1,14 +1,13 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-// Класс создаёт окно редактора материалов и обрабатывает его события
-
 #pragma once
 
 #include <dviglo/dviglo_all.h>
 
 namespace dv = dviglo;
 
+// Класс создаёт окно редактора материалов и обрабатывает его события
 class MaterialEditor : public dv::Object
 {
     DV_OBJECT(MaterialEditor, Object);
