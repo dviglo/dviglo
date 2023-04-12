@@ -197,16 +197,39 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
 
     else if (pressed_button->GetName() == str_new_material)
     {
+        material_ = new Material();
 
+        View3D* view3d = window_->GetChildStaticCast<View3D>("view3d", false);
+        StaticModel* model = view3d->GetScene()->GetChild("model")->GetComponent<StaticModel>();
+        model->SetMaterial(material_);
+
+        LineEdit* material_file_path = window_->GetChildStaticCast<LineEdit>(str_material_file_path, true);
+        material_file_path->SetText("");
     }
 
     else if (pressed_button->GetName() == str_reload_material)
     {
-
+        DV_RES_CACHE.reload_resource(material_);
     }
 
     else if (pressed_button->GetName() == str_save_material)
     {
+        String full_name = DV_RES_CACHE.GetResourceFileName(material_->GetName());
+
+        if (full_name.Empty())
+            return;
+
+        if (GetExtension(full_name) == ".json")
+        {
+            JSONFile json;
+            material_->Save(json.GetRoot());
+            File file(full_name, FILE_WRITE);
+            json.Save(file);
+        }
+        else
+        {
+            material_->SaveFile(full_name);
+        }
     }
 
     else if (pressed_button->GetName() == str_save_material_as)
