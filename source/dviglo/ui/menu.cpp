@@ -38,8 +38,11 @@ Menu::Menu() :
 
 Menu::~Menu()
 {
-    if (popup_ && showPopup_)
+    if (!UI::is_destructed() // Избегаем assert(), когда при закрытии приложения был открыт какой-то пункт меню
+        && popup_ && showPopup_)
+    {
         ShowPopup(false);
+    }
 }
 
 void Menu::register_object()
