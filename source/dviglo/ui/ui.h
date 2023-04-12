@@ -44,6 +44,7 @@ class DV_API UI : public Object
 
 public:
     static UI& get_instance();
+    static bool is_destructed();
 
 private:
     /// Construct.
