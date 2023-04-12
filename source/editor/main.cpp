@@ -5,6 +5,7 @@
 
 #include <dviglo/dviglo_all.h>
 
+#include "main_menu.h"
 #include "material_editor.h"
 
 using namespace dviglo;
@@ -36,7 +37,8 @@ public:
         DV_UI.SetCursor(cursor);
         DV_INPUT.SetMouseVisible(true);
 
-        // Создаём редактор материалов
+        // Создаём синглтоны
+        MainMenu::get_instance();
         MaterialEditor::get_instance();
     }
 };
