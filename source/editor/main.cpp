@@ -1,8 +1,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-// Главный класс приложения
-
 #include <dviglo/dviglo_all.h>
 
 #include "main_menu.h"
@@ -10,6 +8,7 @@
 
 using namespace dviglo;
 
+// Главный класс приложения
 class App : public Application
 {
     DV_OBJECT(App, Application);
