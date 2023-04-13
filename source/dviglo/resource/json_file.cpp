@@ -2,13 +2,14 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "json_file.h"
+
 #include "../containers/array_ptr.h"
 #include "../core/profiler.h"
 #include "../core/context.h"
 #include "../io/deserializer.h"
 #include "../io/log.h"
 #include "../io/memory_buffer.h"
-#include "json_file.h"
 #include "resource_cache.h"
 
 #include <rapidjson/document.h>
@@ -99,13 +100,13 @@ bool JSONFile::begin_load(Deserializer& source)
         return false;
     }
 
-    SharedArrayPtr<char> buffer(new char[dataSize + 1]);
-    if (source.Read(buffer.Get(), dataSize) != dataSize)
+    std::unique_ptr<char[]> buffer(new char[dataSize + 1]);
+    if (source.Read(buffer.get(), dataSize) != dataSize)
         return false;
     buffer[dataSize] = '\0';
 
     rapidjson::Document document;
-    if (document.Parse<kParseCommentsFlag | kParseTrailingCommasFlag>(buffer).HasParseError())
+    if (document.Parse<kParseCommentsFlag | kParseTrailingCommasFlag>(buffer.get()).HasParseError())
     {
         DV_LOGERROR("Could not parse JSON data from " + source.GetName());
         return false;
@@ -230,4 +231,4 @@ String JSONFile::ToString(const String& indendation) const
     return buffer.GetString();
 }
 
-}
+} // namespace dviglo

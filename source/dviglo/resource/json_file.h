@@ -7,6 +7,8 @@
 #include "resource.h"
 #include "json_value.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -45,4 +47,4 @@ private:
     JSONValue root_;
 };
 
-}
+} // namespace dviglo
