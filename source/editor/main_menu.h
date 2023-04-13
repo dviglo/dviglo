@@ -22,7 +22,7 @@ private:
     ~MainMenu();
 
     // Создаёт пункт меню с текстом
-    dv::Menu* create_menu_item(const dv::String& text);
+    dv::Menu* create_menu_item(const dv::String& name, const dv::String& text);
 
     // Обрабатывает нажатие любого пункта меню в программе
     void handle_menu_selected(dv::StringHash event_type, dv::VariantMap& event_data);
