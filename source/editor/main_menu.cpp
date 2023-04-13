@@ -43,6 +43,7 @@ MainMenu::MainMenu()
 
     {
         Menu* menu = create_menu_item("Файл");
+        menu->SetName("file");
         menu_bar_->AddChild(menu);
         menu->SetFixedWidth(menu->GetChildStaticCast<Text>(0)->GetWidth() + 20);
         menu->SetPopupOffset(0, menu->GetHeight());
@@ -72,6 +73,8 @@ MainMenu::MainMenu()
         }
     }
 
+    subscribe_to_event(E_MENUSELECTED, DV_HANDLER(MainMenu, handle_menu_selected));
+
     DV_LOGDEBUG("Singleton MainMenu constructed");
 }
 
@@ -82,4 +85,14 @@ MainMenu::~MainMenu()
 #ifndef NDEBUG
     main_menu_destructed = true;
 #endif
+}
+
+void MainMenu::handle_menu_selected(StringHash event_type, VariantMap& event_data)
+{
+    using namespace MenuSelected;
+    Menu* menu = static_cast<Menu*>(event_data[P_ELEMENT].GetPtr());
+
+    // После клика по пункту подменю прячем подменю
+    if (menu->GetParent() != menu_bar_)
+        menu_bar_->GetChildStaticCast<Menu>("file", false)->ShowPopup(false);
 }
