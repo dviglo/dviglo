@@ -42,7 +42,7 @@ void ParticleEmitter2D::register_object()
     DV_CONTEXT.RegisterFactory<ParticleEmitter2D>(URHO2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    DV_COPY_BASE_ATTRIBUTES(Drawable2D);
+    DV_COPY_BASE_ATTRIBUTES(Drawable2d);
     DV_ACCESSOR_ATTRIBUTE("Particle Effect", GetParticleEffectAttr, SetParticleEffectAttr,
         ResourceRef(ParticleEffect2D::GetTypeStatic()), AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Sprite ", GetSpriteAttr, SetSpriteAttr, ResourceRef(Sprite2D::GetTypeStatic()),
@@ -53,7 +53,7 @@ void ParticleEmitter2D::register_object()
 
 void ParticleEmitter2D::OnSetEnabled()
 {
-    Drawable2D::OnSetEnabled();
+    Drawable2d::OnSetEnabled();
 
     Scene* scene = GetScene();
     if (scene)
@@ -161,7 +161,7 @@ ResourceRef ParticleEmitter2D::GetSpriteAttr() const
 
 void ParticleEmitter2D::OnSceneSet(Scene* scene)
 {
-    Drawable2D::OnSceneSet(scene);
+    Drawable2d::OnSceneSet(scene);
 
     if (scene && IsEnabledEffective())
         subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(ParticleEmitter2D, HandleScenePostUpdate));

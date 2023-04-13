@@ -10,7 +10,7 @@
 namespace dviglo
 {
 
-class Drawable2D;
+class Drawable2d;
 class IndexBuffer;
 class Material;
 class Technique;
@@ -71,25 +71,25 @@ public:
     /// Return whether a geometry update is necessary, and if it can happen in a worker thread.
     UpdateGeometryType GetUpdateGeometryType() override;
 
-    /// Add Drawable2D.
-    void AddDrawable(Drawable2D* drawable);
-    /// Remove Drawable2D.
-    void RemoveDrawable(Drawable2D* drawable);
+    /// Add Drawable2d.
+    void AddDrawable(Drawable2d* drawable);
+    /// Remove Drawable2d.
+    void RemoveDrawable(Drawable2d* drawable);
     /// Return material by texture and blend mode.
     Material* GetMaterial(Texture2D* texture, BlendMode blendMode);
 
     /// Check visibility.
-    bool CheckVisibility(Drawable2D* drawable) const;
+    bool CheckVisibility(Drawable2d* drawable) const;
 
 private:
     /// Recalculate the world-space bounding box.
     void OnWorldBoundingBoxUpdate() override;
     /// Create material by texture and blend mode.
     SharedPtr<Material> CreateMaterial(Texture2D* texture, BlendMode blendMode);
-    /// Handle view update begin event. Determine Drawable2D's and their batches here.
+    /// Handle view update begin event. Determine Drawable2d's and their batches here.
     void HandleBeginViewUpdate(StringHash eventType, VariantMap& eventData);
     /// Get all drawables in node.
-    void GetDrawables(Vector<Drawable2D*>& drawables, Node* node);
+    void GetDrawables(Vector<Drawable2d*>& drawables, Node* node);
     /// Update view batch info.
     void UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* camera);
     /// Add view batch.
@@ -101,7 +101,7 @@ private:
     /// Material.
     SharedPtr<Material> material_;
     /// Drawables.
-    Vector<Drawable2D*> drawables_;
+    Vector<Drawable2d*> drawables_;
     /// View frame info for current frame.
     FrameInfo frame_;
     /// View batch info.

@@ -43,7 +43,7 @@ void StaticSprite2D::register_object()
     DV_CONTEXT.RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
-    DV_COPY_BASE_ATTRIBUTES(Drawable2D);
+    DV_COPY_BASE_ATTRIBUTES(Drawable2d);
     DV_ACCESSOR_ATTRIBUTE("Sprite", GetSpriteAttr, SetSpriteAttr, ResourceRef(Sprite2D::GetTypeStatic()),
         AM_DEFAULT);
     DV_ENUM_ACCESSOR_ATTRIBUTE("Blend Mode", blend_mode, SetBlendMode, blendModeNames, BLEND_ALPHA, AM_DEFAULT);
@@ -248,7 +248,7 @@ ResourceRef StaticSprite2D::GetCustomMaterialAttr() const
 
 void StaticSprite2D::OnSceneSet(Scene* scene)
 {
-    Drawable2D::OnSceneSet(scene);
+    Drawable2d::OnSceneSet(scene);
 
     UpdateMaterial();
 }

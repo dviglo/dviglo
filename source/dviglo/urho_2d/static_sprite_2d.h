@@ -12,7 +12,7 @@ namespace dviglo
 class Sprite2D;
 
 /// Static sprite component.
-class DV_API StaticSprite2D : public Drawable2D
+class DV_API StaticSprite2D : public Drawable2d
 {
     DV_OBJECT(StaticSprite2D);
 
@@ -21,7 +21,7 @@ public:
     explicit StaticSprite2D();
     /// Destruct.
     ~StaticSprite2D() override;
-    /// Register object factory. Drawable2D must be registered first.
+    /// Register object factory. Drawable2d must be registered first.
     static void register_object();
 
     /// Set sprite.

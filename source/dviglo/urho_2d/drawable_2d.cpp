@@ -21,7 +21,7 @@ SourceBatch2D::SourceBatch2D() :
 {
 }
 
-Drawable2D::Drawable2D() :
+Drawable2d::Drawable2d() :
     Drawable(DrawableTypes::Geometry2D),
     layer_(0),
     orderInLayer_(0),
@@ -29,20 +29,20 @@ Drawable2D::Drawable2D() :
 {
 }
 
-Drawable2D::~Drawable2D()
+Drawable2d::~Drawable2d()
 {
     if (renderer_)
         renderer_->RemoveDrawable(this);
 }
 
-void Drawable2D::register_object()
+void Drawable2d::register_object()
 {
     DV_ACCESSOR_ATTRIBUTE("Layer", GetLayer, SetLayer, 0, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Order in Layer", GetOrderInLayer, SetOrderInLayer, 0, AM_DEFAULT);
     DV_ATTRIBUTE("View Mask", viewMask_, DEFAULT_VIEWMASK, AM_DEFAULT);
 }
 
-void Drawable2D::OnSetEnabled()
+void Drawable2d::OnSetEnabled()
 {
     bool enabled = IsEnabledEffective();
 
@@ -52,7 +52,7 @@ void Drawable2D::OnSetEnabled()
         renderer_->RemoveDrawable(this);
 }
 
-void Drawable2D::SetLayer(int layer)
+void Drawable2d::SetLayer(int layer)
 {
     if (layer == layer_)
         return;
@@ -63,7 +63,7 @@ void Drawable2D::SetLayer(int layer)
     MarkNetworkUpdate();
 }
 
-void Drawable2D::SetOrderInLayer(int orderInLayer)
+void Drawable2d::SetOrderInLayer(int orderInLayer)
 {
     if (orderInLayer == orderInLayer_)
         return;
@@ -74,7 +74,7 @@ void Drawable2D::SetOrderInLayer(int orderInLayer)
     MarkNetworkUpdate();
 }
 
-const Vector<SourceBatch2D>& Drawable2D::GetSourceBatches()
+const Vector<SourceBatch2D>& Drawable2d::GetSourceBatches()
 {
     if (sourceBatchesDirty_)
         UpdateSourceBatches();
@@ -82,7 +82,7 @@ const Vector<SourceBatch2D>& Drawable2D::GetSourceBatches()
     return sourceBatches_;
 }
 
-void Drawable2D::OnSceneSet(Scene* scene)
+void Drawable2d::OnSceneSet(Scene* scene)
 {
     // Do not call Drawable::OnSceneSet(node), as 2D drawable components should not be added to the octree
     // but are instead rendered through Renderer2D
@@ -100,7 +100,7 @@ void Drawable2D::OnSceneSet(Scene* scene)
     }
 }
 
-void Drawable2D::OnMarkedDirty(Node* node)
+void Drawable2d::OnMarkedDirty(Node* node)
 {
     Drawable::OnMarkedDirty(node);
 

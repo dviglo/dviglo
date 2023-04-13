@@ -32,7 +32,7 @@ public:
     explicit ParticleEffect2D();
     /// Destruct.
     ~ParticleEffect2D() override;
-    /// Register object factory. Drawable2D must be registered first.
+    /// Register object factory. Drawable2d must be registered first.
     static void register_object();
 
     /// Load resource from stream. May be called from a worker thread. Return true if successful.

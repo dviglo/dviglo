@@ -31,7 +31,7 @@ void register_urho_2d_library()
     SpriteSheet2D::register_object();
 
     // Must register objects from base to derived order
-    Drawable2D::register_object();
+    Drawable2d::register_object();
     StaticSprite2D::register_object();
 
     StretchableSprite2D::register_object();

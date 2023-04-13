@@ -70,8 +70,8 @@ void Renderer2D::register_object()
 
 static inline bool CompareRayQueryResults(RayQueryResult& lr, RayQueryResult& rr)
 {
-    auto* lhs = static_cast<Drawable2D*>(lr.drawable_);
-    auto* rhs = static_cast<Drawable2D*>(rr.drawable_);
+    auto* lhs = static_cast<Drawable2d*>(lr.drawable_);
+    auto* rhs = static_cast<Drawable2d*>(rr.drawable_);
     if (lhs->GetLayer() != rhs->GetLayer())
         return lhs->GetLayer() > rhs->GetLayer();
 
@@ -204,7 +204,7 @@ UpdateGeometryType Renderer2D::GetUpdateGeometryType()
     return UPDATE_MAIN_THREAD;
 }
 
-void Renderer2D::AddDrawable(Drawable2D* drawable)
+void Renderer2D::AddDrawable(Drawable2d* drawable)
 {
     if (!drawable)
         return;
@@ -212,7 +212,7 @@ void Renderer2D::AddDrawable(Drawable2D* drawable)
     drawables_.Push(drawable);
 }
 
-void Renderer2D::RemoveDrawable(Drawable2D* drawable)
+void Renderer2D::RemoveDrawable(Drawable2d* drawable)
 {
     if (!drawable)
         return;
@@ -244,7 +244,7 @@ Material* Renderer2D::GetMaterial(Texture2D* texture, BlendMode blendMode)
     return newMaterial;
 }
 
-bool Renderer2D::CheckVisibility(Drawable2D* drawable) const
+bool Renderer2D::CheckVisibility(Drawable2d* drawable) const
 {
     if ((viewMask_ & drawable->GetViewMask()) == 0)
         return false;
@@ -286,12 +286,12 @@ SharedPtr<Material> Renderer2D::CreateMaterial(Texture2D* texture, BlendMode ble
 void CheckDrawableVisibilityWork(const WorkItem* item, i32 threadIndex)
 {
     auto* renderer = reinterpret_cast<Renderer2D*>(item->aux_);
-    auto** start = reinterpret_cast<Drawable2D**>(item->start_);
-    auto** end = reinterpret_cast<Drawable2D**>(item->end_);
+    auto** start = reinterpret_cast<Drawable2d**>(item->start_);
+    auto** end = reinterpret_cast<Drawable2d**>(item->end_);
 
     while (start != end)
     {
-        Drawable2D* drawable = *start++;
+        Drawable2d* drawable = *start++;
         if (renderer->CheckVisibility(drawable))
             drawable->MarkInView(renderer->frame_);
     }
@@ -321,7 +321,7 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
         int numWorkItems = queue.GetNumThreads() + 1; // Worker threads + main thread
         int drawablesPerItem = drawables_.Size() / numWorkItems;
 
-        Vector<Drawable2D*>::Iterator start = drawables_.Begin();
+        Vector<Drawable2d*>::Iterator start = drawables_.Begin();
         for (int i = 0; i < numWorkItems; ++i)
         {
             SharedPtr<WorkItem> item = queue.GetFreeItem();
@@ -329,7 +329,7 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
             item->workFunction_ = CheckDrawableVisibilityWork;
             item->aux_ = this;
 
-            Vector<Drawable2D*>::Iterator end = drawables_.End();
+            Vector<Drawable2d*>::Iterator end = drawables_.End();
             if (i < numWorkItems - 1 && end - start > drawablesPerItem)
                 end = start + drawablesPerItem;
 
@@ -364,7 +364,7 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
     }
 }
 
-void Renderer2D::GetDrawables(Vector<Drawable2D*>& drawables, Node* node)
+void Renderer2D::GetDrawables(Vector<Drawable2d*>& drawables, Node* node)
 {
     if (!node || !node->IsEnabled())
         return;
@@ -372,7 +372,7 @@ void Renderer2D::GetDrawables(Vector<Drawable2D*>& drawables, Node* node)
     const Vector<SharedPtr<Component>>& components = node->GetComponents();
     for (Vector<SharedPtr<Component>>::ConstIterator i = components.Begin(); i != components.End(); ++i)
     {
-        auto* drawable = dynamic_cast<Drawable2D*>(i->Get());
+        auto* drawable = dynamic_cast<Drawable2d*>(i->Get());
         if (drawable && drawable->IsEnabled())
             drawables.Push(drawable);
     }

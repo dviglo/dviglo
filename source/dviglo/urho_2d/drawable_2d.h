@@ -11,7 +11,7 @@
 namespace dviglo
 {
 
-class Drawable2D;
+class Drawable2d;
 class Renderer2D;
 class Texture2D;
 class VertexBuffer;
@@ -34,7 +34,7 @@ struct SourceBatch2D
     SourceBatch2D();
 
     /// Owner.
-    WeakPtr<Drawable2D> owner_;
+    WeakPtr<Drawable2d> owner_;
     /// Distance to camera.
     mutable float distance_;
     /// Draw order.
@@ -46,15 +46,15 @@ struct SourceBatch2D
 };
 
 /// Base class for 2D visible components.
-class DV_API Drawable2D : public Drawable
+class DV_API Drawable2d : public Drawable
 {
-    DV_OBJECT(Drawable2D);
+    DV_OBJECT(Drawable2d);
 
 public:
     /// Construct.
-    explicit Drawable2D();
+    explicit Drawable2d();
     /// Destruct.
-    ~Drawable2D() override;
+    ~Drawable2d() override;
     /// Register object factory. Drawable must be registered first.
     static void register_object();
 

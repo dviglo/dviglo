@@ -55,7 +55,7 @@ struct Particle2D
 };
 
 /// 2D particle emitter component.
-class DV_API ParticleEmitter2D : public Drawable2D
+class DV_API ParticleEmitter2D : public Drawable2d
 {
     DV_OBJECT(ParticleEmitter2D);
 
@@ -64,7 +64,7 @@ public:
     explicit ParticleEmitter2D();
     /// Destruct.
     ~ParticleEmitter2D() override;
-    /// Register object factory. Drawable2D must be registered first.
+    /// Register object factory. Drawable2d must be registered first.
     static void register_object();
 
     /// Handle enabled/disabled state change.

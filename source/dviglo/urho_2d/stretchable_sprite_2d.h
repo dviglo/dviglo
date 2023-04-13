@@ -16,7 +16,7 @@ class DV_API StretchableSprite2D : public StaticSprite2D
 public:
     /// Construct.
     explicit StretchableSprite2D();
-    /// Register object factory. Drawable2D must be registered first.
+    /// Register object factory. Drawable2d must be registered first.
     static void register_object();
 
     /// Set border as number of pixels from each side.
