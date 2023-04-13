@@ -30,15 +30,15 @@ static int const UICOMPONENT_DEFAULT_TEXTURE_SIZE = 512;
 static int const UICOMPONENT_MIN_TEXTURE_SIZE = 64;
 static int const UICOMPONENT_MAX_TEXTURE_SIZE = 4096;
 
-class UIElement3D : public UiElement
+class UiElement3D : public UiElement
 {
-    DV_OBJECT(UIElement3D);
+    DV_OBJECT(UiElement3D);
 
 public:
     /// Construct.
-    explicit UIElement3D() { }
+    explicit UiElement3D() { }
     /// Destruct.
-    ~UIElement3D() override = default;
+    ~UiElement3D() override = default;
     /// Set UIComponent which is using this element as root element.
     void SetNode(Node* node) { node_ = node; }
     /// Set active viewport through which this element is rendered. If viewport is not set, it defaults to first viewport.
@@ -46,7 +46,7 @@ public:
     /// Convert element coordinates to screen coordinates.
     IntVector2 element_to_screen(const IntVector2& position) override
     {
-        DV_LOGERROR("UIElement3D::element_to_screen is not implemented.");
+        DV_LOGERROR("UiElement3D::element_to_screen is not implemented.");
         return {-1, -1};
     }
     /// Convert screen coordinates to element coordinates.
@@ -144,7 +144,7 @@ UIComponent::UIComponent()
     texture_->SetAddressMode(COORD_V, ADDRESS_CLAMP);
     texture_->SetNumLevels(1);                                        // No mipmaps
 
-    rootElement_ = DV_CONTEXT.CreateObject<UIElement3D>();
+    rootElement_ = DV_CONTEXT.CreateObject<UiElement3D>();
     rootElement_->SetTraversalMode(TM_BREADTH_FIRST);
     rootElement_->SetEnabled(true);
 
@@ -164,7 +164,7 @@ UIComponent::~UIComponent() = default;
 void UIComponent::register_object()
 {
     DV_CONTEXT.RegisterFactory<UIComponent>();
-    DV_CONTEXT.RegisterFactory<UIElement3D>();
+    DV_CONTEXT.RegisterFactory<UiElement3D>();
 }
 
 UiElement* UIComponent::GetRoot() const
