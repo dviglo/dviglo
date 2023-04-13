@@ -35,7 +35,7 @@ class UiElement;
 class XmlElement;
 class XmlFile;
 class RenderSurface;
-class UIComponent;
+class UiComponent;
 
 /// %UI subsystem. Manages the graphical user interface.
 class DV_API UI : public Object

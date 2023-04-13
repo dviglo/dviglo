@@ -509,7 +509,7 @@ void UI::Render(bool renderUICommand)
         Render(vertexBuffer_, batches_, nonModalBatchSize_, batches_.Size());
     }
 
-    // Render to UIComponent textures. This is skipped when called from the RENDERUI command
+    // Render to UiComponent textures. This is skipped when called from the RENDERUI command
     if (!renderUICommand)
     {
         for (auto& item : renderToTexture_)
@@ -2217,7 +2217,7 @@ void register_ui_library()
     MessageBox::register_object();
     ProgressBar::register_object();
     ToolTip::register_object();
-    UIComponent::register_object();
+    UiComponent::register_object();
 }
 
 }

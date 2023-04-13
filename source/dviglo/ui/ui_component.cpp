@@ -39,7 +39,7 @@ public:
     explicit UiElement3D() { }
     /// Destruct.
     ~UiElement3D() override = default;
-    /// Set UIComponent which is using this element as root element.
+    /// Set UiComponent which is using this element as root element.
     void SetNode(Node* node) { node_ = node; }
     /// Set active viewport through which this element is rendered. If viewport is not set, it defaults to first viewport.
     void SetViewport(Viewport* viewport) { viewport_ = viewport; }
@@ -75,7 +75,7 @@ public:
 
         if (viewport_->GetScene() != scene)
         {
-            DV_LOGERROR("UIComponent and Viewport set to component's root element belong to different scenes.");
+            DV_LOGERROR("UiComponent and Viewport set to component's root element belong to different scenes.");
             return result;
         }
 
@@ -129,13 +129,13 @@ public:
     }
 
 protected:
-    /// A UIComponent which owns this element.
+    /// A UiComponent which owns this element.
     WeakPtr<Node> node_;
     /// Viewport which renders this element.
     WeakPtr<Viewport> viewport_;
 };
 
-UIComponent::UIComponent()
+UiComponent::UiComponent()
     : viewportIndex_(0)
 {
     texture_ = DV_CONTEXT.CreateObject<Texture2D>();
@@ -152,37 +152,37 @@ UIComponent::UIComponent()
     material_->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("techniques/diff.xml"));
     material_->SetTexture(TU_DIFFUSE, texture_);
 
-    subscribe_to_event(rootElement_, E_RESIZED, DV_HANDLER(UIComponent, OnElementResized));
+    subscribe_to_event(rootElement_, E_RESIZED, DV_HANDLER(UiComponent, OnElementResized));
 
     // Triggers resizing of texture.
     rootElement_->SetRenderTexture(texture_);
     rootElement_->SetSize(UICOMPONENT_DEFAULT_TEXTURE_SIZE, UICOMPONENT_DEFAULT_TEXTURE_SIZE);
 }
 
-UIComponent::~UIComponent() = default;
+UiComponent::~UiComponent() = default;
 
-void UIComponent::register_object()
+void UiComponent::register_object()
 {
-    DV_CONTEXT.RegisterFactory<UIComponent>();
+    DV_CONTEXT.RegisterFactory<UiComponent>();
     DV_CONTEXT.RegisterFactory<UiElement3D>();
 }
 
-UiElement* UIComponent::GetRoot() const
+UiElement* UiComponent::GetRoot() const
 {
     return rootElement_;
 }
 
-Material* UIComponent::GetMaterial() const
+Material* UiComponent::GetMaterial() const
 {
     return material_;
 }
 
-Texture2D* UIComponent::GetTexture() const
+Texture2D* UiComponent::GetTexture() const
 {
     return texture_;
 }
 
-void UIComponent::OnNodeSet(Node* node)
+void UiComponent::OnNodeSet(Node* node)
 {
     rootElement_->SetNode(node);
     if (node)
@@ -205,7 +205,7 @@ void UIComponent::OnNodeSet(Node* node)
     }
 }
 
-void UIComponent::OnElementResized(StringHash eventType, VariantMap& args)
+void UiComponent::OnElementResized(StringHash eventType, VariantMap& args)
 {
     int width = args[Resized::P_WIDTH].GetI32();
     int height = args[Resized::P_HEIGHT].GetI32();
@@ -213,7 +213,7 @@ void UIComponent::OnElementResized(StringHash eventType, VariantMap& args)
     if (width < UICOMPONENT_MIN_TEXTURE_SIZE || width > UICOMPONENT_MAX_TEXTURE_SIZE ||
         height < UICOMPONENT_MIN_TEXTURE_SIZE || height > UICOMPONENT_MAX_TEXTURE_SIZE)
     {
-        DV_LOGERRORF("UIComponent: Texture size %dx%d is not valid. Width and height should be between %d and %d.",
+        DV_LOGERRORF("UiComponent: Texture size %dx%d is not valid. Width and height should be between %d and %d.",
                          width, height, UICOMPONENT_MIN_TEXTURE_SIZE, UICOMPONENT_MAX_TEXTURE_SIZE);
         return;
     }
@@ -221,10 +221,10 @@ void UIComponent::OnElementResized(StringHash eventType, VariantMap& args)
     if (texture_->SetSize(width, height, Graphics::GetRGBAFormat(), TEXTURE_RENDERTARGET))
         texture_->GetRenderSurface()->SetUpdateMode(SURFACE_MANUALUPDATE);
     else
-        DV_LOGERROR("UIComponent: resizing texture failed.");
+        DV_LOGERROR("UiComponent: resizing texture failed.");
 }
 
-void UIComponent::SetViewportIndex(unsigned int index)
+void UiComponent::SetViewportIndex(unsigned int index)
 {
     viewportIndex_ = index;
     if (Scene* scene = GetScene())

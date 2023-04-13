@@ -14,7 +14,7 @@ class Window;
 }
 
 /// A 3D UI demonstration based on the HelloGUI sample. Renders UI alternatively
-/// either to a 3D scene object using UIComponent, or directly to the backbuffer.
+/// either to a 3D scene object using UiComponent, or directly to the backbuffer.
 class Hello3DUI : public Sample
 {
     DV_OBJECT(Hello3DUI);

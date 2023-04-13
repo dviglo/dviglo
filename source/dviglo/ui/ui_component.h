@@ -19,15 +19,15 @@ class UIBatch;
 class VertexBuffer;
 class UiElement3D;
 
-class DV_API UIComponent : public Component
+class DV_API UiComponent : public Component
 {
-    DV_OBJECT(UIComponent);
+    DV_OBJECT(UiComponent);
 
 public:
     /// Construct.
-    explicit UIComponent();
+    explicit UiComponent();
     /// Destruct.
-    ~UIComponent() override;
+    ~UiComponent() override;
     /// Register object factory.
     static void register_object();
 
