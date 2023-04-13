@@ -10,6 +10,8 @@
 #include "../resource/resource.h"
 #include "../scene/value_animation_info.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -311,4 +313,4 @@ private:
     WeakPtr<Scene> scene_;
 };
 
-}
+} // namespace dviglo

@@ -362,7 +362,7 @@ bool Material::begin_load_json(Deserializer& source)
 
 bool Material::Save(Serializer& dest) const
 {
-    SharedPtr<XmlFile> xml(new XmlFile());
+    std::unique_ptr<XmlFile> xml(new XmlFile());
     XmlElement materialElem = xml->CreateRoot("material");
 
     Save(materialElem);
@@ -1364,4 +1364,4 @@ void Material::ApplyShaderDefines(i32 index/* = NINDEX*/)
         techniques_[index].technique_ = techniques_[index].original_->CloneWithDefines(vertexShaderDefines_, pixelShaderDefines_);
 }
 
-}
+} // namespace dviglo
