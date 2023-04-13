@@ -9,6 +9,8 @@
 #include "../graphics_api/graphics_defs.h"
 #include "../resource/resource.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -409,4 +411,4 @@ private:
     FaceCameraMode faceCameraMode_;
 };
 
-}
+} // namespace dviglo

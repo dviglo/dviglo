@@ -2,14 +2,15 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "particle_effect.h"
+
 #include "../core/context.h"
 #include "../core/string_utils.h"
-#include "material.h"
-#include "particle_effect.h"
-#include "billboard_set.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
+#include "billboard_set.h"
+#include "material.h"
 
 #include "../common/debug_new.h"
 
@@ -298,7 +299,7 @@ bool ParticleEffect::Load(const XmlElement& source)
 
 bool ParticleEffect::Save(Serializer& dest) const
 {
-    SharedPtr<XmlFile> xml(new XmlFile());
+    std::unique_ptr<XmlFile> xml(new XmlFile());
     XmlElement materialElem = xml->CreateRoot("particleeffect");
 
     Save(materialElem);
@@ -842,5 +843,4 @@ void ParticleEffect::GetVector3MinMax(const XmlElement& element, Vector3& minVal
     }
 }
 
-
-}
+} // namespace dviglo
