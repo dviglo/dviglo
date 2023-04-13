@@ -14,14 +14,6 @@
 namespace dviglo
 {
 
-TypeInfo::TypeInfo(const char* typeName) :
-    type_(typeName),
-    typeName_(typeName)
-{
-}
-
-TypeInfo::~TypeInfo() = default;
-
 Object::Object() :
     blockEvents_(false)
 {

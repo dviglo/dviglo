@@ -16,36 +16,13 @@ namespace dviglo
 class Context;
 class EventHandler;
 
-/// Type info.
-class DV_API TypeInfo
-{
-public:
-    /// Construct.
-    TypeInfo(const char* typeName);
-    /// Destruct.
-    ~TypeInfo();
-
-    /// Return type.
-    StringHash GetType() const { return type_; }
-    /// Return type name.
-    const String& GetTypeName() const { return typeName_;}
-
-private:
-    /// Type.
-    StringHash type_;
-    /// Type name.
-    String typeName_;
-};
-
-#define DV_OBJECT(typeName) \
+#define DV_OBJECT(type_name) \
     public: \
-        using ClassName = typeName; \
-        virtual dviglo::StringHash GetType() const override { return GetTypeInfoStatic()->GetType(); } \
-        virtual const dviglo::String& GetTypeName() const override { return GetTypeInfoStatic()->GetTypeName(); } \
-        virtual const dviglo::TypeInfo* GetTypeInfo() const override { return GetTypeInfoStatic(); } \
-        static dviglo::StringHash GetTypeStatic() { return GetTypeInfoStatic()->GetType(); } \
-        static const dviglo::String& GetTypeNameStatic() { return GetTypeInfoStatic()->GetTypeName(); } \
-        static const dviglo::TypeInfo* GetTypeInfoStatic() { static const dviglo::TypeInfo typeInfoStatic(#typeName); return &typeInfoStatic; }
+        using ClassName = type_name; \
+        static const dviglo::String& GetTypeNameStatic() { static const dviglo::String name(#type_name); return name; } \
+        static dviglo::StringHash GetTypeStatic() { static const dviglo::StringHash type(#type_name); return type; } \
+        virtual const dviglo::String& GetTypeName() const override { return GetTypeNameStatic(); } \
+        virtual dviglo::StringHash GetType() const override { return GetTypeStatic(); }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
 class DV_API Object : public RefCounted
@@ -60,15 +37,12 @@ public:
 
     /// Return type hash.
     virtual StringHash GetType() const = 0;
+
     /// Return type name.
     virtual const String& GetTypeName() const = 0;
-    /// Return type info.
-    virtual const TypeInfo* GetTypeInfo() const = 0;
+
     /// Handle event.
     virtual void OnEvent(Object* sender, StringHash eventType, VariantMap& eventData);
-
-    /// Return type info static.
-    static const TypeInfo* GetTypeInfoStatic() { return nullptr; }
 
     /// Subscribe to an event that can be sent by any sender.
     void subscribe_to_event(StringHash eventType, EventHandler* handler);
@@ -155,28 +129,25 @@ public:
     /// Create an object. Implemented in templated subclasses.
     virtual SharedPtr<Object> CreateObject() = 0;
 
-    /// Return type info of objects created by this factory.
-    const TypeInfo* GetTypeInfo() const { return typeInfo_; }
-
     /// Return type hash of objects created by this factory.
-    StringHash GetType() const { return typeInfo_->GetType(); }
+    StringHash GetType() const { return type_; }
 
     /// Return type name of objects created by this factory.
-    const String& GetTypeName() const { return typeInfo_->GetTypeName(); }
+    const String& GetTypeName() const { return type_name_; }
 
 protected:
-    /// Type info.
-    const TypeInfo* typeInfo_{};
+    StringHash type_;
+    String type_name_;
 };
 
 /// Template implementation of the object factory.
 template <class T> class ObjectFactoryImpl : public ObjectFactory
 {
 public:
-    /// Construct.
     explicit ObjectFactoryImpl()
     {
-        typeInfo_ = T::GetTypeInfoStatic();
+        type_ = T::GetTypeStatic();
+        type_name_ = T::GetTypeNameStatic();
     }
 
     /// Create an object of the specific type.
@@ -307,4 +278,4 @@ DV_API StringHashRegister& GetEventNameRegister();
 /// Convenience macro to construct an EventHandler that points to a receiver object and its member function, and also defines a userdata pointer.
 #define DV_HANDLER_USERDATA(className, function, userData) (new dviglo::EventHandlerImpl<className>(this, &className::function, userData))
 
-}
+} // namespace dviglo
