@@ -4,6 +4,7 @@
 #include <dviglo/dviglo_all.h>
 
 #include "main_menu.h"
+#include "main_scene.h"
 #include "material_editor.h"
 
 using namespace dviglo;
@@ -38,7 +39,11 @@ public:
 
         // Создаём синглтоны
         MainMenu::get_instance();
+        MainScene::get_instance();
         MaterialEditor::get_instance();
+
+        SharedPtr<Viewport> viewport(new Viewport(MAIN_SCENE.scene(), MAIN_SCENE.camera()));
+        DV_RENDERER.SetViewport(0, viewport);
     }
 };
 
