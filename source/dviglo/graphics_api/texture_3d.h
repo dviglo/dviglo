@@ -5,9 +5,9 @@
 #pragma once
 
 #include "../containers/ptr.h"
+#include "../resource/image.h"
 #include "render_surface.h"
 #include "texture.h"
-#include "../resource/image.h"
 
 namespace dviglo
 {
@@ -67,4 +67,4 @@ private:
     SharedPtr<XmlFile> loadParameters_;
 };
 
-}
+} // namespace dviglo
