@@ -9,6 +9,8 @@
 #include "../containers/array_ptr.h"
 #include "../resource/resource.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -93,4 +95,4 @@ private:
     bool sdfFont_;
 };
 
-}
+} // namespace dviglo

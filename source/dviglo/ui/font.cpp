@@ -2,17 +2,18 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "font.h"
+
 #include "../core/context.h"
 #include "../core/profiler.h"
 #include "../graphics/graphics.h"
 #include "../io/deserializer.h"
 #include "../io/file_system.h"
-#include "font.h"
-#include "font_face_bitmap.h"
-#include "font_face_freetype.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_element.h"
 #include "../resource/xml_file.h"
+#include "font_face_bitmap.h"
+#include "font_face_freetype.h"
 
 #include "../common/debug_new.h"
 
@@ -97,7 +98,7 @@ bool Font::save_xml(Serializer& dest, int pointSize, bool usedGlyphs, const Stri
 
     DV_PROFILE(FontSaveXML);
 
-    SharedPtr<FontFaceBitmap> packedFontFace(new FontFaceBitmap(this));
+    std::unique_ptr<FontFaceBitmap> packedFontFace(new FontFaceBitmap(this));
     if (!packedFontFace->Load(fontFace, usedGlyphs))
         return false;
 
@@ -218,4 +219,4 @@ FontFace* Font::GetFaceBitmap(float pointSize)
     return newFace;
 }
 
-}
+} // namespace dviglo
