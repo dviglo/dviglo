@@ -13,6 +13,8 @@
 #include "../graphics_api/vertex_buffer.h"
 #include "graphics.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -48,7 +50,7 @@ private:
     ShaderVariation* t_pixel_shader_;
 
     // Вершинный буфер для треугольников (индексный буфер не используется)
-    SharedPtr<VertexBuffer> t_vertex_buffer_;
+    std::unique_ptr<VertexBuffer> t_vertex_buffer_;
 
 protected:
 
@@ -108,8 +110,8 @@ private:
     ShaderVariation* q_current_ps_ = nullptr;
 
     // Буферы
-    SharedPtr<IndexBuffer> q_index_buffer_;
-    SharedPtr<VertexBuffer> q_vertex_buffer_;
+    std::unique_ptr<IndexBuffer> q_index_buffer_;
+    std::unique_ptr<VertexBuffer> q_vertex_buffer_;
 
 protected:
 

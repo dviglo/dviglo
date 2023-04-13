@@ -145,7 +145,7 @@ using GpuIndex16 = u16;
 
 SpriteBatchBase::SpriteBatchBase()
 {
-    q_index_buffer_ = new IndexBuffer();
+    q_index_buffer_.reset(new IndexBuffer());
     q_index_buffer_->SetShadowed(true);
 
     // Индексный буфер всегда содержит набор четырёхугольников, поэтому его можно сразу заполнить
@@ -165,12 +165,12 @@ SpriteBatchBase::SpriteBatchBase()
     }
     q_index_buffer_->Unlock();
 
-    q_vertex_buffer_ = new VertexBuffer();
+    q_vertex_buffer_.reset(new VertexBuffer());
     q_vertex_buffer_->SetSize(max_quads_in_portion_ * vertices_per_quad_, VertexElements::Position | VertexElements::Color | VertexElements::TexCoord1, true);
 
     Graphics& graphics = DV_GRAPHICS;
 
-    t_vertex_buffer_ = new VertexBuffer();
+    t_vertex_buffer_.reset(new VertexBuffer());
     t_vertex_buffer_->SetSize(max_triangles_in_portion_ * vertices_per_triangle_, VertexElements::Position | VertexElements::Color, true);
     t_vertex_shader_ = graphics.GetShader(VS, "triangle_batch");
     t_pixel_shader_ = graphics.GetShader(PS, "triangle_batch");
@@ -195,7 +195,7 @@ void SpriteBatchBase::flush()
         graphics.SetViewport(get_viewport_rect());
 
         graphics.SetIndexBuffer(nullptr);
-        graphics.SetVertexBuffer(t_vertex_buffer_);
+        graphics.SetVertexBuffer(t_vertex_buffer_.get());
         graphics.SetTexture(0, nullptr);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
@@ -230,8 +230,8 @@ void SpriteBatchBase::flush()
         graphics.SetBlendMode(blend_mode);
         graphics.SetViewport(get_viewport_rect());
 
-        graphics.SetIndexBuffer(q_index_buffer_);
-        graphics.SetVertexBuffer(q_vertex_buffer_);
+        graphics.SetIndexBuffer(q_index_buffer_.get());
+        graphics.SetVertexBuffer(q_vertex_buffer_.get());
         graphics.SetTexture(0, q_current_texture_);
 
         // Параметры шейдеров нужно задавать после указания шейдеров
