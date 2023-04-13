@@ -116,4 +116,4 @@ private:
     float compressedLength_;
 };
 
-}
+} // namespace dviglo

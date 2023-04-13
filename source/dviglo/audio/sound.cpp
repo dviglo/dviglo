@@ -2,14 +2,15 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "ogg_vorbis_sound_stream.h"
 #include "sound.h"
+
 #include "../core/context.h"
 #include "../core/profiler.h"
 #include "../io/file_system.h"
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
+#include "ogg_vorbis_sound_stream.h"
 
 #define STB_VORBIS_HEADER_ONLY
 #include <stb_vorbis.c>
@@ -353,4 +354,4 @@ void Sound::LoadParameters()
     }
 }
 
-}
+} // namespace dviglo
