@@ -12,7 +12,7 @@ namespace dviglo
 /// %Slider bar %UI element.
 class DV_API Slider : public BorderImage
 {
-    DV_OBJECT(Slider, BorderImage);
+    DV_OBJECT(Slider);
 
 public:
     /// Construct.

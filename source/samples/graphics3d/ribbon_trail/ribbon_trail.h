@@ -19,7 +19,7 @@ class RibbonTrail;
 /// This sample demonstrates how to use both trail types of RibbonTrail component.
 class RibbonTrailDemo : public Sample
 {
-    DV_OBJECT(RibbonTrailDemo, Sample);
+    DV_OBJECT(RibbonTrailDemo);
 
 public:
     /// Construct.

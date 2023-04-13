@@ -12,7 +12,7 @@ namespace dviglo
 /// %Sound listener component.
 class DV_API SoundListener : public Component
 {
-    DV_OBJECT(SoundListener, Component);
+    DV_OBJECT(SoundListener);
 
 public:
     /// Construct.

@@ -53,7 +53,7 @@ struct DelayedWorldTransform2D
 /// 2D physics simulation world component. Should be added only to the root scene node.
 class DV_API PhysicsWorld2D : public Component, public b2ContactListener, public b2Draw
 {
-    DV_OBJECT(PhysicsWorld2D, Component);
+    DV_OBJECT(PhysicsWorld2D);
 
 public:
     /// Construct.

@@ -11,7 +11,7 @@ namespace dviglo
 /// Stretchable sprite component.
 class DV_API StretchableSprite2D : public StaticSprite2D
 {
-    DV_OBJECT(StretchableSprite2D, StaticSprite2D);
+    DV_OBJECT(StretchableSprite2D);
 
 public:
     /// Construct.

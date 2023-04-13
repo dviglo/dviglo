@@ -15,7 +15,7 @@ using namespace dviglo;
 ///    - Default speed is 0.8 if 'Speed' property is not set in the tmx file objects
 class Mover : public LogicComponent
 {
-    DV_OBJECT(Mover, LogicComponent);
+    DV_OBJECT(Mover);
 
 public:
     /// Construct.

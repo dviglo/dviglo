@@ -65,7 +65,7 @@ struct DV_API AnimationControl
 /// %Component that drives an AnimatedModel's animations.
 class DV_API AnimationController : public Component
 {
-    DV_OBJECT(AnimationController, Component);
+    DV_OBJECT(AnimationController);
 
 public:
     /// Construct.

@@ -23,7 +23,7 @@ class XmlFile;
 /// %Console window with log history and command line prompt.
 class DV_API Console : public Object
 {
-    DV_OBJECT(Console, Object);
+    DV_OBJECT(Console);
 
 public:
     static Console& get_instance();

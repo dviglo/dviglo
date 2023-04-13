@@ -17,7 +17,7 @@ class Image;
 /// 2D texture array resource.
 class DV_API Texture2DArray : public Texture
 {
-    DV_OBJECT(Texture2DArray, Texture);
+    DV_OBJECT(Texture2DArray);
 
 public:
     /// Construct.

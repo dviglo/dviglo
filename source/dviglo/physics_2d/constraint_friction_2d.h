@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D friction constraint component.
 class DV_API ConstraintFriction2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintFriction2D, Constraint2D);
+    DV_OBJECT(ConstraintFriction2D);
 
 public:
     /// Construct.

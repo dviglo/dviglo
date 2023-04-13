@@ -24,7 +24,7 @@ using SDL_AudioDeviceID = u32;
 /// %Audio subsystem.
 class DV_API Audio : public Object
 {
-    DV_OBJECT(Audio, Object);
+    DV_OBJECT(Audio);
 
 public:
     static Audio& get_instance();

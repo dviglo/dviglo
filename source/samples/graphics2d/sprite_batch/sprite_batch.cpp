@@ -6,7 +6,7 @@ using namespace dviglo;
 
 class Game : public Application
 {
-    DV_OBJECT(Game, Application);
+    DV_OBJECT(Game);
 
 public:
     SharedPtr<Scene> scene_;

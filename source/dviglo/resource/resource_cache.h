@@ -63,7 +63,7 @@ public:
 /// %Resource cache subsystem. Loads resources on demand and stores them for later access.
 class DV_API ResourceCache : public Object
 {
-    DV_OBJECT(ResourceCache, Object);
+    DV_OBJECT(ResourceCache);
 
 public:
     static ResourceCache& get_instance();

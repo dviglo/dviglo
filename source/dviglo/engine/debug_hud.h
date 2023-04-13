@@ -29,7 +29,7 @@ DV_FLAGS(DebugHudElements);
 /// Displays rendering stats and profiling information.
 class DV_API DebugHud : public Object
 {
-    DV_OBJECT(DebugHud, Object);
+    DV_OBJECT(DebugHud);
 
 public:
     static DebugHud& get_instance();

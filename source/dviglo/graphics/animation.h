@@ -98,7 +98,7 @@ struct AnimationTriggerPoint
 /// Skeletal animation resource.
 class DV_API Animation : public ResourceWithMetadata
 {
-    DV_OBJECT(Animation, ResourceWithMetadata);
+    DV_OBJECT(Animation);
 
 public:
     /// Construct.

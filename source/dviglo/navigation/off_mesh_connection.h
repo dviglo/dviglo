@@ -12,7 +12,7 @@ namespace dviglo
 /// A link between otherwise unconnected regions of the navigation mesh.
 class DV_API OffMeshConnection : public Component
 {
-    DV_OBJECT(OffMeshConnection, Component);
+    DV_OBJECT(OffMeshConnection);
 
 public:
     /// Construct.

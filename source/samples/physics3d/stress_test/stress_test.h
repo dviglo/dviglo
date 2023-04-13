@@ -21,7 +21,7 @@ class Scene;
 ///     - Optimizing physics simulation by leaving out collision event signaling
 class PhysicsStressTest : public Sample
 {
-    DV_OBJECT(PhysicsStressTest, Sample);
+    DV_OBJECT(PhysicsStressTest);
 
 public:
     /// Construct.

@@ -123,7 +123,7 @@ struct JoystickState
 /// %Input subsystem. Converts operating system window messages to input state and events.
 class DV_API Input : public Object
 {
-    DV_OBJECT(Input, Object);
+    DV_OBJECT(Input);
 
 public:
     static Input& get_instance();

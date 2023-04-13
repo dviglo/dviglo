@@ -75,7 +75,7 @@ struct DV_API NavigationPathPoint
 /// Navigation mesh component. Collects the navigation geometry from child nodes with the Navigable component and responds to path queries.
 class DV_API NavigationMesh : public Component
 {
-    DV_OBJECT(NavigationMesh, Component);
+    DV_OBJECT(NavigationMesh);
 
     friend class CrowdManager;
 

@@ -15,7 +15,7 @@ class ScrollBar;
 /// Scrollable %UI element for showing a (possibly large) child element.
 class DV_API ScrollView : public UiElement
 {
-    DV_OBJECT(ScrollView, UiElement);
+    DV_OBJECT(ScrollView);
 
 public:
     /// Construct.

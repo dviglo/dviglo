@@ -14,7 +14,7 @@ class Sprite2D;
 /// Static sprite component.
 class DV_API StaticSprite2D : public Drawable2D
 {
-    DV_OBJECT(StaticSprite2D, Drawable2D);
+    DV_OBJECT(StaticSprite2D);
 
 public:
     /// Construct.

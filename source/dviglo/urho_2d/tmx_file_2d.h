@@ -138,7 +138,7 @@ private:
 /// Tile map file.
 class DV_API TmxFile2D : public Resource
 {
-    DV_OBJECT(TmxFile2D, Resource);
+    DV_OBJECT(TmxFile2D);
 
 public:
     /// Construct.

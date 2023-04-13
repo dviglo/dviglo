@@ -123,7 +123,7 @@ private:
 /// Property list (plist).
 class DV_API PListFile : public Resource
 {
-    DV_OBJECT(PListFile, Resource);
+    DV_OBJECT(PListFile);
 
 public:
     /// Construct.

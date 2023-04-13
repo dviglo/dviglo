@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D box collision component.
 class DV_API CollisionBox2D : public CollisionShape2D
 {
-    DV_OBJECT(CollisionBox2D, CollisionShape2D);
+    DV_OBJECT(CollisionBox2D);
 
 public:
     /// Construct.

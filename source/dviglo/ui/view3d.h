@@ -18,7 +18,7 @@ class Viewport;
 /// %UI element which renders a 3D scene.
 class DV_API View3D : public Window
 {
-    DV_OBJECT(View3D, Window);
+    DV_OBJECT(View3D);
 
 public:
     /// Construct.

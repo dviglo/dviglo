@@ -30,7 +30,7 @@ using ComponentId = id32;
 /// Base class for components. Components can be created to scene nodes.
 class DV_API Component : public Animatable
 {
-    DV_OBJECT(Component, Animatable);
+    DV_OBJECT(Component);
 
     friend class Node;
     friend class Scene;

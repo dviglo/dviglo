@@ -55,7 +55,7 @@ enum NavigationPushiness
 /// Crowd agent component, requires a CrowdManager component in the scene. When not set explicitly, agent's radius and height are defaulted to navigation mesh's agent radius and height, respectively.
 class DV_API CrowdAgent : public Component
 {
-    DV_OBJECT(CrowdAgent, Component);
+    DV_OBJECT(CrowdAgent);
 
     friend class CrowdManager;
     friend void CrowdAgentUpdateCallback(dtCrowdAgent* ag, float dt);

@@ -69,7 +69,7 @@ struct AsyncProgress
 /// Root scene node, represents the whole scene.
 class DV_API Scene : public Node
 {
-    DV_OBJECT(Scene, Node);
+    DV_OBJECT(Scene);
 
 public:
     using Node::GetComponent;

@@ -20,7 +20,7 @@ class Scene;
 ///     - Creating rendertarget texture and material programmatically
 class RenderToTexture : public Sample
 {
-    DV_OBJECT(RenderToTexture, Sample);
+    DV_OBJECT(RenderToTexture);
 
 public:
     /// Construct.

@@ -12,7 +12,7 @@ namespace dviglo
 /// Component which tags geometry for inclusion in the navigation mesh. Optionally auto-includes geometry from child nodes.
 class DV_API Navigable : public Component
 {
-    DV_OBJECT(Navigable, Component);
+    DV_OBJECT(Navigable);
 
 public:
     /// Construct.

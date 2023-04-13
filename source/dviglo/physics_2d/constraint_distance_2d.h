@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D distance constraint component.
 class DV_API ConstraintDistance2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintDistance2D, Constraint2D);
+    DV_OBJECT(ConstraintDistance2D);
 
 public:
     /// Construct.

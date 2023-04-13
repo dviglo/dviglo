@@ -99,7 +99,7 @@ enum PacketType {
 /// %Connection to a remote network host.
 class DV_API Connection : public Object
 {
-    DV_OBJECT(Connection, Object);
+    DV_OBJECT(Connection);
 
 public:
     Connection(bool isClient, const SLNet::AddressOrGUID& address, SLNet::RakPeerInterface* peer);

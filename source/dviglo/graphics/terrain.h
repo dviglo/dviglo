@@ -19,7 +19,7 @@ class TerrainPatch;
 /// Heightmap terrain component.
 class DV_API Terrain : public Component
 {
-    DV_OBJECT(Terrain, Component);
+    DV_OBJECT(Terrain);
 
 public:
     /// Construct.

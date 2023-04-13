@@ -22,7 +22,7 @@ class UiElement;
 ///     - Implementing simple chat functionality with network messages
 class Chat : public Sample
 {
-    DV_OBJECT(Chat, Sample);
+    DV_OBJECT(Chat);
 
 public:
     /// Construct.

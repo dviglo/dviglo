@@ -23,7 +23,7 @@ class Scene;
 ///     - Optionally speeding up rendering by grouping objects with the StaticModelGroup component
 class HugeObjectCount : public Sample
 {
-    DV_OBJECT(HugeObjectCount, Sample);
+    DV_OBJECT(HugeObjectCount);
 
 public:
     /// Construct.

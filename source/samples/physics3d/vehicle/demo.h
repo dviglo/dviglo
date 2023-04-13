@@ -23,7 +23,7 @@ class Vehicle;
 ///     - Defining attributes (including node and component references) of a custom component so that it can be saved and loaded
 class VehicleDemo : public Sample
 {
-    DV_OBJECT(VehicleDemo, Sample);
+    DV_OBJECT(VehicleDemo);
 
 public:
     /// Construct.

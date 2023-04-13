@@ -14,45 +14,13 @@
 namespace dviglo
 {
 
-TypeInfo::TypeInfo(const char* typeName, const TypeInfo* baseTypeInfo) :
+TypeInfo::TypeInfo(const char* typeName) :
     type_(typeName),
-    typeName_(typeName),
-    baseTypeInfo_(baseTypeInfo)
+    typeName_(typeName)
 {
 }
 
 TypeInfo::~TypeInfo() = default;
-
-bool TypeInfo::IsTypeOf(StringHash type) const
-{
-    const TypeInfo* current = this;
-    while (current)
-    {
-        if (current->GetType() == type)
-            return true;
-
-        current = current->GetBaseTypeInfo();
-    }
-
-    return false;
-}
-
-bool TypeInfo::IsTypeOf(const TypeInfo* typeInfo) const
-{
-    if (typeInfo == nullptr)
-        return false;
-
-    const TypeInfo* current = this;
-    while (current)
-    {
-        if (current == typeInfo || current->GetType() == typeInfo->GetType())
-            return true;
-
-        current = current->GetBaseTypeInfo();
-    }
-
-    return false;
-}
 
 Object::Object() :
     blockEvents_(false)
@@ -106,16 +74,6 @@ void Object::OnEvent(Object* sender, StringHash eventType, VariantMap& eventData
         nonSpecific->Invoke(eventData);
         DV_CONTEXT.SetEventHandler(nullptr);
     }
-}
-
-bool Object::IsInstanceOf(StringHash type) const
-{
-    return GetTypeInfo()->IsTypeOf(type);
-}
-
-bool Object::IsInstanceOf(const TypeInfo* typeInfo) const
-{
-    return GetTypeInfo()->IsTypeOf(typeInfo);
 }
 
 void Object::subscribe_to_event(StringHash eventType, EventHandler* handler)

@@ -40,7 +40,7 @@ class UIComponent;
 /// %UI subsystem. Manages the graphical user interface.
 class DV_API UI : public Object
 {
-    DV_OBJECT(UI, Object);
+    DV_OBJECT(UI);
 
 public:
     static UI& get_instance();

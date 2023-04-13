@@ -91,7 +91,7 @@ class DV_API View : public Object
     friend void CheckVisibilityWork(const WorkItem* item, i32 threadIndex);
     friend void ProcessLightWork(const WorkItem* item, i32 threadIndex);
 
-    DV_OBJECT(View, Object);
+    DV_OBJECT(View);
 
 public:
     /// Construct.

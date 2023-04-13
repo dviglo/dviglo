@@ -24,7 +24,7 @@ class Zone;
 /// core_data/render_paths/pbr_deferred.xml or core_data/render_paths/pbr_deferred_hw_depth.xml
 class PBRMaterials : public Sample
 {
-    DV_OBJECT(PBRMaterials, Sample);
+    DV_OBJECT(PBRMaterials);
 
 public:
     /// Construct.

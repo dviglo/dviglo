@@ -14,7 +14,7 @@
 class Sprites : public Sample
 {
     // Enable type information.
-    DV_OBJECT(Sprites, Sample);
+    DV_OBJECT(Sprites);
 
 public:
     /// Construct.

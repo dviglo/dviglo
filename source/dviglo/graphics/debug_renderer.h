@@ -72,7 +72,7 @@ struct DebugTriangle
 /// Debug geometry rendering component. Should be added only to the root scene node.
 class DV_API DebugRenderer : public Component
 {
-    DV_OBJECT(DebugRenderer, Component);
+    DV_OBJECT(DebugRenderer);
 
 public:
     /// Construct.

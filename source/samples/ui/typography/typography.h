@@ -10,7 +10,7 @@
 /// Displays text at various sizes, with checkboxes to change the rendering parameters.
 class Typography : public Sample
 {
-    DV_OBJECT(Typography, Sample);
+    DV_OBJECT(Typography);
 
 public:
     /// Construct.

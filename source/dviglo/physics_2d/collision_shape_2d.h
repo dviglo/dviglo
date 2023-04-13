@@ -16,7 +16,7 @@ class RigidBody2D;
 /// 2D collision shape component.
 class DV_API CollisionShape2D : public Component
 {
-    DV_OBJECT(CollisionShape2D, Component);
+    DV_OBJECT(CollisionShape2D);
 
 public:
     /// Construct.

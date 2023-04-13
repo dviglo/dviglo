@@ -24,7 +24,7 @@ class Obstacle;
 
 class DV_API DynamicNavigationMesh : public NavigationMesh
 {
-    DV_OBJECT(DynamicNavigationMesh, NavigationMesh);
+    DV_OBJECT(DynamicNavigationMesh);
 
     friend class Obstacle;
     friend struct MeshProcess;

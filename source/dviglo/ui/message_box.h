@@ -17,7 +17,7 @@ class XmlFile;
 /// Message box dialog. Manages its lifetime automatically, so the application does not need to hold a reference to it, and shouldn't attempt to destroy it manually.
 class DV_API MessageBox : public Object
 {
-    DV_OBJECT(MessageBox, Object);
+    DV_OBJECT(MessageBox);
 
 public:
     /// Construct. If layout file is not given, use the default message box layout. If style file is not given, use the default style file from root UI element.

@@ -11,7 +11,7 @@ namespace dviglo
 
 class LightFlash : public GameObject
 {
-    DV_OBJECT(LightFlash, GameObject);
+    DV_OBJECT(LightFlash);
 
 public:
     static void register_object();

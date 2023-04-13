@@ -13,7 +13,7 @@ using namespace dvt;
 class Benchmark03_MoleculeLogic : public dv::LogicComponent
 {
 public:
-    DV_OBJECT(Benchmark03_MoleculeLogic, LogicComponent);
+    DV_OBJECT(Benchmark03_MoleculeLogic);
 
 private:
     i32 moleculeType_;

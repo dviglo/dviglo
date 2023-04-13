@@ -18,7 +18,7 @@ using namespace dviglo;
 
 class App : public Application
 {
-    DV_OBJECT(App, Application);
+    DV_OBJECT(App);
 
 public:
     App()

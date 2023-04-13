@@ -14,7 +14,7 @@ struct RaycastVehicleData;
 
 class DV_API RaycastVehicle : public LogicComponent
 {
-    DV_OBJECT(RaycastVehicle, LogicComponent);
+    DV_OBJECT(RaycastVehicle);
 
 public:
     /// Construct.

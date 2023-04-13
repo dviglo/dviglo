@@ -150,7 +150,7 @@ struct WindowModeParams
 /// %Graphics subsystem. Manages the application window, rendering state and GPU resources.
 class DV_API Graphics : public Object
 {
-    DV_OBJECT(Graphics, Object);
+    DV_OBJECT(Graphics);
 
 public:
     static Graphics& get_instance();

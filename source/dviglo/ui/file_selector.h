@@ -32,7 +32,7 @@ struct FileSelectorEntry
 /// %File selector dialog.
 class DV_API FileSelector : public Object
 {
-    DV_OBJECT(FileSelector, Object);
+    DV_OBJECT(FileSelector);
 
 public:
     /// Construct.

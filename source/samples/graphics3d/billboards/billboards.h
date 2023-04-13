@@ -21,7 +21,7 @@ class Scene;
 ///     - Examining rendering performance with a somewhat large object and light count
 class Billboards : public Sample
 {
-    DV_OBJECT(Billboards, Sample);
+    DV_OBJECT(Billboards);
 
 public:
     /// Construct.

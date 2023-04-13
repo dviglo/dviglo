@@ -31,7 +31,7 @@ using namespace dviglo;
 class Sample : public Application
 {
     // Enable type information.
-    DV_OBJECT(Sample, Application);
+    DV_OBJECT(Sample);
 
 public:
     /// Construct.

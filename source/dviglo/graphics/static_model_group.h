@@ -12,7 +12,7 @@ namespace dviglo
 /// Renders several object instances while culling and receiving light as one unit. Can be used as a CPU-side optimization, but note that also regular StaticModels will use instanced rendering if possible.
 class DV_API StaticModelGroup : public StaticModel
 {
-    DV_OBJECT(StaticModelGroup, StaticModel);
+    DV_OBJECT(StaticModelGroup);
 
 public:
     /// Construct.

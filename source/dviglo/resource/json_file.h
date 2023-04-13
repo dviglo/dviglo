@@ -13,7 +13,7 @@ namespace dviglo
 /// JSON document resource.
 class DV_API JSONFile : public Resource
 {
-    DV_OBJECT(JSONFile, Resource);
+    DV_OBJECT(JSONFile);
 
 public:
     /// Construct.

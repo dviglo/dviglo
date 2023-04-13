@@ -49,7 +49,7 @@ struct VAnimEventFrame
 /// Value animation class.
 class DV_API ValueAnimation : public Resource
 {
-    DV_OBJECT(ValueAnimation, Resource);
+    DV_OBJECT(ValueAnimation);
 
 public:
     /// Construct.

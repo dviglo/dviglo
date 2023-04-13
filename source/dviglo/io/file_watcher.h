@@ -16,7 +16,7 @@ namespace dviglo
 /// Watches a directory and its subdirectories for files being modified.
 class DV_API FileWatcher : public Object, public Thread
 {
-    DV_OBJECT(FileWatcher, Object);
+    DV_OBJECT(FileWatcher);
 
 public:
     /// Construct.

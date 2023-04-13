@@ -11,7 +11,7 @@ namespace dviglo
 /// 2D chain collision component.
 class DV_API CollisionChain2D : public CollisionShape2D
 {
-    DV_OBJECT(CollisionChain2D, CollisionShape2D);
+    DV_OBJECT(CollisionChain2D);
 
 public:
     /// Construct.

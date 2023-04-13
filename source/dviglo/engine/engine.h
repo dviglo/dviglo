@@ -13,7 +13,7 @@ namespace dviglo
 /// Urho3D engine. Creates the other subsystems.
 class DV_API Engine : public Object
 {
-    DV_OBJECT(Engine, Object);
+    DV_OBJECT(Engine);
 
 public:
     static Engine& get_instance();

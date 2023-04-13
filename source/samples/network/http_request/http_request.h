@@ -17,7 +17,7 @@ namespace dviglo
 ///     - How to use Http request API
 class HttpRequestDemo : public Sample
 {
-    DV_OBJECT(HttpRequestDemo, Sample);
+    DV_OBJECT(HttpRequestDemo);
 
 public:
     /// Construct.

@@ -37,7 +37,7 @@ DV_FLAGS(LogicComponentEvents);
 /// Helper base class for user-defined game logic components that hooks up to update events and forwards them to virtual functions similar to ScriptInstance class.
 class DV_API LogicComponent : public Component
 {
-    DV_OBJECT(LogicComponent, Component);
+    DV_OBJECT(LogicComponent);
 
 public:
     /// Construct.

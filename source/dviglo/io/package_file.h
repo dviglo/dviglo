@@ -25,7 +25,7 @@ struct PackageEntry
 /// Stores files of a directory tree sequentially for convenient access.
 class DV_API PackageFile : public Object
 {
-    DV_OBJECT(PackageFile, Object);
+    DV_OBJECT(PackageFile);
 
 public:
     /// Construct.

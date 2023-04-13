@@ -25,7 +25,7 @@ DV_FLAGSET(SmoothingType, SmoothingTypeFlags);
 /// Transform smoothing component for network updates.
 class DV_API SmoothedTransform : public Component
 {
-    DV_OBJECT(SmoothedTransform, Component);
+    DV_OBJECT(SmoothedTransform);
 
 public:
     /// Construct.

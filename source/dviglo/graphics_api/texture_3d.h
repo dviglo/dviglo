@@ -15,7 +15,7 @@ namespace dviglo
 /// 3D texture resource.
 class DV_API Texture3D : public Texture
 {
-    DV_OBJECT(Texture3D, Texture);
+    DV_OBJECT(Texture3D);
 
 public:
     /// Construct.

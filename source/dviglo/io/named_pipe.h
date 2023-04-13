@@ -18,7 +18,7 @@ namespace dviglo
 /// Named pipe for interprocess communication.
 class DV_API NamedPipe : public Object, public AbstractFile
 {
-    DV_OBJECT(NamedPipe, Object);
+    DV_OBJECT(NamedPipe);
 
 public:
     /// Construct.

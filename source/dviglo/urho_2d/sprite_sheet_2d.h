@@ -18,7 +18,7 @@ class JSONFile;
 /// Sprite sheet.
 class DV_API SpriteSheet2D : public Resource
 {
-    DV_OBJECT(SpriteSheet2D, Resource);
+    DV_OBJECT(SpriteSheet2D);
 
 public:
     /// Construct.

@@ -89,7 +89,7 @@ struct GeometryDesc
 /// 3D model resource.
 class DV_API Model : public ResourceWithMetadata
 {
-    DV_OBJECT(Model, ResourceWithMetadata);
+    DV_OBJECT(Model);
 
 public:
     /// Construct.

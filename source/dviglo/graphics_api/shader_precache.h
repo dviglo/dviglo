@@ -17,7 +17,7 @@ class ShaderVariation;
 /// Utility class for collecting used shader combinations during runtime for precaching.
 class DV_API ShaderPrecache : public Object
 {
-    DV_OBJECT(ShaderPrecache, Object);
+    DV_OBJECT(ShaderPrecache);
 
 public:
     /// Construct and begin collecting shader combinations. Load existing combinations from XML if the file exists.

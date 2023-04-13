@@ -65,7 +65,7 @@ struct OcclusionBatch
 /// Software renderer for occlusion.
 class DV_API OcclusionBuffer : public Object
 {
-    DV_OBJECT(OcclusionBuffer, Object);
+    DV_OBJECT(OcclusionBuffer);
 
 public:
     /// Construct.

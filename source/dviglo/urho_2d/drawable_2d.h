@@ -48,7 +48,7 @@ struct SourceBatch2D
 /// Base class for 2D visible components.
 class DV_API Drawable2D : public Drawable
 {
-    DV_OBJECT(Drawable2D, Drawable);
+    DV_OBJECT(Drawable2D);
 
 public:
     /// Construct.

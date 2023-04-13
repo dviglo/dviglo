@@ -75,7 +75,7 @@ struct DV_API CursorShapeInfo
 /// Mouse cursor %UI element.
 class DV_API Cursor : public BorderImage
 {
-    DV_OBJECT(Cursor, BorderImage);
+    DV_OBJECT(Cursor);
 
 public:
     /// Construct.

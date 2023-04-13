@@ -18,7 +18,7 @@ namespace dviglo
 
 class DV_API SpriteBatchBase : public Object
 {
-    DV_OBJECT(SpriteBatchBase, Object);
+    DV_OBJECT(SpriteBatchBase);
 
     // ============================ Пакетный рендеринг треугольников ============================
 

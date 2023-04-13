@@ -25,7 +25,7 @@ class Character;
 ///     - Defining attributes of a custom component so that it can be saved and loaded
 class CharacterDemo : public Sample
 {
-    DV_OBJECT(CharacterDemo, Sample);
+    DV_OBJECT(CharacterDemo);
 
 public:
     /// Construct.

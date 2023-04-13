@@ -18,7 +18,7 @@ class CheckBox;
 /// Demo application for dynamic window settings change.
 class WindowSettingsDemo : public Sample
 {
-    DV_OBJECT(WindowSettingsDemo, Sample);
+    DV_OBJECT(WindowSettingsDemo);
 
 public:
     /// Construct.

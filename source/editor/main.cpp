@@ -12,7 +12,7 @@ using namespace dviglo;
 // Главный класс приложения
 class App : public Application
 {
-    DV_OBJECT(App, Application);
+    DV_OBJECT(App);
 
 public:
     App()

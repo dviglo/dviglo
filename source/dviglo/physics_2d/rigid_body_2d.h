@@ -28,7 +28,7 @@ enum BodyType2D
 /// 2D rigid body component.
 class DV_API RigidBody2D : public Component
 {
-    DV_OBJECT(RigidBody2D, Component);
+    DV_OBJECT(RigidBody2D);
 
 public:
     /// Construct.

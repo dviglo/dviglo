@@ -15,7 +15,7 @@ inline const dv::String CURRENT_FPS_STR = "Current FPS";
 class AppState_Base : public dv::Object
 {
 public:
-    DV_OBJECT(AppState_Base, Object);
+    DV_OBJECT(AppState_Base);
 
 protected:
     dv::String name_ = "Название бенчмарка";

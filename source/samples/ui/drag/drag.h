@@ -20,7 +20,7 @@ namespace dviglo
 ///     - Working with GUI elements with specific tags.
 class UIDrag : public Sample
 {
-    DV_OBJECT(UIDrag, Sample);
+    DV_OBJECT(UIDrag);
 
 public:
     /// Construct.

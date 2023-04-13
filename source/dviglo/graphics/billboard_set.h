@@ -42,7 +42,7 @@ struct DV_API Billboard
 /// %Billboard component.
 class DV_API BillboardSet : public Drawable
 {
-    DV_OBJECT(BillboardSet, Drawable);
+    DV_OBJECT(BillboardSet);
 
 public:
     /// Construct.

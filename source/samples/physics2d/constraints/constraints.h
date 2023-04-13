@@ -34,7 +34,7 @@ namespace dviglo
 ///     - Setting the background color for the scene
 class Urho2DConstraints : public Sample
 {
-    DV_OBJECT(Urho2DConstraints, Sample);
+    DV_OBJECT(Urho2DConstraints);
 
 public:
     /// Construct.

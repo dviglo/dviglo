@@ -17,7 +17,7 @@ class PhysicsWorld2D;
 /// 2D physics constraint component.
 class DV_API Constraint2D : public Component
 {
-    DV_OBJECT(Constraint2D, Component);
+    DV_OBJECT(Constraint2D);
 
 public:
     /// Construct.

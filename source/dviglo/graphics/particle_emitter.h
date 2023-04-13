@@ -35,7 +35,7 @@ struct Particle
 /// %Particle emitter component.
 class DV_API ParticleEmitter : public BillboardSet
 {
-    DV_OBJECT(ParticleEmitter, BillboardSet);
+    DV_OBJECT(ParticleEmitter);
 
 public:
     /// Construct.

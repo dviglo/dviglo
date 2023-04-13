@@ -127,7 +127,7 @@ struct DV_API FocusParameters
 /// %Light component.
 class DV_API Light : public Drawable
 {
-    DV_OBJECT(Light, Drawable);
+    DV_OBJECT(Light);
 
 public:
     /// Construct.

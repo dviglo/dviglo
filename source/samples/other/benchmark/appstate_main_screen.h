@@ -14,7 +14,7 @@ namespace dviglo
 class AppState_MainScreen : public AppState_Base
 {
 public:
-    DV_OBJECT(AppState_MainScreen, AppState_Base);
+    DV_OBJECT(AppState_MainScreen);
 
 private:
     void HandleButtonPressed(dv::StringHash eventType, dv::VariantMap& eventData);

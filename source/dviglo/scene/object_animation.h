@@ -18,7 +18,7 @@ class JSONValue;
 /// Object animation class, an object animation include one or more attribute animations and theirs wrap mode and speed for an Animatable object.
 class DV_API ObjectAnimation : public Resource
 {
-    DV_OBJECT(ObjectAnimation, Resource);
+    DV_OBJECT(ObjectAnimation);
 
 public:
     /// Construct.

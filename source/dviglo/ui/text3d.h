@@ -17,7 +17,7 @@ class Text;
 /// 3D text component.
 class DV_API Text3D : public Drawable
 {
-    DV_OBJECT(Text3D, Drawable);
+    DV_OBJECT(Text3D);
 
 public:
     /// Construct.

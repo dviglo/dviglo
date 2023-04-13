@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D pulley constraint component.
 class DV_API ConstraintPulley2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintPulley2D, Constraint2D);
+    DV_OBJECT(ConstraintPulley2D);
 
 public:
     /// Construct.

@@ -62,7 +62,7 @@ struct CompressedLevel
 /// %Image resource.
 class DV_API Image : public Resource
 {
-    DV_OBJECT(Image, Resource);
+    DV_OBJECT(Image);
 
 public:
     /// Construct empty.

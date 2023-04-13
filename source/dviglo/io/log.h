@@ -55,7 +55,7 @@ struct StoredLogMessage
 /// Logging subsystem.
 class DV_API Log : public Object
 {
-    DV_OBJECT(Log, Object);
+    DV_OBJECT(Log);
 
 public:
     static Log& get_instance();

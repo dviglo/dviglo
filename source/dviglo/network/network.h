@@ -19,7 +19,7 @@ class Scene;
 /// %Network subsystem. Manages client-server communications using the UDP protocol.
 class DV_API Network : public Object
 {
-    DV_OBJECT(Network, Object);
+    DV_OBJECT(Network);
 
 public:
     static Network& get_instance();

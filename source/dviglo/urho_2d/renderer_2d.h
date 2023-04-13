@@ -50,7 +50,7 @@ struct ViewBatchInfo2D
 /// 2D renderer component.
 class DV_API Renderer2D : public Drawable
 {
-    DV_OBJECT(Renderer2D, Drawable);
+    DV_OBJECT(Renderer2D);
 
     friend void CheckDrawableVisibilityWork(const WorkItem* item, i32 threadIndex);
 

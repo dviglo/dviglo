@@ -61,7 +61,7 @@ struct DV_API NodeImpl
 /// %Scene node that may contain components and child nodes.
 class DV_API Node : public Animatable
 {
-    DV_OBJECT(Node, Animatable);
+    DV_OBJECT(Node);
 
     friend class Connection;
 

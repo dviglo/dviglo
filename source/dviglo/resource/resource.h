@@ -35,7 +35,7 @@ enum AsyncLoadState
 /// Base class for resources.
 class DV_API Resource : public Object
 {
-    DV_OBJECT(Resource, Object);
+    DV_OBJECT(Resource);
 
 public:
     /// Construct.
@@ -95,7 +95,7 @@ private:
 /// Base class for resources that support arbitrary metadata stored. Metadata serialization shall be implemented in derived classes.
 class DV_API ResourceWithMetadata : public Resource
 {
-    DV_OBJECT(ResourceWithMetadata, Resource);
+    DV_OBJECT(ResourceWithMetadata);
 
 public:
     /// Construct.

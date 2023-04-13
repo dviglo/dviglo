@@ -14,7 +14,7 @@ namespace dviglo
 /// %ProgressBar bar %UI element.
 class DV_API ProgressBar : public BorderImage
 {
-    DV_OBJECT(ProgressBar, BorderImage);
+    DV_OBJECT(ProgressBar);
 
 public:
     /// Construct.

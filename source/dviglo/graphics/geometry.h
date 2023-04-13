@@ -19,7 +19,7 @@ class VertexBuffer;
 /// Defines one or more vertex buffers, an index buffer and a draw range.
 class DV_API Geometry : public Object
 {
-    DV_OBJECT(Geometry, Object);
+    DV_OBJECT(Geometry);
 
 public:
     /// Construct with one empty vertex buffer.

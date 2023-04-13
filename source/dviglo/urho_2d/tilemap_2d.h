@@ -16,7 +16,7 @@ class TmxFile2D;
 /// Tile map component.
 class DV_API TileMap2D : public Component
 {
-    DV_OBJECT(TileMap2D, Component);
+    DV_OBJECT(TileMap2D);
 
 public:
     /// Construct.

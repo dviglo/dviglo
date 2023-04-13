@@ -12,7 +12,7 @@ namespace dviglo
 /// %Menu %UI element that optionally shows a popup.
 class DV_API Menu : public Button
 {
-    DV_OBJECT(Menu, Button);
+    DV_OBJECT(Menu);
 
 public:
     /// Construct.

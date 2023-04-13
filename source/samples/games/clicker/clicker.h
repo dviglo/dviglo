@@ -10,7 +10,7 @@
 
 class Clicker : public Sample
 {
-    DV_OBJECT(Clicker, Sample);
+    DV_OBJECT(Clicker);
 
 public:
     /// Construct.

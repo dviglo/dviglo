@@ -21,7 +21,7 @@ class Scene;
 ///     - Attaching a light to an object (the camera)
 class AnimatingScene : public Sample
 {
-    DV_OBJECT(AnimatingScene, Sample);
+    DV_OBJECT(AnimatingScene);
 
 public:
     /// Construct.

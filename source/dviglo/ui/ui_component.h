@@ -21,7 +21,7 @@ class UIElement3D;
 
 class DV_API UIComponent : public Component
 {
-    DV_OBJECT(UIComponent, Component);
+    DV_OBJECT(UIComponent);
 
 public:
     /// Construct.

@@ -141,7 +141,7 @@ protected:
 /// %Octree component. Should be added only to the root scene node.
 class DV_API Octree : public Component, public Octant
 {
-    DV_OBJECT(Octree, Component);
+    DV_OBJECT(Octree);
 
 public:
     /// Construct.

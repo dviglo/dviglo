@@ -15,7 +15,7 @@ class SoundStream;
 /// %Sound resource.
 class DV_API Sound : public ResourceWithMetadata
 {
-    DV_OBJECT(Sound, ResourceWithMetadata);
+    DV_OBJECT(Sound);
 
 public:
     /// Construct.

@@ -25,7 +25,7 @@ enum EmitterType2D
 /// 2D particle effect resource.
 class DV_API ParticleEffect2D : public Resource
 {
-    DV_OBJECT(ParticleEffect2D, Resource);
+    DV_OBJECT(ParticleEffect2D);
 
 public:
     /// Construct.

@@ -84,7 +84,7 @@ struct Decal
 /// %Decal renderer component.
 class DV_API DecalSet : public Drawable
 {
-    DV_OBJECT(DecalSet, Drawable);
+    DV_OBJECT(DecalSet);
 
 public:
     /// Construct.

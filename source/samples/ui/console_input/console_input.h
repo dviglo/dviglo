@@ -13,7 +13,7 @@
 ///     - Adding autocomplete options to the engine console.
 class ConsoleInput : public Sample
 {
-    DV_OBJECT(ConsoleInput, Sample);
+    DV_OBJECT(ConsoleInput);
 
 public:
     /// Construct.

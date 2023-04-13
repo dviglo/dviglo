@@ -31,7 +31,7 @@ DV_FLAGSET(ViewOverride, ViewOverrideFlags);
 /// %Camera component.
 class DV_API Camera : public Component
 {
-    DV_OBJECT(Camera, Component);
+    DV_OBJECT(Camera);
 
 public:
     /// Construct.

@@ -89,7 +89,7 @@ class XmlElement;
 /// %Particle effect definition.
 class DV_API ParticleEffect : public Resource
 {
-    DV_OBJECT(ParticleEffect, Resource);
+    DV_OBJECT(ParticleEffect);
 
 public:
     /// Construct.

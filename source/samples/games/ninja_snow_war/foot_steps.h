@@ -11,7 +11,7 @@ namespace dviglo
 
 class FootSteps : public LogicComponent
 {
-    DV_OBJECT(FootSteps, LogicComponent);
+    DV_OBJECT(FootSteps);
 
 public:
     static void register_object();

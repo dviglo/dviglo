@@ -46,7 +46,7 @@ struct DV_API TrailPoint
 /// Drawable component that creates a tail.
 class DV_API RibbonTrail : public Drawable
 {
-    DV_OBJECT(RibbonTrail, Drawable);
+    DV_OBJECT(RibbonTrail);
 
 public:
     /// Construct.

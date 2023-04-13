@@ -46,7 +46,7 @@ static constexpr float SPAWN_AREA_SIZE = 5.0f;
 
 class App : public Application
 {
-    DV_OBJECT(App, Application);
+    DV_OBJECT(App);
 
 private:
     SharedPtr<Scene> gameScene;

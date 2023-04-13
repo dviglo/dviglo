@@ -87,7 +87,7 @@ template <> inline hash32 MakeHash(const TextureUnit& value)
 /// Describes how to render 3D geometries.
 class DV_API Material : public Resource
 {
-    DV_OBJECT(Material, Resource);
+    DV_OBJECT(Material);
 
 public:
     /// Construct.

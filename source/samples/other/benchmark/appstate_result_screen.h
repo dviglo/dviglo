@@ -9,7 +9,7 @@
 class AppState_ResultScreen : public AppState_Base
 {
 public:
-    DV_OBJECT(AppState_ResultScreen, AppState_Base);
+    DV_OBJECT(AppState_ResultScreen);
 
 public:
     AppState_ResultScreen()

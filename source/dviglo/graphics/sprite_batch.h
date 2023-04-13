@@ -26,7 +26,7 @@ DV_FLAGS(FlipModes);
 
 class DV_API SpriteBatch : public SpriteBatchBase
 {
-    DV_OBJECT(SpriteBatch, SpriteBatchBase);
+    DV_OBJECT(SpriteBatch);
 
 public:
 

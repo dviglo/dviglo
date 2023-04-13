@@ -16,7 +16,7 @@ class Texture2D;
 /// Sprite.
 class DV_API Sprite2D : public Resource
 {
-    DV_OBJECT(Sprite2D, Resource);
+    DV_OBJECT(Sprite2D);
 
 public:
     /// Construct.

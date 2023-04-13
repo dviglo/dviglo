@@ -96,7 +96,7 @@ struct DV_API SourceBatch
 /// Base class for visible components.
 class DV_API Drawable : public Component
 {
-    DV_OBJECT(Drawable, Component);
+    DV_OBJECT(Drawable);
 
     friend class Octant;
     friend class Octree;

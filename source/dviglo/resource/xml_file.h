@@ -24,7 +24,7 @@ namespace dviglo
 /// XML document resource.
 class DV_API XmlFile : public Resource
 {
-    DV_OBJECT(XmlFile, Resource);
+    DV_OBJECT(XmlFile);
 
 public:
     /// Construct.

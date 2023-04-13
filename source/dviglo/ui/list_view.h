@@ -26,7 +26,7 @@ enum HighlightMode
 /// Scrollable list %UI element.
 class DV_API ListView : public ScrollView
 {
-    DV_OBJECT(ListView, ScrollView);
+    DV_OBJECT(ListView);
 
 public:
     /// Construct.

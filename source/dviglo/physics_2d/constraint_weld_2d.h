@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D weld constraint component.
 class DV_API ConstraintWeld2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintWeld2D, Constraint2D);
+    DV_OBJECT(ConstraintWeld2D);
 
 public:
     /// Construct.

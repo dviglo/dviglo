@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D wheel constraint component.
 class DV_API ConstraintWheel2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintWheel2D, Constraint2D);
+    DV_OBJECT(ConstraintWheel2D);
 
 public:
     /// Construct.

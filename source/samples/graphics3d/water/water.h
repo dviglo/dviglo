@@ -22,7 +22,7 @@ class Scene;
 ///     - Setting up a second camera to render reflections on the water surface
 class Water : public Sample
 {
-    DV_OBJECT(Water, Sample);
+    DV_OBJECT(Water);
 
 public:
     /// Construct.

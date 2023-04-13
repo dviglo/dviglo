@@ -21,7 +21,7 @@ inline constexpr AppStateId APPSTATEID_BENCHMARK04 = 6;
 class AppStateManager : public dv::Object
 {
 public:
-    DV_OBJECT(AppStateManager, Object);
+    DV_OBJECT(AppStateManager);
 
 public:
     static AppStateManager& get_instance();

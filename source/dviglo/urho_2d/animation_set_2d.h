@@ -29,7 +29,7 @@ class SpriteSheet2D;
 /// Spriter animation set, it includes one or more animations, for more information please refer to http://www.esotericsoftware.com and http://www.brashmonkey.com/spriter.htm.
 class DV_API AnimationSet2D : public Resource
 {
-    DV_OBJECT(AnimationSet2D, Resource);
+    DV_OBJECT(AnimationSet2D);
 
 public:
     /// Construct.

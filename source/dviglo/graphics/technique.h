@@ -171,7 +171,7 @@ private:
 /// %Material technique. Consists of several passes.
 class DV_API Technique : public Resource
 {
-    DV_OBJECT(Technique, Resource);
+    DV_OBJECT(Technique);
 
     friend class Renderer;
 

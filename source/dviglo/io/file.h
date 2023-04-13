@@ -26,7 +26,7 @@ class PackageFile;
 /// %File opened either through the filesystem or from within a package file.
 class DV_API File : public Object, public AbstractFile
 {
-    DV_OBJECT(File, Object);
+    DV_OBJECT(File);
 
 public:
     /// Construct.

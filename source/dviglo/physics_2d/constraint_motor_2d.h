@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D motor constraint component.
 class DV_API ConstraintMotor2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintMotor2D, Constraint2D);
+    DV_OBJECT(ConstraintMotor2D);
 
 public:
     /// Construct.

@@ -27,7 +27,7 @@ struct ReplicationState;
 /// Base class for objects with automatic serialization through attributes.
 class DV_API Serializable : public Object
 {
-    DV_OBJECT(Serializable, Object);
+    DV_OBJECT(Serializable);
 
 public:
     /// Construct.

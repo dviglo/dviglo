@@ -15,7 +15,7 @@ namespace dviglo
 /// Hardware index buffer.
 class DV_API IndexBuffer : public Object, public GpuObject
 {
-    DV_OBJECT(IndexBuffer, Object);
+    DV_OBJECT(IndexBuffer);
 
 public:
     explicit IndexBuffer();

@@ -10,7 +10,7 @@ namespace dv = dviglo;
 // Класс создаёт окно редактора материалов и обрабатывает его события
 class MaterialEditor : public dv::Object
 {
-    DV_OBJECT(MaterialEditor, Object);
+    DV_OBJECT(MaterialEditor);
 
 public:
     static MaterialEditor& get_instance();

@@ -40,7 +40,7 @@ class AnimationSet2D;
 /// Animated sprite component, it uses to play animation created by Spine (http://www.esotericsoftware.com) and Spriter (http://www.brashmonkey.com/).
 class DV_API AnimatedSprite2D : public StaticSprite2D
 {
-    DV_OBJECT(AnimatedSprite2D, StaticSprite2D);
+    DV_OBJECT(AnimatedSprite2D);
 
 public:
     /// Construct.

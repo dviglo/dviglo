@@ -15,7 +15,7 @@ class Slider;
 /// Scroll bar %UI element with forward and back buttons.
 class DV_API ScrollBar : public BorderImage
 {
-    DV_OBJECT(ScrollBar, BorderImage);
+    DV_OBJECT(ScrollBar);
 
 public:
     /// Construct.

@@ -20,7 +20,7 @@ namespace dviglo
 /// Spline for creating smooth movement based on Speed along a set of Control Points modified by the Interpolation Mode.
 class DV_API SplinePath : public Component
 {
-    DV_OBJECT(SplinePath, Component);
+    DV_OBJECT(SplinePath);
 
 public:
     /// Construct an Empty SplinePath.

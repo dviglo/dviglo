@@ -59,7 +59,7 @@ struct GlyphLocation
 /// %Text %UI element.
 class DV_API Text : public UISelectable
 {
-    DV_OBJECT(Text, UISelectable);
+    DV_OBJECT(Text);
 
     friend class Text3D;
 

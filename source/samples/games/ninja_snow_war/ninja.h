@@ -15,7 +15,7 @@ namespace dviglo
 
 class Ninja : public GameObject
 {
-    DV_OBJECT(Ninja, GameObject);
+    DV_OBJECT(Ninja);
 
 public:
     static void register_object();

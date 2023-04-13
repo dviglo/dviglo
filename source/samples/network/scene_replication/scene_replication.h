@@ -25,7 +25,7 @@ class UiElement;
 ///     - Controlling a physics object's movement by applying forces
 class SceneReplication : public Sample
 {
-    DV_OBJECT(SceneReplication, Sample);
+    DV_OBJECT(SceneReplication);
 
 public:
     /// Construct.

@@ -13,7 +13,7 @@ namespace dviglo
 class DV_API UISelectable : public UiElement
 {
 public:
-    DV_OBJECT(UISelectable, UiElement);
+    DV_OBJECT(UISelectable);
 
     /// Construct.
     using UiElement::UiElement;

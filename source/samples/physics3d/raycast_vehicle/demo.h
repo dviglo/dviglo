@@ -23,7 +23,7 @@ class Vehicle;
 
 class RaycastVehicleDemo : public Sample
 {
-    DV_OBJECT(RaycastVehicleDemo, Sample);
+    DV_OBJECT(RaycastVehicleDemo);
 
 public:
     /// Construct.

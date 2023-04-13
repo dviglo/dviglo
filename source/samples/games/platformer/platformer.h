@@ -22,7 +22,7 @@ class Sample2D;
 /// Note that this sample uses some functions from Sample2D utility class.
 class Urho2DPlatformer : public Sample
 {
-    DV_OBJECT(Urho2DPlatformer, Sample);
+    DV_OBJECT(Urho2DPlatformer);
 
 public:
     /// Construct.

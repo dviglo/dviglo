@@ -21,43 +21,31 @@ class DV_API TypeInfo
 {
 public:
     /// Construct.
-    TypeInfo(const char* typeName, const TypeInfo* baseTypeInfo);
+    TypeInfo(const char* typeName);
     /// Destruct.
     ~TypeInfo();
-
-    /// Check current type is type of specified type.
-    bool IsTypeOf(StringHash type) const;
-    /// Check current type is type of specified type.
-    bool IsTypeOf(const TypeInfo* typeInfo) const;
-    /// Check current type is type of specified class type.
-    template<typename T> bool IsTypeOf() const { return IsTypeOf(T::GetTypeInfoStatic()); }
 
     /// Return type.
     StringHash GetType() const { return type_; }
     /// Return type name.
     const String& GetTypeName() const { return typeName_;}
-    /// Return base type info.
-    const TypeInfo* GetBaseTypeInfo() const { return baseTypeInfo_; }
 
 private:
     /// Type.
     StringHash type_;
     /// Type name.
     String typeName_;
-    /// Base class type info.
-    const TypeInfo* baseTypeInfo_;
 };
 
-#define DV_OBJECT(typeName, baseTypeName) \
+#define DV_OBJECT(typeName) \
     public: \
         using ClassName = typeName; \
-        using BaseClassName = baseTypeName; \
         virtual dviglo::StringHash GetType() const override { return GetTypeInfoStatic()->GetType(); } \
         virtual const dviglo::String& GetTypeName() const override { return GetTypeInfoStatic()->GetTypeName(); } \
         virtual const dviglo::TypeInfo* GetTypeInfo() const override { return GetTypeInfoStatic(); } \
         static dviglo::StringHash GetTypeStatic() { return GetTypeInfoStatic()->GetType(); } \
         static const dviglo::String& GetTypeNameStatic() { return GetTypeInfoStatic()->GetTypeName(); } \
-        static const dviglo::TypeInfo* GetTypeInfoStatic() { static const dviglo::TypeInfo typeInfoStatic(#typeName, BaseClassName::GetTypeInfoStatic()); return &typeInfoStatic; }
+        static const dviglo::TypeInfo* GetTypeInfoStatic() { static const dviglo::TypeInfo typeInfoStatic(#typeName); return &typeInfoStatic; }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
 class DV_API Object : public RefCounted

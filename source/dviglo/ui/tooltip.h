@@ -13,7 +13,7 @@ namespace dviglo
 /// Tooltip %UI element.
 class DV_API ToolTip : public UiElement
 {
-    DV_OBJECT(ToolTip, UiElement);
+    DV_OBJECT(ToolTip);
 
 public:
     /// Construct.

@@ -16,7 +16,7 @@ class ShaderVariation;
 /// %Shader resource consisting of several shader variations.
 class DV_API Shader : public Resource
 {
-    DV_OBJECT(Shader, Resource);
+    DV_OBJECT(Shader);
 
 public:
     /// Construct.

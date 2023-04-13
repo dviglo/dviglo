@@ -25,7 +25,7 @@ class TmxTileLayer2D;
 /// Tile map component.
 class DV_API TileMapLayer2D : public Component
 {
-    DV_OBJECT(TileMapLayer2D, Component);
+    DV_OBJECT(TileMapLayer2D);
 
 public:
     /// Construct.

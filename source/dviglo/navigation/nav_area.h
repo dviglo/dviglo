@@ -12,7 +12,7 @@ namespace dviglo
 
 class DV_API NavArea : public Component
 {
-    DV_OBJECT(NavArea, Component);
+    DV_OBJECT(NavArea);
 
 public:
     /// Construct.

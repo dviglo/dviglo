@@ -23,7 +23,7 @@ static const unsigned SCAN_HIDDEN = 0x4;
 /// Subsystem for file and directory operations and access control.
 class DV_API FileSystem : public Object
 {
-    DV_OBJECT(FileSystem, Object);
+    DV_OBJECT(FileSystem);
 
 public:
     static FileSystem& get_instance();

@@ -17,7 +17,7 @@ class XmlFile;
 /// 2D texture resource.
 class DV_API Texture2D : public Texture
 {
-    DV_OBJECT(Texture2D, Texture);
+    DV_OBJECT(Texture2D);
 
 public:
     /// Construct.

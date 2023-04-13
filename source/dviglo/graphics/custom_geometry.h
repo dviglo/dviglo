@@ -29,7 +29,7 @@ class VertexBuffer;
 /// Custom geometry component.
 class DV_API CustomGeometry : public Drawable
 {
-    DV_OBJECT(CustomGeometry, Drawable);
+    DV_OBJECT(CustomGeometry);
 
 public:
     /// Construct.

@@ -10,7 +10,7 @@
 class AppState_Benchmark03 : public AppState_Base
 {
 public:
-    DV_OBJECT(AppState_Benchmark03, AppState_Base);
+    DV_OBJECT(AppState_Benchmark03);
 
 public:
     AppState_Benchmark03();

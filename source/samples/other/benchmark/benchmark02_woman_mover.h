@@ -13,7 +13,7 @@ namespace dv = dviglo;
 class Benchmark02_WomanMover : public dv::LogicComponent
 {
 public:
-    DV_OBJECT(Benchmark02_WomanMover, LogicComponent);
+    DV_OBJECT(Benchmark02_WomanMover);
 
 private:
     // Forward movement speed

@@ -156,7 +156,7 @@ enum DeferredLightPSVariation
 /// High-level rendering subsystem. Manages drawing of 3D views.
 class DV_API Renderer : public Object
 {
-    DV_OBJECT(Renderer, Object);
+    DV_OBJECT(Renderer);
 
 public:
     using ShadowMapFilter = void(Object::*)(View* view, Texture2D* shadowMap, float blurScale);

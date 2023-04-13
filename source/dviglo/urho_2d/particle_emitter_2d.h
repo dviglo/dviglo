@@ -57,7 +57,7 @@ struct Particle2D
 /// 2D particle emitter component.
 class DV_API ParticleEmitter2D : public Drawable2D
 {
-    DV_OBJECT(ParticleEmitter2D, Drawable2D);
+    DV_OBJECT(ParticleEmitter2D);
 
 public:
     /// Construct.

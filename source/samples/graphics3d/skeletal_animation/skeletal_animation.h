@@ -23,7 +23,7 @@ class Scene;
 ///     - Displaying renderer debug geometry
 class SkeletalAnimation : public Sample
 {
-    DV_OBJECT(SkeletalAnimation, Sample);
+    DV_OBJECT(SkeletalAnimation);
 
 public:
     /// Construct.

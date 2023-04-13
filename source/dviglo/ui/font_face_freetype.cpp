@@ -36,7 +36,7 @@ static bool free_type_lib_destructed = false;
 /// FreeType library subsystem.
 class FreeTypeLibrary : public Object
 {
-    DV_OBJECT(FreeTypeLibrary, Object);
+    DV_OBJECT(FreeTypeLibrary);
 
 public:
     static FreeTypeLibrary& get_instance()

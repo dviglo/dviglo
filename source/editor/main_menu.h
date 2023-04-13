@@ -10,7 +10,7 @@ namespace dv = dviglo;
 // Класс создаёт главное меню и обрабатывает его события
 class MainMenu : public dv::Object
 {
-    DV_OBJECT(MainMenu, Object);
+    DV_OBJECT(MainMenu);
 
 public:
     static MainMenu& get_instance();

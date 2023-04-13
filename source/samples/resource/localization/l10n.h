@@ -13,7 +13,7 @@
 ///     - The manually reaction to change language
 class L10n : public Sample
 {
-    DV_OBJECT(L10n, Sample);
+    DV_OBJECT(L10n);
 
 public:
     /// Construct.

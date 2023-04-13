@@ -12,7 +12,7 @@ namespace dviglo
 /// Static model component with fixed position in relation to the camera.
 class DV_API Skybox : public StaticModel
 {
-    DV_OBJECT(Skybox, StaticModel);
+    DV_OBJECT(Skybox);
 
 public:
     /// Construct.

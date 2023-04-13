@@ -15,7 +15,7 @@ namespace dviglo
 /// Hardware vertex buffer.
 class DV_API VertexBuffer : public Object, public GpuObject
 {
-    DV_OBJECT(VertexBuffer, Object);
+    DV_OBJECT(VertexBuffer);
 
 public:
     explicit VertexBuffer();

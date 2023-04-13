@@ -20,7 +20,7 @@ class XmlFile;
 /// Base class for texture resources.
 class DV_API Texture : public ResourceWithMetadata, public GpuObject
 {
-    DV_OBJECT(Texture, ResourceWithMetadata);
+    DV_OBJECT(Texture);
 
 public:
     /// Construct.

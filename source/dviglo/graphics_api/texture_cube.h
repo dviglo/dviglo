@@ -17,7 +17,7 @@ class Image;
 /// Cube texture resource.
 class DV_API TextureCube : public Texture
 {
-    DV_OBJECT(TextureCube, Texture);
+    DV_OBJECT(TextureCube);
 
 public:
     /// Construct.

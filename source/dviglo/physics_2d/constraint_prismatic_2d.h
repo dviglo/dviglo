@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D prismatic constraint component.
 class DV_API ConstraintPrismatic2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintPrismatic2D, Constraint2D);
+    DV_OBJECT(ConstraintPrismatic2D);
 
 public:
     /// Construct.

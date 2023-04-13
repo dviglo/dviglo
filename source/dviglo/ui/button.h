@@ -12,7 +12,7 @@ namespace dviglo
 /// Push button %UI element.
 class DV_API Button : public BorderImage
 {
-    DV_OBJECT(Button, BorderImage);
+    DV_OBJECT(Button);
 
 public:
     /// Construct.

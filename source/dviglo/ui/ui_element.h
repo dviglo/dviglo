@@ -103,7 +103,7 @@ class Texture2D;
 /// Base class for %UI elements.
 class DV_API UiElement : public Animatable
 {
-    DV_OBJECT(UiElement, Animatable);
+    DV_OBJECT(UiElement);
 
 public:
     /// Construct.

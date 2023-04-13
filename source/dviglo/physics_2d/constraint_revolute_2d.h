@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D revolute constraint component.
 class DV_API ConstraintRevolute2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintRevolute2D, Constraint2D);
+    DV_OBJECT(ConstraintRevolute2D);
 
 public:
     /// Construct.

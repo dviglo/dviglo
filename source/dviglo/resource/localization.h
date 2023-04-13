@@ -13,7 +13,7 @@ namespace dviglo
 /// %Localization subsystem. Stores all the strings in all languages.
 class DV_API Localization : public Object
 {
-    DV_OBJECT(Localization, Object);
+    DV_OBJECT(Localization);
 
 public:
     static Localization& get_instance();

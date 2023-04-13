@@ -14,7 +14,7 @@ class Audio;
 /// %Sound source component with three-dimensional position.
 class DV_API SoundSource3D : public SoundSource
 {
-    DV_OBJECT(SoundSource3D, SoundSource);
+    DV_OBJECT(SoundSource3D);
 
 public:
     /// Construct.

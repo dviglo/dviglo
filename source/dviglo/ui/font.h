@@ -29,7 +29,7 @@ enum FontType
 /// %Font resource.
 class DV_API Font : public Resource
 {
-    DV_OBJECT(Font, Resource);
+    DV_OBJECT(Font);
 
 public:
     /// Construct.

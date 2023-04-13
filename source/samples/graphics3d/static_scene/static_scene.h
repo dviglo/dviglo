@@ -21,7 +21,7 @@ class Scene;
 ///     - Handling keyboard and mouse input to move a freelook camera
 class StaticScene : public Sample
 {
-    DV_OBJECT(StaticScene, Sample);
+    DV_OBJECT(StaticScene);
 
 public:
     /// Construct.

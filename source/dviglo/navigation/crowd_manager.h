@@ -40,7 +40,7 @@ struct CrowdObstacleAvoidanceParams
 /// Crowd manager scene component. Should be added only to the root scene node.
 class DV_API CrowdManager : public Component
 {
-    DV_OBJECT(CrowdManager, Component);
+    DV_OBJECT(CrowdManager);
 
     friend class CrowdAgent;
 

@@ -27,7 +27,7 @@ class Scene;
 ///     - Using agents to simulate moving obstacles
 class CrowdNavigation : public Sample
 {
-    DV_OBJECT(CrowdNavigation, Sample);
+    DV_OBJECT(CrowdNavigation);
 
 public:
     /// Construct.

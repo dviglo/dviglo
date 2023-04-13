@@ -14,7 +14,7 @@ class ListView;
 /// %Menu %UI element that displays a popup list view.
 class DV_API DropDownList : public Menu
 {
-    DV_OBJECT(DropDownList, Menu);
+    DV_OBJECT(DropDownList);
 
 public:
     /// Construct.

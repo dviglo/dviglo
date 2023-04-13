@@ -23,7 +23,7 @@ class Scene;
 ///     - Displaying renderer debug geometry to see the effect of occlusion
 class Decals : public Sample
 {
-    DV_OBJECT(Decals, Sample);
+    DV_OBJECT(Decals);
 
 public:
     /// Construct.

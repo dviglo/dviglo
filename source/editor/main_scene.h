@@ -10,7 +10,7 @@ namespace dv = dviglo;
 // Класс создаёт главную сцену редактора и управляет ей
 class MainScene : public dv::Object
 {
-    DV_OBJECT(MainScene, Object);
+    DV_OBJECT(MainScene);
 
 public:
     static MainScene& get_instance();

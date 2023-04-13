@@ -22,7 +22,7 @@ class View;
 /// %Viewport definition either for a render surface or the backbuffer.
 class DV_API Viewport : public Object
 {
-    DV_OBJECT(Viewport, Object);
+    DV_OBJECT(Viewport);
 
 public:
     bool draw_debug = true;

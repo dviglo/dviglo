@@ -51,7 +51,7 @@ private:
 /// Work queue subsystem for multithreading.
 class DV_API WorkQueue : public Object
 {
-    DV_OBJECT(WorkQueue, Object);
+    DV_OBJECT(WorkQueue);
 
     friend class WorkerThread;
 

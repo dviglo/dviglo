@@ -29,7 +29,7 @@ enum WindowDragMode
 /// %Window %UI element that can optionally by moved or resized.
 class DV_API Window : public BorderImage
 {
-    DV_OBJECT(Window, BorderImage);
+    DV_OBJECT(Window);
 
 public:
     /// Construct.

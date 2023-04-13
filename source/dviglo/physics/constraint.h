@@ -31,7 +31,7 @@ class RigidBody;
 /// Physics constraint component. Connects two rigid bodies together, or one rigid body to a static point.
 class DV_API Constraint : public Component
 {
-    DV_OBJECT(Constraint, Component);
+    DV_OBJECT(Constraint);
 
     friend class RigidBody;
 

@@ -17,7 +17,7 @@ class AnimationState;
 /// Animated model component.
 class DV_API AnimatedModel : public StaticModel
 {
-    DV_OBJECT(AnimatedModel, StaticModel);
+    DV_OBJECT(AnimatedModel);
 
     friend class AnimationState;
 

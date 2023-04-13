@@ -34,7 +34,7 @@ const float CAMERA_MAX_DIST = 6.0f;
 ///    - Create XML patch instructions for screen joystick layout
 class Sample2D : public Object
 {
-    DV_OBJECT(Sample2D, Object);
+    DV_OBJECT(Sample2D);
 
 public:
     /// Construct.

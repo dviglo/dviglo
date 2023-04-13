@@ -11,7 +11,7 @@ namespace dviglo
 
 class SnowCrate : public GameObject
 {
-    DV_OBJECT(SnowCrate, GameObject);
+    DV_OBJECT(SnowCrate);
 
 public:
     static void register_object();

@@ -128,7 +128,7 @@ struct HeightfieldData : public CollisionGeometryData
 /// Physics collision shape component.
 class DV_API CollisionShape : public Component
 {
-    DV_OBJECT(CollisionShape, Component);
+    DV_OBJECT(CollisionShape);
 
 public:
     /// Construct.

@@ -16,7 +16,7 @@ namespace dviglo
 /// Base class for creating applications which initialize the Urho3D engine and run a main loop until exited.
 class DV_API Application : public Object
 {
-    DV_OBJECT(Application, Object);
+    DV_OBJECT(Application);
 
 public:
     /// Construct. Parse default engine parameters from the command line, and create the engine in an uninitialized state.

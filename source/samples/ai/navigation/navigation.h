@@ -25,7 +25,7 @@ class Scene;
 ///     - Making a node follow the Detour path
 class Navigation : public Sample
 {
-    DV_OBJECT(Navigation, Sample);
+    DV_OBJECT(Navigation);
 
 public:
     /// Construct.

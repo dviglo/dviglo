@@ -59,7 +59,7 @@ private:
 /// %Time and frame counter subsystem.
 class DV_API Time : public Object
 {
-    DV_OBJECT(Time, Object);
+    DV_OBJECT(Time);
 
 public:
     static Time& get_instance();

@@ -35,7 +35,7 @@ enum CollisionEventMode
 /// Physics rigid body component.
 class DV_API RigidBody : public Component, public btMotionState
 {
-    DV_OBJECT(RigidBody, Component);
+    DV_OBJECT(RigidBody);
 
 public:
     /// Construct.

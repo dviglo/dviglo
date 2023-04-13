@@ -21,7 +21,7 @@ class Scene;
 ///     - Using rolling friction to stop rolling objects from moving infinitely
 class Ragdolls : public Sample
 {
-    DV_OBJECT(Ragdolls, Sample);
+    DV_OBJECT(Ragdolls);
 
 public:
     /// Construct.

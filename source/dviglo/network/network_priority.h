@@ -12,7 +12,7 @@ namespace dviglo
 /// %Network interest management settings component.
 class DV_API NetworkPriority : public Component
 {
-    DV_OBJECT(NetworkPriority, Component);
+    DV_OBJECT(NetworkPriority);
 
 public:
     /// Construct.

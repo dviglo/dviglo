@@ -15,7 +15,7 @@ class Text;
 /// Single-line text editor %UI element.
 class DV_API LineEdit : public BorderImage
 {
-    DV_OBJECT(LineEdit, BorderImage);
+    DV_OBJECT(LineEdit);
 
 public:
     /// Construct.

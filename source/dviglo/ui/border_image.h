@@ -16,7 +16,7 @@ class Texture2D;
 /// %Image %UI element with optional border.
 class DV_API BorderImage : public UiElement
 {
-    DV_OBJECT(BorderImage, UiElement);
+    DV_OBJECT(BorderImage);
 
 public:
     /// Construct.

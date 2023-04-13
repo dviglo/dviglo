@@ -23,7 +23,7 @@ constexpr i32 SIDE_ENEMY = 2;
 
 class GameObject : public LogicComponent
 {
-    DV_OBJECT(GameObject, LogicComponent);
+    DV_OBJECT(GameObject);
 
 public:
     static void register_object();

@@ -15,7 +15,7 @@ class DynamicNavigationMesh;
 /// Obstacle for dynamic navigation mesh.
 class DV_API Obstacle : public Component
 {
-    DV_OBJECT(Obstacle, Component);
+    DV_OBJECT(Obstacle);
 
     friend class DynamicNavigationMesh;
 

@@ -16,7 +16,7 @@ class VertexBuffer;
 /// Individually rendered part of a heightmap terrain.
 class DV_API TerrainPatch : public Drawable
 {
-    DV_OBJECT(TerrainPatch, Drawable);
+    DV_OBJECT(TerrainPatch);
 
 public:
     /// Construct.

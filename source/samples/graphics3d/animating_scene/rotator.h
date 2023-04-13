@@ -12,7 +12,7 @@ using namespace dviglo;
 /// Custom logic component for rotating a scene node.
 class Rotator : public LogicComponent
 {
-    DV_OBJECT(Rotator, LogicComponent);
+    DV_OBJECT(Rotator);
 
 public:
     /// Construct.

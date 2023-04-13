@@ -32,7 +32,8 @@ static int const UICOMPONENT_MAX_TEXTURE_SIZE = 4096;
 
 class UIElement3D : public UiElement
 {
-    DV_OBJECT(UIElement3D, UiElement);
+    DV_OBJECT(UIElement3D);
+
 public:
     /// Construct.
     explicit UIElement3D() { }
@@ -110,7 +111,7 @@ public:
             if (queryResult.drawable_ != model)
             {
                 // ignore billboard sets by default
-                if (queryResult.drawable_->GetTypeInfo()->IsTypeOf(BillboardSet::GetTypeStatic()))
+                if (dynamic_cast<BillboardSet*>(queryResult.drawable_))
                     continue;
                 return result;
             }

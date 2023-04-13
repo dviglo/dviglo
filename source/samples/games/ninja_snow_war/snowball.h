@@ -11,7 +11,7 @@ namespace dviglo
 
 class Snowball : public GameObject
 {
-    DV_OBJECT(Snowball, GameObject);
+    DV_OBJECT(Snowball);
 
 private:
     int hitDamage;

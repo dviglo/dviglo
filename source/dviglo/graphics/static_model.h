@@ -23,7 +23,7 @@ struct StaticModelGeometryData
 /// Static model component.
 class DV_API StaticModel : public Drawable
 {
-    DV_OBJECT(StaticModel, Drawable);
+    DV_OBJECT(StaticModel);
 
 public:
     /// Construct.

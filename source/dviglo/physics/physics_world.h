@@ -111,7 +111,7 @@ using CollisionGeometryDataCache = HashMap<Pair<Model*, i32>, SharedPtr<Collisio
 /// Physics simulation world component. Should be added only to the root scene node.
 class DV_API PhysicsWorld : public Component, public btIDebugDraw
 {
-    DV_OBJECT(PhysicsWorld, Component);
+    DV_OBJECT(PhysicsWorld);
 
     friend void InternalPreTickCallback(btDynamicsWorld* world, btScalar timeStep);
     friend void InternalTickCallback(btDynamicsWorld* world, btScalar timeStep);

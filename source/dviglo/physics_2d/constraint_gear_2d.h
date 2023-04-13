@@ -12,7 +12,7 @@ namespace dviglo
 /// 2D gear constraint component.
 class DV_API ConstraintGear2D : public Constraint2D
 {
-    DV_OBJECT(ConstraintGear2D, Constraint2D);
+    DV_OBJECT(ConstraintGear2D);
 
 public:
     /// Construct.
