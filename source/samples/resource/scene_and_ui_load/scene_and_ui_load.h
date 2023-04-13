@@ -20,13 +20,13 @@ class Scene;
 ///      - Loading a scene from a file and showing it
 ///      - Loading a UI layout from a file and showing it
 ///      - Subscribing to the UI layout's events
-class SceneAndUILoad : public Sample
+class SceneAndUiLoad : public Sample
 {
-    DV_OBJECT(SceneAndUILoad);
+    DV_OBJECT(SceneAndUiLoad);
 
 public:
     /// Construct.
-    explicit SceneAndUILoad();
+    explicit SceneAndUiLoad();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

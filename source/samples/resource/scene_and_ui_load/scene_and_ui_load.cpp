@@ -17,13 +17,13 @@
 
 #include <dviglo/common/debug_new.h>
 
-DV_DEFINE_APPLICATION_MAIN(SceneAndUILoad)
+DV_DEFINE_APPLICATION_MAIN(SceneAndUiLoad)
 
-SceneAndUILoad::SceneAndUILoad()
+SceneAndUiLoad::SceneAndUiLoad()
 {
 }
 
-void SceneAndUILoad::Start()
+void SceneAndUiLoad::Start()
 {
     // Execute base class startup
     Sample::Start();
@@ -44,7 +44,7 @@ void SceneAndUILoad::Start()
     Sample::InitMouseMode(MM_RELATIVE);
 }
 
-void SceneAndUILoad::create_scene()
+void SceneAndUiLoad::create_scene()
 {
     scene_ = new Scene();
 
@@ -61,7 +61,7 @@ void SceneAndUILoad::create_scene()
     cameraNode_->SetPosition(Vector3(0.0f, 2.0f, -10.0f));
 }
 
-void SceneAndUILoad::create_ui()
+void SceneAndUiLoad::create_ui()
 {
     // Set up global UI style into the root UI element
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
@@ -82,26 +82,26 @@ void SceneAndUILoad::create_ui()
     // Subscribe to button actions (toggle scene lights when pressed then released)
     auto* button = layoutRoot->GetChildStaticCast<Button>("ToggleLight1", true);
     if (button)
-        subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight1));
+        subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUiLoad, ToggleLight1));
     button = layoutRoot->GetChildStaticCast<Button>("ToggleLight2", true);
     if (button)
-        subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUILoad, ToggleLight2));
+        subscribe_to_event(button, E_RELEASED, DV_HANDLER(SceneAndUiLoad, ToggleLight2));
 }
 
-void SceneAndUILoad::setup_viewport()
+void SceneAndUiLoad::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
     DV_RENDERER.SetViewport(0, viewport);
 }
 
-void SceneAndUILoad::subscribe_to_events()
+void SceneAndUiLoad::subscribe_to_events()
 {
     // Subscribe handle_update() function for camera motion
-    subscribe_to_event(E_UPDATE, DV_HANDLER(SceneAndUILoad, handle_update));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(SceneAndUiLoad, handle_update));
 }
 
-void SceneAndUILoad::move_camera(float timeStep)
+void SceneAndUiLoad::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     Input& input = DV_INPUT;
@@ -140,7 +140,7 @@ void SceneAndUILoad::move_camera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 
-void SceneAndUILoad::handle_update(StringHash eventType, VariantMap& eventData)
+void SceneAndUiLoad::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 
@@ -151,14 +151,14 @@ void SceneAndUILoad::handle_update(StringHash eventType, VariantMap& eventData)
     move_camera(timeStep);
 }
 
-void SceneAndUILoad::ToggleLight1(StringHash eventType, VariantMap& eventData)
+void SceneAndUiLoad::ToggleLight1(StringHash eventType, VariantMap& eventData)
 {
     Node* lightNode = scene_->GetChild("Light1", true);
     if (lightNode)
         lightNode->SetEnabled(!lightNode->IsEnabled());
 }
 
-void SceneAndUILoad::ToggleLight2(StringHash eventType, VariantMap& eventData)
+void SceneAndUiLoad::ToggleLight2(StringHash eventType, VariantMap& eventData)
 {
     Node* lightNode = scene_->GetChild("Light2", true);
     if (lightNode)
