@@ -28,9 +28,9 @@
 
 #include <dviglo/common/debug_new.h>
 
-DV_DEFINE_APPLICATION_MAIN(Hello3DUI)
+DV_DEFINE_APPLICATION_MAIN(Hello3dUi)
 
-Hello3DUI::Hello3DUI() :
+Hello3dUi::Hello3dUi() :
     dragBeginPosition_(IntVector2::ZERO),
     animateCube_(true),
     renderOnCube_(false),
@@ -38,7 +38,7 @@ Hello3DUI::Hello3DUI() :
 {
 }
 
-void Hello3DUI::Start()
+void Hello3dUi::Start()
 {
     // Execute base class startup
     Sample::Start();
@@ -73,7 +73,7 @@ void Hello3DUI::Start()
     Sample::InitMouseMode(MM_FREE);
 }
 
-void Hello3DUI::InitControls()
+void Hello3dUi::InitControls()
 {
     // Create a CheckBox
     auto* checkBox = new CheckBox();
@@ -106,7 +106,7 @@ void Hello3DUI::InitControls()
     uiRoot_->AddChild(instructions_);
 }
 
-void Hello3DUI::InitWindow()
+void Hello3dUi::InitWindow()
 {
     // Create the Window and add it to the UI's root node
     window_ = new Window();
@@ -162,13 +162,13 @@ void Hello3DUI::InitWindow()
     buttonClose->SetStyle("CloseButton");
 
     // Subscribe to buttonClose release (following a 'press') events
-    subscribe_to_event(buttonClose, E_RELEASED, DV_HANDLER(Hello3DUI, HandleClosePressed));
+    subscribe_to_event(buttonClose, E_RELEASED, DV_HANDLER(Hello3dUi, HandleClosePressed));
 
     // Subscribe also to all UI mouse clicks just to see where we have clicked
-    subscribe_to_event(E_UIMOUSECLICK, DV_HANDLER(Hello3DUI, HandleControlClicked));
+    subscribe_to_event(E_UIMOUSECLICK, DV_HANDLER(Hello3dUi, HandleControlClicked));
 }
 
-void Hello3DUI::InitScene()
+void Hello3dUi::InitScene()
 {
     scene_ = new Scene();
     scene_->create_component<Octree>();
@@ -200,10 +200,10 @@ void Hello3DUI::InitScene()
     DV_RENDERER.SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
-    subscribe_to_event(E_UPDATE, DV_HANDLER(Hello3DUI, handle_update));
+    subscribe_to_event(E_UPDATE, DV_HANDLER(Hello3dUi, handle_update));
 }
 
-void Hello3DUI::CreateDraggableFish()
+void Hello3dUi::CreateDraggableFish()
 {
     // Create a draggable Fish button
     auto* draggableFish = new Button();
@@ -228,34 +228,34 @@ void Hello3DUI::CreateDraggableFish()
 
     // Subscribe draggableFish to Drag Events (in order to make it draggable)
     // See "Event list" in documentation's Main Page for reference on available Events and their eventData
-    subscribe_to_event(draggableFish, E_DRAGBEGIN, DV_HANDLER(Hello3DUI, HandleDragBegin));
-    subscribe_to_event(draggableFish, E_DRAGMOVE, DV_HANDLER(Hello3DUI, HandleDragMove));
-    subscribe_to_event(draggableFish, E_DRAGEND, DV_HANDLER(Hello3DUI, HandleDragEnd));
+    subscribe_to_event(draggableFish, E_DRAGBEGIN, DV_HANDLER(Hello3dUi, HandleDragBegin));
+    subscribe_to_event(draggableFish, E_DRAGMOVE, DV_HANDLER(Hello3dUi, HandleDragMove));
+    subscribe_to_event(draggableFish, E_DRAGEND, DV_HANDLER(Hello3dUi, HandleDragEnd));
 }
 
-void Hello3DUI::HandleDragBegin(StringHash eventType, VariantMap& eventData)
+void Hello3dUi::HandleDragBegin(StringHash eventType, VariantMap& eventData)
 {
     // Get UiElement relative position where click occurred (top-left = IntVector2(0,0))
     dragBeginPosition_ = IntVector2(eventData["ElementX"].GetI32(), eventData["ElementY"].GetI32());
 }
 
-void Hello3DUI::HandleDragMove(StringHash eventType, VariantMap& eventData)
+void Hello3dUi::HandleDragMove(StringHash eventType, VariantMap& eventData)
 {
     IntVector2 dragCurrentPosition = IntVector2(eventData["X"].GetI32(), eventData["Y"].GetI32());
     UiElement* draggedElement = static_cast<UiElement*>(eventData["Element"].GetPtr());
     draggedElement->SetPosition(dragCurrentPosition - dragBeginPosition_);
 }
 
-void Hello3DUI::HandleDragEnd(StringHash eventType, VariantMap& eventData) // For reference (not used here)
+void Hello3dUi::HandleDragEnd(StringHash eventType, VariantMap& eventData) // For reference (not used here)
 {
 }
 
-void Hello3DUI::HandleClosePressed(StringHash eventType, VariantMap& eventData)
+void Hello3dUi::HandleClosePressed(StringHash eventType, VariantMap& eventData)
 {
     DV_ENGINE.Exit();
 }
 
-void Hello3DUI::HandleControlClicked(StringHash eventType, VariantMap& eventData)
+void Hello3dUi::HandleControlClicked(StringHash eventType, VariantMap& eventData)
 {
     // Get the Text control acting as the Window's title
     auto* windowTitle = window_->GetChildStaticCast<Text>("WindowTitle", true);
@@ -274,7 +274,7 @@ void Hello3DUI::HandleControlClicked(StringHash eventType, VariantMap& eventData
     windowTitle->SetText("Hello " + name + "!");
 }
 
-void Hello3DUI::Init3DUI()
+void Hello3dUi::Init3DUI()
 {
     // Node that will get UI rendered on it.
     Node* boxNode = scene_->GetChild("Box");
@@ -288,7 +288,7 @@ void Hello3DUI::Init3DUI()
     textureRoot_->SetSize(512, 512);
 }
 
-void Hello3DUI::handle_update(StringHash, VariantMap& eventData)
+void Hello3dUi::handle_update(StringHash, VariantMap& eventData)
 {
     using namespace Update;
     float timeStep = eventData[P_TIMESTEP].GetFloat();

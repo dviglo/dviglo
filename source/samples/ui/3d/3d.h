@@ -15,13 +15,13 @@ class Window;
 
 /// A 3D UI demonstration based on the HelloGUI sample. Renders UI alternatively
 /// either to a 3D scene object using UiComponent, or directly to the backbuffer.
-class Hello3DUI : public Sample
+class Hello3dUi : public Sample
 {
-    DV_OBJECT(Hello3DUI);
+    DV_OBJECT(Hello3dUi);
 
 public:
     /// Construct.
-    explicit Hello3DUI();
+    explicit Hello3dUi();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;
