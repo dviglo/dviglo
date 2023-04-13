@@ -12,6 +12,7 @@
 #include "node.h"
 #include "scene_resolver.h"
 
+#include <memory>
 #include <mutex>
 
 namespace dviglo

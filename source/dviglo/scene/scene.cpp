@@ -199,7 +199,7 @@ bool Scene::load_xml(Deserializer& source)
 
     StopAsyncLoading();
 
-    SharedPtr<XmlFile> xml(new XmlFile());
+    std::unique_ptr<XmlFile> xml(new XmlFile());
     if (!xml->Load(source))
         return false;
 
@@ -222,7 +222,7 @@ bool Scene::load_json(Deserializer& source)
 
     StopAsyncLoading();
 
-    SharedPtr<JSONFile> json(new JSONFile());
+    std::unique_ptr<JSONFile> json(new JSONFile());
     if (!json->Load(source))
         return false;
 
@@ -243,7 +243,7 @@ bool Scene::save_xml(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneXML);
 
-    SharedPtr<XmlFile> xml(new XmlFile());
+    std::unique_ptr<XmlFile> xml(new XmlFile());
     XmlElement rootElem = xml->CreateRoot("scene");
     if (!save_xml(rootElem))
         return false;
@@ -265,7 +265,7 @@ bool Scene::save_json(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneJSON);
 
-    SharedPtr<JSONFile> json(new JSONFile());
+    std::unique_ptr<JSONFile> json(new JSONFile());
     JSONValue rootVal;
     if (!save_json(rootVal))
         return false;
