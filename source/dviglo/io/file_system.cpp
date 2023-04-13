@@ -82,10 +82,12 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
     // Capture the standard error stream
     if (!stderrFilename.Empty())
     {
-        SharedPtr<File> errFile(new File(stderrFilename, FILE_READ));
+        std::unique_ptr<File> errFile(new File(stderrFilename, FILE_READ));
+
         while (!errFile->IsEof())
         {
             unsigned numRead = errFile->Read(buffer, sizeof(buffer));
+
             if (numRead)
                 Log::WriteRaw(String(buffer, numRead), true);
         }
@@ -381,10 +383,13 @@ bool FileSystem::system_open(const String& fileName, const String& mode)
 
 bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 {
-    SharedPtr<File> srcFile(new File(srcFileName, FILE_READ));
+    std::unique_ptr<File> srcFile(new File(srcFileName, FILE_READ));
+
     if (!srcFile->IsOpen())
         return false;
-    SharedPtr<File> destFile(new File(destFileName, FILE_WRITE));
+
+    std::unique_ptr<File> destFile(new File(destFileName, FILE_WRITE));
+
     if (!destFile->IsOpen())
         return false;
 
@@ -750,4 +755,4 @@ String FileSystem::GetTemporaryDir() const
 #endif
 }
 
-}
+} // namespace dviglo

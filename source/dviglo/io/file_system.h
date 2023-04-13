@@ -8,6 +8,8 @@
 #include "../containers/list.h"
 #include "../core/object.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
