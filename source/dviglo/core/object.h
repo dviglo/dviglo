@@ -21,8 +21,8 @@ class EventHandler;
         using ClassName = type_name; \
         static const dviglo::String& GetTypeNameStatic() { static const dviglo::String name(#type_name); return name; } \
         static dviglo::StringHash GetTypeStatic() { static const dviglo::StringHash type(#type_name); return type; } \
-        virtual const dviglo::String& GetTypeName() const override { return GetTypeNameStatic(); } \
-        virtual dviglo::StringHash GetType() const override { return GetTypeStatic(); }
+        const dviglo::String& GetTypeName() const override { return GetTypeNameStatic(); } \
+        dviglo::StringHash GetType() const override { return GetTypeStatic(); }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
 class DV_API Object : public RefCounted
