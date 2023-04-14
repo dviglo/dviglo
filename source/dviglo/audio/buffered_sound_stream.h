@@ -9,6 +9,7 @@
 #include "../containers/list.h"
 #include "../containers/pair.h"
 
+#include <memory>
 #include <mutex>
 
 namespace dviglo
