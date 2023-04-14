@@ -79,9 +79,9 @@ private:
     /// Mutex for synchronizing the worker and the main thread.
     mutable std::mutex mutex_;
     /// Read buffer for the worker thread.
-    SharedArrayPtr<u8> httpReadBuffer_;
+    std::unique_ptr<u8[]> httpReadBuffer_;
     /// Read buffer for the main thread.
-    SharedArrayPtr<u8> readBuffer_;
+    std::unique_ptr<u8[]> readBuffer_;
     /// Read buffer read cursor.
     i32 readPosition_;
     /// Read buffer write cursor.
