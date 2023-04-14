@@ -7,6 +7,8 @@
 #include "../containers/array_ptr.h"
 #include "../resource/resource.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -49,10 +51,10 @@ public:
     SharedPtr<SoundStream> GetDecoderStream() const;
 
     /// Return shared sound data.
-    SharedArrayPtr<signed char> GetData() const { return data_; }
+    std::shared_ptr<signed char[]> GetData() const { return data_; }
 
     /// Return sound data start.
-    signed char* GetStart() const { return data_.Get(); }
+    signed char* GetStart() const { return data_.get(); }
 
     /// Return loop start.
     signed char* GetRepeat() const { return repeat_; }
@@ -95,7 +97,7 @@ private:
     void LoadParameters();
 
     /// Sound data.
-    SharedArrayPtr<signed char> data_;
+    std::shared_ptr<signed char[]> data_;
     /// Loop start.
     signed char* repeat_;
     /// Sound data end.

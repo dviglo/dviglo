@@ -7,6 +7,8 @@
 #include "sound_stream.h"
 #include "../containers/array_ptr.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -31,7 +33,7 @@ protected:
     /// Decoder state.
     void* decoder_;
     /// Compressed sound data.
-    SharedArrayPtr<signed char> data_;
+    std::shared_ptr<signed char[]> data_;
     /// Compressed sound data size in bytes.
     unsigned dataSize_;
 };

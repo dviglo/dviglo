@@ -82,12 +82,12 @@ bool Sound::begin_load(Deserializer& source)
 bool Sound::LoadOggVorbis(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
-    SharedArrayPtr<signed char> data(new signed char[dataSize]);
-    source.Read(data.Get(), dataSize);
+    std::shared_ptr<signed char[]> data = std::make_shared<signed char[]>(dataSize);
+    source.Read(data.get(), dataSize);
 
     // Check for validity of data
     int error;
-    stb_vorbis* vorbis = stb_vorbis_open_memory((unsigned char*)data.Get(), dataSize, &error, nullptr);
+    stb_vorbis* vorbis = stb_vorbis_open_memory((unsigned char*)data.get(), dataSize, &error, nullptr);
     if (!vorbis)
     {
         DV_LOGERROR("Could not read Ogg Vorbis data from " + source.GetName());
@@ -180,7 +180,7 @@ bool Sound::load_wav(Deserializer& source)
     unsigned length = header.dataLength_;
     SetSize(length);
     SetFormat(header.frequency_, header.bits_ == 16, header.channels_ == 2);
-    source.Read(data_.Get(), length);
+    source.Read(data_.get(), length);
 
     // Convert 8-bit audio to signed
     if (!sixteenBit_)
@@ -196,7 +196,7 @@ bool Sound::load_raw(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
     SetSize(dataSize);
-    return source.Read(data_.Get(), dataSize) == dataSize;
+    return source.Read(data_.get(), dataSize) == dataSize;
 }
 
 void Sound::SetSize(unsigned dataSize)
@@ -204,7 +204,7 @@ void Sound::SetSize(unsigned dataSize)
     if (!dataSize)
         return;
 
-    data_ = new signed char[dataSize + IP_SAFETY];
+    data_ = std::make_shared<signed char[]>(dataSize + IP_SAFETY);
     dataSize_ = dataSize;
     compressed_ = false;
     SetLooped(false);
@@ -218,7 +218,7 @@ void Sound::SetData(const void* data, unsigned dataSize)
         return;
 
     SetSize(dataSize);
-    memcpy(data_.Get(), data, dataSize);
+    memcpy(data_.get(), data, dataSize);
 }
 
 void Sound::SetFormat(unsigned frequency, bool sixteenBit, bool stereo)
@@ -237,7 +237,7 @@ void Sound::SetLooped(bool enable)
     {
         if (!compressed_)
         {
-            end_ = data_.Get() + dataSize_;
+            end_ = data_.get() + dataSize_;
             looped_ = false;
 
             FixInterpolation();
@@ -261,8 +261,8 @@ void Sound::SetLoop(unsigned repeatOffset, unsigned endOffset)
         repeatOffset &= -sampleSize;
         endOffset &= -sampleSize;
 
-        repeat_ = data_.Get() + repeatOffset;
-        end_ = data_.Get() + endOffset;
+        repeat_ = data_.get() + repeatOffset;
+        end_ = data_.get() + endOffset;
         looped_ = true;
 
         FixInterpolation();
