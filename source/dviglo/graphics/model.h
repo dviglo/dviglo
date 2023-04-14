@@ -6,10 +6,12 @@
 
 #include "../containers/array_ptr.h"
 #include "../containers/ptr.h"
-#include "skeleton.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../math/bounding_box.h"
 #include "../resource/resource.h"
+#include "skeleton.h"
+
+#include <memory>
 
 namespace dviglo
 {
@@ -118,7 +120,7 @@ public:
     /// Set number of LOD levels in a geometry.
     bool SetNumGeometryLodLevels(i32 index, i32 num);
     /// Set geometry.
-    bool SetGeometry(i32 index, i32 lodLevel, Geometry* geometry);
+    bool SetGeometry(i32 index, i32 lodLevel, std::shared_ptr<Geometry>& geometry);
     /// Set geometry center.
     bool SetGeometryCenter(i32 index, const Vector3& center);
     /// Set skeleton.
@@ -149,7 +151,7 @@ public:
     i32 GetNumGeometryLodLevels(i32 index) const;
 
     /// Return geometry pointers.
-    const Vector<Vector<SharedPtr<Geometry>>>& GetGeometries() const { return geometries_; }
+    const Vector<Vector<std::shared_ptr<Geometry>>>& GetGeometries() const { return geometries_; }
 
     /// Return geometry center points.
     const Vector<Vector3>& GetGeometryCenters() const { return geometryCenters_; }
@@ -194,7 +196,7 @@ private:
     /// Index buffers.
     Vector<SharedPtr<IndexBuffer>> indexBuffers_;
     /// Geometries.
-    Vector<Vector<SharedPtr<Geometry>>> geometries_;
+    Vector<Vector<std::shared_ptr<Geometry>>> geometries_;
     /// Geometry bone mappings.
     Vector<Vector<i32>> geometryBoneMappings_;
     /// Geometry centers.
@@ -213,4 +215,4 @@ private:
     Vector<Vector<GeometryDesc>> loadGeometries_;
 };
 
-}
+} // namespace dviglo

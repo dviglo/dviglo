@@ -2,8 +2,15 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "static_model.h"
+
 #include "../core/context.h"
 #include "../core/profiler.h"
+#include "../graphics_api/vertex_buffer.h"
+#include "../io/file_system.h"
+#include "../io/log.h"
+#include "../resource/resource_cache.h"
+#include "../resource/resource_events.h"
 #include "animated_model.h"
 #include "batch.h"
 #include "camera.h"
@@ -11,11 +18,6 @@
 #include "material.h"
 #include "occlusion_buffer.h"
 #include "octree_query.h"
-#include "../graphics_api/vertex_buffer.h"
-#include "../io/file_system.h"
-#include "../io/log.h"
-#include "../resource/resource_cache.h"
-#include "../resource/resource_events.h"
 
 #include "../common/debug_new.h"
 
@@ -143,7 +145,7 @@ Geometry* StaticModel::GetLodGeometry(i32 batchIndex, i32 level)
 
     // If level is out of range, use visible geometry
     if (level >= 0 && level < geometries_[batchIndex].Size())
-        return geometries_[batchIndex][level];
+        return geometries_[batchIndex][level].get(); // TODO: возвращать shared_ptr<Geometry>& ?
     else
         return batches_[batchIndex].geometry_;
 }
@@ -233,7 +235,7 @@ void StaticModel::SetModel(Model* model)
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());
-        const Vector<Vector<SharedPtr<Geometry>>>& geometries = model->GetGeometries();
+        const Vector<Vector<std::shared_ptr<Geometry>>>& geometries = model->GetGeometries();
         const Vector<Vector3>& geometryCenters = model->GetGeometryCenters();
         const Matrix3x4* worldTransform = node_ ? &node_->GetWorldTransform() : nullptr;
         for (unsigned i = 0; i < geometries.Size(); ++i)
@@ -393,7 +395,7 @@ void StaticModel::ResetLodLevels()
     {
         if (!geometries_[i].Size())
             geometries_[i].Resize(1);
-        batches_[i].geometry_ = geometries_[i][0];
+        batches_[i].geometry_ = geometries_[i][0].get();
         geometryData_[i].lodLevel_ = 0;
     }
 
@@ -405,7 +407,7 @@ void StaticModel::CalculateLodLevels()
 {
     for (unsigned i = 0; i < batches_.Size(); ++i)
     {
-        const Vector<SharedPtr<Geometry>>& batchGeometries = geometries_[i];
+        const Vector<std::shared_ptr<Geometry>>& batchGeometries = geometries_[i];
         // If only one LOD geometry, no reason to go through the LOD calculation
         if (batchGeometries.Size() <= 1)
             continue;
@@ -422,7 +424,7 @@ void StaticModel::CalculateLodLevels()
         if (geometryData_[i].lodLevel_ != newLodLevel)
         {
             geometryData_[i].lodLevel_ = newLodLevel;
-            batches_[i].geometry_ = batchGeometries[newLodLevel];
+            batches_[i].geometry_ = batchGeometries[newLodLevel].get();
         }
     }
 }
@@ -434,4 +436,4 @@ void StaticModel::HandleModelReloadFinished(StringHash eventType, VariantMap& ev
     SetModel(currentModel);
 }
 
-}
+} // namespace dviglo

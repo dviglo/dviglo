@@ -2,9 +2,16 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "animated_model.h"
+
 #include "../core/context.h"
 #include "../core/profiler.h"
-#include "animated_model.h"
+#include "../graphics_api/index_buffer.h"
+#include "../graphics_api/vertex_buffer.h"
+#include "../io/log.h"
+#include "../resource/resource_cache.h"
+#include "../resource/resource_events.h"
+#include "../scene/scene.h"
 #include "animation.h"
 #include "animation_state.h"
 #include "batch.h"
@@ -15,12 +22,6 @@
 #include "graphics.h"
 #include "material.h"
 #include "octree.h"
-#include "../graphics_api/index_buffer.h"
-#include "../graphics_api/vertex_buffer.h"
-#include "../io/log.h"
-#include "../resource/resource_cache.h"
-#include "../resource/resource_events.h"
-#include "../scene/scene.h"
 
 #include "../common/debug_new.h"
 
@@ -333,7 +334,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());
-        const Vector<Vector<SharedPtr<Geometry>>>& geometries = model->GetGeometries();
+        const Vector<Vector<std::shared_ptr<Geometry>>>& geometries = model->GetGeometries();
         const Vector<Vector3>& geometryCenters = model->GetGeometryCenters();
         for (unsigned i = 0; i < geometries.Size(); ++i)
         {
@@ -1120,8 +1121,8 @@ void AnimatedModel::CloneGeometries()
     {
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
-            SharedPtr<Geometry> original = geometries_[i][j];
-            SharedPtr<Geometry> clone(new Geometry());
+            std::shared_ptr<Geometry> original = geometries_[i][j];
+            std::shared_ptr<Geometry> clone = std::make_shared<Geometry>();
 
             // Add an additional vertex stream into the clone, which supplies only the morphable vertex data, while the static
             // data comes from the original vertex buffer(s)
@@ -1426,4 +1427,4 @@ void AnimatedModel::HandleModelReloadFinished(StringHash eventType, VariantMap& 
     SetModel(currentModel);
 }
 
-}
+} // namespace dviglo

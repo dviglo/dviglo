@@ -2,12 +2,11 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "model.h"
+
 #include "../common/utils.h"
 #include "../core/context.h"
 #include "../core/profiler.h"
-#include "geometry.h"
-#include "graphics.h"
-#include "model.h"
 #include "../graphics_api/index_buffer.h"
 #include "../graphics_api/vertex_buffer.h"
 #include "../io/file.h"
@@ -15,6 +14,8 @@
 #include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../resource/xml_file.h"
+#include "geometry.h"
+#include "graphics.h"
 
 #include "../common/debug_new.h"
 
@@ -183,7 +184,7 @@ bool Model::begin_load(Deserializer& source)
         geometryBoneMappings_.Push(boneMapping);
 
         unsigned numLodLevels = source.ReadU32();
-        Vector<SharedPtr<Geometry>> geometryLodLevels;
+        Vector<std::shared_ptr<Geometry>> geometryLodLevels;
         geometryLodLevels.Reserve(numLodLevels);
         loadGeometries_[i].Resize(numLodLevels);
 
@@ -214,7 +215,7 @@ bool Model::begin_load(Deserializer& source)
                 return false;
             }
 
-            SharedPtr<Geometry> geometry(new Geometry());
+            std::shared_ptr<Geometry> geometry = std::make_shared<Geometry>();
             geometry->SetLodDistance(distance);
 
             // Prepare geometry to be defined during end_load()
@@ -330,7 +331,7 @@ bool Model::end_load()
     {
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
-            Geometry* geometry = geometries_[i][j];
+            Geometry* geometry = geometries_[i][j].get();
             GeometryDesc& desc = loadGeometries_[i][j];
             geometry->SetVertexBuffer(0, vertexBuffers_[desc.vbRef_]);
             geometry->SetIndexBuffer(indexBuffers_[desc.ibRef_]);
@@ -391,7 +392,7 @@ bool Model::Save(Serializer& dest) const
         dest.WriteU32(geometries_[i].Size());
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
-            Geometry* geometry = geometries_[i][j];
+            Geometry* geometry = geometries_[i][j].get();
             dest.WriteFloat(geometry->GetLodDistance());
             dest.WriteU32(geometry->GetPrimitiveType());
             dest.WriteU32(LookupVertexBuffer(geometry->GetVertexBuffer(0), vertexBuffers_));
@@ -554,7 +555,7 @@ bool Model::SetNumGeometryLodLevels(i32 index, i32 num)
     return true;
 }
 
-bool Model::SetGeometry(i32 index, i32 lodLevel, Geometry* geometry)
+bool Model::SetGeometry(i32 index, i32 lodLevel, std::shared_ptr<Geometry>& geometry)
 {
     assert(index >= 0);
     assert(lodLevel >= 0);
@@ -679,12 +680,12 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
         ret->geometries_[i].Resize(geometries_[i].Size());
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
-            SharedPtr<Geometry> cloneGeometry;
-            Geometry* origGeometry = geometries_[i][j];
+            std::shared_ptr<Geometry> cloneGeometry;
+            Geometry* origGeometry = geometries_[i][j].get();
 
             if (origGeometry)
             {
-                cloneGeometry = new Geometry();
+                cloneGeometry = std::make_shared<Geometry>();
                 cloneGeometry->SetIndexBuffer(ibMapping[origGeometry->GetIndexBuffer()]);
                 unsigned numVbs = origGeometry->GetNumVertexBuffers();
                 for (unsigned k = 0; k < numVbs; ++k)
@@ -738,7 +739,7 @@ Geometry* Model::GetGeometry(i32 index, i32 lodLevel) const
     if (lodLevel >= geometries_[index].Size())
         lodLevel = geometries_[index].Size() - 1;
 
-    return geometries_[index][lodLevel];
+    return geometries_[index][lodLevel].get(); // Возвращать shared_ptr<Geometry>& ?
 }
 
 const ModelMorph* Model::GetMorph(i32 index) const
@@ -775,4 +776,4 @@ i32 Model::GetMorphRangeCount(i32 bufferIndex) const
     return bufferIndex < vertexBuffers_.Size() ? morphRangeCounts_[bufferIndex] : 0;
 }
 
-}
+} // namespace dviglo

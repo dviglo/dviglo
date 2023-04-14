@@ -98,7 +98,7 @@ protected:
     /// Extra per-geometry data.
     Vector<StaticModelGeometryData> geometryData_;
     /// All geometries.
-    Vector<Vector<SharedPtr<Geometry>>> geometries_;
+    Vector<Vector<std::shared_ptr<Geometry>>> geometries_;
     /// Model.
     SharedPtr<Model> model_;
     /// Occlusion LOD level.
@@ -111,4 +111,4 @@ private:
     void HandleModelReloadFinished(StringHash eventType, VariantMap& eventData);
 };
 
-}
+} // namespace dviglo

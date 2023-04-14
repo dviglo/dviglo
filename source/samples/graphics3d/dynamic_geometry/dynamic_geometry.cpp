@@ -198,7 +198,7 @@ void DynamicGeometry::create_scene()
         SharedPtr<Model> fromScratchModel(new Model());
         SharedPtr<VertexBuffer> vb(new VertexBuffer());
         SharedPtr<IndexBuffer> ib(new IndexBuffer());
-        SharedPtr<Geometry> geom(new Geometry());
+        std::shared_ptr<Geometry> geom = std::make_shared<Geometry>();
 
         // Shadowed buffer needed for raycasts to work, and so that data can be automatically restored on device loss
         vb->SetShadowed(true);
