@@ -30,7 +30,7 @@ PackageFile::~PackageFile() = default;
 
 bool PackageFile::Open(const String& fileName, unsigned startOffset)
 {
-    SharedPtr<File> file(new File(fileName));
+    std::unique_ptr<File> file(new File(fileName));
     if (!file->IsOpen())
         return false;
 
