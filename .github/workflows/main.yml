@@ -192,8 +192,10 @@ jobs:
         COMPILER:
         - {
             ID: gcc,
-            C: gcc,
-            CXX: g++,
+            #C: gcc,
+            #CXX: g++,
+            C: gcc-12, # Используем GCC 12 вместо дефолтного 11, так как 11 не поддерживает shared_ptr<T[]>
+            CXX: g++-12,
           }
         - {
             ID: clang,
