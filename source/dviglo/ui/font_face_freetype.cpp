@@ -219,8 +219,8 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
             return false;
         }
 
-        SharedArrayPtr<unsigned char> kerningTable(new unsigned char[kerningTableSize]);
-        error = FT_Load_Sfnt_Table(face, tagKern, 0, kerningTable, &kerningTableSize);
+        std::unique_ptr<unsigned char[]> kerningTable(new unsigned char[kerningTableSize]);
+        error = FT_Load_Sfnt_Table(face, tagKern, 0, kerningTable.get(), &kerningTableSize);
         if (error)
         {
             DV_LOGERROR("Could not load kerning table");
@@ -230,7 +230,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
         // Convert big endian to little endian
         for (unsigned i = 0; i < kerningTableSize; i += 2)
             std::swap(kerningTable[i], kerningTable[i + 1]);
-        MemoryBuffer deserializer(kerningTable, (unsigned)kerningTableSize);
+        MemoryBuffer deserializer(kerningTable.get(), (unsigned)kerningTableSize);
 
         unsigned short version = deserializer.ReadU16();
         if (version == 0)
