@@ -11,6 +11,7 @@
 #include "../core/thread.h"
 #include "../io/deserializer.h"
 
+#include <memory>
 #include <mutex>
 
 namespace dviglo
