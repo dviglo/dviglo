@@ -59,7 +59,7 @@ bool Geometry::SetVertexBuffer(i32 index, VertexBuffer* buffer)
     return true;
 }
 
-void Geometry::SetIndexBuffer(IndexBuffer* buffer)
+void Geometry::SetIndexBuffer(std::shared_ptr<IndexBuffer> buffer)
 {
     indexBuffer_ = buffer;
 }
@@ -171,7 +171,7 @@ void Geometry::Draw()
 
     if (indexBuffer_ && indexCount_ > 0)
     {
-        graphics.SetIndexBuffer(indexBuffer_);
+        graphics.SetIndexBuffer(indexBuffer_.get());
         graphics.SetVertexBuffers(vertexBuffers_);
         graphics.Draw(primitiveType_, indexStart_, indexCount_, vertexStart_, vertexCount_);
     }
@@ -188,7 +188,7 @@ VertexBuffer* Geometry::GetVertexBuffer(i32 index) const
     return index < vertexBuffers_.Size() ? vertexBuffers_[index] : nullptr;
 }
 
-u16 Geometry::GetBufferHash() const
+u16 Geometry::GetBufferHash() const // TODO: Поменять типа на hash16?
 {
     u16 hash = 0;
 
@@ -198,7 +198,7 @@ u16 Geometry::GetBufferHash() const
         hash += *((u16*)&vBuf);
     }
 
-    IndexBuffer* iBuf = indexBuffer_;
+    IndexBuffer* iBuf = indexBuffer_.get();
     hash += *((u16*)&iBuf);
 
     return hash;

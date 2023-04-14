@@ -42,7 +42,7 @@ ViewBatchInfo2D::ViewBatchInfo2D() :
 Renderer2D::Renderer2D() :
     Drawable(DrawableTypes::Geometry),
     material_(new Material()),
-    indexBuffer_(new IndexBuffer()),
+    indexBuffer_(std::make_shared<IndexBuffer>()),
     viewMask_(DEFAULT_VIEWMASK)
 {
     material_->SetName("Urho2D");

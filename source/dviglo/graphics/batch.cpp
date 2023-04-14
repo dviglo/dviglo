@@ -669,7 +669,7 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
         {
             Batch::Prepare(view, camera, false, allowDepthWrite);
 
-            graphics.SetIndexBuffer(geometry_->GetIndexBuffer());
+            graphics.SetIndexBuffer(geometry_->GetIndexBuffer().get());
             graphics.SetVertexBuffers(geometry_->GetVertexBuffers());
 
             for (const InstanceData& instance : instances_)
@@ -691,7 +691,7 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
                 geometry_->GetVertexBuffers());
             vertexBuffers.Push(SharedPtr<VertexBuffer>(instanceBuffer));
 
-            graphics.SetIndexBuffer(geometry_->GetIndexBuffer());
+            graphics.SetIndexBuffer(geometry_->GetIndexBuffer().get());
             graphics.SetVertexBuffers(vertexBuffers, startIndex_);
             graphics.DrawInstanced(geometry_->GetPrimitiveType(), geometry_->GetIndexStart(), geometry_->GetIndexCount(),
                 geometry_->GetVertexStart(), geometry_->GetVertexCount(), instances_.Size());

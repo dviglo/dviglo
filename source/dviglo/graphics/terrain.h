@@ -224,7 +224,7 @@ private:
     void MarkTerrainDirty() { recreateTerrain_ = true; }
 
     /// Shared index buffer.
-    SharedPtr<IndexBuffer> indexBuffer_;
+    std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Heightmap image.
     SharedPtr<Image> heightMap_;
     /// Height data.

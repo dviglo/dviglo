@@ -202,7 +202,7 @@ private:
     /// Vertex buffer.
     SharedPtr<VertexBuffer> vertexBuffer_;
     /// Index buffer.
-    SharedPtr<IndexBuffer> indexBuffer_;
+    std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Decals.
     List<Decal> decals_;
     /// Bones used for skinned decals.

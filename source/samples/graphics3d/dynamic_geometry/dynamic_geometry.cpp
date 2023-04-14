@@ -197,7 +197,7 @@ void DynamicGeometry::create_scene()
 
         SharedPtr<Model> fromScratchModel(new Model());
         SharedPtr<VertexBuffer> vb(new VertexBuffer());
-        SharedPtr<IndexBuffer> ib(new IndexBuffer());
+        std::shared_ptr<IndexBuffer> ib = std::make_shared<IndexBuffer>();
         std::shared_ptr<Geometry> geom = std::make_shared<Geometry>();
 
         // Shadowed buffer needed for raycasts to work, and so that data can be automatically restored on device loss
@@ -224,7 +224,7 @@ void DynamicGeometry::create_scene()
 
         // Though not necessary to render, the vertex & index buffers must be listed in the model so that it can be saved properly
         Vector<SharedPtr<VertexBuffer>> vertexBuffers;
-        Vector<SharedPtr<IndexBuffer>> indexBuffers;
+        Vector<std::shared_ptr<IndexBuffer>> indexBuffers;
         vertexBuffers.Push(vb);
         indexBuffers.Push(ib);
         // Morph ranges could also be not defined. Here we simply define a zero range (no morphing) for the vertex buffer

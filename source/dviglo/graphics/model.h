@@ -114,7 +114,7 @@ public:
     bool SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
         const Vector<i32>& morphRangeCounts);
     /// Set index buffers.
-    bool SetIndexBuffers(const Vector<SharedPtr<IndexBuffer>>& buffers);
+    bool SetIndexBuffers(const Vector<std::shared_ptr<IndexBuffer>>& buffers);
     /// Set number of geometries.
     void SetNumGeometries(i32 num);
     /// Set number of LOD levels in a geometry.
@@ -142,7 +142,7 @@ public:
     const Vector<SharedPtr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }
 
     /// Return index buffers.
-    const Vector<SharedPtr<IndexBuffer>>& GetIndexBuffers() const { return indexBuffers_; }
+    const Vector<std::shared_ptr<IndexBuffer>>& GetIndexBuffers() const { return indexBuffers_; }
 
     /// Return number of geometries.
     i32 GetNumGeometries() const { return geometries_.Size(); }
@@ -194,7 +194,7 @@ private:
     /// Vertex buffers.
     Vector<SharedPtr<VertexBuffer>> vertexBuffers_;
     /// Index buffers.
-    Vector<SharedPtr<IndexBuffer>> indexBuffers_;
+    Vector<std::shared_ptr<IndexBuffer>> indexBuffers_;
     /// Geometries.
     Vector<Vector<std::shared_ptr<Geometry>>> geometries_;
     /// Geometry bone mappings.

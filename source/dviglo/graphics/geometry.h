@@ -32,7 +32,7 @@ public:
     /// Set a vertex buffer by index.
     bool SetVertexBuffer(i32 index, VertexBuffer* buffer);
     /// Set the index buffer.
-    void SetIndexBuffer(IndexBuffer* buffer);
+    void SetIndexBuffer(std::shared_ptr<IndexBuffer> buffer);
     /// Set the draw range.
     bool SetDrawRange(PrimitiveType type, i32 indexStart, i32 indexCount, bool getUsedVertexRange = true);
     /// Set the draw range.
@@ -59,7 +59,7 @@ public:
     VertexBuffer* GetVertexBuffer(i32 index) const;
 
     /// Return the index buffer.
-    IndexBuffer* GetIndexBuffer() const { return indexBuffer_; }
+    std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return indexBuffer_; }
 
     /// Return primitive type.
     PrimitiveType GetPrimitiveType() const { return primitiveType_; }
@@ -98,7 +98,7 @@ private:
     /// Vertex buffers.
     Vector<SharedPtr<VertexBuffer>> vertexBuffers_;
     /// Index buffer.
-    SharedPtr<IndexBuffer> indexBuffer_;
+    std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Primitive type.
     PrimitiveType primitiveType_;
     /// Start index.

@@ -58,7 +58,7 @@ inline void GrowUpdateRegion(IntRect& updateRegion, int x, int y)
 }
 
 Terrain::Terrain() :
-    indexBuffer_(new IndexBuffer()),
+    indexBuffer_(std::make_shared<IndexBuffer>()),
     spacing_(DEFAULT_SPACING),
     lastSpacing_(Vector3::ZERO),
     patchWorldOrigin_(Vector2::ZERO),

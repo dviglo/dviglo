@@ -32,11 +32,11 @@ unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<SharedPtr<VertexB
     return 0;
 }
 
-unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<SharedPtr<IndexBuffer>>& buffers)
+unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<std::shared_ptr<IndexBuffer>>& buffers)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
     {
-        if (buffers[i] == buffer)
+        if (buffers[i].get() == buffer)
             return i;
     }
     return 0;
@@ -142,7 +142,7 @@ bool Model::begin_load(Deserializer& source)
         unsigned indexCount = source.ReadU32();
         unsigned indexSize = source.ReadU32();
 
-        SharedPtr<IndexBuffer> buffer(new IndexBuffer());
+        std::shared_ptr<IndexBuffer> buffer = std::make_shared<IndexBuffer>();
 
         // Prepare index buffer data to be uploaded during end_load()
         if (async)
@@ -316,7 +316,7 @@ bool Model::end_load()
     // Upload index buffer data
     for (unsigned i = 0; i < indexBuffers_.Size(); ++i)
     {
-        IndexBuffer* buffer = indexBuffers_[i];
+        IndexBuffer* buffer = indexBuffers_[i].get();
         IndexBufferDesc& desc = loadIBData_[i];
         if (desc.data_)
         {
@@ -374,7 +374,7 @@ bool Model::Save(Serializer& dest) const
     dest.WriteU32(indexBuffers_.Size());
     for (unsigned i = 0; i < indexBuffers_.Size(); ++i)
     {
-        IndexBuffer* buffer = indexBuffers_[i];
+        IndexBuffer* buffer = indexBuffers_[i].get();
         dest.WriteU32(buffer->GetIndexCount());
         dest.WriteU32(buffer->GetIndexSize());
         dest.Write(buffer->GetShadowData(), buffer->GetIndexCount() * buffer->GetIndexSize());
@@ -396,7 +396,7 @@ bool Model::Save(Serializer& dest) const
             dest.WriteFloat(geometry->GetLodDistance());
             dest.WriteU32(geometry->GetPrimitiveType());
             dest.WriteU32(LookupVertexBuffer(geometry->GetVertexBuffer(0), vertexBuffers_));
-            dest.WriteU32(LookupIndexBuffer(geometry->GetIndexBuffer(), indexBuffers_));
+            dest.WriteU32(LookupIndexBuffer(geometry->GetIndexBuffer().get(), indexBuffers_));
             dest.WriteU32(geometry->GetIndexStart());
             dest.WriteU32(geometry->GetIndexCount());
         }
@@ -499,7 +499,7 @@ bool Model::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, con
     return true;
 }
 
-bool Model::SetIndexBuffers(const Vector<SharedPtr<IndexBuffer>>& buffers)
+bool Model::SetIndexBuffers(const Vector<std::shared_ptr<IndexBuffer>>& buffers)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
     {
@@ -645,15 +645,15 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
         ret->vertexBuffers_.Push(cloneBuffer);
     }
 
-    HashMap<IndexBuffer*, IndexBuffer*> ibMapping;
-    for (Vector<SharedPtr<IndexBuffer>>::ConstIterator i = indexBuffers_.Begin(); i != indexBuffers_.End(); ++i)
+    HashMap<IndexBuffer*, std::shared_ptr<IndexBuffer>> ibMapping;
+    for (Vector<std::shared_ptr<IndexBuffer>>::ConstIterator i = indexBuffers_.Begin(); i != indexBuffers_.End(); ++i)
     {
-        IndexBuffer* origBuffer = *i;
-        SharedPtr<IndexBuffer> cloneBuffer;
+        IndexBuffer* origBuffer = i->get();
+        std::shared_ptr<IndexBuffer> cloneBuffer;
 
         if (origBuffer)
         {
-            cloneBuffer = new IndexBuffer();
+            cloneBuffer = std::make_shared<IndexBuffer>();
             cloneBuffer->SetSize(origBuffer->GetIndexCount(), origBuffer->GetIndexSize() == sizeof(unsigned),
                 origBuffer->IsDynamic());
             cloneBuffer->SetShadowed(origBuffer->IsShadowed());
@@ -686,7 +686,7 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
             if (origGeometry)
             {
                 cloneGeometry = std::make_shared<Geometry>();
-                cloneGeometry->SetIndexBuffer(ibMapping[origGeometry->GetIndexBuffer()]);
+                cloneGeometry->SetIndexBuffer(ibMapping[origGeometry->GetIndexBuffer().get()]);
                 unsigned numVbs = origGeometry->GetNumVertexBuffers();
                 for (unsigned k = 0; k < numVbs; ++k)
                 {

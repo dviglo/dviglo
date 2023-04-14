@@ -1806,7 +1806,7 @@ void Renderer::CreateGeometries()
     dlvb->SetSize(4, VertexElements::Position);
     dlvb->SetData(dirLightVertexData);
 
-    SharedPtr<IndexBuffer> dlib(new IndexBuffer());
+    std::shared_ptr<IndexBuffer> dlib = std::make_shared<IndexBuffer>();
     dlib->SetShadowed(true);
     dlib->SetSize(6, false);
     dlib->SetData(dirLightIndexData);
@@ -1821,7 +1821,7 @@ void Renderer::CreateGeometries()
     slvb->SetSize(8, VertexElements::Position);
     slvb->SetData(spotLightVertexData);
 
-    SharedPtr<IndexBuffer> slib(new IndexBuffer());
+    std::shared_ptr<IndexBuffer> slib = std::make_shared<IndexBuffer>();
     slib->SetShadowed(true);
     slib->SetSize(36, false);
     slib->SetData(spotLightIndexData);
@@ -1836,7 +1836,7 @@ void Renderer::CreateGeometries()
     plvb->SetSize(24, VertexElements::Position);
     plvb->SetData(pointLightVertexData);
 
-    SharedPtr<IndexBuffer> plib(new IndexBuffer());
+    std::shared_ptr<IndexBuffer> plib = std::make_shared<IndexBuffer>();
     plib->SetShadowed(true);
     plib->SetSize(132, false);
     plib->SetData(pointLightIndexData);

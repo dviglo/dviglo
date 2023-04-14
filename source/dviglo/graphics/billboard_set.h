@@ -166,7 +166,7 @@ private:
     /// Vertex buffer.
     SharedPtr<VertexBuffer> vertexBuffer_;
     /// Index buffer.
-    SharedPtr<IndexBuffer> indexBuffer_;
+    std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Transform matrices for position and billboard orientation.
     Matrix3x4 transforms_[2];
     /// Buffers need resize flag.

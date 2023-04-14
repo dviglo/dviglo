@@ -134,7 +134,7 @@ DecalSet::DecalSet() :
     Drawable(DrawableTypes::Geometry),
     geometry_(new Geometry()),
     vertexBuffer_(new VertexBuffer()),
-    indexBuffer_(new IndexBuffer()),
+    indexBuffer_(std::make_shared<IndexBuffer>()),
     numVertices_(0),
     numIndices_(0),
     maxVertices_(DEFAULT_MAX_VERTICES),
@@ -689,7 +689,7 @@ void DecalSet::GetFaces(Vector<Vector<DecalVertex>>& faces, Drawable* target, un
     unsigned skinningStride = 0;
     i32 indexStride = 0;
 
-    IndexBuffer* ib = geometry->GetIndexBuffer();
+    IndexBuffer* ib = geometry->GetIndexBuffer().get();
     if (ib)
     {
         indexData = ib->GetShadowData();

@@ -376,7 +376,7 @@ bool HasDynamicBuffers(Model* model, i32 lodLevel)
             if (buffer->IsDynamic())
                 return true;
         }
-        IndexBuffer* buffer = geometry->GetIndexBuffer();
+        IndexBuffer* buffer = geometry->GetIndexBuffer().get();
         if (buffer && buffer->IsDynamic())
             return true;
     }

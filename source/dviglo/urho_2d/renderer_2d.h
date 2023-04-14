@@ -97,7 +97,7 @@ private:
         unsigned indexStart, unsigned indexCount, unsigned vertexStart, unsigned vertexCount, float distance);
 
     /// Index buffer.
-    SharedPtr<IndexBuffer> indexBuffer_;
+    std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Material.
     SharedPtr<Material> material_;
     /// Drawables.

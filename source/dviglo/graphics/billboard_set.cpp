@@ -67,7 +67,7 @@ BillboardSet::BillboardSet() :
     minAngle_(0.0f),
     geometry_(new Geometry()),
     vertexBuffer_(new VertexBuffer()),
-    indexBuffer_(new IndexBuffer()),
+    indexBuffer_(std::make_shared<IndexBuffer>()),
     bufferSizeDirty_(true),
     bufferDirty_(true),
     forceUpdate_(false),
