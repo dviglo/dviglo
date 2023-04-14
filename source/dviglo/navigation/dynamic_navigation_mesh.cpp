@@ -855,13 +855,13 @@ int DynamicNavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryLis
     }
 
     unsigned numTriangles = build.indices_.Size() / 3;
-    SharedArrayPtr<unsigned char> triAreas(new unsigned char[numTriangles]);
-    memset(triAreas.Get(), 0, numTriangles);
+    std::unique_ptr<unsigned char> triAreas(new unsigned char[numTriangles]);
+    memset(triAreas.get(), 0, numTriangles);
 
     rcMarkWalkableTriangles(build.ctx_, cfg.walkableSlopeAngle, &build.vertices_[0].x, build.vertices_.Size(),
-        &build.indices_[0], numTriangles, triAreas.Get());
+        &build.indices_[0], numTriangles, triAreas.get());
     rcRasterizeTriangles(build.ctx_, &build.vertices_[0].x, build.vertices_.Size(), &build.indices_[0],
-        triAreas.Get(), numTriangles, *build.heightField_, cfg.walkableClimb);
+        triAreas.get(), numTriangles, *build.heightField_, cfg.walkableClimb);
     rcFilterLowHangingWalkableObstacles(build.ctx_, cfg.walkableClimb, *build.heightField_);
 
     rcFilterLedgeSpans(build.ctx_, cfg.walkableHeight, cfg.walkableClimb, *build.heightField_);
