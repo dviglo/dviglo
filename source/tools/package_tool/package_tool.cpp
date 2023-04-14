@@ -321,7 +321,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
 
         unsigned dataSize = entries_[i].size_;
         totalDataSize += dataSize;
-        SharedArrayPtr<u8> buffer(new u8[dataSize]);
+        std::unique_ptr<byte[]> buffer(new byte[dataSize]);
 
         if (srcFile.Read(&buffer[0], dataSize) != dataSize)
             ErrorExit("Could not read file " + fileFullPath);
@@ -341,7 +341,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
         }
         else // Compress 
         {
-            SharedArrayPtr<u8> compressBuffer(new u8[LZ4_compressBound(blockSize_)]);
+            std::unique_ptr<byte[]> compressBuffer(new byte[LZ4_compressBound(blockSize_)]);
 
             unsigned pos = 0;
 
@@ -351,13 +351,13 @@ void WritePackageFile(const String& fileName, const String& rootDir)
                 if (pos + unpackedSize > dataSize)
                     unpackedSize = dataSize - pos;
 
-                auto packedSize = (unsigned)LZ4_compress_HC((const char*)&buffer[pos], (char*)compressBuffer.Get(), unpackedSize, LZ4_compressBound(unpackedSize), 0);
+                auto packedSize = (unsigned)LZ4_compress_HC((const char*)&buffer[pos], (char*)compressBuffer.get(), unpackedSize, LZ4_compressBound(unpackedSize), 0);
                 if (!packedSize)
                     ErrorExit("LZ4 compression failed for file " + entries_[i].name_ + " at offset " + String(pos));
 
                 dest.WriteU16((unsigned short)unpackedSize);
                 dest.WriteU16((unsigned short)packedSize);
-                dest.Write(compressBuffer.Get(), packedSize);
+                dest.Write(compressBuffer.get(), packedSize);
 
                 pos += unpackedSize;
             }
