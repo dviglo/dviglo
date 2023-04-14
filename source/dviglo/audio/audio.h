@@ -117,7 +117,7 @@ private:
     void UpdateInternal(float timeStep);
 
     /// Clipping buffer for mixing.
-    SharedArrayPtr<i32> clipBuffer_;
+    std::unique_ptr<i32[]> clipBuffer_;
     /// Audio thread mutex.
     std::mutex audioMutex_;
     /// SDL audio device ID.

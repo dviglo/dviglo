@@ -130,7 +130,7 @@ bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpo
     fragment_size_ = Min(NextPowerOfTwo((u32)mixRate >> 6u), (u32)obtained.samples);
     mixRate_ = obtained.freq;
     interpolation_ = interpolation;
-    clipBuffer_ = new i32[stereo ? fragment_size_ << 1u : fragment_size_];
+    clipBuffer_.reset(new i32[stereo ? fragment_size_ << 1u : fragment_size_]);
 
     DV_LOGINFO("Set audio mode " + String(mixRate_) + " Hz " + (stereo_ ? "stereo" : "mono") + (interpolation_ ? " interpolated" : ""));
 
@@ -291,7 +291,7 @@ void Audio::MixOutput(void* dest, u32 samples)
             clipSamples <<= 1;
 
         // Clear clip buffer
-        i32* clipPtr = clipBuffer_.Get();
+        i32* clipPtr = clipBuffer_.get();
         memset(clipPtr, 0, clipSamples * sizeof(i32));
 
         // Mix samples to clip buffer
@@ -332,7 +332,7 @@ void Audio::Release()
     {
         SDL_CloseAudioDevice(device_id_);
         device_id_ = 0;
-        clipBuffer_.Reset();
+        clipBuffer_.reset();
     }
 }
 
