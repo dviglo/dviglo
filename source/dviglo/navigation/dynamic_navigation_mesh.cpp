@@ -855,7 +855,7 @@ int DynamicNavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryLis
     }
 
     unsigned numTriangles = build.indices_.Size() / 3;
-    std::unique_ptr<unsigned char> triAreas(new unsigned char[numTriangles]);
+    std::unique_ptr<unsigned char[]> triAreas(new unsigned char[numTriangles]);
     memset(triAreas.get(), 0, numTriangles);
 
     rcMarkWalkableTriangles(build.ctx_, cfg.walkableSlopeAngle, &build.vertices_[0].x, build.vertices_.Size(),
