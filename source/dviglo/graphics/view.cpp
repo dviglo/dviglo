@@ -2974,7 +2974,7 @@ void View::PrepareInstancingBuffer()
     if (!totalInstances || !DV_RENDERER.ResizeInstancingBuffer(totalInstances))
         return;
 
-    VertexBuffer* instancingBuffer = DV_RENDERER.GetInstancingBuffer();
+    VertexBuffer* instancingBuffer = DV_RENDERER.GetInstancingBuffer().get();
     i32 freeIndex = 0;
     void* dest = instancingBuffer->Lock(0, totalInstances, true);
     if (!dest)

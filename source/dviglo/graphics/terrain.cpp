@@ -647,7 +647,7 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
     ZoneScoped;
 
     auto row = (unsigned)(patchSize_ + 1);
-    VertexBuffer* vertexBuffer = patch->GetVertexBuffer();
+    VertexBuffer* vertexBuffer = patch->GetVertexBuffer().get();
     Geometry* geometry = patch->GetGeometry();
     Geometry* maxLodGeometry = patch->GetMaxLodGeometry();
     Geometry* occlusionGeometry = patch->GetOcclusionGeometry();

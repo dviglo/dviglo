@@ -795,9 +795,36 @@ bool Graphics::SetVertexBuffers_OGL(const Vector<VertexBuffer*>& buffers, unsign
     return true;
 }
 
-bool Graphics::SetVertexBuffers_OGL(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset)
+// TODO: Код функции почти покипаста предыдущей, предыдущую возможно удалить?
+bool Graphics::SetVertexBuffers_OGL(const Vector<std::shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset)
 {
-    return SetVertexBuffers_OGL(reinterpret_cast<const Vector<VertexBuffer*>&>(buffers), instanceOffset);
+    if (buffers.Size() > MAX_VERTEX_STREAMS)
+    {
+        DV_LOGERROR("Too many vertex buffers");
+        return false;
+    }
+
+    GraphicsImpl_OGL* impl = GetImpl_OGL();
+
+    if (instanceOffset != impl->lastInstanceOffset_)
+    {
+        impl->lastInstanceOffset_ = instanceOffset;
+        impl->vertexBuffersDirty_ = true;
+    }
+
+    for (i32 i = 0; i < MAX_VERTEX_STREAMS; ++i)
+    {
+        VertexBuffer* buffer = nullptr;
+        if (i < buffers.Size())
+            buffer = buffers[i].get();
+        if (buffer != vertexBuffers_[i])
+        {
+            vertexBuffers_[i] = buffer;
+            impl->vertexBuffersDirty_ = true;
+        }
+    }
+
+    return true;
 }
 
 void Graphics::SetIndexBuffer_OGL(IndexBuffer* buffer)

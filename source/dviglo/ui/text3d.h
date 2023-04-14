@@ -173,7 +173,7 @@ protected:
     /// Geometries.
     Vector<SharedPtr<Geometry>> geometries_;
     /// Vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::shared_ptr<VertexBuffer> vertexBuffer_;
     /// Material to use as a base for the text material(s).
     SharedPtr<Material> material_;
     /// Text UI batches.

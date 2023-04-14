@@ -664,7 +664,7 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
     if (instances_.Size() && !geometry_->IsEmpty())
     {
         // Draw as individual objects if instancing not supported or could not fill the instancing buffer
-        VertexBuffer* instanceBuffer = DV_RENDERER.GetInstancingBuffer();
+        VertexBuffer* instanceBuffer = DV_RENDERER.GetInstancingBuffer().get();
         if (!instanceBuffer || geometryType_ != GEOM_INSTANCED || startIndex_ == NINDEX)
         {
             Batch::Prepare(view, camera, false, allowDepthWrite);
@@ -684,20 +684,19 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
         else
         {
             Batch::Prepare(view, camera, false, allowDepthWrite);
+            Vector<VertexBuffer*> vertexBuffers;
 
-            // Get the geometry vertex buffers, then add the instancing stream buffer
-            // Hack: use a const_cast to avoid dynamic allocation of new temp vectors
-            auto& vertexBuffers = const_cast<Vector<SharedPtr<VertexBuffer>>&>(
-                geometry_->GetVertexBuffers());
-            vertexBuffers.Push(SharedPtr<VertexBuffer>(instanceBuffer));
+            // TODO: Тут вырезал какую-то оптимизацию, которая крэшилась
+
+            vertexBuffers.Resize(geometry_->GetVertexBuffers().Size());
+            for (int i = 0; i < geometry_->GetVertexBuffers().Size(); ++i)
+                vertexBuffers[i] = geometry_->GetVertexBuffers()[i].get();
+            vertexBuffers.Push(instanceBuffer);
 
             graphics.SetIndexBuffer(geometry_->GetIndexBuffer().get());
             graphics.SetVertexBuffers(vertexBuffers, startIndex_);
             graphics.DrawInstanced(geometry_->GetPrimitiveType(), geometry_->GetIndexStart(), geometry_->GetIndexCount(),
                 geometry_->GetVertexStart(), geometry_->GetVertexCount(), instances_.Size());
-
-            // Remove the instancing buffer & element mask now
-            vertexBuffers.Pop();
         }
     }
 }

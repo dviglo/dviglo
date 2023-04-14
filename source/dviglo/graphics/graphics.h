@@ -234,7 +234,7 @@ public:
     /// Set multiple vertex buffers.
     bool SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned instanceOffset = 0);
     /// Set multiple vertex buffers.
-    bool SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset = 0);
+    bool SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset = 0);
     /// Set index buffer.
     void SetIndexBuffer(IndexBuffer* buffer);
     /// Set shaders.
@@ -742,7 +742,7 @@ private:
     void DrawInstanced_OGL(PrimitiveType type, unsigned indexStart, unsigned indexCount, unsigned baseVertexIndex, unsigned minVertex, unsigned vertexCount, unsigned instanceCount);
     void SetVertexBuffer_OGL(VertexBuffer* buffer);
     bool SetVertexBuffers_OGL(const Vector<VertexBuffer*>& buffers, unsigned instanceOffset = 0);
-    bool SetVertexBuffers_OGL(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset = 0);
+    bool SetVertexBuffers_OGL(const Vector<std::shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset = 0);
     void SetIndexBuffer_OGL(IndexBuffer* buffer);
     void SetShaders_OGL(ShaderVariation* vs, ShaderVariation* ps);
     void SetShaderParameter_OGL(StringHash param, const float* data, unsigned count);

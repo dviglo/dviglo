@@ -366,7 +366,7 @@ public:
     TextureCube* GetIndirectionCubeMap() const { return indirectionCubeMap_; }
 
     /// Return the instancing vertex buffer.
-    VertexBuffer* GetInstancingBuffer() const { return dynamicInstancing_ ? instancingBuffer_.Get() : nullptr; }
+    std::shared_ptr<VertexBuffer> GetInstancingBuffer() const { return dynamicInstancing_ ? instancingBuffer_ : nullptr; }
 
     /// Return the frame update parameters.
     const FrameInfo& GetFrameInfo() const { return frame_; }
@@ -473,7 +473,7 @@ private:
     /// Point light volume geometry.
     SharedPtr<Geometry> pointLightGeometry_;
     /// Instance stream vertex buffer.
-    SharedPtr<VertexBuffer> instancingBuffer_;
+    std::shared_ptr<VertexBuffer> instancingBuffer_;
     /// Default material.
     SharedPtr<Material> defaultMaterial_;
     /// Default range attenuation texture.

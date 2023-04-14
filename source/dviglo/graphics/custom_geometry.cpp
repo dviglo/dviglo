@@ -27,7 +27,7 @@ extern const char* GEOMETRY_CATEGORY;
 
 CustomGeometry::CustomGeometry()
     : Drawable(DrawableTypes::Geometry)
-    , vertexBuffer_(new VertexBuffer())
+    , vertexBuffer_(std::make_shared<VertexBuffer>())
     , elementMask_(VertexElements::Position)
     , geometryIndex_(0)
     , materialsAttr_(Material::GetTypeStatic())

@@ -829,7 +829,7 @@ bool Graphics::SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned i
     return {}; // Prevent warning
 }
 
-bool Graphics::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, unsigned instanceOffset)
+bool Graphics::SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset)
 {
     GAPI gapi = GParams::get_gapi();
 

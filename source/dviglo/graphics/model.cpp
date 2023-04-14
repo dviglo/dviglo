@@ -22,11 +22,11 @@
 namespace dviglo
 {
 
-unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<SharedPtr<VertexBuffer>>& buffers)
+unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<std::shared_ptr<VertexBuffer>>& buffers)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
     {
-        if (buffers[i] == buffer)
+        if (buffers[i].get() == buffer)
             return i;
     }
     return 0;
@@ -108,7 +108,7 @@ bool Model::begin_load(Deserializer& source)
         morphRangeStarts_[i] = source.ReadU32();
         morphRangeCounts_[i] = source.ReadU32();
 
-        SharedPtr<VertexBuffer> buffer(new VertexBuffer());
+        std::shared_ptr<VertexBuffer> buffer = std::make_shared<VertexBuffer>();
         unsigned vertexSize = VertexBuffer::GetVertexSize(desc.vertexElements_);
         desc.dataSize_ = desc.vertexCount_ * vertexSize;
 
@@ -303,7 +303,7 @@ bool Model::end_load()
     // Upload vertex buffer data
     for (unsigned i = 0; i < vertexBuffers_.Size(); ++i)
     {
-        VertexBuffer* buffer = vertexBuffers_[i];
+        VertexBuffer* buffer = vertexBuffers_[i].get();
         VertexBufferDesc& desc = loadVBData_[i];
         if (desc.data_)
         {
@@ -355,7 +355,7 @@ bool Model::Save(Serializer& dest) const
     dest.WriteU32(vertexBuffers_.Size());
     for (unsigned i = 0; i < vertexBuffers_.Size(); ++i)
     {
-        VertexBuffer* buffer = vertexBuffers_[i];
+        VertexBuffer* buffer = vertexBuffers_[i].get();
         dest.WriteU32(buffer->GetVertexCount());
         const Vector<VertexElement>& elements = buffer->GetElements();
         dest.WriteU32(elements.Size());
@@ -395,7 +395,7 @@ bool Model::Save(Serializer& dest) const
             Geometry* geometry = geometries_[i][j].get();
             dest.WriteFloat(geometry->GetLodDistance());
             dest.WriteU32(geometry->GetPrimitiveType());
-            dest.WriteU32(LookupVertexBuffer(geometry->GetVertexBuffer(0), vertexBuffers_));
+            dest.WriteU32(LookupVertexBuffer(geometry->GetVertexBuffer(0).get(), vertexBuffers_));
             dest.WriteU32(LookupIndexBuffer(geometry->GetIndexBuffer().get(), indexBuffers_));
             dest.WriteU32(geometry->GetIndexStart());
             dest.WriteU32(geometry->GetIndexCount());
@@ -468,7 +468,7 @@ void Model::SetBoundingBox(const BoundingBox& box)
     boundingBox_ = box;
 }
 
-bool Model::SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
+bool Model::SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
     const Vector<i32>& morphRangeCounts)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
@@ -618,15 +618,15 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
     ret->morphRangeCounts_ = morphRangeCounts_;
 
     // Deep copy vertex/index buffers
-    HashMap<VertexBuffer*, VertexBuffer*> vbMapping;
-    for (Vector<SharedPtr<VertexBuffer>>::ConstIterator i = vertexBuffers_.Begin(); i != vertexBuffers_.End(); ++i)
+    HashMap<VertexBuffer*, std::shared_ptr<VertexBuffer>> vbMapping;
+    for (Vector<std::shared_ptr<VertexBuffer>>::ConstIterator i = vertexBuffers_.Begin(); i != vertexBuffers_.End(); ++i)
     {
-        VertexBuffer* origBuffer = *i;
-        SharedPtr<VertexBuffer> cloneBuffer;
+        VertexBuffer* origBuffer = i->get();
+        std::shared_ptr<VertexBuffer> cloneBuffer;
 
         if (origBuffer)
         {
-            cloneBuffer = new VertexBuffer();
+            cloneBuffer = std::make_shared<VertexBuffer>();
             cloneBuffer->SetSize(origBuffer->GetVertexCount(), origBuffer->GetElementMask(), origBuffer->IsDynamic());
             cloneBuffer->SetShadowed(origBuffer->IsShadowed());
             if (origBuffer->IsShadowed())
@@ -690,7 +690,7 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
                 unsigned numVbs = origGeometry->GetNumVertexBuffers();
                 for (unsigned k = 0; k < numVbs; ++k)
                 {
-                    cloneGeometry->SetVertexBuffer(k, vbMapping[origGeometry->GetVertexBuffer(k)]);
+                    cloneGeometry->SetVertexBuffer(k, vbMapping[origGeometry->GetVertexBuffer(k).get()]);
                 }
                 cloneGeometry->SetDrawRange(origGeometry->GetPrimitiveType(), origGeometry->GetIndexStart(),
                     origGeometry->GetIndexCount(), origGeometry->GetVertexStart(), origGeometry->GetVertexCount(), false);

@@ -171,7 +171,7 @@ void Renderer2D::UpdateGeometry(const FrameInfo& frame)
     if (viewBatchInfo.vertexBufferUpdateFrameNumber_ != frame_.frameNumber_)
     {
         unsigned vertexCount = viewBatchInfo.vertexCount_;
-        VertexBuffer* vertexBuffer = viewBatchInfo.vertexBuffer_;
+        VertexBuffer* vertexBuffer = viewBatchInfo.vertexBuffer_.get();
         if (vertexBuffer->GetVertexCount() < vertexCount)
             vertexBuffer->SetSize(vertexCount, MASK_VERTEX2D, true);
 
@@ -347,7 +347,7 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
 
     // Create vertex buffer
     if (!viewBatchInfo.vertexBuffer_)
-        viewBatchInfo.vertexBuffer_ = new VertexBuffer();
+        viewBatchInfo.vertexBuffer_ = std::make_shared<VertexBuffer>();
 
     UpdateViewBatchInfo(viewBatchInfo, camera);
 

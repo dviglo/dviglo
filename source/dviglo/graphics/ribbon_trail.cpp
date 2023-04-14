@@ -44,7 +44,7 @@ RibbonTrail::RibbonTrail() :
     geometry_(new Geometry()),
     animationLodBias_(1.0f),
     animationLodTimer_(0.0f),
-    vertexBuffer_(new VertexBuffer()),
+    vertexBuffer_(std::make_shared<VertexBuffer>()),
     indexBuffer_(std::make_shared<IndexBuffer>()),
     transforms_(Matrix3x4::IDENTITY),
     bufferSizeDirty_(false),

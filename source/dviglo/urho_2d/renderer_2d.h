@@ -32,7 +32,7 @@ struct ViewBatchInfo2D
     /// Vertex count.
     unsigned vertexCount_;
     /// Vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::shared_ptr<VertexBuffer> vertexBuffer_;
     /// Batch updated frame number.
     i32 batchUpdatedFrameNumber_;
     /// Source batches.

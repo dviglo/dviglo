@@ -1801,7 +1801,7 @@ void Renderer::ReloadTextures()
 
 void Renderer::CreateGeometries()
 {
-    SharedPtr<VertexBuffer> dlvb(new VertexBuffer());
+    std::shared_ptr<VertexBuffer> dlvb = std::make_shared<VertexBuffer>();
     dlvb->SetShadowed(true);
     dlvb->SetSize(4, VertexElements::Position);
     dlvb->SetData(dirLightVertexData);
@@ -1816,7 +1816,7 @@ void Renderer::CreateGeometries()
     dirLightGeometry_->SetIndexBuffer(dlib);
     dirLightGeometry_->SetDrawRange(TRIANGLE_LIST, 0, dlib->GetIndexCount());
 
-    SharedPtr<VertexBuffer> slvb(new VertexBuffer());
+    std::shared_ptr<VertexBuffer> slvb = std::make_shared<VertexBuffer>();
     slvb->SetShadowed(true);
     slvb->SetSize(8, VertexElements::Position);
     slvb->SetData(spotLightVertexData);
@@ -1831,7 +1831,7 @@ void Renderer::CreateGeometries()
     spotLightGeometry_->SetIndexBuffer(slib);
     spotLightGeometry_->SetDrawRange(TRIANGLE_LIST, 0, slib->GetIndexCount());
 
-    SharedPtr<VertexBuffer> plvb(new VertexBuffer());
+    std::shared_ptr<VertexBuffer> plvb = std::make_shared<VertexBuffer>();
     plvb->SetShadowed(true);
     plvb->SetSize(24, VertexElements::Position);
     plvb->SetData(pointLightVertexData);
@@ -1922,16 +1922,16 @@ void Renderer::CreateInstancingBuffer()
     // Do not create buffer if instancing not supported
     if (!DV_GRAPHICS.GetInstancingSupport())
     {
-        instancingBuffer_.Reset();
+        instancingBuffer_.reset();
         dynamicInstancing_ = false;
         return;
     }
 
-    instancingBuffer_ = new VertexBuffer();
+    instancingBuffer_ = std::make_shared<VertexBuffer>();
     const Vector<VertexElement> instancingBufferElements = CreateInstancingBufferElements(numExtraInstancingBufferElements_);
     if (!instancingBuffer_->SetSize(INSTANCING_BUFFER_DEFAULT_SIZE, instancingBufferElements, true))
     {
-        instancingBuffer_.Reset();
+        instancingBuffer_.reset();
         dynamicInstancing_ = false;
     }
 }

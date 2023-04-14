@@ -66,7 +66,7 @@ BillboardSet::BillboardSet() :
     faceCameraMode_(FC_ROTATE_XYZ),
     minAngle_(0.0f),
     geometry_(new Geometry()),
-    vertexBuffer_(new VertexBuffer()),
+    vertexBuffer_(std::make_shared<VertexBuffer>()),
     indexBuffer_(std::make_shared<IndexBuffer>()),
     bufferSizeDirty_(true),
     bufferDirty_(true),

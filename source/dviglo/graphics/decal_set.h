@@ -200,7 +200,7 @@ private:
     /// Geometry.
     SharedPtr<Geometry> geometry_;
     /// Vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::shared_ptr<VertexBuffer> vertexBuffer_;
     /// Index buffer.
     std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Decals.

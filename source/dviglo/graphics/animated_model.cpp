@@ -1091,29 +1091,29 @@ void AnimatedModel::MarkMorphsDirty()
 
 void AnimatedModel::CloneGeometries()
 {
-    const Vector<SharedPtr<VertexBuffer>>& originalVertexBuffers = model_->GetVertexBuffers();
-    HashMap<VertexBuffer*, SharedPtr<VertexBuffer>> clonedVertexBuffers;
+    const Vector<std::shared_ptr<VertexBuffer>>& originalVertexBuffers = model_->GetVertexBuffers();
+    HashMap<VertexBuffer*, std::shared_ptr<VertexBuffer>> clonedVertexBuffers;
     morphVertexBuffers_.Resize(originalVertexBuffers.Size());
 
     for (unsigned i = 0; i < originalVertexBuffers.Size(); ++i)
     {
-        VertexBuffer* original = originalVertexBuffers[i];
+        VertexBuffer* original = originalVertexBuffers[i].get();
         if (model_->GetMorphRangeCount(i))
         {
-            SharedPtr<VertexBuffer> clone(new VertexBuffer());
+            std::shared_ptr<VertexBuffer> clone = std::make_shared<VertexBuffer>();
             clone->SetShadowed(true);
             clone->SetSize(original->GetVertexCount(), morphElementMask_ & original->GetElementMask(), true);
             void* dest = clone->Lock(0, original->GetVertexCount());
             if (dest)
             {
-                CopyMorphVertices(dest, original->GetShadowData(), original->GetVertexCount(), clone, original);
+                CopyMorphVertices(dest, original->GetShadowData(), original->GetVertexCount(), clone.get(), original);
                 clone->Unlock();
             }
             clonedVertexBuffers[original] = clone;
             morphVertexBuffers_[i] = clone;
         }
         else
-            morphVertexBuffers_[i].Reset();
+            morphVertexBuffers_[i].reset();
     }
 
     // Geometries will always be cloned fully. They contain only references to buffer, so they are relatively light
@@ -1126,11 +1126,11 @@ void AnimatedModel::CloneGeometries()
 
             // Add an additional vertex stream into the clone, which supplies only the morphable vertex data, while the static
             // data comes from the original vertex buffer(s)
-            const Vector<SharedPtr<VertexBuffer>>& originalBuffers = original->GetVertexBuffers();
+            const Vector<std::shared_ptr<VertexBuffer>>& originalBuffers = original->GetVertexBuffers();
             unsigned totalBuf = originalBuffers.Size();
             for (unsigned k = 0; k < originalBuffers.Size(); ++k)
             {
-                VertexBuffer* originalBuffer = originalBuffers[k];
+                VertexBuffer* originalBuffer = originalBuffers[k].get();
                 if (clonedVertexBuffers.Contains(originalBuffer))
                     ++totalBuf;
             }
@@ -1139,11 +1139,12 @@ void AnimatedModel::CloneGeometries()
             unsigned l = 0;
             for (unsigned k = 0; k < originalBuffers.Size(); ++k)
             {
-                VertexBuffer* originalBuffer = originalBuffers[k];
+                std::shared_ptr<VertexBuffer> originalBuffer = originalBuffers[k];
 
-                if (clonedVertexBuffers.Contains(originalBuffer))
+                if (clonedVertexBuffers.Contains(originalBuffer.get()))
                 {
-                    VertexBuffer* clonedBuffer = clonedVertexBuffers[originalBuffer];
+                    // TODO: ПОиск по хэш таблице повторный
+                    std::shared_ptr<VertexBuffer> clonedBuffer = clonedVertexBuffers[originalBuffer.get()];
                     clone->SetVertexBuffer(l++, originalBuffer);
                     // Specify the morph buffer at a greater index to override the model's original positions/normals/tangents
                     clone->SetVertexBuffer(l++, clonedBuffer);
@@ -1338,10 +1339,10 @@ void AnimatedModel::UpdateMorphs()
         // Reset the morph data range from all morphable vertex buffers, then apply morphs
         for (unsigned i = 0; i < morphVertexBuffers_.Size(); ++i)
         {
-            VertexBuffer* buffer = morphVertexBuffers_[i];
+            VertexBuffer* buffer = morphVertexBuffers_[i].get();
             if (buffer)
             {
-                VertexBuffer* originalBuffer = model_->GetVertexBuffers()[i];
+                VertexBuffer* originalBuffer = model_->GetVertexBuffers()[i].get();
                 unsigned morphStart = model_->GetMorphRangeStart(i);
                 unsigned morphCount = model_->GetMorphRangeCount(i);
 

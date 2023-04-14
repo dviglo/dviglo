@@ -116,7 +116,7 @@ private:
     /// All geometries.
     Vector<SharedPtr<Geometry>> geometries_;
     /// Vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::shared_ptr<VertexBuffer> vertexBuffer_;
     /// Element mask used so far.
     VertexElements elementMask_;
     /// Current geometry being updated.

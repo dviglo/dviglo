@@ -133,7 +133,7 @@ void Decal::CalculateBoundingBox()
 DecalSet::DecalSet() :
     Drawable(DrawableTypes::Geometry),
     geometry_(new Geometry()),
-    vertexBuffer_(new VertexBuffer()),
+    vertexBuffer_(std::make_shared<VertexBuffer>()),
     indexBuffer_(std::make_shared<IndexBuffer>()),
     numVertices_(0),
     numIndices_(0),
@@ -699,7 +699,7 @@ void DecalSet::GetFaces(Vector<Vector<DecalVertex>>& faces, Drawable* target, un
     // For morphed models positions, normals and skinning may be in different buffers
     for (unsigned i = 0; i < geometry->GetNumVertexBuffers(); ++i)
     {
-        VertexBuffer* vb = geometry->GetVertexBuffer(i);
+        VertexBuffer* vb = geometry->GetVertexBuffer(i).get();
         if (!vb)
             continue;
 

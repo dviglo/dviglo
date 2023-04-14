@@ -63,7 +63,7 @@ public:
     /// Return geometry used for occlusion.
     Geometry* GetOcclusionGeometry() const;
     /// Return vertex buffer.
-    VertexBuffer* GetVertexBuffer() const;
+    std::shared_ptr<VertexBuffer> GetVertexBuffer() const;
     /// Return owner terrain.
     Terrain* GetOwner() const;
 
@@ -103,7 +103,7 @@ private:
     /// Geometry that is used for occlusion.
     SharedPtr<Geometry> occlusionGeometry_;
     /// Vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::shared_ptr<VertexBuffer> vertexBuffer_;
     /// Parent terrain.
     WeakPtr<Terrain> owner_;
     /// North neighbor patch.

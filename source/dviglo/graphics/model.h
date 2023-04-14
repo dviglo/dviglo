@@ -111,7 +111,7 @@ public:
     /// Set local-space bounding box.
     void SetBoundingBox(const BoundingBox& box);
     /// Set vertex buffers and their morph ranges.
-    bool SetVertexBuffers(const Vector<SharedPtr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
+    bool SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
         const Vector<i32>& morphRangeCounts);
     /// Set index buffers.
     bool SetIndexBuffers(const Vector<std::shared_ptr<IndexBuffer>>& buffers);
@@ -139,7 +139,7 @@ public:
     Skeleton& GetSkeleton() { return skeleton_; }
 
     /// Return vertex buffers.
-    const Vector<SharedPtr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }
+    const Vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }
 
     /// Return index buffers.
     const Vector<std::shared_ptr<IndexBuffer>>& GetIndexBuffers() const { return indexBuffers_; }
@@ -192,7 +192,7 @@ private:
     /// Skeleton.
     Skeleton skeleton_;
     /// Vertex buffers.
-    Vector<SharedPtr<VertexBuffer>> vertexBuffers_;
+    Vector<std::shared_ptr<VertexBuffer>> vertexBuffers_;
     /// Index buffers.
     Vector<std::shared_ptr<IndexBuffer>> indexBuffers_;
     /// Geometries.

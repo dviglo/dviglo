@@ -8,6 +8,8 @@
 #include "../core/object.h"
 #include "../graphics_api/graphics_defs.h"
 
+#include <memory>
+
 namespace dviglo
 {
 
@@ -30,7 +32,7 @@ public:
     /// Set number of vertex buffers.
     bool SetNumVertexBuffers(i32 num);
     /// Set a vertex buffer by index.
-    bool SetVertexBuffer(i32 index, VertexBuffer* buffer);
+    bool SetVertexBuffer(i32 index, std::shared_ptr<VertexBuffer> buffer);
     /// Set the index buffer.
     void SetIndexBuffer(std::shared_ptr<IndexBuffer> buffer);
     /// Set the draw range.
@@ -50,13 +52,13 @@ public:
     void Draw();
 
     /// Return all vertex buffers.
-    const Vector<SharedPtr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }
+    const Vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const { return vertexBuffers_; }
 
     /// Return number of vertex buffers.
     i32 GetNumVertexBuffers() const { return vertexBuffers_.Size(); }
 
     /// Return vertex buffer by index.
-    VertexBuffer* GetVertexBuffer(i32 index) const;
+    std::shared_ptr<VertexBuffer> GetVertexBuffer(i32 index) const;
 
     /// Return the index buffer.
     std::shared_ptr<IndexBuffer> GetIndexBuffer() const { return indexBuffer_; }
@@ -96,7 +98,7 @@ public:
 
 private:
     /// Vertex buffers.
-    Vector<SharedPtr<VertexBuffer>> vertexBuffers_;
+    Vector<std::shared_ptr<VertexBuffer>> vertexBuffers_;
     /// Index buffer.
     std::shared_ptr<IndexBuffer> indexBuffer_;
     /// Primitive type.

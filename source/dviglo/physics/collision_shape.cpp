@@ -370,7 +370,7 @@ bool HasDynamicBuffers(Model* model, i32 lodLevel)
         unsigned numVertexBuffers = geometry->GetNumVertexBuffers();
         for (unsigned j = 0; j < numVertexBuffers; ++j)
         {
-            VertexBuffer* buffer = geometry->GetVertexBuffer(j);
+            VertexBuffer* buffer = geometry->GetVertexBuffer(j).get();
             if (!buffer)
                 continue;
             if (buffer->IsDynamic())

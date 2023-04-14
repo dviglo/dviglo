@@ -30,7 +30,7 @@ TerrainPatch::TerrainPatch() :
     geometry_(new Geometry()),
     maxLodGeometry_(new Geometry()),
     occlusionGeometry_(new Geometry()),
-    vertexBuffer_(new VertexBuffer()),
+    vertexBuffer_(std::make_shared<VertexBuffer>()),
     coordinates_(IntVector2::ZERO),
     lodLevel_(0)
 {
@@ -243,7 +243,7 @@ Geometry* TerrainPatch::GetOcclusionGeometry() const
     return occlusionGeometry_;
 }
 
-VertexBuffer* TerrainPatch::GetVertexBuffer() const
+std::shared_ptr<VertexBuffer> TerrainPatch::GetVertexBuffer() const
 {
     return vertexBuffer_;
 }

@@ -89,7 +89,7 @@ void DynamicGeometry::create_scene()
         return;
     }
     // Get the vertex buffer from the first geometry's first LOD level
-    VertexBuffer* buffer = originalModel->GetGeometry(0, 0)->GetVertexBuffer(0);
+    VertexBuffer* buffer = originalModel->GetGeometry(0, 0)->GetVertexBuffer(0).get();
     const auto* vertexData = (const unsigned char*)buffer->Lock(0, buffer->GetVertexCount());
     if (vertexData)
     {
@@ -135,7 +135,7 @@ void DynamicGeometry::create_scene()
             SharedPtr<Model> cloneModel = originalModel->Clone();
             object->SetModel(cloneModel);
             // Store the cloned vertex buffer that we will modify when animating
-            animatingBuffers_.Push(SharedPtr<VertexBuffer>(cloneModel->GetGeometry(0, 0)->GetVertexBuffer(0)));
+            animatingBuffers_.Push(cloneModel->GetGeometry(0, 0)->GetVertexBuffer(0));
         }
     }
 
@@ -196,7 +196,7 @@ void DynamicGeometry::create_scene()
         }
 
         SharedPtr<Model> fromScratchModel(new Model());
-        SharedPtr<VertexBuffer> vb(new VertexBuffer());
+        std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>();
         std::shared_ptr<IndexBuffer> ib = std::make_shared<IndexBuffer>();
         std::shared_ptr<Geometry> geom = std::make_shared<Geometry>();
 
@@ -223,7 +223,7 @@ void DynamicGeometry::create_scene()
         fromScratchModel->SetBoundingBox(BoundingBox(Vector3(-0.5f, -0.5f, -0.5f), Vector3(0.5f, 0.5f, 0.5f)));
 
         // Though not necessary to render, the vertex & index buffers must be listed in the model so that it can be saved properly
-        Vector<SharedPtr<VertexBuffer>> vertexBuffers;
+        Vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
         Vector<std::shared_ptr<IndexBuffer>> indexBuffers;
         vertexBuffers.Push(vb);
         indexBuffers.Push(ib);
@@ -322,7 +322,7 @@ void DynamicGeometry::AnimateObjects(float timeStep)
     for (i32 i = 0; i < animatingBuffers_.Size(); ++i)
     {
         float startPhase = time_ + i * 30.0f;
-        VertexBuffer* buffer = animatingBuffers_[i];
+        VertexBuffer* buffer = animatingBuffers_[i].get();
 
         // Lock the vertex buffer for update and rewrite positions with sine wave modulated ones
         // Cannot use discard lock as there is other data (normals, UVs) that we are not overwriting

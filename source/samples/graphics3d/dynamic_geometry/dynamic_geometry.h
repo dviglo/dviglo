@@ -47,7 +47,7 @@ private:
     void handle_update(StringHash eventType, VariantMap& eventData);
 
     /// Cloned models' vertex buffers that we will animate.
-    Vector<SharedPtr<VertexBuffer>> animatingBuffers_;
+    Vector<std::shared_ptr<VertexBuffer>> animatingBuffers_;
     /// Original vertex positions for the sphere model.
     Vector<Vector3> originalVertices_;
     /// If the vertices are duplicates, indices to the original vertices (to allow seamless animation.)
