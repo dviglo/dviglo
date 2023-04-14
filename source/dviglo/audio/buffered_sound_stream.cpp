@@ -28,13 +28,13 @@ unsigned BufferedSoundStream::GetData(signed char* dest, unsigned numBytes)
     while (numBytes && buffers_.Size())
     {
         // Copy as much from the front buffer as possible, then discard it and move to the next
-        List<Pair<SharedArrayPtr<signed char>, unsigned>>::Iterator front = buffers_.Begin();
+        List<Pair<std::shared_ptr<signed char[]>, unsigned>>::Iterator front = buffers_.Begin();
 
         unsigned copySize = front->second_ - position_;
         if (copySize > numBytes)
             copySize = numBytes;
 
-        memcpy(dest, front->first_.Get() + position_, copySize);
+        memcpy(dest, front->first_.get() + position_, copySize);
         position_ += copySize;
         if (position_ >= front->second_)
         {
@@ -56,13 +56,13 @@ void BufferedSoundStream::AddData(void* data, unsigned numBytes)
     {
         std::scoped_lock lock(buffer_mutex_);
 
-        SharedArrayPtr<signed char> newBuffer(new signed char[numBytes]);
-        memcpy(newBuffer.Get(), data, numBytes);
+        std::shared_ptr<signed char[]> newBuffer = std::make_shared<signed char[]>(numBytes);
+        memcpy(newBuffer.get(), data, numBytes);
         buffers_.Push(MakePair(newBuffer, numBytes));
     }
 }
 
-void BufferedSoundStream::AddData(const SharedArrayPtr<signed char>& data, unsigned numBytes)
+void BufferedSoundStream::AddData(const std::shared_ptr<signed char[]>& data, unsigned numBytes)
 {
     if (data && numBytes)
     {
@@ -72,13 +72,13 @@ void BufferedSoundStream::AddData(const SharedArrayPtr<signed char>& data, unsig
     }
 }
 
-void BufferedSoundStream::AddData(const SharedArrayPtr<signed short>& data, unsigned numBytes)
+void BufferedSoundStream::AddData(const std::shared_ptr<signed short[]>& data, unsigned numBytes)
 {
     if (data && numBytes)
     {
         std::scoped_lock lock(buffer_mutex_);
 
-        buffers_.Push(MakePair(ReinterpretCast<signed char>(data), numBytes));
+        buffers_.Push(MakePair(reinterpret_pointer_cast<signed char[]>(data), numBytes));
     }
 }
 
@@ -95,7 +95,7 @@ unsigned BufferedSoundStream::GetBufferNumBytes() const
     std::scoped_lock lock(buffer_mutex_);
 
     unsigned ret = 0;
-    for (List<Pair<SharedArrayPtr<signed char>, unsigned>>::ConstIterator i = buffers_.Begin(); i != buffers_.End(); ++i)
+    for (List<Pair<std::shared_ptr<signed char[]>, unsigned>>::ConstIterator i = buffers_.Begin(); i != buffers_.End(); ++i)
         ret += i->second_;
     // Subtract amount of sound data played from the front buffer
     ret -= position_;

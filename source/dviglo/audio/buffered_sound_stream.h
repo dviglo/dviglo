@@ -29,9 +29,9 @@ public:
     /// Buffer sound data. Makes a copy of it.
     void AddData(void* data, unsigned numBytes);
     /// Buffer sound data by taking ownership of it.
-    void AddData(const SharedArrayPtr<signed char>& data, unsigned numBytes);
+    void AddData(const std::shared_ptr<signed char[]>& data, unsigned numBytes);
     /// Buffer sound data by taking ownership of it.
-    void AddData(const SharedArrayPtr<signed short>& data, unsigned numBytes);
+    void AddData(const std::shared_ptr<signed short[]>& data, unsigned numBytes);
     /// Remove all buffered audio data.
     void Clear();
 
@@ -42,7 +42,7 @@ public:
 
 private:
     /// Buffers and their sizes.
-    List<Pair<SharedArrayPtr<signed char>, unsigned>> buffers_;
+    List<Pair<std::shared_ptr<signed char[]>, unsigned>> buffers_;
     /// Byte position in the front most buffer.
     unsigned position_;
     /// Mutex for buffer data.

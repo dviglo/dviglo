@@ -82,7 +82,7 @@ void SoundSynthesis::UpdateSound()
 
     // Allocate a new buffer and fill it with a simple two-oscillator algorithm. The sound is over-amplified
     // (distorted), clamped to the 16-bit range, and finally lowpass-filtered according to the coefficient
-    SharedArrayPtr<signed short> newData(new signed short[numSamples]);
+    std::shared_ptr<signed short[]> newData(new signed short[numSamples]);
     for (unsigned i = 0; i < numSamples; ++i)
     {
         osc1_ = fmodf(osc1_ + 1.0f, 360.0f);
