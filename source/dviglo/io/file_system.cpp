@@ -396,10 +396,10 @@ bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
         return false;
 
     unsigned fileSize = srcFile->GetSize();
-    SharedArrayPtr<unsigned char> buffer(new unsigned char[fileSize]);
+    unique_ptr<byte[]> buffer(new byte[fileSize]);
 
-    unsigned bytesRead = srcFile->Read(buffer.Get(), fileSize);
-    unsigned bytesWritten = destFile->Write(buffer.Get(), fileSize);
+    unsigned bytesRead = srcFile->Read(buffer.get(), fileSize);
+    unsigned bytesWritten = destFile->Write(buffer.get(), fileSize);
     return bytesRead == fileSize && bytesWritten == fileSize;
 }
 
