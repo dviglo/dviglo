@@ -157,13 +157,13 @@ bool Model::begin_load(Deserializer& source)
             loadIBData_[i].indexCount_ = indexCount;
             loadIBData_[i].indexSize_ = indexSize;
             loadIBData_[i].dataSize_ = indexCount * indexSize;
-            loadIBData_[i].data_ = new byte[loadIBData_[i].dataSize_];
-            source.Read(loadIBData_[i].data_.Get(), loadIBData_[i].dataSize_);
+            loadIBData_[i].data_ = make_unique<byte[]>(loadIBData_[i].dataSize_);
+            source.Read(loadIBData_[i].data_.get(), loadIBData_[i].dataSize_);
         }
         else
         {
             // If not async loading, use locking to avoid extra allocation & copy
-            loadIBData_[i].data_.Reset(); // Make sure no previous data
+            loadIBData_[i].data_.reset(); // Make sure no previous data
             buffer->SetShadowed(true);
             buffer->SetSize(indexCount, indexSize > sizeof(unsigned short));
             void* dest = buffer->Lock(0, indexCount);
@@ -329,7 +329,7 @@ bool Model::end_load()
         {
             buffer->SetShadowed(true);
             buffer->SetSize(desc.indexCount_, desc.indexSize_ > sizeof(unsigned short));
-            buffer->SetData(desc.data_.Get());
+            buffer->SetData(desc.data_.get());
         }
     }
 

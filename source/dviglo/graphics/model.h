@@ -68,7 +68,7 @@ struct IndexBufferDesc
     /// Index data size.
     i32 dataSize_;
     /// Index data.
-    SharedArrayPtr<byte> data_;
+    std::unique_ptr<byte[]> data_; // TODO: std::shared_ptr<byte[]> ?
 };
 
 /// Description of a geometry for asynchronous loading.
