@@ -82,9 +82,9 @@ private:
     /// File handle.
     FILE* handle_;
     /// Read buffer for compressed file loading.
-    SharedArrayPtr<u8> readBuffer_;
+    std::unique_ptr<u8[]> readBuffer_;
     /// Decompression input buffer for compressed file loading.
-    SharedArrayPtr<u8> inputBuffer_;
+    std::unique_ptr<u8[]> inputBuffer_;
     /// Read buffer position.
     i32 readBufferOffset_;
     /// Bytes in the current read buffer.

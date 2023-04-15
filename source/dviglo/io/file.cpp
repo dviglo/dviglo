@@ -145,20 +145,20 @@ i32 File::Read(void* dest, i32 size)
 
                 if (!readBuffer_)
                 {
-                    readBuffer_ = new u8[unpackedSize];
-                    inputBuffer_ = new u8[LZ4_compressBound(unpackedSize)];
+                    readBuffer_.reset(new u8[unpackedSize]);
+                    inputBuffer_.reset(new u8[LZ4_compressBound(unpackedSize)]);
                 }
 
                 /// \todo Handle errors
-                ReadInternal(inputBuffer_.Get(), packedSize);
-                LZ4_decompress_fast((const char*)inputBuffer_.Get(), (char*)readBuffer_.Get(), unpackedSize);
+                ReadInternal(inputBuffer_.get(), packedSize);
+                LZ4_decompress_fast((const char*)inputBuffer_.get(), (char*)readBuffer_.get(), unpackedSize);
 
                 readBufferSize_ = unpackedSize;
                 readBufferOffset_ = 0;
             }
 
             i32 copySize = Min((readBufferSize_ - readBufferOffset_), sizeLeft);
-            memcpy(destPtr, readBuffer_.Get() + readBufferOffset_, copySize);
+            memcpy(destPtr, readBuffer_.get() + readBufferOffset_, copySize);
             destPtr += copySize;
             sizeLeft -= copySize;
             readBufferOffset_ += copySize;
@@ -302,8 +302,8 @@ hash32 File::GetChecksum()
 
 void File::Close()
 {
-    readBuffer_.Reset();
-    inputBuffer_.Reset();
+    readBuffer_.reset();
+    inputBuffer_.reset();
 
     if (handle_)
     {
