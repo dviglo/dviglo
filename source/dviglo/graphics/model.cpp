@@ -120,13 +120,13 @@ bool Model::begin_load(Deserializer& source)
         // Prepare vertex buffer data to be uploaded during end_load()
         if (async)
         {
-            desc.data_ = new byte[desc.dataSize_];
-            source.Read(desc.data_.Get(), desc.dataSize_);
+            desc.data_ = make_unique<byte[]>(desc.dataSize_);
+            source.Read(desc.data_.get(), desc.dataSize_);
         }
         else
         {
             // If not async loading, use locking to avoid extra allocation & copy
-            desc.data_.Reset(); // Make sure no previous data
+            desc.data_.reset(); // Make sure no previous data
             buffer->SetShadowed(true);
             buffer->SetSize(desc.vertexCount_, desc.vertexElements_);
             void* dest = buffer->Lock(0, desc.vertexCount_);
@@ -316,7 +316,7 @@ bool Model::end_load()
         {
             buffer->SetShadowed(true);
             buffer->SetSize(desc.vertexCount_, desc.vertexElements_);
-            buffer->SetData(desc.data_.Get());
+            buffer->SetData(desc.data_.get());
         }
     }
 
