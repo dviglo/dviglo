@@ -6,8 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dviglo
-{
+using namespace dviglo;
 
 constexpr i32 CTRL_UP = 1;
 constexpr i32 CTRL_DOWN = 2;
@@ -50,5 +49,3 @@ public:
     virtual void ObjectCollision(GameObject& otherObject, VariantMap& eventData);
     void ResetWorldCollision();
 };
-
-} // namespace dviglo

@@ -25,9 +25,6 @@
 #include "utilities/network.h"
 #include "utilities/spawn.h"
 
-namespace dviglo
-{
-
 static constexpr float MOUSE_SENSITIVITY = 0.125f;
 static constexpr float JOY_SENSITIVITY = 0.5f;
 static constexpr float JOY_MOVE_DEAD_ZONE = 0.333f;
@@ -1108,6 +1105,4 @@ public:
     }
 };
 
-} // namespace dviglo
-
-DV_DEFINE_APPLICATION_MAIN(dviglo::App);
+DV_DEFINE_APPLICATION_MAIN(App);

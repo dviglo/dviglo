@@ -6,12 +6,8 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dviglo
-{
+using namespace dviglo;
 
-// Перенесено сюда из NinjaSnowWar.as
 Node* SpawnObject(Scene* scene, const Vector3& position, const Quaternion& rotation, const String& className);
 Node* SpawnParticleEffect(Scene* scene, const Vector3& position, const String& effectName, float duration, CreateMode mode = REPLICATED);
 Node* SpawnSound(Scene* scene, const Vector3& position, const String& soundName, float duration);
-
-} // namespace dviglo

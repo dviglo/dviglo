@@ -6,8 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dviglo
-{
+using namespace dviglo;
 
 class Ninja;
 
@@ -26,5 +25,3 @@ public:
     void Control(Ninja* ownNinja, Node* ownNode, float timeStep);
     void GetNewTarget(Node* ownNode);
 };
-
-} // namespace dviglo

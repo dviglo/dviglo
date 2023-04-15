@@ -5,9 +5,6 @@
 #include "snow_crate.h"
 #include "utilities/spawn.h"
 
-namespace dviglo
-{
-
 static constexpr i32 SNOWCRATE_HEALTH = 5;
 static constexpr i32 SNOWCRATE_POINTS = 250;
 
@@ -42,5 +39,3 @@ void SnowCrate::FixedUpdate(float timeStep)
         node_->Remove();
     }
 }
-
-} // namespace dviglo

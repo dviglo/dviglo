@@ -6,8 +6,7 @@
 
 #include <dviglo/containers/str.h>
 
-namespace dviglo
-{
+using namespace dviglo;
 
 inline bool runServer = false;
 inline bool runClient = false;
@@ -17,5 +16,3 @@ inline String userName;
 inline bool nobgm = false; // Без фоновой музыки
 
 void ParseNetworkArguments();
-
-} // namespace dviglo

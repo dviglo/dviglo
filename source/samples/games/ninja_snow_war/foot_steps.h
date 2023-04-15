@@ -6,8 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dviglo
-{
+using namespace dviglo;
 
 class FootSteps : public LogicComponent
 {
@@ -21,5 +20,3 @@ public:
     void Start() override;
     void HandleAnimationTrigger(StringHash eventType, VariantMap& eventData);
 };
-
-} // namespace dviglo

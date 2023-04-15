@@ -4,9 +4,6 @@
 
 #include "potion.h"
 
-namespace dviglo
-{
-
 static constexpr int POTION_HEAL_AMOUNT = 5;
 
 void Potion::register_object()
@@ -36,5 +33,3 @@ void Potion::ObjectCollision(GameObject& otherObject, VariantMap& eventData)
         }
     }
 }
-
-} // namespace dviglo

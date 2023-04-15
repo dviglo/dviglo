@@ -6,9 +6,6 @@
 
 #include "game_object.h"
 
-namespace dviglo
-{
-
 class Snowball : public GameObject
 {
     DV_OBJECT(Snowball);
@@ -26,5 +23,3 @@ public:
     void WorldCollision(VariantMap& eventData) override;
     void ObjectCollision(GameObject& otherObject, VariantMap& eventData) override;
 };
-
-} // namespace dviglo

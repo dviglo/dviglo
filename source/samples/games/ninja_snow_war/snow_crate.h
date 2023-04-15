@@ -6,9 +6,6 @@
 
 #include "game_object.h"
 
-namespace dviglo
-{
-
 class SnowCrate : public GameObject
 {
     DV_OBJECT(SnowCrate);
@@ -21,5 +18,3 @@ public:
     void Start() override;
     void FixedUpdate(float timeStep) override;
 };
-
-} // namespace dviglo

@@ -5,9 +5,6 @@
 #include "foot_steps.h"
 #include "utilities/spawn.h"
 
-namespace dviglo
-{
-
 void FootSteps::register_object()
 {
     DV_CONTEXT.RegisterFactory<FootSteps>();
@@ -42,5 +39,3 @@ void FootSteps::HandleAnimationTrigger(StringHash eventType, VariantMap& eventDa
             SpawnParticleEffect(bone->GetScene(), bone->GetWorldPosition(), "particle/snow_explosion_fade.xml", 1, LOCAL);
     }
 }
-
-} // namespace dviglo

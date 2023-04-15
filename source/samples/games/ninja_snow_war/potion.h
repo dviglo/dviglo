@@ -6,9 +6,6 @@
 
 #include "game_object.h"
 
-namespace dviglo
-{
-
 class Potion : public GameObject
 {
     DV_OBJECT(Potion);
@@ -23,5 +20,3 @@ public:
     void Start() override;
     void ObjectCollision(GameObject& otherObject, VariantMap& eventData) override;
 };
-
-} // namespace dviglo

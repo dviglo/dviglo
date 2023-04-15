@@ -5,9 +5,6 @@
 #include "snowball.h"
 #include "utilities/spawn.h"
 
-namespace dviglo
-{
-
 static constexpr float SNOWBALL_MIN_HIT_SPEED = 1.f;
 static constexpr float SNOWBALL_DAMPING_FORCE = 20.f;
 static constexpr float SNOWBALL_DURATION = 5.f;
@@ -84,5 +81,3 @@ void Snowball::ObjectCollision(GameObject& otherObject, VariantMap& eventData)
     if (duration > SNOWBALL_OBJECT_HIT_DURATION)
         duration = SNOWBALL_OBJECT_HIT_DURATION;
 }
-
-} // namespace dviglo

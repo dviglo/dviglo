@@ -4,9 +4,6 @@
 
 #include "game_object.h"
 
-namespace dviglo
-{
-
 void GameObject::register_object()
 {
     DV_CONTEXT.RegisterFactory<GameObject>();
@@ -148,5 +145,3 @@ void GameObject::ResetWorldCollision()
         isSliding = false;
     }
 }
-
-} // namespace dviglo

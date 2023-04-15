@@ -7,9 +7,6 @@
 #include "snowball.h"
 #include "utilities/spawn.h"
 
-namespace dviglo
-{
-
 static constexpr i32 LAYER_MOVE = 0;
 static constexpr i32 LAYER_ATTACK = 1;
 
@@ -331,5 +328,3 @@ bool Ninja::Heal(i32 amount)
 
     return true;
 }
-
-} // namespace dviglo

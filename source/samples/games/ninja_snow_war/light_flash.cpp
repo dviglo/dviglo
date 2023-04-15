@@ -4,9 +4,6 @@
 
 #include "light_flash.h"
 
-namespace dviglo
-{
-
 void LightFlash::register_object()
 {
     DV_CONTEXT.RegisterFactory<LightFlash>();
@@ -25,5 +22,3 @@ void LightFlash::FixedUpdate(float timeStep)
     // Call superclass to handle lifetime
     GameObject::FixedUpdate(timeStep);
 }
-
-} // namespace dviglo

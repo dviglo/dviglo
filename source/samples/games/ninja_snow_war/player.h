@@ -6,8 +6,7 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dviglo
-{
+using namespace dviglo;
 
 struct Player
 {
@@ -25,6 +24,3 @@ struct HiscoreEntry
     i32 score;
     String name;
 };
-
-} // namespace dviglo
-

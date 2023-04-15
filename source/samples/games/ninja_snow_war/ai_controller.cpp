@@ -6,9 +6,6 @@
 
 #include "ninja.h"
 
-namespace dviglo
-{
-
 static constexpr float INITIAL_AGGRESSION = 0.0020f;
 static constexpr float INITIAL_PREDICTION = 30.f;
 static constexpr float INITIAL_AIM_SPEED = 10.f;
@@ -197,5 +194,3 @@ void AIController::GetNewTarget(Node* ownNode)
         }
     }
 }
-
-} // namespace dviglo

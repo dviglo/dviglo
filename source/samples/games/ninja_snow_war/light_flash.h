@@ -6,9 +6,6 @@
 
 #include "game_object.h"
 
-namespace dviglo
-{
-
 class LightFlash : public GameObject
 {
     DV_OBJECT(LightFlash);
@@ -19,5 +16,3 @@ public:
     LightFlash();
     void FixedUpdate(float timeStep) override;
 };
-
-} // namespace dviglo

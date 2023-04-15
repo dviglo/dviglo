@@ -6,9 +6,6 @@
 
 #include "../game_object.h"
 
-namespace dviglo
-{
-
 Node* SpawnObject(Scene* scene, const Vector3& position, const Quaternion& rotation, const String& className)
 {
     XmlFile* xml = DV_RES_CACHE.GetResource<XmlFile>("ninja_objects/" + className + ".xml");
@@ -49,5 +46,3 @@ Node* SpawnSound(Scene* scene, const Vector3& position, const String& soundName,
 
     return newNode;
 }
-
-} // namespace dviglo

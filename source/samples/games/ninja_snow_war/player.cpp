@@ -4,13 +4,8 @@
 
 #include "player.h"
 
-namespace dviglo
-{
-
 Player::Player()
     : score(0)
     , nodeID(0)
 {
 }
-
-} // namespace dviglo

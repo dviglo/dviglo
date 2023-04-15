@@ -6,9 +6,6 @@
 
 #include "network.h"
 
-namespace dviglo
-{
-
 void ParseNetworkArguments()
 {
     const Vector<String>& arguments = GetArguments();
@@ -45,5 +42,3 @@ void ParseNetworkArguments()
         }
     }
 }
-
-} // namespace dviglo

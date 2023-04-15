@@ -10,9 +10,6 @@
 
 #include "ai_controller.h"
 
-namespace dviglo
-{
-
 class Ninja : public GameObject
 {
     DV_OBJECT(Ninja);
@@ -42,5 +39,3 @@ public:
     void DeathUpdate(float timeStep);
     bool Heal(i32 amount) override;
 };
-
-} // namespace dviglo
