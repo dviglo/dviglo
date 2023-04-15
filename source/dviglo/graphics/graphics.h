@@ -82,7 +82,7 @@ struct ScratchBuffer
     }
 
     /// Buffer data.
-    SharedArrayPtr<u8> data_;
+    std::shared_ptr<u8[]> data_;
     /// Data size.
     i32 size_;
     /// Reserved flag.

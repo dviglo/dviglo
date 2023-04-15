@@ -409,7 +409,7 @@ void* Graphics::ReserveScratchBuffer(i32 size)
         if (!scratchBuffer.reserved_ && scratchBuffer.size_ >= size)
         {
             scratchBuffer.reserved_ = true;
-            return scratchBuffer.data_.Get();
+            return scratchBuffer.data_.get();
         }
     }
 
@@ -418,26 +418,26 @@ void* Graphics::ReserveScratchBuffer(i32 size)
     {
         if (!scratchBuffer.reserved_)
         {
-            scratchBuffer.data_ = new u8[size];
+            scratchBuffer.data_ = make_shared<u8[]>(size);
             scratchBuffer.size_ = size;
             scratchBuffer.reserved_ = true;
 
             DV_LOGDEBUG("Resized scratch buffer to size " + String(size));
 
-            return scratchBuffer.data_.Get();
+            return scratchBuffer.data_.get();
         }
     }
 
     // Finally allocate a new buffer
     ScratchBuffer newBuffer;
-    newBuffer.data_ = new u8[size];
+    newBuffer.data_ = make_shared<u8[]>(size);
     newBuffer.size_ = size;
     newBuffer.reserved_ = true;
     scratchBuffers_.Push(newBuffer);
 
     DV_LOGDEBUG("Allocated scratch buffer with size " + String(size));
 
-    return newBuffer.data_.Get();
+    return newBuffer.data_.get();
 }
 
 void Graphics::FreeScratchBuffer(void* buffer)
@@ -447,7 +447,7 @@ void Graphics::FreeScratchBuffer(void* buffer)
 
     for (ScratchBuffer& scratchBuffer : scratchBuffers_)
     {
-        if (scratchBuffer.reserved_ && scratchBuffer.data_.Get() == buffer)
+        if (scratchBuffer.reserved_ && scratchBuffer.data_.get() == buffer)
         {
             scratchBuffer.reserved_ = false;
             return;
@@ -463,7 +463,7 @@ void Graphics::CleanupScratchBuffers()
     {
         if (!scratchBuffer.reserved_ && scratchBuffer.size_ > maxScratchBufferRequest_ * 2 && scratchBuffer.size_ >= 1024 * 1024)
         {
-            scratchBuffer.data_ = maxScratchBufferRequest_ > 0 ? (new u8[maxScratchBufferRequest_]) : nullptr;
+            scratchBuffer.data_ = (maxScratchBufferRequest_ > 0) ? make_shared<u8[]>(maxScratchBufferRequest_) : nullptr;
             scratchBuffer.size_ = maxScratchBufferRequest_;
 
             DV_LOGDEBUG("Resized scratch buffer to size " + String(maxScratchBufferRequest_));
