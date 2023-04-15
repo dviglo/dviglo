@@ -75,8 +75,8 @@ bool OcclusionBuffer::SetSize(int width, int height, bool threaded)
     {
         // Reserve extra memory in case 3D clipping is not exact
         OcclusionBufferData& buffer = buffers_[i];
-        buffer.dataWithSafety_ = new int[width * (height + 2) + 2];
-        buffer.data_ = buffer.dataWithSafety_.Get() + width + 1;
+        buffer.dataWithSafety_ = make_unique<int[]>(width * (height + 2) + 2);
+        buffer.data_ = buffer.dataWithSafety_.get() + width + 1;
         buffer.used_ = false;
     }
 

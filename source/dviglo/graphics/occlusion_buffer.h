@@ -36,7 +36,7 @@ struct DepthValue
 struct OcclusionBufferData
 {
     /// Full buffer data with safety padding.
-    SharedArrayPtr<int> dataWithSafety_;
+    std::unique_ptr<int[]> dataWithSafety_;
     /// Buffer data.
     int* data_;
     /// Use flag.
