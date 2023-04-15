@@ -435,8 +435,8 @@ bool AnimationSet2D::EndLoadSpriter()
             texture->SetSize(allocator.GetWidth(), allocator.GetHeight(), Graphics::GetRGBAFormat());
 
             auto textureDataSize = (unsigned)allocator.GetWidth() * allocator.GetHeight() * 4;
-            SharedArrayPtr<unsigned char> textureData(new unsigned char[textureDataSize]);
-            memset(textureData.Get(), 0, textureDataSize);
+            unique_ptr<byte[]> textureData(new byte[textureDataSize]);
+            memset(textureData.get(), 0, textureDataSize);
 
             sprite_ = new Sprite2D();
             sprite_->SetTexture(texture);
@@ -448,7 +448,7 @@ bool AnimationSet2D::EndLoadSpriter()
 
                 for (int y = 0; y < image->GetHeight(); ++y)
                 {
-                    memcpy(textureData.Get() + ((info.y + y) * allocator.GetWidth() + info.x) * 4,
+                    memcpy(textureData.get() + ((info.y + y) * allocator.GetWidth() + info.x) * 4,
                         image->GetData() + y * image->GetWidth() * 4, (size_t)image->GetWidth() * 4);
                 }
 
@@ -461,7 +461,7 @@ bool AnimationSet2D::EndLoadSpriter()
                 spriterFileSprites_[key] = sprite;
             }
 
-            texture->SetData(0, 0, 0, allocator.GetWidth(), allocator.GetHeight(), textureData.Get());
+            texture->SetData(0, 0, 0, allocator.GetWidth(), allocator.GetHeight(), textureData.get());
         }
         else
         {
