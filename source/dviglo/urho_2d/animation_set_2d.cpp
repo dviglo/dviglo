@@ -269,12 +269,12 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
         return false;
     }
 
-    SharedArrayPtr<char> buffer(new char[dataSize]);
-    if (source.Read(buffer.Get(), dataSize) != dataSize)
+    std::unique_ptr<char[]> buffer(new char[dataSize]);
+    if (source.Read(buffer.get(), dataSize) != dataSize)
         return false;
 
     spriterData_ = make_unique<Spriter::SpriterData>();
-    if (!spriterData_->Load(buffer.Get(), dataSize))
+    if (!spriterData_->Load(buffer.get(), dataSize))
     {
         DV_LOGERROR("Could not spriter data from " + source.GetName());
         return false;

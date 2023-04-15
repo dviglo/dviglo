@@ -14,6 +14,7 @@
 #include "../math/rect.h"
 #include "../math/string_hash.h"
 
+#include <memory>
 #include <typeinfo>
 
 namespace dviglo
