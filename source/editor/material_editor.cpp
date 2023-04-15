@@ -5,8 +5,6 @@
 
 #include <dviglo/dviglo_all.h>
 
-using namespace dviglo;
-
 const String str_pick_material("pick material");
 const String str_new_material("new material");
 const String str_reload_material("reload material");

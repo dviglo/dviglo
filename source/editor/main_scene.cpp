@@ -3,8 +3,6 @@
 
 #include "main_scene.h"
 
-using namespace dviglo;
-
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool main_scene_destructed = false;
 

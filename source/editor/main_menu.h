@@ -5,10 +5,10 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dv = dviglo;
+using namespace dviglo;
 
 // Класс создаёт главное меню и обрабатывает его события
-class MainMenu : public dv::Object
+class MainMenu : public Object
 {
     DV_OBJECT(MainMenu);
 
@@ -16,16 +16,16 @@ public:
     static MainMenu& get_instance();
 
 private:
-    dv::BorderImage* menu_bar_;
+    BorderImage* menu_bar_;
 
     MainMenu();
     ~MainMenu();
 
     // Создаёт пункт меню с текстом
-    dv::Menu* create_menu_item(const dv::String& name, const dv::String& text);
+    Menu* create_menu_item(const String& name, const String& text);
 
     // Обрабатывает нажатие любого пункта меню в программе
-    void handle_menu_selected(dv::StringHash event_type, dv::VariantMap& event_data);
+    void handle_menu_selected(StringHash event_type, VariantMap& event_data);
 };
 
 #define MAIN_MENU (MainMenu::get_instance())

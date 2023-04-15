@@ -5,10 +5,10 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dv = dviglo;
+using namespace dviglo;
 
 // Класс создаёт окно редактора материалов и обрабатывает его события
-class MaterialEditor : public dv::Object
+class MaterialEditor : public Object
 {
     DV_OBJECT(MaterialEditor);
 
@@ -16,21 +16,21 @@ public:
     static MaterialEditor& get_instance();
 
 private:
-    dv::Window* window_ = nullptr;
-    dv::SharedPtr<dv::FileSelector> file_selector_;
-    dv::SharedPtr<dv::Material> material_;
+    Window* window_ = nullptr;
+    SharedPtr<FileSelector> file_selector_;
+    SharedPtr<Material> material_;
 
     MaterialEditor();
     ~MaterialEditor();
 
     // Создаёт кнопку с текстом
-    dv::Button* create_button(dv::UiElement* parent, const dv::String& name, const dv::String& text);
+    Button* create_button(UiElement* parent, const String& name, const String& text);
 
-    void handle_pick_file_selected(dv::StringHash event_type, dv::VariantMap& event_data);
-    void handle_save_file_as_selected(dv::StringHash event_type, dv::VariantMap& event_data);
+    void handle_pick_file_selected(StringHash event_type, VariantMap& event_data);
+    void handle_save_file_as_selected(StringHash event_type, VariantMap& event_data);
 
     // Обрабатывает нажатие любой кнопки в окне редактора
-    void handle_button_pressed(dv::StringHash event_type, dv::VariantMap& event_data);
+    void handle_button_pressed(StringHash event_type, VariantMap& event_data);
 
 public:
 };

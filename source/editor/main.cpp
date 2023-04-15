@@ -7,8 +7,6 @@
 #include "main_scene.h"
 #include "material_editor.h"
 
-using namespace dviglo;
-
 // Главный класс приложения
 class App : public Application
 {

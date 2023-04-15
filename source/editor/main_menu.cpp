@@ -3,8 +3,6 @@
 
 #include "main_menu.h"
 
-using namespace dviglo;
-
 const String str_file("file");
 const String str_load_scene("load scene");
 const String str_save_scene("save scene");

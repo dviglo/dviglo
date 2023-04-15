@@ -5,10 +5,10 @@
 
 #include <dviglo/dviglo_all.h>
 
-namespace dv = dviglo;
+using namespace dviglo;
 
 // Класс создаёт главную сцену редактора и управляет ей
-class MainScene : public dv::Object
+class MainScene : public Object
 {
     DV_OBJECT(MainScene);
 
@@ -17,15 +17,15 @@ public:
     static bool is_destructed();
 
 private:
-    dv::SharedPtr<dv::Scene> scene_;
-    dv::Camera* camera_;
+    SharedPtr<Scene> scene_;
+    Camera* camera_;
 
     MainScene();
     ~MainScene();
 
 public:
-    dv::Scene* scene() const { return scene_; }
-    dv::Camera* camera() const { return camera_; }
+    Scene* scene() const { return scene_; }
+    Camera* camera() const { return camera_; }
 };
 
 #define MAIN_SCENE (MainScene::get_instance())
