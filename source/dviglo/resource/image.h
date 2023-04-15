@@ -150,7 +150,7 @@ public:
     unsigned GetComponents() const { return components_; }
 
     /// Return pixel data.
-    unsigned char* GetData() const { return data_; }
+    unsigned char* GetData() const { return data_.get(); }
 
     /// Return whether is compressed.
     bool IsCompressed() const { return compressedFormat_ != CF_NONE; }
@@ -213,7 +213,7 @@ private:
     /// Compressed format.
     CompressedFormat compressedFormat_{CF_NONE};
     /// Pixel data.
-    SharedArrayPtr<unsigned char> data_;
+    std::unique_ptr<unsigned char[]> data_;
     /// Precalculated mip level image.
     SharedPtr<Image> nextLevel_;
     /// Next texture array or cube map image.
