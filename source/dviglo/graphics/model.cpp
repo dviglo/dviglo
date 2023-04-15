@@ -41,6 +41,7 @@ unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<shared_ptr<IndexBuf
         if (buffers[i].get() == buffer)
             return i;
     }
+
     return 0;
 }
 
@@ -58,7 +59,9 @@ void Model::register_object()
 bool Model::begin_load(Deserializer& source)
 {
     // Check ID
+
     String fileID = source.ReadFileID();
+
     if (fileID != "UMDL" && fileID != "UMD2")
     {
         DV_LOGERROR(source.GetName() + " is not a valid model file");
@@ -136,9 +139,11 @@ bool Model::begin_load(Deserializer& source)
     }
 
     // Read index buffers
+
     unsigned numIndexBuffers = source.ReadU32();
     indexBuffers_.Reserve(numIndexBuffers);
     loadIBData_.Resize(numIndexBuffers);
+
     for (unsigned i = 0; i < numIndexBuffers; ++i)
     {
         unsigned indexCount = source.ReadU32();
@@ -266,7 +271,7 @@ bool Model::begin_load(Deserializer& source)
             newBuffer.dataSize_ = newBuffer.vertexCount_ * vertexSize;
             newBuffer.morphData_ = make_shared<byte[]>(newBuffer.dataSize_);
 
-            source.Read(newBuffer.morphData_.get(), newBuffer.vertexCount_* vertexSize);
+            source.Read(newBuffer.morphData_.get(), newBuffer.vertexCount_ * vertexSize);
 
             newMorph.buffers_[bufferIndex] = newBuffer;
             memoryUse += sizeof(VertexBufferMorph) + newBuffer.vertexCount_ * vertexSize;
