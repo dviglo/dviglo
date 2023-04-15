@@ -2307,9 +2307,9 @@ unsigned char* Image::GetImageData(Deserializer& source, int& width, int& height
 {
     unsigned dataSize = source.GetSize();
 
-    SharedArrayPtr<unsigned char> buffer(new unsigned char[dataSize]);
-    source.Read(buffer.Get(), dataSize);
-    return stbi_load_from_memory(buffer.Get(), dataSize, &width, &height, (int*)&components, 0);
+    unique_ptr<unsigned char[]> buffer(new unsigned char[dataSize]);
+    source.Read(buffer.get(), dataSize);
+    return stbi_load_from_memory(buffer.get(), dataSize, &width, &height, (int*)&components, 0);
 }
 
 void Image::FreeImageData(unsigned char* pixelData)
