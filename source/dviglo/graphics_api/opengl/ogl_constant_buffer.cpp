@@ -9,6 +9,8 @@
 
 #include "../../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -26,7 +28,7 @@ void ConstantBuffer::Release_OGL()
         gpu_object_name_ = 0;
     }
 
-    shadowData_.Reset();
+    shadowData_.reset();
     size_ = 0;
 }
 
@@ -50,8 +52,8 @@ bool ConstantBuffer::SetSize_OGL(unsigned size)
 
     size_ = size;
     dirty_ = false;
-    shadowData_ = new unsigned char[size_];
-    memset(shadowData_.Get(), 0, size_);
+    shadowData_ = make_unique<unsigned char[]>(size_);
+    memset(shadowData_.get(), 0, size_);
 
     if (!GParams::is_headless())
     {
@@ -59,7 +61,7 @@ bool ConstantBuffer::SetSize_OGL(unsigned size)
         if (!gpu_object_name_)
             glGenBuffers(1, &gpu_object_name_);
         DV_GRAPHICS.SetUBO_OGL(gpu_object_name_);
-        glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.Get(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.get(), GL_DYNAMIC_DRAW);
 #endif
     }
 
@@ -72,7 +74,7 @@ void ConstantBuffer::Apply_OGL()
     {
 #ifndef GL_ES_VERSION_2_0
         DV_GRAPHICS.SetUBO_OGL(gpu_object_name_);
-        glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.Get(), GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.get(), GL_DYNAMIC_DRAW);
 #endif
         dirty_ = false;
     }

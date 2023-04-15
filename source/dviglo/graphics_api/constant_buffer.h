@@ -52,7 +52,7 @@ private:
 #endif // def DV_OPENGL
 
     /// Shadow data.
-    SharedArrayPtr<unsigned char> shadowData_;
+    std::unique_ptr<unsigned char[]> shadowData_;
     /// Buffer byte size.
     unsigned size_{};
     /// Dirty flag.
