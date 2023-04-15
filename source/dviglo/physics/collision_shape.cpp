@@ -283,14 +283,14 @@ void ConvexData::BuildHull(const Vector<Vector3>& vertices)
         lib.CreateConvexHull(desc, result);
 
         vertexCount_ = result.mNumOutputVertices;
-        vertexData_ = new Vector3[vertexCount_];
+        vertexData_ = make_unique<Vector3[]>(vertexCount_);
 
         indexCount_ = result.mNumIndices;
-        indexData_ = new unsigned[indexCount_];
+        indexData_ = make_unique<unsigned[]>(indexCount_);
 
         // Copy vertex data & index data
-        memcpy(vertexData_.Get(), result.mOutputVertices, vertexCount_ * sizeof(Vector3));
-        memcpy(indexData_.Get(), result.mIndices, indexCount_ * sizeof(unsigned));
+        memcpy(vertexData_.get(), result.mOutputVertices, vertexCount_ * sizeof(Vector3));
+        memcpy(indexData_.get(), result.mIndices, indexCount_ * sizeof(unsigned));
 
         lib.ReleaseResult(result);
     }
@@ -428,7 +428,7 @@ btCollisionShape* CreateCollisionGeometryDataShape(ShapeType shapeType, Collisio
     case SHAPE_CONVEXHULL:
         {
             auto* convex = static_cast<ConvexData*>(geometry);
-            auto* shape = new btConvexHullShape((btScalar*)convex->vertexData_.Get(), convex->vertexCount_, sizeof(Vector3));
+            auto* shape = new btConvexHullShape((btScalar*)convex->vertexData_.get(), convex->vertexCount_, sizeof(Vector3));
             shape->setLocalScaling(ToBtVector3(scale));
             return shape;
         }
