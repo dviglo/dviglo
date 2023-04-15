@@ -146,21 +146,21 @@ void Geometry::SetLodDistance(float distance)
     lodDistance_ = distance;
 }
 
-void Geometry::SetRawVertexData(const SharedArrayPtr<byte>& data, const Vector<VertexElement>& elements)
+void Geometry::SetRawVertexData(const shared_ptr<byte[]>& data, const Vector<VertexElement>& elements)
 {
     rawVertexData_ = data;
     rawVertexSize_ = VertexBuffer::GetVertexSize(elements);
     rawElements_ = elements;
 }
 
-void Geometry::SetRawVertexData(const SharedArrayPtr<byte>& data, VertexElements elementMask)
+void Geometry::SetRawVertexData(const shared_ptr<byte[]>& data, VertexElements elementMask)
 {
     rawVertexData_ = data;
     rawVertexSize_ = VertexBuffer::GetVertexSize(elementMask);
     rawElements_ = VertexBuffer::GetElements(elementMask);
 }
 
-void Geometry::SetRawIndexData(const SharedArrayPtr<byte>& data, i32 indexSize)
+void Geometry::SetRawIndexData(const shared_ptr<byte[]>& data, i32 indexSize)
 {
     assert(indexSize >= 0);
     rawIndexData_ = data;
@@ -211,7 +211,7 @@ void Geometry::GetRawData(const byte*& vertexData, i32& vertexSize, const byte*&
 {
     if (rawVertexData_)
     {
-        vertexData = rawVertexData_;
+        vertexData = rawVertexData_.get();
         vertexSize = rawVertexSize_;
         elements = &rawElements_;
     }
@@ -230,7 +230,7 @@ void Geometry::GetRawData(const byte*& vertexData, i32& vertexSize, const byte*&
 
     if (rawIndexData_)
     {
-        indexData = rawIndexData_;
+        indexData = rawIndexData_.get();
         indexSize = rawIndexSize_;
     }
     else
@@ -251,8 +251,8 @@ void Geometry::GetRawData(const byte*& vertexData, i32& vertexSize, const byte*&
     }
 }
 
-void Geometry::GetRawDataShared(SharedArrayPtr<byte>& vertexData, i32& vertexSize,
-    SharedArrayPtr<byte>& indexData, i32& indexSize, const Vector<VertexElement>*& elements) const
+void Geometry::GetRawDataShared(shared_ptr<byte[]>& vertexData, i32& vertexSize,
+    shared_ptr<byte[]>& indexData, i32& indexSize, const Vector<VertexElement>*& elements) const
 {
     if (rawVertexData_)
     {

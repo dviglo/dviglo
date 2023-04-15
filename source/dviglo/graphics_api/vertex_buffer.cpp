@@ -12,6 +12,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -38,9 +40,9 @@ void VertexBuffer::SetShadowed(bool enable)
     if (enable != shadowed_)
     {
         if (enable && vertexSize_ && vertexCount_)
-            shadowData_ = new byte[(size_t)vertexCount_ * vertexSize_];
+            shadowData_ = make_shared<byte[]>((size_t)vertexCount_ * vertexSize_);
         else
-            shadowData_.Reset();
+            shadowData_.reset();
 
         shadowed_ = enable;
     }
@@ -64,9 +66,9 @@ bool VertexBuffer::SetSize(i32 vertexCount, const Vector<VertexElement>& element
     UpdateOffsets();
 
     if (shadowed_ && vertexCount_ && vertexSize_)
-        shadowData_ = new byte[(size_t)vertexCount_ * vertexSize_];
+        shadowData_ = make_shared<byte[]>((size_t)vertexCount_ * vertexSize_);
     else
-        shadowData_.Reset();
+        shadowData_.reset();
 
     return Create();
 }
@@ -258,8 +260,8 @@ bool VertexBuffer::SetData(const void* data)
         return false;
     }
 
-    if (shadowData_ && data != shadowData_.Get())
-        memcpy(shadowData_.Get(), data, (size_t)vertexCount_ * vertexSize_);
+    if (shadowData_ && data != shadowData_.get())
+        memcpy(shadowData_.get(), data, (size_t)vertexCount_ * vertexSize_);
 
     if (gpu_object_name_)
     {
@@ -307,7 +309,7 @@ bool VertexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool dis
     if (!count)
         return true;
 
-    byte* dst = shadowData_.Get() + (intptr_t)start * vertexSize_;
+    byte* dst = shadowData_.get() + (intptr_t)start * vertexSize_;
     if (shadowData_ && dst != data)
         memcpy(dst, data, (size_t)count * vertexSize_);
 
@@ -363,7 +365,7 @@ void* VertexBuffer::Lock(i32 start, i32 count, bool discard)
     if (shadowData_)
     {
         lockState_ = LOCK_SHADOW;
-        return shadowData_.Get() + (intptr_t)start * vertexSize_;
+        return shadowData_.get() + (intptr_t)start * vertexSize_;
     }
     else if (!GParams::is_headless())
     {
@@ -382,7 +384,7 @@ void VertexBuffer::Unlock()
     switch (lockState_)
     {
     case LOCK_SHADOW:
-        SetDataRange(shadowData_.Get() + (intptr_t)lockStart_ * vertexSize_, lockStart_, lockCount_, discardLock_);
+        SetDataRange(shadowData_.get() + (intptr_t)lockStart_ * vertexSize_, lockStart_, lockCount_, discardLock_);
         lockState_ = LOCK_NONE;
         break;
 
@@ -434,7 +436,7 @@ bool VertexBuffer::Create()
 bool VertexBuffer::UpdateToGPU()
 {
     if (gpu_object_name_ && shadowData_)
-        return SetData(shadowData_.Get());
+        return SetData(shadowData_.get());
     else
         return false;
 }

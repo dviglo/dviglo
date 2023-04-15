@@ -61,10 +61,10 @@ public:
     bool GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& vertexCount);
 
     /// Return CPU memory shadow data.
-    byte* GetShadowData() const { return shadowData_.Get(); }
+    byte* GetShadowData() const { return shadowData_.get(); }
 
     /// Return shared array pointer to the CPU memory shadow data.
-    SharedArrayPtr<byte> GetShadowDataShared() const { return shadowData_; }
+    std::shared_ptr<byte[]> GetShadowDataShared() const { return shadowData_; }
 
 private:
     /// Create buffer.
@@ -73,7 +73,7 @@ private:
     bool UpdateToGPU();
 
     /// Shadow data.
-    SharedArrayPtr<byte> shadowData_;
+    std::shared_ptr<byte[]> shadowData_;
     /// Number of indices.
     i32 indexCount_;
     /// Index size.

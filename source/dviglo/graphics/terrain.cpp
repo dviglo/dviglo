@@ -660,12 +660,12 @@ void Terrain::CreatePatchGeometry(TerrainPatch* patch)
                                          | VertexElements::TexCoord1 | VertexElements::Tangent);
     }
 
-    SharedArrayPtr<byte> cpuVertexData(new byte[row * row * sizeof(Vector3)]);
-    SharedArrayPtr<byte> occlusionCpuVertexData(new byte[row * row * sizeof(Vector3)]);
+    shared_ptr<byte[]> cpuVertexData = make_shared<byte[]>(row * row * sizeof(Vector3));
+    shared_ptr<byte[]> occlusionCpuVertexData = make_shared<byte[]>(row * row * sizeof(Vector3));
 
     auto* vertexData = (float*)vertexBuffer->Lock(0, vertexBuffer->GetVertexCount());
-    auto* positionData = (float*)cpuVertexData.Get();
-    auto* occlusionData = (float*)occlusionCpuVertexData.Get();
+    auto* positionData = (float*)cpuVertexData.get();
+    auto* occlusionData = (float*)occlusionCpuVertexData.get();
     BoundingBox box;
 
     i32 occlusionLevel = occlusionLodLevel_;

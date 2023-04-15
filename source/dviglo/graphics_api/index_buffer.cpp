@@ -11,6 +11,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -44,9 +46,9 @@ void IndexBuffer::SetShadowed(bool enable)
     if (enable != shadowed_)
     {
         if (enable && indexCount_ && indexSize_)
-            shadowData_ = new byte[(size_t)indexCount_ * indexSize_];
+            shadowData_ = make_shared<byte[]>((size_t)indexCount_ * indexSize_);
         else
-            shadowData_.Reset();
+            shadowData_.reset();
 
         shadowed_ = enable;
     }
@@ -62,9 +64,9 @@ bool IndexBuffer::SetSize(i32 indexCount, bool largeIndices, bool dynamic)
     dynamic_ = dynamic;
 
     if (shadowed_ && indexCount_ && indexSize_)
-        shadowData_ = new byte[(size_t)indexCount_ * indexSize_];
+        shadowData_ = make_shared<byte[]>((size_t)indexCount_ * indexSize_);
     else
-        shadowData_.Reset();
+        shadowData_.reset();
 
     return Create();
 }
@@ -90,7 +92,7 @@ bool IndexBuffer::GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& 
 
     if (indexSize_ == sizeof(u32))
     {
-        u32* indices = (u32*)shadowData_.Get() + start;
+        u32* indices = (u32*)shadowData_.get() + start;
 
         for (i32 i = 0; i < count; ++i)
         {
@@ -105,7 +107,7 @@ bool IndexBuffer::GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& 
     }
     else
     {
-        u16* indices = (u16*)shadowData_.Get() + start;
+        u16* indices = (u16*)shadowData_.get() + start;
 
         for (i32 i = 0; i < count; ++i)
         {
@@ -183,8 +185,8 @@ bool IndexBuffer::SetData(const void* data)
         return false;
     }
 
-    if (shadowData_ && data != shadowData_.Get())
-        memcpy(shadowData_.Get(), data, (size_t)indexCount_ * indexSize_);
+    if (shadowData_ && data != shadowData_.get())
+        memcpy(shadowData_.get(), data, (size_t)indexCount_ * indexSize_);
 
     if (gpu_object_name_)
     {
@@ -232,7 +234,7 @@ bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool disc
     if (!count)
         return true;
 
-    byte* dst = shadowData_.Get() + (intptr_t)start * indexSize_;
+    byte* dst = shadowData_.get() + (intptr_t)start * indexSize_;
     if (shadowData_ && dst != data)
         memcpy(dst, data, (size_t)count * indexSize_);
 
@@ -288,7 +290,7 @@ void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
     if (shadowData_)
     {
         lockState_ = LOCK_SHADOW;
-        return shadowData_.Get() + (intptr_t)start * indexSize_;
+        return shadowData_.get() + (intptr_t)start * indexSize_;
     }
     else if (!GParams::is_headless())
     {
@@ -307,7 +309,7 @@ void IndexBuffer::Unlock()
     switch (lockState_)
     {
     case LOCK_SHADOW:
-        SetDataRange(shadowData_.Get() + (intptr_t)lockStart_ * indexSize_, lockStart_, lockCount_, discardLock_);
+        SetDataRange(shadowData_.get() + (intptr_t)lockStart_ * indexSize_, lockStart_, lockCount_, discardLock_);
         lockState_ = LOCK_NONE;
         break;
 
@@ -359,7 +361,7 @@ bool IndexBuffer::Create()
 bool IndexBuffer::UpdateToGPU()
 {
     if (gpu_object_name_ && shadowData_)
-        return SetData(shadowData_.Get());
+        return SetData(shadowData_.get());
     else
         return false;
 }

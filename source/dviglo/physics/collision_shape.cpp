@@ -85,8 +85,8 @@ public:
                 continue;
             }
 
-            SharedArrayPtr<byte> vertexData;
-            SharedArrayPtr<byte> indexData;
+            shared_ptr<byte[]> vertexData;
+            shared_ptr<byte[]> indexData;
             i32 vertexSize;
             i32 indexSize;
             const Vector<VertexElement>* elements;
@@ -110,7 +110,7 @@ public:
             meshIndex.m_triangleIndexBase = reinterpret_cast<unsigned char*>(&indexData[indexStart * indexSize]);
             meshIndex.m_triangleIndexStride = 3 * indexSize;
             meshIndex.m_numVertices = 0;
-            meshIndex.m_vertexBase = reinterpret_cast<unsigned char*>(vertexData.Get());
+            meshIndex.m_vertexBase = reinterpret_cast<unsigned char*>(vertexData.get());
             meshIndex.m_vertexStride = vertexSize;
             meshIndex.m_indexType = (indexSize == sizeof(unsigned short)) ? PHY_SHORT : PHY_INTEGER;
             meshIndex.m_vertexType = PHY_FLOAT;
@@ -137,8 +137,8 @@ public:
         if (totalVertexCount)
         {
             // CustomGeometry vertex data is unindexed, so build index data here
-            SharedArrayPtr<byte> vertexData(new byte[totalVertexCount * sizeof(Vector3)]);
-            SharedArrayPtr<byte> indexData(new byte[totalVertexCount * sizeof(unsigned)]);
+            shared_ptr<byte[]> vertexData = make_shared<byte[]>(totalVertexCount * sizeof(Vector3));
+            shared_ptr<byte[]> indexData = make_shared<byte[]>(totalVertexCount * sizeof(unsigned));
             dataArrays_.Push(vertexData);
             dataArrays_.Push(indexData);
 
@@ -157,10 +157,10 @@ public:
 
             btIndexedMesh meshIndex;
             meshIndex.m_numTriangles = totalVertexCount / 3;
-            meshIndex.m_triangleIndexBase = reinterpret_cast<unsigned char*>(indexData.Get());
+            meshIndex.m_triangleIndexBase = reinterpret_cast<unsigned char*>(indexData.get());
             meshIndex.m_triangleIndexStride = 3 * sizeof(unsigned);
             meshIndex.m_numVertices = totalVertexCount;
-            meshIndex.m_vertexBase = reinterpret_cast<unsigned char*>(vertexData.Get());
+            meshIndex.m_vertexBase = reinterpret_cast<unsigned char*>(vertexData.get());
             meshIndex.m_vertexStride = sizeof(Vector3);
             meshIndex.m_indexType = PHY_INTEGER;
             meshIndex.m_vertexType = PHY_FLOAT;
@@ -177,7 +177,7 @@ public:
 
 private:
     /// Shared vertex/index data used in the collision.
-    Vector<SharedArrayPtr<byte>> dataArrays_;
+    Vector<shared_ptr<byte[]>> dataArrays_;
 };
 
 TriangleMeshData::TriangleMeshData(Model* model, i32 lodLevel)

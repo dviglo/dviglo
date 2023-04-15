@@ -102,10 +102,10 @@ public:
     VertexElements GetElementMask() const { return elementMask_; }
 
     /// Return CPU memory shadow data.
-    byte* GetShadowData() const { return shadowData_.Get(); }
+    byte* GetShadowData() const { return shadowData_.get(); }
 
     /// Return shared array pointer to the CPU memory shadow data.
-    SharedArrayPtr<byte> GetShadowDataShared() const { return shadowData_; }
+    std::shared_ptr<byte[]> GetShadowDataShared() const { return shadowData_; }
 
     /// Return buffer hash for building vertex declarations. Used internally.
     hash64 GetBufferHash(i32 streamIndex) { return elementHash_ << (streamIndex * 16); }
@@ -140,7 +140,7 @@ private:
     bool UpdateToGPU();
 
     /// Shadow data.
-    SharedArrayPtr<byte> shadowData_;
+    std::shared_ptr<byte[]> shadowData_;
     /// Number of vertices.
     i32 vertexCount_{};
     /// Vertex size.

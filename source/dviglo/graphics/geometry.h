@@ -43,11 +43,11 @@ public:
     /// Set the LOD distance.
     void SetLodDistance(float distance);
     /// Override raw vertex data to be returned for CPU-side operations.
-    void SetRawVertexData(const SharedArrayPtr<byte>& data, const Vector<VertexElement>& elements);
+    void SetRawVertexData(const std::shared_ptr<byte[]>& data, const Vector<VertexElement>& elements);
     /// Override raw vertex data to be returned for CPU-side operations using a legacy vertex bitmask.
-    void SetRawVertexData(const SharedArrayPtr<byte>& data, VertexElements elementMask);
+    void SetRawVertexData(const std::shared_ptr<byte[]>& data, VertexElements elementMask);
     /// Override raw index data to be returned for CPU-side operations.
-    void SetRawIndexData(const SharedArrayPtr<byte>& data, i32 indexSize);
+    void SetRawIndexData(const std::shared_ptr<byte[]>& data, i32 indexSize);
     /// Draw.
     void Draw();
 
@@ -86,7 +86,7 @@ public:
     /// Return raw vertex and index data for CPU operations, or null pointers if not available. Will return data of the first vertex buffer if override data not set.
     void GetRawData(const byte*& vertexData, i32& vertexSize, const byte*& indexData, i32& indexSize, const Vector<VertexElement>*& elements) const;
     /// Return raw vertex and index data for CPU operations, or null pointers if not available. Will return data of the first vertex buffer if override data not set.
-    void GetRawDataShared(SharedArrayPtr<byte>& vertexData, i32& vertexSize, SharedArrayPtr<byte>& indexData,
+    void GetRawDataShared(std::shared_ptr<byte[]>& vertexData, i32& vertexSize, std::shared_ptr<byte[]>& indexData,
         i32& indexSize, const Vector<VertexElement>*& elements) const;
     /// Return ray hit distance or infinity if no hit. Requires raw data to be set. Optionally return hit normal and hit uv coordinates at intersect point.
     float GetHitDistance(const Ray& ray, Vector3* outNormal = nullptr, Vector2* outUV = nullptr) const;
@@ -116,9 +116,9 @@ private:
     /// Raw vertex data elements.
     Vector<VertexElement> rawElements_;
     /// Raw vertex data override.
-    SharedArrayPtr<byte> rawVertexData_;
+    std::shared_ptr<byte[]> rawVertexData_;
     /// Raw index data override.
-    SharedArrayPtr<byte> rawIndexData_;
+    std::shared_ptr<byte[]> rawIndexData_;
     /// Raw vertex data override size.
     i32 rawVertexSize_;
     /// Raw index data override size.
