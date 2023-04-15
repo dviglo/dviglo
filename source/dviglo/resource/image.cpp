@@ -19,12 +19,6 @@
 #define STBIW_WINDOWS_UTF8
 #include <stb_image_write.h>
 
-#ifdef DV_WEBP
-#include <webp/decode.h>
-#include <webp/encode.h>
-#include <webp/mux.h>
-#endif
-
 #include "../common/debug_new.h"
 
 #ifndef MAKEFOURCC
@@ -756,75 +750,6 @@ bool Image::begin_load(Deserializer& source)
         source.Read(data_.get(), dataSize);
         SetMemoryUse(dataSize);
     }
-#ifdef DV_WEBP
-    else if (fileID == "RIFF")
-    {
-        // WebP: https://developers.google.com/speed/webp/docs/api
-
-        // RIFF layout is:
-        //   Offset  tag
-        //   0...3   "RIFF" 4-byte tag
-        //   4...7   size of image data (including metadata) starting at offset 8
-        //   8...11  "WEBP"   our form-type signature
-        const uint8_t TAG_SIZE(4);
-
-        source.Seek(8);
-        uint8_t fourCC[TAG_SIZE];
-        memset(&fourCC, 0, sizeof(uint8_t) * TAG_SIZE);
-
-        unsigned bytesRead(source.Read(&fourCC, TAG_SIZE));
-        if (bytesRead != TAG_SIZE)
-        {
-            // Truncated.
-            DV_LOGERROR("Truncated RIFF data");
-            return false;
-        }
-        const uint8_t WEBP[TAG_SIZE] = {'W', 'E', 'B', 'P'};
-        if (memcmp(fourCC, WEBP, TAG_SIZE) != 0)
-        {
-            // VP8_STATUS_BITSTREAM_ERROR
-            DV_LOGERROR("Invalid header");
-            return false;
-        }
-
-        // Read the file to buffer.
-        size_t dataSize(source.GetSize());
-        SharedArrayPtr<uint8_t> data(new uint8_t[dataSize]);
-
-        memset(data.Get(), 0, sizeof(uint8_t) * dataSize);
-        source.Seek(0);
-        source.Read(data.Get(), dataSize);
-
-        WebPBitstreamFeatures features;
-
-        if (WebPGetFeatures(data.Get(), dataSize, &features) != VP8_STATUS_OK)
-        {
-            DV_LOGERROR("Error reading WebP image: " + source.GetName());
-            return false;
-        }
-
-        size_t imgSize = (size_t)features.width * features.height * (features.has_alpha ? 4 : 3);
-        SharedArrayPtr<uint8_t> pixelData(new uint8_t[imgSize]);
-
-        bool decodeError(false);
-        if (features.has_alpha)
-        {
-            decodeError = WebPDecodeRGBAInto(data.Get(), dataSize, pixelData.Get(), imgSize, 4 * features.width) == nullptr;
-        }
-        else
-        {
-            decodeError = WebPDecodeRGBInto(data.Get(), dataSize, pixelData.Get(), imgSize, 3 * features.width) == nullptr;
-        }
-        if (decodeError)
-        {
-            DV_LOGERROR("Error decoding WebP image:" + source.GetName());
-            return false;
-        }
-
-        SetSize(features.width, features.height, features.has_alpha ? 4 : 3);
-        SetData(pixelData);
-    }
-#endif
     else
     {
         // Not DDS, KTX or PVR, use STBImage to load other image formats as uncompressed
@@ -878,10 +803,6 @@ bool Image::SaveFile(const String& fileName) const
         return SaveJPG(fileName, 100);
     else if (fileName.EndsWith(".tga", false))
         return SaveTGA(fileName);
-#ifdef DV_WEBP
-    else if (fileName.EndsWith(".webp", false))
-        return SaveWEBP(fileName, 100.0f);
-#endif
     else
         return SavePNG(fileName);
 }
@@ -1357,93 +1278,6 @@ bool Image::SaveDDS(const String& fileName) const
 
     return true;
 }
-
-bool Image::SaveWEBP(const String& fileName, float compression /* = 0.0f */) const
-{
-#ifdef DV_WEBP
-    DV_PROFILE(SaveImageWEBP);
-
-    File outFile(fileName, FILE_WRITE);
-
-    if (IsCompressed())
-    {
-        DV_LOGERROR("Can not save compressed image to WebP");
-        return false;
-    }
-
-    if (height_ > WEBP_MAX_DIMENSION || width_ > WEBP_MAX_DIMENSION)
-    {
-        DV_LOGERROR("Maximum dimension supported by WebP is " + String(WEBP_MAX_DIMENSION));
-        return false;
-    }
-
-    if (components_ != 4 && components_ != 3)
-    {
-        DV_LOGERRORF("Can not save image with %u components to WebP, which requires 3 or 4; Try ConvertToRGBA first?", components_);
-        return false;
-    }
-
-    if (!data_)
-    {
-        DV_LOGERROR("No image data to save");
-        return false;
-    }
-
-    WebPPicture pic;
-    WebPConfig config;
-    WebPMemoryWriter wrt;
-    int importResult(0);
-    size_t encodeResult(0);
-
-    if (!WebPConfigPreset(&config, WEBP_PRESET_DEFAULT, compression) || !WebPPictureInit(&pic))
-    {
-        DV_LOGERROR("WebP initialization failed; check installation");
-        return false;
-    }
-    config.lossless = 1;
-    config.exact = 1; // Preserve RGB values under transparency, as they may be wanted.
-
-    pic.use_argb = 1;
-    pic.width = width_;
-    pic.height = height_;
-    pic.writer = WebPMemoryWrite;
-    pic.custom_ptr = &wrt;
-    WebPMemoryWriterInit(&wrt);
-
-    if (components_ == 4)
-        importResult = WebPPictureImportRGBA(&pic, data_.Get(), components_ * width_);
-    else if (components_ == 3)
-        importResult = WebPPictureImportRGB(&pic, data_.Get(), components_ * width_);
-
-    if (!importResult)
-    {
-        DV_LOGERROR("WebP import of image data failed (truncated RGBA/RGB data or memory error?)");
-        WebPPictureFree(&pic);
-        WebPMemoryWriterClear(&wrt);
-        return false;
-    }
-
-    encodeResult = WebPEncode(&config, &pic);
-    // Check only general failure. WebPEncode() sets pic.error_code with specific error.
-    if (!encodeResult)
-    {
-        DV_LOGERRORF("WebP encoding failed (memory error?). WebPEncodingError = %d", pic.error_code);
-        WebPPictureFree(&pic);
-        WebPMemoryWriterClear(&wrt);
-        return false;
-    }
-
-    WebPPictureFree(&pic);
-    outFile.Write(wrt.mem, wrt.size);
-    WebPMemoryWriterClear(&wrt);
-
-    return true;
-#else
-    DV_LOGERROR("Cannot save in WEBP format, support not compiled in");
-    return false;
-#endif
-}
-
 
 Color Image::GetPixel(int x, int y) const
 {
