@@ -20,9 +20,9 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void HandleSceneUpdate(dv::StringHash eventType, dv::VariantMap& eventData);
+    void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
 
     void ShowResultWindow();
     void DestroyResultWindow();
-    void HandleResultOkButtonPressed(dv::StringHash eventType, dv::VariantMap& eventData);
+    void HandleResultOkButtonPressed(StringHash eventType, VariantMap& eventData);
 };

@@ -18,7 +18,7 @@ inline constexpr AppStateId APPSTATEID_BENCHMARK02 = 4;
 inline constexpr AppStateId APPSTATEID_BENCHMARK03 = 5;
 inline constexpr AppStateId APPSTATEID_BENCHMARK04 = 6;
 
-class AppStateManager : public dv::Object
+class AppStateManager : public Object
 {
 public:
     DV_OBJECT(AppStateManager);
@@ -27,7 +27,7 @@ public:
     static AppStateManager& get_instance();
 
 private:
-    dv::HashMap<AppStateId, dv::SharedPtr<AppState_Base>> appStates_;
+    HashMap<AppStateId, SharedPtr<AppState_Base>> appStates_;
     AppStateId currentAppStateId_ = APPSTATEID_NULL;
     AppStateId previousAppStateId_ = APPSTATEID_NULL;
     AppStateId requiredAppStateId_ = APPSTATEID_NULL;
@@ -49,7 +49,7 @@ public:
     // Change state if currentAppStateId_ != requiredAppStateId_
     void Apply();
 
-    const dv::String& GetName(AppStateId appStateId) const
+    const String& GetName(AppStateId appStateId) const
     {
         auto it = appStates_.Find(appStateId);
         assert(it != appStates_.End());

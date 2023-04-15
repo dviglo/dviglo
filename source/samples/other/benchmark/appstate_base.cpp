@@ -12,8 +12,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 void AppState_Base::LoadSceneXml(const String& path)
 {
     assert(!scene_);

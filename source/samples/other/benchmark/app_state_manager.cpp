@@ -15,8 +15,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 #ifndef NDEBUG
 // Проверяем, что не происходит обращения к синглтону после вызова деструктора
 static bool app_state_manager_destructed = false;

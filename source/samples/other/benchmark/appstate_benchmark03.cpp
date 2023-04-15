@@ -18,8 +18,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 AppState_Benchmark03::AppState_Benchmark03()
 {
     name_ = "Molecules";

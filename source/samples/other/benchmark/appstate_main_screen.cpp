@@ -16,8 +16,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 static const String MAIN_SCREEN_WINDOW_STR = "Main Screen Window";
 static const String BENCHMARK_01_STR = "Benchmark 01";
 static const String BENCHMARK_02_STR = "Benchmark 02";

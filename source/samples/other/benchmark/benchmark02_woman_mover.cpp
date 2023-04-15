@@ -10,8 +10,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 Benchmark02_WomanMover::Benchmark02_WomanMover()
     : moveSpeed_(0.f)
     , rotationSpeed_(0.f)

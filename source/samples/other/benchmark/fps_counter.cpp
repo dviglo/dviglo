@@ -8,8 +8,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 // Time without measurement
 static constexpr float WARM_UP_TIME = 5.f;
 

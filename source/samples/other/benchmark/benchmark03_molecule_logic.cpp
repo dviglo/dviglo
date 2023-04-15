@@ -8,8 +8,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 Benchmark03_MoleculeLogic::Benchmark03_MoleculeLogic()
     : moleculeType_(0)
 {

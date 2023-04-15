@@ -8,20 +8,20 @@
 
 #include <dviglo/scene/scene.h>
 
-namespace dv = dviglo;
+using namespace dviglo;
 
-inline const dv::String CURRENT_FPS_STR = "Current FPS";
+inline const String CURRENT_FPS_STR = "Current FPS";
 
-class AppState_Base : public dv::Object
+class AppState_Base : public Object
 {
 public:
     DV_OBJECT(AppState_Base);
 
 protected:
-    dv::String name_ = "Название бенчмарка";
+    String name_ = "Название бенчмарка";
 
-    dv::SharedPtr<dv::Scene> scene_;
-    void LoadSceneXml(const dv::String& path);
+    SharedPtr<Scene> scene_;
+    void LoadSceneXml(const String& path);
 
     FpsCounter fpsCounter_;
     void UpdateCurrentFpsElement();
@@ -30,7 +30,7 @@ protected:
     void DestroyViewport();
 
 public:
-    const dv::String& GetName() const { return name_; }
+    const String& GetName() const { return name_; }
     const FpsCounter& GetResult() const { return fpsCounter_; }
 
     AppState_Base()

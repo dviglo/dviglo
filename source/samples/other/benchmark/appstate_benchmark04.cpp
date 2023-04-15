@@ -13,8 +13,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 void AppState_Benchmark04::OnEnter()
 {
     assert(!scene_);

@@ -23,9 +23,9 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    dviglo::SharedPtr<dviglo::SpriteBatch> spriteBatch_;
+    SharedPtr<SpriteBatch> spriteBatch_;
     float angle_ = 0.f;
     float scale_ = 0.f;
 
-    void HandleEndAllViewsRender(dv::StringHash eventType, dv::VariantMap& eventData);
+    void HandleEndAllViewsRender(StringHash eventType, VariantMap& eventData);
 };

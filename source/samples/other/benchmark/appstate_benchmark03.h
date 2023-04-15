@@ -18,7 +18,7 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void CreateMolecule(const dv::Vector2& pos, i32 type);
+    void CreateMolecule(const Vector2& pos, i32 type);
 
-    void HandleSceneUpdate(dv::StringHash eventType, dv::VariantMap& eventData);
+    void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
 };

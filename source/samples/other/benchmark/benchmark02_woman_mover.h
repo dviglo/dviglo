@@ -7,10 +7,10 @@
 #include <dviglo/scene/logic_component.h>
 #include <dviglo/math/bounding_box.h>
 
-namespace dv = dviglo;
+using namespace dviglo;
 
 // Custom logic component for moving the animated model and rotating at area edges
-class Benchmark02_WomanMover : public dv::LogicComponent
+class Benchmark02_WomanMover : public LogicComponent
 {
 public:
     DV_OBJECT(Benchmark02_WomanMover);
@@ -23,13 +23,13 @@ private:
     float rotationSpeed_;
     
     // Movement boundaries
-    dv::BoundingBox bounds_;
+    BoundingBox bounds_;
 
 public:
     explicit Benchmark02_WomanMover();
 
     // Set motion parameters: forward movement speed, rotation speed, and movement boundaries
-    void SetParameters(float moveSpeed, float rotationSpeed, const dv::BoundingBox& bounds);
+    void SetParameters(float moveSpeed, float rotationSpeed, const BoundingBox& bounds);
     
     // Handle scene update. Called by LogicComponent base class
     void Update(float timeStep) override;
@@ -41,5 +41,5 @@ public:
     float GetRotationSpeed() const { return rotationSpeed_; }
     
     // Return movement boundaries
-    const dv::BoundingBox& GetBounds() const { return bounds_; }
+    const BoundingBox& GetBounds() const { return bounds_; }
 };

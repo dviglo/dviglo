@@ -7,18 +7,17 @@
 #include <dviglo/scene/logic_component.h>
 #include <dviglo/common/primitive_types.h>
 
-namespace dv = dviglo;
-using namespace dvt;
+using namespace dviglo;
 
-class Benchmark03_MoleculeLogic : public dv::LogicComponent
+class Benchmark03_MoleculeLogic : public LogicComponent
 {
 public:
     DV_OBJECT(Benchmark03_MoleculeLogic);
 
 private:
     i32 moleculeType_;
-    dv::Vector2 velocity_;
-    dv::Vector2 force_;
+    Vector2 velocity_;
+    Vector2 force_;
 
 public:
     explicit Benchmark03_MoleculeLogic();

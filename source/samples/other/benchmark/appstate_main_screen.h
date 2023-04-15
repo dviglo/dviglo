@@ -17,8 +17,8 @@ public:
     DV_OBJECT(AppState_MainScreen);
 
 private:
-    void HandleButtonPressed(dv::StringHash eventType, dv::VariantMap& eventData);
-    void CreateButton(const dv::String& name, const dv::String& text, dv::Window& parent);
+    void HandleButtonPressed(StringHash eventType, VariantMap& eventData);
+    void CreateButton(const String& name, const String& text, Window& parent);
     void CreateGui();
     void DestroyGui();
 
@@ -31,5 +31,5 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void HandleSceneUpdate(dv::StringHash eventType, dv::VariantMap& eventData);
+    void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
 };

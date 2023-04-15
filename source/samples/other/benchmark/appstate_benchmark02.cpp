@@ -18,8 +18,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-using namespace dviglo;
-
 AppState_Benchmark02::AppState_Benchmark02()
 {
     name_ = "Orcs & Humans";

@@ -14,8 +14,6 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
-using namespace dviglo;
-
 class App : public Application
 {
     DV_OBJECT(App);
