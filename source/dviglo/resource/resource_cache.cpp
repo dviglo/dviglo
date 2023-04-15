@@ -385,9 +385,9 @@ bool ResourceCache::reload_resource(Resource* resource)
     resource->SendEvent(E_RELOADSTARTED);
 
     bool success = false;
-    SharedPtr<File> file = GetFile(resource->GetName());
+    shared_ptr<File> file = GetFile(resource->GetName());
     if (file)
-        success = resource->Load(*(file.Get()));
+        success = resource->Load(*(file.get()));
 
     if (success)
     {
@@ -495,7 +495,7 @@ void ResourceCache::remove_resource_router(ResourceRouter* router)
     }
 }
 
-SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailure)
+shared_ptr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailure)
 {
     scoped_lock lock(resource_mutex_);
 
@@ -529,7 +529,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
         }
 
         if (file)
-            return SharedPtr<File>(file);
+            return shared_ptr<File>(file);
     }
 
     if (sendEventOnFailure)
@@ -549,7 +549,7 @@ SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailu
         }
     }
 
-    return SharedPtr<File>();
+    return shared_ptr<File>();
 }
 
 Resource* ResourceCache::GetExistingResource(StringHash type, const String& name)
@@ -617,14 +617,14 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
     }
 
     // Attempt to load the resource
-    SharedPtr<File> file = GetFile(sanitatedName, sendEventOnFailure);
+    shared_ptr<File> file = GetFile(sanitatedName, sendEventOnFailure);
     if (!file)
         return nullptr;   // Error is already logged
 
     DV_LOGDEBUG("Loading resource " + sanitatedName);
     resource->SetName(sanitatedName);
 
-    if (!resource->Load(*(file.Get())))
+    if (!resource->Load(*(file.get())))
     {
         // Error should already been logged by corresponding resource descendant class
         if (sendEventOnFailure)
@@ -696,14 +696,14 @@ SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String
     }
 
     // Attempt to load the resource
-    SharedPtr<File> file = GetFile(sanitatedName, sendEventOnFailure);
+    shared_ptr<File> file = GetFile(sanitatedName, sendEventOnFailure);
     if (!file)
         return SharedPtr<Resource>();  // Error is already logged
 
     DV_LOGDEBUG("Loading temporary resource " + sanitatedName);
     resource->SetName(file->GetName());
 
-    if (!resource->Load(*(file.Get())))
+    if (!resource->Load(*(file.get())))
     {
         // Error should already been logged by corresponding resource descendant class
         if (sendEventOnFailure)

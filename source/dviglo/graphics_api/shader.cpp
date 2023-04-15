@@ -128,7 +128,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
         {
             String includeFileName = GetPath(source.GetName()) + line.Substring(12).Replaced("\"", "").Trimmed();
 
-            SharedPtr<File> includeFile = cache.GetFile(includeFileName);
+            shared_ptr<File> includeFile = cache.GetFile(includeFileName);
             if (!includeFile)
                 return false;
 

@@ -16,6 +16,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -78,7 +80,7 @@ bool FontFaceBitmap::Load(const byte* fontData, unsigned fontDataSize, float poi
         String textureFile = fontPath + pageElem.GetAttribute("file");
 
         // Load texture manually to allow controlling the alpha channel mode
-        SharedPtr<File> fontFile = cache.GetFile(textureFile);
+        shared_ptr<File> fontFile = cache.GetFile(textureFile);
         SharedPtr<Image> fontImage(new Image());
         if (!fontFile || !fontImage->Load(*fontFile))
         {

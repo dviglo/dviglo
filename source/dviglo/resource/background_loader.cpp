@@ -63,7 +63,7 @@ void BackgroundLoader::ThreadFunction()
             background_load_mutex_.unlock();
 
             bool success = false;
-            SharedPtr<File> file = owner_->GetFile(resource->GetName(), item.sendEventOnFailure_);
+            shared_ptr<File> file = owner_->GetFile(resource->GetName(), item.sendEventOnFailure_);
             if (file)
             {
                 resource->SetAsyncLoadState(ASYNC_LOADING);

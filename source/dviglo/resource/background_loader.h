@@ -60,7 +60,7 @@ private:
     void FinishBackgroundLoading(BackgroundLoadItem& item);
 
     /// Resource cache.
-    ResourceCache* owner_;
+    ResourceCache* owner_; // TODO: Указатель на синглтон?
     /// Mutex for thread-safe access to the background load queue.
     mutable std::mutex background_load_mutex_;
     /// Resources that are queued for background loading.

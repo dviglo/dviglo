@@ -16,6 +16,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -96,9 +98,9 @@ bool Texture3D::begin_load(Deserializer& source)
         if (colorlutTexPath.Empty())
             name = texPath + name;
 
-        SharedPtr<File> file = DV_RES_CACHE.GetFile(name);
+        shared_ptr<File> file = DV_RES_CACHE.GetFile(name);
         loadImage_ = new Image();
-        if (!loadImage_->LoadColorLUT(*(file.Get())))
+        if (!loadImage_->LoadColorLUT(*(file.get())))
         {
             loadParameters_.Reset();
             loadImage_.Reset();

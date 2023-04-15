@@ -12,11 +12,13 @@
 
 #include <dviglo/common/debug_new.h>
 
+using namespace std;
+
 void AppState_Base::LoadSceneXml(const String& path)
 {
     assert(!scene_);
     scene_ = MakeShared<Scene>();
-    SharedPtr<File> file = DV_RES_CACHE.GetFile(path);
+    shared_ptr<File> file = DV_RES_CACHE.GetFile(path);
     scene_->load_xml(*file);
 
 #ifndef NDEBUG

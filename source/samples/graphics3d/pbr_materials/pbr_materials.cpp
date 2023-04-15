@@ -26,6 +26,8 @@
 
 #include <dviglo/common/debug_new.h>
 
+using namespace std;
+
 DV_DEFINE_APPLICATION_MAIN(PBRMaterials)
 
 PBRMaterials::PBRMaterials() :
@@ -76,7 +78,7 @@ void PBRMaterials::create_scene()
 
     // Load scene content prepared in the editor (XML format). GetFile() returns an open file from the resource system
     // which scene.load_xml() will read
-    SharedPtr<File> file = DV_RES_CACHE.GetFile("scenes/pbr_example.xml");
+    shared_ptr<File> file = DV_RES_CACHE.GetFile("scenes/pbr_example.xml");
     scene_->load_xml(*file);
 
     Node* sphereWithDynamicMatNode = scene_->GetChild("SphereWithDynamicMat");

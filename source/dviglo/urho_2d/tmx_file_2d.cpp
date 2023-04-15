@@ -575,7 +575,7 @@ void TmxFile2D::SetSpriteTextureEdgeOffset(float offset)
 SharedPtr<XmlFile> TmxFile2D::LoadTSXFile(const String& source)
 {
     String tsxFilePath = get_parent(GetName()) + source;
-    SharedPtr<File> tsxFile = DV_RES_CACHE.GetFile(tsxFilePath);
+    shared_ptr<File> tsxFile = DV_RES_CACHE.GetFile(tsxFilePath);
     SharedPtr<XmlFile> tsxXMLFile(new XmlFile());
     if (!tsxFile || !tsxXMLFile->Load(*tsxFile))
     {

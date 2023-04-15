@@ -32,6 +32,8 @@
 
 #include <cstdio>
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -1594,15 +1596,15 @@ void Connection::OnPackagesReady()
     {
         // Otherwise start the async loading process
         String extension = GetExtension(sceneFileName_);
-        SharedPtr<File> file = DV_RES_CACHE.GetFile(sceneFileName_);
+        shared_ptr<File> file = DV_RES_CACHE.GetFile(sceneFileName_);
         bool success;
 
         if (extension == ".xml")
-            success = scene_->LoadAsyncXML(file);
+            success = scene_->LoadAsyncXML(file.get());
         else if (extension == ".json")
-            success = scene_->LoadAsyncJSON(file);
+            success = scene_->LoadAsyncJSON(file.get());
         else
-            success = scene_->LoadAsync(file);
+            success = scene_->LoadAsync(file.get());
 
         if (!success)
             OnSceneLoadFailed();

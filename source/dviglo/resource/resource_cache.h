@@ -144,7 +144,7 @@ public:
     void remove_resource_router(ResourceRouter* router);
 
     /// Open and return a file from the resource load paths or from inside a package file. If not found, use a fallback search with absolute path. Return null if fails. Can be called from outside the main thread.
-    SharedPtr<File> GetFile(const String& name, bool sendEventOnFailure = true);
+    std::shared_ptr<File> GetFile(const String& name, bool sendEventOnFailure = true);
 
     /// Return a resource by type and name. Load if not loaded yet. Return null if not found or if fails, unless SetReturnFailedResources(true) has been called. Can be called only from the main thread.
     Resource* GetResource(StringHash type, const String& name, bool sendEventOnFailure = true);

@@ -127,8 +127,8 @@ StringHash ParseTextureTypeXml(const String& filename)
 {
     StringHash type = nullptr;
 
-    SharedPtr<File> texXmlFile = DV_RES_CACHE.GetFile(filename, false);
-    if (texXmlFile.NotNull())
+    shared_ptr<File> texXmlFile = DV_RES_CACHE.GetFile(filename, false);
+    if (texXmlFile)
     {
         SharedPtr<XmlFile> texXml(new XmlFile());
         if (texXml->Load(*texXmlFile))
