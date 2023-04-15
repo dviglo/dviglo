@@ -11,6 +11,8 @@
 #include <lz4/lz4.h>
 #include <lz4/lz4hc.h>
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -47,17 +49,17 @@ bool compress_stream(Serializer& dest, Deserializer& src)
     }
 
     auto maxDestSize = (unsigned)LZ4_compressBound(srcSize);
-    SharedArrayPtr<unsigned char> srcBuffer(new unsigned char[srcSize]);
-    SharedArrayPtr<unsigned char> destBuffer(new unsigned char[maxDestSize]);
+    unique_ptr<byte[]> srcBuffer(new byte[srcSize]);
+    unique_ptr<byte[]> destBuffer(new byte[maxDestSize]);
 
-    if (src.Read(srcBuffer, srcSize) != srcSize)
+    if (src.Read(srcBuffer.get(), srcSize) != srcSize)
         return false;
 
-    auto destSize = (unsigned)LZ4_compress_HC((const char*)srcBuffer.Get(), (char*)destBuffer.Get(), srcSize, LZ4_compressBound(srcSize), 0);
+    auto destSize = (unsigned)LZ4_compress_HC((const char*)srcBuffer.get(), (char*)destBuffer.get(), srcSize, LZ4_compressBound(srcSize), 0);
     bool success = true;
     success &= dest.WriteU32(srcSize);
     success &= dest.WriteU32(destSize);
-    success &= dest.Write(destBuffer, destSize) == destSize;
+    success &= dest.Write(destBuffer.get(), destSize) == destSize;
     return success;
 }
 
@@ -74,14 +76,14 @@ bool decompress_stream(Serializer& dest, Deserializer& src)
     if (srcSize > src.GetSize())
         return false; // Illegal source (packed data) size reported, possibly not valid data
 
-    SharedArrayPtr<unsigned char> srcBuffer(new unsigned char[srcSize]);
-    SharedArrayPtr<unsigned char> destBuffer(new unsigned char[destSize]);
+    unique_ptr<byte[]> srcBuffer(new byte[srcSize]);
+    unique_ptr<byte[]> destBuffer(new byte[destSize]);
 
-    if (src.Read(srcBuffer, srcSize) != srcSize)
+    if (src.Read(srcBuffer.get(), srcSize) != srcSize)
         return false;
 
-    LZ4_decompress_fast((const char*)srcBuffer.Get(), (char*)destBuffer.Get(), destSize);
-    return dest.Write(destBuffer, destSize) == destSize;
+    LZ4_decompress_fast((const char*)srcBuffer.get(), (char*)destBuffer.get(), destSize);
+    return dest.Write(destBuffer.get(), destSize) == destSize;
 }
 
 VectorBuffer compress_vector_buffer(VectorBuffer& src)
