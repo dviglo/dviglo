@@ -12,6 +12,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -157,10 +159,10 @@ bool Sprite2D::GetTextureRectangle(Rect& rect, bool flipX, bool flipY) const
     rect.max_.y = ((float)rectangle_.top_ + edge_offset_) * invHeight;
 
     if (flipX)
-        std::swap(rect.min_.x, rect.max_.x);
+        swap(rect.min_.x, rect.max_.x);
 
     if (flipY)
-        std::swap(rect.min_.y, rect.max_.y);
+        swap(rect.min_.y, rect.max_.y);
 
     return true;
 }

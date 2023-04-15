@@ -6,6 +6,8 @@
 
 #include "../ui/font_face.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -188,10 +190,10 @@ void SpriteBatch::draw_sprite_internal()
     }
 
     if (!!(sprite_.flip_modes & FlipModes::horizontally))
-        std::swap(sprite_.source_uv.min_.x, sprite_.source_uv.max_.x);
+        swap(sprite_.source_uv.min_.x, sprite_.source_uv.max_.x);
 
     if (!!(sprite_.flip_modes & FlipModes::vertically))
-        std::swap(sprite_.source_uv.min_.y, sprite_.source_uv.max_.y);
+        swap(sprite_.source_uv.min_.y, sprite_.source_uv.max_.y);
 
     quad_.v0.color = sprite_.color0;
     quad_.v0.uv = sprite_.source_uv.min_;

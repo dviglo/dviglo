@@ -35,6 +35,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -1333,7 +1335,7 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     }
 
     unsigned numTriangles = build.indices_.Size() / 3;
-    std::unique_ptr<unsigned char[]> triAreas(new unsigned char[numTriangles]);
+    unique_ptr<unsigned char[]> triAreas(new unsigned char[numTriangles]);
     memset(triAreas.get(), 0, numTriangles);
 
     rcMarkWalkableTriangles(build.ctx_, cfg.walkableSlopeAngle, &build.vertices_[0].x, build.vertices_.Size(),

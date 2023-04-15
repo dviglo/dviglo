@@ -19,6 +19,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -66,8 +68,8 @@ BillboardSet::BillboardSet() :
     faceCameraMode_(FC_ROTATE_XYZ),
     minAngle_(0.0f),
     geometry_(new Geometry()),
-    vertexBuffer_(std::make_shared<VertexBuffer>()),
-    indexBuffer_(std::make_shared<IndexBuffer>()),
+    vertexBuffer_(make_shared<VertexBuffer>()),
+    indexBuffer_(make_shared<IndexBuffer>()),
     bufferSizeDirty_(true),
     bufferDirty_(true),
     forceUpdate_(false),
@@ -619,7 +621,7 @@ void BillboardSet::UpdateVertexBuffer(const FrameInfo& frame)
 
     if (sorted_)
     {
-        std::sort(sortedBillboards_.Begin(), sortedBillboards_.End(), CompareBillboards);
+        sort(sortedBillboards_.Begin(), sortedBillboards_.End(), CompareBillboards);
         Vector3 worldPos = node_->GetWorldPosition();
         // Store the "last sorted position" now
         previousOffset_ = (worldPos - frame.camera_->GetNode()->GetWorldPosition());

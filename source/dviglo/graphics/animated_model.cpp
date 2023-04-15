@@ -25,6 +25,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -334,7 +336,7 @@ void AnimatedModel::SetModel(Model* model, bool createBones)
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());
-        const Vector<Vector<std::shared_ptr<Geometry>>>& geometries = model->GetGeometries();
+        const Vector<Vector<shared_ptr<Geometry>>>& geometries = model->GetGeometries();
         const Vector<Vector3>& geometryCenters = model->GetGeometryCenters();
         for (unsigned i = 0; i < geometries.Size(); ++i)
         {
@@ -1091,8 +1093,8 @@ void AnimatedModel::MarkMorphsDirty()
 
 void AnimatedModel::CloneGeometries()
 {
-    const Vector<std::shared_ptr<VertexBuffer>>& originalVertexBuffers = model_->GetVertexBuffers();
-    HashMap<VertexBuffer*, std::shared_ptr<VertexBuffer>> clonedVertexBuffers;
+    const Vector<shared_ptr<VertexBuffer>>& originalVertexBuffers = model_->GetVertexBuffers();
+    HashMap<VertexBuffer*, shared_ptr<VertexBuffer>> clonedVertexBuffers;
     morphVertexBuffers_.Resize(originalVertexBuffers.Size());
 
     for (unsigned i = 0; i < originalVertexBuffers.Size(); ++i)
@@ -1100,7 +1102,7 @@ void AnimatedModel::CloneGeometries()
         VertexBuffer* original = originalVertexBuffers[i].get();
         if (model_->GetMorphRangeCount(i))
         {
-            std::shared_ptr<VertexBuffer> clone = std::make_shared<VertexBuffer>();
+            shared_ptr<VertexBuffer> clone = make_shared<VertexBuffer>();
             clone->SetShadowed(true);
             clone->SetSize(original->GetVertexCount(), morphElementMask_ & original->GetElementMask(), true);
             void* dest = clone->Lock(0, original->GetVertexCount());
@@ -1121,12 +1123,12 @@ void AnimatedModel::CloneGeometries()
     {
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
-            std::shared_ptr<Geometry> original = geometries_[i][j];
-            std::shared_ptr<Geometry> clone = std::make_shared<Geometry>();
+            shared_ptr<Geometry> original = geometries_[i][j];
+            shared_ptr<Geometry> clone = make_shared<Geometry>();
 
             // Add an additional vertex stream into the clone, which supplies only the morphable vertex data, while the static
             // data comes from the original vertex buffer(s)
-            const Vector<std::shared_ptr<VertexBuffer>>& originalBuffers = original->GetVertexBuffers();
+            const Vector<shared_ptr<VertexBuffer>>& originalBuffers = original->GetVertexBuffers();
             unsigned totalBuf = originalBuffers.Size();
             for (unsigned k = 0; k < originalBuffers.Size(); ++k)
             {
@@ -1139,12 +1141,12 @@ void AnimatedModel::CloneGeometries()
             unsigned l = 0;
             for (unsigned k = 0; k < originalBuffers.Size(); ++k)
             {
-                std::shared_ptr<VertexBuffer> originalBuffer = originalBuffers[k];
+                shared_ptr<VertexBuffer> originalBuffer = originalBuffers[k];
 
                 if (clonedVertexBuffers.Contains(originalBuffer.get()))
                 {
                     // TODO: ПОиск по хэш таблице повторный
-                    std::shared_ptr<VertexBuffer> clonedBuffer = clonedVertexBuffers[originalBuffer.get()];
+                    shared_ptr<VertexBuffer> clonedBuffer = clonedVertexBuffers[originalBuffer.get()];
                     clone->SetVertexBuffer(l++, originalBuffer);
                     // Specify the morph buffer at a greater index to override the model's original positions/normals/tangents
                     clone->SetVertexBuffer(l++, clonedBuffer);
@@ -1268,7 +1270,7 @@ void AnimatedModel::ApplyAnimation()
     // Make sure animations are in ascending priority order
     if (animationOrderDirty_)
     {
-        std::sort(animationStates_.Begin(), animationStates_.End(), CompareAnimationOrder);
+        sort(animationStates_.Begin(), animationStates_.End(), CompareAnimationOrder);
         animationOrderDirty_ = false;
     }
 

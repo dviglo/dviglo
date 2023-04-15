@@ -13,6 +13,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -568,7 +570,7 @@ void ListView::SetSelections(const Vector<i32>& indices)
 
     // Re-sort selections if necessary
     if (added)
-        std::sort(selections_.Begin(), selections_.End());
+        sort(selections_.Begin(), selections_.End());
 
     UpdateSelectionEffect();
     SendEvent(E_SELECTIONCHANGED);
@@ -602,7 +604,7 @@ void ListView::AddSelection(i32 index)
             if (self.Expired())
                 return;
 
-            std::sort(selections_.Begin(), selections_.End());
+            sort(selections_.Begin(), selections_.End());
         }
 
         EnsureItemVisibility(index);

@@ -375,7 +375,7 @@ void PhysicsWorld::Raycast(Vector<PhysicsRaycastResult>& result, const Ray& ray,
         result.Push(newResult);
     }
 
-    std::sort(result.Begin(), result.End(), CompareRaycastResults);
+    sort(result.Begin(), result.End(), CompareRaycastResults);
 }
 
 void PhysicsWorld::RaycastSingle(PhysicsRaycastResult& result, const Ray& ray, float maxDistance, unsigned collisionMask)

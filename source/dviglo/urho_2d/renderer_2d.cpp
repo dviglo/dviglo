@@ -23,6 +23,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -42,7 +44,7 @@ ViewBatchInfo2D::ViewBatchInfo2D() :
 Renderer2D::Renderer2D() :
     Drawable(DrawableTypes::Geometry),
     material_(new Material()),
-    indexBuffer_(std::make_shared<IndexBuffer>()),
+    indexBuffer_(make_shared<IndexBuffer>()),
     viewMask_(DEFAULT_VIEWMASK)
 {
     material_->SetName("Urho2D");
@@ -91,7 +93,7 @@ void Renderer2D::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryRes
     }
 
     if (results.Size() != resultSize)
-        std::sort(results.Begin() + resultSize, results.End(), CompareRayQueryResults);
+        sort(results.Begin() + resultSize, results.End(), CompareRayQueryResults);
 }
 
 void Renderer2D::update_batches(const FrameInfo& frame)
@@ -347,7 +349,7 @@ void Renderer2D::HandleBeginViewUpdate(StringHash eventType, VariantMap& eventDa
 
     // Create vertex buffer
     if (!viewBatchInfo.vertexBuffer_)
-        viewBatchInfo.vertexBuffer_ = std::make_shared<VertexBuffer>();
+        viewBatchInfo.vertexBuffer_ = make_shared<VertexBuffer>();
 
     UpdateViewBatchInfo(viewBatchInfo, camera);
 
@@ -424,7 +426,7 @@ void Renderer2D::UpdateViewBatchInfo(ViewBatchInfo2D& viewBatchInfo, Camera* cam
         sourceBatch->distance_ = camera->GetDistance(worldPos);
     }
 
-    std::sort(sourceBatches.Begin(), sourceBatches.End(), CompareSourceBatch2Ds);
+    sort(sourceBatches.Begin(), sourceBatches.End(), CompareSourceBatch2Ds);
 
     viewBatchInfo.batchCount_ = 0;
     Material* currMaterial = nullptr;

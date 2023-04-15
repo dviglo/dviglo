@@ -12,6 +12,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -125,7 +127,7 @@ void HttpRequest::ThreadFunction()
     }
 
     {
-        std::scoped_lock lock(mutex_);
+        scoped_lock lock(mutex_);
         state_ = connection ? HTTP_OPEN : HTTP_ERROR;
 
         // If no connection could be made, store the error and exit
@@ -185,7 +187,7 @@ void HttpRequest::ThreadFunction()
     mg_close_connection(connection);
 
     {
-        std::scoped_lock lock(mutex_);
+        scoped_lock lock(mutex_);
         state_ = HTTP_CLOSED;
     }
 }
@@ -260,25 +262,25 @@ i64 HttpRequest::Seek(i64 position)
 
 bool HttpRequest::IsEof() const
 {
-    std::scoped_lock lock(mutex_);
+    scoped_lock lock(mutex_);
     return CheckAvailableSizeAndEof().second_;
 }
 
 String HttpRequest::GetError() const
 {
-    std::scoped_lock lock(mutex_);
+    scoped_lock lock(mutex_);
     return error_;
 }
 
 HttpRequestState HttpRequest::GetState() const
 {
-    std::scoped_lock lock(mutex_);
+    scoped_lock lock(mutex_);
     return state_;
 }
 
 i32 HttpRequest::GetAvailableSize() const
 {
-    std::scoped_lock lock(mutex_);
+    scoped_lock lock(mutex_);
     return CheckAvailableSizeAndEof().first_;
 }
 

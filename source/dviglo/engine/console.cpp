@@ -24,6 +24,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -262,7 +264,7 @@ void Console::SetFocusOnShow(bool enable)
 void Console::AddAutoComplete(const String& option)
 {
     // Sorted insertion
-    Vector<String>::Iterator iter = std::upper_bound(autoComplete_.Begin(), autoComplete_.End(), option);
+    Vector<String>::Iterator iter = upper_bound(autoComplete_.Begin(), autoComplete_.End(), option);
     if (!iter.ptr_)
         autoComplete_.Push(option);
     // Make sure it isn't a duplicate
@@ -273,7 +275,7 @@ void Console::AddAutoComplete(const String& option)
 void Console::RemoveAutoComplete(const String& option)
 {
     // Erase and keep ordered
-    autoComplete_.Erase(std::lower_bound(autoComplete_.Begin(), autoComplete_.End(), option));
+    autoComplete_.Erase(lower_bound(autoComplete_.Begin(), autoComplete_.End(), option));
     if (autoCompletePosition_ > autoComplete_.Size())
         autoCompletePosition_ = autoComplete_.Size();
 }
@@ -331,7 +333,7 @@ bool Console::PopulateInterpreter()
         if (receiver)
             names.Push(receiver->GetTypeName());
     }
-    std::sort(names.Begin(), names.End());
+    sort(names.Begin(), names.End());
 
     i32 selection = NINDEX;
     for (i32 i = 0; i < names.Size(); ++i)

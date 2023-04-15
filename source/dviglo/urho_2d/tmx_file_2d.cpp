@@ -16,6 +16,7 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
 
 namespace dviglo
 {
@@ -741,7 +742,7 @@ bool TmxFile2D::LoadTileSet(const XmlElement& element)
         texture->SetSize(allocator.GetWidth(), allocator.GetHeight(), Graphics::GetRGBAFormat());
 
         auto textureDataSize = (unsigned)allocator.GetWidth() * allocator.GetHeight() * 4;
-        std::unique_ptr<byte[]> textureData(new byte[textureDataSize]);
+        unique_ptr<byte[]> textureData(new byte[textureDataSize]);
         memset(textureData.get(), 0, textureDataSize);
 
         for (int i = 0; i < tileImageInfos.Size(); ++i)

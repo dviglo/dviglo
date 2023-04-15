@@ -15,6 +15,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -72,7 +74,7 @@ static bool CompareUIElements(const UiElement* lhs, const UiElement* rhs)
 XPathQuery UiElement::styleXPathQuery_("/elements/element[@type=$typeName]", "typeName:String");
 
 UiElement::UiElement() :
-    pivot_(std::numeric_limits<float>::max(), std::numeric_limits<float>::max())
+    pivot_(numeric_limits<float>::max(), numeric_limits<float>::max())
 {
     SetEnabled(false);
 }
@@ -104,7 +106,7 @@ void UiElement::register_object()
     DV_ACCESSOR_ATTRIBUTE("Max Anchor", GetMaxAnchor, SetMaxAnchor, Vector2::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Min Offset", GetMinOffset, SetMinOffset, IntVector2::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Max Offset", GetMaxOffset, SetMaxOffset, IntVector2::ZERO, AM_FILE);
-    DV_ACCESSOR_ATTRIBUTE("Pivot", GetPivot, SetPivot, Vector2(std::numeric_limits<float>::max(), std::numeric_limits<float>::max()), AM_FILE);
+    DV_ACCESSOR_ATTRIBUTE("Pivot", GetPivot, SetPivot, Vector2(numeric_limits<float>::max(), numeric_limits<float>::max()), AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Enable Anchor", GetEnableAnchor, SetEnableAnchor, false, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Clip Border", GetClipBorder, SetClipBorder, IntRect::ZERO, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Priority", GetPriority, SetPriority, 0, AM_FILE);
@@ -1781,7 +1783,7 @@ void UiElement::SortChildren()
     {
         // Only sort when there is no layout
         if (layoutMode_ == LM_FREE)
-            std::stable_sort(children_.Begin().ptr_, children_.End().ptr_, CompareUIElements);
+            stable_sort(children_.Begin().ptr_, children_.End().ptr_, CompareUIElements);
         sortOrderDirty_ = false;
     }
 }

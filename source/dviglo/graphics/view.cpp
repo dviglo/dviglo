@@ -33,6 +33,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -926,8 +928,8 @@ void View::GetDrawables()
         PerThreadSceneResult& result = sceneResults_[0];
         minZ_ = result.minZ_;
         maxZ_ = result.maxZ_;
-        std::swap(geometries_, result.geometries_);
-        std::swap(lights_, result.lights_);
+        swap(geometries_, result.geometries_);
+        swap(lights_, result.lights_);
     }
 
     if (minZ_ == M_INFINITY)
@@ -940,7 +942,7 @@ void View::GetDrawables()
         light->SetLightQueue(nullptr);
     }
 
-    std::sort(lights_.Begin(), lights_.End(), CompareLights);
+    sort(lights_.Begin(), lights_.End(), CompareLights);
 }
 
 void View::GetBatches()
@@ -2214,7 +2216,7 @@ void View::UpdateOccluders(Vector<Drawable*>& occluders, Camera* camera)
 
     // Sort occluders so that if triangle budget is exceeded, best occluders have been drawn
     if (occluders.Size())
-        std::sort(occluders.Begin(), occluders.End(), CompareDrawables);
+        sort(occluders.Begin(), occluders.End(), CompareDrawables);
 }
 
 void View::DrawOccluders(OcclusionBuffer* buffer, const Vector<Drawable*>& occluders)

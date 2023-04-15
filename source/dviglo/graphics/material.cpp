@@ -27,6 +27,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -362,7 +364,7 @@ bool Material::begin_load_json(Deserializer& source)
 
 bool Material::Save(Serializer& dest) const
 {
-    std::unique_ptr<XmlFile> xml(new XmlFile());
+    unique_ptr<XmlFile> xml(new XmlFile());
     XmlElement materialElem = xml->CreateRoot("material");
 
     Save(materialElem);
@@ -1146,7 +1148,7 @@ SharedPtr<Material> Material::Clone(const String& cloneName) const
 
 void Material::SortTechniques()
 {
-    std::sort(techniques_.Begin(), techniques_.End(), CompareTechniqueEntries);
+    sort(techniques_.Begin(), techniques_.End(), CompareTechniqueEntries);
 }
 
 void Material::MarkForAuxView(i32 frameNumber)

@@ -20,6 +20,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -27,7 +29,7 @@ extern const char* GEOMETRY_CATEGORY;
 
 CustomGeometry::CustomGeometry()
     : Drawable(DrawableTypes::Geometry)
-    , vertexBuffer_(std::make_shared<VertexBuffer>())
+    , vertexBuffer_(make_shared<VertexBuffer>())
     , elementMask_(VertexElements::Position)
     , geometryIndex_(0)
     , materialsAttr_(Material::GetTypeStatic())

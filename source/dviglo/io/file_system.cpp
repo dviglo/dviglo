@@ -41,6 +41,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -82,7 +84,7 @@ int DoSystemCommand(const String& commandLine, bool redirectToLog)
     // Capture the standard error stream
     if (!stderrFilename.Empty())
     {
-        std::unique_ptr<File> errFile(new File(stderrFilename, FILE_READ));
+        unique_ptr<File> errFile(new File(stderrFilename, FILE_READ));
 
         while (!errFile->IsEof())
         {
@@ -383,12 +385,12 @@ bool FileSystem::system_open(const String& fileName, const String& mode)
 
 bool FileSystem::Copy(const String& srcFileName, const String& destFileName)
 {
-    std::unique_ptr<File> srcFile(new File(srcFileName, FILE_READ));
+    unique_ptr<File> srcFile(new File(srcFileName, FILE_READ));
 
     if (!srcFile->IsOpen())
         return false;
 
-    std::unique_ptr<File> destFile(new File(destFileName, FILE_WRITE));
+    unique_ptr<File> destFile(new File(destFileName, FILE_WRITE));
 
     if (!destFile->IsOpen())
         return false;

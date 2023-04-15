@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 void Test_Container_Str();
 void Test_Math_BigInt();
 void test_third_party_sdl();
@@ -19,8 +21,8 @@ int main(int argc, char* argv[])
 {
     Run();
 
-    std::setlocale(LC_ALL, "en_US.UTF-8");
-    std::cout << "Все тесты пройдены успешно" << std::endl;
+    setlocale(LC_ALL, "en_US.UTF-8");
+    cout << "Все тесты пройдены успешно" << endl;
 
     return 0;
 }

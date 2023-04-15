@@ -28,6 +28,8 @@
 
 #include <dviglo/common/debug_new.h>
 
+using namespace std;
+
 DV_DEFINE_APPLICATION_MAIN(DynamicGeometry)
 
 DynamicGeometry::DynamicGeometry() :
@@ -196,9 +198,9 @@ void DynamicGeometry::create_scene()
         }
 
         SharedPtr<Model> fromScratchModel(new Model());
-        std::shared_ptr<VertexBuffer> vb = std::make_shared<VertexBuffer>();
-        std::shared_ptr<IndexBuffer> ib = std::make_shared<IndexBuffer>();
-        std::shared_ptr<Geometry> geom = std::make_shared<Geometry>();
+        shared_ptr<VertexBuffer> vb = make_shared<VertexBuffer>();
+        shared_ptr<IndexBuffer> ib = make_shared<IndexBuffer>();
+        shared_ptr<Geometry> geom = make_shared<Geometry>();
 
         // Shadowed buffer needed for raycasts to work, and so that data can be automatically restored on device loss
         vb->SetShadowed(true);
@@ -223,8 +225,8 @@ void DynamicGeometry::create_scene()
         fromScratchModel->SetBoundingBox(BoundingBox(Vector3(-0.5f, -0.5f, -0.5f), Vector3(0.5f, 0.5f, 0.5f)));
 
         // Though not necessary to render, the vertex & index buffers must be listed in the model so that it can be saved properly
-        Vector<std::shared_ptr<VertexBuffer>> vertexBuffers;
-        Vector<std::shared_ptr<IndexBuffer>> indexBuffers;
+        Vector<shared_ptr<VertexBuffer>> vertexBuffers;
+        Vector<shared_ptr<IndexBuffer>> indexBuffers;
         vertexBuffers.Push(vb);
         indexBuffers.Push(ib);
         // Morph ranges could also be not defined. Here we simply define a zero range (no morphing) for the vertex buffer

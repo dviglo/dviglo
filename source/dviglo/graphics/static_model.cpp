@@ -21,6 +21,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -235,7 +237,7 @@ void StaticModel::SetModel(Model* model)
 
         // Copy the subgeometry & LOD level structure
         SetNumGeometries(model->GetNumGeometries());
-        const Vector<Vector<std::shared_ptr<Geometry>>>& geometries = model->GetGeometries();
+        const Vector<Vector<shared_ptr<Geometry>>>& geometries = model->GetGeometries();
         const Vector<Vector3>& geometryCenters = model->GetGeometryCenters();
         const Matrix3x4* worldTransform = node_ ? &node_->GetWorldTransform() : nullptr;
         for (unsigned i = 0; i < geometries.Size(); ++i)
@@ -407,7 +409,7 @@ void StaticModel::CalculateLodLevels()
 {
     for (unsigned i = 0; i < batches_.Size(); ++i)
     {
-        const Vector<std::shared_ptr<Geometry>>& batchGeometries = geometries_[i];
+        const Vector<shared_ptr<Geometry>>& batchGeometries = geometries_[i];
         // If only one LOD geometry, no reason to go through the LOD calculation
         if (batchGeometries.Size() <= 1)
             continue;

@@ -269,7 +269,7 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
         return false;
     }
 
-    std::unique_ptr<char[]> buffer(new char[dataSize]);
+    unique_ptr<char[]> buffer(new char[dataSize]);
     if (source.Read(buffer.get(), dataSize) != dataSize)
         return false;
 

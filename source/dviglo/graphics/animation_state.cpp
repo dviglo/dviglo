@@ -10,6 +10,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -302,6 +304,7 @@ void AnimationState::AddTime(float delta)
                 wrap = true;
             }
         }
+
         if (delta < 0.0f)
         {
             if (time > oldTime)
@@ -310,8 +313,9 @@ void AnimationState::AddTime(float delta)
                 wrap = true;
             }
         }
+
         if (oldTime > time)
-            std::swap(oldTime, time);
+            swap(oldTime, time);
 
         const Vector<AnimationTriggerPoint>& triggers = animation_->GetTriggers();
         for (Vector<AnimationTriggerPoint>::ConstIterator i = triggers.Begin(); i != triggers.End(); ++i)

@@ -13,6 +13,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -23,7 +25,7 @@ BackgroundLoader::BackgroundLoader(ResourceCache* owner) :
 
 BackgroundLoader::~BackgroundLoader()
 {
-    std::scoped_lock lock(background_load_mutex_);
+    scoped_lock lock(background_load_mutex_);
 
     backgroundLoadQueue_.Clear();
 }
@@ -96,7 +98,7 @@ bool BackgroundLoader::QueueResource(StringHash type, const String& name, bool s
     StringHash nameHash(name);
     Pair<StringHash, StringHash> key = MakePair(type, nameHash);
 
-    std::scoped_lock lock(background_load_mutex_);
+    scoped_lock lock(background_load_mutex_);
 
     // Check if already exists in the queue
     if (backgroundLoadQueue_.Find(key) != backgroundLoadQueue_.End())
@@ -234,7 +236,7 @@ void BackgroundLoader::FinishResources(int maxMs)
 
 unsigned BackgroundLoader::GetNumQueuedResources() const
 {
-    std::scoped_lock lock(background_load_mutex_);
+    scoped_lock lock(background_load_mutex_);
     return backgroundLoadQueue_.Size();
 }
 

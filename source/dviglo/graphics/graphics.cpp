@@ -37,6 +37,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -156,7 +158,7 @@ bool Graphics::SetMode(int width, int height)
 
 bool Graphics::ToggleFullscreen()
 {
-    std::swap(primaryWindowMode_, secondaryWindowMode_);
+    swap(primaryWindowMode_, secondaryWindowMode_);
     return SetScreenMode(primaryWindowMode_.width_, primaryWindowMode_.height_, primaryWindowMode_.screenParams_);
 }
 
@@ -379,14 +381,14 @@ void Graphics::PrecacheShaders(Deserializer& source)
 
 void Graphics::AddGPUObject(GpuObject* object)
 {
-    std::scoped_lock lock(gpuObjectMutex_);
+    scoped_lock lock(gpuObjectMutex_);
 
     gpuObjects_.Push(object);
 }
 
 void Graphics::RemoveGPUObject(GpuObject* object)
 {
-    std::scoped_lock lock(gpuObjectMutex_);
+    scoped_lock lock(gpuObjectMutex_);
 
     gpuObjects_.Remove(object);
 }
@@ -829,7 +831,7 @@ bool Graphics::SetVertexBuffers(const Vector<VertexBuffer*>& buffers, unsigned i
     return {}; // Prevent warning
 }
 
-bool Graphics::SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset)
+bool Graphics::SetVertexBuffers(const Vector<shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset)
 {
     GAPI gapi = GParams::get_gapi();
 

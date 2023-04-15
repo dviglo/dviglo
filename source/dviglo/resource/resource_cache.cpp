@@ -24,6 +24,8 @@
 
 #include <cstdio>
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -101,7 +103,7 @@ bool ResourceCache::add_resource_dir(const String& pathName, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
 
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     if (!dir_exists(pathName))
     {
@@ -140,7 +142,7 @@ bool ResourceCache::add_package_file(PackageFile* package, i32 priority)
 {
     assert(priority >= 0 || priority == PRIORITY_LAST);
 
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     // Do not add packages that failed to load
     if (!package || !package->GetNumFiles())
@@ -188,7 +190,7 @@ bool ResourceCache::add_manual_resource(Resource* resource)
 
 void ResourceCache::remove_resource_dir(const String& pathName)
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     String fixedPath = sanitate_resource_dir_name(pathName);
 
@@ -214,7 +216,7 @@ void ResourceCache::remove_resource_dir(const String& pathName)
 
 void ResourceCache::remove_package_file(PackageFile* package, bool releaseResources, bool forceRelease)
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     for (Vector<SharedPtr<PackageFile>>::Iterator i = packages_.Begin(); i != packages_.End(); ++i)
     {
@@ -231,7 +233,7 @@ void ResourceCache::remove_package_file(PackageFile* package, bool releaseResour
 
 void ResourceCache::remove_package_file(const String& fileName, bool releaseResources, bool forceRelease)
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     // Compare the name and extension only, not the path
     String fileNameNoPath = GetFileNameAndExtension(fileName);
@@ -495,7 +497,7 @@ void ResourceCache::remove_resource_router(ResourceRouter* router)
 
 SharedPtr<File> ResourceCache::GetFile(const String& name, bool sendEventOnFailure)
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     String sanitatedName = sanitate_resource_name(name);
 
@@ -742,7 +744,7 @@ void ResourceCache::GetResources(Vector<Resource*>& result, StringHash type) con
 
 bool ResourceCache::Exists(const String& name) const
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     String sanitatedName = sanitate_resource_name(name);
 
@@ -899,7 +901,7 @@ void ResourceCache::store_resource_dependency(Resource* resource, const String& 
     if (!resource)
         return;
 
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     StringHash nameHash(resource->GetName());
     HashSet<StringHash>& dependents = dependentResources_[dependency];
@@ -911,7 +913,7 @@ void ResourceCache::reset_dependencies(Resource* resource)
     if (!resource)
         return;
 
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     StringHash nameHash(resource->GetName());
 
@@ -987,7 +989,7 @@ String ResourceCache::print_memory_usage() const
 
 const SharedPtr<Resource>& ResourceCache::find_resource(StringHash type, StringHash nameHash)
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     HashMap<StringHash, ResourceGroup>::Iterator i = resourceGroups_.Find(type);
     if (i == resourceGroups_.End())
@@ -1001,7 +1003,7 @@ const SharedPtr<Resource>& ResourceCache::find_resource(StringHash type, StringH
 
 const SharedPtr<Resource>& ResourceCache::find_resource(StringHash nameHash)
 {
-    std::scoped_lock lock(resource_mutex_);
+    scoped_lock lock(resource_mutex_);
 
     for (HashMap<StringHash, ResourceGroup>::Iterator i = resourceGroups_.Begin(); i != resourceGroups_.End(); ++i)
     {

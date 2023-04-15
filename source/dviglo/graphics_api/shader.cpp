@@ -13,6 +13,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -150,7 +152,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
 String Shader::NormalizeDefines(const String& defines)
 {
     Vector<String> definesVec = defines.ToUpper().Split(' ');
-    std::sort(definesVec.Begin(), definesVec.End());
+    sort(definesVec.Begin(), definesVec.End());
     return String::Joined(definesVec, " ");
 }
 

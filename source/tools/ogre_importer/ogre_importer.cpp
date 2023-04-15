@@ -16,6 +16,8 @@
 
 #include <dviglo/common/debug_new.h>
 
+using namespace std;
+
 static const int VERTEX_CACHE_SIZE = 32;
 
 SharedPtr<XmlFile> meshFile_(new XmlFile());
@@ -488,7 +490,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                         subGeometryLodLevel.boneWeights_.Begin(); i != subGeometryLodLevel.boneWeights_.End(); ++i)
                     {
                         // Sort the bone assigns by weight
-                        std::sort(i->second_.Begin(), i->second_.End(), CompareWeights);
+                        sort(i->second_.Begin(), i->second_.End(), CompareWeights);
 
                         // Use only the first 4 weights
                         for (unsigned j = 0; j < i->second_.Size() && j < 4; ++j)
@@ -520,7 +522,7 @@ void LoadMesh(const String& inputFileName, bool generateTangents, bool splitSubM
                 {
                     // Sort the bone assigns by weight, if not sorted yet in bone remapping pass
                     if (!sorted)
-                        std::sort(i->second_.Begin(), i->second_.End(), CompareWeights);
+                        sort(i->second_.Begin(), i->second_.End(), CompareWeights);
 
                     float totalWeight = 0.0f;
                     float normalizationFactor = 0.0f;
@@ -990,7 +992,7 @@ void WriteOutput(const String& outputFileName, bool exportAnimations, bool rotat
                     }
 
                     // Make sure keyframes are sorted from beginning to end
-                    std::sort(newAnimationTrack.keyFrames_.Begin(), newAnimationTrack.keyFrames_.End(), CompareKeyFrames);
+                    sort(newAnimationTrack.keyFrames_.Begin(), newAnimationTrack.keyFrames_.End(), CompareKeyFrames);
 
                     // Do not add tracks with no keyframes
                     if (newAnimationTrack.keyFrames_.Size())

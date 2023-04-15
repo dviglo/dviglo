@@ -94,7 +94,7 @@ bool XmlFile::begin_load(Deserializer& source)
         }
 
         // Patch this XmlFile and leave the original inherited XmlFile as it is
-        std::unique_ptr<pugi::xml_document> patchDocument = move(document_);
+        unique_ptr<pugi::xml_document> patchDocument = move(document_);
         document_ = make_unique<pugi::xml_document>();
         document_->reset(*inheritedXMLFile->document_);
         Patch(rootElem);

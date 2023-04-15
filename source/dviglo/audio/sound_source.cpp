@@ -15,6 +15,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -151,7 +153,7 @@ void SoundSource::Play(Sound* sound)
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        std::scoped_lock lock(DV_AUDIO.GetMutex());
+        scoped_lock lock(DV_AUDIO.GetMutex());
         PlayLockless(sound);
     }
     else
@@ -207,7 +209,7 @@ void SoundSource::Play(SoundStream* stream)
     // requested, clear the existing sound if any
     if (position_)
     {
-        std::scoped_lock lock(DV_AUDIO.GetMutex());
+        scoped_lock lock(DV_AUDIO.GetMutex());
         sound_.Reset();
         PlayLockless(streamPtr);
     }
@@ -225,7 +227,7 @@ void SoundSource::Stop()
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        std::scoped_lock lock(DV_AUDIO.GetMutex());
+        scoped_lock lock(DV_AUDIO.GetMutex());
         StopLockless();
     }
     else
@@ -287,7 +289,7 @@ void SoundSource::SetPlayPosition(signed char* pos)
     if (!sound_ || soundStream_)
         return;
 
-    std::scoped_lock lock(DV_AUDIO.GetMutex());
+    scoped_lock lock(DV_AUDIO.GetMutex());
     SetPlayPositionLockless(pos);
 }
 

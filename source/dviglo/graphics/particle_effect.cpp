@@ -14,6 +14,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -299,7 +301,7 @@ bool ParticleEffect::Load(const XmlElement& source)
 
 bool ParticleEffect::Save(Serializer& dest) const
 {
-    std::unique_ptr<XmlFile> xml(new XmlFile());
+    unique_ptr<XmlFile> xml(new XmlFile());
     XmlElement materialElem = xml->CreateRoot("particleeffect");
 
     Save(materialElem);

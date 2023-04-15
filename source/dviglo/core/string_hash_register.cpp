@@ -17,7 +17,7 @@ namespace dviglo
 StringHashRegister::StringHashRegister(bool threadSafe)
 {
     if (threadSafe)
-        mutex_ = make_unique<std::mutex>();
+        mutex_ = make_unique<mutex>();
 }
 
 

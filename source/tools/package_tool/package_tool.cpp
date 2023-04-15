@@ -17,6 +17,7 @@
 #include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
+using namespace std;
 
 static const unsigned COMPRESSED_BLOCK_SIZE = 32768;
 
@@ -321,7 +322,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
 
         unsigned dataSize = entries_[i].size_;
         totalDataSize += dataSize;
-        std::unique_ptr<byte[]> buffer(new byte[dataSize]);
+        unique_ptr<byte[]> buffer(new byte[dataSize]);
 
         if (srcFile.Read(&buffer[0], dataSize) != dataSize)
             ErrorExit("Could not read file " + fileFullPath);
@@ -341,7 +342,7 @@ void WritePackageFile(const String& fileName, const String& rootDir)
         }
         else // Compress 
         {
-            std::unique_ptr<byte[]> compressBuffer(new byte[LZ4_compressBound(blockSize_)]);
+            unique_ptr<byte[]> compressBuffer(new byte[LZ4_compressBound(blockSize_)]);
 
             unsigned pos = 0;
 

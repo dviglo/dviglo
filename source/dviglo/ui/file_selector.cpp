@@ -19,6 +19,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -294,7 +296,7 @@ void FileSelector::RefreshFiles()
 
     // Sort and add to the list view
     // While items are being added, disable layout update for performance optimization
-    std::sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
+    sort(fileEntries_.Begin(), fileEntries_.End(), CompareEntries);
     UiElement* listContent = fileList_->GetContentElement();
     listContent->DisableLayoutUpdate();
     for (unsigned i = 0; i < fileEntries_.Size(); ++i)

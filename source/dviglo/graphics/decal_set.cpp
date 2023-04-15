@@ -22,6 +22,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -133,8 +135,8 @@ void Decal::CalculateBoundingBox()
 DecalSet::DecalSet() :
     Drawable(DrawableTypes::Geometry),
     geometry_(new Geometry()),
-    vertexBuffer_(std::make_shared<VertexBuffer>()),
-    indexBuffer_(std::make_shared<IndexBuffer>()),
+    vertexBuffer_(make_shared<VertexBuffer>()),
+    indexBuffer_(make_shared<IndexBuffer>()),
     numVertices_(0),
     numIndices_(0),
     maxVertices_(DEFAULT_MAX_VERTICES),

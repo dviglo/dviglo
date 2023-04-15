@@ -11,6 +11,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -45,7 +47,7 @@ bool Geometry::SetNumVertexBuffers(i32 num)
     return true;
 }
 
-bool Geometry::SetVertexBuffer(i32 index, std::shared_ptr<VertexBuffer> buffer)
+bool Geometry::SetVertexBuffer(i32 index, shared_ptr<VertexBuffer> buffer)
 {
     assert(index >= 0);
 
@@ -59,7 +61,7 @@ bool Geometry::SetVertexBuffer(i32 index, std::shared_ptr<VertexBuffer> buffer)
     return true;
 }
 
-void Geometry::SetIndexBuffer(std::shared_ptr<IndexBuffer> buffer)
+void Geometry::SetIndexBuffer(shared_ptr<IndexBuffer> buffer)
 {
     indexBuffer_ = buffer;
 }
@@ -182,7 +184,7 @@ void Geometry::Draw()
     }
 }
 
-std::shared_ptr<VertexBuffer> Geometry::GetVertexBuffer(i32 index) const
+shared_ptr<VertexBuffer> Geometry::GetVertexBuffer(i32 index) const
 {
     assert(index >= 0);
     return index < vertexBuffers_.Size() ? vertexBuffers_[index] : nullptr;

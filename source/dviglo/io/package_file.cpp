@@ -6,6 +6,8 @@
 #include "log.h"
 #include "package_file.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -30,7 +32,7 @@ PackageFile::~PackageFile() = default;
 
 bool PackageFile::Open(const String& fileName, unsigned startOffset)
 {
-    std::unique_ptr<File> file(new File(fileName));
+    unique_ptr<File> file(new File(fileName));
     if (!file->IsOpen())
         return false;
 

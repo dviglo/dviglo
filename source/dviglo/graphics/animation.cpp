@@ -19,6 +19,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -39,7 +41,7 @@ void AnimationTrack::SetKeyFrame(i32 index, const AnimationKeyFrame& keyFrame)
     if (index < keyFrames_.Size())
     {
         keyFrames_[index] = keyFrame;
-        std::sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
     }
     else if (index == keyFrames_.Size())
         AddKeyFrame(keyFrame);
@@ -50,14 +52,14 @@ void AnimationTrack::AddKeyFrame(const AnimationKeyFrame& keyFrame)
     bool needSort = keyFrames_.Size() ? keyFrames_.Back().time_ > keyFrame.time_ : false;
     keyFrames_.Push(keyFrame);
     if (needSort)
-        std::sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+        sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
 }
 
 void AnimationTrack::InsertKeyFrame(i32 index, const AnimationKeyFrame& keyFrame)
 {
     assert(index >= 0);
     keyFrames_.Insert(index, keyFrame);
-    std::sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
+    sort(keyFrames_.Begin(), keyFrames_.End(), CompareKeyFrames);
 }
 
 void AnimationTrack::RemoveKeyFrame(i32 index)
@@ -321,14 +323,14 @@ void Animation::SetTrigger(i32 index, const AnimationTriggerPoint& trigger)
     else if (index < triggers_.Size())
     {
         triggers_[index] = trigger;
-        std::sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+        sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
     }
 }
 
 void Animation::AddTrigger(const AnimationTriggerPoint& trigger)
 {
     triggers_.Push(trigger);
-    std::sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+    sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
 }
 
 void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant& data)
@@ -338,7 +340,7 @@ void Animation::AddTrigger(float time, bool timeIsNormalized, const Variant& dat
     newTrigger.data_ = data;
     triggers_.Push(newTrigger);
 
-    std::sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
+    sort(triggers_.Begin(), triggers_.End(), CompareTriggers);
 }
 
 void Animation::RemoveTrigger(i32 index)

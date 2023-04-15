@@ -18,6 +18,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -30,7 +32,7 @@ TerrainPatch::TerrainPatch() :
     geometry_(new Geometry()),
     maxLodGeometry_(new Geometry()),
     occlusionGeometry_(new Geometry()),
-    vertexBuffer_(std::make_shared<VertexBuffer>()),
+    vertexBuffer_(make_shared<VertexBuffer>()),
     coordinates_(IntVector2::ZERO),
     lodLevel_(0)
 {
@@ -243,7 +245,7 @@ Geometry* TerrainPatch::GetOcclusionGeometry() const
     return occlusionGeometry_;
 }
 
-std::shared_ptr<VertexBuffer> TerrainPatch::GetVertexBuffer() const
+shared_ptr<VertexBuffer> TerrainPatch::GetVertexBuffer() const
 {
     return vertexBuffer_;
 }

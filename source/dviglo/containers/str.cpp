@@ -8,6 +8,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -489,7 +491,7 @@ void String::Clear()
 
 void String::Swap(String& str)
 {
-    std::swap(data_, str.data_);
+    swap(data_, str.data_);
 }
 
 String String::Substring(i32 pos) const

@@ -19,6 +19,7 @@
 #include "../common/debug_new.h"
 
 using namespace rapidjson;
+using namespace std;
 
 namespace dviglo
 {
@@ -100,7 +101,7 @@ bool JSONFile::begin_load(Deserializer& source)
         return false;
     }
 
-    std::unique_ptr<char[]> buffer(new char[dataSize + 1]);
+    unique_ptr<char[]> buffer(new char[dataSize + 1]);
     if (source.Read(buffer.get(), dataSize) != dataSize)
         return false;
     buffer[dataSize] = '\0';

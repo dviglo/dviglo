@@ -15,6 +15,8 @@
 #include "../scene/scene.h"
 #include "../scene/scene_events.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -44,8 +46,8 @@ RibbonTrail::RibbonTrail() :
     geometry_(new Geometry()),
     animationLodBias_(1.0f),
     animationLodTimer_(0.0f),
-    vertexBuffer_(std::make_shared<VertexBuffer>()),
-    indexBuffer_(std::make_shared<IndexBuffer>()),
+    vertexBuffer_(make_shared<VertexBuffer>()),
+    indexBuffer_(make_shared<IndexBuffer>()),
     transforms_(Matrix3x4::IDENTITY),
     bufferSizeDirty_(false),
     bufferDirty_(true),
@@ -538,7 +540,7 @@ void RibbonTrail::UpdateVertexBuffer(const FrameInfo& frame)
 
     // Sort points
     if (sorted_)
-        std::sort(sortedPoints_.Begin(), sortedPoints_.End(), CompareTails);
+        sort(sortedPoints_.Begin(), sortedPoints_.End(), CompareTails);
 
     // Update individual trail elapsed length
     float trailLength = 0.0f;

@@ -42,6 +42,8 @@
 #define GL_DEPTH24_STENCIL8_EXT GL_DEPTH24_STENCIL8
 #endif
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -796,7 +798,7 @@ bool Graphics::SetVertexBuffers_OGL(const Vector<VertexBuffer*>& buffers, unsign
 }
 
 // TODO: Код функции почти покипаста предыдущей, предыдущую возможно удалить?
-bool Graphics::SetVertexBuffers_OGL(const Vector<std::shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset)
+bool Graphics::SetVertexBuffers_OGL(const Vector<shared_ptr<VertexBuffer>>& buffers, unsigned instanceOffset)
 {
     if (buffers.Size() > MAX_VERTEX_STREAMS)
     {
@@ -1474,7 +1476,7 @@ void Graphics::SetDefaultTextureAnisotropy_OGL(unsigned level)
 
 void Graphics::SetTextureParametersDirty_OGL()
 {
-    std::scoped_lock lock(gpuObjectMutex_);
+    scoped_lock lock(gpuObjectMutex_);
 
     for (Vector<GpuObject*>::Iterator i = gpuObjects_.Begin(); i != gpuObjects_.End(); ++i)
     {
@@ -2207,7 +2209,7 @@ void Graphics::Release_OGL(bool clearGPUObjects, bool closeWindow)
     GraphicsImpl_OGL* impl = GetImpl_OGL();
 
     {
-        std::scoped_lock lock(gpuObjectMutex_);
+        scoped_lock lock(gpuObjectMutex_);
 
         if (clearGPUObjects)
         {
@@ -2325,7 +2327,7 @@ void Graphics::Restore_OGL()
     }
 
     {
-        std::scoped_lock lock(gpuObjectMutex_);
+        scoped_lock lock(gpuObjectMutex_);
 
         for (Vector<GpuObject*>::Iterator i = gpuObjects_.Begin(); i != gpuObjects_.End(); ++i)
             (*i)->OnDeviceReset();

@@ -10,6 +10,7 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
 
 namespace dviglo
 {
@@ -114,12 +115,12 @@ void Object::subscribe_to_event(Object* sender, StringHash eventType, EventHandl
     }
 }
 
-void Object::subscribe_to_event(StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
+void Object::subscribe_to_event(StringHash eventType, const function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
 {
     subscribe_to_event(eventType, new EventHandler11Impl(function, userData));
 }
 
-void Object::subscribe_to_event(Object* sender, StringHash eventType, const std::function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
+void Object::subscribe_to_event(Object* sender, StringHash eventType, const function<void(StringHash, VariantMap&)>& function, void* userData/*=0*/)
 {
     subscribe_to_event(sender, eventType, new EventHandler11Impl(function, userData));
 }

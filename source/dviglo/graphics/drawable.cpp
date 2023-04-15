@@ -18,6 +18,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -315,7 +317,7 @@ void Drawable::LimitLights()
     for (unsigned i = 0; i < lights_.Size(); ++i)
         lights_[i]->SetIntensitySortValue(box);
 
-    std::sort(lights_.Begin(), lights_.End(), CompareDrawables);
+    sort(lights_.Begin(), lights_.End(), CompareDrawables);
     vertexLights_.Insert(vertexLights_.End(), lights_.Begin() + max_lights_, lights_.End());
     lights_.Resize(max_lights_);
 }
@@ -338,7 +340,7 @@ void Drawable::LimitVertexLights(bool removeConvertedLights)
     for (unsigned i = 0; i < vertexLights_.Size(); ++i)
         vertexLights_[i]->SetIntensitySortValue(box);
 
-    std::sort(vertexLights_.Begin(), vertexLights_.End(), CompareDrawables);
+    sort(vertexLights_.Begin(), vertexLights_.End(), CompareDrawables);
     vertexLights_.Resize(MAX_VERTEX_LIGHTS);
 }
 

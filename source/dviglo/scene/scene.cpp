@@ -25,6 +25,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -199,7 +201,7 @@ bool Scene::load_xml(Deserializer& source)
 
     StopAsyncLoading();
 
-    std::unique_ptr<XmlFile> xml(new XmlFile());
+    unique_ptr<XmlFile> xml(new XmlFile());
     if (!xml->Load(source))
         return false;
 
@@ -222,7 +224,7 @@ bool Scene::load_json(Deserializer& source)
 
     StopAsyncLoading();
 
-    std::unique_ptr<JSONFile> json(new JSONFile());
+    unique_ptr<JSONFile> json(new JSONFile());
     if (!json->Load(source))
         return false;
 
@@ -243,7 +245,7 @@ bool Scene::save_xml(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneXML);
 
-    std::unique_ptr<XmlFile> xml(new XmlFile());
+    unique_ptr<XmlFile> xml(new XmlFile());
     XmlElement rootElem = xml->CreateRoot("scene");
     if (!save_xml(rootElem))
         return false;
@@ -265,7 +267,7 @@ bool Scene::save_json(Serializer& dest, const String& indentation) const
 {
     DV_PROFILE(SaveSceneJSON);
 
-    std::unique_ptr<JSONFile> json(new JSONFile());
+    unique_ptr<JSONFile> json(new JSONFile());
     JSONValue rootVal;
     if (!save_json(rootVal))
         return false;
@@ -814,7 +816,7 @@ void Scene::EndThreadedUpdate()
 
 void Scene::DelayedMarkedDirty(Component* component)
 {
-    std::scoped_lock lock(scene_mutex_);
+    scoped_lock lock(scene_mutex_);
     delayedDirtyComponents_.Push(component);
 }
 
@@ -1103,10 +1105,12 @@ void Scene::MarkNetworkUpdate(Node* node)
     if (node)
     {
         if (!threadedUpdate_)
+        {
             networkUpdateNodes_.Insert(node->GetID());
+        }
         else
         {
-            std::scoped_lock lock(scene_mutex_);
+            scoped_lock lock(scene_mutex_);
             networkUpdateNodes_.Insert(node->GetID());
         }
     }
@@ -1117,10 +1121,12 @@ void Scene::MarkNetworkUpdate(Component* component)
     if (component)
     {
         if (!threadedUpdate_)
+        {
             networkUpdateComponents_.Insert(component->GetID());
+        }
         else
         {
-            std::scoped_lock lock(scene_mutex_);
+            scoped_lock lock(scene_mutex_);
             networkUpdateComponents_.Insert(component->GetID());
         }
     }

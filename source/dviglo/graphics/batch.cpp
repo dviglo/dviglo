@@ -18,6 +18,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -722,7 +724,7 @@ void BatchQueue::SortBackToFront()
     for (i32 i = 0; i < batches_.Size(); ++i)
         sortedBatches_[i] = &batches_[i];
 
-    std::sort(sortedBatches_.Begin(), sortedBatches_.End(), CompareBatchesBackToFront);
+    sort(sortedBatches_.Begin(), sortedBatches_.End(), CompareBatchesBackToFront);
 
     sortedBatchGroups_.Resize(batchGroups_.Size());
 
@@ -730,7 +732,7 @@ void BatchQueue::SortBackToFront()
     for (HashMap<BatchGroupKey, BatchGroup>::Iterator i = batchGroups_.Begin(); i != batchGroups_.End(); ++i)
         sortedBatchGroups_[index++] = &i->second_;
 
-    std::sort(sortedBatchGroups_.Begin(), sortedBatchGroups_.End(), CompareBatchGroupOrder);
+    sort(sortedBatchGroups_.Begin(), sortedBatchGroups_.End(), CompareBatchGroupOrder);
 }
 
 void BatchQueue::SortFrontToBack()
@@ -747,7 +749,7 @@ void BatchQueue::SortFrontToBack()
     {
         if (i->second_.instances_.Size() <= maxSortedInstances_)
         {
-            std::sort(i->second_.instances_.Begin(), i->second_.instances_.End(), CompareInstancesFrontToBack);
+            sort(i->second_.instances_.Begin(), i->second_.instances_.End(), CompareInstancesFrontToBack);
             if (i->second_.instances_.Size())
                 i->second_.distance_ = i->second_.instances_[0].distance_;
         }
@@ -774,10 +776,10 @@ void BatchQueue::SortFrontToBack2Pass(Vector<Batch*>& batches)
     // Mobile devices likely use a tiled deferred approach, with which front-to-back sorting is irrelevant. The 2-pass
     // method is also time consuming, so just sort with state having priority
 #ifdef MOBILE_GRAPHICS
-    std::sort(batches.Begin(), batches.End(), CompareBatchesState);
+    sort(batches.Begin(), batches.End(), CompareBatchesState);
 #else
     // For desktop, first sort by distance and remap shader/material/geometry IDs in the sort key
-    std::sort(batches.Begin(), batches.End(), CompareBatchesFrontToBack);
+    sort(batches.Begin(), batches.End(), CompareBatchesFrontToBack);
 
     hash32 freeShaderID = 0;
     hash16 freeMaterialID = 0;
@@ -825,7 +827,7 @@ void BatchQueue::SortFrontToBack2Pass(Vector<Batch*>& batches)
     geometryRemapping_.Clear();
 
     // Finally sort again with the rewritten ID's
-    std::sort(batches.Begin(), batches.End(), CompareBatchesState);
+    sort(batches.Begin(), batches.End(), CompareBatchesState);
 #endif
 }
 

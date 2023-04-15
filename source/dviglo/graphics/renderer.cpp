@@ -30,6 +30,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -1151,7 +1153,7 @@ OcclusionBuffer* Renderer::GetOcclusionBuffer(Camera* camera)
 
 Camera* Renderer::GetShadowCamera()
 {
-    std::scoped_lock lock(renderer_mutex_);
+    scoped_lock lock(renderer_mutex_);
 
     assert(numShadowCameras_ <= shadowCameraNodes_.Size());
     if (numShadowCameras_ == shadowCameraNodes_.Size())
@@ -1801,12 +1803,12 @@ void Renderer::ReloadTextures()
 
 void Renderer::CreateGeometries()
 {
-    std::shared_ptr<VertexBuffer> dlvb = std::make_shared<VertexBuffer>();
+    shared_ptr<VertexBuffer> dlvb = make_shared<VertexBuffer>();
     dlvb->SetShadowed(true);
     dlvb->SetSize(4, VertexElements::Position);
     dlvb->SetData(dirLightVertexData);
 
-    std::shared_ptr<IndexBuffer> dlib = std::make_shared<IndexBuffer>();
+    shared_ptr<IndexBuffer> dlib = make_shared<IndexBuffer>();
     dlib->SetShadowed(true);
     dlib->SetSize(6, false);
     dlib->SetData(dirLightIndexData);
@@ -1816,12 +1818,12 @@ void Renderer::CreateGeometries()
     dirLightGeometry_->SetIndexBuffer(dlib);
     dirLightGeometry_->SetDrawRange(TRIANGLE_LIST, 0, dlib->GetIndexCount());
 
-    std::shared_ptr<VertexBuffer> slvb = std::make_shared<VertexBuffer>();
+    shared_ptr<VertexBuffer> slvb = make_shared<VertexBuffer>();
     slvb->SetShadowed(true);
     slvb->SetSize(8, VertexElements::Position);
     slvb->SetData(spotLightVertexData);
 
-    std::shared_ptr<IndexBuffer> slib = std::make_shared<IndexBuffer>();
+    shared_ptr<IndexBuffer> slib = make_shared<IndexBuffer>();
     slib->SetShadowed(true);
     slib->SetSize(36, false);
     slib->SetData(spotLightIndexData);
@@ -1831,12 +1833,12 @@ void Renderer::CreateGeometries()
     spotLightGeometry_->SetIndexBuffer(slib);
     spotLightGeometry_->SetDrawRange(TRIANGLE_LIST, 0, slib->GetIndexCount());
 
-    std::shared_ptr<VertexBuffer> plvb = std::make_shared<VertexBuffer>();
+    shared_ptr<VertexBuffer> plvb = make_shared<VertexBuffer>();
     plvb->SetShadowed(true);
     plvb->SetSize(24, VertexElements::Position);
     plvb->SetData(pointLightVertexData);
 
-    std::shared_ptr<IndexBuffer> plib = std::make_shared<IndexBuffer>();
+    shared_ptr<IndexBuffer> plib = make_shared<IndexBuffer>();
     plib->SetShadowed(true);
     plib->SetSize(132, false);
     plib->SetData(pointLightIndexData);
@@ -1927,7 +1929,8 @@ void Renderer::CreateInstancingBuffer()
         return;
     }
 
-    instancingBuffer_ = std::make_shared<VertexBuffer>();
+    instancingBuffer_ = make_shared<VertexBuffer>();
+    instancingBuffer_ = make_shared<VertexBuffer>();
     const Vector<VertexElement> instancingBufferElements = CreateInstancingBufferElements(numExtraInstancingBufferElements_);
     if (!instancingBuffer_->SetSize(INSTANCING_BUFFER_DEFAULT_SIZE, instancingBufferElements, true))
     {

@@ -9,6 +9,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -21,14 +23,14 @@ BufferedSoundStream::~BufferedSoundStream() = default;
 
 unsigned BufferedSoundStream::GetData(signed char* dest, unsigned numBytes)
 {
-    std::scoped_lock lock(buffer_mutex_);
+    scoped_lock lock(buffer_mutex_);
 
     unsigned outBytes = 0;
 
     while (numBytes && buffers_.Size())
     {
         // Copy as much from the front buffer as possible, then discard it and move to the next
-        List<Pair<std::shared_ptr<signed char[]>, unsigned>>::Iterator front = buffers_.Begin();
+        List<Pair<shared_ptr<signed char[]>, unsigned>>::Iterator front = buffers_.Begin();
 
         unsigned copySize = front->second_ - position_;
         if (copySize > numBytes)
@@ -54,29 +56,29 @@ void BufferedSoundStream::AddData(void* data, unsigned numBytes)
 {
     if (data && numBytes)
     {
-        std::scoped_lock lock(buffer_mutex_);
+        scoped_lock lock(buffer_mutex_);
 
-        std::shared_ptr<signed char[]> newBuffer = std::make_shared<signed char[]>(numBytes);
+        shared_ptr<signed char[]> newBuffer = make_shared<signed char[]>(numBytes);
         memcpy(newBuffer.get(), data, numBytes);
         buffers_.Push(MakePair(newBuffer, numBytes));
     }
 }
 
-void BufferedSoundStream::AddData(const std::shared_ptr<signed char[]>& data, unsigned numBytes)
+void BufferedSoundStream::AddData(const shared_ptr<signed char[]>& data, unsigned numBytes)
 {
     if (data && numBytes)
     {
-        std::scoped_lock lock(buffer_mutex_);
+        scoped_lock lock(buffer_mutex_);
 
         buffers_.Push(MakePair(data, numBytes));
     }
 }
 
-void BufferedSoundStream::AddData(const std::shared_ptr<signed short[]>& data, unsigned numBytes)
+void BufferedSoundStream::AddData(const shared_ptr<signed short[]>& data, unsigned numBytes)
 {
     if (data && numBytes)
     {
-        std::scoped_lock lock(buffer_mutex_);
+        scoped_lock lock(buffer_mutex_);
 
         buffers_.Push(MakePair(reinterpret_pointer_cast<signed char[]>(data), numBytes));
     }
@@ -84,7 +86,7 @@ void BufferedSoundStream::AddData(const std::shared_ptr<signed short[]>& data, u
 
 void BufferedSoundStream::Clear()
 {
-    std::scoped_lock lock(buffer_mutex_);
+    scoped_lock lock(buffer_mutex_);
 
     buffers_.Clear();
     position_ = 0;
@@ -92,10 +94,10 @@ void BufferedSoundStream::Clear()
 
 unsigned BufferedSoundStream::GetBufferNumBytes() const
 {
-    std::scoped_lock lock(buffer_mutex_);
+    scoped_lock lock(buffer_mutex_);
 
     unsigned ret = 0;
-    for (List<Pair<std::shared_ptr<signed char[]>, unsigned>>::ConstIterator i = buffers_.Begin(); i != buffers_.End(); ++i)
+    for (List<Pair<shared_ptr<signed char[]>, unsigned>>::ConstIterator i = buffers_.Begin(); i != buffers_.End(); ++i)
         ret += i->second_;
     // Subtract amount of sound data played from the front buffer
     ret -= position_;

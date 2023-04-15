@@ -19,10 +19,12 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
-unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<std::shared_ptr<VertexBuffer>>& buffers)
+unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<shared_ptr<VertexBuffer>>& buffers)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
     {
@@ -32,7 +34,7 @@ unsigned LookupVertexBuffer(VertexBuffer* buffer, const Vector<std::shared_ptr<V
     return 0;
 }
 
-unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<std::shared_ptr<IndexBuffer>>& buffers)
+unsigned LookupIndexBuffer(IndexBuffer* buffer, const Vector<shared_ptr<IndexBuffer>>& buffers)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
     {
@@ -108,7 +110,7 @@ bool Model::begin_load(Deserializer& source)
         morphRangeStarts_[i] = source.ReadU32();
         morphRangeCounts_[i] = source.ReadU32();
 
-        std::shared_ptr<VertexBuffer> buffer = std::make_shared<VertexBuffer>();
+        shared_ptr<VertexBuffer> buffer = make_shared<VertexBuffer>();
         unsigned vertexSize = VertexBuffer::GetVertexSize(desc.vertexElements_);
         desc.dataSize_ = desc.vertexCount_ * vertexSize;
 
@@ -142,7 +144,7 @@ bool Model::begin_load(Deserializer& source)
         unsigned indexCount = source.ReadU32();
         unsigned indexSize = source.ReadU32();
 
-        std::shared_ptr<IndexBuffer> buffer = std::make_shared<IndexBuffer>();
+        shared_ptr<IndexBuffer> buffer = make_shared<IndexBuffer>();
 
         // Prepare index buffer data to be uploaded during end_load()
         if (async)
@@ -184,7 +186,7 @@ bool Model::begin_load(Deserializer& source)
         geometryBoneMappings_.Push(boneMapping);
 
         unsigned numLodLevels = source.ReadU32();
-        Vector<std::shared_ptr<Geometry>> geometryLodLevels;
+        Vector<shared_ptr<Geometry>> geometryLodLevels;
         geometryLodLevels.Reserve(numLodLevels);
         loadGeometries_[i].Resize(numLodLevels);
 
@@ -215,7 +217,7 @@ bool Model::begin_load(Deserializer& source)
                 return false;
             }
 
-            std::shared_ptr<Geometry> geometry = std::make_shared<Geometry>();
+            shared_ptr<Geometry> geometry = make_shared<Geometry>();
             geometry->SetLodDistance(distance);
 
             // Prepare geometry to be defined during end_load()
@@ -468,7 +470,7 @@ void Model::SetBoundingBox(const BoundingBox& box)
     boundingBox_ = box;
 }
 
-bool Model::SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
+bool Model::SetVertexBuffers(const Vector<shared_ptr<VertexBuffer>>& buffers, const Vector<i32>& morphRangeStarts,
     const Vector<i32>& morphRangeCounts)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
@@ -499,7 +501,7 @@ bool Model::SetVertexBuffers(const Vector<std::shared_ptr<VertexBuffer>>& buffer
     return true;
 }
 
-bool Model::SetIndexBuffers(const Vector<std::shared_ptr<IndexBuffer>>& buffers)
+bool Model::SetIndexBuffers(const Vector<shared_ptr<IndexBuffer>>& buffers)
 {
     for (unsigned i = 0; i < buffers.Size(); ++i)
     {
@@ -555,7 +557,7 @@ bool Model::SetNumGeometryLodLevels(i32 index, i32 num)
     return true;
 }
 
-bool Model::SetGeometry(i32 index, i32 lodLevel, std::shared_ptr<Geometry>& geometry)
+bool Model::SetGeometry(i32 index, i32 lodLevel, shared_ptr<Geometry>& geometry)
 {
     assert(index >= 0);
     assert(lodLevel >= 0);
@@ -618,15 +620,15 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
     ret->morphRangeCounts_ = morphRangeCounts_;
 
     // Deep copy vertex/index buffers
-    HashMap<VertexBuffer*, std::shared_ptr<VertexBuffer>> vbMapping;
-    for (Vector<std::shared_ptr<VertexBuffer>>::ConstIterator i = vertexBuffers_.Begin(); i != vertexBuffers_.End(); ++i)
+    HashMap<VertexBuffer*, shared_ptr<VertexBuffer>> vbMapping;
+    for (Vector<shared_ptr<VertexBuffer>>::ConstIterator i = vertexBuffers_.Begin(); i != vertexBuffers_.End(); ++i)
     {
         VertexBuffer* origBuffer = i->get();
-        std::shared_ptr<VertexBuffer> cloneBuffer;
+        shared_ptr<VertexBuffer> cloneBuffer;
 
         if (origBuffer)
         {
-            cloneBuffer = std::make_shared<VertexBuffer>();
+            cloneBuffer = make_shared<VertexBuffer>();
             cloneBuffer->SetSize(origBuffer->GetVertexCount(), origBuffer->GetElementMask(), origBuffer->IsDynamic());
             cloneBuffer->SetShadowed(origBuffer->IsShadowed());
             if (origBuffer->IsShadowed())
@@ -645,15 +647,15 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
         ret->vertexBuffers_.Push(cloneBuffer);
     }
 
-    HashMap<IndexBuffer*, std::shared_ptr<IndexBuffer>> ibMapping;
-    for (Vector<std::shared_ptr<IndexBuffer>>::ConstIterator i = indexBuffers_.Begin(); i != indexBuffers_.End(); ++i)
+    HashMap<IndexBuffer*, shared_ptr<IndexBuffer>> ibMapping;
+    for (Vector<shared_ptr<IndexBuffer>>::ConstIterator i = indexBuffers_.Begin(); i != indexBuffers_.End(); ++i)
     {
         IndexBuffer* origBuffer = i->get();
-        std::shared_ptr<IndexBuffer> cloneBuffer;
+        shared_ptr<IndexBuffer> cloneBuffer;
 
         if (origBuffer)
         {
-            cloneBuffer = std::make_shared<IndexBuffer>();
+            cloneBuffer = make_shared<IndexBuffer>();
             cloneBuffer->SetSize(origBuffer->GetIndexCount(), origBuffer->GetIndexSize() == sizeof(unsigned),
                 origBuffer->IsDynamic());
             cloneBuffer->SetShadowed(origBuffer->IsShadowed());
@@ -680,12 +682,12 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
         ret->geometries_[i].Resize(geometries_[i].Size());
         for (unsigned j = 0; j < geometries_[i].Size(); ++j)
         {
-            std::shared_ptr<Geometry> cloneGeometry;
+            shared_ptr<Geometry> cloneGeometry;
             Geometry* origGeometry = geometries_[i][j].get();
 
             if (origGeometry)
             {
-                cloneGeometry = std::make_shared<Geometry>();
+                cloneGeometry = make_shared<Geometry>();
                 cloneGeometry->SetIndexBuffer(ibMapping[origGeometry->GetIndexBuffer().get()]);
                 unsigned numVbs = origGeometry->GetNumVertexBuffers();
                 for (unsigned k = 0; k < numVbs; ++k)

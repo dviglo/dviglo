@@ -16,6 +16,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -168,7 +170,7 @@ void Log::Write(int level, const String& message)
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())
     {
-        std::scoped_lock lock(instance.log_mutex_);
+        scoped_lock lock(instance.log_mutex_);
         instance.threadMessages_.Push(StoredLogMessage(message, level, false));
 
         return;
@@ -232,7 +234,7 @@ void Log::WriteRaw(const String& message, bool error)
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())
     {
-        std::scoped_lock lock(instance.log_mutex_);
+        scoped_lock lock(instance.log_mutex_);
         instance.threadMessages_.Push(StoredLogMessage(message, LOG_RAW, error));
 
         return;
@@ -296,7 +298,7 @@ void Log::HandleEndFrame(StringHash eventType, VariantMap& eventData)
         return;
     }
 
-    std::scoped_lock lock(log_mutex_);
+    scoped_lock lock(log_mutex_);
 
     // Process messages accumulated from other threads (if any)
     while (!threadMessages_.Empty())

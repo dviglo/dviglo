@@ -20,6 +20,8 @@
 #pragma warning(disable:4355)
 #endif
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -489,7 +491,7 @@ void Octree::Raycast(RayOctreeQuery& query) const
 
     query.result_.Clear();
     GetDrawablesInternal(query);
-    std::sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
+    sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
 }
 
 void Octree::RaycastSingle(RayOctreeQuery& query) const
@@ -507,7 +509,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
         drawable->SetSortValue(query.ray_.HitDistance(drawable->GetWorldBoundingBox()));
     }
 
-    std::sort(rayQueryDrawables_.Begin(), rayQueryDrawables_.End(), CompareDrawables);
+    sort(rayQueryDrawables_.Begin(), rayQueryDrawables_.End(), CompareDrawables);
 
     // Then do the actual test according to the query, and early-out as possible
     float closestHit = M_INFINITY;
@@ -527,7 +529,7 @@ void Octree::RaycastSingle(RayOctreeQuery& query) const
 
     if (query.result_.Size() > 1)
     {
-        std::sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
+        sort(query.result_.Begin(), query.result_.End(), CompareRayQueryResults);
         query.result_.Resize(1);
     }
 }
@@ -537,7 +539,7 @@ void Octree::queue_update(Drawable* drawable)
     Scene* scene = GetScene();
     if (scene && scene->IsThreadedUpdate())
     {
-        std::scoped_lock lock(octree_mutex_);
+        scoped_lock lock(octree_mutex_);
         threadedDrawableUpdates_.Push(drawable);
     }
     else

@@ -21,6 +21,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -58,7 +60,7 @@ inline void GrowUpdateRegion(IntRect& updateRegion, int x, int y)
 }
 
 Terrain::Terrain() :
-    indexBuffer_(std::make_shared<IndexBuffer>()),
+    indexBuffer_(make_shared<IndexBuffer>()),
     spacing_(DEFAULT_SPACING),
     lastSpacing_(Vector3::ZERO),
     patchWorldOrigin_(Vector2::ZERO),

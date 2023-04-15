@@ -10,6 +10,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -55,7 +57,7 @@ int Application::Run()
         return exitCode_;
 #if !defined(__GNUC__) || __EXCEPTIONS
     }
-    catch (std::bad_alloc&)
+    catch (bad_alloc&)
     {
         ErrorDialog(GetTypeName(), "An out-of-memory error occurred. The application will now exit.");
         return EXIT_FAILURE;

@@ -16,6 +16,8 @@
 #include "text.h"
 #include "text3d.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -30,7 +32,7 @@ static const float DEFAULT_EFFECT_DEPTH_BIAS = 0.1f;
 
 Text3D::Text3D() :
     Drawable(DrawableTypes::Geometry),
-    vertexBuffer_(std::make_shared<VertexBuffer>()),
+    vertexBuffer_(make_shared<VertexBuffer>()),
     customWorldTransform_(Matrix3x4::IDENTITY),
     faceCameraMode_(FC_NONE),
     minAngle_(0.0f),

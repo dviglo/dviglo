@@ -19,6 +19,7 @@
 #include <dviglo/common/debug_new.h>
 
 using namespace dviglo;
+using namespace std;
 
 // Kernel used for blurring IES lights
 static const float sigma3Kernel9x9[9 * 9] = {
@@ -82,7 +83,7 @@ void Run(const Vector<String>& arguments)
         Vector<float> luminance;
         ReadIES(&file, vertical, horizontal, luminance);
 
-        std::unique_ptr<unsigned char[]> data(new unsigned char[width * height]);
+        unique_ptr<unsigned char[]> data(new unsigned char[width * height]);
         WriteIES(data.get(), width, height, vertical, horizontal, luminance);
 
         // Apply a blur, simpler than interpolating through the 2 dimensions of coarse samples
@@ -107,7 +108,7 @@ void Run(const Vector<String>& arguments)
 
         if (dimensions == 1)
         {
-            std::unique_ptr<unsigned char[]> data(new unsigned char[width]);
+            unique_ptr<unsigned char[]> data(new unsigned char[width]);
 
             for (int i = 0; i < width; ++i)
             {
@@ -125,7 +126,7 @@ void Run(const Vector<String>& arguments)
 
         if (dimensions == 2)
         {
-            std::unique_ptr<unsigned char[]> data(new unsigned char[width * width]);
+            unique_ptr<unsigned char[]> data(new unsigned char[width * width]);
 
             for (int y = 0; y < width; ++y)
             {

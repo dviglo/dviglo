@@ -17,6 +17,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -98,7 +100,7 @@ bool Font::save_xml(Serializer& dest, int pointSize, bool usedGlyphs, const Stri
 
     DV_PROFILE(FontSaveXML);
 
-    std::unique_ptr<FontFaceBitmap> packedFontFace(new FontFaceBitmap(this));
+    unique_ptr<FontFaceBitmap> packedFontFace(new FontFaceBitmap(this));
     if (!packedFontFace->Load(fontFace, usedGlyphs))
         return false;
 

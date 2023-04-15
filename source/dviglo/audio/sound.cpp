@@ -17,6 +17,8 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
 namespace dviglo
 {
 
@@ -82,7 +84,7 @@ bool Sound::begin_load(Deserializer& source)
 bool Sound::LoadOggVorbis(Deserializer& source)
 {
     unsigned dataSize = source.GetSize();
-    std::shared_ptr<signed char[]> data = std::make_shared<signed char[]>(dataSize);
+    shared_ptr<signed char[]> data = make_shared<signed char[]>(dataSize);
     source.Read(data.get(), dataSize);
 
     // Check for validity of data
@@ -204,7 +206,7 @@ void Sound::SetSize(unsigned dataSize)
     if (!dataSize)
         return;
 
-    data_ = std::make_shared<signed char[]>(dataSize + IP_SAFETY);
+    data_ = make_shared<signed char[]>(dataSize + IP_SAFETY);
     dataSize_ = dataSize;
     compressed_ = false;
     SetLooped(false);
