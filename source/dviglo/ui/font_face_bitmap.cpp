@@ -28,7 +28,7 @@ FontFaceBitmap::~FontFaceBitmap() = default;
 
 // FIXME: The Load() and Save() should be refactored accordingly after the recent FontGlyph struct changes
 
-bool FontFaceBitmap::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
+bool FontFaceBitmap::Load(const byte* fontData, unsigned fontDataSize, float pointSize)
 {
     SharedPtr<XmlFile> xmlReader(new XmlFile());
     MemoryBuffer memoryBuffer(fontData, fontDataSize);

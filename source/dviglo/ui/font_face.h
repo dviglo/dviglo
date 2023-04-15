@@ -53,7 +53,7 @@ public:
     ~FontFace() override;
 
     /// Load font face.
-    virtual bool Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize) = 0;
+    virtual bool Load(const byte* fontData, unsigned fontDataSize, float pointSize) = 0;
     /// Return pointer to the glyph structure corresponding to a character. Return null if glyph not found.
     virtual const FontGlyph* GetGlyph(c32 c);
 

@@ -94,7 +94,7 @@ FontFaceFreeType::~FontFaceFreeType()
     }
 }
 
-bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize)
+bool FontFaceFreeType::Load(const byte* fontData, unsigned fontDataSize, float pointSize)
 {
     // Create & initialize FreeType library if it does not exist yet
     FreeTypeLibrary& freeType = FreeTypeLibrary::get_instance();
@@ -121,7 +121,7 @@ bool FontFaceFreeType::Load(const unsigned char* fontData, unsigned fontDataSize
 
     FT_Library library = freeType.GetLibrary();
     FT_Face face;
-    FT_Error error = FT_New_Memory_Face(library, fontData, fontDataSize, 0, &face);
+    FT_Error error = FT_New_Memory_Face(library, (FT_Byte*)fontData, fontDataSize, 0, &face);
     if (error)
     {
         DV_LOGERROR("Could not create font face");

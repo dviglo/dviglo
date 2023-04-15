@@ -22,7 +22,7 @@ public:
     ~FontFaceBitmap() override;
 
     /// Load font face.
-    bool Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize) override;
+    bool Load(const byte* fontData, unsigned fontDataSize, float pointSize) override;
     /// Load from existed font face, pack used glyphs into smallest texture size and smallest number of texture.
     bool Load(FontFace* fontFace, bool usedGlyphs);
     /// Save as a new bitmap font type in XML format. Return true if successful.

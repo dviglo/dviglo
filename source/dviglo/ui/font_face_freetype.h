@@ -21,7 +21,7 @@ public:
     ~FontFaceFreeType() override;
 
     /// Load font face.
-    bool Load(const unsigned char* fontData, unsigned fontDataSize, float pointSize) override;
+    bool Load(const byte* fontData, unsigned fontDataSize, float pointSize) override;
     /// Return pointer to the glyph structure corresponding to a character. Return null if glyph not found.
     const FontGlyph* GetGlyph(c32 c) override;
 

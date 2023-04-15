@@ -82,7 +82,7 @@ private:
     /// Created faces.
     HashMap<int, SharedPtr<FontFace>> faces_;
     /// Font data.
-    SharedArrayPtr<unsigned char> fontData_;
+    std::unique_ptr<byte[]> fontData_;
     /// Size of font data.
     unsigned fontDataSize_;
     /// Absolute position adjustment for glyphs.

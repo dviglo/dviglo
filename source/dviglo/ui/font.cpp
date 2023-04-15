@@ -47,7 +47,7 @@ Font::~Font()
 {
     // To ensure FreeType deallocates properly, first clear all faces, then release the raw font data
     ReleaseFaces();
-    fontData_.Reset();
+    fontData_.reset();
 }
 
 void Font::register_object()
@@ -67,13 +67,13 @@ bool Font::begin_load(Deserializer& source)
     fontDataSize_ = source.GetSize();
     if (fontDataSize_)
     {
-        fontData_ = new unsigned char[fontDataSize_];
+        fontData_.reset(new byte[fontDataSize_]);
         if (source.Read(&fontData_[0], fontDataSize_) != fontDataSize_)
             return false;
     }
     else
     {
-        fontData_.Reset();
+        fontData_.reset();
         return false;
     }
 
@@ -202,7 +202,7 @@ void Font::LoadParameters()
 FontFace* Font::GetFaceFreeType(float pointSize)
 {
     SharedPtr<FontFace> newFace(new FontFaceFreeType(this));
-    if (!newFace->Load(&fontData_[0], fontDataSize_, pointSize))
+    if (!newFace->Load(fontData_.get(), fontDataSize_, pointSize))
         return nullptr;
 
     int key = FloatToFixed(pointSize);
@@ -213,7 +213,7 @@ FontFace* Font::GetFaceFreeType(float pointSize)
 FontFace* Font::GetFaceBitmap(float pointSize)
 {
     SharedPtr<FontFace> newFace(new FontFaceBitmap(this));
-    if (!newFace->Load(&fontData_[0], fontDataSize_, pointSize))
+    if (!newFace->Load(fontData_.get(), fontDataSize_, pointSize))
         return nullptr;
 
     int key = FloatToFixed(pointSize);
