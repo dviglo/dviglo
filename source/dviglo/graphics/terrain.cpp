@@ -885,11 +885,11 @@ void Terrain::CreateGeometry()
         // Ensure that the source (unsmoothed) data exists if smoothing is active
         if (smoothing_ && (!sourceHeightData_ || updateAll))
         {
-            sourceHeightData_ = new float[newDataSize];
+            sourceHeightData_ = make_unique<float[]>(newDataSize);
             updateAll = true;
         }
         else if (!smoothing_)
-            sourceHeightData_.Reset();
+            sourceHeightData_.reset();
     }
     else
     {
@@ -897,7 +897,7 @@ void Terrain::CreateGeometry()
         numVertices_ = IntVector2::ZERO;
         patchWorldOrigin_ = Vector2::ZERO;
         heightData_.reset();
-        sourceHeightData_.Reset();
+        sourceHeightData_.reset();
     }
 
     lastNumVertices_ = numVertices_;
@@ -937,7 +937,7 @@ void Terrain::CreateGeometry()
     {
         // Copy heightmap data
         const unsigned char* src = heightMap_->GetData();
-        float* dest = smoothing_ ? sourceHeightData_ : heightData_.get();
+        float* dest = smoothing_ ? sourceHeightData_.get() : heightData_.get();
         unsigned imgComps = heightMap_->GetComponents();
         unsigned imgRow = heightMap_->GetWidth() * imgComps;
         IntRect updateRegion(-1, -1, -1, -1);

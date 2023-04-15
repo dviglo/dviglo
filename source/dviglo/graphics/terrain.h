@@ -230,7 +230,7 @@ private:
     /// Height data.
     std::shared_ptr<float[]> heightData_;
     /// Source height data for smoothing.
-    SharedArrayPtr<float> sourceHeightData_;
+    std::unique_ptr<float[]> sourceHeightData_;
     /// Material.
     SharedPtr<Material> material_;
     /// Terrain patches.
