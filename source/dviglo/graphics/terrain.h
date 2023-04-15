@@ -136,7 +136,7 @@ public:
     Terrain* GetEastNeighbor() const { return east_; }
 
     /// Return raw height data.
-    SharedArrayPtr<float> GetHeightData() const { return heightData_; }
+    std::shared_ptr<float[]> GetHeightData() const { return heightData_; }
 
     /// Return draw distance.
     float GetDrawDistance() const { return drawDistance_; }
@@ -228,7 +228,7 @@ private:
     /// Heightmap image.
     SharedPtr<Image> heightMap_;
     /// Height data.
-    SharedArrayPtr<float> heightData_;
+    std::shared_ptr<float[]> heightData_;
     /// Source height data for smoothing.
     SharedArrayPtr<float> sourceHeightData_;
     /// Material.

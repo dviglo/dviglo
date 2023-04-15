@@ -114,7 +114,7 @@ struct HeightfieldData : public CollisionGeometryData
     HeightfieldData(Terrain* terrain, i32 lodLevel);
 
     /// Height data. On LOD level 0 the original height data will be used.
-    SharedArrayPtr<float> heightData_;
+    std::shared_ptr<float[]> heightData_;
     /// Vertex spacing.
     Vector3 spacing_;
     /// Heightmap size.

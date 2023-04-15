@@ -333,7 +333,7 @@ HeightfieldData::HeightfieldData(Terrain* terrain, i32 lodLevel) :
                     break;
             }
 
-            SharedArrayPtr<float> lodHeightData(new float[lodSize.x * lodSize.y]);
+            shared_ptr<float[]> lodHeightData = make_shared<float[]>(lodSize.x * lodSize.y);
             for (int y = 0, dY = 0; y < size_.y && dY < lodSize.y; y += skip, ++dY)
             {
                 for (int x = 0, dX = 0; x < size_.x && dX < lodSize.x; x += skip, ++dX)
@@ -346,7 +346,7 @@ HeightfieldData::HeightfieldData(Terrain* terrain, i32 lodLevel) :
         }
 
         auto points = (unsigned)(size_.x * size_.y);
-        float* data = heightData_.Get();
+        float* data = heightData_.get();
 
         minHeight_ = maxHeight_ = data[0];
         for (unsigned i = 1; i < points; ++i)
@@ -1063,7 +1063,7 @@ void CollisionShape::UpdateShape()
                     auto* heightfield = static_cast<HeightfieldData*>(geometry_.Get());
 
                     shape_ = make_unique<btHeightfieldTerrainShape>(
-                        heightfield->size_.x, heightfield->size_.y, heightfield->heightData_.Get(),
+                        heightfield->size_.x, heightfield->size_.y, heightfield->heightData_.get(),
                         1.0f, heightfield->minHeight_, heightfield->maxHeight_, 1, PHY_FLOAT, false);
 
                     shape_->setLocalScaling(
