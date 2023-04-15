@@ -264,9 +264,9 @@ bool Model::begin_load(Deserializer& source)
             if (!!(newBuffer.elementMask_ & VertexElements::Tangent))
                 vertexSize += sizeof(Vector3);
             newBuffer.dataSize_ = newBuffer.vertexCount_ * vertexSize;
-            newBuffer.morphData_ = new byte[newBuffer.dataSize_];
+            newBuffer.morphData_ = make_shared<byte[]>(newBuffer.dataSize_);
 
-            source.Read(&newBuffer.morphData_[0], newBuffer.vertexCount_ * vertexSize);
+            source.Read(newBuffer.morphData_.get(), newBuffer.vertexCount_* vertexSize);
 
             newMorph.buffers_[bufferIndex] = newBuffer;
             memoryUse += sizeof(VertexBufferMorph) + newBuffer.vertexCount_ * vertexSize;
@@ -429,7 +429,7 @@ bool Model::Save(Serializer& dest) const
             if (!!(j->second_.elementMask_ & VertexElements::Tangent))
                 vertexSize += sizeof(Vector3);
 
-            dest.Write(j->second_.morphData_.Get(), vertexSize * j->second_.vertexCount_);
+            dest.Write(j->second_.morphData_.get(), vertexSize * j->second_.vertexCount_);
         }
     }
 
@@ -712,8 +712,8 @@ SharedPtr<Model> Model::Clone(const String& cloneName) const
             VertexBufferMorph& vbMorph = j->second_;
             if (vbMorph.dataSize_)
             {
-                SharedArrayPtr<byte> cloneData(new byte[vbMorph.dataSize_]);
-                memcpy(cloneData.Get(), vbMorph.morphData_.Get(), vbMorph.dataSize_);
+                shared_ptr<byte[]> cloneData = make_shared<byte[]>(vbMorph.dataSize_);
+                memcpy(cloneData.get(), vbMorph.morphData_.get(), vbMorph.dataSize_);
                 vbMorph.morphData_ = cloneData;
             }
         }

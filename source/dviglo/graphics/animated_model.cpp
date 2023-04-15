@@ -1385,7 +1385,7 @@ void AnimatedModel::ApplyMorph(VertexBuffer* buffer, void* destVertexData, i32 m
     unsigned tangentOffset = buffer->GetElementOffset(SEM_TANGENT);
     unsigned vertexSize = buffer->GetVertexSize();
 
-    byte* srcData = morph.morphData_;
+    byte* srcData = morph.morphData_.get();
     byte* destData = (byte*)destVertexData;
 
     while (vertexCount--)

@@ -11,8 +11,6 @@
 #include "../resource/resource.h"
 #include "skeleton.h"
 
-#include <memory>
-
 namespace dviglo
 {
 
@@ -31,7 +29,7 @@ struct VertexBufferMorph
     /// Morphed vertices data size as bytes.
     i32 dataSize_;
     /// Morphed vertices. Stored packed as <index, data> pairs.
-    SharedArrayPtr<byte> morphData_;
+    std::shared_ptr<byte[]> morphData_;
 };
 
 /// Definition of a model's vertex morph.
