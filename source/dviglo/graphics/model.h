@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "../containers/array_ptr.h"
 #include "../containers/ptr.h"
 #include "../graphics_api/graphics_defs.h"
 #include "../math/bounding_box.h"

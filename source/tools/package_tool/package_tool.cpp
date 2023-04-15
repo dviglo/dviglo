@@ -3,7 +3,6 @@
 // License: MIT
 
 #include <dviglo/core/context.h>
-#include <dviglo/containers/array_ptr.h>
 #include <dviglo/core/process_utils.h>
 #include <dviglo/io/file.h>
 #include <dviglo/io/file_system.h>

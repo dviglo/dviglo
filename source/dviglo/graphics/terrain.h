@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "../containers/array_ptr.h"
 #include "../scene/component.h"
 
 namespace dviglo

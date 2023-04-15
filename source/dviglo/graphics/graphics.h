@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "../containers/array_ptr.h"
 #include "../containers/hash_set.h"
 #include "../core/object.h"
 #include "../graphics_api/graphics_defs.h"

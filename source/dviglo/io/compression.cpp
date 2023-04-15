@@ -2,7 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../containers/array_ptr.h"
 #include "compression.h"
 #include "deserializer.h"
 #include "serializer.h"

@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include "../containers/array_ptr.h"
 #include "../math/bounding_box.h"
 #include "../math/quaternion.h"
 #include "../scene/component.h"

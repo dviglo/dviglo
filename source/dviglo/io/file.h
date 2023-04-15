@@ -6,7 +6,6 @@
 
 #pragma once
 
-#include "../containers/array_ptr.h"
 #include "../core/object.h"
 #include "abstract_file.h"
 

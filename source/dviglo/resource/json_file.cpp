@@ -4,7 +4,6 @@
 
 #include "json_file.h"
 
-#include "../containers/array_ptr.h"
 #include "../core/profiler.h"
 #include "../core/context.h"
 #include "../io/deserializer.h"

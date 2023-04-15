@@ -5,7 +5,6 @@
 #pragma once
 
 #include "sound_stream.h"
-#include "../containers/array_ptr.h"
 #include "../containers/list.h"
 #include "../containers/pair.h"
 

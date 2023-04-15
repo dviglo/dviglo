@@ -2,7 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include "../containers/array_ptr.h"
 #include "../core/context.h"
 #include "../graphics/graphics.h"
 #include "../graphics_api/texture_2d.h"

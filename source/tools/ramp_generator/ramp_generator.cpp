@@ -2,7 +2,6 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
-#include <dviglo/containers/array_ptr.h>
 #include <dviglo/core/context.h>
 #include <dviglo/io/file.h>
 #include <dviglo/io/file_system.h>
