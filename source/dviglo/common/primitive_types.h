@@ -65,7 +65,7 @@ using namespace dvt;
 * GCC 32, Clang 32, VS 32, VS 64 - long long
 * GCC 64, Clang 64 - long
 
-Следущий код успешно скомпилируют VS 32, VS 64 и GCC 32, но не скомпилирует GCC 64:
+Следующий код успешно скомпилируют VS 32, VS 64 и GCC 32, но не скомпилирует GCC 64:
 
 ```
 #include <cstdint>
