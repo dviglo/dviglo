@@ -64,7 +64,7 @@ Variant& Variant::operator =(const Variant& rhs)
     }
 
     // Assign other types here
-    SetType(rhs.GetType());
+    set_type(rhs.GetType());
 
     switch (type_)
     {
@@ -122,7 +122,7 @@ Variant& Variant::operator =(const Variant& rhs)
 
 Variant& Variant::operator =(const VectorBuffer& rhs)
 {
-    SetType(VAR_BUFFER);
+    set_type(VAR_BUFFER);
     value_.buffer_ = rhs.GetBuffer();
     return *this;
 }
@@ -292,7 +292,7 @@ void Variant::FromString(VariantType type, const char* value)
         break;
 
     case VAR_BUFFER:
-        SetType(VAR_BUFFER);
+        set_type(VAR_BUFFER);
         StringToBuffer(value_.buffer_, value);
         break;
 
@@ -306,7 +306,7 @@ void Variant::FromString(VariantType type, const char* value)
         StringVector values = String::Split(value, ';');
         if (values.Size() == 2)
         {
-            SetType(VAR_RESOURCEREF);
+            set_type(VAR_RESOURCEREF);
             value_.resourceRef_.type_ = values[0];
             value_.resourceRef_.name_ = values[1];
         }
@@ -318,7 +318,7 @@ void Variant::FromString(VariantType type, const char* value)
         StringVector values = String::Split(value, ';', true);
         if (values.Size() >= 1)
         {
-            SetType(VAR_RESOURCEREFLIST);
+            set_type(VAR_RESOURCEREFLIST);
             value_.resourceRefList_.type_ = values[0];
             value_.resourceRefList_.names_.Resize(values.Size() - 1);
             for (unsigned i = 1; i < values.Size(); ++i)
@@ -365,7 +365,7 @@ void Variant::FromString(VariantType type, const char* value)
         break;
 
     default:
-        SetType(VAR_NONE);
+        set_type(VAR_NONE);
     }
 }
 
@@ -374,7 +374,7 @@ void Variant::SetBuffer(const void* data, unsigned size)
     if (size && !data)
         size = 0;
 
-    SetType(VAR_BUFFER);
+    set_type(VAR_BUFFER);
     Vector<byte>& buffer = value_.buffer_;
     buffer.Resize(size);
     if (size)
@@ -395,13 +395,13 @@ void Variant::SetCustomVariantValue(const CustomVariantValue& value)
 
     if (value.GetSize() <= VARIANT_VALUE_SIZE)
     {
-        SetType(VAR_CUSTOM_STACK);
+        set_type(VAR_CUSTOM_STACK);
         value_.customValueStack_.~CustomVariantValue();
         value.Clone(&value_.customValueStack_);
     }
     else
     {
-        SetType(VAR_CUSTOM_HEAP);
+        set_type(VAR_CUSTOM_HEAP);
         delete value_.customValueHeap_;
         value_.customValueHeap_ = value.Clone();
     }
@@ -600,9 +600,9 @@ bool Variant::IsZero() const
     }
 }
 
-void Variant::SetType(VariantType newType)
+void Variant::set_type(VariantType new_type)
 {
-    if (type_ == newType)
+    if (type_ == new_type)
         return;
 
     switch (type_)
@@ -663,7 +663,7 @@ void Variant::SetType(VariantType newType)
         break;
     }
 
-    type_ = newType;
+    type_ = new_type;
 
     switch (type_)
     {

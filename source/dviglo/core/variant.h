@@ -314,11 +314,18 @@ union VariantValue
 
 static_assert(sizeof(VariantValue) == VARIANT_VALUE_SIZE, "Unexpected size of VariantValue");
 
-/// Variable that supports a fixed set of types.
+/// Может хранить значения разных типов
 class DV_API Variant
 {
+private:
+    VariantType type_ = VAR_NONE;
+    VariantValue value_;
+
+    /// Меняет тип и выделяет/освобождает память, если необходимо
+    void set_type(VariantType new_type);
+
 public:
-    /// Construct empty.
+    /// Пустое значение без типа
     Variant() = default;
 
     /// Construct from integer.
@@ -555,13 +562,13 @@ public:
     /// Destruct.
     ~Variant()
     {
-        SetType(VAR_NONE);
+        set_type(VAR_NONE);
     }
 
     /// Reset to empty.
     void Clear()
     {
-        SetType(VAR_NONE);
+        set_type(VAR_NONE);
     }
 
     /// Assign from another variant.
@@ -570,7 +577,7 @@ public:
     /// Assign from an integer.
     Variant& operator =(int rhs)
     {
-        SetType(VAR_INT);
+        set_type(VAR_INT);
         value_.int_ = rhs;
         return *this;
     }
@@ -578,7 +585,7 @@ public:
     /// Assign from 64 bit integer.
     Variant& operator =(long long rhs)
     {
-        SetType(VAR_INT64);
+        set_type(VAR_INT64);
         value_.int64_ = rhs;
         return *this;
     }
@@ -586,7 +593,7 @@ public:
     /// Assign from unsigned 64 bit integer.
     Variant& operator =(unsigned long long rhs)
     {
-        SetType(VAR_INT64);
+        set_type(VAR_INT64);
         value_.int64_ = static_cast<long long>(rhs);
         return *this;
     }
@@ -594,7 +601,7 @@ public:
     /// Assign from an unsigned integer.
     Variant& operator =(unsigned rhs)
     {
-        SetType(VAR_INT);
+        set_type(VAR_INT);
         value_.int_ = (int)rhs;
         return *this;
     }
@@ -602,7 +609,7 @@ public:
     /// Assign from an Unicode code point.
     Variant& operator =(c32 rhs)
     {
-        SetType(VAR_INT);
+        set_type(VAR_INT);
         value_.int_ = (int)rhs;
         return *this;
     }
@@ -610,7 +617,7 @@ public:
     /// Assign from a StringHash (convert to integer).
     Variant& operator =(const StringHash& rhs)
     {
-        SetType(VAR_INT);
+        set_type(VAR_INT);
         value_.int_ = (int)rhs.Value();
         return *this;
     }
@@ -618,7 +625,7 @@ public:
     /// Assign from a bool.
     Variant& operator =(bool rhs)
     {
-        SetType(VAR_BOOL);
+        set_type(VAR_BOOL);
         value_.bool_ = rhs;
         return *this;
     }
@@ -626,7 +633,7 @@ public:
     /// Assign from a float.
     Variant& operator =(float rhs)
     {
-        SetType(VAR_FLOAT);
+        set_type(VAR_FLOAT);
         value_.float_ = rhs;
         return *this;
     }
@@ -634,7 +641,7 @@ public:
     /// Assign from a double.
     Variant& operator =(double rhs)
     {
-        SetType(VAR_DOUBLE);
+        set_type(VAR_DOUBLE);
         value_.double_ = rhs;
         return *this;
     }
@@ -642,7 +649,7 @@ public:
     /// Assign from a Vector2.
     Variant& operator =(const Vector2& rhs)
     {
-        SetType(VAR_VECTOR2);
+        set_type(VAR_VECTOR2);
         value_.vector2_ = rhs;
         return *this;
     }
@@ -650,7 +657,7 @@ public:
     /// Assign from a Vector3.
     Variant& operator =(const Vector3& rhs)
     {
-        SetType(VAR_VECTOR3);
+        set_type(VAR_VECTOR3);
         value_.vector3_ = rhs;
         return *this;
     }
@@ -658,7 +665,7 @@ public:
     /// Assign from a Vector4.
     Variant& operator =(const Vector4& rhs)
     {
-        SetType(VAR_VECTOR4);
+        set_type(VAR_VECTOR4);
         value_.vector4_ = rhs;
         return *this;
     }
@@ -666,7 +673,7 @@ public:
     /// Assign from a quaternion.
     Variant& operator =(const Quaternion& rhs)
     {
-        SetType(VAR_QUATERNION);
+        set_type(VAR_QUATERNION);
         value_.quaternion_ = rhs;
         return *this;
     }
@@ -674,7 +681,7 @@ public:
     /// Assign from a color.
     Variant& operator =(const Color& rhs)
     {
-        SetType(VAR_COLOR);
+        set_type(VAR_COLOR);
         value_.color_ = rhs;
         return *this;
     }
@@ -682,7 +689,7 @@ public:
     /// Assign from a string.
     Variant& operator =(const String& rhs)
     {
-        SetType(VAR_STRING);
+        set_type(VAR_STRING);
         value_.string_ = rhs;
         return *this;
     }
@@ -690,7 +697,7 @@ public:
     /// Assign from a C string.
     Variant& operator =(const char* rhs)
     {
-        SetType(VAR_STRING);
+        set_type(VAR_STRING);
         value_.string_ = rhs;
         return *this;
     }
@@ -698,7 +705,7 @@ public:
     /// Assign from a buffer.
     Variant& operator =(const Vector<byte>& rhs)
     {
-        SetType(VAR_BUFFER);
+        set_type(VAR_BUFFER);
         value_.buffer_ = rhs;
         return *this;
     }
@@ -709,7 +716,7 @@ public:
     /// Assign from a void pointer.
     Variant& operator =(void* rhs)
     {
-        SetType(VAR_VOIDPTR);
+        set_type(VAR_VOIDPTR);
         value_.voidPtr_ = rhs;
         return *this;
     }
@@ -717,7 +724,7 @@ public:
     /// Assign from a resource reference.
     Variant& operator =(const ResourceRef& rhs)
     {
-        SetType(VAR_RESOURCEREF);
+        set_type(VAR_RESOURCEREF);
         value_.resourceRef_ = rhs;
         return *this;
     }
@@ -725,7 +732,7 @@ public:
     /// Assign from a resource reference list.
     Variant& operator =(const ResourceRefList& rhs)
     {
-        SetType(VAR_RESOURCEREFLIST);
+        set_type(VAR_RESOURCEREFLIST);
         value_.resourceRefList_ = rhs;
         return *this;
     }
@@ -733,7 +740,7 @@ public:
     /// Assign from a variant vector.
     Variant& operator =(const VariantVector& rhs)
     {
-        SetType(VAR_VARIANTVECTOR);
+        set_type(VAR_VARIANTVECTOR);
         value_.variantVector_ = rhs;
         return *this;
     }
@@ -741,7 +748,7 @@ public:
     /// Assign from a string vector.
     Variant& operator =(const StringVector& rhs)
     {
-        SetType(VAR_STRINGVECTOR);
+        set_type(VAR_STRINGVECTOR);
         value_.stringVector_ = rhs;
         return *this;
     }
@@ -749,7 +756,7 @@ public:
     /// Assign from a variant map.
     Variant& operator =(const VariantMap& rhs)
     {
-        SetType(VAR_VARIANTMAP);
+        set_type(VAR_VARIANTMAP);
         value_.variantMap_ = rhs;
         return *this;
     }
@@ -757,7 +764,7 @@ public:
     /// Assign from a rect.
     Variant& operator =(const Rect& rhs)
     {
-        SetType(VAR_RECT);
+        set_type(VAR_RECT);
         value_.rect_ = rhs;
         return *this;
     }
@@ -765,7 +772,7 @@ public:
     /// Assign from an integer rect.
     Variant& operator =(const IntRect& rhs)
     {
-        SetType(VAR_INTRECT);
+        set_type(VAR_INTRECT);
         value_.intRect_ = rhs;
         return *this;
     }
@@ -773,7 +780,7 @@ public:
     /// Assign from an IntVector2.
     Variant& operator =(const IntVector2& rhs)
     {
-        SetType(VAR_INTVECTOR2);
+        set_type(VAR_INTVECTOR2);
         value_.intVector2_ = rhs;
         return *this;
     }
@@ -781,7 +788,7 @@ public:
     /// Assign from an IntVector3.
     Variant& operator =(const IntVector3& rhs)
     {
-        SetType(VAR_INTVECTOR3);
+        set_type(VAR_INTVECTOR3);
         value_.intVector3_ = rhs;
         return *this;
     }
@@ -789,7 +796,7 @@ public:
     /// Assign from a RefCounted pointer. The object will be stored internally in a WeakPtr so that its expiration can be detected safely.
     Variant& operator =(RefCounted* rhs)
     {
-        SetType(VAR_PTR);
+        set_type(VAR_PTR);
         value_.weakPtr_ = rhs;
         return *this;
     }
@@ -797,7 +804,7 @@ public:
     /// Assign from a Matrix3.
     Variant& operator =(const Matrix3& rhs)
     {
-        SetType(VAR_MATRIX3);
+        set_type(VAR_MATRIX3);
         *value_.matrix3_ = rhs;
         return *this;
     }
@@ -805,7 +812,7 @@ public:
     /// Assign from a Matrix3x4.
     Variant& operator =(const Matrix3x4& rhs)
     {
-        SetType(VAR_MATRIX3X4);
+        set_type(VAR_MATRIX3X4);
         *value_.matrix3x4_ = rhs;
         return *this;
     }
@@ -813,7 +820,7 @@ public:
     /// Assign from a Matrix4.
     Variant& operator =(const Matrix4& rhs)
     {
-        SetType(VAR_MATRIX4);
+        set_type(VAR_MATRIX4);
         *value_.matrix4_ = rhs;
         return *this;
     }
@@ -1416,15 +1423,6 @@ public:
     static const VariantVector emptyVariantVector;
     /// Empty string vector.
     static const StringVector emptyStringVector;
-
-private:
-    /// Set new type and allocate/deallocate memory as necessary.
-    void SetType(VariantType newType);
-
-    /// Variant type.
-    VariantType type_ = VAR_NONE;
-    /// Variant value.
-    VariantValue value_;
 };
 
 /// Return variant type from type.
