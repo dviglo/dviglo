@@ -10,6 +10,7 @@
 #include "../containers/ptr.h"
 #include "variant.h"
 
+
 namespace dviglo
 {
 
@@ -123,4 +124,4 @@ public:
     }
 };
 
-}
+} // namespace dviglo
