@@ -15,7 +15,7 @@ class DV_API Localization : public Object
 {
     DV_OBJECT(Localization);
 
-    /// Только Engine может создать и уничтожить лог
+    /// Только Engine может создать и уничтожить объект
     friend class Engine;
 
 private:
