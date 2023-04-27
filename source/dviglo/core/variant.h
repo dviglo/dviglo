@@ -17,6 +17,7 @@
 #include <memory>
 #include <typeinfo>
 
+
 namespace dviglo
 {
 
@@ -1596,4 +1597,4 @@ template <class T> const T* CustomVariantValue::GetValuePtr() const
     return nullptr;
 }
 
-}
+} // namespace dviglo
