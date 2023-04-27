@@ -205,7 +205,7 @@ void SkeletalAnimation::setup_viewport()
         rp->Load(DV_RES_CACHE.GetResource<XmlFile>("render_paths/deferred.xml"));
         viewport->SetRenderPath(rp);
 #endif
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 }
 
 void SkeletalAnimation::subscribe_to_events()
@@ -273,5 +273,5 @@ void SkeletalAnimation::handle_post_render_update(StringHash eventType, VariantM
     // bones. Note that debug geometry has to be separately requested each frame. Disable depth test so that we can see the
     // bones properly
     if (draw_debug_)
-        DV_RENDERER.draw_debug_geometry(false);
+        DV_RENDERER->draw_debug_geometry(false);
 }

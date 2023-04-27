@@ -95,9 +95,9 @@ void Urho2DConstraints::create_scene()
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera_));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 
-    Zone* zone = DV_RENDERER.GetDefaultZone();
+    Zone* zone = DV_RENDERER->GetDefaultZone();
     zone->SetFogColor(Color(0.1f, 0.1f, 0.1f)); // Set background color for the scene
 
     // Create 4x3 grid

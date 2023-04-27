@@ -212,7 +212,7 @@ void Billboards::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 }
 
 void Billboards::subscribe_to_events()
@@ -309,5 +309,5 @@ void Billboards::handle_post_render_update(StringHash eventType, VariantMap& eve
     // If draw debug mode is enabled, draw viewport debug geometry. This time use depth test, as otherwise the result becomes
     // hard to interpret due to large object count
     if (draw_debug_)
-        DV_RENDERER.draw_debug_geometry(true);
+        DV_RENDERER->draw_debug_geometry(true);
 }

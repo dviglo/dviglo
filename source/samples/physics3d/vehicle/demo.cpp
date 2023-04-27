@@ -77,7 +77,7 @@ void VehicleDemo::create_scene()
     cameraNode_ = new Node();
     auto* camera = cameraNode_->create_component<Camera>();
     camera->SetFarClip(500.0f);
-    DV_RENDERER.SetViewport(0, new Viewport(scene_, camera));
+    DV_RENDERER->SetViewport(0, new Viewport(scene_, camera));
 
     // Create static scene content. First create a zone for ambient lighting and fog control
     Node* zoneNode = scene_->create_child("Zone");

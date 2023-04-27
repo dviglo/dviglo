@@ -183,7 +183,7 @@ void Decals::setup_viewport()
 {
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 }
 
 void Decals::subscribe_to_events()
@@ -308,5 +308,5 @@ void Decals::handle_post_render_update(StringHash eventType, VariantMap& eventDa
 {
     // If draw debug mode is enabled, draw viewport debug geometry. Disable depth test so that we can see the effect of occlusion
     if (draw_debug_)
-        DV_RENDERER.draw_debug_geometry(false);
+        DV_RENDERER->draw_debug_geometry(false);
 }

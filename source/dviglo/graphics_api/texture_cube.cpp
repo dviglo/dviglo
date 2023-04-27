@@ -321,7 +321,7 @@ void TextureCube::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& ev
         if (renderSurface && (renderSurface->GetUpdateMode() == SURFACE_UPDATEALWAYS || renderSurface->IsUpdateQueued()))
         {
             if (!GParams::is_headless())
-                DV_RENDERER.QueueRenderSurface(renderSurface);
+                DV_RENDERER->QueueRenderSurface(renderSurface);
             renderSurface->ResetUpdateQueued();
         }
     }

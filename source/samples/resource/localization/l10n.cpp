@@ -164,7 +164,7 @@ void L10n::create_scene()
     text3DNode->SetScale(15);
 
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 
     subscribe_to_event(E_UPDATE, DV_HANDLER(L10n, handle_update));
 }

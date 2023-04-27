@@ -99,7 +99,7 @@ void Chat::create_ui()
     }
 
     // No viewports or scene is defined. However, the default zone's fog color controls the fill color
-    DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
+    DV_RENDERER->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
 void Chat::subscribe_to_events()

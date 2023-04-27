@@ -197,7 +197,7 @@ void Hello3dUi::InitScene()
 
     // Set up a viewport so 3D scene can be visible.
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 
     // Subscribe to update event and animate cube and handle input.
     subscribe_to_event(E_UPDATE, DV_HANDLER(Hello3dUi, handle_update));

@@ -32,6 +32,7 @@
 
 using namespace std;
 
+
 namespace dviglo
 {
 
@@ -243,21 +244,6 @@ inline Vector<VertexElement> CreateInstancingBufferElements(unsigned numExtraEle
     return elements;
 }
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool renderer_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Renderer& Renderer::get_instance()
-{
-    assert(!renderer_destructed);
-    static Renderer instance;
-    return instance;
-}
-
 Renderer::Renderer() :
     defaultZone_(new Zone())
 {
@@ -268,16 +254,15 @@ Renderer::Renderer() :
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
 
-    DV_LOGDEBUG("Singleton Renderer constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Renderer constructed");
 }
 
 Renderer::~Renderer()
 {
-    DV_LOGDEBUG("Singleton Renderer destructed");
-
-#ifndef NDEBUG
-    renderer_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("Renderer destructed");
 }
 
 void Renderer::SetNumViewports(i32 num)

@@ -249,7 +249,7 @@ bool Drawable::IsInView() const
     if (GParams::is_headless())
         return false;
 
-    return viewFrameNumber_ == DV_RENDERER.GetFrameInfo().frameNumber_ && !viewCameras_.Empty();
+    return viewFrameNumber_ == DV_RENDERER->GetFrameInfo().frameNumber_ && !viewCameras_.Empty();
 }
 
 bool Drawable::IsInView(Camera* camera) const
@@ -257,7 +257,7 @@ bool Drawable::IsInView(Camera* camera) const
     if (GParams::is_headless())
         return false;
 
-    return viewFrameNumber_ == DV_RENDERER.GetFrameInfo().frameNumber_ && (!camera || viewCameras_.Contains(camera));
+    return viewFrameNumber_ == DV_RENDERER->GetFrameInfo().frameNumber_ && (!camera || viewCameras_.Contains(camera));
 }
 
 bool Drawable::IsInView(const FrameInfo& frame, bool anyCamera) const

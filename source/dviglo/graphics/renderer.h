@@ -159,10 +159,17 @@ class DV_API Renderer : public Object
 {
     DV_OBJECT(Renderer);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Renderer* instance_ = nullptr;
+
 public:
     using ShadowMapFilter = void(Object::*)(View* view, Texture2D* shadowMap, float blurScale);
 
-    static Renderer& get_instance();
+    static Renderer* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -593,6 +600,6 @@ private:
     bool resetViews_{};
 };
 
-#define DV_RENDERER (dviglo::Renderer::get_instance())
+#define DV_RENDERER (dviglo::Renderer::instance())
 
 } // namespace dviglo

@@ -197,7 +197,7 @@ void Typography::HandleWhiteBackground(StringHash eventType, VariantMap& eventDa
     Color fg = checked ? Color::BLACK : Color::WHITE;
     Color bg = checked ? Color::WHITE : Color::BLACK;
 
-    Zone* zone = DV_RENDERER.GetDefaultZone();
+    Zone* zone = DV_RENDERER->GetDefaultZone();
     zone->SetFogColor(bg);
 
     Vector<UiElement*> text = uielement_->GetChildrenWithTag(TEXT_TAG, true);

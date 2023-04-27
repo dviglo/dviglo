@@ -68,7 +68,7 @@ public:
         // \todo Always uses the first viewport, in case there are multiple
         auto* octree = scene->GetComponent<Octree>();
         if (viewport_ == nullptr)
-            viewport_ = DV_RENDERER.GetViewportForScene(scene, 0);
+            viewport_ = DV_RENDERER->GetViewportForScene(scene, 0);
 
         if (viewport_.Expired() || octree == nullptr)
             return result;
@@ -188,7 +188,7 @@ void UiComponent::OnNodeSet(Node* node)
     if (node)
     {
         auto* model = node->GetComponent<StaticModel>();
-        rootElement_->SetViewport(DV_RENDERER.GetViewportForScene(GetScene(), viewportIndex_));
+        rootElement_->SetViewport(DV_RENDERER->GetViewportForScene(GetScene(), viewportIndex_));
         if (model == nullptr)
             model_ = model = node->create_component<StaticModel>();
         model->SetMaterial(material_);
@@ -229,7 +229,7 @@ void UiComponent::SetViewportIndex(unsigned int index)
     viewportIndex_ = index;
     if (Scene* scene = GetScene())
     {
-        Viewport* viewport = DV_RENDERER.GetViewportForScene(scene, index);
+        Viewport* viewport = DV_RENDERER->GetViewportForScene(scene, index);
         rootElement_->SetViewport(viewport);
     }
 }

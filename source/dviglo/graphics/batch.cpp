@@ -108,7 +108,7 @@ void CalculateShadowMatrix(Matrix4& dest, LightBatchQueue* queue, i32 split)
     }
 
     // If using 4 shadow samples, offset the position diagonally by half pixel
-    if (DV_RENDERER.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || DV_RENDERER.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
+    if (DV_RENDERER->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || DV_RENDERER->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
     {
         offset.x -= 0.5f / width;
         offset.y -= 0.5f / height;
@@ -170,7 +170,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         return;
 
     Graphics& graphics = DV_GRAPHICS;
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
     Node* cameraNode = camera ? camera->GetNode() : nullptr;
     Light* light = lightQueue_ ? lightQueue_->light_ : nullptr;
     Texture2D* shadowMap = lightQueue_ ? lightQueue_->shadowMap_ : nullptr;
@@ -199,7 +199,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         if (effectiveCullMode == MAX_CULLMODES)
             effectiveCullMode = isShadowPass ? material_->GetShadowCullMode() : material_->GetCullMode();
 
-        renderer.SetCullMode(effectiveCullMode, camera);
+        renderer->SetCullMode(effectiveCullMode, camera);
         if (!isShadowPass)
         {
             const BiasParameters& depthBias = material_->GetDepthBias();
@@ -436,7 +436,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                     }
 
                     // If using 4 shadow samples, offset the position diagonally by half pixel
-                    if (renderer.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
+                    if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
                     {
                         addX -= 0.5f / width;
                         addY -= 0.5f / height;
@@ -472,7 +472,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                             Lerp(intensity, 1.0f, Clamp((light->distance() - fadeStart) / (fadeEnd - fadeStart), 0.0f, 1.0f));
                     float pcfValues = (1.0f - intensity);
                     float samples = 1.0f;
-                    if (renderer.GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer.GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
+                    if (renderer->GetShadowQuality() == SHADOWQUALITY_PCF_16BIT || renderer->GetShadowQuality() == SHADOWQUALITY_PCF_24BIT)
                         samples = 4.0f;
                     graphics.SetShaderParameter(PSP_SHADOWINTENSITY, Vector4(pcfValues / samples, intensity, 0.0f, 0.0f));
                 }
@@ -492,7 +492,7 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
                 graphics.SetShaderParameter(PSP_SHADOWSPLITS, lightSplits);
 
                 if (graphics.HasShaderParameter(PSP_VSMSHADOWPARAMS))
-                    graphics.SetShaderParameter(PSP_VSMSHADOWPARAMS, renderer.GetVSMShadowParameters());
+                    graphics.SetShaderParameter(PSP_VSMSHADOWPARAMS, renderer->GetVSMShadowParameters());
 
                 if (light->GetShadowBias().normalOffset_ > 0.0f)
                 {
@@ -613,14 +613,14 @@ void Batch::Prepare(View* view, Camera* camera, bool setModelTransform, bool all
         {
             Texture* rampTexture = light->GetRampTexture();
             if (!rampTexture)
-                rampTexture = renderer.GetDefaultLightRamp();
+                rampTexture = renderer->GetDefaultLightRamp();
             graphics.SetTexture(TU_LIGHTRAMP, rampTexture);
         }
         if (graphics.HasTextureUnit(TU_LIGHTSHAPE))
         {
             Texture* shapeTexture = light->GetShapeTexture();
             if (!shapeTexture && light->GetLightType() == LIGHT_SPOT)
-                shapeTexture = renderer.GetDefaultLightSpot();
+                shapeTexture = renderer->GetDefaultLightSpot();
             graphics.SetTexture(TU_LIGHTSHAPE, shapeTexture);
         }
     }
@@ -666,7 +666,7 @@ void BatchGroup::Draw(View* view, Camera* camera, bool allowDepthWrite) const
     if (instances_.Size() && !geometry_->IsEmpty())
     {
         // Draw as individual objects if instancing not supported or could not fill the instancing buffer
-        VertexBuffer* instanceBuffer = DV_RENDERER.GetInstancingBuffer().get();
+        VertexBuffer* instanceBuffer = DV_RENDERER->GetInstancingBuffer().get();
         if (!instanceBuffer || geometryType_ != GEOM_INSTANCED || startIndex_ == NINDEX)
         {
             Batch::Prepare(view, camera, false, allowDepthWrite);
@@ -871,7 +871,7 @@ void BatchQueue::Draw(View* view, Camera* camera, bool markToStencil, bool using
         {
             // If drawing an alpha batch, we can optimize fillrate by scissor test
             if (!batch->isBase_ && batch->lightQueue_)
-                DV_RENDERER.OptimizeLightByScissor(batch->lightQueue_->light_, camera);
+                DV_RENDERER->OptimizeLightByScissor(batch->lightQueue_->light_, camera);
             else
                 graphics.SetScissorTest(false);
         }

@@ -97,7 +97,7 @@ void Urho2DIsometricDemo::create_scene()
 
     // Setup the viewport for displaying the scene
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 
     // Create tile map from tmx file
     auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("sprites/tilesets/atrium.tmx");

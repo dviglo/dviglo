@@ -165,7 +165,7 @@ void Texture2D::HandleRenderSurfaceUpdate(StringHash eventType, VariantMap& even
     if (renderSurface_ && (renderSurface_->GetUpdateMode() == SURFACE_UPDATEALWAYS || renderSurface_->IsUpdateQueued()))
     {
         if (!GParams::is_headless())
-            DV_RENDERER.QueueRenderSurface(renderSurface_);
+            DV_RENDERER->QueueRenderSurface(renderSurface_);
         renderSurface_->ResetUpdateQueued();
     }
 }

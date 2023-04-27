@@ -86,7 +86,7 @@ void NATPunchtrough::create_ui()
     connectButton_ = CreateButton("Connect", 160, IntVector2(240, marginTop));
 
     // No viewports or scene is defined. However, the default zone's fog color controls the fill color
-    DV_RENDERER.GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
+    DV_RENDERER->GetDefaultZone()->SetFogColor(Color(0.0f, 0.0f, 0.1f));
 }
 
 void NATPunchtrough::subscribe_to_events()

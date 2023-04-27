@@ -104,7 +104,7 @@ void DebugHud::Update()
         return;
 
     Graphics& graphics = DV_GRAPHICS;
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
 
     // Ensure UI-elements are not detached
     if (!statsText_->GetParent())
@@ -124,8 +124,8 @@ void DebugHud::Update()
         }
         else
         {
-            primitives = renderer.GetNumPrimitives();
-            batches = renderer.GetNumBatches();
+            primitives = renderer->GetNumPrimitives();
+            batches = renderer->GetNumBatches();
         }
 
         if (fps_timer_.GetMSec(false) >= 500)
@@ -139,10 +139,10 @@ void DebugHud::Update()
             fps_,
             primitives,
             batches,
-            renderer.GetNumViews(),
-            renderer.GetNumLights(true),
-            renderer.GetNumShadowMaps(true),
-            renderer.GetNumOccluders(true));
+            renderer->GetNumViews(),
+            renderer->GetNumLights(true),
+            renderer->GetNumShadowMaps(true),
+            renderer->GetNumOccluders(true));
 
         if (!appStats_.Empty())
         {
@@ -158,14 +158,14 @@ void DebugHud::Update()
     {
         String mode;
         mode.AppendWithFormat("Tex:%s Mat:%s Spec:%s Shadows:%s Size:%i Quality:%s Occlusion:%s Instancing:%s",
-            qualityTexts[renderer.GetTextureQuality()],
-            qualityTexts[Min((i32)renderer.GetMaterialQuality(), 3)],
-            renderer.GetSpecularLighting() ? "On" : "Off",
-            renderer.GetDrawShadows() ? "On" : "Off",
-            renderer.GetShadowMapSize(),
-            shadowQualityTexts[renderer.GetShadowQuality()],
-            renderer.GetMaxOccluderTriangles() > 0 ? "On" : "Off",
-            renderer.GetDynamicInstancing() ? "On" : "Off");
+            qualityTexts[renderer->GetTextureQuality()],
+            qualityTexts[Min((i32)renderer->GetMaterialQuality(), 3)],
+            renderer->GetSpecularLighting() ? "On" : "Off",
+            renderer->GetDrawShadows() ? "On" : "Off",
+            renderer->GetShadowMapSize(),
+            shadowQualityTexts[renderer->GetShadowQuality()],
+            renderer->GetMaxOccluderTriangles() > 0 ? "On" : "Off",
+            renderer->GetDynamicInstancing() ? "On" : "Off");
     #ifdef DV_OPENGL
         mode.AppendWithFormat(" Renderer:%s Version:%s", graphics.GetRendererName().c_str(),
             graphics.GetVersionString().c_str());

@@ -163,11 +163,11 @@ void MultipleViewports::create_instructions()
 
 void MultipleViewports::SetupViewports()
 {
-    DV_RENDERER.SetNumViewports(2);
+    DV_RENDERER->SetNumViewports(2);
 
     // Set up the front camera viewport
     SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 
     // Clone the default render path so that we do not interfere with the other viewport, then add
     // bloom and FXAA postprocess effects to the front viewport. Render path commands can be tagged
@@ -188,7 +188,7 @@ void MultipleViewports::SetupViewports()
     // The viewport index must be greater in that case, otherwise the view would be left behind
     SharedPtr<Viewport> rearViewport(new Viewport(scene_, rearCameraNode_->GetComponent<Camera>(),
         IntRect(DV_GRAPHICS.GetWidth() * 2 / 3, 32, DV_GRAPHICS.GetWidth() - 32, DV_GRAPHICS.GetHeight() / 3)));
-    DV_RENDERER.SetViewport(1, rearViewport);
+    DV_RENDERER->SetViewport(1, rearViewport);
 }
 
 void MultipleViewports::subscribe_to_events()
@@ -234,7 +234,7 @@ void MultipleViewports::move_camera(float timeStep)
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // Toggle post processing effects on the front viewport. Note that the rear viewport is unaffected
-    RenderPath* effectRenderPath = DV_RENDERER.GetViewport(0)->GetRenderPath();
+    RenderPath* effectRenderPath = DV_RENDERER->GetViewport(0)->GetRenderPath();
 
     if (input->GetKeyPress(KEY_B))
         effectRenderPath->ToggleEnabled("bloom");
@@ -266,5 +266,5 @@ void MultipleViewports::handle_post_render_update(StringHash eventType, VariantM
     // If draw debug mode is enabled, draw viewport debug geometry, which will show eg. drawable bounding boxes and skeleton
     // bones. Disable depth test so that we can see the effect of occlusion
     if (draw_debug_)
-        DV_RENDERER.draw_debug_geometry(false);
+        DV_RENDERER->draw_debug_geometry(false);
 }

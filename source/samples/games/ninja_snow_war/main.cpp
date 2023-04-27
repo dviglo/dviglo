@@ -181,7 +181,7 @@ public:
         String platform = GetPlatform();
         if (platform == "Android" || platform == "iOS" || platform == "Raspberry Pi")
         {
-            DV_RENDERER.SetReuseShadowMaps(false);
+            DV_RENDERER->SetReuseShadowMaps(false);
             // Adjust the directional light shadow range slightly further, as only the first
             // cascade is supported
             Node* dirLightNode = gameScene->GetChild("GlobalLight", true);
@@ -247,7 +247,7 @@ public:
         if (!GParams::is_headless())
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
-            DV_RENDERER.SetViewport(0, viewport);
+            DV_RENDERER->SetViewport(0, viewport);
             DV_AUDIO.SetListener(gameCameraNode->create_component<SoundListener>());
         }
     }

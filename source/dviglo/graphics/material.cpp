@@ -1235,7 +1235,7 @@ void Material::ResetToDefaults()
     pixelShaderDefines_.Clear();
 
     SetNumTechniques(1);
-    SetTechnique(0, (!GParams::is_headless()) ? DV_RENDERER.GetDefaultTechnique() :
+    SetTechnique(0, (!GParams::is_headless()) ? DV_RENDERER->GetDefaultTechnique() :
         DV_RES_CACHE.GetResource<Technique>("techniques/no_texture.xml"));
 
     textures_.Clear();

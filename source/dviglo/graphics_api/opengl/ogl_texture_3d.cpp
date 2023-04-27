@@ -152,7 +152,7 @@ bool Texture3D::SetData_OGL(Image* image, bool useAlpha)
     unsigned memoryUse = sizeof(Texture3D);
     MaterialQuality quality = QUALITY_HIGH;
     if (!GParams::is_headless())
-        quality = DV_RENDERER.GetTextureQuality();
+        quality = DV_RENDERER->GetTextureQuality();
 
     if (!image->IsCompressed())
     {

@@ -280,7 +280,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     renderTarget_ = renderTarget;
     draw_debug_ = viewport->draw_debug;
 
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
 
     // Validate the rect and calculate size. If zero rect, use whole rendertarget size
@@ -318,7 +318,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     else
     {
         // If view specifies a culling camera (view preparation sharing), check if already prepared
-        sourceView_ = renderer.GetPreparedView(cullCamera_);
+        sourceView_ = renderer->GetPreparedView(cullCamera_);
         if (sourceView_ && sourceView_->scene_ == scene_ && sourceView_->renderPath_ == renderPath_)
         {
             // Copy properties needed later in rendering
@@ -428,7 +428,7 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
 
     octree_ = nullptr;
     // Get default zone first in case we do not have zones defined
-    cameraZone_ = farClipZone_ = renderer.GetDefaultZone();
+    cameraZone_ = farClipZone_ = renderer->GetDefaultZone();
 
     if (hasScenePasses_)
     {
@@ -473,10 +473,10 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
         }
     }
 
-    drawShadows_ = renderer.GetDrawShadows();
-    materialQuality_ = renderer.GetMaterialQuality();
-    maxOccluderTriangles_ = renderer.GetMaxOccluderTriangles();
-    minInstances_ = renderer.GetMinInstances();
+    drawShadows_ = renderer->GetDrawShadows();
+    materialQuality_ = renderer->GetMaterialQuality();
+    maxOccluderTriangles_ = renderer->GetMaxOccluderTriangles();
+    minInstances_ = renderer->GetMinInstances();
 
     // Set possible quality overrides from the camera
     // Note that the culling camera is used here (its settings are authoritative) while the render camera
@@ -511,9 +511,9 @@ void View::Update(const FrameInfo& frame)
 
     SendViewEvent(E_BEGINVIEWUPDATE);
 
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
 
-    int maxSortedInstances = renderer.GetMaxSortedInstances();
+    int maxSortedInstances = renderer->GetMaxSortedInstances();
 
     // Clear buffers, geometry, light, occluder & batch list
     renderTargets_.Clear();
@@ -538,7 +538,7 @@ void View::Update(const FrameInfo& frame)
 
     GetDrawables();
     GetBatches();
-    renderer.StorePreparedView(this, cullCamera_);
+    renderer->StorePreparedView(this, cullCamera_);
 
     SendViewEvent(E_ENDVIEWUPDATE);
 }
@@ -559,13 +559,13 @@ void View::Render()
     AllocateScreenBuffers();
     SendViewEvent(E_VIEWBUFFERSREADY);
 
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
 
     // Forget parameter sources from the previous view
     graphics.ClearParameterSources();
 
-    if (renderer.GetDynamicInstancing() && graphics.GetInstancingSupport())
+    if (renderer->GetDynamicInstancing() && graphics.GetInstancingSupport())
         PrepareInstancingBuffer();
 
     // It is possible, though not recommended, that the same camera is used for multiple main views. Set automatic aspect ratio
@@ -575,10 +575,10 @@ void View::Render()
 
     // Bind the face selection and indirection cube maps for point light shadows
 #ifndef DV_GLES2
-    if (renderer.GetDrawShadows())
+    if (renderer->GetDrawShadows())
     {
-        graphics.SetTexture(TU_FACESELECT, renderer.GetFaceSelectCubeMap());
-        graphics.SetTexture(TU_INDIRECTION, renderer.GetIndirectionCubeMap());
+        graphics.SetTexture(TU_FACESELECT, renderer->GetFaceSelectCubeMap());
+        graphics.SetTexture(TU_INDIRECTION, renderer->GetIndirectionCubeMap());
     }
 #endif
 
@@ -838,7 +838,7 @@ void View::GetDrawables()
             }
         }
     }
-    if (farClipZone_ == DV_RENDERER.GetDefaultZone())
+    if (farClipZone_ == DV_RENDERER->GetDefaultZone())
         farClipZone_ = cameraZone_;
 
     // If occlusion in use, get & render the occluders
@@ -850,7 +850,7 @@ void View::GetDrawables()
         {
             DV_PROFILE(DrawOcclusion);
 
-            occlusionBuffer_ = DV_RENDERER.GetOcclusionBuffer(cullCamera_);
+            occlusionBuffer_ = DV_RENDERER->GetOcclusionBuffer(cullCamera_);
             DrawOccluders(occlusionBuffer_, occluders_);
         }
     }
@@ -1001,11 +1001,11 @@ void View::GetLightBatches()
                 ++numLightQueues;
         }
 
-        Renderer& renderer = DV_RENDERER;
+        Renderer* renderer = DV_RENDERER;
 
         lightQueues_.Resize(numLightQueues);
         maxLightsDrawables_.Clear();
-        i32 maxSortedInstances = renderer.GetMaxSortedInstances();
+        i32 maxSortedInstances = renderer->GetMaxSortedInstances();
 
         for (Vector<LightQueryResult>::Iterator i = lightQueryResults_.Begin(); i != lightQueryResults_.End(); ++i)
         {
@@ -1045,7 +1045,7 @@ void View::GetLightBatches()
                 // Allocate shadow map now
                 if (shadowSplits > 0)
                 {
-                    lightQueue.shadowMap_ = renderer.GetShadowMap(light, cullCamera_, viewSize_.x, viewSize_.y);
+                    lightQueue.shadowMap_ = renderer->GetShadowMap(light, cullCamera_, viewSize_.x, viewSize_.y);
                     // If did not manage to get a shadow map, convert the light to unshadowed
                     if (!lightQueue.shadowMap_)
                         shadowSplits = 0;
@@ -1122,7 +1122,7 @@ void View::GetLightBatches()
                 if (deferred_ && (light->GetLightMask() & 0xffu) != 0)
                 {
                     Batch volumeBatch;
-                    volumeBatch.geometry_ = renderer.GetLightGeometry(light);
+                    volumeBatch.geometry_ = renderer->GetLightGeometry(light);
                     volumeBatch.geometryType_ = GEOM_STATIC;
                     volumeBatch.worldTransform_ = &light->GetVolumeTransform(cullCamera_);
                     volumeBatch.numWorldTransforms_ = 1;
@@ -1131,7 +1131,7 @@ void View::GetLightBatches()
                     volumeBatch.material_ = nullptr;
                     volumeBatch.pass_ = nullptr;
                     volumeBatch.zone_ = nullptr;
-                    renderer.SetLightVolumeBatchShaders(volumeBatch, cullCamera_, lightVolumeCommand_->vertexShaderName_,
+                    renderer->SetLightVolumeBatchShaders(volumeBatch, cullCamera_, lightVolumeCommand_->vertexShaderName_,
                         lightVolumeCommand_->pixelShaderName_, lightVolumeCommand_->vertexShaderDefines_,
                         lightVolumeCommand_->pixelShaderDefines_);
                     lightQueue.volumeBatches_.Push(volumeBatch);
@@ -1424,7 +1424,7 @@ void View::GetLitBatches(Drawable* drawable, LightBatchQueue& lightQueue, BatchQ
         {
             // Transparent batches can not be instanced, and shadows on transparencies can only be rendered if shadow maps are
             // not reused
-            AddBatchToQueue(*alphaQueue, destBatch, tech, false, !DV_RENDERER.GetReuseShadowMaps());
+            AddBatchToQueue(*alphaQueue, destBatch, tech, false, !DV_RENDERER->GetReuseShadowMaps());
         }
     }
 }
@@ -1433,11 +1433,11 @@ void View::ExecuteRenderPathCommands()
 {
     View* actualView = sourceView_ ? sourceView_ : this;
 
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
 
     // If not reusing shadowmaps, render all of them first
-    if (!renderer.GetReuseShadowMaps() && renderer.GetDrawShadows() && !actualView->lightQueues_.Empty())
+    if (!renderer->GetReuseShadowMaps() && renderer->GetDrawShadows() && !actualView->lightQueues_.Empty())
     {
         DV_PROFILE(RenderShadowMaps);
 
@@ -1613,7 +1613,7 @@ void View::ExecuteRenderPathCommands()
                     for (Vector<LightBatchQueue>::Iterator i = actualView->lightQueues_.Begin(); i != actualView->lightQueues_.End(); ++i)
                     {
                         // If reusing shadowmaps, render each of them before the lit batches
-                        if (renderer.GetReuseShadowMaps() && NeedRenderShadowMap(*i))
+                        if (renderer->GetReuseShadowMaps() && NeedRenderShadowMap(*i))
                         {
                             RenderShadowMap(*i);
                             SetRenderTargets(command);
@@ -1635,9 +1635,9 @@ void View::ExecuteRenderPathCommands()
                         // Then, if there are additive passes, optimize the light and draw them
                         if (!i->litBatches_.IsEmpty())
                         {
-                            renderer.OptimizeLightByScissor(i->light_, camera_);
+                            renderer->OptimizeLightByScissor(i->light_, camera_);
                             if (!noStencil_)
-                                renderer.OptimizeLightByStencil(i->light_, camera_);
+                                renderer->OptimizeLightByStencil(i->light_, camera_);
                             i->litBatches_.Draw(this, camera_, false, true, allowDepthWrite);
                         }
 
@@ -1659,7 +1659,7 @@ void View::ExecuteRenderPathCommands()
                     for (Vector<LightBatchQueue>::Iterator i = actualView->lightQueues_.Begin(); i != actualView->lightQueues_.End(); ++i)
                     {
                         // If reusing shadowmaps, render each of them before the lit batches
-                        if (renderer.GetReuseShadowMaps() && NeedRenderShadowMap(*i))
+                        if (renderer->GetReuseShadowMaps() && NeedRenderShadowMap(*i))
                         {
                             RenderShadowMap(*i);
                             SetRenderTargets(command);
@@ -1700,7 +1700,7 @@ void View::ExecuteRenderPathCommands()
 
                     VariantMap& eventData = GetEventDataMap();
                     eventData[P_NAME] = command.eventName_;
-                    renderer.SendEvent(E_RENDERPATHEVENT, eventData);
+                    renderer->SendEvent(E_RENDERPATHEVENT, eventData);
                 }
                 break;
 
@@ -1948,7 +1948,7 @@ void View::AllocateScreenBuffers()
     i32 numViewportTextures = 0;
     lastCustomDepthSurface_ = nullptr;
 
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
 
     // Check for commands with special meaning: has custom depth, renders a scene pass to other than the destination viewport,
@@ -2004,7 +2004,7 @@ void View::AllocateScreenBuffers()
     unsigned format = renderTarget_ ? renderTarget_->GetParentTexture()->GetFormat() : Graphics::GetRGBFormat();
 
     // If HDR rendering is enabled use RGBA16f and reserve a buffer
-    if (renderer.GetHDRRendering())
+    if (renderer->GetHDRRendering())
     {
         format = Graphics::GetRGBAFloat16Format();
         needSubstitute = true;
@@ -2038,11 +2038,11 @@ void View::AllocateScreenBuffers()
     // Allocate screen buffers. Enable filtering in case the quad commands need that
     // Follow the sRGB mode of the destination render target
     bool sRGB = renderTarget_ ? renderTarget_->GetParentTexture()->GetSRGB() : graphics.GetSRGB();
-    substituteRenderTarget_ = needSubstitute ? GetRenderSurfaceFromTexture(renderer.GetScreenBuffer(viewSize_.x, viewSize_.y,
+    substituteRenderTarget_ = needSubstitute ? GetRenderSurfaceFromTexture(renderer->GetScreenBuffer(viewSize_.x, viewSize_.y,
         format, 1, false, false, true, sRGB)) : nullptr;
     for (i32 i = 0; i < MAX_VIEWPORT_TEXTURES; ++i)
     {
-        viewportTextures_[i] = i < numViewportTextures ? renderer.GetScreenBuffer(viewSize_.x, viewSize_.y, format, 1, false,
+        viewportTextures_[i] = i < numViewportTextures ? renderer->GetScreenBuffer(viewSize_.x, viewSize_.y, format, 1, false,
             false, true, sRGB) : nullptr;
     }
     // If using a substitute render target and pingponging, the substitute can act as the second viewport texture
@@ -2074,7 +2074,7 @@ void View::AllocateScreenBuffers()
 
         // If the rendertarget is persistent, key it with a hash derived from the RT name and the view's pointer
         renderTargets_[rtInfo.name_] =
-            renderer.GetScreenBuffer(intWidth, intHeight, rtInfo.format_, rtInfo.multiSample_, rtInfo.autoResolve_,
+            renderer->GetScreenBuffer(intWidth, intHeight, rtInfo.format_, rtInfo.multiSample_, rtInfo.autoResolve_,
                 rtInfo.cubemap_, rtInfo.filtered_, rtInfo.sRGB_, rtInfo.persistent_ ? StringHash(rtInfo.name_).Value()
                 + (unsigned)(size_t)this : 0);
     }
@@ -2123,7 +2123,7 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
 
 void View::DrawFullscreenQuad(bool setIdentityProjection)
 {
-    Geometry* geometry = DV_RENDERER.GetQuadGeometry();
+    Geometry* geometry = DV_RENDERER->GetQuadGeometry();
 
     Graphics& graphics = DV_GRAPHICS;
 
@@ -2161,7 +2161,7 @@ void View::DrawFullscreenQuad(bool setIdentityProjection)
 
 void View::UpdateOccluders(Vector<Drawable*>& occluders, Camera* camera)
 {
-    float occluderSizeThreshold_ = DV_RENDERER.GetOccluderSizeThreshold();
+    float occluderSizeThreshold_ = DV_RENDERER->GetOccluderSizeThreshold();
     float halfViewSize = camera->GetHalfViewSize();
     float invOrthoSize = 1.0f / camera->GetOrthoSize();
 
@@ -2542,7 +2542,7 @@ void View::SetupShadowCameras(LightQueryResult& query)
                     break;
 
                 // Setup the shadow camera for the split
-                Camera* shadowCamera = DV_RENDERER.GetShadowCamera();
+                Camera* shadowCamera = DV_RENDERER->GetShadowCamera();
                 query.shadowCameras_[splits] = shadowCamera;
                 query.shadowNearSplits_[splits] = nearSplit;
                 query.shadowFarSplits_[splits] = farSplit;
@@ -2556,7 +2556,7 @@ void View::SetupShadowCameras(LightQueryResult& query)
 
     case LIGHT_SPOT:
         {
-            Camera* shadowCamera = DV_RENDERER.GetShadowCamera();
+            Camera* shadowCamera = DV_RENDERER->GetShadowCamera();
             query.shadowCameras_[0] = shadowCamera;
             Node* cameraNode = shadowCamera->GetNode();
             Node* lightNode = light->GetNode();
@@ -2585,7 +2585,7 @@ void View::SetupShadowCameras(LightQueryResult& query)
 
             for (i32 i = 0; i < MAX_CUBEMAP_FACES; ++i)
             {
-                Camera* shadowCamera = DV_RENDERER.GetShadowCamera();
+                Camera* shadowCamera = DV_RENDERER->GetShadowCamera();
                 query.shadowCameras_[i] = shadowCamera;
                 Node* cameraNode = shadowCamera->GetNode();
 
@@ -2808,7 +2808,7 @@ void View::FindZone(Drawable* drawable)
 Technique* View::GetTechnique(Drawable* drawable, Material* material)
 {
     if (!material)
-        return DV_RENDERER.GetDefaultMaterial()->GetTechniques()[0].technique_;
+        return DV_RENDERER->GetDefaultMaterial()->GetTechniques()[0].technique_;
 
     const Vector<TechniqueEntry>& techniques = material->GetTechniques();
     // If only one technique, no choice
@@ -2890,10 +2890,10 @@ void View::SetQueueShaderDefines(BatchQueue& queue, const RenderPathCommand& com
 
 void View::AddBatchToQueue(BatchQueue& queue, Batch& batch, Technique* tech, bool allowInstancing, bool allowShadows)
 {
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
 
     if (!batch.material_)
-        batch.material_ = renderer.GetDefaultMaterial();
+        batch.material_ = renderer->GetDefaultMaterial();
 
     // Convert to instanced if possible
     if (allowInstancing && batch.geometryType_ == GEOM_STATIC && batch.geometry_->GetIndexBuffer())
@@ -2910,7 +2910,7 @@ void View::AddBatchToQueue(BatchQueue& queue, Batch& batch, Technique* tech, boo
             // In case the group remains below the instancing limit, do not enable instancing shaders yet
             BatchGroup newGroup(batch);
             newGroup.geometryType_ = GEOM_STATIC;
-            renderer.SetBatchShaders(newGroup, tech, allowShadows, queue);
+            renderer->SetBatchShaders(newGroup, tech, allowShadows, queue);
             newGroup.CalculateSortKey();
             i = queue.batchGroups_.Insert(MakePair(key, newGroup));
         }
@@ -2921,13 +2921,13 @@ void View::AddBatchToQueue(BatchQueue& queue, Batch& batch, Technique* tech, boo
         if (oldSize < minInstances_ && (int)i->second_.instances_.Size() >= minInstances_)
         {
             i->second_.geometryType_ = GEOM_INSTANCED;
-            renderer.SetBatchShaders(i->second_, tech, allowShadows, queue);
+            renderer->SetBatchShaders(i->second_, tech, allowShadows, queue);
             i->second_.CalculateSortKey();
         }
     }
     else
     {
-        renderer.SetBatchShaders(batch, tech, allowShadows, queue);
+        renderer->SetBatchShaders(batch, tech, allowShadows, queue);
         batch.CalculateSortKey();
 
         // If batch is static with multiple world transforms and cannot instance, we must push copies of the batch individually
@@ -2973,10 +2973,10 @@ void View::PrepareInstancingBuffer()
         totalInstances += i->litBatches_.GetNumInstances();
     }
 
-    if (!totalInstances || !DV_RENDERER.ResizeInstancingBuffer(totalInstances))
+    if (!totalInstances || !DV_RENDERER->ResizeInstancingBuffer(totalInstances))
         return;
 
-    VertexBuffer* instancingBuffer = DV_RENDERER.GetInstancingBuffer().get();
+    VertexBuffer* instancingBuffer = DV_RENDERER->GetInstancingBuffer().get();
     i32 freeIndex = 0;
     void* dest = instancingBuffer->Lock(0, totalInstances, true);
     if (!dest)
@@ -3024,12 +3024,12 @@ void View::SetupLightVolumeBatch(Batch& batch)
         // Draw front faces if not inside light volume
         if (lightDist < camera_->GetNearClip() * 2.0f)
         {
-            DV_RENDERER.SetCullMode(CULL_CW, camera_);
+            DV_RENDERER->SetCullMode(CULL_CW, camera_);
             graphics.SetDepthTest(CMP_GREATER);
         }
         else
         {
-            DV_RENDERER.SetCullMode(CULL_CCW, camera_);
+            DV_RENDERER->SetCullMode(CULL_CCW, camera_);
             graphics.SetDepthTest(CMP_LESSEQUAL);
         }
     }
@@ -3060,7 +3060,7 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
 {
     ZoneScoped;
 
-    Renderer& renderer = DV_RENDERER;
+    Renderer* renderer = DV_RENDERER;
     Graphics& graphics = DV_GRAPHICS;
 
     Texture2D* shadowMap = queue.shadowMap_;
@@ -3092,7 +3092,7 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
         // Disable other render targets
         for (i32 i = 1; i < MAX_RENDERTARGETS; ++i)
             graphics.SetRenderTarget(i, (RenderSurface*) nullptr);
-        graphics.SetDepthStencil(renderer.GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(),
+        graphics.SetDepthStencil(renderer->GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(),
             shadowMap->GetMultiSample(), shadowMap->GetAutoResolve()));
         graphics.SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
         graphics.Clear(CLEAR_DEPTH | CLEAR_COLOR, Color::WHITE);
@@ -3134,7 +3134,7 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
 
     // Scale filter blur amount to shadow map viewport size so that different shadow map resolutions don't behave differently
     float blurScale = queue.shadowSplits_[0].shadowViewport_.Width() / 1024.0f;
-    renderer.ApplyShadowMapFilter(this, shadowMap, blurScale);
+    renderer->ApplyShadowMapFilter(this, shadowMap, blurScale);
 
     // reset some parameters
     graphics.SetColorWrite(true);
@@ -3150,7 +3150,7 @@ RenderSurface* View::GetDepthStencil(RenderSurface* renderTarget)
     RenderSurface* depthStencil = renderTarget->GetLinkedDepthStencil();
     // Finally get one from Renderer
     if (!depthStencil)
-        depthStencil = DV_RENDERER.GetDepthStencil(renderTarget->GetWidth(), renderTarget->GetHeight(),
+        depthStencil = DV_RENDERER->GetDepthStencil(renderTarget->GetWidth(), renderTarget->GetHeight(),
             renderTarget->GetMultiSample(), renderTarget->GetAutoResolve());
     return depthStencil;
 }
@@ -3180,7 +3180,7 @@ void View::SendViewEvent(StringHash eventType)
     eventData[P_SCENE] = scene_;
     eventData[P_CAMERA] = cullCamera_;
 
-    DV_RENDERER.SendEvent(eventType, eventData);
+    DV_RENDERER->SendEvent(eventType, eventData);
 }
 
 Texture* View::FindNamedTexture(const String& name, bool isRenderTarget, bool isVolumeMap)

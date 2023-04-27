@@ -60,7 +60,7 @@ void Viewport::SetRenderPath(RenderPath* renderPath)
     else
     {
         if (!GParams::is_headless())
-            renderPath_ = DV_RENDERER.GetDefaultRenderPath();
+            renderPath_ = DV_RENDERER->GetDefaultRenderPath();
     }
 }
 

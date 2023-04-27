@@ -100,10 +100,10 @@ void Urho2DPlatformer::create_scene()
 
     // Setup the viewport for displaying the scene
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera));
-    DV_RENDERER.SetViewport(0, viewport);
+    DV_RENDERER->SetViewport(0, viewport);
 
     // Set background color for the scene
-    Zone* zone = DV_RENDERER.GetDefaultZone();
+    Zone* zone = DV_RENDERER->GetDefaultZone();
     zone->SetFogColor(Color(0.2f, 0.2f, 0.2f));
 
     // Create tile map from tmx file

@@ -195,67 +195,67 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
     // Common rendering quality controls, only when UI has no focused element
     else if (!DV_UI->GetFocusElement())
     {
-        Renderer& renderer = DV_RENDERER;
+        Renderer* renderer = DV_RENDERER;
 
         // Texture quality
         if (key == '1')
         {
-            auto quality = (unsigned)renderer.GetTextureQuality();
+            auto quality = (unsigned)renderer->GetTextureQuality();
             ++quality;
             if (quality > QUALITY_HIGH)
                 quality = QUALITY_LOW;
-            renderer.SetTextureQuality((MaterialQuality)quality);
+            renderer->SetTextureQuality((MaterialQuality)quality);
         }
 
         // Material quality
         else if (key == '2')
         {
-            auto quality = (unsigned)renderer.GetMaterialQuality();
+            auto quality = (unsigned)renderer->GetMaterialQuality();
             ++quality;
             if (quality > QUALITY_HIGH)
                 quality = QUALITY_LOW;
-            renderer.SetMaterialQuality((MaterialQuality)quality);
+            renderer->SetMaterialQuality((MaterialQuality)quality);
         }
 
         // Specular lighting
         else if (key == '3')
-            renderer.SetSpecularLighting(!renderer.GetSpecularLighting());
+            renderer->SetSpecularLighting(!renderer->GetSpecularLighting());
 
         // Shadow rendering
         else if (key == '4')
-            renderer.SetDrawShadows(!renderer.GetDrawShadows());
+            renderer->SetDrawShadows(!renderer->GetDrawShadows());
 
         // Shadow map resolution
         else if (key == '5')
         {
-            int shadowMapSize = renderer.GetShadowMapSize();
+            int shadowMapSize = renderer->GetShadowMapSize();
             shadowMapSize *= 2;
             if (shadowMapSize > 2048)
                 shadowMapSize = 512;
-            renderer.SetShadowMapSize(shadowMapSize);
+            renderer->SetShadowMapSize(shadowMapSize);
         }
 
         // Shadow depth and filtering quality
         else if (key == '6')
         {
-            ShadowQuality quality = renderer.GetShadowQuality();
+            ShadowQuality quality = renderer->GetShadowQuality();
             quality = (ShadowQuality)(quality + 1);
             if (quality > SHADOWQUALITY_BLUR_VSM)
                 quality = SHADOWQUALITY_SIMPLE_16BIT;
-            renderer.SetShadowQuality(quality);
+            renderer->SetShadowQuality(quality);
         }
 
         // Occlusion culling
         else if (key == '7')
         {
-            bool occlusion = renderer.GetMaxOccluderTriangles() > 0;
+            bool occlusion = renderer->GetMaxOccluderTriangles() > 0;
             occlusion = !occlusion;
-            renderer.SetMaxOccluderTriangles(occlusion ? 5000 : 0);
+            renderer->SetMaxOccluderTriangles(occlusion ? 5000 : 0);
         }
 
         // Instancing
         else if (key == '8')
-            renderer.SetDynamicInstancing(!renderer.GetDynamicInstancing());
+            renderer->SetDynamicInstancing(!renderer->GetDynamicInstancing());
 
         // Take screenshot
         else if (key == '9')

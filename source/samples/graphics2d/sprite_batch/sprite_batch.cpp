@@ -61,7 +61,7 @@ public:
     void setup_viewport()
     {
         SharedPtr<Viewport> viewport(new Viewport(scene_, cameraNode_->GetComponent<Camera>()));
-        DV_RENDERER.SetViewport(0, viewport);
+        DV_RENDERER->SetViewport(0, viewport);
     }
 
     void create_scene()

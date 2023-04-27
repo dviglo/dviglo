@@ -41,7 +41,7 @@ public:
         MaterialEditor::get_instance();
 
         SharedPtr<Viewport> viewport(new Viewport(MAIN_SCENE.scene(), MAIN_SCENE.camera()));
-        DV_RENDERER.SetViewport(0, viewport);
+        DV_RENDERER->SetViewport(0, viewport);
     }
 };
 

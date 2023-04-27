@@ -146,6 +146,8 @@ Engine::~Engine()
 {
     delete UI::instance_;
     delete Input::instance_;
+    delete Renderer::instance_;
+
     delete Localization::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
@@ -166,11 +168,12 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     GParams::gapi = GAPI_OPENGL;
 
-    // Создаём остальные синглтоны, которые зависят от параметров движка
+    // Создаём остальные подсистемы, которые зависят от параметров движка
     if (!GParams::is_headless())
     {
+        // Указатели на объекты хранятся в самих классах
         Graphics::get_instance();
-        Renderer::get_instance();
+        new Renderer();
     }
     else
     {
@@ -220,7 +223,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     if (!GParams::is_headless())
     {
         Graphics& graphics = DV_GRAPHICS;
-        Renderer& renderer = DV_RENDERER;
+        Renderer* renderer = DV_RENDERER;
 
         graphics.SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Dviglo").GetString());
         graphics.SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
@@ -249,15 +252,15 @@ bool Engine::Initialize(const VariantMap& parameters)
         if (HasParameter(parameters, EP_DUMP_SHADERS))
             graphics.BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))
-            renderer.SetDefaultRenderPath(DV_RES_CACHE.GetResource<XmlFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
+            renderer->SetDefaultRenderPath(DV_RES_CACHE.GetResource<XmlFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
 
-        renderer.SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
-        if (renderer.GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())
-            renderer.SetShadowQuality(SHADOWQUALITY_SIMPLE_16BIT);
-        renderer.SetMaterialQuality((MaterialQuality)GetParameter(parameters, EP_MATERIAL_QUALITY, QUALITY_HIGH).GetI32());
-        renderer.SetTextureQuality((MaterialQuality)GetParameter(parameters, EP_TEXTURE_QUALITY, QUALITY_HIGH).GetI32());
-        renderer.SetTextureFilterMode((TextureFilterMode)GetParameter(parameters, EP_TEXTURE_FILTER_MODE, FILTER_TRILINEAR).GetI32());
-        renderer.SetTextureAnisotropy(GetParameter(parameters, EP_TEXTURE_ANISOTROPY, 4).GetI32());
+        renderer->SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
+        if (renderer->GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())
+            renderer->SetShadowQuality(SHADOWQUALITY_SIMPLE_16BIT);
+        renderer->SetMaterialQuality((MaterialQuality)GetParameter(parameters, EP_MATERIAL_QUALITY, QUALITY_HIGH).GetI32());
+        renderer->SetTextureQuality((MaterialQuality)GetParameter(parameters, EP_TEXTURE_QUALITY, QUALITY_HIGH).GetI32());
+        renderer->SetTextureFilterMode((TextureFilterMode)GetParameter(parameters, EP_TEXTURE_FILTER_MODE, FILTER_TRILINEAR).GetI32());
+        renderer->SetTextureAnisotropy(GetParameter(parameters, EP_TEXTURE_ANISOTROPY, 4).GetI32());
 
         if (GetParameter(parameters, EP_SOUND, true).GetBool())
         {
@@ -639,7 +642,7 @@ void Engine::render()
     if (!DV_GRAPHICS.BeginFrame())
         return;
 
-    DV_RENDERER.Render();
+    DV_RENDERER->Render();
     DV_UI->Render();
     DV_GRAPHICS.EndFrame();
 }

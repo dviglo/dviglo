@@ -183,7 +183,7 @@ bool TextureCube::SetData_OGL(CubeMapFace face, Image* image, bool useAlpha)
     unsigned memoryUse = 0;
     MaterialQuality quality = QUALITY_HIGH;
     if (!GParams::is_headless())
-        quality = DV_RENDERER.GetTextureQuality();
+        quality = DV_RENDERER->GetTextureQuality();
 
     if (!image->IsCompressed())
     {
