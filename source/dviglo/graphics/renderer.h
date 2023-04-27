@@ -7,12 +7,13 @@
 #pragma once
 
 #include "../containers/hash_set.h"
+#include "../math/color.h"
 #include "batch.h"
 #include "drawable.h"
 #include "viewport.h"
-#include "../math/color.h"
 
 #include <mutex>
+
 
 namespace dviglo
 {
