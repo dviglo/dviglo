@@ -10,6 +10,7 @@
 #include "../core/main.h"
 #include "engine.h"
 
+
 namespace dviglo
 {
 
@@ -48,8 +49,6 @@ protected:
     int exitCode_;
 };
 
-// Macro for defining a main function which creates a Context and the application, then runs it
-#if !defined(IOS) && !defined(TVOS)
 #define DV_DEFINE_APPLICATION_MAIN(className) \
 int RunApplication() \
 { \
@@ -57,15 +56,5 @@ int RunApplication() \
     return application->Run(); \
 } \
 DV_DEFINE_MAIN(RunApplication())
-#else
-// On iOS/tvOS we will let this function exit, so do not hold the context and application in SharedPtr's
-#define DV_DEFINE_APPLICATION_MAIN(className) \
-int RunApplication() \
-{ \
-    className* application = new className(); \
-    return application->Run(); \
-} \
-DV_DEFINE_MAIN(RunApplication());
-#endif
 
-}
+} // namespace dviglo
