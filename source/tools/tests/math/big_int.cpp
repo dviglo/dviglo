@@ -1,5 +1,5 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
 #include "../force_assert.h"
@@ -11,7 +11,8 @@
 
 using namespace dviglo;
 
-void Test_Math_BigInt()
+
+void test_math_big_int()
 {
     // Constructors
     assert(BigInt().ToString() == "0");

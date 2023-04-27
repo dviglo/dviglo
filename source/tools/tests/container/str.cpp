@@ -1,5 +1,5 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
 #include "../force_assert.h"
@@ -10,7 +10,8 @@
 
 using namespace dviglo;
 
-void Test_Container_Str()
+
+void test_containers_str()
 {
     {
         String str;

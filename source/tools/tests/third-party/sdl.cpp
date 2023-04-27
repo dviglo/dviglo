@@ -7,6 +7,7 @@
 
 #include <SDL3/SDL.h>
 
+
 void test_third_party_sdl()
 {
     // Если собрать движок как dll, то не будет доступа к функциям SDL
