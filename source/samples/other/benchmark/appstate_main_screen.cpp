@@ -84,7 +84,7 @@ void AppState_MainScreen::OnEnter()
 
     CreateGui();
     setup_viewport();
-    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT->SetMouseVisible(true);
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
     fpsCounter_.Clear();
 }
@@ -103,6 +103,6 @@ void AppState_MainScreen::HandleSceneUpdate(StringHash eventType, VariantMap& ev
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();
 
-    if (DV_INPUT.GetKeyPress(KEY_ESCAPE))
+    if (DV_INPUT->GetKeyPress(KEY_ESCAPE))
         DV_ENGINE.Exit();
 }

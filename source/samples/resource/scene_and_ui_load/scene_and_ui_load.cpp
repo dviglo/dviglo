@@ -106,8 +106,8 @@ void SceneAndUiLoad::subscribe_to_events()
 void SceneAndUiLoad::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    Input& input = DV_INPUT;
-    DV_UI->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    Input* input = DV_INPUT;
+    DV_UI->GetCursor()->SetVisible(!input->GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element
     if (DV_UI->GetFocusElement())
@@ -122,7 +122,7 @@ void SceneAndUiLoad::move_camera(float timeStep)
     // Only move the camera when the cursor is hidden
     if (!DV_UI->GetCursor()->IsVisible())
     {
-        IntVector2 mouseMove = input.GetMouseMove();
+        IntVector2 mouseMove = input->GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
@@ -132,13 +132,13 @@ void SceneAndUiLoad::move_camera(float timeStep)
     }
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input.GetKeyDown(KEY_W))
+    if (input->GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_S))
+    if (input->GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_A))
+    if (input->GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_D))
+    if (input->GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 }
 

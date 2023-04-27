@@ -199,8 +199,8 @@ void Navigation::subscribe_to_events()
 void Navigation::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    Input& input = DV_INPUT;
-    DV_UI->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    Input* input = DV_INPUT;
+    DV_UI->GetCursor()->SetVisible(!input->GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element (the console)
     if (DV_UI->GetFocusElement())
@@ -215,7 +215,7 @@ void Navigation::move_camera(float timeStep)
     // Only move the camera when the cursor is hidden
     if (!DV_UI->GetCursor()->IsVisible())
     {
-        IntVector2 mouseMove = input.GetMouseMove();
+        IntVector2 mouseMove = input->GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
@@ -226,24 +226,24 @@ void Navigation::move_camera(float timeStep)
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed.
     // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-    if (input.GetScancodeDown(SCANCODE_W))
+    if (input->GetScancodeDown(SCANCODE_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input.GetScancodeDown(SCANCODE_S))
+    if (input->GetScancodeDown(SCANCODE_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input.GetScancodeDown(SCANCODE_A))
+    if (input->GetScancodeDown(SCANCODE_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input.GetScancodeDown(SCANCODE_D))
+    if (input->GetScancodeDown(SCANCODE_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // Set destination or teleport with left mouse button
-    if (input.GetMouseButtonPress(MOUSEB_LEFT))
+    if (input->GetMouseButtonPress(MOUSEB_LEFT))
         SetPathPoint();
     // Add or remove objects with middle mouse button, then rebuild navigation mesh partially
-    if (input.GetMouseButtonPress(MOUSEB_MIDDLE) || input.GetScancodePress(SCANCODE_O))
+    if (input->GetMouseButtonPress(MOUSEB_MIDDLE) || input->GetScancodePress(SCANCODE_O))
         AddOrRemoveObject();
 
     // Toggle debug geometry with space
-    if (input.GetKeyPress(KEY_SPACE))
+    if (input->GetKeyPress(KEY_SPACE))
         draw_debug_ = !draw_debug_;
 }
 
@@ -257,7 +257,7 @@ void Navigation::SetPathPoint()
     {
         Vector3 pathPos = navMesh->FindNearestPoint(hitPos, Vector3(1.0f, 1.0f, 1.0f));
 
-        if (DV_INPUT.GetQualifierDown(QUAL_SHIFT))
+        if (DV_INPUT->GetQualifierDown(QUAL_SHIFT))
         {
             // Teleport
             currentPath_.Clear();
@@ -445,7 +445,7 @@ void Navigation::handle_update(StringHash eventType, VariantMap& eventData)
     FollowPath(timeStep);
 
     // Update streaming
-    if (DV_INPUT.GetKeyPress(KEY_TAB))
+    if (DV_INPUT->GetKeyPress(KEY_TAB))
     {
         useStreaming_ = !useStreaming_;
         toggle_streaming(useStreaming_);

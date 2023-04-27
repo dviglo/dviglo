@@ -207,7 +207,7 @@ void MultipleViewports::move_camera(float timeStep)
     if (DV_UI->GetFocusElement())
         return;
 
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 20.0f;
@@ -215,7 +215,7 @@ void MultipleViewports::move_camera(float timeStep)
     const float MOUSE_SENSITIVITY = 0.1f;
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
-    IntVector2 mouseMove = input.GetMouseMove();
+    IntVector2 mouseMove = input->GetMouseMove();
     yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
     pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
     pitch_ = Clamp(pitch_, -90.0f, 90.0f);
@@ -224,29 +224,29 @@ void MultipleViewports::move_camera(float timeStep)
     cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input.GetKeyDown(KEY_W))
+    if (input->GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_S))
+    if (input->GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_A))
+    if (input->GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_D))
+    if (input->GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // Toggle post processing effects on the front viewport. Note that the rear viewport is unaffected
     RenderPath* effectRenderPath = DV_RENDERER.GetViewport(0)->GetRenderPath();
 
-    if (input.GetKeyPress(KEY_B))
+    if (input->GetKeyPress(KEY_B))
         effectRenderPath->ToggleEnabled("bloom");
 
-    if (input.GetKeyPress(KEY_F))
+    if (input->GetKeyPress(KEY_F))
         effectRenderPath->ToggleEnabled("fxaa2");
 
-    if (input.GetKeyPress(KEY_G))
+    if (input->GetKeyPress(KEY_G))
         effectRenderPath->ToggleEnabled("grayscale");
 
     // Toggle debug geometry with space
-    if (input.GetKeyPress(KEY_SPACE))
+    if (input->GetKeyPress(KEY_SPACE))
         draw_debug_ = !draw_debug_;
 }
 

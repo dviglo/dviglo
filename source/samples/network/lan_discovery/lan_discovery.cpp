@@ -44,7 +44,7 @@ void LANDiscovery::Start()
     Sample::Start();
 
     // Enable OS cursor
-    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT->SetMouseVisible(true);
 
     // Create the user interface
     create_ui();

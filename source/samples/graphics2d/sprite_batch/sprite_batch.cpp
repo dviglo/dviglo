@@ -118,21 +118,21 @@ public:
         constexpr float MOVE_SPEED = 20.0f;
         constexpr float MOUSE_SENSITIVITY = 0.1f;
 
-        Input& input = DV_INPUT;
+        Input* input = DV_INPUT;
 
-        IntVector2 mouseMove = input.GetMouseMove();
+        IntVector2 mouseMove = input->GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, -90.0f, 90.0f);
         cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 
-        if (input.GetKeyDown(KEY_W))
+        if (input->GetKeyDown(KEY_W))
             cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-        if (input.GetKeyDown(KEY_S))
+        if (input->GetKeyDown(KEY_S))
             cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-        if (input.GetKeyDown(KEY_A))
+        if (input->GetKeyDown(KEY_A))
             cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-        if (input.GetKeyDown(KEY_D))
+        if (input->GetKeyDown(KEY_D))
             cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     }
@@ -148,25 +148,25 @@ public:
         using namespace Update;
         float timeStep = eventData[P_TIMESTEP].GetFloat();
 
-        Input& input = DV_INPUT;
+        Input* input = DV_INPUT;
 
-        if (input.GetKeyPress(KEY_1))
+        if (input->GetKeyPress(KEY_1))
             currentTest_ = 1;
-        else if (input.GetKeyPress(KEY_2))
+        else if (input->GetKeyPress(KEY_2))
             currentTest_ = 2;
-        else if (input.GetKeyPress(KEY_3))
+        else if (input->GetKeyPress(KEY_3))
             currentTest_ = 3;
-        else if (input.GetKeyPress(KEY_ESCAPE))
+        else if (input->GetKeyPress(KEY_ESCAPE))
             DV_ENGINE.Exit();
 
-        if (input.GetMouseButtonDown(MOUSEB_RIGHT))
+        if (input->GetMouseButtonDown(MOUSEB_RIGHT))
         {
-            input.SetMouseVisible(false);
+            input->SetMouseVisible(false);
             move_camera(timeStep);
         }
         else
         {
-            input.SetMouseVisible(true);
+            input->SetMouseVisible(true);
         }
 
         fpsTimeCounter_ += timeStep;
@@ -239,7 +239,7 @@ public:
             virtualSpriteBatch_->draw_aabb_solid(Vector2::ZERO, (Vector2)virtualSpriteBatch_->virtual_screen_size);
             virtualSpriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f));
             // Преобразуем координаты мыши из оконных координат в виртуальные координаты
-            Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT.GetMousePosition()));
+            Vector2 virtualMousePos = virtualSpriteBatch_->to_virtual_pos(Vector2(DV_INPUT->GetMousePosition()));
             virtualSpriteBatch_->set_shape_color(0xFFFFFFFF);
             virtualSpriteBatch_->draw_arrow({100.0f, 100.f}, virtualMousePos, 10);
             virtualSpriteBatch_->flush();

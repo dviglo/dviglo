@@ -858,16 +858,16 @@ public:
 
     void UpdateControls()
     {
-        Input& input = DV_INPUT;
+        Input* input = DV_INPUT;
 
         if (singlePlayer || runClient)
         {
             prevPlayerControls = playerControls;
             playerControls.Set(CTRL_ALL, false);
 
-            if (input.GetNumJoysticks() > 0)
+            if (input->GetNumJoysticks() > 0)
             {
-                JoystickState* joystick = input.GetJoystickByIndex(0);
+                JoystickState* joystick = input->GetJoystickByIndex(0);
                 if (joystick->GetNumButtons() > 0)
                 {
                     if (joystick->GetButtonDown(0))
@@ -925,26 +925,26 @@ public:
             // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
             if (!GParams::is_headless() && !DV_CONSOLE.IsVisible())
             {
-                if (input.GetScancodeDown(SCANCODE_W))
+                if (input->GetScancodeDown(SCANCODE_W))
                     playerControls.Set(CTRL_UP, true);
-                if (input.GetScancodeDown(SCANCODE_S))
+                if (input->GetScancodeDown(SCANCODE_S))
                     playerControls.Set(CTRL_DOWN, true);
-                if (input.GetScancodeDown(SCANCODE_A))
+                if (input->GetScancodeDown(SCANCODE_A))
                     playerControls.Set(CTRL_LEFT, true);
-                if (input.GetScancodeDown(SCANCODE_D))
+                if (input->GetScancodeDown(SCANCODE_D))
                     playerControls.Set(CTRL_RIGHT, true);
-                if (input.GetKeyDown(KEY_LCTRL) || input.GetKeyPress(KEY_LCTRL))
+                if (input->GetKeyDown(KEY_LCTRL) || input->GetKeyPress(KEY_LCTRL))
                     playerControls.Set(CTRL_FIRE, true);
-                if (input.GetKeyDown(KEY_SPACE) || input.GetKeyPress(KEY_SPACE))
+                if (input->GetKeyDown(KEY_SPACE) || input->GetKeyPress(KEY_SPACE))
                     playerControls.Set(CTRL_JUMP, true);
 
-                if (input.GetMouseButtonDown(MOUSEB_LEFT) || input.GetMouseButtonPress(MOUSEB_LEFT))
+                if (input->GetMouseButtonDown(MOUSEB_LEFT) || input->GetMouseButtonPress(MOUSEB_LEFT))
                     playerControls.Set(CTRL_FIRE, true);
-                if (input.GetMouseButtonDown(MOUSEB_RIGHT) || input.GetMouseButtonPress(MOUSEB_RIGHT))
+                if (input->GetMouseButtonDown(MOUSEB_RIGHT) || input->GetMouseButtonPress(MOUSEB_RIGHT))
                     playerControls.Set(CTRL_JUMP, true);
 
-                playerControls.yaw_ += MOUSE_SENSITIVITY * input.GetMouseMoveX();
-                playerControls.pitch_ += MOUSE_SENSITIVITY * input.GetMouseMoveY();
+                playerControls.yaw_ += MOUSE_SENSITIVITY * input->GetMouseMoveX();
+                playerControls.pitch_ += MOUSE_SENSITIVITY * input->GetMouseMoveY();
                 playerControls.pitch_ = Clamp(playerControls.pitch_, -60.0f, 60.0f);
             }
 
@@ -1036,29 +1036,29 @@ public:
 
     void UpdateFreelookCamera()
     {
-        Input& input = DV_INPUT;
+        Input* input = DV_INPUT;
 
         if (!DV_CONSOLE.IsVisible())
         {
             float timeStep = DV_TIME.GetTimeStep();
             float speedMultiplier = 1.0f;
-            if (input.GetKeyDown(KEY_LSHIFT))
+            if (input->GetKeyDown(KEY_LSHIFT))
                 speedMultiplier = 5.0f;
-            if (input.GetKeyDown(KEY_LCTRL))
+            if (input->GetKeyDown(KEY_LCTRL))
                 speedMultiplier = 0.1f;
 
             // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-            if (input.GetScancodeDown(SCANCODE_W))
+            if (input->GetScancodeDown(SCANCODE_W))
                 gameCameraNode->Translate(Vector3(0.f, 0.f, 10.f) * timeStep * speedMultiplier);
-            if (input.GetScancodeDown(SCANCODE_S))
+            if (input->GetScancodeDown(SCANCODE_S))
                 gameCameraNode->Translate(Vector3(0.f, 0.f, -10.f) * timeStep * speedMultiplier);
-            if (input.GetScancodeDown(SCANCODE_A))
+            if (input->GetScancodeDown(SCANCODE_A))
                 gameCameraNode->Translate(Vector3(-10.f, 0.f, 0.f) * timeStep * speedMultiplier);
-            if (input.GetScancodeDown(SCANCODE_D))
+            if (input->GetScancodeDown(SCANCODE_D))
                 gameCameraNode->Translate(Vector3(10.f, 0.f, 0.f) * timeStep * speedMultiplier);
 
-            playerControls.yaw_ += MOUSE_SENSITIVITY * input.GetMouseMoveX();
-            playerControls.pitch_ += MOUSE_SENSITIVITY * input.GetMouseMoveY();
+            playerControls.yaw_ += MOUSE_SENSITIVITY * input->GetMouseMoveX();
+            playerControls.pitch_ += MOUSE_SENSITIVITY * input->GetMouseMoveY();
             playerControls.pitch_ = Clamp(playerControls.pitch_, -90.0f, 90.0f);
             gameCameraNode->SetRotation(Quaternion(playerControls.pitch_, playerControls.yaw_, 0.f));
         }

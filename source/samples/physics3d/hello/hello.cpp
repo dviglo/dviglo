@@ -197,7 +197,7 @@ void Physics::move_camera(float timeStep)
     if (DV_UI->GetFocusElement())
         return;
 
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 20.0f;
@@ -205,7 +205,7 @@ void Physics::move_camera(float timeStep)
     const float MOUSE_SENSITIVITY = 0.1f;
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
-    IntVector2 mouseMove = input.GetMouseMove();
+    IntVector2 mouseMove = input->GetMouseMove();
     yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
     pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
     pitch_ = Clamp(pitch_, -90.0f, 90.0f);
@@ -214,34 +214,34 @@ void Physics::move_camera(float timeStep)
     cameraNode_->SetRotation(Quaternion(pitch_, yaw_, 0.0f));
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input.GetKeyDown(KEY_W))
+    if (input->GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::FORWARD * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_S))
+    if (input->GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::BACK * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_A))
+    if (input->GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_D))
+    if (input->GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
     // "Shoot" a physics object with left mousebutton
-    if (input.GetMouseButtonPress(MOUSEB_LEFT))
+    if (input->GetMouseButtonPress(MOUSEB_LEFT))
         SpawnObject();
 
     // Check for loading/saving the scene. Save the scene to the file data/scenes/physics.xml relative to the executable
     // directory
-    if (input.GetKeyPress(KEY_F5))
+    if (input->GetKeyPress(KEY_F5))
     {
         File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/phys3d_hello.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
-    if (input.GetKeyPress(KEY_F7))
+    if (input->GetKeyPress(KEY_F7))
     {
         File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/phys3d_hello.xml", FILE_READ);
         scene_->load_xml(loadFile);
     }
 
     // Toggle physics debug geometry with space
-    if (input.GetKeyPress(KEY_SPACE))
+    if (input->GetKeyPress(KEY_SPACE))
         draw_debug_ = !draw_debug_;
 }
 

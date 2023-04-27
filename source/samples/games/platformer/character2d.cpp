@@ -64,7 +64,7 @@ void Character2D::Update(float timeStep)
     }
 
     // Set temporary variables
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
     auto* body = GetComponent<RigidBody2D>();
     auto* animatedSprite = GetComponent<AnimatedSprite2D>();
     bool onGround = false;
@@ -83,28 +83,28 @@ void Character2D::Update(float timeStep)
     Vector2 moveDir = Vector2::ZERO; // Reset
 
     // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-    if (input.GetScancodeDown(SCANCODE_A) || input.GetKeyDown(KEY_LEFT))
+    if (input->GetScancodeDown(SCANCODE_A) || input->GetKeyDown(KEY_LEFT))
     {
         moveDir = moveDir + Vector2::LEFT;
         animatedSprite->SetFlipX(false); // Flip sprite (reset to default play on the X axis)
     }
-    if (input.GetScancodeDown(SCANCODE_D) || input.GetKeyDown(KEY_RIGHT))
+    if (input->GetScancodeDown(SCANCODE_D) || input->GetKeyDown(KEY_RIGHT))
     {
         moveDir = moveDir + Vector2::RIGHT;
         animatedSprite->SetFlipX(true); // Flip sprite (flip animation on the X axis)
     }
 
     // Jump
-    if ((onGround || aboveClimbable_) && (input.GetScancodePress(SCANCODE_W) || input.GetKeyPress(KEY_UP)))
+    if ((onGround || aboveClimbable_) && (input->GetScancodePress(SCANCODE_W) || input->GetKeyPress(KEY_UP)))
         jump = true;
 
     // Climb
     if (isClimbing_)
     {
-        if (!aboveClimbable_ && (input.GetKeyDown(KEY_UP) || input.GetScancodeDown(SCANCODE_W)))
+        if (!aboveClimbable_ && (input->GetKeyDown(KEY_UP) || input->GetScancodeDown(SCANCODE_W)))
             moveDir = moveDir + Vector2(0.0f, 1.0f);
 
-        if (input.GetKeyDown(KEY_DOWN) || input.GetScancodeDown(SCANCODE_S))
+        if (input->GetKeyDown(KEY_DOWN) || input->GetScancodeDown(SCANCODE_S))
             moveDir = moveDir + Vector2(0.0f, -1.0f);
     }
 
@@ -120,7 +120,7 @@ void Character2D::Update(float timeStep)
     }
 
     // Animate
-    if (input.GetKeyDown(KEY_SPACE))
+    if (input->GetKeyDown(KEY_SPACE))
     {
         if (animatedSprite->GetAnimation() != "attack")
         {
@@ -202,7 +202,7 @@ void Character2D::HandleDeath()
     static_cast<Text*>(DV_UI->GetRoot()->GetChild("PlayButton", true))->SetVisible(true);
 
     // Show mouse cursor so that we can click
-    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT->SetMouseVisible(true);
 
     // Put character outside of the scene and magnify him
     node_->SetPosition(Vector3(-20.0f, 0.0f, 0.0f));

@@ -85,7 +85,7 @@ void AppState_Benchmark03::OnEnter()
     for (int i = 0; i < NUM_MOLECULES; ++i)
         CreateMolecule({Random(-10.f, 10.f), Random(-6.f, 6.f)}, Random(7));
 
-    DV_INPUT.SetMouseVisible(false);
+    DV_INPUT->SetMouseVisible(false);
     setup_viewport();
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark03, HandleSceneUpdate));
     fpsCounter_.Clear();
@@ -120,7 +120,7 @@ void AppState_Benchmark03::HandleSceneUpdate(StringHash eventType, VariantMap& e
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();
 
-    if (DV_INPUT.GetKeyDown(KEY_ESCAPE))
+    if (DV_INPUT->GetKeyDown(KEY_ESCAPE))
     {
         APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
         return;

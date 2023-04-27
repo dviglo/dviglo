@@ -34,7 +34,7 @@ void Urho2DTileMap::Start()
     Sample::Start();
 
     // Enable OS cursor
-    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT->SetMouseVisible(true);
 
     // Create the scene content
     create_scene();
@@ -113,28 +113,28 @@ void Urho2DTileMap::move_camera(float timeStep)
     if (DV_UI->GetFocusElement())
         return;
 
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
 
     // Movement speed as world units per second
     const float MOVE_SPEED = 4.0f;
 
     // Read WASD keys and move the camera scene node to the corresponding direction if they are pressed
-    if (input.GetKeyDown(KEY_W))
+    if (input->GetKeyDown(KEY_W))
         cameraNode_->Translate(Vector3::UP * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_S))
+    if (input->GetKeyDown(KEY_S))
         cameraNode_->Translate(Vector3::DOWN * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_A))
+    if (input->GetKeyDown(KEY_A))
         cameraNode_->Translate(Vector3::LEFT * MOVE_SPEED * timeStep);
-    if (input.GetKeyDown(KEY_D))
+    if (input->GetKeyDown(KEY_D))
         cameraNode_->Translate(Vector3::RIGHT * MOVE_SPEED * timeStep);
 
-    if (input.GetKeyDown(KEY_PAGEUP))
+    if (input->GetKeyDown(KEY_PAGEUP))
     {
         auto* camera = cameraNode_->GetComponent<Camera>();
         camera->SetZoom(camera->GetZoom() * 1.01f);
     }
 
-    if (input.GetKeyDown(KEY_PAGEDOWN))
+    if (input->GetKeyDown(KEY_PAGEDOWN))
     {
         auto* camera = cameraNode_->GetComponent<Camera>();
         camera->SetZoom(camera->GetZoom() * 0.99f);
@@ -180,7 +180,7 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
             return;
         auto* sprite = n->GetComponent<StaticSprite2D>();
 
-        if (DV_INPUT.GetMouseButtonDown(MOUSEB_RIGHT))
+        if (DV_INPUT->GetMouseButtonDown(MOUSEB_RIGHT))
         {
             // Swap grass and water
             if (layer->GetTile(x, y)->GetGid() < 9) // First 8 sprites in the "isometric_grass_and_water.png" tileset are mostly grass and from 9 to 24 they are mostly water
@@ -198,7 +198,7 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
 Vector2 Urho2DTileMap::GetMousePositionXY()
 {
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Vector3 screenPoint = Vector3((float)DV_INPUT.GetMousePosition().x / DV_GRAPHICS.GetWidth(), (float)DV_INPUT.GetMousePosition().y / DV_GRAPHICS.GetHeight(), 10.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT->GetMousePosition().x / DV_GRAPHICS.GetWidth(), (float)DV_INPUT->GetMousePosition().y / DV_GRAPHICS.GetHeight(), 10.0f);
     Vector3 worldPoint = camera->screen_to_world_point(screenPoint);
     return Vector2(worldPoint.x, worldPoint.y);
 }

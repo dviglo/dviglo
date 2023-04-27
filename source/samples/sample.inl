@@ -77,23 +77,23 @@ void Sample::InitMouseMode(MouseMode mode)
 {
     useMouseMode_ = mode;
 
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
 
     if (GetPlatform() != "Web")
     {
         if (useMouseMode_ == MM_FREE)
-            input.SetMouseVisible(true);
+            input->SetMouseVisible(true);
 
         if (useMouseMode_ != MM_ABSOLUTE)
         {
-            input.SetMouseMode(useMouseMode_);
+            input->SetMouseMode(useMouseMode_);
             if (DV_CONSOLE.IsVisible())
-                input.SetMouseMode(MM_ABSOLUTE, true);
+                input->SetMouseMode(MM_ABSOLUTE, true);
         }
     }
     else
     {
-        input.SetMouseVisible(true);
+        input->SetMouseVisible(true);
         subscribe_to_event(E_MOUSEBUTTONDOWN, DV_HANDLER(Sample, HandleMouseModeRequest));
         subscribe_to_event(E_MOUSEMODECHANGED, DV_HANDLER(Sample, HandleMouseModeChange));
     }
@@ -279,14 +279,14 @@ void Sample::HandleMouseModeRequest(StringHash /*eventType*/, VariantMap& eventD
     if (DV_CONSOLE.IsVisible())
         return;
     if (useMouseMode_ == MM_ABSOLUTE)
-        DV_INPUT.SetMouseVisible(false);
+        DV_INPUT->SetMouseVisible(false);
     else if (useMouseMode_ == MM_FREE)
-        DV_INPUT.SetMouseVisible(true);
-    DV_INPUT.SetMouseMode(useMouseMode_);
+        DV_INPUT->SetMouseVisible(true);
+    DV_INPUT->SetMouseMode(useMouseMode_);
 }
 
 void Sample::HandleMouseModeChange(StringHash /*eventType*/, VariantMap& eventData)
 {
     bool mouseLocked = eventData[MouseModeChanged::P_MOUSELOCKED].GetBool();
-    DV_INPUT.SetMouseVisible(!mouseLocked);
+    DV_INPUT->SetMouseVisible(!mouseLocked);
 }

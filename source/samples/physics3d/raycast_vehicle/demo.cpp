@@ -169,30 +169,30 @@ void RaycastVehicleDemo::handle_update(StringHash eventType,
                                  VariantMap& eventData)
 {
     using namespace Update;
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
     if (vehicle_)
     {
         // Get movement controls and assign them to the vehicle component. If UI has a focused element, clear controls
         if (!DV_UI->GetFocusElement())
         {
-            vehicle_->controls_.Set(CTRL_FORWARD, input.GetKeyDown(KEY_W));
-            vehicle_->controls_.Set(CTRL_BACK, input.GetKeyDown(KEY_S));
-            vehicle_->controls_.Set(CTRL_LEFT, input.GetKeyDown(KEY_A));
-            vehicle_->controls_.Set(CTRL_RIGHT, input.GetKeyDown(KEY_D));
-            vehicle_->controls_.Set(CTRL_BRAKE, input.GetKeyDown(KEY_F));
+            vehicle_->controls_.Set(CTRL_FORWARD, input->GetKeyDown(KEY_W));
+            vehicle_->controls_.Set(CTRL_BACK, input->GetKeyDown(KEY_S));
+            vehicle_->controls_.Set(CTRL_LEFT, input->GetKeyDown(KEY_A));
+            vehicle_->controls_.Set(CTRL_RIGHT, input->GetKeyDown(KEY_D));
+            vehicle_->controls_.Set(CTRL_BRAKE, input->GetKeyDown(KEY_F));
             // Add yaw & pitch from the mouse motion. Used only for the camera, does not affect motion
-            vehicle_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
-            vehicle_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
+            vehicle_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
+            vehicle_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
             // Limit pitch
             vehicle_->controls_.pitch_ = Clamp(vehicle_->controls_.pitch_, 0.0f, 80.0f);
             // Check for loading / saving the scene
-            if (input.GetKeyPress(KEY_F5))
+            if (input->GetKeyPress(KEY_F5))
             {
                 File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/raycast_vehicle_demo.xml",
                               FILE_WRITE);
                 scene_->save_xml(saveFile);
             }
-            if (input.GetKeyPress(KEY_F7))
+            if (input->GetKeyPress(KEY_F7))
             {
                 File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/raycast_vehicle_demo.xml",
                               FILE_READ);

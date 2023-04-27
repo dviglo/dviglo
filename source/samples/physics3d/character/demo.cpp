@@ -236,7 +236,7 @@ void CharacterDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     using namespace Update;
 
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
 
     if (character_)
     {
@@ -247,31 +247,31 @@ void CharacterDemo::handle_update(StringHash eventType, VariantMap& eventData)
         if (!DV_UI->GetFocusElement())
         {
             // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-            character_->controls_.Set(CTRL_FORWARD, input.GetScancodeDown(SCANCODE_W));
-            character_->controls_.Set(CTRL_BACK, input.GetScancodeDown(SCANCODE_S));
-            character_->controls_.Set(CTRL_LEFT, input.GetScancodeDown(SCANCODE_A));
-            character_->controls_.Set(CTRL_RIGHT, input.GetScancodeDown(SCANCODE_D));
-            character_->controls_.Set(CTRL_JUMP, input.GetScancodeDown(SCANCODE_SPACE));
+            character_->controls_.Set(CTRL_FORWARD, input->GetScancodeDown(SCANCODE_W));
+            character_->controls_.Set(CTRL_BACK, input->GetScancodeDown(SCANCODE_S));
+            character_->controls_.Set(CTRL_LEFT, input->GetScancodeDown(SCANCODE_A));
+            character_->controls_.Set(CTRL_RIGHT, input->GetScancodeDown(SCANCODE_D));
+            character_->controls_.Set(CTRL_JUMP, input->GetScancodeDown(SCANCODE_SPACE));
 
             // Add character yaw & pitch from the mouse motion
-            character_->controls_.yaw_ += (float)input.GetMouseMoveX() * YAW_SENSITIVITY;
-            character_->controls_.pitch_ += (float)input.GetMouseMoveY() * YAW_SENSITIVITY;
+            character_->controls_.yaw_ += (float)input->GetMouseMoveX() * YAW_SENSITIVITY;
+            character_->controls_.pitch_ += (float)input->GetMouseMoveY() * YAW_SENSITIVITY;
             // Limit pitch
             character_->controls_.pitch_ = Clamp(character_->controls_.pitch_, -80.0f, 80.0f);
             // Set rotation already here so that it's updated every rendering frame instead of every physics frame
             character_->GetNode()->SetRotation(Quaternion(character_->controls_.yaw_, Vector3::UP));
 
             // Switch between 1st and 3rd person
-            if (input.GetKeyPress(KEY_F))
+            if (input->GetKeyPress(KEY_F))
                 firstPerson_ = !firstPerson_;
 
             // Check for loading / saving the scene
-            if (input.GetKeyPress(KEY_F5))
+            if (input->GetKeyPress(KEY_F5))
             {
                 File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/character_demo.xml", FILE_WRITE);
                 scene_->save_xml(saveFile);
             }
-            if (input.GetKeyPress(KEY_F7))
+            if (input->GetKeyPress(KEY_F7))
             {
                 File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/character_demo.xml", FILE_READ);
                 scene_->load_xml(loadFile);

@@ -288,7 +288,7 @@ Node* SceneReplication::CreateControllableObject()
 void SceneReplication::move_camera()
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    DV_UI->GetCursor()->SetVisible(!DV_INPUT.GetMouseButtonDown(MOUSEB_RIGHT));
+    DV_UI->GetCursor()->SetVisible(!DV_INPUT->GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Mouse sensitivity as degrees per pixel
     const float MOUSE_SENSITIVITY = 0.1f;
@@ -297,7 +297,7 @@ void SceneReplication::move_camera()
     // when the cursor is hidden
     if (!DV_UI->GetCursor()->IsVisible())
     {
-        IntVector2 mouseMove = DV_INPUT.GetMouseMove();
+        IntVector2 mouseMove = DV_INPUT->GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
         pitch_ += MOUSE_SENSITIVITY * mouseMove.y;
         pitch_ = Clamp(pitch_, 1.0f, 90.0f);
@@ -370,10 +370,10 @@ void SceneReplication::HandlePhysicsPreStep(StringHash eventType, VariantMap& ev
         // Only apply WASD controls if there is no focused UI element
         if (!DV_UI->GetFocusElement())
         {
-            controls.Set(CTRL_FORWARD, DV_INPUT.GetKeyDown(KEY_W));
-            controls.Set(CTRL_BACK, DV_INPUT.GetKeyDown(KEY_S));
-            controls.Set(CTRL_LEFT, DV_INPUT.GetKeyDown(KEY_A));
-            controls.Set(CTRL_RIGHT, DV_INPUT.GetKeyDown(KEY_D));
+            controls.Set(CTRL_FORWARD, DV_INPUT->GetKeyDown(KEY_W));
+            controls.Set(CTRL_BACK, DV_INPUT->GetKeyDown(KEY_S));
+            controls.Set(CTRL_LEFT, DV_INPUT->GetKeyDown(KEY_A));
+            controls.Set(CTRL_RIGHT, DV_INPUT->GetKeyDown(KEY_D));
         }
 
         serverConnection->SetControls(controls);

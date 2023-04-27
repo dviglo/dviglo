@@ -125,8 +125,15 @@ class DV_API Input : public Object
 {
     DV_OBJECT(Input);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Input* instance_ = nullptr;
+
 public:
-    static Input& get_instance();
+    static Input* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -375,6 +382,6 @@ private:
     bool initialized_;
 };
 
-#define DV_INPUT (dviglo::Input::get_instance())
+#define DV_INPUT (dviglo::Input::instance())
 
 }

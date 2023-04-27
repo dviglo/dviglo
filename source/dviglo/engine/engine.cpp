@@ -116,7 +116,7 @@ Engine::Engine() :
     WorkQueue::get_instance();
     FileSystem::get_instance();
     ResourceCache::get_instance();
-    new Localization(); // Указатель хранится в классе
+    new Localization(); // Указатель на объект хранится в самом классе
 #ifdef DV_NETWORK
     Network::get_instance();
 #endif
@@ -145,6 +145,7 @@ Engine::Engine() :
 Engine::~Engine()
 {
     delete UI::instance_;
+    delete Input::instance_;
     delete Localization::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
@@ -177,8 +178,8 @@ bool Engine::Initialize(const VariantMap& parameters)
         register_graphics_library();
     }
 
-    // Указатели на объекты хранятся в классах
-    Input::get_instance();
+    // Указатели на объекты хранятся в самих классах
+    new Input();
     new UI();
 
 #ifdef DV_URHO2D
@@ -274,7 +275,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Initialize input
     if (HasParameter(parameters, EP_TOUCH_EMULATION))
-        DV_INPUT.SetTouchEmulation(GetParameter(parameters, EP_TOUCH_EMULATION).GetBool());
+        DV_INPUT->SetTouchEmulation(GetParameter(parameters, EP_TOUCH_EMULATION).GetBool());
 
     // Initialize network
 #ifdef DV_NETWORK
@@ -462,7 +463,7 @@ void Engine::run_frame()
     time.BeginFrame(timeStep_);
 
     // If pause when minimized -mode is in use, stop updates and audio as necessary
-    if (pauseMinimized_ && DV_INPUT.IsMinimized())
+    if (pauseMinimized_ && DV_INPUT->IsMinimized())
     {
         if (DV_AUDIO.IsPlaying())
         {
@@ -649,7 +650,7 @@ void Engine::apply_frame_limit()
         return;
 
     unsigned maxFps = maxFps_;
-    if (DV_INPUT.HasFocus())
+    if (DV_INPUT->HasFocus())
         maxFps = Min(maxInactiveFps_, maxFps);
 
     long long elapsed = 0;

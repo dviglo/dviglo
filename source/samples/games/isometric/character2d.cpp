@@ -55,7 +55,7 @@ void Character2D::Update(float timeStep)
     }
 
     auto* animatedSprite = GetComponent<AnimatedSprite2D>();
-    Input& input = DV_INPUT;
+    Input* input = DV_INPUT;
 
     // Set direction
     Vector3 moveDir = Vector3::ZERO; // Reset
@@ -63,12 +63,12 @@ void Character2D::Update(float timeStep)
     float speedY = speedX;
 
     // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-    if (input.GetScancodeDown(SCANCODE_A) || input.GetKeyDown(KEY_LEFT))
+    if (input->GetScancodeDown(SCANCODE_A) || input->GetKeyDown(KEY_LEFT))
     {
         moveDir = moveDir + Vector3::LEFT * speedX;
         animatedSprite->SetFlipX(false); // Flip sprite (reset to default play on the X axis)
     }
-    if (input.GetScancodeDown(SCANCODE_D) || input.GetKeyDown(KEY_RIGHT))
+    if (input->GetScancodeDown(SCANCODE_D) || input->GetKeyDown(KEY_RIGHT))
     {
         moveDir = moveDir + Vector3::RIGHT * speedX;
         animatedSprite->SetFlipX(true); // Flip sprite (flip animation on the X axis)
@@ -77,9 +77,9 @@ void Character2D::Update(float timeStep)
     if (!moveDir.Equals(Vector3::ZERO))
         speedY = speedX * moveSpeedScale_;
 
-    if (input.GetScancodeDown(SCANCODE_W) || input.GetKeyDown(KEY_UP))
+    if (input->GetScancodeDown(SCANCODE_W) || input->GetKeyDown(KEY_UP))
         moveDir = moveDir + Vector3::UP * speedY;
-    if (input.GetScancodeDown(SCANCODE_S) || input.GetKeyDown(KEY_DOWN))
+    if (input->GetScancodeDown(SCANCODE_S) || input->GetKeyDown(KEY_DOWN))
         moveDir = moveDir + Vector3::DOWN * speedY;
 
     // Move
@@ -87,7 +87,7 @@ void Character2D::Update(float timeStep)
         node_->Translate(moveDir * timeStep);
 
     // Animate
-    if (input.GetKeyDown(KEY_SPACE))
+    if (input->GetKeyDown(KEY_SPACE))
     {
         if (animatedSprite->GetAnimation() != "attack")
             animatedSprite->SetAnimation("attack", LM_FORCE_LOOPED);
@@ -166,7 +166,7 @@ void Character2D::HandleDeath()
     static_cast<Text*>(DV_UI->GetRoot()->GetChild("PlayButton", true))->SetVisible(true);
 
     // Show mouse cursor so that we can click
-    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT->SetMouseVisible(true);
 
     // Put character outside of the scene and magnify him
     node_->SetPosition(Vector3(-20.0f, 0.0f, 0.0f));

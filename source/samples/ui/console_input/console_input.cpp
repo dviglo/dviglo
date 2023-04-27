@@ -72,7 +72,7 @@ void ConsoleInput::Start()
     console.AddAutoComplete("quit");
 
     // Show OS mouse cursor
-    DV_INPUT.SetMouseVisible(true);
+    DV_INPUT->SetMouseVisible(true);
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);

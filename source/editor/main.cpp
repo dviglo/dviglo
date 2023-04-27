@@ -33,7 +33,7 @@ public:
         SharedPtr<Cursor> cursor(new Cursor());
         cursor->SetStyleAuto();
         DV_UI->SetCursor(cursor);
-        DV_INPUT.SetMouseVisible(true);
+        DV_INPUT->SetMouseVisible(true);
 
         // Создаём синглтоны
         MainMenu::get_instance();

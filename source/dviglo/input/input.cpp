@@ -99,21 +99,6 @@ void JoystickState::Reset()
         hats_[i] = HAT_CENTER;
 }
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool input_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Input& Input::get_instance()
-{
-    assert(!input_destructed);
-    static Input instance;
-    return instance;
-}
-
 Input::Input() :
     mouseButtonDown_(0),
     mouseButtonPress_(0),
@@ -147,16 +132,15 @@ Input::Input() :
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
 
-    DV_LOGDEBUG("Singleton Input constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Input constructed");
 }
 
 Input::~Input()
 {
-    DV_LOGDEBUG("Singleton Input destructed");
-
-#ifndef NDEBUG
-    input_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("Input destructed");
 }
 
 void Input::Update()

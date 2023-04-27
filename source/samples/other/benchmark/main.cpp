@@ -54,7 +54,7 @@ public:
     {
         APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 
-        DV_INPUT.SetToggleFullscreen(false); // Block Alt+Enter
+        DV_INPUT->SetToggleFullscreen(false); // Block Alt+Enter
 
         CreateCurrentFpsUiElement();
     }

@@ -26,7 +26,7 @@ void UIDrag::Start()
     // Set mouse visible
     String platform = GetPlatform();
     if (platform != "Android" && platform != "iOS")
-        DV_INPUT.SetMouseVisible(true);
+        DV_INPUT->SetMouseVisible(true);
 
     // Create the UI content
     CreateGUI();
@@ -152,7 +152,7 @@ void UIDrag::handle_update(StringHash eventType, VariantMap& eventData)
 {
     UiElement* root = DV_UI->GetRoot();
 
-    if (DV_INPUT.GetKeyPress(KEY_SPACE))
+    if (DV_INPUT->GetKeyPress(KEY_SPACE))
     {
         Vector<UiElement*> elements;
         root->GetChildrenWithTag(elements, "SomeTag");

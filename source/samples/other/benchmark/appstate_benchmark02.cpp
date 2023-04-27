@@ -85,7 +85,7 @@ void AppState_Benchmark02::OnEnter()
     cameraTargetSplinePath->SetSpeed(2.f);
     cameraTargetSplinePath->SetInterpolationMode(InterpolationMode::CATMULL_ROM_FULL_CURVE);
 
-    DV_INPUT.SetMouseVisible(false);
+    DV_INPUT->SetMouseVisible(false);
     setup_viewport();
     subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_Benchmark02, HandleSceneUpdate));
     fpsCounter_.Clear();
@@ -105,7 +105,7 @@ void AppState_Benchmark02::HandleSceneUpdate(StringHash eventType, VariantMap& e
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();
 
-    if (DV_INPUT.GetKeyDown(KEY_ESCAPE))
+    if (DV_INPUT->GetKeyDown(KEY_ESCAPE))
     {
         APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
         return;

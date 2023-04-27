@@ -228,14 +228,14 @@ void Urho2DIsometricDemo::handle_update(StringHash eventType, VariantMap& eventD
 
     // Toggle debug geometry with 'Z' key.
     // Используем скан-код, а не код клавиши, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-    if (DV_INPUT.GetScancodePress(SCANCODE_Z))
+    if (DV_INPUT->GetScancodePress(SCANCODE_Z))
         draw_debug_ = !draw_debug_;
 
     // Check for loading / saving the scene
-    if (DV_INPUT.GetKeyPress(KEY_F5))
+    if (DV_INPUT->GetKeyPress(KEY_F5))
         sample2D_->SaveScene(false);
 
-    if (DV_INPUT.GetKeyPress(KEY_F7))
+    if (DV_INPUT->GetKeyPress(KEY_F7))
         ReloadScene(false);
 }
 
@@ -314,7 +314,7 @@ void Urho2DIsometricDemo::HandlePlayButton(StringHash eventType, VariantMap& eve
     playButton->SetVisible(false);
 
     // Hide mouse cursor
-    DV_INPUT.SetMouseVisible(false);
+    DV_INPUT->SetMouseVisible(false);
 }
 
 DV_DEFINE_APPLICATION_MAIN(Urho2DIsometricDemo)
