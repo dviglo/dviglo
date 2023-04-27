@@ -111,12 +111,12 @@ Engine::Engine() :
     exiting_(false),
     audioPaused_(false)
 {
-    // Создаём синглтоны, которые не зависят от инициализации движка и параметров движка
+    // Создаём подсистемы, которые не зависят от инициализации движка и параметров движка
     Time::get_instance();
     WorkQueue::get_instance();
     FileSystem::get_instance();
     ResourceCache::get_instance();
-    Localization::get_instance();
+    new Localization(); // Указатель хранится в классе
 #ifdef DV_NETWORK
     Network::get_instance();
 #endif
@@ -145,6 +145,8 @@ Engine::Engine() :
 Engine::~Engine()
 {
     DV_LOGDEBUG("Singleton Engine destructed");
+
+    delete Localization::instance_;
 
 #ifndef NDEBUG
     engine_destructed = true;

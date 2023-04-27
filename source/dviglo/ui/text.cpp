@@ -83,7 +83,7 @@ void Text::apply_attributes()
 
     // Localize now if attributes were loaded out-of-order
     if (autoLocalizable_ && stringId_.Length())
-        text_ = DV_LOCALIZATION.Get(stringId_);
+        text_ = DV_LOCALIZATION->Get(stringId_);
 
     DecodeToUnicode();
 
@@ -270,7 +270,7 @@ void Text::SetText(const String& text)
     if (autoLocalizable_)
     {
         stringId_ = text;
-        text_ = DV_LOCALIZATION.Get(stringId_);
+        text_ = DV_LOCALIZATION->Get(stringId_);
     }
     else
     {
@@ -317,7 +317,7 @@ void Text::SetAutoLocalizable(bool enable)
         if (enable)
         {
             stringId_ = text_;
-            text_ = DV_LOCALIZATION.Get(stringId_);
+            text_ = DV_LOCALIZATION->Get(stringId_);
             subscribe_to_event(E_CHANGELANGUAGE, DV_HANDLER(Text, HandleChangeLanguage));
         }
         else
@@ -334,7 +334,7 @@ void Text::SetAutoLocalizable(bool enable)
 
 void Text::HandleChangeLanguage(StringHash eventType, VariantMap& eventData)
 {
-    text_ = DV_LOCALIZATION.Get(stringId_);
+    text_ = DV_LOCALIZATION->Get(stringId_);
     DecodeToUnicode();
     ValidateSelection();
     UpdateText();

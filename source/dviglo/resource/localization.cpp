@@ -13,34 +13,19 @@
 namespace dviglo
 {
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool localization_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Localization& Localization::get_instance()
-{
-    assert(!localization_destructed);
-    static Localization instance;
-    return instance;
-}
-
 Localization::Localization() :
     languageIndex_(-1)
 {
-    DV_LOGDEBUG("Singleton Localization constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Localization constructed");
 }
 
 Localization::~Localization()
 {
-    DV_LOGDEBUG("Singleton Localization destructed");
+    DV_LOGDEBUG("Localization destructed");
 
-#ifndef NDEBUG
-    localization_destructed = true;
-#endif
+    instance_ = nullptr;
 }
 
 int Localization::GetLanguageIndex(const String& language)

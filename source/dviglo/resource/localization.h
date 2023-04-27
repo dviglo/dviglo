@@ -15,8 +15,15 @@ class DV_API Localization : public Object
 {
     DV_OBJECT(Localization);
 
+    /// Только Engine может создать и уничтожить лог
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Localization* instance_ = nullptr;
+
 public:
-    static Localization& get_instance();
+    static Localization* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -65,6 +72,6 @@ private:
     HashMap<StringHash, HashMap<StringHash, String>> strings_;
 };
 
-#define DV_LOCALIZATION (dviglo::Localization::get_instance())
+#define DV_LOCALIZATION (dviglo::Localization::instance())
 
 }
