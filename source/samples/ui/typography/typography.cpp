@@ -43,7 +43,7 @@ void Typography::Start()
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
 
     // Set the loaded style as default style
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
     root->SetDefaultStyle(style);
 
     // Create a UiElement to hold all our content
@@ -69,7 +69,7 @@ void Typography::Start()
 
     // Add a checkbox for the global ForceAutoHint setting. This affects character spacing.
     CreateCheckbox("UI::SetForceAutoHint", DV_HANDLER(Typography, HandleForceAutoHint))
-        ->SetChecked(DV_UI.GetForceAutoHint());
+        ->SetChecked(DV_UI->GetForceAutoHint());
 
     // Add a drop-down menu to control the font hinting level.
     const char* levels[] = {
@@ -79,7 +79,7 @@ void Typography::Start()
         nullptr
     };
     CreateMenu("UI::SetFontHintLevel", levels, DV_HANDLER(Typography, HandleFontHintLevel))
-        ->SetSelection(DV_UI.GetFontHintLevel());
+        ->SetSelection(DV_UI->GetFontHintLevel());
 
     // Add a drop-down menu to control the subpixel threshold.
     const char* thresholds[] = {
@@ -94,7 +94,7 @@ void Typography::Start()
         nullptr
     };
     CreateMenu("UI::SetFontSubpixelThreshold", thresholds, DV_HANDLER(Typography, HandleFontSubpixel))
-        ->SetSelection(DV_UI.GetFontSubpixelThreshold() / 3);
+        ->SetSelection(DV_UI->GetFontSubpixelThreshold() / 3);
 
     // Add a drop-down menu to control oversampling.
     const char* limits[] = {
@@ -109,7 +109,7 @@ void Typography::Start()
         nullptr
     };
     CreateMenu("UI::SetFontOversampling", limits, DV_HANDLER(Typography, HandleFontOversampling))
-        ->SetSelection(DV_UI.GetFontOversampling() - 1);
+        ->SetSelection(DV_UI->GetFontOversampling() - 1);
 
     // Set the mouse mode to use in the sample
     Sample::InitMouseMode(MM_FREE);
@@ -209,7 +209,7 @@ void Typography::HandleForceAutoHint(StringHash eventType, VariantMap& eventData
 {
     auto* box = static_cast<CheckBox*>(eventData[Toggled::P_ELEMENT].GetPtr());
     bool checked = box->IsChecked();
-    DV_UI.SetForceAutoHint(checked);
+    DV_UI->SetForceAutoHint(checked);
 }
 
 void Typography::HandleSRGB(StringHash eventType, VariantMap& eventData)
@@ -234,19 +234,19 @@ void Typography::HandleFontHintLevel(StringHash eventType, VariantMap& eventData
 {
     auto* list = static_cast<DropDownList*>(eventData[Toggled::P_ELEMENT].GetPtr());
     unsigned i = list->GetSelection();
-    DV_UI.SetFontHintLevel((FontHintLevel)i);
+    DV_UI->SetFontHintLevel((FontHintLevel)i);
 }
 
 void Typography::HandleFontSubpixel(StringHash eventType, VariantMap& eventData)
 {
     auto* list = static_cast<DropDownList*>(eventData[Toggled::P_ELEMENT].GetPtr());
     unsigned i = list->GetSelection();
-    DV_UI.SetFontSubpixelThreshold(i * 3);
+    DV_UI->SetFontSubpixelThreshold(i * 3);
 }
 
 void Typography::HandleFontOversampling(StringHash eventType, VariantMap& eventData)
 {
     auto* list = static_cast<DropDownList*>(eventData[Toggled::P_ELEMENT].GetPtr());
     unsigned i = list->GetSelection();
-    DV_UI.SetFontOversampling(i + 1);
+    DV_UI->SetFontOversampling(i + 1);
 }

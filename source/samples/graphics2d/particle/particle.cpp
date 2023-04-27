@@ -87,14 +87,14 @@ void Urho2DParticle::create_scene()
 void Urho2DParticle::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
+    auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use mouse to move the particle.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI->GetRoot()->GetHeight() / 4);
 }
 
 void Urho2DParticle::setup_viewport()

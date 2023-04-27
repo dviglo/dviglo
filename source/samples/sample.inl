@@ -113,7 +113,7 @@ void Sample::CreateLogo()
         return;
 
     // Create logo sprite and add to the UI layout
-    logoSprite_ = DV_UI.GetRoot()->create_child<Sprite>();
+    logoSprite_ = DV_UI->GetRoot()->create_child<Sprite>();
 
     // Set logo sprite texture
     logoSprite_->SetTexture(logoTexture);
@@ -193,7 +193,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         DV_DEBUG_HUD.ToggleAll();
 
     // Common rendering quality controls, only when UI has no focused element
-    else if (!DV_UI.GetFocusElement())
+    else if (!DV_UI->GetFocusElement())
     {
         Renderer& renderer = DV_RENDERER;
 

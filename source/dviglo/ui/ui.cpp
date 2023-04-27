@@ -69,24 +69,6 @@ const int DEFAULT_FONT_TEXTURE_MAX_SIZE = 2048;
 
 const char* UI_CATEGORY = "UI";
 
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool ui_destructed = false;
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-UI& UI::get_instance()
-{
-    assert(!ui_destructed);
-    static UI instance;
-    return instance;
-}
-
-bool UI::is_destructed()
-{
-    return ui_destructed;
-}
-
 UI::UI() :
     rootElement_(new UiElement()),
     rootModalElement_(new UiElement()),
@@ -140,14 +122,16 @@ UI::UI() :
     // Try to initialize right now, but skip if screen mode is not yet set
     Initialize();
 
-    DV_LOGDEBUG("Singleton UI constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Ui constructed");
 }
 
 UI::~UI()
 {
-    DV_LOGDEBUG("Singleton UI destructed");
+    instance_ = nullptr;
 
-    ui_destructed = true;
+    DV_LOGDEBUG("Ui destructed");
 }
 
 void UI::SetCursor(Cursor* cursor)

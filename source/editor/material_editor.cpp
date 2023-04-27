@@ -30,7 +30,7 @@ MaterialEditor& MaterialEditor::get_instance()
 MaterialEditor::MaterialEditor()
 {
     // Создаём окно
-    window_ = DV_UI.GetRoot()->create_child<Window>("material editor");
+    window_ = DV_UI->GetRoot()->create_child<Window>("material editor");
     window_->SetStyleAuto();
     window_->SetMinSize(400, 400);
     window_->SetPosition(40, 40);
@@ -185,7 +185,7 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
         if (!file_selector_)
         {
             file_selector_ = new FileSelector();
-            file_selector_->SetDefaultStyle(DV_UI.GetRoot()->GetDefaultStyle());
+            file_selector_->SetDefaultStyle(DV_UI->GetRoot()->GetDefaultStyle());
             file_selector_->SetTitle("Выберите материал");
             file_selector_->SetButtonTexts("Выбрать", "Отмена");
             file_selector_->SetFilters({"*.xml", "*.mater", "*.json", "*.*"}, 0);
@@ -235,7 +235,7 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
         if (!file_selector_)
         {
             file_selector_ = new FileSelector();
-            file_selector_->SetDefaultStyle(DV_UI.GetRoot()->GetDefaultStyle());
+            file_selector_->SetDefaultStyle(DV_UI->GetRoot()->GetDefaultStyle());
             file_selector_->SetTitle("Сохранить материал как…");
             file_selector_->SetButtonTexts("Сохранить", "Отмена");
             file_selector_->SetFilters({"*.xml", "*.mater", "*.json", "*.*"}, 0);

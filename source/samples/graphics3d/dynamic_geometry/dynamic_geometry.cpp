@@ -253,7 +253,7 @@ void DynamicGeometry::create_scene()
 void DynamicGeometry::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
+    auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys and mouse to move\n"
         "Space to toggle animation"
@@ -265,7 +265,7 @@ void DynamicGeometry::create_instructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI->GetRoot()->GetHeight() / 4);
 }
 
 void DynamicGeometry::setup_viewport()
@@ -284,7 +284,7 @@ void DynamicGeometry::subscribe_to_events()
 void DynamicGeometry::move_camera(float timeStep)
 {
     // Do not move if the UI has a focused element (the console)
-    if (DV_UI.GetFocusElement())
+    if (DV_UI->GetFocusElement())
         return;
 
     Input& input = DV_INPUT;

@@ -49,7 +49,7 @@ void Hello3dUi::Start()
     // Load XML file containing default UI style sheet
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
 
-    uiRoot_ = DV_UI.GetRoot();
+    uiRoot_ = DV_UI->GetRoot();
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);
@@ -296,10 +296,10 @@ void Hello3dUi::handle_update(StringHash, VariantMap& eventData)
     Node* node = scene_->GetChild("Box");
 
     if (current_.NotNull() && draw_debug_)
-        DV_UI.DebugDraw(current_);
+        DV_UI->DebugDraw(current_);
 
     if (input.GetMouseButtonPress(MOUSEB_LEFT))
-        current_ = DV_UI.GetElementAt(input.GetMousePosition());
+        current_ = DV_UI->GetElementAt(input.GetMousePosition());
 
     if (input.GetKeyPress(KEY_TAB))
     {

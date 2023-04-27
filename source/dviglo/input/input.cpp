@@ -328,7 +328,7 @@ void Input::SetMouseVisible(bool enable, bool suppressEvent)
                     SetMouseModeAbsolute(SDL_FALSE);
 
                 // Update cursor position
-                Cursor* cursor = DV_UI.GetCursor();
+                Cursor* cursor = DV_UI->GetCursor();
                 // If the UI Cursor was visible, use that position instead of last visible OS cursor position
                 if (cursor && cursor->IsVisible())
                 {
@@ -421,7 +421,7 @@ void Input::SetMouseMode(MouseMode mode, bool suppressEvent)
             mouseMode_ = mode;
             SDL_Window* const window = DV_GRAPHICS.GetWindow();
 
-            Cursor* const cursor = DV_UI.GetCursor();
+            Cursor* const cursor = DV_UI->GetCursor();
 
             // Handle changing from previous mode
             if (previousMode == MM_ABSOLUTE)

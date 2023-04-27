@@ -38,7 +38,7 @@ Menu::Menu() :
 
 Menu::~Menu()
 {
-    if (!UI::is_destructed() // Избегаем assert(), когда при закрытии приложения был открыт какой-то пункт меню
+    if (!DV_UI // Избегаем ошибки, когда при закрытии приложения был открыт какой-то пункт меню
         && popup_ && showPopup_)
     {
         ShowPopup(false);
@@ -414,8 +414,8 @@ void Menu::HandleKeyDown(StringHash eventType, VariantMap& eventData)
         eventData[P_REPEAT].GetBool() == false)
     {
         // Ignore if UI has modal element or focused LineEdit
-        UiElement* focusElement = DV_UI.GetFocusElement();
-        if (DV_UI.HasModalElement() || (focusElement && focusElement->GetType() == LineEdit::GetTypeStatic()))
+        UiElement* focusElement = DV_UI->GetFocusElement();
+        if (DV_UI->HasModalElement() || (focusElement && focusElement->GetType() == LineEdit::GetTypeStatic()))
             return;
 
         HandlePressedReleased(eventType, eventData);

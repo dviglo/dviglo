@@ -77,7 +77,7 @@ void SoundEffects::Start()
 
 void SoundEffects::create_ui()
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
@@ -110,7 +110,7 @@ void SoundEffects::create_ui()
 
 Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const String& text)
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
     auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
 
     // Create the button and center the text onto it
@@ -129,7 +129,7 @@ Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const Str
 
 Slider* SoundEffects::CreateSlider(int x, int y, int xSize, int ySize, const String& text)
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
     auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
 
     // Create text and slider below it

@@ -138,8 +138,8 @@ void SceneReplication::create_scene()
 
 void SceneReplication::create_ui()
 {
-    UI& ui = DV_UI;
-    UiElement* root = ui.GetRoot();
+    UI* ui = DV_UI;
+    UiElement* root = ui->GetRoot();
     auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
@@ -148,12 +148,12 @@ void SceneReplication::create_ui()
     // control the camera, and when visible, it can interact with the login UI
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(uiStyle);
-    ui.SetCursor(cursor);
+    ui->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Construct the instructions text element
-    instructionsText_ = ui.GetRoot()->create_child<Text>();
+    instructionsText_ = ui->GetRoot()->create_child<Text>();
     instructionsText_->SetText(
         "Use WASD keys to move and RMB to rotate view"
     );
@@ -165,14 +165,14 @@ void SceneReplication::create_ui()
     // Hide until connected
     instructionsText_->SetVisible(false);
 
-    packetsIn_ = ui.GetRoot()->create_child<Text>();
+    packetsIn_ = ui->GetRoot()->create_child<Text>();
     packetsIn_->SetText("Packets in : 0");
     packetsIn_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(10, -10);
 
-    packetsOut_ = ui.GetRoot()->create_child<Text>();
+    packetsOut_ = ui->GetRoot()->create_child<Text>();
     packetsOut_->SetText("Packets out: 0");
     packetsOut_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     packetsOut_->SetHorizontalAlignment(HA_LEFT);
@@ -288,14 +288,14 @@ Node* SceneReplication::CreateControllableObject()
 void SceneReplication::move_camera()
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    DV_UI.GetCursor()->SetVisible(!DV_INPUT.GetMouseButtonDown(MOUSEB_RIGHT));
+    DV_UI->GetCursor()->SetVisible(!DV_INPUT.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Mouse sensitivity as degrees per pixel
     const float MOUSE_SENSITIVITY = 0.1f;
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch and only move the camera
     // when the cursor is hidden
-    if (!DV_UI.GetCursor()->IsVisible())
+    if (!DV_UI->GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = DV_INPUT.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
@@ -368,7 +368,7 @@ void SceneReplication::HandlePhysicsPreStep(StringHash eventType, VariantMap& ev
         controls.yaw_ = yaw_;
 
         // Only apply WASD controls if there is no focused UI element
-        if (!DV_UI.GetFocusElement())
+        if (!DV_UI->GetFocusElement())
         {
             controls.Set(CTRL_FORWARD, DV_INPUT.GetKeyDown(KEY_W));
             controls.Set(CTRL_BACK, DV_INPUT.GetKeyDown(KEY_S));

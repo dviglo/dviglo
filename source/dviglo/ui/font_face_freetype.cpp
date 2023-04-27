@@ -99,13 +99,13 @@ bool FontFaceFreeType::Load(const byte* fontData, unsigned fontDataSize, float p
     // Create & initialize FreeType library if it does not exist yet
     FreeTypeLibrary& freeType = FreeTypeLibrary::get_instance();
 
-    UI& ui = DV_UI;
-    const int maxTextureSize = ui.max_font_texture_size();
-    const FontHintLevel hintLevel = ui.GetFontHintLevel();
-    const float subpixelThreshold = ui.GetFontSubpixelThreshold();
+    UI* ui = DV_UI;
+    const int maxTextureSize = ui->max_font_texture_size();
+    const FontHintLevel hintLevel = ui->GetFontHintLevel();
+    const float subpixelThreshold = ui->GetFontSubpixelThreshold();
 
     subpixel_ = (hintLevel <= FONT_HINT_LEVEL_LIGHT) && (pointSize <= subpixelThreshold);
-    oversampling_ = subpixel_ ? ui.GetFontOversampling() : 1;
+    oversampling_ = subpixel_ ? ui->GetFontOversampling() : 1;
 
     if (pointSize <= 0)
     {
@@ -142,15 +142,15 @@ bool FontFaceFreeType::Load(const byte* fontData, unsigned fontDataSize, float p
 
     // Load each of the glyphs to see the sizes & store other information
     loadMode_ = FT_LOAD_DEFAULT;
-    if (ui.GetForceAutoHint())
+    if (ui->GetForceAutoHint())
     {
         loadMode_ |= FT_LOAD_FORCE_AUTOHINT;
     }
-    if (ui.GetFontHintLevel() == FONT_HINT_LEVEL_NONE)
+    if (ui->GetFontHintLevel() == FONT_HINT_LEVEL_NONE)
     {
         loadMode_ |= FT_LOAD_NO_HINTING;
     }
-    if (ui.GetFontHintLevel() == FONT_HINT_LEVEL_LIGHT)
+    if (ui->GetFontHintLevel() == FONT_HINT_LEVEL_LIGHT)
     {
         loadMode_ |= FT_LOAD_TARGET_LIGHT;
     }

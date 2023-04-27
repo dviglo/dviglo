@@ -41,7 +41,7 @@ void UIDrag::Start()
 
 void UIDrag::CreateGUI()
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
     // Load the style sheet from xml
     root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml"));
 
@@ -77,7 +77,7 @@ void UIDrag::CreateGUI()
 void UIDrag::create_instructions()
 {
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
+    auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Drag on the buttons to move them around.\n"
                              "Press SPACE to show/hide tagged UI elements.");
     instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
@@ -86,7 +86,7 @@ void UIDrag::create_instructions()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI->GetRoot()->GetHeight() / 4);
 }
 
 void UIDrag::subscribe_to_events()
@@ -150,7 +150,7 @@ void UIDrag::HandleDragCancel(StringHash eventType, VariantMap& eventData)
 
 void UIDrag::handle_update(StringHash eventType, VariantMap& eventData)
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
 
     if (DV_INPUT.GetKeyPress(KEY_SPACE))
     {

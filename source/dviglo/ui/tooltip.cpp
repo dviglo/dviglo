@@ -67,7 +67,7 @@ void ToolTip::Update(float timeStep)
 
     if (hovering)
     {
-        float effectiveDelay = delay_ > 0.0f ? delay_ : DV_UI.GetDefaultToolTipDelay();
+        float effectiveDelay = delay_ > 0.0f ? delay_ : DV_UI->GetDefaultToolTipDelay();
 
         if (!hovered_)
         {

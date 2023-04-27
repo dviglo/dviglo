@@ -42,9 +42,15 @@ class DV_API UI : public Object
 {
     DV_OBJECT(UI);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static UI* instance_ = nullptr;
+
 public:
-    static UI& get_instance();
-    static bool is_destructed();
+    static UI* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -423,9 +429,9 @@ private:
     HashMap<UiElement*, RenderToTextureData> renderToTexture_;
 };
 
-#define DV_UI (dviglo::UI::get_instance())
+#define DV_UI (dviglo::UI::instance())
 
 /// Register UI library objects.
 void DV_API register_ui_library();
 
-}
+} // namespace dviglo

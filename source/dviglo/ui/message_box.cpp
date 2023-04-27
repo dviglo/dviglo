@@ -31,10 +31,10 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
             return;         // Note: windowless MessageBox should not be used!
     }
 
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
 
     {
-        SharedPtr<UiElement> holder = DV_UI.LoadLayout(layoutFile, styleFile);
+        SharedPtr<UiElement> holder = DV_UI->LoadLayout(layoutFile, styleFile);
         if (!holder)    // Error is already logged
             return;
         window_ = holder;
@@ -63,7 +63,7 @@ MessageBox::MessageBox(const String& messageString, const String& titleString, X
     okButton_ = window_->GetChildDynamicCast<Button>("OkButton", true);
     if (okButton_)
     {
-        DV_UI.SetFocusElement(okButton_);
+        DV_UI->SetFocusElement(okButton_);
         subscribe_to_event(okButton_, E_RELEASED, DV_HANDLER(MessageBox, HandleMessageAcknowledged));
     }
     auto* cancelButton = window_->GetChildDynamicCast<Button>("CancelButton", true);

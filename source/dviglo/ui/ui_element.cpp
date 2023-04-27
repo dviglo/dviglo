@@ -915,13 +915,13 @@ void UiElement::SetFocus(bool enable)
 
     if (enable)
     {
-        if (DV_UI.GetFocusElement() != this)
-            DV_UI.SetFocusElement(this);
+        if (DV_UI->GetFocusElement() != this)
+            DV_UI->SetFocusElement(this);
     }
     else
     {
-        if (DV_UI.GetFocusElement() == this)
-            DV_UI.SetFocusElement(nullptr);
+        if (DV_UI->GetFocusElement() == this)
+            DV_UI->SetFocusElement(nullptr);
     }
 }
 
@@ -950,7 +950,7 @@ void UiElement::SetVisible(bool enable)
         // If the focus element becomes effectively hidden, clear focus
         if (!enable)
         {
-            UiElement* focusElement = DV_UI.GetFocusElement();
+            UiElement* focusElement = DV_UI->GetFocusElement();
             if (focusElement && !focusElement->IsVisibleEffective())
                 focusElement->SetFocus(false);
         }
@@ -1529,7 +1529,7 @@ float UiElement::GetDerivedOpacity() const
 
 bool UiElement::HasFocus() const
 {
-    return DV_UI.GetFocusElement() == this;
+    return DV_UI->GetFocusElement() == this;
 }
 
 bool UiElement::IsChildOf(UiElement* element) const
@@ -2235,7 +2235,7 @@ void UiElement::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
 
 void UiElement::SetRenderTexture(Texture2D* texture)
 {
-    DV_UI.SetElementRenderTexture(this, texture);
+    DV_UI->SetElementRenderTexture(this, texture);
 }
 
-}
+} // namespace dviglo

@@ -144,9 +144,10 @@ Engine::Engine() :
 
 Engine::~Engine()
 {
-    DV_LOGDEBUG("Singleton Engine destructed");
-
+    delete UI::instance_;
     delete Localization::instance_;
+
+    DV_LOGDEBUG("Singleton Engine destructed");
 
 #ifndef NDEBUG
     engine_destructed = true;
@@ -176,8 +177,9 @@ bool Engine::Initialize(const VariantMap& parameters)
         register_graphics_library();
     }
 
+    // Указатели на объекты хранятся в классах
     Input::get_instance();
-    UI::get_instance();
+    new UI();
 
 #ifdef DV_URHO2D
     // 2D graphics library is dependent on 3D graphics library
@@ -637,7 +639,7 @@ void Engine::render()
         return;
 
     DV_RENDERER.Render();
-    DV_UI.Render();
+    DV_UI->Render();
     DV_GRAPHICS.EndFrame();
 }
 

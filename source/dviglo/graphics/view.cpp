@@ -1690,7 +1690,7 @@ void View::ExecuteRenderPathCommands()
             case CMD_RENDERUI:
                 {
                     SetRenderTargets(command);
-                    DV_UI.Render(true);
+                    DV_UI->Render(true);
                 }
                 break;
 

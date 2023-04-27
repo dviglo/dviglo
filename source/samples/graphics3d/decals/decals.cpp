@@ -157,12 +157,12 @@ void Decals::create_ui()
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
-    DV_UI.SetCursor(cursor);
+    DV_UI->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
-    auto* instructionText = DV_UI.GetRoot()->create_child<Text>();
+    auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText(
         "Use WASD keys to move\n"
         "LMB to paint decals, RMB to rotate view\n"
@@ -176,7 +176,7 @@ void Decals::create_ui()
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);
     instructionText->SetVerticalAlignment(VA_CENTER);
-    instructionText->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
+    instructionText->SetPosition(0, DV_UI->GetRoot()->GetHeight() / 4);
 }
 
 void Decals::setup_viewport()
@@ -200,10 +200,10 @@ void Decals::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     Input& input = DV_INPUT;
-    DV_UI.GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    DV_UI->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element (the console)
-    if (DV_UI.GetFocusElement())
+    if (DV_UI->GetFocusElement())
         return;
 
     // Movement speed as world units per second
@@ -213,7 +213,7 @@ void Decals::move_camera(float timeStep)
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
     // Only move the camera when the cursor is hidden
-    if (!DV_UI.GetCursor()->IsVisible())
+    if (!DV_UI->GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;
@@ -239,7 +239,7 @@ void Decals::move_camera(float timeStep)
         draw_debug_ = !draw_debug_;
 
     // Paint decal with the left mousebutton; cursor must be visible
-    if (DV_UI.GetCursor()->IsVisible() && input.GetMouseButtonPress(MOUSEB_LEFT))
+    if (DV_UI->GetCursor()->IsVisible() && input.GetMouseButtonPress(MOUSEB_LEFT))
         PaintDecal();
 }
 
@@ -271,9 +271,9 @@ bool Decals::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawable)
 {
     hitDrawable = nullptr;
 
-    IntVector2 pos = DV_UI.GetCursorPosition();
+    IntVector2 pos = DV_UI->GetCursorPosition();
     // Check the cursor is visible and there is no UI element in front of the cursor
-    if (!DV_UI.GetCursor()->IsVisible() || DV_UI.GetElementAt(pos, true))
+    if (!DV_UI->GetCursor()->IsVisible() || DV_UI->GetElementAt(pos, true))
         return false;
 
     auto* camera = cameraNode_->GetComponent<Camera>();

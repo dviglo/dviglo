@@ -73,7 +73,7 @@ void Urho2DPlatformer::Start()
 
     // Create the UI content
     sample2D_->CreateUIContent("PLATFORMER 2D DEMO", character2D_->remainingLifes_, character2D_->remainingCoins_);
-    Button* playButton = static_cast<Button*>(DV_UI.GetRoot()->GetChild("PlayButton", true));
+    Button* playButton = static_cast<Button*>(DV_UI->GetRoot()->GetChild("PlayButton", true));
     subscribe_to_event(playButton, E_RELEASED, DV_HANDLER(Urho2DPlatformer, HandlePlayButton));
 
     // Hook up to the frame update events
@@ -205,10 +205,10 @@ void Urho2DPlatformer::HandleCollisionBegin(StringHash eventType, VariantMap& ev
         character2D_->remainingCoins_ -= 1;
         if (character2D_->remainingCoins_ == 0)
         {
-            Text* instructions = static_cast<Text*>(DV_UI.GetRoot()->GetChild("Instructions", true));
+            Text* instructions = static_cast<Text*>(DV_UI->GetRoot()->GetChild("Instructions", true));
             instructions->SetText("!!! Go to the Exit !!!");
         }
-        Text* coinsText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("CoinsText", true));
+        Text* coinsText = static_cast<Text*>(DV_UI->GetRoot()->GetChild("CoinsText", true));
         coinsText->SetText(String(character2D_->remainingCoins_)); // Update coins UI counter
         sample2D_->PlaySoundEffect("powerup.wav");
     }
@@ -251,7 +251,7 @@ void Urho2DPlatformer::HandleCollisionBegin(StringHash eventType, VariantMap& ev
     if (nodeName == "Exit" && character2D_->remainingCoins_ == 0)
     {
         // Update UI
-        Text* instructions = static_cast<Text*>(DV_UI.GetRoot()->GetChild("Instructions", true));
+        Text* instructions = static_cast<Text*>(DV_UI->GetRoot()->GetChild("Instructions", true));
         instructions->SetText("!!! WELL DONE !!!");
         instructions->SetPosition(IntVector2(0, 0));
         // Put the character outside of the scene and magnify him
@@ -380,21 +380,21 @@ void Urho2DPlatformer::ReloadScene(bool reInit)
     }
 
     // Update lifes UI
-    Text* lifeText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("LifeText", true));
+    Text* lifeText = static_cast<Text*>(DV_UI->GetRoot()->GetChild("LifeText", true));
     lifeText->SetText(String(lifes));
 
     // Update coins UI
-    Text* coinsText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("CoinsText", true));
+    Text* coinsText = static_cast<Text*>(DV_UI->GetRoot()->GetChild("CoinsText", true));
     coinsText->SetText(String(coins));
 }
 
 void Urho2DPlatformer::HandlePlayButton(StringHash eventType, VariantMap& eventData)
 {
     // Remove fullscreen UI and unfreeze the scene
-    UI& ui = DV_UI;
-    if (static_cast<Text*>(ui.GetRoot()->GetChild("FullUI", true)))
+    UI* ui = DV_UI;
+    if (static_cast<Text*>(ui->GetRoot()->GetChild("FullUI", true)))
     {
-        ui.GetRoot()->GetChild("FullUI", true)->Remove();
+        ui->GetRoot()->GetChild("FullUI", true)->Remove();
         scene_->SetUpdateEnabled(true);
     }
     else
@@ -404,11 +404,11 @@ void Urho2DPlatformer::HandlePlayButton(StringHash eventType, VariantMap& eventD
     }
 
     // Hide Instructions and Play/Exit buttons
-    Text* instructionText = static_cast<Text*>(ui.GetRoot()->GetChild("Instructions", true));
+    Text* instructionText = static_cast<Text*>(ui->GetRoot()->GetChild("Instructions", true));
     instructionText->SetText("");
-    Button* exitButton = static_cast<Button*>(ui.GetRoot()->GetChild("ExitButton", true));
+    Button* exitButton = static_cast<Button*>(ui->GetRoot()->GetChild("ExitButton", true));
     exitButton->SetVisible(false);
-    Button* playButton = static_cast<Button*>(ui.GetRoot()->GetChild("PlayButton", true));
+    Button* playButton = static_cast<Button*>(ui->GetRoot()->GetChild("PlayButton", true));
     playButton->SetVisible(false);
 
     // Hide mouse cursor

@@ -67,19 +67,19 @@ void SceneAndUiLoad::create_ui()
 {
     // Set up global UI style into the root UI element
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
-    DV_UI.GetRoot()->SetDefaultStyle(style);
+    DV_UI->GetRoot()->SetDefaultStyle(style);
 
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will interact with the UI
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto();
-    DV_UI.SetCursor(cursor);
+    DV_UI->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
     cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
 
     // Load UI content prepared in the editor and add to the UI hierarchy
-    SharedPtr<UiElement> layoutRoot = DV_UI.LoadLayout(DV_RES_CACHE.GetResource<XmlFile>("ui/ui_load_example.xml"));
-    DV_UI.GetRoot()->AddChild(layoutRoot);
+    SharedPtr<UiElement> layoutRoot = DV_UI->LoadLayout(DV_RES_CACHE.GetResource<XmlFile>("ui/ui_load_example.xml"));
+    DV_UI->GetRoot()->AddChild(layoutRoot);
 
     // Subscribe to button actions (toggle scene lights when pressed then released)
     auto* button = layoutRoot->GetChildStaticCast<Button>("ToggleLight1", true);
@@ -107,10 +107,10 @@ void SceneAndUiLoad::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
     Input& input = DV_INPUT;
-    DV_UI.GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    DV_UI->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element
-    if (DV_UI.GetFocusElement())
+    if (DV_UI->GetFocusElement())
         return;
 
     // Movement speed as world units per second
@@ -120,7 +120,7 @@ void SceneAndUiLoad::move_camera(float timeStep)
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
     // Only move the camera when the cursor is hidden
-    if (!DV_UI.GetCursor()->IsVisible())
+    if (!DV_UI->GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;

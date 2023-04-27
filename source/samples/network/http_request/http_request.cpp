@@ -50,7 +50,7 @@ void HttpRequestDemo::create_ui()
     text_->SetVerticalAlignment(VA_CENTER);
 
     // Add Text instance to the UI root element
-    DV_UI.GetRoot()->AddChild(text_);
+    DV_UI->GetRoot()->AddChild(text_);
 }
 
 void HttpRequestDemo::subscribe_to_events()

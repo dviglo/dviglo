@@ -94,7 +94,7 @@ public:
 
         // Convert to system mouse position
         IntVector2 pos;
-        pos = DV_UI.ConvertUIToSystem(screenPos);
+        pos = DV_UI->ConvertUIToSystem(screenPos);
 
         Ray ray(camera->GetScreenRay((float)pos.x / rect.Width(), (float)pos.y / rect.Height()));
         Vector<RayQueryResult> queryResultVector;
@@ -121,7 +121,7 @@ public:
                 static_cast<int>(uv.y * GetHeight()));
 
             // Convert back to scaled UI position
-            result = DV_UI.ConvertSystemToUI(result);
+            result = DV_UI->ConvertSystemToUI(result);
 
             return result;
         }

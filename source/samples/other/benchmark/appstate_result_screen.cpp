@@ -49,7 +49,7 @@ void AppState_ResultScreen::HandleSceneUpdate(StringHash eventType, VariantMap& 
 
 void AppState_ResultScreen::ShowResultWindow()
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
 
     Window* window = root->create_child<Window>(RESULT_WINDOW_STR);
     window->SetStyleAuto();
@@ -83,7 +83,7 @@ void AppState_ResultScreen::ShowResultWindow()
 
 void AppState_ResultScreen::DestroyResultWindow()
 {
-    UiElement* root = DV_UI.GetRoot();
+    UiElement* root = DV_UI->GetRoot();
     UiElement* window = root->GetChild(RESULT_WINDOW_STR);
     window->Remove();
 }

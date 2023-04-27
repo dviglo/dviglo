@@ -68,7 +68,7 @@ Console::Console() :
 {
     assert(!GParams::is_headless());
 
-    UiElement* uiRoot = DV_UI.GetRoot();
+    UiElement* uiRoot = DV_UI->GetRoot();
 
     focusOnShow_ = true;
 
@@ -147,7 +147,7 @@ void Console::SetDefaultStyle(XmlFile* style)
 void Console::SetVisible(bool enable)
 {
     Input& input = DV_INPUT;
-    Cursor* cursor = DV_UI.GetCursor();
+    Cursor* cursor = DV_UI->GetCursor();
 
     background_->SetVisible(enable);
     closeButton_->SetVisible(enable);
@@ -158,7 +158,7 @@ void Console::SetVisible(bool enable)
         bool hasInterpreter = PopulateInterpreter();
         commandLine_->SetVisible(hasInterpreter);
         if (hasInterpreter && focusOnShow_)
-            DV_UI.SetFocusElement(lineEdit_);
+            DV_UI->SetFocusElement(lineEdit_);
 
         // Ensure the background has no empty space when shown without the lineedit
         background_->SetHeight(background_->GetMinHeight());
@@ -282,7 +282,7 @@ void Console::RemoveAutoComplete(const String& option)
 
 void Console::UpdateElements()
 {
-    int width = DV_UI.GetRoot()->GetWidth();
+    int width = DV_UI->GetRoot()->GetWidth();
     const IntRect& border = background_->GetLayoutBorder();
     const IntRect& panelBorder = rowContainer_->GetScrollPanel()->GetClipBorder();
     rowContainer_->SetFixedWidth(width - border.left_ - border.right_);
@@ -562,7 +562,7 @@ void Console::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     // Ensure UI-elements are not detached
     if (!background_->GetParent())
     {
-        UiElement* uiRoot = DV_UI.GetRoot();
+        UiElement* uiRoot = DV_UI->GetRoot();
         uiRoot->AddChild(background_);
         uiRoot->AddChild(closeButton_);
     }

@@ -130,7 +130,7 @@ void Character2D::HandleWoundedState(float timeStep)
 
         // Update lifes UI and counter
         remainingLifes_ -= 1;
-        Text* lifeText = static_cast<Text*>(DV_UI.GetRoot()->GetChild("LifeText", true));
+        Text* lifeText = static_cast<Text*>(DV_UI->GetRoot()->GetChild("LifeText", true));
         lifeText->SetText(String(remainingLifes_)); // Update lifes UI counter
 
         // Reset wounded state
@@ -160,10 +160,10 @@ void Character2D::HandleDeath()
     killed_ = true;
 
     // Update UI elements
-    Text* instructions = static_cast<Text*>(DV_UI.GetRoot()->GetChild("Instructions", true));
+    Text* instructions = static_cast<Text*>(DV_UI->GetRoot()->GetChild("Instructions", true));
     instructions->SetText("!!! GAME OVER !!!");
-    static_cast<Text*>(DV_UI.GetRoot()->GetChild("ExitButton", true))->SetVisible(true);
-    static_cast<Text*>(DV_UI.GetRoot()->GetChild("PlayButton", true))->SetVisible(true);
+    static_cast<Text*>(DV_UI->GetRoot()->GetChild("ExitButton", true))->SetVisible(true);
+    static_cast<Text*>(DV_UI->GetRoot()->GetChild("PlayButton", true))->SetVisible(true);
 
     // Show mouse cursor so that we can click
     DV_INPUT.SetMouseVisible(true);

@@ -39,7 +39,7 @@ Menu* MainMenu::create_menu_item(const String& name, const String& text)
 
 MainMenu::MainMenu()
 {
-    menu_bar_ = DV_UI.GetRoot()->create_child<BorderImage>();
+    menu_bar_ = DV_UI->GetRoot()->create_child<BorderImage>();
     menu_bar_->SetStyle("EditorMenuBar");
     menu_bar_->SetFixedHeight(20);
     menu_bar_->SetFixedWidth(DV_GRAPHICS.GetWidth());
@@ -52,7 +52,7 @@ MainMenu::MainMenu()
         menu->SetPopupOffset(0, menu->GetHeight());
 
         Window* popup = new Window();
-        popup->SetStyleAuto(DV_UI.GetRoot()->GetDefaultStyle());
+        popup->SetStyleAuto(DV_UI->GetRoot()->GetDefaultStyle());
         popup->SetLayout(LM_VERTICAL, 1, IntRect(2, 6, 2, 6));
         menu->SetPopup(popup);
         popup->SetFixedWidth(200);

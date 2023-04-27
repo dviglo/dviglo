@@ -177,14 +177,14 @@ void CrowdNavigation::create_ui()
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
-    DV_UI.SetCursor(cursor);
+    DV_UI->SetCursor(cursor);
 
     // Set starting position of the cursor at the rendering window center
     Graphics& graphics = DV_GRAPHICS;
     cursor->SetPosition(graphics.GetWidth() / 2, graphics.GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
-    instructionText_ = DV_UI.GetRoot()->create_child<Text>();
+    instructionText_ = DV_UI->GetRoot()->create_child<Text>();
     instructionText_->SetText(
         "Use WASD keys to move, RMB to rotate view\n"
         "LMB to set destination, SHIFT+LMB to spawn a Jack\n"
@@ -201,7 +201,7 @@ void CrowdNavigation::create_ui()
     // Position the text relative to the screen center
     instructionText_->SetHorizontalAlignment(HA_CENTER);
     instructionText_->SetVerticalAlignment(VA_CENTER);
-    instructionText_->SetPosition(0, DV_UI.GetRoot()->GetHeight() / 4);
+    instructionText_->SetPosition(0, DV_UI->GetRoot()->GetHeight() / 4);
 }
 
 void CrowdNavigation::setup_viewport()
@@ -350,13 +350,13 @@ bool CrowdNavigation::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hit
 {
     hitDrawable = nullptr;
 
-    UI& ui = DV_UI;
-    IntVector2 pos = ui.GetCursorPosition();
+    UI* ui = DV_UI;
+    IntVector2 pos = ui->GetCursorPosition();
     // Check the cursor is visible and there is no UI element in front of the cursor
-    if (!ui.GetCursor()->IsVisible() || ui.GetElementAt(pos, true))
+    if (!ui->GetCursor()->IsVisible() || ui->GetElementAt(pos, true))
         return false;
 
-    pos = ui.ConvertUIToSystem(pos);
+    pos = ui->ConvertUIToSystem(pos);
 
     Graphics& graphics = DV_GRAPHICS;
     auto* camera = cameraNode_->GetComponent<Camera>();
@@ -379,12 +379,12 @@ bool CrowdNavigation::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hit
 void CrowdNavigation::move_camera(float timeStep)
 {
     // Right mouse button controls mouse cursor visibility: hide when pressed
-    UI& ui = DV_UI;
+    UI* ui = DV_UI;
     Input& input = DV_INPUT;
-    ui.GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
+    ui->GetCursor()->SetVisible(!input.GetMouseButtonDown(MOUSEB_RIGHT));
 
     // Do not move if the UI has a focused element (the console)
-    if (ui.GetFocusElement())
+    if (ui->GetFocusElement())
         return;
 
     // Movement speed as world units per second
@@ -394,7 +394,7 @@ void CrowdNavigation::move_camera(float timeStep)
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
     // Only move the camera when the cursor is hidden
-    if (!ui.GetCursor()->IsVisible())
+    if (!ui->GetCursor()->IsVisible())
     {
         IntVector2 mouseMove = input.GetMouseMove();
         yaw_ += MOUSE_SENSITIVITY * mouseMove.x;

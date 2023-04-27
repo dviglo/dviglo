@@ -198,7 +198,7 @@ void LineEdit::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
             i32 length = text_->GetSelectionLength();
 
             if (text_->GetSelectionLength())
-                DV_UI.SetClipboardText(line_.SubstringUTF8(start, length));
+                DV_UI->SetClipboardText(line_.SubstringUTF8(start, length));
 
             if (key == KEY_X && editable_)
             {
@@ -216,7 +216,7 @@ void LineEdit::OnKey(Key key, MouseButtonFlags buttons, QualifierFlags qualifier
     case KEY_V:
         if (editable_ && textCopyable_ && qualifiers & QUAL_CTRL)
         {
-            const String& clipBoard = DV_UI.GetClipboardText();
+            const String& clipBoard = DV_UI->GetClipboardText();
             if (!clipBoard.Empty())
             {
                 // Remove selected text first

@@ -45,7 +45,7 @@ void WindowSettingsDemo::Start()
     // Load XML file containing default UI style sheet
     auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
 
-    uiRoot_ = DV_UI.GetRoot();
+    uiRoot_ = DV_UI->GetRoot();
 
     // Set the loaded style as default style
     uiRoot_->SetDefaultStyle(style);

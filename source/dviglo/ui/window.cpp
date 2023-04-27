@@ -258,7 +258,7 @@ void Window::SetResizeBorder(const IntRect& rect)
 
 void Window::SetModal(bool modal)
 {
-    if (DV_UI.SetModalElement(this, modal))
+    if (DV_UI->SetModalElement(this, modal))
     {
         modal_ = modal;
 
