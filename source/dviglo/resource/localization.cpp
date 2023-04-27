@@ -23,9 +23,9 @@ Localization::Localization() :
 
 Localization::~Localization()
 {
-    DV_LOGDEBUG("Localization destructed");
-
     instance_ = nullptr;
+
+    DV_LOGDEBUG("Localization destructed");
 }
 
 int Localization::GetLanguageIndex(const String& language)
