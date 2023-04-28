@@ -68,8 +68,8 @@ private:
     void CreateLogo();
     /// Set custom window Title & Icon
     void SetWindowTitleAndIcon();
-    /// Create console and debug HUD.
-    void CreateConsoleAndDebugHud();
+    /// Init console and debug HUD.
+    void InitConsoleAndDebugHud();
     /// Handle request for mouse mode on web platform.
     void HandleMouseModeRequest(StringHash eventType, VariantMap& eventData);
     /// Handle request for mouse mode change on web platform.

@@ -103,7 +103,7 @@ public:
             singlePlayer = false;
 
         InitAudio();
-        CreateConsoleAndDebugHud();
+        InitConsoleAndDebugHud();
         InitScene();
         InitNetworking();
         CreateCamera();
@@ -152,7 +152,7 @@ public:
         }
     }
 
-    void CreateConsoleAndDebugHud()
+    void InitConsoleAndDebugHud()
     {
         if (GParams::is_headless())
             return;
@@ -163,7 +163,7 @@ public:
         DV_CONSOLE.SetDefaultStyle(uiStyle);
         DV_CONSOLE.GetBackground()->SetOpacity(0.8f);
 
-        DV_DEBUG_HUD.SetDefaultStyle(uiStyle);
+        DV_DEBUG_HUD->SetDefaultStyle(uiStyle);
     }
 
     void InitScene()
@@ -455,19 +455,19 @@ public:
         }
         else
         {
-            DebugHud& debugHud = DV_DEBUG_HUD;
+            DebugHud* debugHud = DV_DEBUG_HUD;
 
-            if (debugHud.GetMode() != DebugHudElements::None)
+            if (debugHud->GetMode() != DebugHudElements::None)
             {
                 Node* playerNode = FindOwnNode();
                 if (playerNode)
                 {
-                    debugHud.SetAppStats("Player Pos", playerNode->GetWorldPosition().ToString());
-                    debugHud.SetAppStats("Player Yaw", Variant(playerNode->GetWorldRotation().YawAngle()));
+                    debugHud->SetAppStats("Player Pos", playerNode->GetWorldPosition().ToString());
+                    debugHud->SetAppStats("Player Yaw", Variant(playerNode->GetWorldRotation().YawAngle()));
                 }
                 else
                 {
-                    debugHud.ClearAppStats();
+                    debugHud->ClearAppStats();
                 }
             }
         }
@@ -516,7 +516,7 @@ public:
             DV_CONSOLE.Toggle();
 
         else if (key == KEY_F2)
-            DV_DEBUG_HUD.ToggleAll();
+            DV_DEBUG_HUD->ToggleAll();
 
         else if (key == KEY_F3)
             drawDebug = !drawDebug;

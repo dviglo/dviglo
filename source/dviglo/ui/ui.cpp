@@ -25,6 +25,7 @@
 #include "../scene/scene.h"
 #include "check_box.h"
 #include "cursor.h"
+#include "debug_hud.h"
 #include "dropdown_list.h"
 #include "file_selector.h"
 #include "font.h"
@@ -129,6 +130,8 @@ UI::UI() :
 
 UI::~UI()
 {
+    delete DebugHud::instance_;
+
     instance_ = nullptr;
 
     DV_LOGDEBUG("Ui destructed");
@@ -933,6 +936,9 @@ void UI::Initialize()
     subscribe_to_event(E_BEGINFRAME, DV_HANDLER(UI, HandleBeginFrame));
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(UI, HandlePostUpdate));
     subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(UI, HandleRenderUpdate));
+
+    // Указатель на объект хранится в самом классе
+    new DebugHud();
 
     DV_LOGINFO("Initialized user interface");
 }

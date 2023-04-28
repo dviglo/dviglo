@@ -58,7 +58,7 @@ void Sample::Start()
     SetWindowTitleAndIcon();
 
     // Create console and debug HUD
-    CreateConsoleAndDebugHud();
+    InitConsoleAndDebugHud();
 
     // Subscribe key down event
     subscribe_to_event(E_KEYDOWN, DV_HANDLER(Sample, HandleKeyDown));
@@ -148,7 +148,7 @@ void Sample::SetWindowTitleAndIcon()
     graphics->SetWindowTitle("Urho3D Sample");
 }
 
-void Sample::CreateConsoleAndDebugHud()
+void Sample::InitConsoleAndDebugHud()
 {
     // Get default style
     XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
@@ -157,8 +157,8 @@ void Sample::CreateConsoleAndDebugHud()
     DV_CONSOLE.SetDefaultStyle(xmlFile);
     DV_CONSOLE.GetBackground()->SetOpacity(0.8f);
 
-    // Create debug HUD
-    DV_DEBUG_HUD.SetDefaultStyle(xmlFile);
+    // Init debug HUD
+    DV_DEBUG_HUD->SetDefaultStyle(xmlFile);
 }
 
 
@@ -190,7 +190,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 
     // Toggle debug HUD with F2
     else if (key == KEY_F2)
-        DV_DEBUG_HUD.ToggleAll();
+        DV_DEBUG_HUD->ToggleAll();
 
     // Common rendering quality controls, only when UI has no focused element
     else if (!DV_UI->GetFocusElement())

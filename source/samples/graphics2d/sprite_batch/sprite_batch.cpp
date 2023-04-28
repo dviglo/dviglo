@@ -46,7 +46,7 @@ public:
         subscribe_to_events();
 
         XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
-        DV_DEBUG_HUD.SetDefaultStyle(xmlFile);
+        DV_DEBUG_HUD->SetDefaultStyle(xmlFile);
 
         screenSpaceSpriteBatch_ = new SpriteBatch();
         

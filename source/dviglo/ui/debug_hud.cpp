@@ -38,22 +38,6 @@ static const char* shadowQualityTexts[] =
     "Blurred VSM"
 };
 
-
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool debug_hud_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-DebugHud& DebugHud::get_instance()
-{
-    assert(!debug_hud_destructed);
-    static DebugHud instance;
-    return instance;
-}
-
 DebugHud::DebugHud() :
     useRendererStats_(false),
     mode_(DebugHudElements::None)
@@ -82,7 +66,9 @@ DebugHud::DebugHud() :
 
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(DebugHud, HandlePostUpdate));
 
-    DV_LOGDEBUG("Singleton DebugHud constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("DebugHud constructed");
 }
 
 DebugHud::~DebugHud()
@@ -90,12 +76,8 @@ DebugHud::~DebugHud()
     statsText_->Remove();
     modeText_->Remove();
     memoryText_->Remove();
-
-    DV_LOGDEBUG("Singleton DebugHud destructed");
-
-#ifndef NDEBUG
-    debug_hud_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("DebugHud destructed");
 }
 
 void DebugHud::Update()

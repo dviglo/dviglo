@@ -31,8 +31,15 @@ class DV_API DebugHud : public Object
 {
     DV_OBJECT(DebugHud);
 
+    /// Только Ui может создать и уничтожить объект
+    friend class UI;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static DebugHud* instance_ = nullptr;
+
 public:
-    static DebugHud& get_instance();
+    static DebugHud* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -115,6 +122,6 @@ private:
     DebugHudElements mode_;
 };
 
-#define DV_DEBUG_HUD (dviglo::DebugHud::get_instance())
+#define DV_DEBUG_HUD (dviglo::DebugHud::instance())
 
 }
