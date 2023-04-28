@@ -152,8 +152,8 @@ void Chat::ShowChatText(const String& row)
 
 void Chat::UpdateButtons()
 {
-    Connection* serverConnection = DV_NET.GetServerConnection();
-    bool serverRunning = DV_NET.IsServerRunning();
+    Connection* serverConnection = DV_NET->GetServerConnection();
+    bool serverRunning = DV_NET->IsServerRunning();
 
     // Show and hide buttons so that eg. Connect and Disconnect are never shown at the same time
     sendButton_->SetVisible(serverConnection != nullptr);
@@ -175,7 +175,7 @@ void Chat::HandleSend(StringHash /*eventType*/, VariantMap& eventData)
     if (text.Empty())
         return; // Do not send an empty message
 
-    Connection* serverConnection = DV_NET.GetServerConnection();
+    Connection* serverConnection = DV_NET->GetServerConnection();
 
     if (serverConnection)
     {
@@ -200,27 +200,27 @@ void Chat::HandleConnect(StringHash /*eventType*/, VariantMap& eventData)
     // Connect to server, do not specify a client scene as we are not using scene replication, just messages.
     // At connect time we could also send identity parameters (such as username) in a VariantMap, but in this
     // case we skip it for simplicity
-    DV_NET.Connect(address, CHAT_SERVER_PORT, nullptr);
+    DV_NET->Connect(address, CHAT_SERVER_PORT, nullptr);
 
     UpdateButtons();
 }
 
 void Chat::HandleDisconnect(StringHash /*eventType*/, VariantMap& eventData)
 {
-    Connection* serverConnection = DV_NET.GetServerConnection();
+    Connection* serverConnection = DV_NET->GetServerConnection();
     // If we were connected to server, disconnect
     if (serverConnection)
         serverConnection->Disconnect();
     // Or if we were running a server, stop it
-    else if (DV_NET.IsServerRunning())
-        DV_NET.StopServer();
+    else if (DV_NET->IsServerRunning())
+        DV_NET->StopServer();
 
     UpdateButtons();
 }
 
 void Chat::HandleStartServer(StringHash /*eventType*/, VariantMap& eventData)
 {
-    DV_NET.StartServer(CHAT_SERVER_PORT);
+    DV_NET->StartServer(CHAT_SERVER_PORT);
 
     UpdateButtons();
 }
@@ -239,7 +239,7 @@ void Chat::HandleNetworkMessage(StringHash /*eventType*/, VariantMap& eventData)
 
         // If we are the server, prepend the sender's IP address and port and echo to everyone
         // If we are a client, just display the message
-        if (DV_NET.IsServerRunning())
+        if (DV_NET->IsServerRunning())
         {
             auto* sender = static_cast<Connection*>(eventData[P_CONNECTION].GetPtr());
 
@@ -248,7 +248,7 @@ void Chat::HandleNetworkMessage(StringHash /*eventType*/, VariantMap& eventData)
             VectorBuffer sendMsg;
             sendMsg.WriteString(text);
             // Broadcast as in-order and reliable
-            DV_NET.BroadcastMessage(MSG_CHAT, true, true, sendMsg);
+            DV_NET->BroadcastMessage(MSG_CHAT, true, true, sendMsg);
         }
 
         ShowChatText(text);

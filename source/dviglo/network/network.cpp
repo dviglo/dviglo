@@ -175,21 +175,6 @@ static const char* RAKNET_MESSAGEID_STRINGS[] = {
 static const int DEFAULT_UPDATE_FPS = 30;
 static const int SERVER_TIMEOUT_TIME = 10000;
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool network_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Network& Network::get_instance()
-{
-    assert(!network_destructed);
-    static Network instance;
-    return instance;
-}
-
 Network::Network() :
     updateFps_(DEFAULT_UPDATE_FPS),
     simulated_latency_(0),
@@ -258,7 +243,9 @@ Network::Network() :
     blacklistedRemoteEvents_.Insert(E_NETWORKUPDATESENT);
     blacklistedRemoteEvents_.Insert(E_NETWORKSCENELOADFAILED);
 
-    DV_LOGDEBUG("Singleton Network constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Network constructed");
 }
 
 Network::~Network()
@@ -285,11 +272,9 @@ Network::~Network()
     rakPeer_ = nullptr;
     rakPeerClient_ = nullptr;
 
-    DV_LOGDEBUG("Singleton Network destructed");
+    instance_ = nullptr;
 
-#ifndef NDEBUG
-    network_destructed = true;
-#endif
+    DV_LOGDEBUG("Network destructed");
 }
 
 void Network::HandleMessage(const SLNet::AddressOrGUID& source, int packetID, int msgID, const char* data, size_t numBytes)

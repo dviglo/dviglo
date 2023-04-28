@@ -135,13 +135,13 @@ void LANDiscovery::HandleNetworkHostDiscovered(StringHash eventType, VariantMap&
 
 void LANDiscovery::HandleStartServer(StringHash eventType, VariantMap& eventData)
 {
-    if (DV_NET.StartServer(SERVER_PORT))
+    if (DV_NET->StartServer(SERVER_PORT))
     {
         VariantMap data;
         data["Name"] = "Test server";
         data["Players"] = 100;
         /// Set data which will be sent to all who requests LAN network discovery
-        DV_NET.SetDiscoveryBeacon(data);
+        DV_NET->SetDiscoveryBeacon(data);
         startServer_->SetVisible(false);
         stopServer_->SetVisible(true);
     }
@@ -149,7 +149,7 @@ void LANDiscovery::HandleStartServer(StringHash eventType, VariantMap& eventData
 
 void LANDiscovery::HandleStopServer(StringHash eventType, VariantMap& eventData)
 {
-    DV_NET.StopServer();
+    DV_NET->StopServer();
     startServer_->SetVisible(true);
     stopServer_->SetVisible(false);
 }
@@ -157,6 +157,6 @@ void LANDiscovery::HandleStopServer(StringHash eventType, VariantMap& eventData)
 void LANDiscovery::HandleDoNetworkDiscovery(StringHash eventType, VariantMap& eventData)
 {
     /// Pass in the port that should be checked
-    DV_NET.DiscoverHosts(SERVER_PORT);
+    DV_NET->DiscoverHosts(SERVER_PORT);
     serverList_->SetText("");
 }

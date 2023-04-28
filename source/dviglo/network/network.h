@@ -21,8 +21,15 @@ class DV_API Network : public Object
 {
     DV_OBJECT(Network);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Network* instance_ = nullptr;
+
 public:
-    static Network& get_instance();
+    static Network* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -182,7 +189,7 @@ private:
     String guid_;
 };
 
-#define DV_NET (dviglo::Network::get_instance())
+#define DV_NET (dviglo::Network::instance())
 
 /// Register Network library objects.
 void DV_API register_network_library();

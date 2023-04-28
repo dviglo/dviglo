@@ -63,9 +63,9 @@ void HttpRequestDemo::handle_update(StringHash eventType, VariantMap& eventData)
 {
     if (httpRequest_.Null())
 #ifdef DV_SSL
-        httpRequest_ = DV_NET.MakeHttpRequest("https://api.ipify.org/?format=json");
+        httpRequest_ = DV_NET->MakeHttpRequest("https://api.ipify.org/?format=json");
 #else
-        httpRequest_ = DV_NET.MakeHttpRequest("http://httpbin.org/ip");
+        httpRequest_ = DV_NET->MakeHttpRequest("http://httpbin.org/ip");
 #endif
     else
     {

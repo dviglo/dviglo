@@ -199,18 +199,18 @@ public:
 
     void InitNetworking()
     {
-        Network& network = DV_NET;
+        Network* network = DV_NET;
 
-        network.SetUpdateFps(25); // 1/4 of physics FPS
+        network->SetUpdateFps(25); // 1/4 of physics FPS
         // Remote events sent between client & server must be explicitly registered or else they are not allowed to be received
-        network.RegisterRemoteEvent("PlayerSpawned");
-        network.RegisterRemoteEvent("UpdateScore");
-        network.RegisterRemoteEvent("UpdateHiscores");
-        network.RegisterRemoteEvent("ParticleEffect");
+        network->RegisterRemoteEvent("PlayerSpawned");
+        network->RegisterRemoteEvent("UpdateScore");
+        network->RegisterRemoteEvent("UpdateHiscores");
+        network->RegisterRemoteEvent("ParticleEffect");
 
         if (runServer)
         {
-            network.StartServer(serverPort);
+            network->StartServer(serverPort);
 
             // Disable physics interpolation to ensure clients get sent physically correct transforms
             gameScene->GetComponent<PhysicsWorld>()->SetInterpolation(false);
@@ -224,8 +224,8 @@ public:
         {
             VariantMap identity;
             identity["UserName"] = userName;
-            network.SetUpdateFps(50); // Increase controls send rate for better responsiveness
-            network.Connect(serverAddress, serverPort, gameScene, identity);
+            network->SetUpdateFps(50); // Increase controls send rate for better responsiveness
+            network->Connect(serverAddress, serverPort, gameScene, identity);
 
             subscribe_to_event("PlayerSpawned", DV_HANDLER(App, HandlePlayerSpawned));
             subscribe_to_event("UpdateScore", DV_HANDLER(App, HandleUpdateScore));
@@ -672,8 +672,8 @@ public:
     void HandleNetworkUpdateSent(StringHash eventType, VariantMap& eventData)
     {
         // Clear accumulated buttons from the network controls
-        if (DV_NET.GetServerConnection() != nullptr)
-            DV_NET.GetServerConnection()->controls_.Set(CTRL_ALL, false);
+        if (DV_NET->GetServerConnection() != nullptr)
+            DV_NET->GetServerConnection()->controls_.Set(CTRL_ALL, false);
     }
 
     i32 FindPlayerIndex(NodeId nodeID)
@@ -772,7 +772,7 @@ public:
         if (playerIndex >= 0 && playerIndex < players.Size())
             players[playerIndex].connection->SendRemoteEvent("UpdateHiscores", true, eventData);
         else
-            DV_NET.BroadcastRemoteEvent(gameScene, "UpdateHiscores", true, eventData); // Send to all in scene
+            DV_NET->BroadcastRemoteEvent(gameScene, "UpdateHiscores", true, eventData); // Send to all in scene
     }
 
     void SpawnObjects(float timeStep)
@@ -958,15 +958,15 @@ public:
                     playerNinja->controls = playerControls;
                 }
             }
-            else if (DV_NET.GetServerConnection() != nullptr)
+            else if (DV_NET->GetServerConnection() != nullptr)
             {
                 // Set the latest yaw & pitch to server controls, and accumulate the buttons so that we do not miss any presses
-                DV_NET.GetServerConnection()->controls_.yaw_ = playerControls.yaw_;
-                DV_NET.GetServerConnection()->controls_.pitch_ = playerControls.pitch_;
-                DV_NET.GetServerConnection()->controls_.buttons_ |= playerControls.buttons_;
+                DV_NET->GetServerConnection()->controls_.yaw_ = playerControls.yaw_;
+                DV_NET->GetServerConnection()->controls_.pitch_ = playerControls.pitch_;
+                DV_NET->GetServerConnection()->controls_.buttons_ |= playerControls.buttons_;
 
                 // Tell the camera position to server for interest management
-                DV_NET.GetServerConnection()->SetPosition(gameCameraNode->GetWorldPosition());
+                DV_NET->GetServerConnection()->SetPosition(gameCameraNode->GetWorldPosition());
             }
         }
 

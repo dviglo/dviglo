@@ -117,7 +117,7 @@ Engine::Engine() :
     ResourceCache::get_instance();
     new Localization();
 #ifdef DV_NETWORK
-    Network::get_instance();
+    new Network();
 #endif
     new Audio();
 
@@ -151,6 +151,7 @@ Engine::~Engine()
 
     // Подсистемы, которые создаются в конструкторе
     delete Audio::instance_;
+    delete Network::instance_;
     delete Localization::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
@@ -286,7 +287,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     // Initialize network
 #ifdef DV_NETWORK
     if (HasParameter(parameters, EP_PACKAGE_CACHE_DIR))
-        DV_NET.SetPackageCacheDir(GetParameter(parameters, EP_PACKAGE_CACHE_DIR).GetString());
+        DV_NET->SetPackageCacheDir(GetParameter(parameters, EP_PACKAGE_CACHE_DIR).GetString());
 #endif
 
 #ifdef DV_TESTING
