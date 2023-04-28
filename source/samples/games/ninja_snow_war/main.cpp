@@ -160,8 +160,8 @@ public:
         XmlFile* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
         DV_UI->GetRoot()->SetDefaultStyle(uiStyle);
 
-        DV_CONSOLE.SetDefaultStyle(uiStyle);
-        DV_CONSOLE.GetBackground()->SetOpacity(0.8f);
+        DV_CONSOLE->SetDefaultStyle(uiStyle);
+        DV_CONSOLE->GetBackground()->SetOpacity(0.8f);
 
         DV_DEBUG_HUD->SetDefaultStyle(uiStyle);
     }
@@ -506,14 +506,14 @@ public:
 
         if (key == KEY_ESCAPE)
         {
-            if (!DV_CONSOLE.IsVisible())
+            if (!DV_CONSOLE->IsVisible())
                 DV_ENGINE.Exit();
             else
-                DV_CONSOLE.SetVisible(false);
+                DV_CONSOLE->SetVisible(false);
         }
 
         else if (key == KEY_F1)
-            DV_CONSOLE.Toggle();
+            DV_CONSOLE->Toggle();
 
         else if (key == KEY_F2)
             DV_DEBUG_HUD->ToggleAll();
@@ -534,7 +534,7 @@ public:
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
         }
         // Allow pause only in singleplayer
-        if (key == KEY_P && singlePlayer && !DV_CONSOLE.IsVisible() && gameOn)
+        if (key == KEY_P && singlePlayer && !DV_CONSOLE->IsVisible() && gameOn)
         {
             gameScene->SetUpdateEnabled(!gameScene->IsUpdateEnabled());
             if (!gameScene->IsUpdateEnabled())
@@ -923,7 +923,7 @@ public:
             // For the triggered actions (fire & jump) check also for press, in case the FPS is low
             // and the key was already released.
             // Используем скан-коды, а не коды клавиш, иначе не будет работать в Linux, когда включена русская раскладка клавиатуры
-            if (!GParams::is_headless() && !DV_CONSOLE.IsVisible())
+            if (!GParams::is_headless() && !DV_CONSOLE->IsVisible())
             {
                 if (input->GetScancodeDown(SCANCODE_W))
                     playerControls.Set(CTRL_UP, true);
@@ -1038,7 +1038,7 @@ public:
     {
         Input* input = DV_INPUT;
 
-        if (!DV_CONSOLE.IsVisible())
+        if (!DV_CONSOLE->IsVisible())
         {
             float timeStep = DV_TIME.GetTimeStep();
             float speedMultiplier = 1.0f;

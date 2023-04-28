@@ -44,22 +44,6 @@ const char* logStyles[] =
     "ConsoleText"
 };
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool console_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Console& Console::get_instance()
-{
-    assert(!console_destructed);
-    static Console instance;
-    return instance;
-}
-
-
 Console::Console() :
     autoVisibleOnError_(false),
     historyRows_(DEFAULT_HISTORY_SIZE),
@@ -110,19 +94,17 @@ Console::Console() :
     subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Console, HandleLogMessage));
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Console, HandlePostUpdate));
 
-    DV_LOGDEBUG("Singleton Console constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Console constructed");
 }
 
 Console::~Console()
 {
     background_->Remove();
     closeButton_->Remove();
-
-    DV_LOGDEBUG("Singleton Console destructed");
-
-#ifndef NDEBUG
-    console_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("Console destructed");
 }
 
 void Console::SetDefaultStyle(XmlFile* style)

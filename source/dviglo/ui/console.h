@@ -25,8 +25,15 @@ class DV_API Console : public Object
 {
     DV_OBJECT(Console);
 
+    /// Только Ui может создать и уничтожить объект
+    friend class UI;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Console* instance_ = nullptr;
+
 public:
-    static Console& get_instance();
+    static Console* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -183,6 +190,6 @@ private:
     bool historyOrAutoCompleteChange_;
 };
 
-#define DV_CONSOLE (dviglo::Console::get_instance())
+#define DV_CONSOLE (dviglo::Console::instance())
 
 }

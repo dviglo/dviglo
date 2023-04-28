@@ -58,18 +58,18 @@ void ConsoleInput::Start()
 
     // Show the console by default, make it large. Console will show the text edit field when there is at least one
     // subscriber for the console command event
-    Console& console = DV_CONSOLE;
-    console.SetNumRows(DV_GRAPHICS->GetHeight() / 16);
-    console.SetNumBufferedRows(2 * console.GetNumRows());
-    console.SetCommandInterpreter(GetTypeName());
-    console.SetVisible(true);
-    console.GetCloseButton()->SetVisible(false);
-    console.AddAutoComplete("help");
-    console.AddAutoComplete("eat");
-    console.AddAutoComplete("hide");
-    console.AddAutoComplete("wait");
-    console.AddAutoComplete("score");
-    console.AddAutoComplete("quit");
+    Console* console = DV_CONSOLE;
+    console->SetNumRows(DV_GRAPHICS->GetHeight() / 16);
+    console->SetNumBufferedRows(2 * console->GetNumRows());
+    console->SetCommandInterpreter(GetTypeName());
+    console->SetVisible(true);
+    console->GetCloseButton()->SetVisible(false);
+    console->AddAutoComplete("help");
+    console->AddAutoComplete("eat");
+    console->AddAutoComplete("hide");
+    console->AddAutoComplete("wait");
+    console->AddAutoComplete("score");
+    console->AddAutoComplete("quit");
 
     // Show OS mouse cursor
     DV_INPUT->SetMouseVisible(true);

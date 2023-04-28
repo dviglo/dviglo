@@ -87,7 +87,7 @@ void Sample::InitMouseMode(MouseMode mode)
         if (useMouseMode_ != MM_ABSOLUTE)
         {
             input->SetMouseMode(useMouseMode_);
-            if (DV_CONSOLE.IsVisible())
+            if (DV_CONSOLE->IsVisible())
                 input->SetMouseMode(MM_ABSOLUTE, true);
         }
     }
@@ -154,8 +154,8 @@ void Sample::InitConsoleAndDebugHud()
     XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
 
     // Create console
-    DV_CONSOLE.SetDefaultStyle(xmlFile);
-    DV_CONSOLE.GetBackground()->SetOpacity(0.8f);
+    DV_CONSOLE->SetDefaultStyle(xmlFile);
+    DV_CONSOLE->GetBackground()->SetOpacity(0.8f);
 
     // Init debug HUD
     DV_DEBUG_HUD->SetDefaultStyle(xmlFile);
@@ -171,8 +171,8 @@ void Sample::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
     // Close console (if open) or exit when ESC is pressed
     if (key == KEY_ESCAPE)
     {
-        if (DV_CONSOLE.IsVisible())
-            DV_CONSOLE.SetVisible(false);
+        if (DV_CONSOLE->IsVisible())
+            DV_CONSOLE->SetVisible(false);
         else
             DV_ENGINE.Exit();
     }
@@ -186,7 +186,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
 
     // Toggle console with F1
     if (key == KEY_F1)
-        DV_CONSOLE.Toggle();
+        DV_CONSOLE->Toggle();
 
     // Toggle debug HUD with F2
     else if (key == KEY_F2)
@@ -276,12 +276,14 @@ void Sample::HandleSceneUpdate(StringHash /*eventType*/, VariantMap& eventData)
 // If the user clicks the canvas, attempt to switch to relative mouse mode on web platform
 void Sample::HandleMouseModeRequest(StringHash /*eventType*/, VariantMap& eventData)
 {
-    if (DV_CONSOLE.IsVisible())
+    if (DV_CONSOLE->IsVisible())
         return;
+
     if (useMouseMode_ == MM_ABSOLUTE)
         DV_INPUT->SetMouseVisible(false);
     else if (useMouseMode_ == MM_FREE)
         DV_INPUT->SetMouseVisible(true);
+
     DV_INPUT->SetMouseMode(useMouseMode_);
 }
 
