@@ -18,8 +18,6 @@
 #include "../io/fs_base.h"
 #include "../io/log.h"
 #include "../io/package_file.h"
-#include "console.h"
-#include "debug_hud.h"
 #include "engine_defs.h"
 #ifdef DV_NAVIGATION
 #include "../navigation/navigation_mesh.h"

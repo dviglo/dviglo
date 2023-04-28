@@ -4,16 +4,16 @@
 
 #include "debug_hud.h"
 
-#include "../core/core_events.h"
 #include "../core/context.h"
-#include "engine.h"
+#include "../core/core_events.h"
+#include "../engine/engine.h"
 #include "../graphics/graphics.h"
 #include "../graphics/renderer.h"
-#include "../resource/resource_cache.h"
 #include "../io/log.h"
-#include "../ui/font.h"
-#include "../ui/text.h"
-#include "../ui/ui.h"
+#include "../resource/resource_cache.h"
+#include "font.h"
+#include "text.h"
+#include "ui.h"
 
 #include "../common/debug_new.h"
 

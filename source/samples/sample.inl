@@ -5,7 +5,6 @@
 #include <dviglo/core/time_base.h>
 #include <dviglo/engine/application.h>
 #include <dviglo/engine/console.h>
-#include <dviglo/engine/debug_hud.h>
 #include <dviglo/engine/engine.h>
 #include <dviglo/engine/engine_defs.h>
 #include <dviglo/graphics/camera.h>
@@ -22,6 +21,7 @@
 #include <dviglo/scene/scene.h>
 #include <dviglo/scene/scene_events.h>
 #include <dviglo/ui/cursor.h>
+#include <dviglo/ui/debug_hud.h>
 #include <dviglo/ui/sprite.h>
 #include <dviglo/ui/ui.h>
 
