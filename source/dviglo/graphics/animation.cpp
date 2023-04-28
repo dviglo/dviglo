@@ -160,7 +160,7 @@ bool Animation::begin_load(Deserializer& source)
     // Optionally read triggers from an XML file
     String xmlName = replace_extension(GetName(), ".xml");
 
-    SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
+    SharedPtr<XmlFile> file(DV_RES_CACHE->GetTempResource<XmlFile>(xmlName, false));
     if (file)
     {
         XmlElement rootElem = file->GetRoot();
@@ -182,7 +182,7 @@ bool Animation::begin_load(Deserializer& source)
     // Optionally read triggers from a JSON file
     String jsonName = replace_extension(GetName(), ".json");
 
-    SharedPtr<JSONFile> jsonFile(DV_RES_CACHE.GetTempResource<JSONFile>(jsonName, false));
+    SharedPtr<JSONFile> jsonFile(DV_RES_CACHE->GetTempResource<JSONFile>(jsonName, false));
     if (jsonFile)
     {
         const JSONValue& rootVal = jsonFile->GetRoot();

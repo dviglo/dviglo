@@ -172,7 +172,7 @@ void Font::ReleaseFaces()
 void Font::LoadParameters()
 {
     String xmlName = replace_extension(GetName(), ".xml");
-    SharedPtr<XmlFile> xml = DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false);
+    SharedPtr<XmlFile> xml = DV_RES_CACHE->GetTempResource<XmlFile>(xmlName, false);
     if (!xml)
         return;
 

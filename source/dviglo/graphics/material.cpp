@@ -127,7 +127,7 @@ StringHash ParseTextureTypeXml(const String& filename)
 {
     StringHash type = nullptr;
 
-    shared_ptr<File> texXmlFile = DV_RES_CACHE.GetFile(filename, false);
+    shared_ptr<File> texXmlFile = DV_RES_CACHE->GetFile(filename, false);
     if (texXmlFile)
     {
         SharedPtr<XmlFile> texXml(new XmlFile());
@@ -258,12 +258,12 @@ bool Material::begin_load_xml(Deserializer& source)
         // and request them to also be loaded. Can not do anything else at this point
         if (GetAsyncLoadState() == ASYNC_LOADING)
         {
-            ResourceCache& cache = DV_RES_CACHE;
+            ResourceCache* cache = DV_RES_CACHE;
             XmlElement rootElem = loadXMLFile_->GetRoot();
             XmlElement techniqueElem = rootElem.GetChild("technique");
             while (techniqueElem)
             {
-                cache.background_load_resource<Technique>(techniqueElem.GetAttribute("name"), true, this);
+                cache->background_load_resource<Technique>(techniqueElem.GetAttribute("name"), true, this);
                 techniqueElem = techniqueElem.GetNext("technique");
             }
 
@@ -284,15 +284,15 @@ bool Material::begin_load_xml(Deserializer& source)
                     }
 
                     if (type == Texture3D::GetTypeStatic())
-                        cache.background_load_resource<Texture3D>(name, true, this);
+                        cache->background_load_resource<Texture3D>(name, true, this);
                     else if (type == Texture2DArray::GetTypeStatic())
-                        cache.background_load_resource<Texture2DArray>(name, true, this);
+                        cache->background_load_resource<Texture2DArray>(name, true, this);
                     else
 #endif
-                        cache.background_load_resource<TextureCube>(name, true, this);
+                        cache->background_load_resource<TextureCube>(name, true, this);
                 }
                 else
-                    cache.background_load_resource<Texture2D>(name, true, this);
+                    cache->background_load_resource<Texture2D>(name, true, this);
                 textureElem = textureElem.GetNext("texture");
             }
         }
@@ -317,13 +317,13 @@ bool Material::begin_load_json(Deserializer& source)
         // and request them to also be loaded. Can not do anything else at this point
         if (GetAsyncLoadState() == ASYNC_LOADING)
         {
-            ResourceCache& cache = DV_RES_CACHE;
+            ResourceCache* cache = DV_RES_CACHE;
             const JSONValue& rootVal = loadJSONFile_->GetRoot();
 
             JSONArray techniqueArray = rootVal.Get("techniques").GetArray();
 
             for (const JSONValue& techVal : techniqueArray)
-                cache.background_load_resource<Technique>(techVal.Get("name").GetString(), true, this);
+                cache->background_load_resource<Technique>(techVal.Get("name").GetString(), true, this);
 
             JSONObject textureObject = rootVal.Get("textures").GetObject();
             for (JSONObject::ConstIterator it = textureObject.Begin(); it != textureObject.End(); it++)
@@ -343,15 +343,15 @@ bool Material::begin_load_json(Deserializer& source)
                     }
 
                     if (type == Texture3D::GetTypeStatic())
-                        cache.background_load_resource<Texture3D>(name, true, this);
+                        cache->background_load_resource<Texture3D>(name, true, this);
                     else if (type == Texture2DArray::GetTypeStatic())
-                        cache.background_load_resource<Texture2DArray>(name, true, this);
+                        cache->background_load_resource<Texture2DArray>(name, true, this);
                     else
 #endif
-                        cache.background_load_resource<TextureCube>(name, true, this);
+                        cache->background_load_resource<TextureCube>(name, true, this);
                 }
                 else
-                    cache.background_load_resource<Texture2D>(name, true, this);
+                    cache->background_load_resource<Texture2D>(name, true, this);
             }
         }
 
@@ -381,7 +381,7 @@ bool Material::Load(const XmlElement& source)
         return false;
     }
 
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     XmlElement shaderElem = source.GetChild("shader");
     if (shaderElem)
@@ -395,7 +395,7 @@ bool Material::Load(const XmlElement& source)
 
     while (techniqueElem)
     {
-        auto* tech = cache.GetResource<Technique>(techniqueElem.GetAttribute("name"));
+        auto* tech = cache->GetResource<Technique>(techniqueElem.GetAttribute("name"));
         if (tech)
         {
             TechniqueEntry newTechnique;
@@ -431,15 +431,15 @@ bool Material::Load(const XmlElement& source)
                     type = Texture3D::GetTypeStatic();
 
                 if (type == Texture3D::GetTypeStatic())
-                    SetTexture(unit, cache.GetResource<Texture3D>(name));
+                    SetTexture(unit, cache->GetResource<Texture3D>(name));
                 else if (type == Texture2DArray::GetTypeStatic())
-                    SetTexture(unit, cache.GetResource<Texture2DArray>(name));
+                    SetTexture(unit, cache->GetResource<Texture2DArray>(name));
                 else
 #endif
-                    SetTexture(unit, cache.GetResource<TextureCube>(name));
+                    SetTexture(unit, cache->GetResource<TextureCube>(name));
             }
             else
-                SetTexture(unit, cache.GetResource<Texture2D>(name));
+                SetTexture(unit, cache->GetResource<Texture2D>(name));
         }
         textureElem = textureElem.GetNext("texture");
     }
@@ -532,7 +532,7 @@ bool Material::Load(const JSONValue& source)
         return false;
     }
 
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     const JSONValue& shaderVal = source.Get("shader");
     if (!shaderVal.IsNull())
@@ -548,7 +548,7 @@ bool Material::Load(const JSONValue& source)
 
     for (const JSONValue& techVal : techniquesArray)
     {
-        Technique* tech = cache.GetResource<Technique>(techVal.Get("name").GetString());
+        Technique* tech = cache->GetResource<Technique>(techVal.Get("name").GetString());
         if (tech)
         {
             TechniqueEntry newTechnique;
@@ -587,15 +587,15 @@ bool Material::Load(const JSONValue& source)
                     type = Texture3D::GetTypeStatic();
 
                 if (type == Texture3D::GetTypeStatic())
-                    SetTexture(unit, cache.GetResource<Texture3D>(textureName));
+                    SetTexture(unit, cache->GetResource<Texture3D>(textureName));
                 else if (type == Texture2DArray::GetTypeStatic())
-                    SetTexture(unit, cache.GetResource<Texture2DArray>(textureName));
+                    SetTexture(unit, cache->GetResource<Texture2DArray>(textureName));
                 else
 #endif
-                    SetTexture(unit, cache.GetResource<TextureCube>(textureName));
+                    SetTexture(unit, cache->GetResource<TextureCube>(textureName));
             }
             else
-                SetTexture(unit, cache.GetResource<Texture2D>(textureName));
+                SetTexture(unit, cache->GetResource<Texture2D>(textureName));
         }
     }
 
@@ -1236,7 +1236,7 @@ void Material::ResetToDefaults()
 
     SetNumTechniques(1);
     SetTechnique(0, (!GParams::is_headless()) ? DV_RENDERER->GetDefaultTechnique() :
-        DV_RES_CACHE.GetResource<Technique>("techniques/no_texture.xml"));
+        DV_RES_CACHE->GetResource<Technique>("techniques/no_texture.xml"));
 
     textures_.Clear();
 

@@ -67,7 +67,7 @@ void Urho2DParticle::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
     camera->SetZoom(1.2f * Min((float)DV_GRAPHICS->GetWidth() / 1280.0f, (float)DV_GRAPHICS->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
-    auto* particleEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("sprites/sun.pex");
+    auto* particleEffect = DV_RES_CACHE->GetResource<ParticleEffect2D>("sprites/sun.pex");
     if (!particleEffect)
         return;
 
@@ -75,7 +75,7 @@ void Urho2DParticle::create_scene()
     auto* particleEmitter = particleNode_->create_component<ParticleEmitter2D>();
     particleEmitter->SetEffect(particleEffect);
 
-    auto* greenSpiralEffect = DV_RES_CACHE.GetResource<ParticleEffect2D>("sprites/greenspiral.pex");
+    auto* greenSpiralEffect = DV_RES_CACHE->GetResource<ParticleEffect2D>("sprites/greenspiral.pex");
     if (!greenSpiralEffect)
         return;
 
@@ -89,7 +89,7 @@ void Urho2DParticle::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use mouse to move the particle.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

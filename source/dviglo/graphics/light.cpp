@@ -501,12 +501,12 @@ const Matrix3x4& Light::GetVolumeTransform(Camera* camera)
 
 void Light::SetRampTextureAttr(const ResourceRef& value)
 {
-    rampTexture_ = static_cast<Texture*>(DV_RES_CACHE.GetResource(value.type_, value.name_));
+    rampTexture_ = static_cast<Texture*>(DV_RES_CACHE->GetResource(value.type_, value.name_));
 }
 
 void Light::SetShapeTextureAttr(const ResourceRef& value)
 {
-    shapeTexture_ = static_cast<Texture*>(DV_RES_CACHE.GetResource(value.type_, value.name_));
+    shapeTexture_ = static_cast<Texture*>(DV_RES_CACHE->GetResource(value.type_, value.name_));
 }
 
 ResourceRef Light::GetRampTextureAttr() const

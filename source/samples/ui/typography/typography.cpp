@@ -40,7 +40,7 @@ void Typography::Start()
     DV_INPUT->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
 
     // Set the loaded style as default style
     UiElement* root = DV_UI->GetRoot();
@@ -122,7 +122,7 @@ void Typography::CreateText()
     container->SetLayout(LM_VERTICAL);
     uielement_->AddChild(container);
 
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/blue_highway.ttf");
+    auto* font = DV_RES_CACHE->GetResource<Font>("fonts/blue_highway.ttf");
 
     for (auto size2x = 2; size2x <= 36; ++size2x)
     {

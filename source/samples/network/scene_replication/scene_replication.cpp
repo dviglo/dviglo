@@ -80,7 +80,7 @@ void SceneReplication::create_scene()
 {
     scene_ = new Scene();
 
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // Create octree and physics world with default settings. Create them as local so that they are not needlessly replicated
     // when a client connects
@@ -113,8 +113,8 @@ void SceneReplication::create_scene()
             floorNode->SetPosition(Vector3(x * 20.2f, -0.5f, y * 20.2f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.0f));
             auto* floorObject = floorNode->create_component<StaticModel>();
-            floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            floorObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+            floorObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+            floorObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
 
             auto* body = floorNode->create_component<RigidBody>();
             body->SetFriction(1.0f);
@@ -140,7 +140,7 @@ void SceneReplication::create_ui()
 {
     UI* ui = DV_UI;
     UiElement* root = ui->GetRoot();
-    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* uiStyle = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
@@ -157,7 +157,7 @@ void SceneReplication::create_ui()
     instructionsText_->SetText(
         "Use WASD keys to move and RMB to rotate view"
     );
-    instructionsText_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionsText_->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // Position the text relative to the screen center
     instructionsText_->SetHorizontalAlignment(HA_CENTER);
     instructionsText_->SetVerticalAlignment(VA_CENTER);
@@ -167,14 +167,14 @@ void SceneReplication::create_ui()
 
     packetsIn_ = ui->GetRoot()->create_child<Text>();
     packetsIn_->SetText("Packets in : 0");
-    packetsIn_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    packetsIn_->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     packetsIn_->SetHorizontalAlignment(HA_LEFT);
     packetsIn_->SetVerticalAlignment(VA_CENTER);
     packetsIn_->SetPosition(10, -10);
 
     packetsOut_ = ui->GetRoot()->create_child<Text>();
     packetsOut_->SetText("Packets out: 0");
-    packetsOut_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    packetsOut_->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     packetsOut_->SetHorizontalAlignment(HA_LEFT);
     packetsOut_->SetVerticalAlignment(VA_CENTER);
     packetsOut_->SetPosition(10, 10);
@@ -230,7 +230,7 @@ void SceneReplication::subscribe_to_events()
 
 Button* SceneReplication::CreateButton(const String& text, int width)
 {
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
+    auto* font = DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf");
 
     auto* button = buttonContainer_->create_child<Button>();
     button->SetStyleAuto();
@@ -263,8 +263,8 @@ Node* SceneReplication::CreateControllableObject()
     ballNode->SetPosition(Vector3(Random(40.0f) - 20.0f, 5.0f, -Random(40.0f) + 20.0f));
     ballNode->SetScale(0.5f);
     auto* ballObject = ballNode->create_component<StaticModel>();
-    ballObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/sphere.mdl"));
-    ballObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_small.xml"));
+    ballObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/sphere.mdl"));
+    ballObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/stone_small.xml"));
 
     // Create the physics components
     auto* body = ballNode->create_component<RigidBody>();

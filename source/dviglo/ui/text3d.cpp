@@ -522,12 +522,12 @@ void Text3D::MarkTextDirty()
 
 void Text3D::SetMaterialAttr(const ResourceRef& value)
 {
-    SetMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
+    SetMaterial(DV_RES_CACHE->GetResource<Material>(value.name_));
 }
 
 void Text3D::SetFontAttr(const ResourceRef& value)
 {
-    text_.font_ = DV_RES_CACHE.GetResource<Font>(value.name_);
+    text_.font_ = DV_RES_CACHE->GetResource<Font>(value.name_);
 }
 
 void Text3D::SetTextAttr(const String& value)

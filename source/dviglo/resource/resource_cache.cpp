@@ -50,24 +50,6 @@ static const char* check_dirs[] =
 
 static const SharedPtr<Resource> noResource;
 
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool resource_cache_destructed = false;
-
-bool ResourceCache::is_destructed()
-{
-    return resource_cache_destructed;
-}
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-ResourceCache& ResourceCache::get_instance()
-{
-    assert(!resource_cache_destructed);
-    static ResourceCache instance;
-    return instance;
-}
-
 ResourceCache::ResourceCache() :
     autoReloadResources_(false),
     returnFailedResources_(false),
@@ -86,7 +68,9 @@ ResourceCache::ResourceCache() :
     // Subscribe BeginFrame for handling directory watchers and background loaded resource finalization
     subscribe_to_event(E_BEGINFRAME, DV_HANDLER(ResourceCache, HandleBeginFrame));
 
-    DV_LOGDEBUG("Singleton ResourceCache constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("ResourceCache constructed");
 }
 
 ResourceCache::~ResourceCache()
@@ -95,8 +79,10 @@ ResourceCache::~ResourceCache()
     // Shut down the background loader first
     backgroundLoader_.Reset();
 #endif
-    DV_LOGDEBUG("Singleton ResourceCache destructed");
-    resource_cache_destructed = true;
+
+    instance_ = nullptr;
+
+    DV_LOGDEBUG("ResourceCache destructed");
 }
 
 bool ResourceCache::add_resource_dir(const String& pathName, i32 priority)

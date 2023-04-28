@@ -51,7 +51,7 @@ void StaticScene::Start()
 
 void StaticScene::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -67,8 +67,8 @@ void StaticScene::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a directional light to the world so that we can see something. The light scene node's orientation controls the
     // light direction; we will use the SetDirection() function which calculates the orientation from a forward direction vector.
@@ -92,8 +92,8 @@ void StaticScene::create_scene()
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-        mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+        mushroomObject->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+        mushroomObject->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
     }
 
     // Create a scene node for the camera, which we will move around
@@ -110,7 +110,7 @@ void StaticScene::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

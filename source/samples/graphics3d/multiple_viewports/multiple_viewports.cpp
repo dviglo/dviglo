@@ -56,7 +56,7 @@ void MultipleViewports::Start()
 
 void MultipleViewports::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -69,8 +69,8 @@ void MultipleViewports::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -100,8 +100,8 @@ void MultipleViewports::create_scene()
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-        mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+        mushroomObject->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+        mushroomObject->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
         mushroomObject->SetCastShadows(true);
     }
 
@@ -114,8 +114,8 @@ void MultipleViewports::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+        boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        boxObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -151,7 +151,7 @@ void MultipleViewports::create_instructions()
         "G для переключения grayscale\n"
         "Space to toggle debug geometry\n"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -174,9 +174,9 @@ void MultipleViewports::SetupViewports()
     // for example with the effect name to allow easy toggling on and off. We start with the effects
     // disabled.
     SharedPtr<RenderPath> effectRenderPath = viewport->GetRenderPath()->Clone();
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/bloom.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/fxaa2.xml"));
-    effectRenderPath->Append(DV_RES_CACHE.GetResource<XmlFile>("postprocess/grayscale.xml"));
+    effectRenderPath->Append(DV_RES_CACHE->GetResource<XmlFile>("postprocess/bloom.xml"));
+    effectRenderPath->Append(DV_RES_CACHE->GetResource<XmlFile>("postprocess/fxaa2.xml"));
+    effectRenderPath->Append(DV_RES_CACHE->GetResource<XmlFile>("postprocess/grayscale.xml"));
     // Make the bloom mixing parameter more pronounced
     effectRenderPath->SetShaderParameter("BloomMix", Vector2(0.9f, 0.6f));
     effectRenderPath->SetEnabled("bloom", false);

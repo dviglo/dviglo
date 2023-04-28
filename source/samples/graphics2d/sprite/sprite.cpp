@@ -70,7 +70,7 @@ void Urho2DSprite::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
 
     // Get sprite
-    Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/aster.png");
+    Sprite2D* sprite = DV_RES_CACHE->GetResource<Sprite2D>("sprites/aster.png");
     if (!sprite)
         return;
 
@@ -100,7 +100,7 @@ void Urho2DSprite::create_scene()
     }
 
     // Get animation set
-    AnimationSet2D* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/gold_icon.scml");
+    AnimationSet2D* animationSet = DV_RES_CACHE->GetResource<AnimationSet2D>("sprites/gold_icon.scml");
     if (!animationSet)
         return;
 
@@ -118,7 +118,7 @@ void Urho2DSprite::create_instructions()
     // Construct new Text object, set string to display and font to use
     Text* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys to move, use PageUp PageDown keys to zoom.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

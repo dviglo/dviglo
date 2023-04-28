@@ -63,7 +63,7 @@ void TextureCube::register_object()
 
 bool TextureCube::begin_load(Deserializer& source)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // In headless mode, do not actually load the texture, just return success
     if (GParams::is_headless())
@@ -77,7 +77,7 @@ bool TextureCube::begin_load(Deserializer& source)
         return true;
     }
 
-    cache.reset_dependencies(this);
+    cache->reset_dependencies(this);
 
     String texPath, texName, texExt;
     split_path(GetName(), texPath, texName, texExt);
@@ -101,7 +101,7 @@ bool TextureCube::begin_load(Deserializer& source)
         if (GetPath(name).Empty())
             name = texPath + name;
 
-        SharedPtr<Image> image = cache.GetTempResource<Image>(name);
+        SharedPtr<Image> image = cache->GetTempResource<Image>(name);
         if (!image)
             return false;
 
@@ -195,8 +195,8 @@ bool TextureCube::begin_load(Deserializer& source)
             if (GetPath(name).Empty())
                 name = texPath + name;
 
-            loadImages_.Push(cache.GetTempResource<Image>(name));
-            cache.store_resource_dependency(this, name);
+            loadImages_.Push(cache->GetTempResource<Image>(name));
+            cache->store_resource_dependency(this, name);
 
             faceElem = faceElem.GetNext("face");
         }

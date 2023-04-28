@@ -37,7 +37,7 @@ void HelloGUI::Start()
     DV_INPUT->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
 
     uiRoot_ = DV_UI->GetRoot();
 
@@ -134,7 +134,7 @@ void HelloGUI::CreateDraggableFish()
 {
     // Create a draggable Fish button
     auto* draggableFish = new Button();
-    draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("textures/urho_decal.dds")); // Set texture
+    draggableFish->SetTexture(DV_RES_CACHE->GetResource<Texture2D>("textures/urho_decal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
     draggableFish->SetPosition((DV_GRAPHICS->GetWidth() - draggableFish->GetWidth()) / 2, 200);

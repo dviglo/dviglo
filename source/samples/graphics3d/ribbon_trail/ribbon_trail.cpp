@@ -56,7 +56,7 @@ void RibbonTrailDemo::Start()
 
 void RibbonTrailDemo::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -67,8 +67,8 @@ void RibbonTrailDemo::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a directional light to the world.
     Node* lightNode = scene_->create_child("DirectionalLight");
@@ -83,10 +83,10 @@ void RibbonTrailDemo::create_scene()
     // Create first box for face camera trail demo with 1 column.
     boxNode1_ = scene_->create_child("Box1");
     auto* box1 = boxNode1_->create_component<StaticModel>();
-    box1->SetModel(cache.GetResource<Model>("models/box.mdl"));
+    box1->SetModel(cache->GetResource<Model>("models/box.mdl"));
     box1->SetCastShadows(true);
     auto* boxTrail1 = boxNode1_->create_component<RibbonTrail>();
-    boxTrail1->SetMaterial(cache.GetResource<Material>("materials/ribbon_trail.xml"));
+    boxTrail1->SetMaterial(cache->GetResource<Material>("materials/ribbon_trail.xml"));
     boxTrail1->SetStartColor(Color(1.0f, 0.5f, 0.0f, 1.0f));
     boxTrail1->SetEndColor(Color(1.0f, 1.0f, 0.0f, 0.0f));
     boxTrail1->SetWidth(0.5f);
@@ -96,10 +96,10 @@ void RibbonTrailDemo::create_scene()
     // This will produce less distortion than first trail.
     boxNode2_ = scene_->create_child("Box2");
     auto* box2 = boxNode2_->create_component<StaticModel>();
-    box2->SetModel(cache.GetResource<Model>("models/box.mdl"));
+    box2->SetModel(cache->GetResource<Model>("models/box.mdl"));
     box2->SetCastShadows(true);
     auto* boxTrail2 = boxNode2_->create_component<RibbonTrail>();
-    boxTrail2->SetMaterial(cache.GetResource<Material>("materials/ribbon_trail.xml"));
+    boxTrail2->SetMaterial(cache->GetResource<Material>("materials/ribbon_trail.xml"));
     boxTrail2->SetStartColor(Color(1.0f, 0.5f, 0.0f, 1.0f));
     boxTrail2->SetEndColor(Color(1.0f, 1.0f, 0.0f, 0.0f));
     boxTrail2->SetWidth(0.5f);
@@ -111,8 +111,8 @@ void RibbonTrailDemo::create_scene()
     ninjaNode->SetPosition(Vector3(5.0f, 0.0f, 0.0f));
     ninjaNode->SetRotation(Quaternion(0.0f, 180.0f, 0.0f));
     auto* ninja = ninjaNode->create_component<AnimatedModel>();
-    ninja->SetModel(cache.GetResource<Model>("models/ninja_snow_war/ninja.mdl"));
-    ninja->SetMaterial(cache.GetResource<Material>("materials/ninja_snow_war/ninja.xml"));
+    ninja->SetModel(cache->GetResource<Model>("models/ninja_snow_war/ninja.mdl"));
+    ninja->SetMaterial(cache->GetResource<Material>("materials/ninja_snow_war/ninja.xml"));
     ninja->SetCastShadows(true);
 
     // Create animation controller and play attack animation.
@@ -125,7 +125,7 @@ void RibbonTrailDemo::create_scene()
 
     // Set sword trail type to bone and set other parameters.
     swordTrail_->SetTrailType(TT_BONE);
-    swordTrail_->SetMaterial(cache.GetResource<Material>("materials/slash_trail.xml"));
+    swordTrail_->SetMaterial(cache->GetResource<Material>("materials/slash_trail.xml"));
     swordTrail_->SetLifetime(0.22f);
     swordTrail_->SetStartColor(Color(1.0f, 1.0f, 1.0f, 0.75f));
     swordTrail_->SetEndColor(Color(0.2f, 0.5f, 1.0f, 0.0f));
@@ -137,19 +137,19 @@ void RibbonTrailDemo::create_scene()
     boxTextNode1->SetPosition(Vector3(-1.0f, 2.0f, 0.0f));
     auto* boxText1 = boxTextNode1->create_component<Text3D>();
     boxText1->SetText(String("Face Camera Trail (4 Column)"));
-    boxText1->SetFont(cache.GetResource<Font>("fonts/blue_highway.sdf"), 24);
+    boxText1->SetFont(cache->GetResource<Font>("fonts/blue_highway.sdf"), 24);
 
     Node* boxTextNode2 = scene_->create_child("BoxText2");
     boxTextNode2->SetPosition(Vector3(-6.0f, 2.0f, 0.0f));
     auto* boxText2 = boxTextNode2->create_component<Text3D>();
     boxText2->SetText(String("Face Camera Trail (1 Column)"));
-    boxText2->SetFont(cache.GetResource<Font>("fonts/blue_highway.sdf"), 24);
+    boxText2->SetFont(cache->GetResource<Font>("fonts/blue_highway.sdf"), 24);
 
     Node* ninjaTextNode2 = scene_->create_child("NinjaText");
     ninjaTextNode2->SetPosition(Vector3(4.0f, 2.5f, 0.0f));
     auto* ninjaText = ninjaTextNode2->create_component<Text3D>();
     ninjaText->SetText(String("Bone Trail (4 Column)"));
-    ninjaText->SetFont(cache.GetResource<Font>("fonts/blue_highway.sdf"), 24);
+    ninjaText->SetFont(cache->GetResource<Font>("fonts/blue_highway.sdf"), 24);
 
     // Create the camera.
     cameraNode_ = scene_->create_child("Camera");
@@ -164,7 +164,7 @@ void RibbonTrailDemo::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

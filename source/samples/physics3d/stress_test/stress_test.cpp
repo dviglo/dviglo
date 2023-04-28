@@ -60,7 +60,7 @@ void PhysicsStressTest::Start()
 
 void PhysicsStressTest::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -97,8 +97,8 @@ void PhysicsStressTest::create_scene()
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(500.0f, 1.0f, 500.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
-        floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        floorObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+        floorObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        floorObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components
         /*RigidBody* body = */floorNode->create_component<RigidBody>();
@@ -116,8 +116,8 @@ void PhysicsStressTest::create_scene()
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(5.0f + Random(5.0f));
             auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-            mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+            mushroomObject->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+            mushroomObject->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
             mushroomObject->SetCastShadows(true);
 
             /*RigidBody* body = */mushroomNode->create_component<RigidBody>();
@@ -135,8 +135,8 @@ void PhysicsStressTest::create_scene()
             Node* boxNode = scene_->create_child("Box");
             boxNode->SetPosition(Vector3(0.0f, i * 2.0f + 100.0f, 0.0f));
             auto* boxObject = boxNode->create_component<StaticModel>();
-            boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            boxObject->SetMaterial(cache.GetResource<Material>("materials/stone_small.xml"));
+            boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+            boxObject->SetMaterial(cache->GetResource<Material>("materials/stone_small.xml"));
             boxObject->SetCastShadows(true);
 
             // Give the RigidBody mass to make it movable and also adjust friction
@@ -170,7 +170,7 @@ void PhysicsStressTest::create_instructions()
         "F5 to save scene, F7 to load\n"
         "Space to toggle physics debug geometry"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -258,8 +258,8 @@ void PhysicsStressTest::SpawnObject()
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
-    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
-    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_small.xml"));
+    boxObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/box.mdl"));
+    boxObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/stone_small.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also

@@ -78,7 +78,7 @@ void SoundEffects::Start()
 void SoundEffects::create_ui()
 {
     UiElement* root = DV_UI->GetRoot();
-    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* uiStyle = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
@@ -111,7 +111,7 @@ void SoundEffects::create_ui()
 Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const String& text)
 {
     UiElement* root = DV_UI->GetRoot();
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
+    auto* font = DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf");
 
     // Create the button and center the text onto it
     auto* button = root->create_child<Button>();
@@ -130,7 +130,7 @@ Button* SoundEffects::CreateButton(int x, int y, int xSize, int ySize, const Str
 Slider* SoundEffects::CreateSlider(int x, int y, int xSize, int ySize, const String& text)
 {
     UiElement* root = DV_UI->GetRoot();
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
+    auto* font = DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf");
 
     // Create text and slider below it
     auto* sliderText = root->create_child<Text>();
@@ -154,7 +154,7 @@ void SoundEffects::HandlePlaySound(StringHash eventType, VariantMap& eventData)
     const String& soundResourceName = button->GetVar(VAR_SOUNDRESOURCE).GetString();
 
     // Get the sound resource
-    auto* sound = DV_RES_CACHE.GetResource<Sound>(soundResourceName);
+    auto* sound = DV_RES_CACHE->GetResource<Sound>(soundResourceName);
 
     if (sound)
     {
@@ -172,7 +172,7 @@ void SoundEffects::HandlePlaySound(StringHash eventType, VariantMap& eventData)
 
 void SoundEffects::HandlePlayMusic(StringHash eventType, VariantMap& eventData)
 {
-    auto* music = DV_RES_CACHE.GetResource<Sound>("music/ninja gods.ogg");
+    auto* music = DV_RES_CACHE->GetResource<Sound>("music/ninja gods.ogg");
     // Set the song to loop
     music->SetLooped(true);
 

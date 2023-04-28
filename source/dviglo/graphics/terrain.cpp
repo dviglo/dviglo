@@ -789,12 +789,12 @@ void Terrain::UpdatePatchLod(TerrainPatch* patch)
 
 void Terrain::SetMaterialAttr(const ResourceRef& value)
 {
-    SetMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
+    SetMaterial(DV_RES_CACHE->GetResource<Material>(value.name_));
 }
 
 void Terrain::SetHeightMapAttr(const ResourceRef& value)
 {
-    auto* image = DV_RES_CACHE.GetResource<Image>(value.name_);
+    auto* image = DV_RES_CACHE->GetResource<Image>(value.name_);
     SetHeightMapInternal(image, false);
 }
 

@@ -228,7 +228,7 @@ void Text::OnIndentSet()
 
 bool Text::SetFont(const String& fontName, float size)
 {
-    return SetFont(DV_RES_CACHE.GetResource<Font>(fontName), size);
+    return SetFont(DV_RES_CACHE->GetResource<Font>(fontName), size);
 }
 
 bool Text::SetFont(Font* font, float size)
@@ -418,7 +418,7 @@ Vector2 Text::GetCharSize(i32 index)
 
 void Text::SetFontAttr(const ResourceRef& value)
 {
-    font_ = DV_RES_CACHE.GetResource<Font>(value.name_);
+    font_ = DV_RES_CACHE->GetResource<Font>(value.name_);
 }
 
 ResourceRef Text::GetFontAttr() const

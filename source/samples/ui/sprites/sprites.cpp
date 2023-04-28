@@ -47,7 +47,7 @@ void Sprites::CreateSprites()
     auto height = (float)DV_GRAPHICS->GetHeight();
 
     // Get the Urho3D fish texture
-    auto* decalTex = DV_RES_CACHE.GetResource<Texture2D>("textures/urho_decal.dds");
+    auto* decalTex = DV_RES_CACHE->GetResource<Texture2D>("textures/urho_decal.dds");
 
     for (unsigned i = 0; i < NUM_SPRITES; ++i)
     {

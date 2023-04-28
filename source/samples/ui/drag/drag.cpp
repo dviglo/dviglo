@@ -43,7 +43,7 @@ void UIDrag::CreateGUI()
 {
     UiElement* root = DV_UI->GetRoot();
     // Load the style sheet from xml
-    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml"));
+    root->SetDefaultStyle(DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml"));
 
     for (int i=0; i < 10; i++)
     {
@@ -80,7 +80,7 @@ void UIDrag::create_instructions()
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Drag on the buttons to move them around.\n"
                              "Press SPACE to show/hide tagged UI elements.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
 
     // Position the text relative to the screen center

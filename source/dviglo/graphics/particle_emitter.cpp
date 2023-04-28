@@ -336,7 +336,7 @@ ParticleEffect* ParticleEmitter::GetEffect() const
 
 void ParticleEmitter::SetEffectAttr(const ResourceRef& value)
 {
-    SetEffect(DV_RES_CACHE.GetResource<ParticleEffect>(value.name_));
+    SetEffect(DV_RES_CACHE->GetResource<ParticleEffect>(value.name_));
 }
 
 ResourceRef ParticleEmitter::GetEffectAttr() const

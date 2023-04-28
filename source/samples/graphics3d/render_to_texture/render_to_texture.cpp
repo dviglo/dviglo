@@ -58,7 +58,7 @@ void RenderToTexture::Start()
 
 void RenderToTexture::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     {
         // Create the scene which will be rendered to a texture
@@ -86,8 +86,8 @@ void RenderToTexture::create_scene()
             // Orient using random pitch, yaw and roll Euler angles
             boxNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
             auto* boxObject = boxNode->create_component<StaticModel>();
-            boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+            boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+            boxObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
 
             // Add our custom Rotator component which will rotate the scene node each frame, when the scene sends its update event.
             // Simply set same rotation speed for all objects
@@ -138,8 +138,8 @@ void RenderToTexture::create_scene()
                 floorNode->SetPosition(Vector3(x * 20.5f, -0.5f, y * 20.5f));
                 floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
                 auto* floorObject = floorNode->create_component<StaticModel>();
-                floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-                floorObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+                floorObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+                floorObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
             }
         }
 
@@ -150,15 +150,15 @@ void RenderToTexture::create_scene()
             boxNode->SetPosition(Vector3(0.0f, 10.0f, 0.0f));
             boxNode->SetScale(Vector3(21.0f, 16.0f, 0.5f));
             auto* boxObject = boxNode->create_component<StaticModel>();
-            boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+            boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+            boxObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
 
             Node* screenNode = scene_->create_child("Screen");
             screenNode->SetPosition(Vector3(0.0f, 10.0f, -0.27f));
             screenNode->SetRotation(Quaternion(-90.0f, 0.0f, 0.0f));
             screenNode->SetScale(Vector3(20.0f, 0.0f, 15.0f));
             auto* screenObject = screenNode->create_component<StaticModel>();
-            screenObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
+            screenObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
 
             // Create a renderable texture (1024x768, RGB format), enable bilinear filtering on it
             SharedPtr<Texture2D> renderTexture(new Texture2D());
@@ -168,7 +168,7 @@ void RenderToTexture::create_scene()
             // Create a new material from scratch, use the diffuse unlit technique, assign the render texture
             // as its diffuse texture, then assign the material to the screen plane object
             SharedPtr<Material> renderMaterial(new Material());
-            renderMaterial->SetTechnique(0, cache.GetResource<Technique>("techniques/diff_unlit.xml"));
+            renderMaterial->SetTechnique(0, cache->GetResource<Technique>("techniques/diff_unlit.xml"));
             renderMaterial->SetTexture(TU_DIFFUSE, renderTexture);
             // Since the screen material is on top of the box model and may Z-fight, use negative depth bias
             // to push it forward (particularly necessary on mobiles with possibly less Z resolution)
@@ -199,7 +199,7 @@ void RenderToTexture::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

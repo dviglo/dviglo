@@ -69,7 +69,7 @@ void Urho2DTileMap::create_scene()
     camera->SetZoom(1.0f * Min((float)DV_GRAPHICS->GetWidth() / 1280.0f, (float)DV_GRAPHICS->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.0) is set for full visibility at 1280x800 resolution)
 
     // Get tmx file
-    auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("sprites/isometric_grass_and_water.tmx");
+    auto* tmxFile = DV_RES_CACHE->GetResource<TmxFile2D>("sprites/isometric_grass_and_water.tmx");
     if (!tmxFile)
         return;
 
@@ -92,7 +92,7 @@ void Urho2DTileMap::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys to move, use PageUp PageDown keys to zoom.\n LMB to remove a tile, RMB to swap grass and water.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

@@ -58,7 +58,7 @@ void Decals::Start()
 
 void Decals::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -71,8 +71,8 @@ void Decals::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -102,8 +102,8 @@ void Decals::create_scene()
         mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mushroomNode->SetScale(0.5f + Random(2.0f));
         auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-        mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+        mushroomObject->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+        mushroomObject->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
         mushroomObject->SetCastShadows(true);
     }
 
@@ -117,8 +117,8 @@ void Decals::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+        boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        boxObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -133,8 +133,8 @@ void Decals::create_scene()
         mutantNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         mutantNode->SetScale(0.5f + Random(2.0f));
         AnimatedModel* mutantObject = mutantNode->create_component<AnimatedModel>();
-        mutantObject->SetModel(cache.GetResource<Model>("models/mutant/mutant.mdl"));
-        mutantObject->SetMaterial(cache.GetResource<Material>("models/mutant/materials/mutant_m.xml"));
+        mutantObject->SetModel(cache->GetResource<Model>("models/mutant/mutant.mdl"));
+        mutantObject->SetMaterial(cache->GetResource<Material>("models/mutant/materials/mutant_m.xml"));
         mutantObject->SetCastShadows(true);
         AnimationController* animCtrl = mutantNode->create_component<AnimationController>();
         animCtrl->PlayExclusive("models/mutant/mutant_idle0.ani", 0, true, 0.f);
@@ -154,7 +154,7 @@ void Decals::create_ui()
 {
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
     DV_UI->SetCursor(cursor);
@@ -169,7 +169,7 @@ void Decals::create_ui()
         "Space to toggle debug geometry\n"
         "7 to toggle occlusion culling"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -256,7 +256,7 @@ void Decals::PaintDecal()
         if (!decal)
         {
             decal = targetNode->create_component<DecalSet>();
-            decal->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/urho_decal.xml"));
+            decal->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/urho_decal.xml"));
         }
         // Add a square decal to the decal set using the geometry of the drawable that was hit, orient it to face the camera,
         // use full texture UV's (0,0) to (1,1). Note that if we create several decals to a large object (such as the ground

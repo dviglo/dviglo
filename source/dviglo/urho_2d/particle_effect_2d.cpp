@@ -110,7 +110,7 @@ bool ParticleEffect2D::begin_load(Deserializer& source)
     loadSpriteName_ = get_parent(GetName()) + texture;
     // If async loading, request the sprite beforehand
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.background_load_resource<Sprite2D>(loadSpriteName_, true, this);
+        DV_RES_CACHE->background_load_resource<Sprite2D>(loadSpriteName_, true, this);
 
     sourcePositionVariance_ = ReadVector2(rootElem, "sourcePositionVariance");
 
@@ -193,7 +193,7 @@ bool ParticleEffect2D::end_load()
     // Apply the sprite now
     if (!loadSpriteName_.Empty())
     {
-        sprite_ = DV_RES_CACHE.GetResource<Sprite2D>(loadSpriteName_);
+        sprite_ = DV_RES_CACHE->GetResource<Sprite2D>(loadSpriteName_);
         if (!sprite_)
             DV_LOGERROR("Could not load sprite " + loadSpriteName_ + " for particle effect");
 

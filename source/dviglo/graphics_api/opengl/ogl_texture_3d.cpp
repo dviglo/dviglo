@@ -32,8 +32,8 @@ void Texture3D::OnDeviceReset_OGL()
     if (!gpu_object_name_ || dataPending_)
     {
         // If has a resource file, reload through the resource cache. Otherwise just recreate.
-        if (DV_RES_CACHE.Exists(GetName()))
-            dataLost_ = !DV_RES_CACHE.reload_resource(this);
+        if (DV_RES_CACHE->Exists(GetName()))
+            dataLost_ = !DV_RES_CACHE->reload_resource(this);
 
         if (!gpu_object_name_)
         {

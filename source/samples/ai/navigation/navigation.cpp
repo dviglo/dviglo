@@ -58,7 +58,7 @@ void Navigation::Start()
 
 void Navigation::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -71,8 +71,8 @@ void Navigation::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -107,8 +107,8 @@ void Navigation::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+        boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        boxObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -118,8 +118,8 @@ void Navigation::create_scene()
     jackNode_ = scene_->create_child("Jack");
     jackNode_->SetPosition(Vector3(-5.0f, 0.0f, 20.0f));
     auto* modelObject = jackNode_->create_component<AnimatedModel>();
-    modelObject->SetModel(cache.GetResource<Model>("models/jack.mdl"));
-    modelObject->SetMaterial(cache.GetResource<Material>("materials/jack.xml"));
+    modelObject->SetModel(cache->GetResource<Model>("models/jack.mdl"));
+    modelObject->SetMaterial(cache->GetResource<Material>("materials/jack.xml"));
     modelObject->SetCastShadows(true);
 
     // Create a NavigationMesh component to the scene root
@@ -152,7 +152,7 @@ void Navigation::create_ui()
 {
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
     DV_UI->SetCursor(cursor);
@@ -169,7 +169,7 @@ void Navigation::create_ui()
         "Tab to toggle navigation mesh streaming\n"
         "Space to toggle debug geometry"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -312,8 +312,8 @@ Node* Navigation::create_mushroom(const Vector3& pos)
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/mushroom.mdl"));
-    mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/mushroom.xml"));
+    mushroomObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/mushroom.mdl"));
+    mushroomObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
     return mushroomNode;

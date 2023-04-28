@@ -431,7 +431,7 @@ void SoundSource::UpdateMasterGain()
 
 void SoundSource::SetSoundAttr(const ResourceRef& value)
 {
-    auto* newSound = DV_RES_CACHE.GetResource<Sound>(value.name_);
+    auto* newSound = DV_RES_CACHE->GetResource<Sound>(value.name_);
     if (IsPlaying())
         Play(newSound);
     else

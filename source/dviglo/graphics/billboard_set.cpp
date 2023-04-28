@@ -353,7 +353,7 @@ Billboard* BillboardSet::GetBillboard(i32 index)
 
 void BillboardSet::SetMaterialAttr(const ResourceRef& value)
 {
-    SetMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
+    SetMaterial(DV_RES_CACHE->GetResource<Material>(value.name_));
 }
 
 void BillboardSet::SetBillboardsAttr(const VariantVector& value)

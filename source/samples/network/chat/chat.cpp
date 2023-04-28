@@ -67,11 +67,11 @@ void Chat::create_ui()
     SetLogoVisible(false); // We need the full rendering window
 
     UiElement* root = DV_UI->GetRoot();
-    auto* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* uiStyle = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
     // Set style to the UI root so that elements will inherit it
     root->SetDefaultStyle(uiStyle);
 
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
+    auto* font = DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf");
     chatHistoryText_ = root->create_child<Text>();
     chatHistoryText_->SetFont(font, 12);
 
@@ -123,7 +123,7 @@ void Chat::subscribe_to_events()
 
 Button* Chat::CreateButton(const String& text, int width)
 {
-    auto* font = DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf");
+    auto* font = DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf");
 
     auto* button = buttonContainer_->create_child<Button>();
     button->SetStyleAuto();

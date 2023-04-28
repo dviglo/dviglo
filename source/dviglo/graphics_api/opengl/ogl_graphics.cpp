@@ -1981,10 +1981,10 @@ ShaderVariation* Graphics::GetShader_OGL(ShaderType type, const char* name, cons
     {
         String fullShaderName = shaderPath_ + name + shaderExtension_;
         // Try to reduce repeated error log prints because of missing shaders
-        if (lastShaderName_ == name && !DV_RES_CACHE.Exists(fullShaderName))
+        if (lastShaderName_ == name && !DV_RES_CACHE->Exists(fullShaderName))
             return nullptr;
 
-        lastShader_ = DV_RES_CACHE.GetResource<Shader>(fullShaderName);
+        lastShader_ = DV_RES_CACHE->GetResource<Shader>(fullShaderName);
         lastShaderName_ = name;
     }
 

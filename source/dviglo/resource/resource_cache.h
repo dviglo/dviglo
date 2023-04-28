@@ -65,9 +65,15 @@ class DV_API ResourceCache : public Object
 {
     DV_OBJECT(ResourceCache);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static ResourceCache* instance_ = nullptr;
+
 public:
-    static ResourceCache& get_instance();
-    static bool is_destructed();
+    static ResourceCache* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -283,7 +289,7 @@ private:
     int finishBackgroundResourcesMs_;
 };
 
-#define DV_RES_CACHE (dviglo::ResourceCache::get_instance())
+#define DV_RES_CACHE (dviglo::ResourceCache::instance())
 
 template <class T> T* ResourceCache::GetExistingResource(const String& name)
 {

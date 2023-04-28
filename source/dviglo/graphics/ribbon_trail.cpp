@@ -845,7 +845,7 @@ void RibbonTrail::SetBaseVelocity(const Vector3& baseVelocity)
 
 void RibbonTrail::SetMaterialAttr(const ResourceRef& value)
 {
-    SetMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
+    SetMaterial(DV_RES_CACHE->GetResource<Material>(value.name_));
     Commit();
 }
 

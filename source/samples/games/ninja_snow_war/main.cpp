@@ -140,7 +140,7 @@ public:
 
         if (!nobgm)
         {
-            Sound* musicFile = DV_RES_CACHE.GetResource<Sound>("music/ninja gods.ogg");
+            Sound* musicFile = DV_RES_CACHE->GetResource<Sound>("music/ninja gods.ogg");
             musicFile->SetLooped(true);
 
             // Note: the non-positional sound source component need to be attached to a node to become effective
@@ -157,7 +157,7 @@ public:
         if (GParams::is_headless())
             return;
 
-        XmlFile* uiStyle = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+        XmlFile* uiStyle = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
         DV_UI->GetRoot()->SetDefaultStyle(uiStyle);
 
         DV_CONSOLE->SetDefaultStyle(uiStyle);
@@ -175,7 +175,7 @@ public:
         if (runClient)
             return;
 
-        gameScene->load_xml(*DV_RES_CACHE.GetFile("scenes/ninja_snow_war.xml"));
+        gameScene->load_xml(*DV_RES_CACHE->GetFile("scenes/ninja_snow_war.xml"));
 
         // On mobile devices render the shadowmap first for better performance, adjust the cascaded shadows
         String platform = GetPlatform();
@@ -193,8 +193,8 @@ public:
         }
 
         // Precache shaders if possible
-        if (!GParams::is_headless() && DV_RES_CACHE.Exists("ninja_snow_war_shaders.xml"))
-            DV_GRAPHICS->PrecacheShaders(*DV_RES_CACHE.GetFile("ninja_snow_war_shaders.xml"));
+        if (!GParams::is_headless() && DV_RES_CACHE->Exists("ninja_snow_war_shaders.xml"))
+            DV_GRAPHICS->PrecacheShaders(*DV_RES_CACHE->GetFile("ninja_snow_war_shaders.xml"));
     }
 
     void InitNetworking()
@@ -261,16 +261,16 @@ public:
         if (height > 64)
             height = 64;
 
-        ResourceCache& cache = DV_RES_CACHE;
+        ResourceCache* cache = DV_RES_CACHE;
         UI* ui = DV_UI;
 
         sight = new BorderImage();
-        sight->SetTexture(cache.GetResource<Texture2D>("textures/ninja_snow_war/sight.png"));
+        sight->SetTexture(cache->GetResource<Texture2D>("textures/ninja_snow_war/sight.png"));
         sight->SetAlignment(HA_CENTER, VA_CENTER);
         sight->SetSize(height, height);
         ui->GetRoot()->AddChild(sight);
 
-        Font* font = cache.GetResource<Font>("fonts/blue_highway.ttf");
+        Font* font = cache->GetResource<Font>("fonts/blue_highway.ttf");
 
         scoreText = new Text();
         scoreText->SetFont(font, 13.f);
@@ -296,14 +296,14 @@ public:
         ui->GetRoot()->AddChild(messageText);
 
         SharedPtr<BorderImage> healthBorder(new BorderImage());
-        healthBorder->SetTexture(cache.GetResource<Texture2D>("textures/ninja_snow_war/health_bar_border.png"));
+        healthBorder->SetTexture(cache->GetResource<Texture2D>("textures/ninja_snow_war/health_bar_border.png"));
         healthBorder->SetAlignment(HA_CENTER, VA_TOP);
         healthBorder->SetPosition(0, 8);
         healthBorder->SetSize(120, 20);
         ui->GetRoot()->AddChild(healthBorder);
 
         healthBar = new BorderImage();
-        healthBar->SetTexture(cache.GetResource<Texture2D>("textures/ninja_snow_war/health_bar_inside.png"));
+        healthBar->SetTexture(cache->GetResource<Texture2D>("textures/ninja_snow_war/health_bar_inside.png"));
         healthBar->SetPosition(2, 2);
         healthBar->SetSize(116, 16);
         healthBorder->AddChild(healthBar);
@@ -430,7 +430,7 @@ public:
             Node* textNode = playerNode->create_child("NameTag");
             textNode->SetPosition(Vector3(0.f, 1.2f, 0.f));
             Text3D* text3D = textNode->create_component<Text3D>();
-            Font* font = DV_RES_CACHE.GetResource<Font>("fonts/blue_highway.ttf");
+            Font* font = DV_RES_CACHE->GetResource<Font>("fonts/blue_highway.ttf");
             text3D->SetFont(font, 19.f);
             text3D->SetColor(Color(1.f, 1.f, 0.f));
             text3D->SetText(players[playerIndex].name);

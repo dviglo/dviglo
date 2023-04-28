@@ -33,7 +33,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
     if (!currentAnimationSet)
         return;
 
-    Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>(path);
+    Sprite2D* sprite = DV_RES_CACHE->GetResource<Sprite2D>(path);
     // Add reference
     if (sprite)
         sprite->AddRef();
@@ -61,7 +61,7 @@ char* _spUtil_readFile(const char* path, int* length)
     if (!currentAnimationSet)
         return 0;
 
-    SharedPtr<File> file = DV_RES_CACHE.GetFile(path);
+    SharedPtr<File> file = DV_RES_CACHE->GetFile(path);
     if (!file)
         return 0;
 
@@ -283,18 +283,18 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
     String parentPath = get_parent(GetName());
 
     spriteSheetFilePath_ = parentPath + GetFileName(GetName()) + ".xml";
-    hasSpriteSheet_ = DV_RES_CACHE.Exists(spriteSheetFilePath_);
+    hasSpriteSheet_ = DV_RES_CACHE->Exists(spriteSheetFilePath_);
     if (!hasSpriteSheet_)
     {
         spriteSheetFilePath_ = parentPath + GetFileName(GetName()) + ".plist";
-        hasSpriteSheet_ = DV_RES_CACHE.Exists(spriteSheetFilePath_);
+        hasSpriteSheet_ = DV_RES_CACHE->Exists(spriteSheetFilePath_);
     }
 
     if (GetAsyncLoadState() == ASYNC_LOADING)
     {
         if (hasSpriteSheet_)
         {
-            DV_RES_CACHE.background_load_resource<SpriteSheet2D>(spriteSheetFilePath_, true, this);
+            DV_RES_CACHE->background_load_resource<SpriteSheet2D>(spriteSheetFilePath_, true, this);
         }
         else
         {
@@ -305,7 +305,7 @@ bool AnimationSet2D::BeginLoadSpriter(Deserializer& source)
                 {
                     Spriter::File* file = folder->files_[j];
                     String imagePath = parentPath + file->name_;
-                    DV_RES_CACHE.background_load_resource<Image>(imagePath, true, this);
+                    DV_RES_CACHE->background_load_resource<Image>(imagePath, true, this);
                 }
             }
         }
@@ -332,7 +332,7 @@ bool AnimationSet2D::EndLoadSpriter()
 
     if (hasSpriteSheet_)
     {
-        spriteSheet_ = DV_RES_CACHE.GetResource<SpriteSheet2D>(spriteSheetFilePath_);
+        spriteSheet_ = DV_RES_CACHE->GetResource<SpriteSheet2D>(spriteSheetFilePath_);
         if (!spriteSheet_)
             return false;
 
@@ -385,7 +385,7 @@ bool AnimationSet2D::EndLoadSpriter()
             {
                 Spriter::File* file = folder->files_[j];
                 String imagePath = parentPath + file->name_;
-                SharedPtr<Image> image(DV_RES_CACHE.GetResource<Image>(imagePath));
+                SharedPtr<Image> image(DV_RES_CACHE->GetResource<Image>(imagePath));
                 if (!image)
                 {
                     DV_LOGERROR("Could not load image");

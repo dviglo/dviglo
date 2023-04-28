@@ -27,7 +27,7 @@ public:
 
     void Start() override
     {
-        XmlFile* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+        XmlFile* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
         DV_UI->GetRoot()->SetDefaultStyle(style);
 
         SharedPtr<Cursor> cursor(new Cursor());

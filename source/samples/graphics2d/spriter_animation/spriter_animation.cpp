@@ -65,7 +65,7 @@ void Urho2DSpriterAnimation::create_scene()
     camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
     camera->SetZoom(1.5f * Min((float)DV_GRAPHICS->GetWidth() / 1280.0f, (float)DV_GRAPHICS->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.5) is set for full visibility at 1280x800 resolution)
 
-    auto* spriterAnimationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/imp/imp.scml");
+    auto* spriterAnimationSet = DV_RES_CACHE->GetResource<AnimationSet2D>("sprites/imp/imp.scml");
     if (!spriterAnimationSet)
         return;
 
@@ -80,7 +80,7 @@ void Urho2DSpriterAnimation::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Mouse click to play next animation, \nUse WASD keys to move, use PageUp PageDown keys to zoom.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
 
     // Position the text relative to the screen center

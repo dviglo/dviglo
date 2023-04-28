@@ -789,7 +789,7 @@ void AnimatedModel::SetSkeleton(const Skeleton& skeleton, bool createBones)
 void AnimatedModel::SetModelAttr(const ResourceRef& value)
 {
     // When loading a scene, set model without creating the bone nodes (will be assigned later during post-load)
-    SetModel(DV_RES_CACHE.GetResource<Model>(value.name_), !loading_);
+    SetModel(DV_RES_CACHE->GetResource<Model>(value.name_), !loading_);
 }
 
 void AnimatedModel::SetBonesEnabledAttr(const VariantVector& value)
@@ -801,7 +801,7 @@ void AnimatedModel::SetBonesEnabledAttr(const VariantVector& value)
 
 void AnimatedModel::SetAnimationStatesAttr(const VariantVector& value)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     RemoveAllAnimationStates();
     unsigned index = 0;
     unsigned numStates = index < value.Size() ? value[index++].GetU32() : 0;
@@ -818,7 +818,7 @@ void AnimatedModel::SetAnimationStatesAttr(const VariantVector& value)
         {
             // Note: null animation is allowed here for editing
             const ResourceRef& animRef = value[index++].GetResourceRef();
-            SharedPtr<AnimationState> newState(new AnimationState(this, cache.GetResource<Animation>(animRef.name_)));
+            SharedPtr<AnimationState> newState(new AnimationState(this, cache->GetResource<Animation>(animRef.name_)));
             animationStates_.Push(newState);
 
             newState->SetStartBone(skeleton_.GetBone(value[index++].GetString()));

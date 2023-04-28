@@ -297,7 +297,7 @@ bool Model::begin_load(Deserializer& source)
 
     // Read metadata
     String xmlName = replace_extension(GetName(), ".xml");
-    SharedPtr<XmlFile> file(DV_RES_CACHE.GetTempResource<XmlFile>(xmlName, false));
+    SharedPtr<XmlFile> file(DV_RES_CACHE->GetTempResource<XmlFile>(xmlName, false));
     if (file)
         load_metadata_from_xml(file->GetRoot());
 

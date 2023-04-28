@@ -75,8 +75,8 @@ void Urho2DPhysics::create_scene()
     // Create 2D physics world component
     /*PhysicsWorld2D* physicsWorld = */scene_->create_component<PhysicsWorld2D>();
 
-    auto* boxSprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/box.png");
-    auto* ballSprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/ball.png");
+    auto* boxSprite = DV_RES_CACHE->GetResource<Sprite2D>("sprites/box.png");
+    auto* ballSprite = DV_RES_CACHE->GetResource<Sprite2D>("sprites/ball.png");
 
     // Create ground.
     Node* groundNode = scene_->create_child("Ground");
@@ -145,7 +145,7 @@ void Urho2DPhysics::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys to move, use PageUp PageDown keys to zoom.");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

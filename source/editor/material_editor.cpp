@@ -57,7 +57,7 @@ MaterialEditor::MaterialEditor()
     scene->create_component<Octree>();
     Node* model_node = scene->create_child("model");
     StaticModel* model_component = model_node->create_component<StaticModel>();
-    model_component->SetModel(DV_RES_CACHE.GetResource<Model>("models/sphere.mdl"));
+    model_component->SetModel(DV_RES_CACHE->GetResource<Model>("models/sphere.mdl"));
     material_ = new Material();
     model_component->SetMaterial(material_);
     Node* light_node = scene->create_child();
@@ -138,7 +138,7 @@ void MaterialEditor::handle_pick_file_selected(StringHash event_type, VariantMap
     {
         LineEdit* material_file_path = window_->GetChildStaticCast<LineEdit>(str_material_file_path, true);
         material_file_path->SetText(file_name);
-        material_ = DV_RES_CACHE.GetResource<Material>(file_name);
+        material_ = DV_RES_CACHE->GetResource<Material>(file_name);
 
         if (material_)
         {
@@ -207,12 +207,12 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
 
     else if (pressed_button->GetName() == str_reload_material)
     {
-        DV_RES_CACHE.reload_resource(material_);
+        DV_RES_CACHE->reload_resource(material_);
     }
 
     else if (pressed_button->GetName() == str_save_material)
     {
-        String full_name = DV_RES_CACHE.GetResourceFileName(material_->GetName());
+        String full_name = DV_RES_CACHE->GetResourceFileName(material_->GetName());
 
         if (full_name.Empty())
             return;

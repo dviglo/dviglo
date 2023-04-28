@@ -170,7 +170,7 @@ Node* Sample2D::CreateCharacter(const TileMapInfo2D& info, float friction, const
     spriteNode->SetScale(scale);
     auto* animatedSprite = spriteNode->create_component<AnimatedSprite2D>();
     // Get scml file and Play "idle" anim
-    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/imp/imp.scml");
+    auto* animationSet = DV_RES_CACHE->GetResource<AnimationSet2D>("sprites/imp/imp.scml");
     animatedSprite->SetAnimationSet(animationSet);
     animatedSprite->SetAnimation("idle");
     animatedSprite->SetLayer(3); // Put character over tile map (which is on layer 0) and over Orcs (which are on layer 2)
@@ -201,7 +201,7 @@ Node* Sample2D::CreateEnemy()
 {
     Node* node = scene_->create_child("Enemy");
     auto* staticSprite = node->create_component<StaticSprite2D>();
-    staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/aster.png"));
+    staticSprite->SetSprite(DV_RES_CACHE->GetResource<Sprite2D>("sprites/aster.png"));
     auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
     auto* shape = node->create_component<CollisionCircle2D>(); // Create circle shape
@@ -214,7 +214,7 @@ Node* Sample2D::CreateOrc()
     Node* node = scene_->create_child("Orc");
     node->SetScale(scene_->GetChild("Imp", true)->GetScale());
     auto* animatedSprite = node->create_component<AnimatedSprite2D>();
-    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/orc/orc.scml");
+    auto* animationSet = DV_RES_CACHE->GetResource<AnimationSet2D>("sprites/orc/orc.scml");
     animatedSprite->SetAnimationSet(animationSet);
     animatedSprite->SetAnimation("run"); // Get scml file and Play "run" anim
     animatedSprite->SetLayer(2); // Make orc always visible
@@ -230,7 +230,7 @@ Node* Sample2D::CreateCoin()
     Node* node = scene_->create_child("Coin");
     node->SetScale(0.5);
     auto* animatedSprite = node->create_component<AnimatedSprite2D>();
-    auto* animationSet = DV_RES_CACHE.GetResource<AnimationSet2D>("sprites/gold_icon.scml");
+    auto* animationSet = DV_RES_CACHE->GetResource<AnimationSet2D>("sprites/gold_icon.scml");
     animatedSprite->SetAnimationSet(animationSet); // Get scml file and Play "idle" anim
     animatedSprite->SetAnimation("idle");
     animatedSprite->SetLayer(4);
@@ -247,7 +247,7 @@ Node* Sample2D::CreateMovingPlatform()
     Node* node = scene_->create_child("MovingPlatform");
     node->SetScale(Vector3(3.0f, 1.0f, 0.0f));
     auto* staticSprite = node->create_component<StaticSprite2D>();
-    staticSprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>("sprites/box.png"));
+    staticSprite->SetSprite(DV_RES_CACHE->GetResource<Sprite2D>("sprites/box.png"));
     auto* body = node->create_component<RigidBody2D>();
     body->SetBodyType(BT_STATIC);
     auto* shape = node->create_component<CollisionBox2D>(); // Create box shape
@@ -378,18 +378,18 @@ Vector<Vector2> Sample2D::CreatePathFromPoints(TileMapObject2D* object, const Ve
 
 void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int remainingCoins)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     UI* ui = DV_UI;
 
     // Set the default UI style and font
-    ui->GetRoot()->SetDefaultStyle(cache.GetResource<XmlFile>("ui/default_style.xml"));
-    auto* font = cache.GetResource<Font>("fonts/anonymous pro.ttf");
+    ui->GetRoot()->SetDefaultStyle(cache->GetResource<XmlFile>("ui/default_style.xml"));
+    auto* font = cache->GetResource<Font>("fonts/anonymous pro.ttf");
 
     // We create in-game UIs (coins and lifes) first so that they are hidden by the fullscreen UI (we could also temporary hide them using SetVisible)
 
     // Create the UI for displaying the remaining coins
     auto* coinsUI = ui->GetRoot()->create_child<BorderImage>("Coins");
-    coinsUI->SetTexture(cache.GetResource<Texture2D>("sprites/gold_icon.png"));
+    coinsUI->SetTexture(cache->GetResource<Texture2D>("sprites/gold_icon.png"));
     coinsUI->SetSize(50, 50);
     coinsUI->SetImageRect(IntRect(0, 64, 60, 128));
     coinsUI->SetAlignment(HA_LEFT, VA_TOP);
@@ -402,7 +402,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
 
     // Create the UI for displaying the remaining lifes
     auto* lifeUI = ui->GetRoot()->create_child<BorderImage>("Life");
-    lifeUI->SetTexture(cache.GetResource<Texture2D>("sprites/imp/imp_all.png"));
+    lifeUI->SetTexture(cache->GetResource<Texture2D>("sprites/imp/imp_all.png"));
     lifeUI->SetSize(70, 80);
     lifeUI->SetAlignment(HA_RIGHT, VA_TOP);
     lifeUI->SetPosition(-5, 5);
@@ -421,7 +421,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     // Create the title
     auto* title = fullUI->create_child<BorderImage>("Title");
     title->SetMinSize(fullUI->GetWidth(), 50);
-    title->SetTexture(cache.GetResource<Texture2D>("textures/heightmap.png"));
+    title->SetTexture(cache->GetResource<Texture2D>("textures/heightmap.png"));
     title->SetFullImageRect();
     title->SetAlignment(HA_CENTER, VA_TOP);
     auto* titleText = title->create_child<Text>("TitleText");
@@ -431,7 +431,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
 
     // Create the image
     auto* spriteUI = fullUI->create_child<BorderImage>("Sprite");
-    spriteUI->SetTexture(cache.GetResource<Texture2D>("sprites/imp/imp_all.png"));
+    spriteUI->SetTexture(cache->GetResource<Texture2D>("sprites/imp/imp_all.png"));
     spriteUI->SetSize(238, 271);
     spriteUI->SetAlignment(HA_CENTER, VA_CENTER);
     spriteUI->SetPosition(0, - ui->GetRoot()->GetHeight() / 4);
@@ -465,7 +465,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
     // Create the instructions
     auto* instructionText = ui->GetRoot()->create_child<Text>("Instructions");
     instructionText->SetText("Use WASD keys or Arrows to move\nPageUp/PageDown/MouseWheel to zoom\nF5/F7 to save/reload scene\n'Z' to toggle debug geometry\nSpace to fight");
-    instructionText->SetFont(cache.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(cache->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER); // Center rows in relation to each other
     instructionText->SetAlignment(HA_CENTER, VA_CENTER);
     instructionText->SetPosition(0, ui->GetRoot()->GetHeight() / 4);
@@ -494,7 +494,7 @@ void Sample2D::CreateBackgroundSprite(const TileMapInfo2D& info, float scale, co
     node->SetPosition(Vector3(info.GetMapWidth(), info.GetMapHeight(), 0) / 2);
     node->SetScale(scale);
     auto* sprite = node->create_component<StaticSprite2D>();
-    sprite->SetSprite(DV_RES_CACHE.GetResource<Sprite2D>(texture));
+    sprite->SetSprite(DV_RES_CACHE->GetResource<Sprite2D>(texture));
     set_random_seed(Time::GetSystemTime()); // Randomize from system clock
     sprite->SetColor(Color(Random(0.0f, 1.0f), Random(0.0f, 1.0f), Random(0.0f, 1.0f), 1.0f));
     sprite->SetLayer(-99);
@@ -516,13 +516,13 @@ void Sample2D::SpawnEffect(Node* node)
     particleNode->SetScale(0.5f / node->GetScale().x);
     auto* particleEmitter = particleNode->create_component<ParticleEmitter2D>();
     particleEmitter->SetLayer(2);
-    particleEmitter->SetEffect(DV_RES_CACHE.GetResource<ParticleEffect2D>("sprites/sun.pex"));
+    particleEmitter->SetEffect(DV_RES_CACHE->GetResource<ParticleEffect2D>("sprites/sun.pex"));
 }
 
 void Sample2D::PlaySoundEffect(const String& soundName)
 {
     auto* source = scene_->create_component<SoundSource>();
-    auto* sound = DV_RES_CACHE.GetResource<Sound>("sounds/" + soundName);
+    auto* sound = DV_RES_CACHE->GetResource<Sound>("sounds/" + soundName);
 
     if (sound)
     {

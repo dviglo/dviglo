@@ -238,7 +238,7 @@ ResourceRef StaticSprite2D::GetSpriteAttr() const
 
 void StaticSprite2D::SetCustomMaterialAttr(const ResourceRef& value)
 {
-    SetCustomMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
+    SetCustomMaterial(DV_RES_CACHE->GetResource<Material>(value.name_));
 }
 
 ResourceRef StaticSprite2D::GetCustomMaterialAttr() const

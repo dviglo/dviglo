@@ -114,7 +114,7 @@ Engine::Engine() :
     Time::get_instance();
     WorkQueue::get_instance();
     FileSystem::get_instance();
-    ResourceCache::get_instance();
+    new ResourceCache();
     new Localization();
 #ifdef DV_NETWORK
     new Network();
@@ -153,6 +153,7 @@ Engine::~Engine()
     delete Audio::instance_;
     delete Network::instance_;
     delete Localization::instance_;
+    delete ResourceCache::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
 
@@ -230,7 +231,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         Renderer* renderer = DV_RENDERER;
 
         graphics->SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Dviglo").GetString());
-        graphics->SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
+        graphics->SetWindowIcon(DV_RES_CACHE->GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
         graphics->SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());
         graphics->SetOrientations(GetParameter(parameters, EP_ORIENTATIONS, "LandscapeLeft LandscapeRight").GetString());
 
@@ -256,7 +257,7 @@ bool Engine::Initialize(const VariantMap& parameters)
         if (HasParameter(parameters, EP_DUMP_SHADERS))
             graphics->BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))
-            renderer->SetDefaultRenderPath(DV_RES_CACHE.GetResource<XmlFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
+            renderer->SetDefaultRenderPath(DV_RES_CACHE->GetResource<XmlFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
 
         renderer->SetDrawShadows(GetParameter(parameters, EP_SHADOWS, true).GetBool());
         if (renderer->GetDrawShadows() && GetParameter(parameters, EP_LOW_QUALITY_SHADOWS, false).GetBool())
@@ -304,18 +305,18 @@ bool Engine::Initialize(const VariantMap& parameters)
 
 bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOld /*= true*/)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     FileSystem& fileSystem = DV_FILE_SYSTEM;
 
     // Remove all resource paths and packages
     if (removeOld)
     {
-        Vector<String> resourceDirs = cache.GetResourceDirs();
-        Vector<SharedPtr<PackageFile>> packageFiles = cache.GetPackageFiles();
+        Vector<String> resourceDirs = cache->GetResourceDirs();
+        Vector<SharedPtr<PackageFile>> packageFiles = cache->GetPackageFiles();
         for (unsigned i = 0; i < resourceDirs.Size(); ++i)
-            cache.remove_resource_dir(resourceDirs[i]);
+            cache->remove_resource_dir(resourceDirs[i]);
         for (unsigned i = 0; i < packageFiles.Size(); ++i)
-            cache.remove_package_file(packageFiles[i]);
+            cache->remove_package_file(packageFiles[i]);
     }
 
     // Add resource paths
@@ -338,7 +339,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                 String packageName = resourcePrefixPaths[j] + resourcePaths[i] + ".pak";
                 if (fileSystem.file_exists(packageName))
                 {
-                    if (cache.add_package_file(packageName))
+                    if (cache->add_package_file(packageName))
                         break;
                     else
                         return false;   // The root cause of the error should have already been logged
@@ -346,7 +347,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                 String pathName = resourcePrefixPaths[j] + resourcePaths[i];
                 if (dir_exists(pathName))
                 {
-                    if (cache.add_resource_dir(pathName))
+                    if (cache->add_resource_dir(pathName))
                         break;
                     else
                         return false;
@@ -364,7 +365,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         {
             String pathName = resourcePaths[i];
             if (dir_exists(pathName))
-                if (!cache.add_resource_dir(pathName))
+                if (!cache->add_resource_dir(pathName))
                     return false;
         }
     }
@@ -378,7 +379,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             String packageName = resourcePrefixPaths[j] + resourcePackages[i];
             if (fileSystem.file_exists(packageName))
             {
-                if (cache.add_package_file(packageName))
+                if (cache->add_package_file(packageName))
                     break;
                 else
                     return false;
@@ -418,7 +419,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         continue;
 
                     String autoResourceDir = autoLoadPath + "/" + dir;
-                    if (!cache.add_resource_dir(autoResourceDir, 0))
+                    if (!cache->add_resource_dir(autoResourceDir, 0))
                         return false;
                 }
 
@@ -432,7 +433,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
                         continue;
 
                     String autoPackageName = autoLoadPath + "/" + pak;
-                    if (!cache.add_package_file(autoPackageName, 0))
+                    if (!cache->add_package_file(autoPackageName, 0))
                         return false;
                 }
             }
@@ -553,7 +554,7 @@ void Engine::DumpResources(bool dumpFileName)
     if (!Thread::IsMainThread())
         return;
 
-    const HashMap<StringHash, ResourceGroup>& resourceGroups = DV_RES_CACHE.GetAllResources();
+    const HashMap<StringHash, ResourceGroup>& resourceGroups = DV_RES_CACHE->GetAllResources();
     if (dumpFileName)
     {
         DV_LOGRAW("Used resources:\n");
@@ -569,7 +570,7 @@ void Engine::DumpResources(bool dumpFileName)
     }
     else
     {
-        DV_LOGRAW(DV_RES_CACHE.print_memory_usage() + "\n");
+        DV_LOGRAW(DV_RES_CACHE->print_memory_usage() + "\n");
     }
 #endif
 }

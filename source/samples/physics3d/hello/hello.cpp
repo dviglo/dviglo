@@ -60,7 +60,7 @@ void Physics::Start()
 
 void Physics::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -97,8 +97,8 @@ void Physics::create_scene()
     Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
-    skybox->SetModel(cache.GetResource<Model>("models/box.mdl"));
-    skybox->SetMaterial(cache.GetResource<Material>("materials/skybox.xml"));
+    skybox->SetModel(cache->GetResource<Model>("models/box.mdl"));
+    skybox->SetMaterial(cache->GetResource<Material>("materials/skybox.xml"));
 
     {
         // Create a floor object, 1000 x 1000 world units. Adjust position so that the ground is at zero Y
@@ -106,8 +106,8 @@ void Physics::create_scene()
         floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
         floorNode->SetScale(Vector3(1000.0f, 1.0f, 1000.0f));
         auto* floorObject = floorNode->create_component<StaticModel>();
-        floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        floorObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+        floorObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        floorObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
         // Make the floor physical by adding RigidBody and CollisionShape components. The RigidBody's default
         // parameters make the object static (zero mass.) Note that a CollisionShape by itself will not participate
@@ -128,8 +128,8 @@ void Physics::create_scene()
                 Node* boxNode = scene_->create_child("Box");
                 boxNode->SetPosition(Vector3((float)x, -(float)y + 8.0f, 0.0f));
                 auto* boxObject = boxNode->create_component<StaticModel>();
-                boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-                boxObject->SetMaterial(cache.GetResource<Material>("materials/stone_env_map_small.xml"));
+                boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+                boxObject->SetMaterial(cache->GetResource<Material>("materials/stone_env_map_small.xml"));
                 boxObject->SetCastShadows(true);
 
                 // Create RigidBody and CollisionShape components like above. Give the RigidBody mass to make it movable
@@ -164,7 +164,7 @@ void Physics::create_instructions()
         "F5 to save scene, F7 to load\n"
         "Space to toggle physics debug geometry"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 
@@ -253,8 +253,8 @@ void Physics::SpawnObject()
     boxNode->SetRotation(cameraNode_->GetRotation());
     boxNode->SetScale(0.25f);
     auto* boxObject = boxNode->create_component<StaticModel>();
-    boxObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
-    boxObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_env_map_small.xml"));
+    boxObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/box.mdl"));
+    boxObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/stone_env_map_small.xml"));
     boxObject->SetCastShadows(true);
 
     // Create physics components, use a smaller mass also

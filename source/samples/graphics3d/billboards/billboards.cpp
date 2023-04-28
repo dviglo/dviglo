@@ -56,7 +56,7 @@ void Billboards::Start()
 
 void Billboards::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -90,8 +90,8 @@ void Billboards::create_scene()
             floorNode->SetPosition(Vector3(x * 20.5f, -0.5f, y * 20.5f));
             floorNode->SetScale(Vector3(20.0f, 1.0f, 20.f));
             auto* floorObject = floorNode->create_component<StaticModel>();
-            floorObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-            floorObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+            floorObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+            floorObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         }
     }
 
@@ -112,8 +112,8 @@ void Billboards::create_scene()
             mushroomNode->SetRotation(Quaternion(0.0f, Random() * 360.0f, 0.0f));
             mushroomNode->SetScale(1.0f + Random() * 4.0f);
             auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-            mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+            mushroomObject->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+            mushroomObject->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
     }
@@ -129,7 +129,7 @@ void Billboards::create_scene()
 
         auto* billboardObject = smokeNode->create_component<BillboardSet>();
         billboardObject->SetNumBillboards(NUM_BILLBOARDS);
-        billboardObject->SetMaterial(cache.GetResource<Material>("materials/lit_smoke.xml"));
+        billboardObject->SetMaterial(cache->GetResource<Material>("materials/lit_smoke.xml"));
         billboardObject->SetSorted(true);
 
         for (unsigned j = 0; j < NUM_BILLBOARDS; ++j)
@@ -163,7 +163,7 @@ void Billboards::create_scene()
 
         light->SetLightType(LIGHT_SPOT);
         light->SetRange(90.0f);
-        light->SetRampTexture(cache.GetResource<Texture2D>("textures/ramp_extreme.png"));
+        light->SetRampTexture(cache->GetResource<Texture2D>("textures/ramp_extreme.png"));
         light->SetFov(45.0f);
         light->SetColor(color);
         light->SetSpecularIntensity(1.0f);
@@ -198,7 +198,7 @@ void Billboards::create_instructions()
         "Use WASD keys and mouse to move\n"
         "Space to toggle debug geometry"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

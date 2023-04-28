@@ -66,7 +66,7 @@ void Urho2DStretchableSprite::create_scene()
     refSpriteNode_ = scene_->create_child("regular sprite");
     stretchSpriteNode_ = scene_->create_child("stretchable sprite");
 
-    auto* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/stretchable.png");
+    auto* sprite = DV_RES_CACHE->GetResource<Sprite2D>("sprites/stretchable.png");
     if (sprite)
     {
         refSpriteNode_->create_component<StaticSprite2D>()->SetSprite(sprite);
@@ -89,7 +89,7 @@ void Urho2DStretchableSprite::create_instructions()
         "Scale, Rotate, and Translate transform modes. In Rotate\n"
         "mode, combine A/D keys with Ctrl key to rotate about\n"
         "the Z axis");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 12);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 12);
 
     // Position the text relative to the screen center
     instructionText->SetHorizontalAlignment(HA_CENTER);

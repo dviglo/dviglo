@@ -872,7 +872,7 @@ void CollisionShape::NotifyRigidBody(bool updateMass)
 
 void CollisionShape::SetModelAttr(const ResourceRef& value)
 {
-    model_ = DV_RES_CACHE.GetResource<Model>(value.name_);
+    model_ = DV_RES_CACHE->GetResource<Model>(value.name_);
     recreateShape_ = true;
     MarkNetworkUpdate();
 }

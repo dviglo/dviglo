@@ -60,7 +60,7 @@ void CrowdNavigation::Start()
 
 void CrowdNavigation::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -73,8 +73,8 @@ void CrowdNavigation::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
     // Create a Zone component for ambient lighting & fog control
     Node* zoneNode = scene_->create_child("Zone");
@@ -104,8 +104,8 @@ void CrowdNavigation::create_scene()
         boxNode->SetPosition(Vector3(Random(80.0f) - 40.0f, size * 0.5f, Random(80.0f) - 40.0f));
         boxNode->SetScale(size);
         auto* boxObject = boxNode->create_component<StaticModel>();
-        boxObject->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        boxObject->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+        boxObject->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        boxObject->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         boxObject->SetCastShadows(true);
         if (size >= 3.0f)
             boxObject->SetOccluder(true);
@@ -174,7 +174,7 @@ void CrowdNavigation::create_ui()
 {
     // Create a Cursor UI element because we want to be able to hide and show it at will. When hidden, the mouse cursor will
     // control the camera, and when visible, it will point the raycast target
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
     SharedPtr<Cursor> cursor(new Cursor());
     cursor->SetStyleAuto(style);
     DV_UI->SetCursor(cursor);
@@ -194,7 +194,7 @@ void CrowdNavigation::create_ui()
         "Space to toggle debug geometry\n"
         "F12 to toggle this instruction text"
     );
-    instructionText_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText_->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText_->SetTextAlignment(HA_CENTER);
 
@@ -235,8 +235,8 @@ void CrowdNavigation::SpawnJack(const Vector3& pos, Node* jackGroup)
     SharedPtr<Node> jackNode(jackGroup->create_child("Jack"));
     jackNode->SetPosition(pos);
     auto* modelObject = jackNode->create_component<AnimatedModel>();
-    modelObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/jack.mdl"));
-    modelObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/jack.xml"));
+    modelObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/jack.mdl"));
+    modelObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/jack.xml"));
     modelObject->SetCastShadows(true);
     jackNode->create_component<AnimationController>();
 
@@ -254,8 +254,8 @@ void CrowdNavigation::create_mushroom(const Vector3& pos)
     mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
     mushroomNode->SetScale(2.0f + Random(0.5f));
     auto* mushroomObject = mushroomNode->create_component<StaticModel>();
-    mushroomObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/mushroom.mdl"));
-    mushroomObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/mushroom.xml"));
+    mushroomObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/mushroom.mdl"));
+    mushroomObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/mushroom.xml"));
     mushroomObject->SetCastShadows(true);
 
     // Create the navigation Obstacle component and set its height & radius proportional to scale
@@ -288,10 +288,10 @@ void CrowdNavigation::CreateMovingBarrels(DynamicNavigationMesh* navMesh)
 {
     Node* barrel = scene_->create_child("Barrel");
     auto* model = barrel->create_component<StaticModel>();
-    model->SetModel(DV_RES_CACHE.GetResource<Model>("models/cylinder.mdl"));
-    auto* material = DV_RES_CACHE.GetResource<Material>("materials/stone_tiled.xml");
+    model->SetModel(DV_RES_CACHE->GetResource<Model>("models/cylinder.mdl"));
+    auto* material = DV_RES_CACHE->GetResource<Material>("materials/stone_tiled.xml");
     model->SetMaterial(material);
-    material->SetTexture(TU_DIFFUSE, DV_RES_CACHE.GetResource<Texture2D>("textures/terrain_detail2.dds"));
+    material->SetTexture(TU_DIFFUSE, DV_RES_CACHE->GetResource<Texture2D>("textures/terrain_detail2.dds"));
     model->SetCastShadows(true);
     for (unsigned i = 0;  i < 20; ++i)
     {

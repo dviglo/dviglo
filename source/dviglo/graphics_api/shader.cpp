@@ -28,8 +28,8 @@ Shader::Shader() :
 Shader::~Shader()
 {
     // Не обращаемся к ResourceCache при завершении приложения
-    if (!ResourceCache::is_destructed())
-        DV_RES_CACHE.reset_dependencies(this);
+    if (DV_RES_CACHE)
+        DV_RES_CACHE->reset_dependencies(this);
 }
 
 void Shader::register_object()
@@ -104,13 +104,13 @@ ShaderVariation* Shader::GetVariation(ShaderType type, const char* defines)
 
 bool Shader::ProcessSource(String& code, Deserializer& source)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // If the source if a non-packaged file, store the timestamp
     auto* file = dynamic_cast<File*>(&source);
     if (file && !file->IsPackaged())
     {
-        String fullName = cache.GetResourceFileName(file->GetName());
+        String fullName = cache->GetResourceFileName(file->GetName());
         unsigned fileTimeStamp = DV_FILE_SYSTEM.GetLastModifiedTime(fullName);
         if (fileTimeStamp > timeStamp_)
             timeStamp_ = fileTimeStamp;
@@ -118,7 +118,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
 
     // Store resource dependencies for includes so that we know to reload if any of them changes
     if (source.GetName() != GetName())
-        cache.store_resource_dependency(this, source.GetName());
+        cache->store_resource_dependency(this, source.GetName());
 
     while (!source.IsEof())
     {
@@ -128,7 +128,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
         {
             String includeFileName = GetPath(source.GetName()) + line.Substring(12).Replaced("\"", "").Trimmed();
 
-            shared_ptr<File> includeFile = cache.GetFile(includeFileName);
+            shared_ptr<File> includeFile = cache->GetFile(includeFileName);
             if (!includeFile)
                 return false;
 

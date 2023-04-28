@@ -1277,7 +1277,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // Read node ID (not needed)
     /*NodeId nodeID = */file->ReadU32();
@@ -1316,8 +1316,8 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
                 {
                     const ResourceRef& ref = varValue.GetResourceRef();
                     // Sanitate resource name beforehand so that when we get the background load event, the name matches exactly
-                    String name = cache.sanitate_resource_name(ref.name_);
-                    bool success = cache.background_load_resource(ref.type_, name);
+                    String name = cache->sanitate_resource_name(ref.name_);
+                    bool success = cache->background_load_resource(ref.type_, name);
                     if (success)
                     {
                         ++asyncProgress_.totalResources_;
@@ -1329,8 +1329,8 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
                     const ResourceRefList& refList = varValue.GetResourceRefList();
                     for (unsigned k = 0; k < refList.names_.Size(); ++k)
                     {
-                        String name = cache.sanitate_resource_name(refList.names_[k]);
-                        bool success = cache.background_load_resource(refList.type_, name);
+                        String name = cache->sanitate_resource_name(refList.names_[k]);
+                        bool success = cache->background_load_resource(refList.type_, name);
                         if (success)
                         {
                             ++asyncProgress_.totalResources_;
@@ -1353,7 +1353,7 @@ void Scene::PreloadResourcesXML(const XmlElement& element)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
     XmlElement compElem = element.GetChild("component");
@@ -1380,8 +1380,8 @@ void Scene::PreloadResourcesXML(const XmlElement& element)
                         if (attr.type_ == VAR_RESOURCEREF)
                         {
                             ResourceRef ref = attrElem.GetVariantValue(attr.type_).GetResourceRef();
-                            String name = cache.sanitate_resource_name(ref.name_);
-                            bool success = cache.background_load_resource(ref.type_, name);
+                            String name = cache->sanitate_resource_name(ref.name_);
+                            bool success = cache->background_load_resource(ref.type_, name);
                             if (success)
                             {
                                 ++asyncProgress_.totalResources_;
@@ -1393,8 +1393,8 @@ void Scene::PreloadResourcesXML(const XmlElement& element)
                             ResourceRefList refList = attrElem.GetVariantValue(attr.type_).GetResourceRefList();
                             for (unsigned k = 0; k < refList.names_.Size(); ++k)
                             {
-                                String name = cache.sanitate_resource_name(refList.names_[k]);
-                                bool success = cache.background_load_resource(refList.type_, name);
+                                String name = cache->sanitate_resource_name(refList.names_[k]);
+                                bool success = cache->background_load_resource(refList.type_, name);
                                 if (success)
                                 {
                                     ++asyncProgress_.totalResources_;
@@ -1433,7 +1433,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
 {
     // If not threaded, can not background load resources, so rather load synchronously later when needed
 #ifdef DV_THREADING
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // Node or Scene attributes do not include any resources; therefore skip to the components
     JSONArray componentArray = value.Get("components").GetArray();
@@ -1465,8 +1465,8 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                         if (attr.type_ == VAR_RESOURCEREF)
                         {
                             ResourceRef ref = attrVal.Get("value").GetVariantValue(attr.type_).GetResourceRef();
-                            String name = cache.sanitate_resource_name(ref.name_);
-                            bool success = cache.background_load_resource(ref.type_, name);
+                            String name = cache->sanitate_resource_name(ref.name_);
+                            bool success = cache->background_load_resource(ref.type_, name);
                             if (success)
                             {
                                 ++asyncProgress_.totalResources_;
@@ -1478,8 +1478,8 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
                             ResourceRefList refList = attrVal.Get("value").GetVariantValue(attr.type_).GetResourceRefList();
                             for (unsigned k = 0; k < refList.names_.Size(); ++k)
                             {
-                                String name = cache.sanitate_resource_name(refList.names_[k]);
-                                bool success = cache.background_load_resource(refList.type_, name);
+                                String name = cache->sanitate_resource_name(refList.names_[k]);
+                                bool success = cache->background_load_resource(refList.type_, name);
                                 if (success)
                                 {
                                     ++asyncProgress_.totalResources_;

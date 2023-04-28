@@ -45,7 +45,7 @@ public:
         setup_viewport();
         subscribe_to_events();
 
-        XmlFile* xmlFile = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+        XmlFile* xmlFile = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
         DV_DEBUG_HUD->SetDefaultStyle(xmlFile);
 
         screenSpaceSpriteBatch_ = new SpriteBatch();
@@ -66,7 +66,7 @@ public:
 
     void create_scene()
     {
-        ResourceCache& cache = DV_RES_CACHE;
+        ResourceCache* cache = DV_RES_CACHE;
 
         scene_ = new Scene();
         scene_->create_component<Octree>();
@@ -74,8 +74,8 @@ public:
         Node* planeNode = scene_->create_child("Plane");
         planeNode->SetScale(Vector3(100.0f, 1.0f, 100.0f));
         StaticModel* planeObject = planeNode->create_component<StaticModel>();
-        planeObject->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-        planeObject->SetMaterial(cache.GetResource<Material>("materials/stone_tiled.xml"));
+        planeObject->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+        planeObject->SetMaterial(cache->GetResource<Material>("materials/stone_tiled.xml"));
 
         Node* lightNode = scene_->create_child("DirectionalLight");
         lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
@@ -103,8 +103,8 @@ public:
             mushroomNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
             mushroomNode->SetScale(0.5f + Random(2.0f));
             StaticModel* mushroomObject = mushroomNode->create_component<StaticModel>();
-            mushroomObject->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-            mushroomObject->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+            mushroomObject->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+            mushroomObject->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
             mushroomObject->SetCastShadows(true);
         }
 
@@ -189,7 +189,7 @@ public:
 
     void HandleEndViewRender(StringHash eventType, VariantMap& eventData)
     {
-        ResourceCache& cache = DV_RES_CACHE;
+        ResourceCache* cache = DV_RES_CACHE;
         Graphics* graphics = DV_GRAPHICS;
 
         // Размер текстуры должен быть степенью двойки (64, 128, 256, ...),
@@ -204,8 +204,8 @@ public:
         // как это сделано в Sprite2D.cpp.
         // В других случаях ("sprites/imp/imp_head.png" - 238x149) и это не помогает
 
-        Texture2D* head = cache.GetResource<Texture2D>("textures/fish_bone_logo.png");
-        Font* font = cache.GetResource<Font>("fonts/anonymous pro.ttf");
+        Texture2D* head = cache->GetResource<Texture2D>("textures/fish_bone_logo.png");
+        Font* font = cache->GetResource<Font>("fonts/anonymous pro.ttf");
 
         // Очистка экрана. Если сцена пустая, то можно просто задать цвет зоны
         //graphics->Clear(CLEAR_COLOR, Color::GREEN);

@@ -41,7 +41,7 @@ public:
     void CreateCurrentFpsUiElement()
     {
         UiElement* root = DV_UI->GetRoot();
-        root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml"));
+        root->SetDefaultStyle(DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml"));
 
         Text* fpsElement = root->create_child<Text>(CURRENT_FPS_STR);
         fpsElement->SetStyleAuto();

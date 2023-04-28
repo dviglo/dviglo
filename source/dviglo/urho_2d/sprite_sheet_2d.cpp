@@ -121,14 +121,14 @@ bool SpriteSheet2D::BeginLoadFromPListFile(Deserializer& source)
     // If we're async loading, request the texture now. Finish during end_load().
     loadTextureName_ = get_parent(GetName()) + textureFileName;
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.background_load_resource<Texture2D>(loadTextureName_, true, this);
+        DV_RES_CACHE->background_load_resource<Texture2D>(loadTextureName_, true, this);
 
     return true;
 }
 
 bool SpriteSheet2D::EndLoadFromPListFile()
 {
-    texture_ = DV_RES_CACHE.GetResource<Texture2D>(loadTextureName_);
+    texture_ = DV_RES_CACHE->GetResource<Texture2D>(loadTextureName_);
     if (!texture_)
     {
         DV_LOGERROR("Could not load texture " + loadTextureName_);
@@ -196,14 +196,14 @@ bool SpriteSheet2D::BeginLoadFromXMLFile(Deserializer& source)
     // If we're async loading, request the texture now. Finish during end_load().
     loadTextureName_ = get_parent(GetName()) + rootElem.GetAttribute("imagePath");
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.background_load_resource<Texture2D>(loadTextureName_, true, this);
+        DV_RES_CACHE->background_load_resource<Texture2D>(loadTextureName_, true, this);
 
     return true;
 }
 
 bool SpriteSheet2D::EndLoadFromXMLFile()
 {
-    texture_ = DV_RES_CACHE.GetResource<Texture2D>(loadTextureName_);
+    texture_ = DV_RES_CACHE->GetResource<Texture2D>(loadTextureName_);
     if (!texture_)
     {
         DV_LOGERROR("Could not load texture " + loadTextureName_);
@@ -269,14 +269,14 @@ bool SpriteSheet2D::BeginLoadFromJSONFile(Deserializer& source)
     // If we're async loading, request the texture now. Finish during end_load().
     loadTextureName_ = get_parent(GetName()) + rootElem.Get("imagePath").GetString();
     if (GetAsyncLoadState() == ASYNC_LOADING)
-        DV_RES_CACHE.background_load_resource<Texture2D>(loadTextureName_, true, this);
+        DV_RES_CACHE->background_load_resource<Texture2D>(loadTextureName_, true, this);
 
     return true;
 }
 
 bool SpriteSheet2D::EndLoadFromJSONFile()
 {
-    texture_ = DV_RES_CACHE.GetResource<Texture2D>(loadTextureName_);
+    texture_ = DV_RES_CACHE->GetResource<Texture2D>(loadTextureName_);
     if (!texture_)
     {
         DV_LOGERROR("Could not load texture " + loadTextureName_);

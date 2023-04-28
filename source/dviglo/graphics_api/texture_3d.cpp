@@ -58,7 +58,7 @@ bool Texture3D::begin_load(Deserializer& source)
     String texPath, texName, texExt;
     split_path(GetName(), texPath, texName, texExt);
 
-    DV_RES_CACHE.reset_dependencies(this);
+    DV_RES_CACHE->reset_dependencies(this);
 
     loadParameters_ = new XmlFile();
     if (!loadParameters_->Load(source))
@@ -81,11 +81,11 @@ bool Texture3D::begin_load(Deserializer& source)
         if (volumeTexPath.Empty())
             name = texPath + name;
 
-        loadImage_ = DV_RES_CACHE.GetTempResource<Image>(name);
+        loadImage_ = DV_RES_CACHE->GetTempResource<Image>(name);
         // Precalculate mip levels if async loading
         if (loadImage_ && GetAsyncLoadState() == ASYNC_LOADING)
             loadImage_->PrecalculateLevels();
-        DV_RES_CACHE.store_resource_dependency(this, name);
+        DV_RES_CACHE->store_resource_dependency(this, name);
         return true;
     }
     else if (colorlutElem)
@@ -98,7 +98,7 @@ bool Texture3D::begin_load(Deserializer& source)
         if (colorlutTexPath.Empty())
             name = texPath + name;
 
-        shared_ptr<File> file = DV_RES_CACHE.GetFile(name);
+        shared_ptr<File> file = DV_RES_CACHE->GetFile(name);
         loadImage_ = new Image();
         if (!loadImage_->LoadColorLUT(*(file.get())))
         {
@@ -109,7 +109,7 @@ bool Texture3D::begin_load(Deserializer& source)
         // Precalculate mip levels if async loading
         if (loadImage_ && GetAsyncLoadState() == ASYNC_LOADING)
             loadImage_->PrecalculateLevels();
-        DV_RES_CACHE.store_resource_dependency(this, name);
+        DV_RES_CACHE->store_resource_dependency(this, name);
         return true;
     }
 

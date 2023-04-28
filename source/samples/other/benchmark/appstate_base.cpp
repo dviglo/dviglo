@@ -18,7 +18,7 @@ void AppState_Base::LoadSceneXml(const String& path)
 {
     assert(!scene_);
     scene_ = MakeShared<Scene>();
-    shared_ptr<File> file = DV_RES_CACHE.GetFile(path);
+    shared_ptr<File> file = DV_RES_CACHE->GetFile(path);
     scene_->load_xml(*file);
 
 #ifndef NDEBUG

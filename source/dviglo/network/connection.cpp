@@ -532,15 +532,15 @@ void Connection::ProcessLoadScene(int msgID, MemoryBuffer& msg)
 
     // In case we have joined other scenes in this session, remove first all downloaded package files from the resource system
     // to prevent resource conflicts
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     const String& packageCacheDir = DV_NET->GetPackageCacheDir();
 
-    Vector<SharedPtr<PackageFile>> packages = cache.GetPackageFiles();
+    Vector<SharedPtr<PackageFile>> packages = cache->GetPackageFiles();
     for (unsigned i = 0; i < packages.Size(); ++i)
     {
         PackageFile* package = packages[i];
         if (!package->GetName().Find(packageCacheDir))
-            cache.remove_package_file(package, true);
+            cache->remove_package_file(package, true);
     }
 
     // Now check which packages we have in the resource cache or in the download cache, and which we need to download
@@ -892,7 +892,7 @@ void Connection::ProcessPackageDownload(int msgID, MemoryBuffer& msg)
 
                 // Instantiate the package and add to the resource system, as we will need it to load the scene
                 download.file_->Close();
-                DV_RES_CACHE.add_package_file(download.file_->GetName(), 0);
+                DV_RES_CACHE->add_package_file(download.file_->GetName(), 0);
 
                 // Then start the next download if there are more
                 downloads_.Erase(i);
@@ -1455,10 +1455,10 @@ void Connection::ProcessExistingNode(Node* node, NodeReplicationState& nodeState
 
 bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     const String& packageCacheDir = DV_NET->GetPackageCacheDir();
 
-    Vector<SharedPtr<PackageFile>> packages = cache.GetPackageFiles();
+    Vector<SharedPtr<PackageFile>> packages = cache->GetPackageFiles();
     Vector<String> downloadedPackages;
     bool packagesScanned = false;
 
@@ -1509,7 +1509,7 @@ bool Connection::RequestNeededPackages(unsigned numPackages, MemoryBuffer& msg)
                 if (newPackage->GetTotalSize() == fileSize && newPackage->GetChecksum() == checksum)
                 {
                     // Add the package to the resource system now, as we will need it to load the scene
-                    cache.add_package_file(newPackage, 0);
+                    cache->add_package_file(newPackage, 0);
                     found = true;
                     break;
                 }
@@ -1596,7 +1596,7 @@ void Connection::OnPackagesReady()
     {
         // Otherwise start the async loading process
         String extension = GetExtension(sceneFileName_);
-        shared_ptr<File> file = DV_RES_CACHE.GetFile(sceneFileName_);
+        shared_ptr<File> file = DV_RES_CACHE->GetFile(sceneFileName_);
         bool success;
 
         if (extension == ".xml")

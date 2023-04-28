@@ -294,15 +294,15 @@ void StaticModel::ApplyMaterialList(const String& fileName)
     if (useFileName.Trimmed().Empty() && model_)
         useFileName = replace_extension(model_->GetName(), ".txt");
 
-    ResourceCache& cache = DV_RES_CACHE;
-    shared_ptr<File> file = cache.GetFile(useFileName, false);
+    ResourceCache* cache = DV_RES_CACHE;
+    shared_ptr<File> file = cache->GetFile(useFileName, false);
     if (!file)
         return;
 
     unsigned index = 0;
     while (!file->IsEof() && index < batches_.Size())
     {
-        auto* material = cache.GetResource<Material>(file->ReadLine());
+        auto* material = cache->GetResource<Material>(file->ReadLine());
         if (material)
             SetMaterial(index, material);
 
@@ -361,14 +361,14 @@ void StaticModel::SetNumGeometries(unsigned num)
 
 void StaticModel::SetModelAttr(const ResourceRef& value)
 {
-    SetModel(DV_RES_CACHE.GetResource<Model>(value.name_));
+    SetModel(DV_RES_CACHE->GetResource<Model>(value.name_));
 }
 
 void StaticModel::SetMaterialsAttr(const ResourceRefList& value)
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     for (unsigned i = 0; i < value.names_.Size(); ++i)
-        SetMaterial(i, cache.GetResource<Material>(value.names_[i]));
+        SetMaterial(i, cache->GetResource<Material>(value.names_[i]));
 }
 
 ResourceRef StaticModel::GetModelAttr() const

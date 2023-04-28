@@ -84,7 +84,7 @@ void DynamicGeometry::create_scene()
     light->SetSpecularIntensity(1.5f);
 
     // Get the original model and its unmodified vertices, which are used as source data for the animation
-    auto* originalModel = DV_RES_CACHE.GetResource<Model>("models/box.mdl");
+    auto* originalModel = DV_RES_CACHE->GetResource<Model>("models/box.mdl");
     if (!originalModel)
     {
         DV_LOGERROR("Model not found, cannot initialize example scene");
@@ -258,7 +258,7 @@ void DynamicGeometry::create_instructions()
         "Use WASD keys and mouse to move\n"
         "Space to toggle animation"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

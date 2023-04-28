@@ -63,7 +63,7 @@ bool FontFaceBitmap::Load(const byte* fontData, unsigned fontDataSize, float poi
     unsigned pages = commonElem.GetU32("pages");
     textures_.Reserve(pages);
 
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
     String fontPath = GetPath(font_->GetName());
     unsigned totalTextureSize = 0;
 
@@ -80,7 +80,7 @@ bool FontFaceBitmap::Load(const byte* fontData, unsigned fontDataSize, float poi
         String textureFile = fontPath + pageElem.GetAttribute("file");
 
         // Load texture manually to allow controlling the alpha channel mode
-        shared_ptr<File> fontFile = cache.GetFile(textureFile);
+        shared_ptr<File> fontFile = cache->GetFile(textureFile);
         SharedPtr<Image> fontImage(new Image());
         if (!fontFile || !fontImage->Load(*fontFile))
         {
@@ -95,7 +95,7 @@ bool FontFaceBitmap::Load(const byte* fontData, unsigned fontDataSize, float poi
 
         // Add texture to resource cache
         texture->SetName(fontFile->GetName());
-        cache.add_manual_resource(texture);
+        cache->add_manual_resource(texture);
 
         totalTextureSize += fontImage->GetWidth() * fontImage->GetHeight() * fontImage->GetComponents();
 

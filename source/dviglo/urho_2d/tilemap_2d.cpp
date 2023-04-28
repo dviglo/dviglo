@@ -154,7 +154,7 @@ bool TileMap2D::position_to_tile_index(int& x, int& y, const Vector2& position) 
 
 void TileMap2D::SetTmxFileAttr(const ResourceRef& value)
 {
-    SetTmxFile(DV_RES_CACHE.GetResource<TmxFile2D>(value.name_));
+    SetTmxFile(DV_RES_CACHE->GetResource<TmxFile2D>(value.name_));
 }
 
 ResourceRef TileMap2D::GetTmxFileAttr() const

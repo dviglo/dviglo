@@ -3191,17 +3191,17 @@ Texture* View::FindNamedTexture(const String& name, bool isRenderTarget, bool is
         return renderTargets_[nameHash];
 
     // Then the resource system
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     // Check existing resources first. This does not load resources, so we can afford to guess the resource type wrong
     // without having to rely on the file extension
-    Texture* texture = cache.GetExistingResource<Texture2D>(name);
+    Texture* texture = cache->GetExistingResource<Texture2D>(name);
     if (!texture)
-        texture = cache.GetExistingResource<TextureCube>(name);
+        texture = cache->GetExistingResource<TextureCube>(name);
     if (!texture)
-        texture = cache.GetExistingResource<Texture3D>(name);
+        texture = cache->GetExistingResource<Texture3D>(name);
     if (!texture)
-        texture = cache.GetExistingResource<Texture2DArray>(name);
+        texture = cache->GetExistingResource<Texture2DArray>(name);
     if (texture)
         return texture;
 
@@ -3218,16 +3218,16 @@ Texture* View::FindNamedTexture(const String& name, bool isRenderTarget, bool is
                 type = Texture3D::GetTypeStatic();
 
             if (type == Texture3D::GetTypeStatic())
-                return cache.GetResource<Texture3D>(name);
+                return cache->GetResource<Texture3D>(name);
             else if (type == Texture2DArray::GetTypeStatic())
-                return cache.GetResource<Texture2DArray>(name);
+                return cache->GetResource<Texture2DArray>(name);
             else
 #endif
-                return cache.GetResource<TextureCube>(name);
+                return cache->GetResource<TextureCube>(name);
         }
         else
         {
-            return cache.GetResource<Texture2D>(name);
+            return cache->GetResource<Texture2D>(name);
         }
     }
 

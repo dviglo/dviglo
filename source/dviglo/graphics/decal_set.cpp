@@ -498,7 +498,7 @@ Material* DecalSet::GetMaterial() const
 
 void DecalSet::SetMaterialAttr(const ResourceRef& value)
 {
-    SetMaterial(DV_RES_CACHE.GetResource<Material>(value.name_));
+    SetMaterial(DV_RES_CACHE->GetResource<Material>(value.name_));
 }
 
 void DecalSet::SetDecalsAttr(const Vector<byte>& value)

@@ -197,7 +197,7 @@ bool Zone::IsInside(const Vector3& point) const
 
 void Zone::SetZoneTextureAttr(const ResourceRef& value)
 {
-    zoneTexture_ = static_cast<Texture*>(DV_RES_CACHE.GetResource(value.type_, value.name_));
+    zoneTexture_ = static_cast<Texture*>(DV_RES_CACHE->GetResource(value.type_, value.name_));
 }
 
 ResourceRef Zone::GetZoneTextureAttr() const

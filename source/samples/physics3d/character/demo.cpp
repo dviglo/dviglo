@@ -68,7 +68,7 @@ void CharacterDemo::Start()
 
 void CharacterDemo::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -107,8 +107,8 @@ void CharacterDemo::create_scene()
     floorNode->SetPosition(Vector3(0.0f, -0.5f, 0.0f));
     floorNode->SetScale(Vector3(200.0f, 1.0f, 200.0f));
     auto* object = floorNode->create_component<StaticModel>();
-    object->SetModel(cache.GetResource<Model>("models/box.mdl"));
-    object->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+    object->SetModel(cache->GetResource<Model>("models/box.mdl"));
+    object->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
 
     auto* body = floorNode->create_component<RigidBody>();
     // Use collision layer bit 2 to mark world scenery. This is what we will raycast against to prevent camera from going
@@ -126,8 +126,8 @@ void CharacterDemo::create_scene()
         objectNode->SetRotation(Quaternion(0.0f, Random(360.0f), 0.0f));
         objectNode->SetScale(2.0f + Random(5.0f));
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+        object->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+        object->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();
@@ -147,8 +147,8 @@ void CharacterDemo::create_scene()
         objectNode->SetRotation(Quaternion(Random(360.0f), Random(360.0f), Random(360.0f)));
         objectNode->SetScale(scale);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+        object->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        object->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();
@@ -171,8 +171,8 @@ void CharacterDemo::CreateCharacter()
 
     // Create the rendering component + animation controller
     auto* object = adjustNode->create_component<AnimatedModel>();
-    object->SetModel(DV_RES_CACHE.GetResource<Model>("models/mutant/mutant.mdl"));
-    object->SetMaterial(DV_RES_CACHE.GetResource<Material>("models/mutant/materials/mutant_m.xml"));
+    object->SetModel(DV_RES_CACHE->GetResource<Model>("models/mutant/mutant.mdl"));
+    object->SetMaterial(DV_RES_CACHE->GetResource<Material>("models/mutant/materials/mutant_m.xml"));
     object->SetCastShadows(true);
     adjustNode->create_component<AnimationController>();
 
@@ -210,7 +210,7 @@ void CharacterDemo::create_instructions()
         "Space to jump, F to toggle 1st/3rd person\n"
         "F5 to save scene, F7 to load"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

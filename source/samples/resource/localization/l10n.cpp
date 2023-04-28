@@ -68,7 +68,7 @@ void L10n::CreateGUI()
     Localization* l10n = DV_LOCALIZATION;
 
     UiElement* root = DV_UI->GetRoot();
-    root->SetDefaultStyle(DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml"));
+    root->SetDefaultStyle(DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml"));
 
     auto* window = new Window();
     root->AddChild(window);
@@ -138,8 +138,8 @@ void L10n::create_scene()
     Node* planeNode = scene_->create_child("Plane");
     planeNode->SetScale(Vector3(300.0f, 1.0f, 300.0f));
     auto* planeObject = planeNode->create_component<StaticModel>();
-    planeObject->SetModel(DV_RES_CACHE.GetResource<Model>("models/plane.mdl"));
-    planeObject->SetMaterial(DV_RES_CACHE.GetResource<Material>("materials/stone_tiled.xml"));
+    planeObject->SetModel(DV_RES_CACHE->GetResource<Model>("models/plane.mdl"));
+    planeObject->SetMaterial(DV_RES_CACHE->GetResource<Material>("materials/stone_tiled.xml"));
 
     Node* lightNode = scene_->create_child("DirectionalLight");
     lightNode->SetDirection(Vector3(0.6f, -1.0f, 0.8f));
@@ -158,7 +158,7 @@ void L10n::create_scene()
     // Manually set text in the current language.
     text3D->SetText(DV_LOCALIZATION->Get("lang"));
 
-    text3D->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 30);
+    text3D->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 30);
     text3D->SetColor(Color::BLACK);
     text3D->SetAlignment(HA_CENTER, VA_BOTTOM);
     text3DNode->SetScale(15);

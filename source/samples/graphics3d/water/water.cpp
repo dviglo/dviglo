@@ -58,7 +58,7 @@ void Water::Start()
 
 void Water::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -92,8 +92,8 @@ void Water::create_scene()
     Node* skyNode = scene_->create_child("Sky");
     skyNode->SetScale(500.0f); // The scale actually does not matter
     auto* skybox = skyNode->create_component<Skybox>();
-    skybox->SetModel(cache.GetResource<Model>("models/box.mdl"));
-    skybox->SetMaterial(cache.GetResource<Material>("materials/skybox.xml"));
+    skybox->SetModel(cache->GetResource<Model>("models/box.mdl"));
+    skybox->SetMaterial(cache->GetResource<Material>("materials/skybox.xml"));
 
     // Create heightmap terrain
     Node* terrainNode = scene_->create_child("Terrain");
@@ -102,8 +102,8 @@ void Water::create_scene()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.5f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache.GetResource<Image>("textures/heightmap.png"));
-    terrain->SetMaterial(cache.GetResource<Material>("materials/terrain.xml"));
+    terrain->SetHeightMap(cache->GetResource<Image>("textures/heightmap.png"));
+    terrain->SetMaterial(cache->GetResource<Material>("materials/terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -120,8 +120,8 @@ void Water::create_scene()
         objectNode->SetRotation(Quaternion(Vector3(0.0f, 1.0f, 0.0f), terrain->GetNormal(position)));
         objectNode->SetScale(5.0f);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/box.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/stone.xml"));
+        object->SetModel(cache->GetResource<Model>("models/box.mdl"));
+        object->SetMaterial(cache->GetResource<Material>("materials/stone.xml"));
         object->SetCastShadows(true);
     }
 
@@ -130,8 +130,8 @@ void Water::create_scene()
     waterNode_->SetScale(Vector3(2048.0f, 1.0f, 2048.0f));
     waterNode_->SetPosition(Vector3(0.0f, 5.0f, 0.0f));
     auto* water = waterNode_->create_component<StaticModel>();
-    water->SetModel(cache.GetResource<Model>("models/plane.mdl"));
-    water->SetMaterial(cache.GetResource<Material>("materials/water.xml"));
+    water->SetModel(cache->GetResource<Model>("models/plane.mdl"));
+    water->SetMaterial(cache->GetResource<Material>("materials/water.xml"));
     // Set a different viewmask on the water plane to be able to hide it from the reflection camera
     water->SetViewMask(0x80000000);
 
@@ -150,7 +150,7 @@ void Water::create_instructions()
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
     instructionText->SetText("Use WASD keys and mouse to move");
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     instructionText->SetTextAlignment(HA_CENTER);
 
     // Position the text relative to the screen center
@@ -197,7 +197,7 @@ void Water::setup_viewport()
     RenderSurface* surface = renderTexture->GetRenderSurface();
     SharedPtr<Viewport> rttViewport(new Viewport(scene_, reflectionCamera));
     surface->SetViewport(0, rttViewport);
-    auto* waterMat = DV_RES_CACHE.GetResource<Material>("materials/water.xml");
+    auto* waterMat = DV_RES_CACHE->GetResource<Material>("materials/water.xml");
     waterMat->SetTexture(TU_DIFFUSE, renderTexture);
 }
 

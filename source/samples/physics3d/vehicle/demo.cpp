@@ -64,7 +64,7 @@ void VehicleDemo::Start()
 
 void VehicleDemo::create_scene()
 {
-    ResourceCache& cache = DV_RES_CACHE;
+    ResourceCache* cache = DV_RES_CACHE;
 
     scene_ = new Scene();
 
@@ -105,8 +105,8 @@ void VehicleDemo::create_scene()
     terrain->SetPatchSize(64);
     terrain->SetSpacing(Vector3(2.0f, 0.1f, 2.0f)); // Spacing between vertices and vertical resolution of the height map
     terrain->SetSmoothing(true);
-    terrain->SetHeightMap(cache.GetResource<Image>("textures/heightmap.png"));
-    terrain->SetMaterial(cache.GetResource<Material>("materials/terrain.xml"));
+    terrain->SetHeightMap(cache->GetResource<Image>("textures/heightmap.png"));
+    terrain->SetMaterial(cache->GetResource<Material>("materials/terrain.xml"));
     // The terrain consists of large triangles, which fits well for occlusion rendering, as a hill can occlude all
     // terrain patches and other objects behind it
     terrain->SetOccluder(true);
@@ -128,8 +128,8 @@ void VehicleDemo::create_scene()
         objectNode->SetRotation(Quaternion(Vector3::UP, terrain->GetNormal(position)));
         objectNode->SetScale(3.0f);
         auto* object = objectNode->create_component<StaticModel>();
-        object->SetModel(cache.GetResource<Model>("models/mushroom.mdl"));
-        object->SetMaterial(cache.GetResource<Material>("materials/mushroom.xml"));
+        object->SetModel(cache->GetResource<Model>("models/mushroom.mdl"));
+        object->SetMaterial(cache->GetResource<Material>("materials/mushroom.xml"));
         object->SetCastShadows(true);
 
         auto* body = objectNode->create_component<RigidBody>();
@@ -158,7 +158,7 @@ void VehicleDemo::create_instructions()
         "Use WASD keys to drive, mouse to rotate camera\n"
         "F5 to save scene, F7 to load"
     );
-    instructionText->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);
+    instructionText->SetFont(DV_RES_CACHE->GetResource<Font>("fonts/anonymous pro.ttf"), 15);
     // The text has multiple rows. Center them in relation to each other
     instructionText->SetTextAlignment(HA_CENTER);
 

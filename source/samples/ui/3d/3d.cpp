@@ -47,7 +47,7 @@ void Hello3dUi::Start()
     DV_INPUT->SetMouseVisible(true);
 
     // Load XML file containing default UI style sheet
-    auto* style = DV_RES_CACHE.GetResource<XmlFile>("ui/default_style.xml");
+    auto* style = DV_RES_CACHE->GetResource<XmlFile>("ui/default_style.xml");
 
     uiRoot_ = DV_UI->GetRoot();
 
@@ -185,7 +185,7 @@ void Hello3dUi::InitScene()
 
     // Create a box model and hide it initially.
     auto* boxModel = boxNode->create_component<StaticModel>();
-    boxModel->SetModel(DV_RES_CACHE.GetResource<Model>("models/box.mdl"));
+    boxModel->SetModel(DV_RES_CACHE->GetResource<Model>("models/box.mdl"));
     boxNode->SetEnabled(false);
 
     // Create a camera.
@@ -207,7 +207,7 @@ void Hello3dUi::CreateDraggableFish()
 {
     // Create a draggable Fish button
     auto* draggableFish = new Button();
-    draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("textures/urho_decal.dds")); // Set texture
+    draggableFish->SetTexture(DV_RES_CACHE->GetResource<Texture2D>("textures/urho_decal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
     draggableFish->SetPosition((DV_GRAPHICS->GetWidth() - draggableFish->GetWidth()) / 2, 200);
@@ -281,7 +281,7 @@ void Hello3dUi::Init3DUI()
     // Create a component that sets up UI rendering. It sets material to StaticModel of the node.
     auto* component = boxNode->create_component<UiComponent>();
     // Optionally modify material. Technique is changed so object is visible without any lights.
-    component->GetMaterial()->SetTechnique(0, DV_RES_CACHE.GetResource<Technique>("techniques/diff_unlit.xml"));
+    component->GetMaterial()->SetTechnique(0, DV_RES_CACHE->GetResource<Technique>("techniques/diff_unlit.xml"));
     // Save root element of texture UI for later use.
     textureRoot_ = component->GetRoot();
     // Set size of root element. This is size of texture as well.
