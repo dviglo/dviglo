@@ -190,7 +190,7 @@ public:
     void HandleEndViewRender(StringHash eventType, VariantMap& eventData)
     {
         ResourceCache& cache = DV_RES_CACHE;
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
 
         // Размер текстуры должен быть степенью двойки (64, 128, 256, ...),
         // иначе она не будет работать в GL ES 1.0 (в вебе).
@@ -208,7 +208,7 @@ public:
         Font* font = cache.GetResource<Font>("fonts/anonymous pro.ttf");
 
         // Очистка экрана. Если сцена пустая, то можно просто задать цвет зоны
-        //graphics.Clear(CLEAR_COLOR, Color::GREEN);
+        //graphics->Clear(CLEAR_COLOR, Color::GREEN);
 
         String str;
 
@@ -274,12 +274,12 @@ public:
 
         // Выводим подсказку про ПКМ
         str = "Зажмите ПКМ для перемещения по сцене";
-        Vector2 pos{graphics.GetWidth() - 550.f, graphics.GetHeight() - 36.f}; // TODO: Добавить MeasureString
+        Vector2 pos{graphics->GetWidth() - 550.f, graphics->GetHeight() - 36.f}; // TODO: Добавить MeasureString
         screenSpaceSpriteBatch_->draw_string(str, font, 20.f, pos, 0xFFFFFFFF);
 
         // Выводим FPS
         str = "FPS: " + String(fpsValue_);
-        pos = {10.f, graphics.GetHeight() - 56.f};
+        pos = {10.f, graphics->GetHeight() - 56.f};
         screenSpaceSpriteBatch_->draw_string(str, font, 40.f, pos, 0xFF0000FF);
 
         screenSpaceSpriteBatch_->flush();

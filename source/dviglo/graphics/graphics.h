@@ -151,9 +151,15 @@ class DV_API Graphics : public Object
 {
     DV_OBJECT(Graphics);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Graphics* instance_ = nullptr;
+
 public:
-    static Graphics& get_instance();
-    static bool is_destructed();
+    static Graphics* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -980,6 +986,6 @@ private:
 /// Register Graphics library objects.
 void DV_API register_graphics_library();
 
-#define DV_GRAPHICS (dviglo::Graphics::get_instance())
+#define DV_GRAPHICS (dviglo::Graphics::instance())
 
 } // namespace dviglo

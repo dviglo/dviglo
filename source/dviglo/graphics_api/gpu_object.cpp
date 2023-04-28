@@ -13,13 +13,13 @@ namespace dviglo
 GpuObject::GpuObject()
 {
     if (!GParams::is_headless())
-        DV_GRAPHICS.AddGPUObject(this);
+        DV_GRAPHICS->AddGPUObject(this);
 }
 
 GpuObject::~GpuObject()
 {
-    if (!GParams::is_headless() && !Graphics::is_destructed())
-        DV_GRAPHICS.RemoveGPUObject(this);
+    if (DV_GRAPHICS) // Подсистема может быть уже уничтожена
+        DV_GRAPHICS->RemoveGPUObject(this);
 }
 
 void GpuObject::OnDeviceLost()

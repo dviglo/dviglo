@@ -281,11 +281,11 @@ bool View::Define(RenderSurface* renderTarget, Viewport* viewport)
     draw_debug_ = viewport->draw_debug;
 
     Renderer* renderer = DV_RENDERER;
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // Validate the rect and calculate size. If zero rect, use whole rendertarget size
-    int rtWidth = renderTarget ? renderTarget->GetWidth() : graphics.GetWidth();
-    int rtHeight = renderTarget ? renderTarget->GetHeight() : graphics.GetHeight();
+    int rtWidth = renderTarget ? renderTarget->GetWidth() : graphics->GetWidth();
+    int rtHeight = renderTarget ? renderTarget->GetHeight() : graphics->GetHeight();
     const IntRect& rect = viewport->rect;
 
     if (rect != IntRect::ZERO)
@@ -560,12 +560,12 @@ void View::Render()
     SendViewEvent(E_VIEWBUFFERSREADY);
 
     Renderer* renderer = DV_RENDERER;
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // Forget parameter sources from the previous view
-    graphics.ClearParameterSources();
+    graphics->ClearParameterSources();
 
-    if (renderer->GetDynamicInstancing() && graphics.GetInstancingSupport())
+    if (renderer->GetDynamicInstancing() && graphics->GetInstancingSupport())
         PrepareInstancingBuffer();
 
     // It is possible, though not recommended, that the same camera is used for multiple main views. Set automatic aspect ratio
@@ -577,8 +577,8 @@ void View::Render()
 #ifndef DV_GLES2
     if (renderer->GetDrawShadows())
     {
-        graphics.SetTexture(TU_FACESELECT, renderer->GetFaceSelectCubeMap());
-        graphics.SetTexture(TU_INDIRECTION, renderer->GetIndirectionCubeMap());
+        graphics->SetTexture(TU_FACESELECT, renderer->GetFaceSelectCubeMap());
+        graphics->SetTexture(TU_INDIRECTION, renderer->GetIndirectionCubeMap());
     }
 #endif
 
@@ -598,13 +598,13 @@ void View::Render()
     ExecuteRenderPathCommands();
 
     // Reset state after commands
-    graphics.SetFillMode(FILL_SOLID);
-    graphics.SetLineAntiAlias(false);
-    graphics.SetClipPlane(false);
-    graphics.SetColorWrite(true);
-    graphics.SetDepthBias(0.0f, 0.0f);
-    graphics.SetScissorTest(false);
-    graphics.SetStencilTest(false);
+    graphics->SetFillMode(FILL_SOLID);
+    graphics->SetLineAntiAlias(false);
+    graphics->SetClipPlane(false);
+    graphics->SetColorWrite(true);
+    graphics->SetDepthBias(0.0f, 0.0f);
+    graphics->SetScissorTest(false);
+    graphics->SetStencilTest(false);
 
     // Draw the associated debug geometry now if enabled
     if (draw_debug_ && octree_ && camera_)
@@ -621,17 +621,17 @@ void View::Render()
                 lastCustomDepthSurface_ = nullptr;
             }
 
-            graphics.SetRenderTarget(0, currentRenderTarget_);
+            graphics->SetRenderTarget(0, currentRenderTarget_);
             for (i32 i = 1; i < MAX_RENDERTARGETS; ++i)
-                graphics.SetRenderTarget(i, (RenderSurface*)nullptr);
+                graphics->SetRenderTarget(i, (RenderSurface*)nullptr);
 
             // If a custom depth surface was used, use it also for debug rendering
-            graphics.SetDepthStencil(lastCustomDepthSurface_ ? lastCustomDepthSurface_ : GetDepthStencil(currentRenderTarget_));
+            graphics->SetDepthStencil(lastCustomDepthSurface_ ? lastCustomDepthSurface_ : GetDepthStencil(currentRenderTarget_));
 
-            IntVector2 rtSizeNow = graphics.GetRenderTargetDimensions();
+            IntVector2 rtSizeNow = graphics->GetRenderTargetDimensions();
             IntRect viewport = (currentRenderTarget_ == renderTarget_) ? viewRect_ : IntRect(0, 0, rtSizeNow.x,
                 rtSizeNow.y);
-            graphics.SetViewport(viewport);
+            graphics->SetViewport(viewport);
 
             debug->SetView(camera_);
             debug->Render();
@@ -660,16 +660,16 @@ View* View::GetSourceView() const
 
 void View::SetGlobalShaderParameters()
 {
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    graphics.SetShaderParameter(VSP_DELTATIME, frame_.timeStep_);
-    graphics.SetShaderParameter(PSP_DELTATIME, frame_.timeStep_);
+    graphics->SetShaderParameter(VSP_DELTATIME, frame_.timeStep_);
+    graphics->SetShaderParameter(PSP_DELTATIME, frame_.timeStep_);
 
     if (scene_)
     {
         float elapsedTime = scene_->GetElapsedTime();
-        graphics.SetShaderParameter(VSP_ELAPSEDTIME, elapsedTime);
-        graphics.SetShaderParameter(PSP_ELAPSEDTIME, elapsedTime);
+        graphics->SetShaderParameter(VSP_ELAPSEDTIME, elapsedTime);
+        graphics->SetShaderParameter(PSP_ELAPSEDTIME, elapsedTime);
     }
 
     SendViewEvent(E_VIEWGLOBALSHADERPARAMETERS);
@@ -680,21 +680,21 @@ void View::SetCameraShaderParameters(Camera* camera)
     if (!camera)
         return;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     Matrix3x4 cameraEffectiveTransform = camera->GetEffectiveWorldTransform();
 
-    graphics.SetShaderParameter(VSP_CAMERAPOS, cameraEffectiveTransform.Translation());
-    graphics.SetShaderParameter(VSP_VIEWINV, cameraEffectiveTransform);
-    graphics.SetShaderParameter(VSP_VIEW, camera->GetView());
-    graphics.SetShaderParameter(PSP_CAMERAPOS, cameraEffectiveTransform.Translation());
+    graphics->SetShaderParameter(VSP_CAMERAPOS, cameraEffectiveTransform.Translation());
+    graphics->SetShaderParameter(VSP_VIEWINV, cameraEffectiveTransform);
+    graphics->SetShaderParameter(VSP_VIEW, camera->GetView());
+    graphics->SetShaderParameter(PSP_CAMERAPOS, cameraEffectiveTransform.Translation());
 
     float nearClip = camera->GetNearClip();
     float farClip = camera->GetFarClip();
-    graphics.SetShaderParameter(VSP_NEARCLIP, nearClip);
-    graphics.SetShaderParameter(VSP_FARCLIP, farClip);
-    graphics.SetShaderParameter(PSP_NEARCLIP, nearClip);
-    graphics.SetShaderParameter(PSP_FARCLIP, farClip);
+    graphics->SetShaderParameter(VSP_NEARCLIP, nearClip);
+    graphics->SetShaderParameter(VSP_FARCLIP, farClip);
+    graphics->SetShaderParameter(PSP_NEARCLIP, nearClip);
+    graphics->SetShaderParameter(PSP_FARCLIP, farClip);
 
     Vector4 depthMode = Vector4::ZERO;
     if (camera->IsOrthographic())
@@ -715,28 +715,28 @@ void View::SetCameraShaderParameters(Camera* camera)
         depthMode.w = 1.0f / camera->GetFarClip();
     }
 
-    graphics.SetShaderParameter(VSP_DEPTHMODE, depthMode);
+    graphics->SetShaderParameter(VSP_DEPTHMODE, depthMode);
 
     Vector4 depthReconstruct
         (farClip / (farClip - nearClip), -nearClip / (farClip - nearClip), camera->IsOrthographic() ? 1.0f : 0.0f,
             camera->IsOrthographic() ? 0.0f : 1.0f);
-    graphics.SetShaderParameter(PSP_DEPTHRECONSTRUCT, depthReconstruct);
+    graphics->SetShaderParameter(PSP_DEPTHRECONSTRUCT, depthReconstruct);
 
     Vector3 nearVector, farVector;
     camera->GetFrustumSize(nearVector, farVector);
-    graphics.SetShaderParameter(VSP_FRUSTUMSIZE, farVector);
+    graphics->SetShaderParameter(VSP_FRUSTUMSIZE, farVector);
 
     Matrix4 projection = camera->GetGPUProjection();
 
     if (GParams::get_gapi() == GAPI_OPENGL)
     {
         // Add constant depth bias manually to the projection matrix due to glPolygonOffset() inconsistency
-        float constantBias = 2.0f * graphics.GetDepthConstantBias();
+        float constantBias = 2.0f * graphics->GetDepthConstantBias();
         projection.m22_ += projection.m32_ * constantBias;
         projection.m23_ += projection.m33_ * constantBias;
     }
 
-    graphics.SetShaderParameter(VSP_VIEWPROJ, projection * camera->GetView());
+    graphics->SetShaderParameter(VSP_VIEWPROJ, projection * camera->GetView());
 
     // If in a scene pass and the command defines shader parameters, set them now
     if (passCommand_)
@@ -747,7 +747,7 @@ void View::SetCommandShaderParameters(const RenderPathCommand& command)
 {
     const HashMap<StringHash, Variant>& parameters = command.shaderParameters_;
     for (HashMap<StringHash, Variant>::ConstIterator k = parameters.Begin(); k != parameters.End(); ++k)
-        DV_GRAPHICS.SetShaderParameter(k->first_, k->second_);
+        DV_GRAPHICS->SetShaderParameter(k->first_, k->second_);
 }
 
 void View::SetGBufferShaderParameters(const IntVector2& texSize, const IntRect& viewRect)
@@ -770,11 +770,11 @@ void View::SetGBufferShaderParameters(const IntVector2& texSize, const IntRect& 
             (float)viewRect.top_ / texHeight + heightRange, widthRange, heightRange);
     }
 
-    DV_GRAPHICS.SetShaderParameter(VSP_GBUFFEROFFSETS, bufferUVOffset);
+    DV_GRAPHICS->SetShaderParameter(VSP_GBUFFEROFFSETS, bufferUVOffset);
 
     float invSizeX = 1.0f / texWidth;
     float invSizeY = 1.0f / texHeight;
-    DV_GRAPHICS.SetShaderParameter(PSP_GBUFFERINVSIZE, Vector2(invSizeX, invSizeY));
+    DV_GRAPHICS->SetShaderParameter(PSP_GBUFFERINVSIZE, Vector2(invSizeX, invSizeY));
 }
 
 void View::GetDrawables()
@@ -1434,7 +1434,7 @@ void View::ExecuteRenderPathCommands()
     View* actualView = sourceView_ ? sourceView_ : this;
 
     Renderer* renderer = DV_RENDERER;
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // If not reusing shadowmaps, render all of them first
     if (!renderer->GetReuseShadowMaps() && renderer->GetDrawShadows() && !actualView->lightQueues_.Empty())
@@ -1490,7 +1490,7 @@ void View::ExecuteRenderPathCommands()
                 {
                     if (!currentRenderTarget_)
                     {
-                        graphics.ResolveToTexture(dynamic_cast<Texture2D*>(viewportTextures_[0]), viewRect_);
+                        graphics->ResolveToTexture(dynamic_cast<Texture2D*>(viewportTextures_[0]), viewRect_);
                         currentViewportTexture_ = viewportTextures_[0];
                         viewportModified = false;
                         usedResolve_ = true;
@@ -1561,7 +1561,7 @@ void View::ExecuteRenderPathCommands()
                         clearColor = actualView->farClipZone_->GetFogColor();
 
                     SetRenderTargets(command);
-                    graphics.Clear(command.clearFlags_, clearColor, command.clearDepth_, command.clearStencil_);
+                    graphics->Clear(command.clearFlags_, clearColor, command.clearDepth_, command.clearStencil_);
                 }
                 break;
 
@@ -1574,14 +1574,14 @@ void View::ExecuteRenderPathCommands()
 
                         SetRenderTargets(command);
                         bool allowDepthWrite = SetTextures(command);
-                        graphics.SetClipPlane(camera_->GetUseClipping(), camera_->GetClipPlane(), camera_->GetView(),
+                        graphics->SetClipPlane(camera_->GetUseClipping(), camera_->GetClipPlane(), camera_->GetView(),
                             camera_->GetGPUProjection());
 
                         if (command.shaderParameters_.Size())
                         {
                             // If pass defines shader parameters, reset parameter sources now to ensure they all will be set
                             // (will be set after camera shader parameters)
-                            graphics.ClearParameterSources();
+                            graphics->ClearParameterSources();
                             passCommand_ = &command;
                         }
 
@@ -1620,12 +1620,12 @@ void View::ExecuteRenderPathCommands()
                         }
 
                         bool allowDepthWrite = SetTextures(command);
-                        graphics.SetClipPlane(camera_->GetUseClipping(), camera_->GetClipPlane(), camera_->GetView(),
+                        graphics->SetClipPlane(camera_->GetUseClipping(), camera_->GetClipPlane(), camera_->GetView(),
                             camera_->GetGPUProjection());
 
                         if (command.shaderParameters_.Size())
                         {
-                            graphics.ClearParameterSources();
+                            graphics->ClearParameterSources();
                             passCommand_ = &command;
                         }
 
@@ -1644,8 +1644,8 @@ void View::ExecuteRenderPathCommands()
                         passCommand_ = nullptr;
                     }
 
-                    graphics.SetScissorTest(false);
-                    graphics.SetStencilTest(false);
+                    graphics->SetScissorTest(false);
+                    graphics->SetStencilTest(false);
                 }
                 break;
 
@@ -1669,7 +1669,7 @@ void View::ExecuteRenderPathCommands()
 
                         if (command.shaderParameters_.Size())
                         {
-                            graphics.ClearParameterSources();
+                            graphics->ClearParameterSources();
                             passCommand_ = &command;
                         }
 
@@ -1682,8 +1682,8 @@ void View::ExecuteRenderPathCommands()
                         passCommand_ = nullptr;
                     }
 
-                    graphics.SetScissorTest(false);
-                    graphics.SetStencilTest(false);
+                    graphics->SetScissorTest(false);
+                    graphics->SetStencilTest(false);
                 }
                 break;
 
@@ -1722,13 +1722,13 @@ void View::SetRenderTargets(RenderPathCommand& command)
     bool useCustomDepth = false;
     bool useViewportOutput = false;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     while (index < command.outputs_.Size())
     {
         if (!command.outputs_[index].first_.Compare("viewport", false))
         {
-            graphics.SetRenderTarget(index, currentRenderTarget_);
+            graphics->SetRenderTarget(index, currentRenderTarget_);
             useViewportOutput = true;
         }
         else
@@ -1742,11 +1742,11 @@ void View::SetRenderTargets(RenderPathCommand& command)
                 useColorWrite = false;
                 useCustomDepth = true;
 
-                graphics.SetRenderTarget(0, (RenderSurface*)nullptr);
-                graphics.SetDepthStencil(GetRenderSurfaceFromTexture(texture));
+                graphics->SetRenderTarget(0, (RenderSurface*)nullptr);
+                graphics->SetDepthStencil(GetRenderSurfaceFromTexture(texture));
             }
             else
-                graphics.SetRenderTarget(index, GetRenderSurfaceFromTexture(texture, command.outputs_[index].second_));
+                graphics->SetRenderTarget(index, GetRenderSurfaceFromTexture(texture, command.outputs_[index].second_));
         }
 
         ++index;
@@ -1754,7 +1754,7 @@ void View::SetRenderTargets(RenderPathCommand& command)
 
     while (index < MAX_RENDERTARGETS)
     {
-        graphics.SetRenderTarget(index, (RenderSurface*)nullptr);
+        graphics->SetRenderTarget(index, (RenderSurface*)nullptr);
         ++index;
     }
 
@@ -1765,27 +1765,27 @@ void View::SetRenderTargets(RenderPathCommand& command)
         {
             useCustomDepth = true;
             lastCustomDepthSurface_ = GetRenderSurfaceFromTexture(depthTexture);
-            graphics.SetDepthStencil(lastCustomDepthSurface_);
+            graphics->SetDepthStencil(lastCustomDepthSurface_);
         }
     }
 
     // When rendering to the final destination rendertarget, use the actual viewport. Otherwise texture rendertargets should use
     // their full size as the viewport
-    IntVector2 rtSizeNow = graphics.GetRenderTargetDimensions();
+    IntVector2 rtSizeNow = graphics->GetRenderTargetDimensions();
     IntRect viewport = (useViewportOutput && currentRenderTarget_ == renderTarget_) ? viewRect_ : IntRect(0, 0, rtSizeNow.x,
         rtSizeNow.y);
 
     if (!useCustomDepth)
-        graphics.SetDepthStencil(GetDepthStencil(graphics.GetRenderTarget(0)));
-    graphics.SetViewport(viewport);
-    graphics.SetColorWrite(useColorWrite);
+        graphics->SetDepthStencil(GetDepthStencil(graphics->GetRenderTarget(0)));
+    graphics->SetViewport(viewport);
+    graphics->SetColorWrite(useColorWrite);
 }
 
 bool View::SetTextures(RenderPathCommand& command)
 {
     bool allowDepthWrite = true;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     for (i32 i = 0; i < MAX_TEXTURE_UNITS; ++i)
     {
@@ -1795,7 +1795,7 @@ bool View::SetTextures(RenderPathCommand& command)
         // Bind the rendered output
         if (!command.textureNames_[i].Compare("viewport", false))
         {
-            graphics.SetTexture(i, currentViewportTexture_);
+            graphics->SetTexture(i, currentViewportTexture_);
             continue;
         }
 
@@ -1807,9 +1807,9 @@ bool View::SetTextures(RenderPathCommand& command)
 
         if (texture)
         {
-            graphics.SetTexture(i, texture);
+            graphics->SetTexture(i, texture);
             // Check if the current depth stencil is being sampled
-            if (graphics.GetDepthStencil() && texture == graphics.GetDepthStencil()->GetParentTexture())
+            if (graphics->GetDepthStencil() && texture == graphics->GetDepthStencil()->GetParentTexture())
                 allowDepthWrite = false;
         }
         else
@@ -1827,24 +1827,24 @@ void View::RenderQuad(RenderPathCommand& command)
     if (command.vertexShaderName_.Empty() || command.pixelShaderName_.Empty())
         return;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // If shader can not be found, clear it from the command to prevent redundant attempts
-    ShaderVariation* vs = graphics.GetShader(VS, command.vertexShaderName_, command.vertexShaderDefines_);
+    ShaderVariation* vs = graphics->GetShader(VS, command.vertexShaderName_, command.vertexShaderDefines_);
     if (!vs)
         command.vertexShaderName_ = String::EMPTY;
-    ShaderVariation* ps = graphics.GetShader(PS, command.pixelShaderName_, command.pixelShaderDefines_);
+    ShaderVariation* ps = graphics->GetShader(PS, command.pixelShaderName_, command.pixelShaderDefines_);
     if (!ps)
         command.pixelShaderName_ = String::EMPTY;
 
     // Set shaders & shader parameters and textures
-    graphics.SetShaders(vs, ps);
+    graphics->SetShaders(vs, ps);
 
     SetGlobalShaderParameters();
     SetCameraShaderParameters(camera_);
 
     // During renderpath commands the G-Buffer or viewport texture is assumed to always be viewport-sized
-    IntRect viewport = graphics.GetViewport();
+    IntRect viewport = graphics->GetViewport();
     IntVector2 viewSize = IntVector2(viewport.Width(), viewport.Height());
     SetGBufferShaderParameters(viewSize, IntRect(0, 0, viewSize.x, viewSize.y));
 
@@ -1863,20 +1863,20 @@ void View::RenderQuad(RenderPathCommand& command)
         auto width = (float)renderTargets_[nameHash]->GetWidth();
         auto height = (float)renderTargets_[nameHash]->GetHeight();
 
-        graphics.SetShaderParameter(invSizeName, Vector2(1.0f / width, 1.0f / height));
+        graphics->SetShaderParameter(invSizeName, Vector2(1.0f / width, 1.0f / height));
     }
 
     // Set command's shader parameters last to allow them to override any of the above
     SetCommandShaderParameters(command);
 
-    graphics.SetBlendMode(command.blend_mode_);
-    graphics.SetDepthTest(CMP_ALWAYS);
-    graphics.SetDepthWrite(false);
-    graphics.SetFillMode(FILL_SOLID);
-    graphics.SetLineAntiAlias(false);
-    graphics.SetClipPlane(false);
-    graphics.SetScissorTest(false);
-    graphics.SetStencilTest(false);
+    graphics->SetBlendMode(command.blend_mode_);
+    graphics->SetDepthTest(CMP_ALWAYS);
+    graphics->SetDepthWrite(false);
+    graphics->SetFillMode(FILL_SOLID);
+    graphics->SetLineAntiAlias(false);
+    graphics->SetClipPlane(false);
+    graphics->SetScissorTest(false);
+    graphics->SetStencilTest(false);
 
     DrawFullscreenQuad(false);
 }
@@ -1949,7 +1949,7 @@ void View::AllocateScreenBuffers()
     lastCustomDepthSurface_ = nullptr;
 
     Renderer* renderer = DV_RENDERER;
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // Check for commands with special meaning: has custom depth, renders a scene pass to other than the destination viewport,
     // read the viewport, or pingpong between viewport textures. These may trigger the need to substitute the destination RT
@@ -1990,7 +1990,7 @@ void View::AllocateScreenBuffers()
     }
 
     // If backbuffer is antialiased when using deferred rendering, need to reserve a buffer
-    if (deferred_ && !renderTarget_ && graphics.GetMultiSample() > 1)
+    if (deferred_ && !renderTarget_ && graphics->GetMultiSample() > 1)
         needSubstitute = true;
     // If viewport is smaller than whole texture/backbuffer in deferred rendering, need to reserve a buffer, as the G-buffer
     // textures will be sized equal to the viewport
@@ -2017,7 +2017,7 @@ void View::AllocateScreenBuffers()
         // If OpenGL ES, use substitute target to avoid resolve from the backbuffer, which may be slow. However if multisampling
         // is specified, there is no choice
 #ifdef DV_GLES2
-        if (!renderTarget_ && graphics.GetMultiSample() < 2)
+        if (!renderTarget_ && graphics->GetMultiSample() < 2)
             needSubstitute = true;
 #endif
 
@@ -2037,7 +2037,7 @@ void View::AllocateScreenBuffers()
 
     // Allocate screen buffers. Enable filtering in case the quad commands need that
     // Follow the sRGB mode of the destination render target
-    bool sRGB = renderTarget_ ? renderTarget_->GetParentTexture()->GetSRGB() : graphics.GetSRGB();
+    bool sRGB = renderTarget_ ? renderTarget_->GetParentTexture()->GetSRGB() : graphics->GetSRGB();
     substituteRenderTarget_ = needSubstitute ? GetRenderSurfaceFromTexture(renderer->GetScreenBuffer(viewSize_.x, viewSize_.y,
         format, 1, false, false, true, sRGB)) : nullptr;
     for (i32 i = 0; i < MAX_VIEWPORT_TEXTURES; ++i)
@@ -2087,37 +2087,37 @@ void View::BlitFramebuffer(Texture* source, RenderSurface* destination, bool dep
 
     ZoneScoped;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // If blitting to the destination rendertarget, use the actual viewport. Intermediate textures on the other hand
     // are always viewport-sized
     IntVector2 srcSize(source->GetWidth(), source->GetHeight());
     IntVector2 destSize = destination ? IntVector2(destination->GetWidth(), destination->GetHeight()) : IntVector2(
-        graphics.GetWidth(), graphics.GetHeight());
+        graphics->GetWidth(), graphics->GetHeight());
 
     IntRect srcRect = (GetRenderSurfaceFromTexture(source) == renderTarget_) ? viewRect_ : IntRect(0, 0, srcSize.x, srcSize.y);
     IntRect destRect = (destination == renderTarget_) ? viewRect_ : IntRect(0, 0, destSize.x, destSize.y);
 
-    graphics.SetBlendMode(BLEND_REPLACE);
-    graphics.SetDepthTest(CMP_ALWAYS);
-    graphics.SetDepthWrite(depthWrite);
-    graphics.SetFillMode(FILL_SOLID);
-    graphics.SetLineAntiAlias(false);
-    graphics.SetClipPlane(false);
-    graphics.SetScissorTest(false);
-    graphics.SetStencilTest(false);
-    graphics.SetRenderTarget(0, destination);
+    graphics->SetBlendMode(BLEND_REPLACE);
+    graphics->SetDepthTest(CMP_ALWAYS);
+    graphics->SetDepthWrite(depthWrite);
+    graphics->SetFillMode(FILL_SOLID);
+    graphics->SetLineAntiAlias(false);
+    graphics->SetClipPlane(false);
+    graphics->SetScissorTest(false);
+    graphics->SetStencilTest(false);
+    graphics->SetRenderTarget(0, destination);
     for (i32 i = 1; i < MAX_RENDERTARGETS; ++i)
-        graphics.SetRenderTarget(i, (RenderSurface*)nullptr);
-    graphics.SetDepthStencil(GetDepthStencil(destination));
-    graphics.SetViewport(destRect);
+        graphics->SetRenderTarget(i, (RenderSurface*)nullptr);
+    graphics->SetDepthStencil(GetDepthStencil(destination));
+    graphics->SetViewport(destRect);
 
     static const char* shaderName = "copy_framebuffer";
-    graphics.SetShaders(graphics.GetShader(VS, shaderName), graphics.GetShader(PS, shaderName));
+    graphics->SetShaders(graphics->GetShader(VS, shaderName), graphics->GetShader(PS, shaderName));
 
     SetGBufferShaderParameters(srcSize, srcRect);
 
-    graphics.SetTexture(TU_DIFFUSE, source);
+    graphics->SetTexture(TU_DIFFUSE, source);
     DrawFullscreenQuad(true);
 }
 
@@ -2125,7 +2125,7 @@ void View::DrawFullscreenQuad(bool setIdentityProjection)
 {
     Geometry* geometry = DV_RENDERER->GetQuadGeometry();
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // If no camera, no choice but to use identity projection
     if (!camera_)
@@ -2147,14 +2147,14 @@ void View::DrawFullscreenQuad(bool setIdentityProjection)
             model.m23_ = 0.5f;
         }
 
-        graphics.SetShaderParameter(VSP_MODEL, model);
-        graphics.SetShaderParameter(VSP_VIEWPROJ, projection);
+        graphics->SetShaderParameter(VSP_MODEL, model);
+        graphics->SetShaderParameter(VSP_VIEWPROJ, projection);
     }
     else
-        graphics.SetShaderParameter(VSP_MODEL, Light::GetFullscreenQuadTransform(camera_));
+        graphics->SetShaderParameter(VSP_MODEL, Light::GetFullscreenQuadTransform(camera_));
 
-    graphics.SetCullMode(CULL_NONE);
-    graphics.ClearTransformSources();
+    graphics->SetCullMode(CULL_NONE);
+    graphics->ClearTransformSources();
 
     geometry->Draw();
 }
@@ -3005,14 +3005,14 @@ void View::SetupLightVolumeBatch(Batch& batch)
     Vector3 cameraPos = camera_->GetNode()->GetWorldPosition();
     float lightDist;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    graphics.SetBlendMode(light->IsNegative() ? BLEND_SUBTRACT : BLEND_ADD);
-    graphics.SetDepthBias(0.0f, 0.0f);
-    graphics.SetDepthWrite(false);
-    graphics.SetFillMode(FILL_SOLID);
-    graphics.SetLineAntiAlias(false);
-    graphics.SetClipPlane(false);
+    graphics->SetBlendMode(light->IsNegative() ? BLEND_SUBTRACT : BLEND_ADD);
+    graphics->SetDepthBias(0.0f, 0.0f);
+    graphics->SetDepthWrite(false);
+    graphics->SetFillMode(FILL_SOLID);
+    graphics->SetLineAntiAlias(false);
+    graphics->SetClipPlane(false);
 
     if (type != LIGHT_DIRECTIONAL)
     {
@@ -3025,12 +3025,12 @@ void View::SetupLightVolumeBatch(Batch& batch)
         if (lightDist < camera_->GetNearClip() * 2.0f)
         {
             DV_RENDERER->SetCullMode(CULL_CW, camera_);
-            graphics.SetDepthTest(CMP_GREATER);
+            graphics->SetDepthTest(CMP_GREATER);
         }
         else
         {
             DV_RENDERER->SetCullMode(CULL_CCW, camera_);
-            graphics.SetDepthTest(CMP_LESSEQUAL);
+            graphics->SetDepthTest(CMP_LESSEQUAL);
         }
     }
     else
@@ -3038,15 +3038,15 @@ void View::SetupLightVolumeBatch(Batch& batch)
         // In case the same camera is used for multiple views with differing aspect ratios (not recommended)
         // refresh the directional light's model transform before rendering
         light->GetVolumeTransform(camera_);
-        graphics.SetCullMode(CULL_NONE);
-        graphics.SetDepthTest(CMP_ALWAYS);
+        graphics->SetCullMode(CULL_NONE);
+        graphics->SetDepthTest(CMP_ALWAYS);
     }
 
-    graphics.SetScissorTest(false);
+    graphics->SetScissorTest(false);
     if (!noStencil_)
-        graphics.SetStencilTest(true, CMP_NOTEQUAL, OP_KEEP, OP_KEEP, OP_KEEP, 0, light->GetLightMask());
+        graphics->SetStencilTest(true, CMP_NOTEQUAL, OP_KEEP, OP_KEEP, OP_KEEP, 0, light->GetLightMask());
     else
-        graphics.SetStencilTest(false);
+        graphics->SetStencilTest(false);
 }
 
 bool View::NeedRenderShadowMap(const LightBatchQueue& queue)
@@ -3061,14 +3061,14 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
     ZoneScoped;
 
     Renderer* renderer = DV_RENDERER;
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     Texture2D* shadowMap = queue.shadowMap_;
-    graphics.SetTexture(TU_SHADOWMAP, nullptr);
+    graphics->SetTexture(TU_SHADOWMAP, nullptr);
 
-    graphics.SetFillMode(FILL_SOLID);
-    graphics.SetClipPlane(false);
-    graphics.SetStencilTest(false);
+    graphics->SetFillMode(FILL_SOLID);
+    graphics->SetClipPlane(false);
+    graphics->SetStencilTest(false);
 
     // Set shadow depth bias
     BiasParameters parameters = queue.light_->GetShadowBias();
@@ -3076,26 +3076,26 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
     // The shadow map is a depth stencil texture
     if (shadowMap->GetUsage() == TEXTURE_DEPTHSTENCIL)
     {
-        graphics.SetColorWrite(false);
-        graphics.SetDepthStencil(shadowMap);
-        graphics.SetRenderTarget(0, shadowMap->GetRenderSurface()->GetLinkedRenderTarget());
+        graphics->SetColorWrite(false);
+        graphics->SetDepthStencil(shadowMap);
+        graphics->SetRenderTarget(0, shadowMap->GetRenderSurface()->GetLinkedRenderTarget());
         // Disable other render targets
         for (i32 i = 1; i < MAX_RENDERTARGETS; ++i)
-            graphics.SetRenderTarget(i, (RenderSurface*) nullptr);
-        graphics.SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
-        graphics.Clear(CLEAR_DEPTH);
+            graphics->SetRenderTarget(i, (RenderSurface*) nullptr);
+        graphics->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
+        graphics->Clear(CLEAR_DEPTH);
     }
     else // if the shadow map is a color rendertarget
     {
-        graphics.SetColorWrite(true);
-        graphics.SetRenderTarget(0, shadowMap);
+        graphics->SetColorWrite(true);
+        graphics->SetRenderTarget(0, shadowMap);
         // Disable other render targets
         for (i32 i = 1; i < MAX_RENDERTARGETS; ++i)
-            graphics.SetRenderTarget(i, (RenderSurface*) nullptr);
-        graphics.SetDepthStencil(renderer->GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(),
+            graphics->SetRenderTarget(i, (RenderSurface*) nullptr);
+        graphics->SetDepthStencil(renderer->GetDepthStencil(shadowMap->GetWidth(), shadowMap->GetHeight(),
             shadowMap->GetMultiSample(), shadowMap->GetAutoResolve()));
-        graphics.SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
-        graphics.Clear(CLEAR_DEPTH | CLEAR_COLOR, Color::WHITE);
+        graphics->SetViewport(IntRect(0, 0, shadowMap->GetWidth(), shadowMap->GetHeight()));
+        graphics->Clear(CLEAR_DEPTH | CLEAR_COLOR, Color::WHITE);
 
         parameters = BiasParameters(0.0f, 0.0f);
     }
@@ -3123,11 +3123,11 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
         addition = renderer.GetMobileShadowBiasAdd();
 #endif
 
-        graphics.SetDepthBias(multiplier * parameters.constantBias_ + addition, multiplier * parameters.slopeScaledBias_);
+        graphics->SetDepthBias(multiplier * parameters.constantBias_ + addition, multiplier * parameters.slopeScaledBias_);
 
         if (!shadowQueue.shadowBatches_.IsEmpty())
         {
-            graphics.SetViewport(shadowQueue.shadowViewport_);
+            graphics->SetViewport(shadowQueue.shadowViewport_);
             shadowQueue.shadowBatches_.Draw(this, shadowQueue.shadowCamera_, false, false, true);
         }
     }
@@ -3137,8 +3137,8 @@ void View::RenderShadowMap(const LightBatchQueue& queue)
     renderer->ApplyShadowMapFilter(this, shadowMap, blurScale);
 
     // reset some parameters
-    graphics.SetColorWrite(true);
-    graphics.SetDepthBias(0.0f, 0.0f);
+    graphics->SetColorWrite(true);
+    graphics->SetDepthBias(0.0f, 0.0f);
 }
 
 RenderSurface* View::GetDepthStencil(RenderSurface* renderTarget)

@@ -210,7 +210,7 @@ void Hello3dUi::CreateDraggableFish()
     draggableFish->SetTexture(DV_RES_CACHE.GetResource<Texture2D>("textures/urho_decal.dds")); // Set texture
     draggableFish->SetBlendMode(BLEND_ADD);
     draggableFish->SetSize(128, 128);
-    draggableFish->SetPosition((DV_GRAPHICS.GetWidth() - draggableFish->GetWidth()) / 2, 200);
+    draggableFish->SetPosition((DV_GRAPHICS->GetWidth() - draggableFish->GetWidth()) / 2, 200);
     draggableFish->SetName("Fish");
     uiRoot_->AddChild(draggableFish);
 

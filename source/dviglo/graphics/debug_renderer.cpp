@@ -468,14 +468,14 @@ void DebugRenderer::Render()
     if (!HasContent())
         return;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
     // Engine does not render when window is closed or device is lost
-    assert(graphics.IsInitialized() && !graphics.IsDeviceLost());
+    assert(graphics->IsInitialized() && !graphics->IsDeviceLost());
 
     DV_PROFILE(RenderDebugGeometry);
 
-    ShaderVariation* vs = graphics.GetShader(VS, "basic", "VERTEXCOLOR");
-    ShaderVariation* ps = graphics.GetShader(PS, "basic", "VERTEXCOLOR");
+    ShaderVariation* vs = graphics->GetShader(VS, "basic", "VERTEXCOLOR");
+    ShaderVariation* ps = graphics->GetShader(PS, "basic", "VERTEXCOLOR");
 
     i32 numVertices = (lines_.Size() + noDepthLines_.Size()) * 2 + (triangles_.Size() + noDepthTriangles_.Size()) * 3;
     // Resize the vertex buffer if too small or much too large
@@ -556,56 +556,56 @@ void DebugRenderer::Render()
 
     vertexBuffer_->Unlock();
 
-    graphics.SetBlendMode(lineAntiAlias_ ? BLEND_ALPHA : BLEND_REPLACE);
-    graphics.SetColorWrite(true);
-    graphics.SetCullMode(CULL_NONE);
-    graphics.SetDepthWrite(true);
-    graphics.SetLineAntiAlias(lineAntiAlias_);
-    graphics.SetScissorTest(false);
-    graphics.SetStencilTest(false);
-    graphics.SetShaders(vs, ps);
-    graphics.SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
-    graphics.SetShaderParameter(VSP_VIEW, view_);
-    graphics.SetShaderParameter(VSP_VIEWINV, view_.Inverse());
-    graphics.SetShaderParameter(VSP_VIEWPROJ, gpuProjection_ * view_);
-    graphics.SetShaderParameter(PSP_MATDIFFCOLOR, Color(1.0f, 1.0f, 1.0f, 1.0f));
-    graphics.SetVertexBuffer(vertexBuffer_);
+    graphics->SetBlendMode(lineAntiAlias_ ? BLEND_ALPHA : BLEND_REPLACE);
+    graphics->SetColorWrite(true);
+    graphics->SetCullMode(CULL_NONE);
+    graphics->SetDepthWrite(true);
+    graphics->SetLineAntiAlias(lineAntiAlias_);
+    graphics->SetScissorTest(false);
+    graphics->SetStencilTest(false);
+    graphics->SetShaders(vs, ps);
+    graphics->SetShaderParameter(VSP_MODEL, Matrix3x4::IDENTITY);
+    graphics->SetShaderParameter(VSP_VIEW, view_);
+    graphics->SetShaderParameter(VSP_VIEWINV, view_.Inverse());
+    graphics->SetShaderParameter(VSP_VIEWPROJ, gpuProjection_ * view_);
+    graphics->SetShaderParameter(PSP_MATDIFFCOLOR, Color(1.0f, 1.0f, 1.0f, 1.0f));
+    graphics->SetVertexBuffer(vertexBuffer_);
 
     unsigned start = 0;
     unsigned count = 0;
     if (lines_.Size())
     {
         count = lines_.Size() * 2;
-        graphics.SetDepthTest(CMP_LESSEQUAL);
-        graphics.Draw(LINE_LIST, start, count);
+        graphics->SetDepthTest(CMP_LESSEQUAL);
+        graphics->Draw(LINE_LIST, start, count);
         start += count;
     }
     if (noDepthLines_.Size())
     {
         count = noDepthLines_.Size() * 2;
-        graphics.SetDepthTest(CMP_ALWAYS);
-        graphics.Draw(LINE_LIST, start, count);
+        graphics->SetDepthTest(CMP_ALWAYS);
+        graphics->Draw(LINE_LIST, start, count);
         start += count;
     }
 
-    graphics.SetBlendMode(BLEND_ALPHA);
-    graphics.SetDepthWrite(false);
+    graphics->SetBlendMode(BLEND_ALPHA);
+    graphics->SetDepthWrite(false);
 
     if (triangles_.Size())
     {
         count = triangles_.Size() * 3;
-        graphics.SetDepthTest(CMP_LESSEQUAL);
-        graphics.Draw(TRIANGLE_LIST, start, count);
+        graphics->SetDepthTest(CMP_LESSEQUAL);
+        graphics->Draw(TRIANGLE_LIST, start, count);
         start += count;
     }
     if (noDepthTriangles_.Size())
     {
         count = noDepthTriangles_.Size() * 3;
-        graphics.SetDepthTest(CMP_ALWAYS);
-        graphics.Draw(TRIANGLE_LIST, start, count);
+        graphics->SetDepthTest(CMP_ALWAYS);
+        graphics->Draw(TRIANGLE_LIST, start, count);
     }
 
-    graphics.SetLineAntiAlias(false);
+    graphics->SetLineAntiAlias(false);
 }
 
 bool DebugRenderer::IsInside(const BoundingBox& box) const

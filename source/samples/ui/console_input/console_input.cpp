@@ -59,7 +59,7 @@ void ConsoleInput::Start()
     // Show the console by default, make it large. Console will show the text edit field when there is at least one
     // subscriber for the console command event
     Console& console = DV_CONSOLE;
-    console.SetNumRows(DV_GRAPHICS.GetHeight() / 16);
+    console.SetNumRows(DV_GRAPHICS->GetHeight() / 16);
     console.SetNumBufferedRows(2 * console.GetNumRows());
     console.SetCommandInterpreter(GetTypeName());
     console.SetVisible(true);

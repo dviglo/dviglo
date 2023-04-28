@@ -48,7 +48,7 @@ bool Texture3D::begin_load(Deserializer& source)
         return true;
 
     // If device is lost, retry later
-    if (DV_GRAPHICS.IsDeviceLost())
+    if (DV_GRAPHICS->IsDeviceLost())
     {
         DV_LOGWARNING("Texture load while device is lost");
         dataPending_ = true;
@@ -121,7 +121,7 @@ bool Texture3D::begin_load(Deserializer& source)
 bool Texture3D::end_load()
 {
     // In headless mode, do not actually load the texture, just return success
-    if (GParams::is_headless() || DV_GRAPHICS.IsDeviceLost())
+    if (GParams::is_headless() || DV_GRAPHICS->IsDeviceLost())
         return true;
 
     // If over the texture budget, see if materials can be freed to allow textures to be freed

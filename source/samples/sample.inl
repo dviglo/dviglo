@@ -142,10 +142,10 @@ void Sample::CreateLogo()
 
 void Sample::SetWindowTitleAndIcon()
 {
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
     Image* icon = DV_RES_CACHE.GetResource<Image>("textures/urho_icon.png");
-    graphics.SetWindowIcon(icon);
-    graphics.SetWindowTitle("Urho3D Sample");
+    graphics->SetWindowIcon(icon);
+    graphics->SetWindowTitle("Urho3D Sample");
 }
 
 void Sample::CreateConsoleAndDebugHud()
@@ -261,7 +261,7 @@ void Sample::HandleKeyDown(StringHash /*eventType*/, VariantMap& eventData)
         else if (key == '9')
         {
             Image screenshot;
-            DV_GRAPHICS.TakeScreenShot(screenshot);
+            DV_GRAPHICS->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(DV_FILE_SYSTEM.GetProgramDir() + "Data/Screenshot_" +
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");

@@ -147,6 +147,7 @@ Engine::~Engine()
     delete UI::instance_;
     delete Input::instance_;
     delete Renderer::instance_;
+    delete Graphics::instance_;
 
     delete Localization::instance_;
 
@@ -172,7 +173,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     if (!GParams::is_headless())
     {
         // Указатели на объекты хранятся в самих классах
-        Graphics::get_instance();
+        new Graphics();
         new Renderer();
     }
     else
@@ -222,19 +223,19 @@ bool Engine::Initialize(const VariantMap& parameters)
     // Initialize graphics & audio output
     if (!GParams::is_headless())
     {
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
         Renderer* renderer = DV_RENDERER;
 
-        graphics.SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Dviglo").GetString());
-        graphics.SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
-        graphics.SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());
-        graphics.SetOrientations(GetParameter(parameters, EP_ORIENTATIONS, "LandscapeLeft LandscapeRight").GetString());
+        graphics->SetWindowTitle(GetParameter(parameters, EP_WINDOW_TITLE, "Dviglo").GetString());
+        graphics->SetWindowIcon(DV_RES_CACHE.GetResource<Image>(GetParameter(parameters, EP_WINDOW_ICON, String::EMPTY).GetString()));
+        graphics->SetFlushGPU(GetParameter(parameters, EP_FLUSH_GPU, false).GetBool());
+        graphics->SetOrientations(GetParameter(parameters, EP_ORIENTATIONS, "LandscapeLeft LandscapeRight").GetString());
 
         if (HasParameter(parameters, EP_WINDOW_POSITION_X) && HasParameter(parameters, EP_WINDOW_POSITION_Y))
-            graphics.SetWindowPosition(GetParameter(parameters, EP_WINDOW_POSITION_X).GetI32(),
+            graphics->SetWindowPosition(GetParameter(parameters, EP_WINDOW_POSITION_X).GetI32(),
                 GetParameter(parameters, EP_WINDOW_POSITION_Y).GetI32());
 
-        if (!graphics.SetMode(
+        if (!graphics->SetMode(
             GetParameter(parameters, EP_WINDOW_WIDTH, 0).GetI32(),
             GetParameter(parameters, EP_WINDOW_HEIGHT, 0).GetI32(),
             GetParameter(parameters, EP_FULL_SCREEN, true).GetBool(),
@@ -250,7 +251,7 @@ bool Engine::Initialize(const VariantMap& parameters)
             return false;
 
         if (HasParameter(parameters, EP_DUMP_SHADERS))
-            graphics.BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
+            graphics->BeginDumpShaders(GetParameter(parameters, EP_DUMP_SHADERS, String::EMPTY).GetString());
         if (HasParameter(parameters, EP_RENDER_PATH))
             renderer->SetDefaultRenderPath(DV_RES_CACHE.GetResource<XmlFile>(GetParameter(parameters, EP_RENDER_PATH).GetString()));
 
@@ -453,7 +454,7 @@ void Engine::run_frame()
     assert(initialized_);
 
     // If not headless, and the graphics subsystem no longer has a window open, assume we should exit
-    if (!GParams::is_headless() && !DV_GRAPHICS.IsInitialized())
+    if (!GParams::is_headless() && !DV_GRAPHICS->IsInitialized())
         exiting_ = true;
 
     if (exiting_)
@@ -639,12 +640,12 @@ void Engine::render()
     ZoneScoped;
 
     // If device is lost, BeginFrame will fail and we skip rendering
-    if (!DV_GRAPHICS.BeginFrame())
+    if (!DV_GRAPHICS->BeginFrame())
         return;
 
     DV_RENDERER->Render();
     DV_UI->Render();
-    DV_GRAPHICS.EndFrame();
+    DV_GRAPHICS->EndFrame();
 }
 
 void Engine::apply_frame_limit()
@@ -910,7 +911,7 @@ void Engine::HandleExitRequested(StringHash eventType, VariantMap& eventData)
 void Engine::DoExit()
 {
     if (!GParams::is_headless())
-        DV_GRAPHICS.Close();
+        DV_GRAPHICS->Close();
 
     exiting_ = true;
 #if defined(__EMSCRIPTEN__) && defined(DV_TESTING)

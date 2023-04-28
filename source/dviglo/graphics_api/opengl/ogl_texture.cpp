@@ -31,7 +31,7 @@ static GLenum GetWrapMode(TextureAddressMode mode)
 void Texture::SetSRGB_OGL(bool enable)
 {
     if (!GParams::is_headless())
-        enable &= DV_GRAPHICS.GetSRGBSupport();
+        enable &= DV_GRAPHICS->GetSRGBSupport();
 
     if (enable != sRGB_)
     {
@@ -42,8 +42,8 @@ void Texture::SetSRGB_OGL(bool enable)
             Create();
 
         // If texture in use in the framebuffer, mark it dirty
-        if (!GParams::is_headless() && DV_GRAPHICS.GetRenderTarget(0) && DV_GRAPHICS.GetRenderTarget(0)->GetParentTexture() == this)
-            DV_GRAPHICS.MarkFBODirty_OGL();
+        if (!GParams::is_headless() && DV_GRAPHICS->GetRenderTarget(0) && DV_GRAPHICS->GetRenderTarget(0)->GetParentTexture() == this)
+            DV_GRAPHICS->MarkFBODirty_OGL();
     }
 }
 
@@ -70,7 +70,7 @@ void Texture::UpdateParameters_OGL()
 
     TextureFilterMode filterMode = filterMode_;
     if (filterMode == FILTER_DEFAULT)
-        filterMode = DV_GRAPHICS.GetDefaultTextureFilterMode();
+        filterMode = DV_GRAPHICS->GetDefaultTextureFilterMode();
 
     // Filtering
     switch (filterMode)
@@ -114,9 +114,9 @@ void Texture::UpdateParameters_OGL()
 
 #ifndef GL_ES_VERSION_2_0
     // Anisotropy
-    if (DV_GRAPHICS.GetAnisotropySupport())
+    if (DV_GRAPHICS->GetAnisotropySupport())
     {
-        unsigned maxAnisotropy = anisotropy_ ? anisotropy_ : DV_GRAPHICS.GetDefaultTextureAnisotropy();
+        unsigned maxAnisotropy = anisotropy_ ? anisotropy_ : DV_GRAPHICS->GetDefaultTextureAnisotropy();
         glTexParameterf(target_, GL_TEXTURE_MAX_ANISOTROPY_EXT,
             (filterMode == FILTER_ANISOTROPIC || filterMode == FILTER_NEAREST_ANISOTROPIC) ? (float)maxAnisotropy : 1.0f);
     }
@@ -320,7 +320,7 @@ unsigned Texture::GetDataType_OGL(unsigned format)
 unsigned Texture::GetSRGBFormat_OGL(unsigned format)
 {
 #if !defined(GL_ES_VERSION_2_0) || defined(GL_ES_VERSION_3_0)
-    if (GParams::is_headless() || !DV_GRAPHICS.GetSRGBSupport())
+    if (GParams::is_headless() || !DV_GRAPHICS->GetSRGBSupport())
         return format;
 
     switch (format)

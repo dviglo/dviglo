@@ -127,7 +127,7 @@ bool IndexBuffer::GetUsedVertexRange(i32 start, i32 count, i32& minVertex, i32& 
 
 void IndexBuffer::OnDeviceLost()
 {
-    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+    if (gpu_object_name_ && !DV_GRAPHICS->IsDeviceLost())
         glDeleteBuffers(1, &gpu_object_name_);
 
     GpuObject::OnDeviceLost();
@@ -157,12 +157,12 @@ void IndexBuffer::Release()
         if (GParams::is_headless())
             return;
 
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
 
-        if (!graphics.IsDeviceLost())
+        if (!graphics->IsDeviceLost())
         {
-            if (graphics.GetIndexBuffer() == this)
-                graphics.SetIndexBuffer(nullptr);
+            if (graphics->GetIndexBuffer() == this)
+                graphics->SetIndexBuffer(nullptr);
 
             glDeleteBuffers(1, &gpu_object_name_);
         }
@@ -190,9 +190,9 @@ bool IndexBuffer::SetData(const void* data)
 
     if (gpu_object_name_)
     {
-        if (!DV_GRAPHICS.IsDeviceLost())
+        if (!DV_GRAPHICS->IsDeviceLost())
         {
-            DV_GRAPHICS.SetIndexBuffer(this);
+            DV_GRAPHICS->SetIndexBuffer(this);
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)indexCount_ * indexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         }
         else
@@ -240,9 +240,9 @@ bool IndexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool disc
 
     if (gpu_object_name_)
     {
-        if (!DV_GRAPHICS.IsDeviceLost())
+        if (!DV_GRAPHICS->IsDeviceLost())
         {
-            DV_GRAPHICS.SetIndexBuffer(this);
+            DV_GRAPHICS->SetIndexBuffer(this);
             if (!discard || start != 0)
                 glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)start * indexSize_, (GLsizeiptr)count * indexSize_, data);
             else
@@ -295,7 +295,7 @@ void* IndexBuffer::Lock(i32 start, i32 count, bool discard)
     else if (!GParams::is_headless())
     {
         lockState_ = LOCK_SCRATCH;
-        lockScratchData_ = DV_GRAPHICS.ReserveScratchBuffer(count * indexSize_);
+        lockScratchData_ = DV_GRAPHICS->ReserveScratchBuffer(count * indexSize_);
         return lockScratchData_;
     }
     else
@@ -316,7 +316,7 @@ void IndexBuffer::Unlock()
     case LOCK_SCRATCH:
         SetDataRange(lockScratchData_, lockStart_, lockCount_, discardLock_);
         if (!GParams::is_headless())
-            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
+            DV_GRAPHICS->FreeScratchBuffer(lockScratchData_);
         lockScratchData_ = nullptr;
         lockState_ = LOCK_NONE;
         break;
@@ -336,7 +336,7 @@ bool IndexBuffer::Create()
 
     if (!GParams::is_headless())
     {
-        if (DV_GRAPHICS.IsDeviceLost())
+        if (DV_GRAPHICS->IsDeviceLost())
         {
             DV_LOGWARNING("Index buffer creation while device is lost");
             return true;
@@ -351,7 +351,7 @@ bool IndexBuffer::Create()
             return false;
         }
 
-        DV_GRAPHICS.SetIndexBuffer(this);
+        DV_GRAPHICS->SetIndexBuffer(this);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, (GLsizeiptr)indexCount_ * indexSize_, nullptr, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     }
 

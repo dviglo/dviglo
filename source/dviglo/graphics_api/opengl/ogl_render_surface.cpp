@@ -53,21 +53,21 @@ void RenderSurface::OnDeviceLost_OGL()
     if (GParams::is_headless())
         return;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
     {
-        if (graphics.GetRenderTarget(i) == this)
-            graphics.ResetRenderTarget(i);
+        if (graphics->GetRenderTarget(i) == this)
+            graphics->ResetRenderTarget(i);
     }
 
-    if (graphics.GetDepthStencil() == this)
-        graphics.ResetDepthStencil();
+    if (graphics->GetDepthStencil() == this)
+        graphics->ResetDepthStencil();
 
     // Clean up also from non-active FBOs
-    graphics.CleanupRenderSurface_OGL(this);
+    graphics->CleanupRenderSurface_OGL(this);
 
-    if (renderBuffer_ && !graphics.IsDeviceLost())
+    if (renderBuffer_ && !graphics->IsDeviceLost())
         glDeleteRenderbuffersEXT(1, &renderBuffer_);
 
     renderBuffer_ = 0;
@@ -75,24 +75,24 @@ void RenderSurface::OnDeviceLost_OGL()
 
 void RenderSurface::Release_OGL()
 {
-    if (GParams::is_headless() || Graphics::is_destructed())
+    if (!Graphics::instance()) // Подсистема может быть уже уничтожена
         return;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    if (!graphics.IsDeviceLost())
+    if (!graphics->IsDeviceLost())
     {
         for (unsigned i = 0; i < MAX_RENDERTARGETS; ++i)
         {
-            if (graphics.GetRenderTarget(i) == this)
-                graphics.ResetRenderTarget(i);
+            if (graphics->GetRenderTarget(i) == this)
+                graphics->ResetRenderTarget(i);
         }
 
-        if (graphics.GetDepthStencil() == this)
-            graphics.ResetDepthStencil();
+        if (graphics->GetDepthStencil() == this)
+            graphics->ResetDepthStencil();
 
         // Clean up also from non-active FBOs
-        graphics.CleanupRenderSurface_OGL(this);
+        graphics->CleanupRenderSurface_OGL(this);
 
         if (renderBuffer_)
             glDeleteRenderbuffersEXT(1, &renderBuffer_);

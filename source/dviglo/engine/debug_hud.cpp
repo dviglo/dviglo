@@ -103,7 +103,7 @@ void DebugHud::Update()
     if (GParams::is_headless())
         return;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
     Renderer* renderer = DV_RENDERER;
 
     // Ensure UI-elements are not detached
@@ -119,8 +119,8 @@ void DebugHud::Update()
         unsigned primitives, batches;
         if (!useRendererStats_)
         {
-            primitives = graphics.GetNumPrimitives();
-            batches = graphics.GetNumBatches();
+            primitives = graphics->GetNumPrimitives();
+            batches = graphics->GetNumBatches();
         }
         else
         {
@@ -167,8 +167,8 @@ void DebugHud::Update()
             renderer->GetMaxOccluderTriangles() > 0 ? "On" : "Off",
             renderer->GetDynamicInstancing() ? "On" : "Off");
     #ifdef DV_OPENGL
-        mode.AppendWithFormat(" Renderer:%s Version:%s", graphics.GetRendererName().c_str(),
-            graphics.GetVersionString().c_str());
+        mode.AppendWithFormat(" Renderer:%s Version:%s", graphics->GetRendererName().c_str(),
+            graphics->GetVersionString().c_str());
     #endif
 
 

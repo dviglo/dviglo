@@ -180,8 +180,8 @@ void CrowdNavigation::create_ui()
     DV_UI->SetCursor(cursor);
 
     // Set starting position of the cursor at the rendering window center
-    Graphics& graphics = DV_GRAPHICS;
-    cursor->SetPosition(graphics.GetWidth() / 2, graphics.GetHeight() / 2);
+    Graphics* graphics = DV_GRAPHICS;
+    cursor->SetPosition(graphics->GetWidth() / 2, graphics->GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
     instructionText_ = DV_UI->GetRoot()->create_child<Text>();
@@ -358,9 +358,9 @@ bool CrowdNavigation::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hit
 
     pos = ui->ConvertUIToSystem(pos);
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Ray cameraRay = camera->GetScreenRay((float)pos.x / graphics.GetWidth(), (float)pos.y / graphics.GetHeight());
+    Ray cameraRay = camera->GetScreenRay((float)pos.x / graphics->GetWidth(), (float)pos.y / graphics->GetHeight());
     // Pick only geometry objects, not eg. zones or lights, only get the first (closest) hit
     Vector<RayQueryResult> results;
     RayOctreeQuery query(results, cameraRay, RAY_TRIANGLE, maxDistance, DrawableTypes::Geometry);

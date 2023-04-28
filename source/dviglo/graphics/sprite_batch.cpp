@@ -13,18 +13,18 @@ namespace dviglo
 
 SpriteBatch::SpriteBatch()
 {
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    sprite_vs_ = graphics.GetShader(VS, "basic", "DIFFMAP VERTEXCOLOR");
-    sprite_ps_ = graphics.GetShader(PS, "basic", "DIFFMAP VERTEXCOLOR");
-    ttf_text_vs_ = graphics.GetShader(VS, "text");
-    ttf_text_ps_ = graphics.GetShader(PS, "text", "ALPHAMAP");
-    sprite_text_vs_ = graphics.GetShader(VS, "text");
-    sprite_text_ps_ = graphics.GetShader(PS, "text");
-    sdf_text_vs_ = graphics.GetShader(VS, "text");
-    sdf_text_ps_ = graphics.GetShader(PS, "text", "SIGNED_DISTANCE_FIELD");
-    shape_vs_ = graphics.GetShader(VS, "basic", "VERTEXCOLOR");
-    shape_ps_ = graphics.GetShader(PS, "basic", "VERTEXCOLOR");
+    sprite_vs_ = graphics->GetShader(VS, "basic", "DIFFMAP VERTEXCOLOR");
+    sprite_ps_ = graphics->GetShader(PS, "basic", "DIFFMAP VERTEXCOLOR");
+    ttf_text_vs_ = graphics->GetShader(VS, "text");
+    ttf_text_ps_ = graphics->GetShader(PS, "text", "ALPHAMAP");
+    sprite_text_vs_ = graphics->GetShader(VS, "text");
+    sprite_text_ps_ = graphics->GetShader(PS, "text");
+    sdf_text_vs_ = graphics->GetShader(VS, "text");
+    sdf_text_ps_ = graphics->GetShader(PS, "text", "SIGNED_DISTANCE_FIELD");
+    shape_vs_ = graphics->GetShader(VS, "basic", "VERTEXCOLOR");
+    shape_ps_ = graphics->GetShader(PS, "basic", "VERTEXCOLOR");
 }
 
 static Rect PosToDest(const Vector2& position, Texture2D* texture, const Rect* src)

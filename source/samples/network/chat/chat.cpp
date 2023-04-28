@@ -76,8 +76,8 @@ void Chat::create_ui()
     chatHistoryText_->SetFont(font, 12);
 
     buttonContainer_ = root->create_child<UiElement>();
-    buttonContainer_->SetFixedSize(DV_GRAPHICS.GetWidth(), 20);
-    buttonContainer_->SetPosition(0, DV_GRAPHICS.GetHeight() - 20);
+    buttonContainer_->SetFixedSize(DV_GRAPHICS->GetWidth(), 20);
+    buttonContainer_->SetPosition(0, DV_GRAPHICS->GetHeight() - 20);
     buttonContainer_->SetLayoutMode(LM_HORIZONTAL);
 
     textEdit_ = buttonContainer_->create_child<LineEdit>();
@@ -94,7 +94,7 @@ void Chat::create_ui()
     // Row height would be zero if the font failed to load
     if (rowHeight)
     {
-        float numberOfRows = (DV_GRAPHICS.GetHeight() - 100) / rowHeight;
+        float numberOfRows = (DV_GRAPHICS->GetHeight() - 100) / rowHeight;
         chatHistory_.Resize(static_cast<unsigned int>(numberOfRows));
     }
 

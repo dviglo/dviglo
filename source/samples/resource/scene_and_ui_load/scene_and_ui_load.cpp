@@ -75,7 +75,7 @@ void SceneAndUiLoad::create_ui()
     cursor->SetStyleAuto();
     DV_UI->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS->GetWidth() / 2, DV_GRAPHICS->GetHeight() / 2);
 
     // Load UI content prepared in the editor and add to the UI hierarchy
     SharedPtr<UiElement> layoutRoot = DV_UI->LoadLayout(DV_RES_CACHE.GetResource<XmlFile>("ui/ui_load_example.xml"));

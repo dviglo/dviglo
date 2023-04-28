@@ -184,7 +184,7 @@ void Water::setup_viewport()
     reflectionCamera->SetUseClipping(true); // Enable clipping of geometry behind water plane
     reflectionCamera->SetClipPlane(waterClipPlane_);
     // The water reflection texture is rectangular. Set reflection camera aspect ratio to match
-    reflectionCamera->SetAspectRatio((float)DV_GRAPHICS.GetWidth() / (float)DV_GRAPHICS.GetHeight());
+    reflectionCamera->SetAspectRatio((float)DV_GRAPHICS->GetWidth() / (float)DV_GRAPHICS->GetHeight());
     // View override flags could be used to optimize reflection rendering. For example disable shadows
     //reflectionCamera->SetViewOverrideFlags(VO_DISABLE_SHADOWS);
 
@@ -241,7 +241,7 @@ void Water::move_camera(float timeStep)
 
     // In case resolution has changed, adjust the reflection camera aspect ratio
     auto* reflectionCamera = reflectionCameraNode_->GetComponent<Camera>();
-    reflectionCamera->SetAspectRatio((float)DV_GRAPHICS.GetWidth() / (float)DV_GRAPHICS.GetHeight());
+    reflectionCamera->SetAspectRatio((float)DV_GRAPHICS->GetWidth() / (float)DV_GRAPHICS->GetHeight());
 }
 
 void Water::handle_update(StringHash eventType, VariantMap& eventData)

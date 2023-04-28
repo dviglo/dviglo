@@ -67,15 +67,15 @@ void Urho2DSprite::create_scene()
     Camera* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
-    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
+    camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
 
     // Get sprite
     Sprite2D* sprite = DV_RES_CACHE.GetResource<Sprite2D>("sprites/aster.png");
     if (!sprite)
         return;
 
-    float halfWidth = DV_GRAPHICS.GetWidth() * 0.5f * PIXEL_SIZE;
-    float halfHeight = DV_GRAPHICS.GetHeight() * 0.5f * PIXEL_SIZE;
+    float halfWidth = DV_GRAPHICS->GetWidth() * 0.5f * PIXEL_SIZE;
+    float halfHeight = DV_GRAPHICS->GetHeight() * 0.5f * PIXEL_SIZE;
 
     for (unsigned i = 0; i < NUM_SPRITES; ++i)
     {
@@ -186,8 +186,8 @@ void Urho2DSprite::handle_update(StringHash eventType, VariantMap& eventData)
     // Move the camera, scale movement with time step
     move_camera(timeStep);
 
-    float halfWidth = (float)DV_GRAPHICS.GetWidth() * 0.5f * PIXEL_SIZE;
-    float halfHeight = (float)DV_GRAPHICS.GetHeight() * 0.5f * PIXEL_SIZE;
+    float halfWidth = (float)DV_GRAPHICS->GetWidth() * 0.5f * PIXEL_SIZE;
+    float halfHeight = (float)DV_GRAPHICS->GetHeight() * 0.5f * PIXEL_SIZE;
 
     for (const SharedPtr<Node>& node : spriteNodes_)
     {

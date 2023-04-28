@@ -65,8 +65,8 @@ void Urho2DTileMap::create_scene()
     auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
-    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
-    camera->SetZoom(1.0f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.0) is set for full visibility at 1280x800 resolution)
+    camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
+    camera->SetZoom(1.0f * Min((float)DV_GRAPHICS->GetWidth() / 1280.0f, (float)DV_GRAPHICS->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.0) is set for full visibility at 1280x800 resolution)
 
     // Get tmx file
     auto* tmxFile = DV_RES_CACHE.GetResource<TmxFile2D>("sprites/isometric_grass_and_water.tmx");
@@ -198,7 +198,7 @@ void Urho2DTileMap::HandleMouseButtonDown(StringHash eventType, VariantMap& even
 Vector2 Urho2DTileMap::GetMousePositionXY()
 {
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Vector3 screenPoint = Vector3((float)DV_INPUT->GetMousePosition().x / DV_GRAPHICS.GetWidth(), (float)DV_INPUT->GetMousePosition().y / DV_GRAPHICS.GetHeight(), 10.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT->GetMousePosition().x / DV_GRAPHICS->GetWidth(), (float)DV_INPUT->GetMousePosition().y / DV_GRAPHICS->GetHeight(), 10.0f);
     Vector3 worldPoint = camera->screen_to_world_point(screenPoint);
     return Vector2(worldPoint.x, worldPoint.y);
 }

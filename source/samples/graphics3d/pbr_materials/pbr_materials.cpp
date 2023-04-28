@@ -112,7 +112,7 @@ void PBRMaterials::create_ui()
     cursor->SetStyleAuto();
     ui->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS->GetWidth() / 2, DV_GRAPHICS->GetHeight() / 2);
 
     roughnessLabel_ = ui->GetRoot()->create_child<Text>();
     roughnessLabel_->SetFont(DV_RES_CACHE.GetResource<Font>("fonts/anonymous pro.ttf"), 15);

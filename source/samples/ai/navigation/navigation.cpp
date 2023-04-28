@@ -158,7 +158,7 @@ void Navigation::create_ui()
     DV_UI->SetCursor(cursor);
 
     // Set starting position of the cursor at the rendering window center
-    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS->GetWidth() / 2, DV_GRAPHICS->GetHeight() / 2);
 
     // Construct new Text object, set string to display and font to use
     auto* instructionText = DV_UI->GetRoot()->create_child<Text>();
@@ -331,7 +331,7 @@ bool Navigation::Raycast(float maxDistance, Vector3& hitPos, Drawable*& hitDrawa
     pos = DV_UI->ConvertUIToSystem(pos);
 
     auto* camera = cameraNode_->GetComponent<Camera>();
-    Ray cameraRay = camera->GetScreenRay((float)pos.x / DV_GRAPHICS.GetWidth(), (float)pos.y / DV_GRAPHICS.GetHeight());
+    Ray cameraRay = camera->GetScreenRay((float)pos.x / DV_GRAPHICS->GetWidth(), (float)pos.y / DV_GRAPHICS->GetHeight());
     // Pick only geometry objects, not eg. zones or lights, only get the first (closest) hit
     Vector<RayQueryResult> results;
     RayOctreeQuery query(results, cameraRay, RAY_TRIANGLE, maxDistance, DrawableTypes::Geometry);

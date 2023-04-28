@@ -90,8 +90,8 @@ void Urho2DConstraints::create_scene()
     camera_ = cameraNode_->create_component<Camera>();
     camera_->SetOrthographic(true);
 
-    camera_->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
-    camera_->SetZoom(1.2f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
+    camera_->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
+    camera_->SetZoom(1.2f * Min((float)DV_GRAPHICS->GetWidth() / 1280.0f, (float)DV_GRAPHICS->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
     // Set up a viewport to the Renderer subsystem so that the 3D scene can be seen
     SharedPtr<Viewport> viewport(new Viewport(scene_, camera_));
@@ -505,7 +505,7 @@ void Urho2DConstraints::HandleMouseButtonUp(StringHash eventType, VariantMap& ev
 
 Vector2 Urho2DConstraints::GetMousePositionXY()
 {
-    Vector3 screenPoint = Vector3((float)DV_INPUT->GetMousePosition().x / DV_GRAPHICS.GetWidth(), (float)DV_INPUT->GetMousePosition().y / DV_GRAPHICS.GetHeight(), 0.0f);
+    Vector3 screenPoint = Vector3((float)DV_INPUT->GetMousePosition().x / DV_GRAPHICS->GetWidth(), (float)DV_INPUT->GetMousePosition().y / DV_GRAPHICS->GetHeight(), 0.0f);
     Vector3 worldPoint = camera_->screen_to_world_point(screenPoint);
     return Vector2(worldPoint.x, worldPoint.y);
 }

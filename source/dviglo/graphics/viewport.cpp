@@ -110,9 +110,9 @@ Ray Viewport::GetScreenRay(int x, int y) const
 
     if (rect == IntRect::ZERO)
     {
-        Graphics& graphics = DV_GRAPHICS;
-        screenX = (float)x / (float)graphics.GetWidth();
-        screenY = (float)y / (float)graphics.GetHeight();
+        Graphics* graphics = DV_GRAPHICS;
+        screenX = (float)x / (float)graphics->GetWidth();
+        screenY = (float)y / (float)graphics->GetHeight();
     }
     else
     {
@@ -135,9 +135,9 @@ IntVector2 Viewport::world_to_screen_point(const Vector3& worldPos) const
     if (rect == IntRect::ZERO)
     {
         /// \todo This is incorrect if the viewport is used on a texture rendertarget instead of the backbuffer, as it may have different dimensions.
-        Graphics& graphics = DV_GRAPHICS;
-        x = (int)(screenPoint.x * graphics.GetWidth());
-        y = (int)(screenPoint.y * graphics.GetHeight());
+        Graphics* graphics = DV_GRAPHICS;
+        x = (int)(screenPoint.x * graphics->GetWidth());
+        y = (int)(screenPoint.y * graphics->GetHeight());
     }
     else
     {
@@ -159,9 +159,9 @@ Vector3 Viewport::screen_to_world_point(int x, int y, float depth) const
     if (rect == IntRect::ZERO)
     {
         /// \todo This is incorrect if the viewport is used on a texture rendertarget instead of the backbuffer, as it may have different dimensions.
-        Graphics& graphics = DV_GRAPHICS;
-        screenX = (float)x / (float)graphics.GetWidth();
-        screenY = (float)y / (float)graphics.GetHeight();
+        Graphics* graphics = DV_GRAPHICS;
+        screenX = (float)x / (float)graphics->GetWidth();
+        screenY = (float)y / (float)graphics->GetHeight();
     }
     else
     {

@@ -42,7 +42,7 @@ MainMenu::MainMenu()
     menu_bar_ = DV_UI->GetRoot()->create_child<BorderImage>();
     menu_bar_->SetStyle("EditorMenuBar");
     menu_bar_->SetFixedHeight(20);
-    menu_bar_->SetFixedWidth(DV_GRAPHICS.GetWidth());
+    menu_bar_->SetFixedWidth(DV_GRAPHICS->GetWidth());
     menu_bar_->SetLayout(LayoutMode::LM_HORIZONTAL);
 
     {

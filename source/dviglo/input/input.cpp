@@ -62,9 +62,9 @@ int Win32_ResizingEventWatcher(void* data, SDL_Event* event)
         {
             if (!GParams::is_headless())
             {
-                if (DV_GRAPHICS.IsInitialized())
+                if (DV_GRAPHICS->IsInitialized())
                 {
-                    DV_GRAPHICS.OnWindowResized();
+                    DV_GRAPHICS->OnWindowResized();
                     DV_ENGINE.run_frame();
                 }
             }
@@ -162,10 +162,10 @@ void Input::Update()
     if (suppressNextMouseMove_ && (mouseMove_ != IntVector2::ZERO || mouseMoved))
         UnsuppressMouseMove();
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // Check for focus change this frame
-    SDL_Window* window = graphics.GetWindow();
+    SDL_Window* window = graphics->GetWindow();
     unsigned flags = window ? SDL_GetWindowFlags(window) & (SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS) : 0;
     if (window)
     {
@@ -187,14 +187,14 @@ void Input::Update()
     // Handle mouse mode MM_WRAP
     if (mouseVisible_ && mouseMode_ == MM_WRAP)
     {
-        IntVector2 windowPos = graphics.GetWindowPosition();
+        IntVector2 windowPos = graphics->GetWindowPosition();
         Vector2 mpos;
         SDL_GetGlobalMouseState(&mpos.x, &mpos.y);
         mpos -= Vector2(windowPos);
 
         const int buffer = 5;
-        const int width = graphics.GetWidth() - buffer * 2;
-        const int height = graphics.GetHeight() - buffer * 2;
+        const int width = graphics->GetWidth() - buffer * 2;
+        const int height = graphics->GetHeight() - buffer * 2;
 
         // SetMousePosition utilizes backbuffer coordinate system, scale now from window coordinates
         mpos.x = (int)(mpos.x * inputScale_.x);
@@ -376,14 +376,14 @@ void Input::ResetMouseGrabbed()
 
 void Input::SetMouseModeAbsolute(SDL_bool enable)
 {
-    SDL_Window* const window = DV_GRAPHICS.GetWindow();
+    SDL_Window* const window = DV_GRAPHICS->GetWindow();
 
     SDL_SetWindowGrab(window, enable);
 }
 
 void Input::SetMouseModeRelative(SDL_bool enable)
 {
-    SDL_Window* const window = DV_GRAPHICS.GetWindow();
+    SDL_Window* const window = DV_GRAPHICS->GetWindow();
 
     int result = SDL_SetRelativeMouseMode(enable);
     sdlMouseRelative_ = enable && (result == 0);
@@ -403,7 +403,7 @@ void Input::SetMouseMode(MouseMode mode, bool suppressEvent)
             SuppressNextMouseMove();
 
             mouseMode_ = mode;
-            SDL_Window* const window = DV_GRAPHICS.GetWindow();
+            SDL_Window* const window = DV_GRAPHICS->GetWindow();
 
             Cursor* const cursor = DV_UI->GetCursor();
 
@@ -722,7 +722,7 @@ bool Input::IsMouseLocked() const
 bool Input::IsMinimized() const
 {
     // Return minimized state also when unfocused in fullscreen
-    if (!inputFocus_ && !GParams::is_headless() && DV_GRAPHICS.GetFullscreen())
+    if (!inputFocus_ && !GParams::is_headless() && DV_GRAPHICS->GetFullscreen())
         return true;
     else
         return minimized_;
@@ -730,7 +730,7 @@ bool Input::IsMinimized() const
 
 void Input::Initialize()
 {
-    if (GParams::is_headless() || !DV_GRAPHICS.IsInitialized())
+    if (GParams::is_headless() || !DV_GRAPHICS->IsInitialized())
         return;
 
     // Set the initial activation
@@ -744,7 +744,7 @@ void Input::Initialize()
 
 #ifdef _WIN32
     // Register callback for resizing in order to repaint.
-    if (SDL_Window* window = DV_GRAPHICS.GetWindow())
+    if (SDL_Window* window = DV_GRAPHICS->GetWindow())
         SDL_AddEventWatch(Win32_ResizingEventWatcher, window);
 #endif
 
@@ -1009,7 +1009,7 @@ void Input::SetKey(Key key, Scancode scancode, bool newState)
 
     if ((key == KEY_RETURN || key == KEY_RETURN2 || key == KEY_KP_ENTER) && newState && !repeat && toggleFullscreen_ &&
         (GetKeyDown(KEY_LALT) || GetKeyDown(KEY_RALT)))
-        DV_GRAPHICS.ToggleFullscreen();
+        DV_GRAPHICS->ToggleFullscreen();
 }
 
 void Input::SetMouseWheel(int delta)
@@ -1033,12 +1033,12 @@ void Input::SetMousePosition(const IntVector2& position)
     if (GParams::is_headless())
         return;
 
-    SDL_WarpMouseInWindow(DV_GRAPHICS.GetWindow(), (int)(position.x / inputScale_.x), (int)(position.y / inputScale_.y));
+    SDL_WarpMouseInWindow(DV_GRAPHICS->GetWindow(), (int)(position.x / inputScale_.x), (int)(position.y / inputScale_.y));
 }
 
 void Input::CenterMousePosition()
 {
-    const IntVector2 center(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
+    const IntVector2 center(DV_GRAPHICS->GetWidth() / 2, DV_GRAPHICS->GetHeight() / 2);
     if (GetMousePosition() != center)
     {
         SetMousePosition(center);
@@ -1061,7 +1061,7 @@ void Input::UnsuppressMouseMove()
 
 void Input::HandleSDLEvent(void* sdlEvent)
 {
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     SDL_Event& evt = *static_cast<SDL_Event*>(sdlEvent);
 
@@ -1132,8 +1132,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
             event.tfinger.touchId = 0;
             event.tfinger.fingerId = evt.button.button - 1;
             event.tfinger.pressure = 1.0f;
-            event.tfinger.x = (float)x / (float)graphics.GetWidth();
-            event.tfinger.y = (float)y / (float)graphics.GetHeight();
+            event.tfinger.x = (float)x / (float)graphics->GetWidth();
+            event.tfinger.y = (float)y / (float)graphics->GetHeight();
             event.tfinger.dx = 0;
             event.tfinger.dy = 0;
             SDL_PushEvent(&event);
@@ -1158,8 +1158,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
             event.tfinger.touchId = 0;
             event.tfinger.fingerId = evt.button.button - 1;
             event.tfinger.pressure = 0.0f;
-            event.tfinger.x = (float)x / (float)graphics.GetWidth();
-            event.tfinger.y = (float)y / (float)graphics.GetHeight();
+            event.tfinger.x = (float)x / (float)graphics->GetWidth();
+            event.tfinger.y = (float)y / (float)graphics->GetHeight();
             event.tfinger.dx = 0;
             event.tfinger.dy = 0;
             SDL_PushEvent(&event);
@@ -1202,10 +1202,10 @@ void Input::HandleSDLEvent(void* sdlEvent)
             event.tfinger.touchId = 0;
             event.tfinger.fingerId = 0;
             event.tfinger.pressure = 1.0f;
-            event.tfinger.x = (float)x / (float)graphics.GetWidth();
-            event.tfinger.y = (float)y / (float)graphics.GetHeight();
-            event.tfinger.dx = (float)evt.motion.xrel * inputScale_.x / (float)graphics.GetWidth();
-            event.tfinger.dy = (float)evt.motion.yrel * inputScale_.y / (float)graphics.GetHeight();
+            event.tfinger.x = (float)x / (float)graphics->GetWidth();
+            event.tfinger.y = (float)y / (float)graphics->GetHeight();
+            event.tfinger.dx = (float)evt.motion.xrel * inputScale_.x / (float)graphics->GetWidth();
+            event.tfinger.dy = (float)evt.motion.yrel * inputScale_.y / (float)graphics->GetHeight();
             SDL_PushEvent(&event);
         }
         break;
@@ -1221,8 +1221,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
             int touchID = GetTouchIndexFromID(evt.tfinger.fingerId & 0x7ffffffu);
             TouchState& state = touches_[touchID];
             state.touchID_ = touchID;
-            state.lastPosition_ = state.position_ = IntVector2((int)(evt.tfinger.x * graphics.GetWidth()),
-                (int)(evt.tfinger.y * graphics.GetHeight()));
+            state.lastPosition_ = state.position_ = IntVector2((int)(evt.tfinger.x * graphics->GetWidth()),
+                (int)(evt.tfinger.y * graphics->GetHeight()));
             state.delta_ = IntVector2::ZERO;
             state.pressure_ = evt.tfinger.pressure;
 
@@ -1273,8 +1273,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
                 break;
             TouchState& state = touches_[touchID];
             state.touchID_ = touchID;
-            state.position_ = IntVector2((int)(evt.tfinger.x * graphics.GetWidth()),
-                (int)(evt.tfinger.y * graphics.GetHeight()));
+            state.position_ = IntVector2((int)(evt.tfinger.x * graphics->GetWidth()),
+                (int)(evt.tfinger.y * graphics->GetHeight()));
             state.delta_ = state.position_ - state.lastPosition_;
             state.pressure_ = evt.tfinger.pressure;
 
@@ -1284,8 +1284,8 @@ void Input::HandleSDLEvent(void* sdlEvent)
             eventData[P_TOUCHID] = touchID;
             eventData[P_X] = state.position_.x;
             eventData[P_Y] = state.position_.y;
-            eventData[P_DX] = (int)(evt.tfinger.dx * graphics.GetWidth());
-            eventData[P_DY] = (int)(evt.tfinger.dy * graphics.GetHeight());
+            eventData[P_DX] = (int)(evt.tfinger.dx * graphics->GetWidth());
+            eventData[P_DY] = (int)(evt.tfinger.dy * graphics->GetHeight());
             eventData[P_PRESSURE] = state.pressure_;
             SendEvent(E_TOUCHMOVE, eventData);
 
@@ -1485,18 +1485,18 @@ void Input::HandleSDLEvent(void* sdlEvent)
 #if defined(IOS) || defined(TVOS) || defined (__ANDROID__)
         // On iOS/tvOS we never lose the GL context, but may have done GPU object changes that could not be applied yet. Apply them now
         // On Android the old GL context may be lost already, restore GPU objects to the new GL context
-        graphics.Restore_OGL();
+        graphics->Restore_OGL();
 #endif
         minimized_ = false;
         SendInputFocusEvent();
         break;
 
     case SDL_EVENT_WINDOW_RESIZED:
-        graphics.OnWindowResized();
+        graphics->OnWindowResized();
         break;
 
     case SDL_EVENT_WINDOW_MOVED:
-        graphics.OnWindowMoved();
+        graphics->OnWindowMoved();
         break;
 
     case SDL_EVENT_DROP_FILE:
@@ -1524,14 +1524,14 @@ void Input::HandleScreenMode(StringHash eventType, VariantMap& eventData)
     if (!initialized_)
         Initialize();
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // Re-enable cursor clipping, and re-center the cursor (if needed) to the new screen size, so that there is no erroneous
     // mouse move event. Also get new window ID if it changed
-    SDL_Window* window = graphics.GetWindow();
+    SDL_Window* window = graphics->GetWindow();
     windowID_ = SDL_GetWindowID(window);
 
-    if (graphics.GetFullscreen() || !mouseVisible_)
+    if (graphics->GetFullscreen() || !mouseVisible_)
         focusedThisFrame_ = true;
 
     // After setting a new screen mode we should not be minimized
@@ -1539,8 +1539,8 @@ void Input::HandleScreenMode(StringHash eventType, VariantMap& eventData)
 
     // Calculate input coordinate scaling from SDL window to backbuffer ratio
     int winWidth, winHeight;
-    int gfxWidth = graphics.GetWidth();
-    int gfxHeight = graphics.GetHeight();
+    int gfxWidth = graphics->GetWidth();
+    int gfxHeight = graphics->GetHeight();
     SDL_GetWindowSize(window, &winWidth, &winHeight);
     if (winWidth > 0 && winHeight > 0 && gfxWidth > 0 && gfxHeight > 0)
     {

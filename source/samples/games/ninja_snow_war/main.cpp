@@ -194,7 +194,7 @@ public:
 
         // Precache shaders if possible
         if (!GParams::is_headless() && DV_RES_CACHE.Exists("ninja_snow_war_shaders.xml"))
-            DV_GRAPHICS.PrecacheShaders(*DV_RES_CACHE.GetFile("ninja_snow_war_shaders.xml"));
+            DV_GRAPHICS->PrecacheShaders(*DV_RES_CACHE.GetFile("ninja_snow_war_shaders.xml"));
     }
 
     void InitNetworking()
@@ -257,7 +257,7 @@ public:
         if (GParams::is_headless() || runServer)
             return;
 
-        i32 height = DV_GRAPHICS.GetHeight() / 22;
+        i32 height = DV_GRAPHICS->GetHeight() / 22;
         if (height > 64)
             height = 64;
 
@@ -528,7 +528,7 @@ public:
         else if (key == KEY_F6)
         {
             Image screenshot;
-            DV_GRAPHICS.TakeScreenShot(screenshot);
+            DV_GRAPHICS->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
             screenshot.SavePNG(DV_FILE_SYSTEM.GetProgramDir() + "Data/Screenshot_" +
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
@@ -1097,7 +1097,7 @@ public:
 
     void HandleScreenMode(StringHash eventType, VariantMap& eventData)
     {
-        i32 height = DV_GRAPHICS.GetHeight() / 22;
+        i32 height = DV_GRAPHICS->GetHeight() / 22;
         if (height > 64)
             height = 64;
         sight->SetSize(height, height);

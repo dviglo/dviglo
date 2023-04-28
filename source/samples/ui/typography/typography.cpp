@@ -65,7 +65,7 @@ void Typography::Start()
     // outputs linear coverage values rather than SRGB values. However, this feature isn't
     // available on all platforms.
     CreateCheckbox("Graphics::SetSRGB", DV_HANDLER(Typography, HandleSRGB))
-        ->SetChecked(DV_GRAPHICS.GetSRGB());
+        ->SetChecked(DV_GRAPHICS->GetSRGB());
 
     // Add a checkbox for the global ForceAutoHint setting. This affects character spacing.
     CreateCheckbox("UI::SetForceAutoHint", DV_HANDLER(Typography, HandleForceAutoHint))
@@ -217,9 +217,9 @@ void Typography::HandleSRGB(StringHash eventType, VariantMap& eventData)
     auto* box = static_cast<CheckBox*>(eventData[Toggled::P_ELEMENT].GetPtr());
     bool checked = box->IsChecked();
 
-    if (DV_GRAPHICS.GetSRGBWriteSupport())
+    if (DV_GRAPHICS->GetSRGBWriteSupport())
     {
-        DV_GRAPHICS.SetSRGB(checked);
+        DV_GRAPHICS->SetSRGB(checked);
     }
     else
     {

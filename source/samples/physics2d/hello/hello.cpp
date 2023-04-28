@@ -69,8 +69,8 @@ void Urho2DPhysics::create_scene()
     auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
-    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
-    camera->SetZoom(1.2f * Min((float)DV_GRAPHICS.GetWidth() / 1280.0f, (float)DV_GRAPHICS.GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
+    camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
+    camera->SetZoom(1.2f * Min((float)DV_GRAPHICS->GetWidth() / 1280.0f, (float)DV_GRAPHICS->GetHeight() / 800.0f)); // Set zoom according to user's resolution to ensure full visibility (initial zoom (1.2) is set for full visibility at 1280x800 resolution)
 
     // Create 2D physics world component
     /*PhysicsWorld2D* physicsWorld = */scene_->create_component<PhysicsWorld2D>();

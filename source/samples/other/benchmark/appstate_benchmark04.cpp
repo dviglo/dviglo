@@ -59,12 +59,12 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
     Texture2D* ball = cache.GetResource<Texture2D>("sprites/ball.png");
     Texture2D* head = cache.GetResource<Texture2D>("textures/fish_bone_logo.png");
 
-    DV_GRAPHICS.Clear(CLEAR_COLOR, Color::GREEN);
+    DV_GRAPHICS->Clear(CLEAR_COLOR, Color::GREEN);
 
     for (int i = 0; i < 20000; i++)
     {
         spriteBatch_->draw_sprite(ball,
-            Vector2(Random(0.0f, (float)(DV_GRAPHICS.GetWidth() - ball->GetWidth())), Random(0.0f, (float)DV_GRAPHICS.GetHeight() - ball->GetHeight())), nullptr, 0xFFFFFFFF);
+            Vector2(Random(0.0f, (float)(DV_GRAPHICS->GetWidth() - ball->GetWidth())), Random(0.0f, (float)DV_GRAPHICS->GetHeight() - ball->GetHeight())), nullptr, 0xFFFFFFFF);
     }
 
     spriteBatch_->draw_sprite(head, Vector2(200.0f, 200.0f), nullptr, 0xFFFFFFFF, 0.0f, Vector2::ZERO, Vector2::ONE, FlipModes::both);

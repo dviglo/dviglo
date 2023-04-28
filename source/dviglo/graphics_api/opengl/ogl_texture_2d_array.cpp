@@ -25,7 +25,7 @@ namespace dviglo
 
 void Texture2DArray::OnDeviceLost_OGL()
 {
-    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+    if (gpu_object_name_ && !DV_GRAPHICS->IsDeviceLost())
         glDeleteTextures(1, &gpu_object_name_);
 
     GpuObject::OnDeviceLost();
@@ -59,14 +59,14 @@ void Texture2DArray::Release_OGL()
         if (GParams::is_headless())
             return;
 
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
 
-        if (!graphics.IsDeviceLost())
+        if (!graphics->IsDeviceLost())
         {
             for (unsigned i = 0; i < MAX_TEXTURE_UNITS; ++i)
             {
-                if (graphics.GetTexture(i) == this)
-                    graphics.SetTexture(i, nullptr);
+                if (graphics->GetTexture(i) == this)
+                    graphics->SetTexture(i, nullptr);
             }
 
             glDeleteTextures(1, &gpu_object_name_);
@@ -109,9 +109,9 @@ bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, i
         return false;
     }
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    if (graphics.IsDeviceLost())
+    if (graphics->IsDeviceLost())
     {
         DV_LOGWARNING("Texture array data assignment while device is lost");
         dataPending_ = true;
@@ -132,7 +132,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, i
         return false;
     }
 
-    graphics.SetTextureForUpdate_OGL(this);
+    graphics->SetTextureForUpdate_OGL(this);
 
 #ifndef GL_ES_VERSION_2_0
     bool wholeLevel = x == 0 && y == 0 && width == levelWidth && height == levelHeight && layer == 0;
@@ -156,7 +156,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, unsigned level, int x, int y, i
     }
 #endif
 
-    graphics.SetTexture(0, nullptr);
+    graphics->SetTexture(0, nullptr);
     return true;
 }
 
@@ -285,7 +285,7 @@ bool Texture2DArray::SetData_OGL(unsigned layer, Image* image, bool useAlpha)
         int width = image->GetWidth();
         int height = image->GetHeight();
         unsigned levels = image->GetNumCompressedLevels();
-        unsigned format = DV_GRAPHICS.GetFormat(image->GetCompressedFormat());
+        unsigned format = DV_GRAPHICS->GetFormat(image->GetCompressedFormat());
         bool needDecompress = false;
 
         if (!format)
@@ -377,22 +377,22 @@ bool Texture2DArray::GetData_OGL(unsigned layer, unsigned level, void* dest) con
         return false;
     }
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    if (graphics.IsDeviceLost())
+    if (graphics->IsDeviceLost())
     {
         DV_LOGWARNING("Getting texture data while device is lost");
         return false;
     }
 
-    graphics.SetTextureForUpdate_OGL(const_cast<Texture2DArray*>(this));
+    graphics->SetTextureForUpdate_OGL(const_cast<Texture2DArray*>(this));
 
     if (!IsCompressed_OGL())
         glGetTexImage(target_, level, GetExternalFormat_OGL(format_), GetDataType_OGL(format_), dest);
     else
         glGetCompressedTexImage(target_, level, dest);
 
-    graphics.SetTexture(0, nullptr);
+    graphics->SetTexture(0, nullptr);
     return true;
 #else
     DV_LOGERROR("Getting texture data not supported");
@@ -412,9 +412,9 @@ bool Texture2DArray::Create_OGL()
     if (GParams::is_headless() || !width_ || !height_ || !layers_)
         return false;
 
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
-    if (graphics.IsDeviceLost())
+    if (graphics->IsDeviceLost())
     {
         DV_LOGWARNING("Texture array creation while device is lost");
         return true;
@@ -423,7 +423,7 @@ bool Texture2DArray::Create_OGL()
     glGenTextures(1, &gpu_object_name_);
 
     // Ensure that our texture is bound to OpenGL texture unit 0
-    graphics.SetTextureForUpdate_OGL(this);
+    graphics->SetTextureForUpdate_OGL(this);
 
     unsigned format = GetSRGB() ? GetSRGBFormat_OGL(format_) : format_;
     unsigned externalFormat = GetExternalFormat_OGL(format_);
@@ -466,7 +466,7 @@ bool Texture2DArray::Create_OGL()
 
     // Set initial parameters, then unbind the texture
     UpdateParameters();
-    graphics.SetTexture(0, nullptr);
+    graphics->SetTexture(0, nullptr);
 
     return success;
 #endif

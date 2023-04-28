@@ -29,7 +29,7 @@ const char* ShaderVariation::elementSemanticNames_OGL[] =
 
 void ShaderVariation::OnDeviceLost_OGL()
 {
-    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+    if (gpu_object_name_ && !DV_GRAPHICS->IsDeviceLost())
         glDeleteShader(gpu_object_name_);
 
     GpuObject::OnDeviceLost();
@@ -44,26 +44,26 @@ void ShaderVariation::Release_OGL()
         if (GParams::is_headless())
             return;
 
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
 
-        if (!graphics.IsDeviceLost())
+        if (!graphics->IsDeviceLost())
         {
             if (type_ == VS)
             {
-                if (graphics.GetVertexShader() == this)
-                    graphics.SetShaders(nullptr, nullptr);
+                if (graphics->GetVertexShader() == this)
+                    graphics->SetShaders(nullptr, nullptr);
             }
             else
             {
-                if (graphics.GetPixelShader() == this)
-                    graphics.SetShaders(nullptr, nullptr);
+                if (graphics->GetPixelShader() == this)
+                    graphics->SetShaders(nullptr, nullptr);
             }
 
             glDeleteShader(gpu_object_name_);
         }
 
         gpu_object_name_ = 0;
-        graphics.CleanupShaderPrograms_OGL(this);
+        graphics->CleanupShaderPrograms_OGL(this);
     }
 
     compilerOutput_.Clear();

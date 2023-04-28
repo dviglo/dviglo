@@ -198,7 +198,7 @@ void VertexBuffer::UpdateOffsets(Vector<VertexElement>& elements)
 
 void VertexBuffer::OnDeviceLost()
 {
-    if (gpu_object_name_ && !DV_GRAPHICS.IsDeviceLost())
+    if (gpu_object_name_ && !DV_GRAPHICS->IsDeviceLost())
         glDeleteBuffers(1, &gpu_object_name_);
 
     GpuObject::OnDeviceLost();
@@ -228,17 +228,17 @@ void VertexBuffer::Release()
         if (GParams::is_headless())
             return;
 
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
 
-        if (!graphics.IsDeviceLost())
+        if (!graphics->IsDeviceLost())
         {
             for (i32 i = 0; i < MAX_VERTEX_STREAMS; ++i)
             {
-                if (graphics.GetVertexBuffer(i) == this)
-                    graphics.SetVertexBuffer(nullptr);
+                if (graphics->GetVertexBuffer(i) == this)
+                    graphics->SetVertexBuffer(nullptr);
             }
 
-            graphics.SetVBO_OGL(0);
+            graphics->SetVBO_OGL(0);
             glDeleteBuffers(1, &gpu_object_name_);
         }
 
@@ -265,9 +265,9 @@ bool VertexBuffer::SetData(const void* data)
 
     if (gpu_object_name_)
     {
-        if (!DV_GRAPHICS.IsDeviceLost())
+        if (!DV_GRAPHICS->IsDeviceLost())
         {
-            DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
+            DV_GRAPHICS->SetVBO_OGL(gpu_object_name_);
             glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, data, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
         }
         else
@@ -315,9 +315,9 @@ bool VertexBuffer::SetDataRange(const void* data, i32 start, i32 count, bool dis
 
     if (gpu_object_name_)
     {
-        if (!DV_GRAPHICS.IsDeviceLost())
+        if (!DV_GRAPHICS->IsDeviceLost())
         {
-            DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
+            DV_GRAPHICS->SetVBO_OGL(gpu_object_name_);
             if (!discard || start != 0)
                 glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)start * vertexSize_, (GLsizeiptr)count * vertexSize_, data);
             else
@@ -370,7 +370,7 @@ void* VertexBuffer::Lock(i32 start, i32 count, bool discard)
     else if (!GParams::is_headless())
     {
         lockState_ = LOCK_SCRATCH;
-        lockScratchData_ = DV_GRAPHICS.ReserveScratchBuffer(count * vertexSize_);
+        lockScratchData_ = DV_GRAPHICS->ReserveScratchBuffer(count * vertexSize_);
         return lockScratchData_;
     }
     else
@@ -391,7 +391,7 @@ void VertexBuffer::Unlock()
     case LOCK_SCRATCH:
         SetDataRange(lockScratchData_, lockStart_, lockCount_, discardLock_);
         if (!GParams::is_headless())
-            DV_GRAPHICS.FreeScratchBuffer(lockScratchData_);
+            DV_GRAPHICS->FreeScratchBuffer(lockScratchData_);
         lockScratchData_ = nullptr;
         lockState_ = LOCK_NONE;
         break;
@@ -411,7 +411,7 @@ bool VertexBuffer::Create()
 
     if (!GParams::is_headless())
     {
-        if (DV_GRAPHICS.IsDeviceLost())
+        if (DV_GRAPHICS->IsDeviceLost())
         {
             DV_LOGWARNING("Vertex buffer creation while device is lost");
             return true;
@@ -426,7 +426,7 @@ bool VertexBuffer::Create()
             return false;
         }
 
-        DV_GRAPHICS.SetVBO_OGL(gpu_object_name_);
+        DV_GRAPHICS->SetVBO_OGL(gpu_object_name_);
         glBufferData(GL_ARRAY_BUFFER, (GLsizeiptr)vertexCount_ * vertexSize_, nullptr, dynamic_ ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
     }
 

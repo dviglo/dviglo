@@ -87,9 +87,9 @@ public:
         IntRect rect = viewport_->rect;
         if (rect == IntRect::ZERO)
         {
-            Graphics& graphics = DV_GRAPHICS;
-            rect.right_ = graphics.GetWidth();
-            rect.bottom_ = graphics.GetHeight();
+            Graphics* graphics = DV_GRAPHICS;
+            rect.right_ = graphics->GetWidth();
+            rect.bottom_ = graphics->GetHeight();
         }
 
         // Convert to system mouse position

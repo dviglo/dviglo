@@ -120,7 +120,7 @@ void WindowSettingsDemo::InitSettings()
     monitorControl_ = window_->create_child<DropDownList>("Monitor");
     monitorControl_->SetMinHeight(24);
     monitorControl_->SetStyleAuto();
-    Vector<SDL_DisplayID> displays = DV_GRAPHICS.get_displays();
+    Vector<SDL_DisplayID> displays = DV_GRAPHICS->get_displays();
 
     for (SDL_DisplayID display : displays)
     {
@@ -230,7 +230,7 @@ void WindowSettingsDemo::InitSettings()
             return;
 
         SDL_DisplayID display = monitorControl_->GetSelectedItem()->GetVar("display").GetU32();
-        const auto& resolutions = DV_GRAPHICS.GetResolutions(display);
+        const auto& resolutions = DV_GRAPHICS->GetResolutions(display);
         const i32 selectedResolution = resolutionControl_->GetSelection();
         if (selectedResolution >= resolutions.Size())
             return;
@@ -244,22 +244,22 @@ void WindowSettingsDemo::InitSettings()
         const int multiSample = multiSampleSelection == M_MAX_UNSIGNED ? 1 : static_cast<int>(1 << multiSampleSelection);
 
         // TODO: Expose these options too?
-        const bool highDPI = DV_GRAPHICS.GetHighDPI();
-        const bool tripleBuffer = DV_GRAPHICS.GetTripleBuffer();
+        const bool highDPI = DV_GRAPHICS->GetHighDPI();
+        const bool tripleBuffer = DV_GRAPHICS->GetTripleBuffer();
 
         const int width = resolutions[selectedResolution].x;
         const int height = resolutions[selectedResolution].y;
         const int refreshRate = resolutions[selectedResolution].z;
-        DV_GRAPHICS.SetMode(width, height, fullscreen, borderless, resizable, highDPI, vsync, tripleBuffer, multiSample, display, refreshRate);
+        DV_GRAPHICS->SetMode(width, height, fullscreen, borderless, resizable, highDPI, vsync, tripleBuffer, multiSample, display, refreshRate);
     });
 }
 
 void WindowSettingsDemo::SynchronizeSettings()
 {
-    Graphics& graphics = DV_GRAPHICS;
+    Graphics* graphics = DV_GRAPHICS;
 
     // Synchronize monitor
-    const SDL_DisplayID current_display = graphics.GetDisplay();
+    const SDL_DisplayID current_display = graphics->GetDisplay();
 
     for (int i = 0; i < monitorControl_->GetNumItems(); ++i)
     {
@@ -274,7 +274,7 @@ void WindowSettingsDemo::SynchronizeSettings()
 
     // Synchronize resolution list
     resolutionControl_->RemoveAllItems();
-    const auto& resolutions = graphics.GetResolutions(current_display);
+    const auto& resolutions = graphics->GetResolutions(current_display);
     for (const IntVector3& resolution : resolutions)
     {
         auto resolutionEntry = MakeShared<Text>();
@@ -285,20 +285,20 @@ void WindowSettingsDemo::SynchronizeSettings()
     }
 
     // Synchronize selected resolution
-    const i32 currentResolution = graphics.FindBestResolutionIndex(current_display,
-        graphics.GetWidth(), graphics.GetHeight(), graphics.GetRefreshRate());
+    const i32 currentResolution = graphics->FindBestResolutionIndex(current_display,
+        graphics->GetWidth(), graphics->GetHeight(), graphics->GetRefreshRate());
     resolutionControl_->SetSelection(currentResolution);
 
     // Synchronize fullscreen and borderless flags
-    fullscreenControl_->SetChecked(graphics.GetFullscreen());
-    borderlessControl_->SetChecked(graphics.GetBorderless());
-    resizableControl_->SetChecked(graphics.GetResizable());
-    vsyncControl_->SetChecked(graphics.GetVSync());
+    fullscreenControl_->SetChecked(graphics->GetFullscreen());
+    borderlessControl_->SetChecked(graphics->GetBorderless());
+    resizableControl_->SetChecked(graphics->GetResizable());
+    vsyncControl_->SetChecked(graphics->GetVSync());
 
     // Synchronize MSAA
     for (unsigned i = 0; i <= 4; ++i)
     {
-        if (graphics.GetMultiSample() == static_cast<int>(1 << i))
+        if (graphics->GetMultiSample() == static_cast<int>(1 << i))
             multiSampleControl_->SetSelection(i);
     }
 }

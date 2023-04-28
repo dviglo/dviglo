@@ -187,7 +187,7 @@ void MultipleViewports::SetupViewports()
     // Set up the rear camera viewport on top of the front view ("rear view mirror")
     // The viewport index must be greater in that case, otherwise the view would be left behind
     SharedPtr<Viewport> rearViewport(new Viewport(scene_, rearCameraNode_->GetComponent<Camera>(),
-        IntRect(DV_GRAPHICS.GetWidth() * 2 / 3, 32, DV_GRAPHICS.GetWidth() - 32, DV_GRAPHICS.GetHeight() / 3)));
+        IntRect(DV_GRAPHICS->GetWidth() * 2 / 3, 32, DV_GRAPHICS->GetWidth() - 32, DV_GRAPHICS->GetHeight() / 3)));
     DV_RENDERER->SetViewport(1, rearViewport);
 }
 

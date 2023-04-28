@@ -22,7 +22,7 @@ void ConstantBuffer::Release_OGL()
             return;
 
 #ifndef GL_ES_VERSION_2_0
-        DV_GRAPHICS.SetUBO_OGL(0);
+        DV_GRAPHICS->SetUBO_OGL(0);
         glDeleteBuffers(1, &gpu_object_name_);
 #endif
         gpu_object_name_ = 0;
@@ -60,7 +60,7 @@ bool ConstantBuffer::SetSize_OGL(unsigned size)
 #ifndef GL_ES_VERSION_2_0
         if (!gpu_object_name_)
             glGenBuffers(1, &gpu_object_name_);
-        DV_GRAPHICS.SetUBO_OGL(gpu_object_name_);
+        DV_GRAPHICS->SetUBO_OGL(gpu_object_name_);
         glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.get(), GL_DYNAMIC_DRAW);
 #endif
     }
@@ -73,7 +73,7 @@ void ConstantBuffer::Apply_OGL()
     if (dirty_ && gpu_object_name_)
     {
 #ifndef GL_ES_VERSION_2_0
-        DV_GRAPHICS.SetUBO_OGL(gpu_object_name_);
+        DV_GRAPHICS->SetUBO_OGL(gpu_object_name_);
         glBufferData(GL_UNIFORM_BUFFER, size_, shadowData_.get(), GL_DYNAMIC_DRAW);
 #endif
         dirty_ = false;

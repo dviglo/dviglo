@@ -61,7 +61,7 @@ void Urho2DStretchableSprite::create_scene()
     auto* camera = cameraNode_->create_component<Camera>();
     camera->SetOrthographic(true);
 
-    camera->SetOrthoSize((float)DV_GRAPHICS.GetHeight() * PIXEL_SIZE);
+    camera->SetOrthoSize((float)DV_GRAPHICS->GetHeight() * PIXEL_SIZE);
 
     refSpriteNode_ = scene_->create_child("regular sprite");
     stretchSpriteNode_ = scene_->create_child("stretchable sprite");

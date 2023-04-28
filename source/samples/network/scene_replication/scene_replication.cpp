@@ -150,7 +150,7 @@ void SceneReplication::create_ui()
     cursor->SetStyleAuto(uiStyle);
     ui->SetCursor(cursor);
     // Set starting position of the cursor at the rendering window center
-    cursor->SetPosition(DV_GRAPHICS.GetWidth() / 2, DV_GRAPHICS.GetHeight() / 2);
+    cursor->SetPosition(DV_GRAPHICS->GetWidth() / 2, DV_GRAPHICS->GetHeight() / 2);
 
     // Construct the instructions text element
     instructionsText_ = ui->GetRoot()->create_child<Text>();
@@ -161,7 +161,7 @@ void SceneReplication::create_ui()
     // Position the text relative to the screen center
     instructionsText_->SetHorizontalAlignment(HA_CENTER);
     instructionsText_->SetVerticalAlignment(VA_CENTER);
-    instructionsText_->SetPosition(0, DV_GRAPHICS.GetHeight() / 4);
+    instructionsText_->SetPosition(0, DV_GRAPHICS->GetHeight() / 4);
     // Hide until connected
     instructionsText_->SetVisible(false);
 

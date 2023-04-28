@@ -53,13 +53,13 @@ ShaderProgram_OGL::~ShaderProgram_OGL()
 
 void ShaderProgram_OGL::OnDeviceLost()
 {
-    if (gpu_object_name_ && !GParams::is_headless() && !DV_GRAPHICS.IsDeviceLost())
+    if (gpu_object_name_ && !GParams::is_headless() && !DV_GRAPHICS->IsDeviceLost())
         glDeleteProgram(gpu_object_name_);
 
     GpuObject::OnDeviceLost();
 
-    if (!GParams::is_headless() && DV_GRAPHICS.GetShaderProgram_OGL() == this)
-        DV_GRAPHICS.SetShaders(nullptr, nullptr);
+    if (!GParams::is_headless() && DV_GRAPHICS->GetShaderProgram_OGL() == this)
+        DV_GRAPHICS->SetShaders(nullptr, nullptr);
 
     linkerOutput_.Clear();
 }
@@ -71,12 +71,12 @@ void ShaderProgram_OGL::Release()
         if (GParams::is_headless())
             return;
 
-        Graphics& graphics = DV_GRAPHICS;
+        Graphics* graphics = DV_GRAPHICS;
 
-        if (!graphics.IsDeviceLost())
+        if (!graphics->IsDeviceLost())
         {
-            if (graphics.GetShaderProgram_OGL() == this)
-                graphics.SetShaders(nullptr, nullptr);
+            if (graphics->GetShaderProgram_OGL() == this)
+                graphics->SetShaders(nullptr, nullptr);
 
             glDeleteProgram(gpu_object_name_);
         }
@@ -232,7 +232,7 @@ bool ShaderProgram_OGL::Link()
             glUniformBlockBinding(gpu_object_name_, blockIndex, bindingIndex);
             blockToBinding[blockIndex] = bindingIndex;
 
-            constantBuffers_[bindingIndex] = DV_GRAPHICS.GetOrCreateConstantBuffer(shaderType, bindingIndex, (unsigned)dataSize);
+            constantBuffers_[bindingIndex] = DV_GRAPHICS->GetOrCreateConstantBuffer(shaderType, bindingIndex, (unsigned)dataSize);
         }
     }
 #endif
@@ -285,7 +285,7 @@ bool ShaderProgram_OGL::Link()
         else if (location >= 0 && name[0] == 's')
         {
             // Set the samplers here so that they do not have to be set later
-            unsigned unit = DV_GRAPHICS.GetTextureUnit(name.Substring(1));
+            unsigned unit = DV_GRAPHICS->GetTextureUnit(name.Substring(1));
             if (unit >= MAX_TEXTURE_UNITS)
                 unit = NumberPostfix(name);
 

@@ -43,8 +43,8 @@ void Sprites::Start()
 void Sprites::CreateSprites()
 {
     // Get rendering window size as floats
-    auto width = (float)DV_GRAPHICS.GetWidth();
-    auto height = (float)DV_GRAPHICS.GetHeight();
+    auto width = (float)DV_GRAPHICS->GetWidth();
+    auto height = (float)DV_GRAPHICS->GetHeight();
 
     // Get the Urho3D fish texture
     auto* decalTex = DV_RES_CACHE.GetResource<Texture2D>("textures/urho_decal.dds");
@@ -83,8 +83,8 @@ void Sprites::CreateSprites()
 
 void Sprites::MoveSprites(float timeStep)
 {
-    auto width = (float)DV_GRAPHICS.GetWidth();
-    auto height = (float)DV_GRAPHICS.GetHeight();
+    auto width = (float)DV_GRAPHICS->GetWidth();
+    auto height = (float)DV_GRAPHICS->GetHeight();
 
     // Go through all sprites
     for (const SharedPtr<Sprite>& sprite : sprites_)
