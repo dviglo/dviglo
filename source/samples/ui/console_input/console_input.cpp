@@ -5,12 +5,12 @@
 #include <dviglo/core/core_events.h>
 #include <dviglo/core/process_utils.h>
 #include <dviglo/core/timer.h>
-#include <dviglo/engine/console.h>
 #include <dviglo/engine/engine.h>
 #include <dviglo/engine/engine_events.h>
 #include <dviglo/input/input.h>
 #include <dviglo/io/log.h>
 #include <dviglo/ui/button.h>
+#include <dviglo/ui/console.h>
 
 #include "console_input.h"
 

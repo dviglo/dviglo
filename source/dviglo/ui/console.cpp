@@ -2,10 +2,11 @@
 // Copyright (c) 2022-2023 the Dviglo project
 // License: MIT
 
+#include "console.h"
+
 #include "../core/context.h"
 #include "../core/core_events.h"
-#include "console.h"
-#include "engine_events.h"
+#include "../engine/engine_events.h"
 #include "../graphics/graphics.h"
 #include "../input/input.h"
 #include "../io/io_events.h"
@@ -25,6 +26,7 @@
 #include "../common/debug_new.h"
 
 using namespace std;
+
 
 namespace dviglo
 {
@@ -595,4 +597,4 @@ void Console::HandlePostUpdate(StringHash eventType, VariantMap& eventData)
     printing_ = false;
 }
 
-}
+} // namespace dviglo
