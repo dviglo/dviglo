@@ -100,11 +100,11 @@ void SoundEffects::create_ui()
 
     // Create sliders for controlling sound and music master volume
     Slider* slider = CreateSlider(20, 140, 200, 20, "Sound Volume");
-    slider->SetValue(DV_AUDIO.GetMasterGain(SOUND_EFFECT));
+    slider->SetValue(DV_AUDIO->GetMasterGain(SOUND_EFFECT));
     subscribe_to_event(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleSoundVolume));
 
     slider = CreateSlider(20, 200, 200, 20, "Music Volume");
-    slider->SetValue(DV_AUDIO.GetMasterGain(SOUND_MUSIC));
+    slider->SetValue(DV_AUDIO->GetMasterGain(SOUND_MUSIC));
     subscribe_to_event(slider, E_SLIDERCHANGED, DV_HANDLER(SoundEffects, HandleMusicVolume));
 }
 
@@ -190,7 +190,7 @@ void SoundEffects::HandleSoundVolume(StringHash eventType, VariantMap& eventData
     using namespace SliderChanged;
 
     float newVolume = eventData[P_VALUE].GetFloat();
-    DV_AUDIO.SetMasterGain(SOUND_EFFECT, newVolume);
+    DV_AUDIO->SetMasterGain(SOUND_EFFECT, newVolume);
 }
 
 void SoundEffects::HandleMusicVolume(StringHash eventType, VariantMap& eventData)
@@ -198,5 +198,5 @@ void SoundEffects::HandleMusicVolume(StringHash eventType, VariantMap& eventData
     using namespace SliderChanged;
 
     float newVolume = eventData[P_VALUE].GetFloat();
-    DV_AUDIO.SetMasterGain(SOUND_MUSIC, newVolume);
+    DV_AUDIO->SetMasterGain(SOUND_MUSIC, newVolume);
 }

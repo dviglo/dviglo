@@ -32,21 +32,6 @@ static const StringHash SOUND_MASTER_HASH("Master");
 
 static void SDLAudioCallback(void* userdata, Uint8* stream, i32 len);
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool audio_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Audio& Audio::get_instance()
-{
-    assert(!audio_destructed);
-    static Audio instance;
-    return instance;
-}
-
 Audio::Audio()
 {
     DV_SDL_HELPER.require(SDL_INIT_AUDIO);
@@ -59,17 +44,16 @@ Audio::Audio()
 
     subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(Audio, HandleRenderUpdate));
 
-    DV_LOGDEBUG("Singleton Audio constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("Audio constructed");
 }
 
 Audio::~Audio()
 {
     Release();
-    DV_LOGDEBUG("Singleton Audio destructed");
-
-#ifndef NDEBUG
-    audio_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("Audio destructed");
 }
 
 bool Audio::SetMode(i32 bufferLengthMSec, i32 mixRate, bool stereo, bool interpolation)

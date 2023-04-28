@@ -109,16 +109,17 @@ Engine::Engine() :
     exiting_(false),
     audioPaused_(false)
 {
-    // Создаём подсистемы, которые не зависят от инициализации движка и параметров движка
+    // Создаём подсистемы, которые не зависят от инициализации движка и параметров движка.
+    // Указатели на объекты хранятся в самих классах
     Time::get_instance();
     WorkQueue::get_instance();
     FileSystem::get_instance();
     ResourceCache::get_instance();
-    new Localization(); // Указатель на объект хранится в самом классе
+    new Localization();
 #ifdef DV_NETWORK
     Network::get_instance();
 #endif
-    Audio::get_instance();
+    new Audio();
 
     // Register object factories for libraries which are not automatically registered along with subsystem creation
     register_scene_library();
@@ -142,11 +143,14 @@ Engine::Engine() :
 
 Engine::~Engine()
 {
+    // Подсистемы, которые создаются в Initialize()
     delete UI::instance_;
     delete Input::instance_;
     delete Renderer::instance_;
     delete Graphics::instance_;
 
+    // Подсистемы, которые создаются в конструкторе
+    delete Audio::instance_;
     delete Localization::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
@@ -263,7 +267,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 
         if (GetParameter(parameters, EP_SOUND, true).GetBool())
         {
-            DV_AUDIO.SetMode(
+            DV_AUDIO->SetMode(
                 GetParameter(parameters, EP_SOUND_BUFFER, 100).GetI32(),
                 GetParameter(parameters, EP_SOUND_MIX_RATE, 44100).GetI32(),
                 GetParameter(parameters, EP_SOUND_STEREO, true).GetBool(),
@@ -467,9 +471,9 @@ void Engine::run_frame()
     // If pause when minimized -mode is in use, stop updates and audio as necessary
     if (pauseMinimized_ && DV_INPUT->IsMinimized())
     {
-        if (DV_AUDIO.IsPlaying())
+        if (DV_AUDIO->IsPlaying())
         {
-            DV_AUDIO.Stop();
+            DV_AUDIO->Stop();
             audioPaused_ = true;
         }
     }
@@ -478,7 +482,7 @@ void Engine::run_frame()
         // Only unpause when it was paused by the engine
         if (audioPaused_)
         {
-            DV_AUDIO.Play();
+            DV_AUDIO->Play();
             audioPaused_ = false;
         }
 

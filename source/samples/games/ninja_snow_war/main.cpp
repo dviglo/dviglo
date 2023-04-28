@@ -135,8 +135,8 @@ public:
             return;
 
         // Lower mastervolumes slightly.
-        DV_AUDIO.SetMasterGain(SOUND_MASTER, 0.75f);
-        DV_AUDIO.SetMasterGain(SOUND_MUSIC, 0.9f);
+        DV_AUDIO->SetMasterGain(SOUND_MASTER, 0.75f);
+        DV_AUDIO->SetMasterGain(SOUND_MUSIC, 0.9f);
 
         if (!nobgm)
         {
@@ -248,7 +248,7 @@ public:
         {
             SharedPtr<Viewport> viewport(new Viewport(gameScene, gameCamera));
             DV_RENDERER->SetViewport(0, viewport);
-            DV_AUDIO.SetListener(gameCameraNode->create_component<SoundListener>());
+            DV_AUDIO->SetListener(gameCameraNode->create_component<SoundListener>());
         }
     }
 
@@ -540,12 +540,12 @@ public:
             if (!gameScene->IsUpdateEnabled())
             {
                 SetMessage("PAUSED");
-                DV_AUDIO.PauseSoundType(SOUND_EFFECT);
+                DV_AUDIO->PauseSoundType(SOUND_EFFECT);
             }
             else
             {
                 SetMessage("");
-                DV_AUDIO.ResumeSoundType(SOUND_EFFECT);
+                DV_AUDIO->ResumeSoundType(SOUND_EFFECT);
             }
         }
     }

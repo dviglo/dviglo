@@ -25,8 +25,15 @@ class DV_API Audio : public Object
 {
     DV_OBJECT(Audio);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Audio* instance_ = nullptr;
+
 public:
-    static Audio& get_instance();
+    static Audio* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -143,7 +150,7 @@ private:
     WeakPtr<SoundListener> listener_;
 };
 
-#define DV_AUDIO (dviglo::Audio::get_instance())
+#define DV_AUDIO (dviglo::Audio::instance())
 
 /// Register Audio library objects.
 void DV_API register_audio_library();

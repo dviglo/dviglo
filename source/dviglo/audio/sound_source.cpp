@@ -95,13 +95,13 @@ SoundSource::SoundSource() :
     timePosition_(0.0f),
     unusedStreamSize_(0)
 {
-    DV_AUDIO.AddSoundSource(this);
+    DV_AUDIO->AddSoundSource(this);
     UpdateMasterGain();
 }
 
 SoundSource::~SoundSource()
 {
-    DV_AUDIO.RemoveSoundSource(this);
+    DV_AUDIO->RemoveSoundSource(this);
 }
 
 void SoundSource::register_object()
@@ -153,7 +153,7 @@ void SoundSource::Play(Sound* sound)
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        scoped_lock lock(DV_AUDIO.GetMutex());
+        scoped_lock lock(DV_AUDIO->GetMutex());
         PlayLockless(sound);
     }
     else
@@ -209,7 +209,7 @@ void SoundSource::Play(SoundStream* stream)
     // requested, clear the existing sound if any
     if (position_)
     {
-        scoped_lock lock(DV_AUDIO.GetMutex());
+        scoped_lock lock(DV_AUDIO->GetMutex());
         sound_.Reset();
         PlayLockless(streamPtr);
     }
@@ -227,7 +227,7 @@ void SoundSource::Stop()
     // If sound source is currently playing, have to lock the audio mutex
     if (position_)
     {
-        scoped_lock lock(DV_AUDIO.GetMutex());
+        scoped_lock lock(DV_AUDIO->GetMutex());
         StopLockless();
     }
     else
@@ -289,7 +289,7 @@ void SoundSource::SetPlayPosition(signed char* pos)
     if (!sound_ || soundStream_)
         return;
 
-    scoped_lock lock(DV_AUDIO.GetMutex());
+    scoped_lock lock(DV_AUDIO->GetMutex());
     SetPlayPositionLockless(pos);
 }
 
@@ -299,7 +299,7 @@ void SoundSource::Update(float timeStep)
         return;
 
     // If there is no actual audio output, perform fake mixing into a nonexistent buffer to check stopping/looping
-    if (!DV_AUDIO.IsInitialized())
+    if (!DV_AUDIO->IsInitialized())
         MixNull(timeStep);
 
     // Free the stream if playback has stopped
@@ -426,7 +426,7 @@ void SoundSource::Mix(int* dest, unsigned samples, int mixRate, bool stereo, boo
 
 void SoundSource::UpdateMasterGain()
 {
-    masterGain_ = DV_AUDIO.GetSoundSourceMasterGain(soundType_);
+    masterGain_ = DV_AUDIO->GetSoundSourceMasterGain(soundType_);
 }
 
 void SoundSource::SetSoundAttr(const ResourceRef& value)
