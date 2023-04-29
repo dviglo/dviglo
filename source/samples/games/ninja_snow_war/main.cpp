@@ -125,7 +125,7 @@ public:
         if (singlePlayer)
         {
             StartGame(nullptr);
-            DV_ENGINE.SetPauseMinimized(true);
+            DV_ENGINE->SetPauseMinimized(true);
         }
     }
 
@@ -507,7 +507,7 @@ public:
         if (key == KEY_ESCAPE)
         {
             if (!DV_CONSOLE->IsVisible())
-                DV_ENGINE.Exit();
+                DV_ENGINE->Exit();
             else
                 DV_CONSOLE->SetVisible(false);
         }

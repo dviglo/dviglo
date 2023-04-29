@@ -15,8 +15,15 @@ class DV_API Engine : public Object
 {
     DV_OBJECT(Engine);
 
+    /// Только Application может создать и уничтожить объект
+    friend class Application;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Engine* instance_ = nullptr;
+
 public:
-    static Engine& get_instance();
+    static Engine* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -135,6 +142,6 @@ private:
     bool audioPaused_;
 };
 
-#define DV_ENGINE (dviglo::Engine::get_instance())
+#define DV_ENGINE (dviglo::Engine::instance())
 
 }

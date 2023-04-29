@@ -252,7 +252,7 @@ void Hello3dUi::HandleDragEnd(StringHash eventType, VariantMap& eventData) // Fo
 
 void Hello3dUi::HandleClosePressed(StringHash eventType, VariantMap& eventData)
 {
-    DV_ENGINE.Exit();
+    DV_ENGINE->Exit();
 }
 
 void Hello3dUi::HandleControlClicked(StringHash eventType, VariantMap& eventData)

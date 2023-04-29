@@ -476,7 +476,7 @@ void Sample2D::CreateUIContent(const String& demoTitle, int remainingLifes, int 
 
 void Sample2D::HandleExitButton(StringHash eventType, VariantMap& eventData)
 {
-    DV_ENGINE.Exit();
+    DV_ENGINE->Exit();
 }
 
 void Sample2D::SaveScene(bool initial)

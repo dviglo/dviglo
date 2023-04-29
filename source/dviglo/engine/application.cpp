@@ -21,10 +21,15 @@ Application::Application() :
     engineParameters_ = Engine::parse_parameters(GetArguments());
 
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
-    Engine::get_instance();
+    new Engine(); // Указатель на объект хранится в самом классе
 
     // Subscribe to log messages so that can show errors if ErrorExit() is called with empty message
     subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));
+}
+
+Application::~Application()
+{
+    delete Engine::instance_;
 }
 
 int Application::Run()
@@ -37,7 +42,7 @@ int Application::Run()
         if (exitCode_)
             return exitCode_;
 
-        if (!DV_ENGINE.Initialize(engineParameters_))
+        if (!DV_ENGINE->Initialize(engineParameters_))
         {
             ErrorExit();
             return exitCode_;
@@ -47,8 +52,8 @@ int Application::Run()
         if (exitCode_)
             return exitCode_;
 
-        while (!DV_ENGINE.IsExiting())
-            DV_ENGINE.run_frame();
+        while (!DV_ENGINE->IsExiting())
+            DV_ENGINE->run_frame();
 
         Stop();
 
@@ -67,7 +72,7 @@ int Application::Run()
 
 void Application::ErrorExit(const String& message)
 {
-    DV_ENGINE.Exit(); // Close the rendering window
+    DV_ENGINE->Exit(); // Close the rendering window
     exitCode_ = EXIT_FAILURE;
 
     if (!message.Length())

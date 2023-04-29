@@ -39,7 +39,7 @@ public:
 
     void Start()
     {
-        //DV_ENGINE.SetMaxFps(10);
+        //DV_ENGINE->SetMaxFps(10);
 
         create_scene();
         setup_viewport();
@@ -157,7 +157,7 @@ public:
         else if (input->GetKeyPress(KEY_3))
             currentTest_ = 3;
         else if (input->GetKeyPress(KEY_ESCAPE))
-            DV_ENGINE.Exit();
+            DV_ENGINE->Exit();
 
         if (input->GetMouseButtonDown(MOUSEB_RIGHT))
         {

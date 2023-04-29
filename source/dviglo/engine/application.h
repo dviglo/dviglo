@@ -23,6 +23,8 @@ public:
     /// Construct. Parse default engine parameters from the command line, and create the engine in an uninitialized state.
     explicit Application();
 
+    ~Application();
+
     /// Setup before engine initialization. This is a chance to eg. modify the engine parameters. Call ErrorExit() to terminate without initializing the engine. Called by Application.
     virtual void Setup() { }
 

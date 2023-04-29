@@ -179,7 +179,7 @@ void HelloGUI::HandleDragEnd(StringHash eventType, VariantMap& eventData) // For
 
 void HelloGUI::HandleClosePressed(StringHash eventType, VariantMap& eventData)
 {
-    DV_ENGINE.Exit();
+    DV_ENGINE->Exit();
 }
 
 void HelloGUI::HandleControlClicked(StringHash eventType, VariantMap& eventData)

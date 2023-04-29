@@ -70,7 +70,7 @@ void Sample::Start()
 
 void Sample::Stop()
 {
-    DV_ENGINE.DumpResources(true);
+    DV_ENGINE->DumpResources(true);
 }
 
 void Sample::InitMouseMode(MouseMode mode)
@@ -174,7 +174,7 @@ void Sample::HandleKeyUp(StringHash /*eventType*/, VariantMap& eventData)
         if (DV_CONSOLE->IsVisible())
             DV_CONSOLE->SetVisible(false);
         else
-            DV_ENGINE.Exit();
+            DV_ENGINE->Exit();
     }
 }
 

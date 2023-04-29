@@ -146,7 +146,7 @@ void Urho2DStretchableSprite::OnKeyUp(StringHash /*eventType*/, VariantMap& even
         selectTransform_ %= 3;
     }
     else if (key == KEY_ESCAPE)
-        DV_ENGINE.Exit();
+        DV_ENGINE->Exit();
 }
 
 

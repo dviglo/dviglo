@@ -104,5 +104,5 @@ void AppState_MainScreen::HandleSceneUpdate(StringHash eventType, VariantMap& ev
     UpdateCurrentFpsElement();
 
     if (DV_INPUT->GetKeyPress(KEY_ESCAPE))
-        DV_ENGINE.Exit();
+        DV_ENGINE->Exit();
 }
