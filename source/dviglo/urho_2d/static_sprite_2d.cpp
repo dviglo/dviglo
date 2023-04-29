@@ -40,7 +40,7 @@ StaticSprite2D::~StaticSprite2D() = default;
 
 void StaticSprite2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<StaticSprite2D>(URHO2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_COPY_BASE_ATTRIBUTES(Drawable2d);

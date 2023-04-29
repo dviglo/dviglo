@@ -53,7 +53,7 @@ Node::~Node()
 
 void Node::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Node>();
+    DV_CONTEXT->RegisterFactory<Node>();
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
@@ -892,7 +892,7 @@ Component* Node::create_component(StringHash type, CreateMode mode, ComponentId 
         mode = LOCAL;
 
     // Check that creation succeeds and that the object in fact is a component
-    SharedPtr<Component> newComponent = DynamicCast<Component>(DV_CONTEXT.CreateObject(type));
+    SharedPtr<Component> newComponent = DynamicCast<Component>(DV_CONTEXT->CreateObject(type));
     if (!newComponent)
     {
         DV_LOGERROR("Could not create unknown component type " + type.ToString());
@@ -2050,7 +2050,7 @@ Component* Node::SafeCreateComponent(const String& typeName, StringHash type, Cr
         mode = LOCAL;
 
     // First check if factory for type exists
-    if (!DV_CONTEXT.GetTypeName(type).Empty())
+    if (!DV_CONTEXT->GetTypeName(type).Empty())
         return create_component(type, mode, id);
     else
     {

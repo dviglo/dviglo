@@ -23,7 +23,7 @@ AppState_Benchmark03::AppState_Benchmark03()
     name_ = "Molecules";
 
     // This constructor is called once when the application runs, so we can register here
-    DV_CONTEXT.RegisterFactory<Benchmark03_MoleculeLogic>();
+    DV_CONTEXT->RegisterFactory<Benchmark03_MoleculeLogic>();
 
     SharedPtr<Material> material0 = MakeShared<Material>();
     material0->SetName("Molecule0");

@@ -36,7 +36,7 @@ StaticModelGroup::~StaticModelGroup() = default;
 
 void StaticModelGroup::register_object()
 {
-    DV_CONTEXT.RegisterFactory<StaticModelGroup>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<StaticModelGroup>(GEOMETRY_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticModel);
     DV_ACCESSOR_ATTRIBUTE("Instance Nodes", GetNodeIDsAttr, SetNodeIDsAttr,

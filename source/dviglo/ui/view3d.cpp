@@ -42,7 +42,7 @@ View3D::~View3D()
 
 void View3D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<View3D>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<View3D>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Window);
     // The texture format is API specific, so do not register it as a serializable attribute

@@ -24,7 +24,7 @@ Skybox::~Skybox() = default;
 
 void Skybox::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Skybox>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Skybox>(GEOMETRY_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticModel);
 }

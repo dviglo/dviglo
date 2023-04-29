@@ -74,7 +74,7 @@ RigidBody::~RigidBody()
 
 void RigidBody::register_object()
 {
-    DV_CONTEXT.RegisterFactory<RigidBody>(PHYSICS_CATEGORY);
+    DV_CONTEXT->RegisterFactory<RigidBody>(PHYSICS_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Physics Rotation", GetRotation, SetRotation, Quaternion::IDENTITY, AM_FILE | AM_NOEDIT);

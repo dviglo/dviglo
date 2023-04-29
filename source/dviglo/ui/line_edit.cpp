@@ -52,7 +52,7 @@ LineEdit::~LineEdit() = default;
 
 void LineEdit::register_object()
 {
-    DV_CONTEXT.RegisterFactory<LineEdit>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<LineEdit>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);

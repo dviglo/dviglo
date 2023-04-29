@@ -10,7 +10,7 @@ static constexpr i32 SNOWCRATE_POINTS = 250;
 
 void SnowCrate::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SnowCrate>();
+    DV_CONTEXT->RegisterFactory<SnowCrate>();
 }
 
 SnowCrate::SnowCrate()

@@ -826,7 +826,7 @@ void Network::HandleIncomingPacket(SLNet::Packet* packet, bool isServer)
             using namespace NetworkHostDiscovered;
 
             dataStart += sizeof(SLNet::TimeMS);
-            VariantMap& eventMap = DV_CONTEXT.GetEventDataMap();
+            VariantMap& eventMap = DV_CONTEXT->GetEventDataMap();
             if (packet->length > packet->length - dataStart) {
                 VectorBuffer buffer(packet->data + dataStart, packet->length - dataStart);
                 VariantMap srcData = buffer.ReadVariantMap();

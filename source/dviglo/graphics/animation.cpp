@@ -110,7 +110,7 @@ Animation::~Animation() = default;
 
 void Animation::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Animation>();
+    DV_CONTEXT->RegisterFactory<Animation>();
 }
 
 bool Animation::begin_load(Deserializer& source)

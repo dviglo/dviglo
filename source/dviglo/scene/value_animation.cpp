@@ -42,7 +42,7 @@ ValueAnimation::~ValueAnimation() = default;
 
 void ValueAnimation::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ValueAnimation>();
+    DV_CONTEXT->RegisterFactory<ValueAnimation>();
 }
 
 bool ValueAnimation::begin_load(Deserializer& source)

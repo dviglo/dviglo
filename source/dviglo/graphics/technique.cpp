@@ -232,7 +232,7 @@ Technique::~Technique() = default;
 
 void Technique::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Technique>();
+    DV_CONTEXT->RegisterFactory<Technique>();
 }
 
 bool Technique::begin_load(Deserializer& source)

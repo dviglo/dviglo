@@ -25,7 +25,7 @@ CollisionChain2D::~CollisionChain2D() = default;
 
 void CollisionChain2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CollisionChain2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CollisionChain2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Loop", GetLoop, SetLoop, false, AM_DEFAULT);

@@ -48,7 +48,7 @@ Zone::~Zone() = default;
 
 void Zone::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Zone>(SCENE_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Zone>(SCENE_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE_EX("Bounding Box Min", boundingBox_.min_, MarkNodeDirty, DEFAULT_BOUNDING_BOX_MIN, AM_DEFAULT);

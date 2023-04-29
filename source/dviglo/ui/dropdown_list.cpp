@@ -49,7 +49,7 @@ DropDownList::~DropDownList() = default;
 
 void DropDownList::register_object()
 {
-    DV_CONTEXT.RegisterFactory<DropDownList>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<DropDownList>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Menu);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_FOCUSABLE_DEFOCUSABLE);

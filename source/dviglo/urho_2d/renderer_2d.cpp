@@ -67,7 +67,7 @@ Renderer2D::~Renderer2D() = default;
 
 void Renderer2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Renderer2D>();
+    DV_CONTEXT->RegisterFactory<Renderer2D>();
 }
 
 static inline bool CompareRayQueryResults(RayQueryResult& lr, RayQueryResult& rr)

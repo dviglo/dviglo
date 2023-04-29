@@ -26,7 +26,7 @@ CheckBox::~CheckBox() = default;
 
 void CheckBox::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CheckBox>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CheckBox>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

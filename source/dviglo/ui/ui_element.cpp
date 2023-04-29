@@ -91,7 +91,7 @@ UiElement::~UiElement()
 
 void UiElement::register_object()
 {
-    DV_CONTEXT.RegisterFactory<UiElement>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<UiElement>(UI_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, IntVector2::ZERO, AM_FILE);
@@ -1248,7 +1248,7 @@ UiElement* UiElement::create_child(StringHash type, const String& name, i32 inde
     assert(index == ENDPOS || (index >= 0 && index <= children_.Size()));
 
     // Check that creation succeeds and that the object in fact is a UI element
-    SharedPtr<UiElement> newElement = DynamicCast<UiElement>(DV_CONTEXT.CreateObject(type));
+    SharedPtr<UiElement> newElement = DynamicCast<UiElement>(DV_CONTEXT->CreateObject(type));
 
     if (!newElement)
     {

@@ -76,7 +76,7 @@ Scene::~Scene()
 
 void Scene::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Scene>();
+    DV_CONTEXT->RegisterFactory<Scene>();
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Time Scale", GetTimeScale, SetTimeScale, 1.0f, AM_DEFAULT);
@@ -1283,7 +1283,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
     /*NodeId nodeID = */file->ReadU32();
 
     // Read Node or Scene attributes; these do not include any resources
-    const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(isSceneFile ? Scene::GetTypeStatic() : Node::GetTypeStatic());
+    const Vector<AttributeInfo>* attributes = DV_CONTEXT->GetAttributes(isSceneFile ? Scene::GetTypeStatic() : Node::GetTypeStatic());
     assert(attributes);
 
     for (unsigned i = 0; i < attributes->Size(); ++i)
@@ -1303,7 +1303,7 @@ void Scene::PreloadResources(File* file, bool isSceneFile)
         // Read component ID (not needed)
         /*ComponentId compID = */compBuffer.ReadU32();
 
-        attributes = DV_CONTEXT.GetAttributes(compType);
+        attributes = DV_CONTEXT->GetAttributes(compType);
         if (attributes)
         {
             for (unsigned j = 0; j < attributes->Size(); ++j)
@@ -1360,7 +1360,7 @@ void Scene::PreloadResourcesXML(const XmlElement& element)
     while (compElem)
     {
         String typeName = compElem.GetAttribute("type");
-        const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(StringHash(typeName));
+        const Vector<AttributeInfo>* attributes = DV_CONTEXT->GetAttributes(StringHash(typeName));
         if (attributes)
         {
             XmlElement attrElem = compElem.GetChild("attribute");
@@ -1443,7 +1443,7 @@ void Scene::PreloadResourcesJSON(const JSONValue& value)
         const JSONValue& compValue = componentArray.At(i);
         String typeName = compValue.Get("type").GetString();
 
-        const Vector<AttributeInfo>* attributes = DV_CONTEXT.GetAttributes(StringHash(typeName));
+        const Vector<AttributeInfo>* attributes = DV_CONTEXT->GetAttributes(StringHash(typeName));
         if (attributes)
         {
             JSONArray attributesArray = compValue.Get("attributes").GetArray();

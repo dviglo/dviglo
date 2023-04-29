@@ -31,7 +31,7 @@ Button::~Button() = default;
 
 void Button::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Button>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Button>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

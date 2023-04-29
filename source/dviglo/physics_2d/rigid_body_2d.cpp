@@ -49,7 +49,7 @@ RigidBody2D::~RigidBody2D()
 
 void RigidBody2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<RigidBody2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<RigidBody2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ACCESSOR_ATTRIBUTE("Body Type", GetBodyType, SetBodyType, bodyTypeNames, DEFAULT_BODYTYPE, AM_DEFAULT);

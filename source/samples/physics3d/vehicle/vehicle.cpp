@@ -24,7 +24,7 @@ Vehicle::Vehicle()
 
 void Vehicle::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Vehicle>();
+    DV_CONTEXT->RegisterFactory<Vehicle>();
 
     DV_ATTRIBUTE("Controls Yaw", controls_.yaw_, 0.0f, AM_DEFAULT);
     DV_ATTRIBUTE("Controls Pitch", controls_.pitch_, 0.0f, AM_DEFAULT);

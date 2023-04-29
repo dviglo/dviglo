@@ -284,7 +284,7 @@ PListFile::~PListFile() = default;
 
 void PListFile::register_object()
 {
-    DV_CONTEXT.RegisterFactory<PListFile>();
+    DV_CONTEXT->RegisterFactory<PListFile>();
 }
 
 bool PListFile::begin_load(Deserializer& source)

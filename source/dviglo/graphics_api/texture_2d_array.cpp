@@ -40,7 +40,7 @@ Texture2DArray::~Texture2DArray()
 
 void Texture2DArray::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Texture2DArray>();
+    DV_CONTEXT->RegisterFactory<Texture2DArray>();
 }
 
 bool Texture2DArray::begin_load(Deserializer& source)

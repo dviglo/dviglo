@@ -83,7 +83,7 @@ CrowdAgent::~CrowdAgent()
 
 void CrowdAgent::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CrowdAgent>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CrowdAgent>(NAVIGATION_CATEGORY);
 
     DV_ATTRIBUTE("Target Position", targetPosition_, Vector3::ZERO, AM_DEFAULT);
     DV_ATTRIBUTE("Target Velocity", targetVelocity_, Vector3::ZERO, AM_DEFAULT);

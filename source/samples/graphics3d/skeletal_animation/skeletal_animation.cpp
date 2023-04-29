@@ -34,7 +34,7 @@ SkeletalAnimation::SkeletalAnimation() :
     draw_debug_(false)
 {
     // Register an object factory for our custom Mover component so that we can create them to scene nodes
-    DV_CONTEXT.RegisterFactory<Mover>();
+    DV_CONTEXT->RegisterFactory<Mover>();
 }
 
 void SkeletalAnimation::Start()

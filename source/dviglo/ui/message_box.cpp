@@ -86,7 +86,7 @@ MessageBox::~MessageBox()
 
 void MessageBox::register_object()
 {
-    DV_CONTEXT.RegisterFactory<MessageBox>();
+    DV_CONTEXT->RegisterFactory<MessageBox>();
 }
 
 void MessageBox::SetTitle(const String& text)

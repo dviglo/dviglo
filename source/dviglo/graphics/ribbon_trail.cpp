@@ -86,7 +86,7 @@ RibbonTrail::~RibbonTrail() = default;
 
 void RibbonTrail::register_object()
 {
-    DV_CONTEXT.RegisterFactory<RibbonTrail>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<RibbonTrail>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled,true, AM_DEFAULT);
     DV_COPY_BASE_ATTRIBUTES(Drawable);

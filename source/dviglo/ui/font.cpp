@@ -52,7 +52,7 @@ Font::~Font()
 
 void Font::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Font>();
+    DV_CONTEXT->RegisterFactory<Font>();
 }
 
 bool Font::begin_load(Deserializer& source)

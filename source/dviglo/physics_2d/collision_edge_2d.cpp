@@ -29,7 +29,7 @@ CollisionEdge2D::~CollisionEdge2D() = default;
 
 void CollisionEdge2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CollisionEdge2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CollisionEdge2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Vertex 1", GetVertex1, SetVertex1, DEFAULT_VERTEX1, AM_DEFAULT);

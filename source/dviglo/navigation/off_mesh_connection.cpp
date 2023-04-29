@@ -32,7 +32,7 @@ OffMeshConnection::~OffMeshConnection() = default;
 
 void OffMeshConnection::register_object()
 {
-    DV_CONTEXT.RegisterFactory<OffMeshConnection>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<OffMeshConnection>(NAVIGATION_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE_EX("Endpoint NodeID", endPointID_, MarkEndPointDirty, 0, AM_DEFAULT | AM_NODEID);

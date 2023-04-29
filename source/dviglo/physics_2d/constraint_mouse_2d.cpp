@@ -23,7 +23,7 @@ ConstraintMouse2D::~ConstraintMouse2D() = default;
 
 void ConstraintMouse2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ConstraintMouse2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ConstraintMouse2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Target", GetTarget, SetTarget, Vector2::ZERO, AM_DEFAULT);

@@ -78,21 +78,6 @@ void RemoveNamedAttribute(HashMap<StringHash, Vector<AttributeInfo>>& attributes
         attributes.Erase(i);
 }
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool context_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Context& Context::get_instance()
-{
-    assert(!context_destructed);
-    static Context instance;
-    return instance;
-}
-
 Context::Context() :
     eventHandler_(nullptr)
 {
@@ -100,9 +85,13 @@ Context::Context() :
     // Always reset the random seed on Android, as the Urho3D library might not be unloaded between runs
     set_random_seed(1);
 #endif
+    // Проверяем, что контекст только один
+    assert(!instance_);
 
     // Set the main thread ID (assuming the Context is created in it)
     Thread::SetMainThread();
+
+    instance_ = this;
 
     // Контекст создаётся перед логом, поэтому в лог вывести ничего не можем
 }
@@ -116,11 +105,9 @@ Context::~Context()
         delete *i;
     eventDataMaps_.Clear();
 
-    // Контекст разрушается после лога, поэтому в лог вывести ничего не можем
+    instance_ = nullptr;
 
-#ifndef NDEBUG
-    context_destructed = true;
-#endif
+    // Контекст разрушается после лога, поэтому в лог вывести ничего не можем
 }
 
 SharedPtr<Object> Context::CreateObject(StringHash objectType)

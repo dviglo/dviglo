@@ -114,7 +114,7 @@ NavigationMesh::~NavigationMesh()
 
 void NavigationMesh::register_object()
 {
-    DV_CONTEXT.RegisterFactory<NavigationMesh>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<NavigationMesh>(NAVIGATION_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Tile Size", GetTileSize, SetTileSize, DEFAULT_TILE_SIZE, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Cell Size", GetCellSize, SetCellSize, DEFAULT_CELL_SIZE, AM_DEFAULT);
@@ -353,7 +353,7 @@ bool NavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned maxTiles)
     // Send a notification event to concerned parties that we've been fully rebuilt
     {
         using namespace NavigationMeshRebuilt;
-        VariantMap& buildEventParams = DV_CONTEXT.GetEventDataMap();
+        VariantMap& buildEventParams = DV_CONTEXT->GetEventDataMap();
         buildEventParams[P_NODE] = node_;
         buildEventParams[P_MESH] = this;
         SendEvent(E_NAVIGATION_MESH_REBUILT, buildEventParams);
@@ -432,7 +432,7 @@ bool NavigationMesh::Build()
         // Send a notification event to concerned parties that we've been fully rebuilt
         {
             using namespace NavigationMeshRebuilt;
-            VariantMap& buildEventParams = DV_CONTEXT.GetEventDataMap();
+            VariantMap& buildEventParams = DV_CONTEXT->GetEventDataMap();
             buildEventParams[P_NODE] = node_;
             buildEventParams[P_MESH] = this;
             SendEvent(E_NAVIGATION_MESH_REBUILT, buildEventParams);
@@ -558,7 +558,7 @@ void NavigationMesh::RemoveTile(const IntVector2& tile)
 
     // Send event
     using namespace NavigationTileRemoved;
-    VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+    VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
     eventData[P_NODE] = GetNode();
     eventData[P_MESH] = this;
     eventData[P_TILE] = tile;
@@ -578,7 +578,7 @@ void NavigationMesh::RemoveAllTiles()
 
     // Send event
     using namespace NavigationAllTilesRemoved;
-    VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+    VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
     eventData[P_NODE] = GetNode();
     eventData[P_MESH] = this;
     SendEvent(E_NAVIGATION_ALL_TILES_REMOVED, eventData);
@@ -1267,7 +1267,7 @@ bool NavigationMesh::ReadTile(Deserializer& source, bool silent)
     if (!silent)
     {
         using namespace NavigationTileAdded;
-        VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+        VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
         eventData[P_NODE] = GetNode();
         eventData[P_MESH] = this;
         eventData[P_TILE] = IntVector2(x, z);
@@ -1494,7 +1494,7 @@ bool NavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryList, int
     // Send a notification of the rebuild of this tile to anyone interested
     {
         using namespace NavigationAreaRebuilt;
-        VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+        VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
         eventData[P_NODE] = GetNode();
         eventData[P_MESH] = this;
         eventData[P_BOUNDSMIN] = Variant(tileBoundingBox.min_);

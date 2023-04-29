@@ -62,7 +62,7 @@ Constraint::~Constraint()
 
 void Constraint::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Constraint>(PHYSICS_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Constraint>(PHYSICS_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ATTRIBUTE_EX("Constraint Type", constraintType_, MarkConstraintDirty, typeNames, CONSTRAINT_POINT, AM_DEFAULT);

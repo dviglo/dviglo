@@ -29,7 +29,7 @@ NetworkPriority::~NetworkPriority() = default;
 
 void NetworkPriority::register_object()
 {
-    DV_CONTEXT.RegisterFactory<NetworkPriority>(NETWORK_CATEGORY);
+    DV_CONTEXT->RegisterFactory<NetworkPriority>(NETWORK_CATEGORY);
 
     DV_ATTRIBUTE("Base Priority", basePriority_, DEFAULT_BASE_PRIORITY, AM_DEFAULT);
     DV_ATTRIBUTE("Distance Factor", distanceFactor_, DEFAULT_DISTANCE_FACTOR, AM_DEFAULT);

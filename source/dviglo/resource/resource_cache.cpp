@@ -585,7 +585,7 @@ Resource* ResourceCache::GetResource(StringHash type, const String& name, bool s
 
     SharedPtr<Resource> resource;
     // Make sure the pointer is non-null and is a Resource subclass
-    resource = DynamicCast<Resource>(DV_CONTEXT.CreateObject(type));
+    resource = DynamicCast<Resource>(DV_CONTEXT->CreateObject(type));
     if (!resource)
     {
         DV_LOGERROR("Could not load unknown resource type " + String(type));
@@ -664,7 +664,7 @@ SharedPtr<Resource> ResourceCache::GetTempResource(StringHash type, const String
 
     SharedPtr<Resource> resource;
     // Make sure the pointer is non-null and is a Resource subclass
-    resource = DynamicCast<Resource>(DV_CONTEXT.CreateObject(type));
+    resource = DynamicCast<Resource>(DV_CONTEXT->CreateObject(type));
     if (!resource)
     {
         DV_LOGERROR("Could not load unknown resource type " + String(type));
@@ -948,7 +948,7 @@ String ResourceCache::print_memory_usage() const
         const String memMaxString = GetFileSizeString(largest);
         const String memBudgetString = GetFileSizeString(cit->second_.memoryBudget_);
         const String memTotalString = GetFileSizeString(cit->second_.memoryUse_);
-        const String resTypeName = DV_CONTEXT.GetTypeName(cit->first_);
+        const String resTypeName = DV_CONTEXT->GetTypeName(cit->first_);
 
         memset(outputLine, ' ', 256);
         outputLine[255] = 0;

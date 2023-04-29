@@ -39,7 +39,7 @@ DebugRenderer::~DebugRenderer() = default;
 
 void DebugRenderer::register_object()
 {
-    DV_CONTEXT.RegisterFactory<DebugRenderer>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT->RegisterFactory<DebugRenderer>(SUBSYSTEM_CATEGORY);
     DV_ACCESSOR_ATTRIBUTE("Line Antialias", GetLineAntiAlias, SetLineAntiAlias, false, AM_DEFAULT);
 }
 

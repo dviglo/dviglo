@@ -106,7 +106,7 @@ SoundSource::~SoundSource()
 
 void SoundSource::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SoundSource>(AUDIO_CATEGORY);
+    DV_CONTEXT->RegisterFactory<SoundSource>(AUDIO_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Sound", GetSoundAttr, SetSoundAttr, ResourceRef(Sound::GetTypeStatic()), AM_DEFAULT);
@@ -317,7 +317,7 @@ void SoundSource::Update(float timeStep)
 
         using namespace SoundFinished;
 
-        VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+        VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
         eventData[P_NODE] = node_;
         eventData[P_SOUNDSOURCE] = this;
         eventData[P_SOUND] = sound_;

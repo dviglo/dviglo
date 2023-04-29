@@ -138,17 +138,17 @@ protected:
 UiComponent::UiComponent()
     : viewportIndex_(0)
 {
-    texture_ = DV_CONTEXT.CreateObject<Texture2D>();
+    texture_ = DV_CONTEXT->CreateObject<Texture2D>();
     texture_->SetFilterMode(FILTER_BILINEAR);
     texture_->SetAddressMode(COORD_U, ADDRESS_CLAMP);
     texture_->SetAddressMode(COORD_V, ADDRESS_CLAMP);
     texture_->SetNumLevels(1);                                        // No mipmaps
 
-    rootElement_ = DV_CONTEXT.CreateObject<UiElement3d>();
+    rootElement_ = DV_CONTEXT->CreateObject<UiElement3d>();
     rootElement_->SetTraversalMode(TM_BREADTH_FIRST);
     rootElement_->SetEnabled(true);
 
-    material_ = DV_CONTEXT.CreateObject<Material>();
+    material_ = DV_CONTEXT->CreateObject<Material>();
     material_->SetTechnique(0, DV_RES_CACHE->GetResource<Technique>("techniques/diff.xml"));
     material_->SetTexture(TU_DIFFUSE, texture_);
 
@@ -163,8 +163,8 @@ UiComponent::~UiComponent() = default;
 
 void UiComponent::register_object()
 {
-    DV_CONTEXT.RegisterFactory<UiComponent>();
-    DV_CONTEXT.RegisterFactory<UiElement3d>();
+    DV_CONTEXT->RegisterFactory<UiComponent>();
+    DV_CONTEXT->RegisterFactory<UiElement3d>();
 }
 
 UiElement* UiComponent::GetRoot() const

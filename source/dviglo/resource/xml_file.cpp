@@ -55,7 +55,7 @@ XmlFile::~XmlFile() = default;
 
 void XmlFile::register_object()
 {
-    DV_CONTEXT.RegisterFactory<XmlFile>();
+    DV_CONTEXT->RegisterFactory<XmlFile>();
 }
 
 bool XmlFile::begin_load(Deserializer& source)

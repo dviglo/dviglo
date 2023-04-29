@@ -469,7 +469,7 @@ CollisionShape::~CollisionShape()
 
 void CollisionShape::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CollisionShape>(PHYSICS_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CollisionShape>(PHYSICS_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ATTRIBUTE_EX("Shape Type", shapeType_, MarkShapeDirty, typeNames, SHAPE_BOX, AM_DEFAULT);

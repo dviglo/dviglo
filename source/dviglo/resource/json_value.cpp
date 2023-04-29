@@ -424,14 +424,14 @@ void JSONValue::SetVariantValue(const Variant& variant)
     case VAR_RESOURCEREF:
         {
             const ResourceRef& ref = variant.GetResourceRef();
-            *this = String(DV_CONTEXT.GetTypeName(ref.type_)) + ";" + ref.name_;
+            *this = String(DV_CONTEXT->GetTypeName(ref.type_)) + ";" + ref.name_;
         }
         return;
 
     case VAR_RESOURCEREFLIST:
         {
             const ResourceRefList& refList = variant.GetResourceRefList();
-            String str(DV_CONTEXT.GetTypeName(refList.type_));
+            String str(DV_CONTEXT->GetTypeName(refList.type_));
             for (const String& name : refList.names_)
             {
                 str += ";";

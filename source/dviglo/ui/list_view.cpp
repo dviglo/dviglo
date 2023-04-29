@@ -170,7 +170,7 @@ ListView::~ListView() = default;
 
 void ListView::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ListView>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ListView>(UI_CATEGORY);
 
     HierarchyContainer::register_object();
 

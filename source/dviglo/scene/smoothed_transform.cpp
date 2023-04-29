@@ -24,7 +24,7 @@ SmoothedTransform::~SmoothedTransform() = default;
 
 void SmoothedTransform::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SmoothedTransform>();
+    DV_CONTEXT->RegisterFactory<SmoothedTransform>();
 }
 
 void SmoothedTransform::Update(float constant, float squaredSnapThreshold)

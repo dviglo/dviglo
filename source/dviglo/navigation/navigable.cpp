@@ -21,7 +21,7 @@ Navigable::~Navigable() = default;
 
 void Navigable::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Navigable>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Navigable>(NAVIGATION_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE("Recursive", recursive_, true, AM_DEFAULT);

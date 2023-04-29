@@ -31,7 +31,7 @@ JSONFile::~JSONFile() = default;
 
 void JSONFile::register_object()
 {
-    DV_CONTEXT.RegisterFactory<JSONFile>();
+    DV_CONTEXT->RegisterFactory<JSONFile>();
 }
 
 // Convert rapidjson value to JSON value.

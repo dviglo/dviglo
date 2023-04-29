@@ -29,7 +29,7 @@ DV_DEFINE_APPLICATION_MAIN(AnimatingScene)
 AnimatingScene::AnimatingScene()
 {
     // Register an object factory for our custom Rotator component so that we can create them to scene nodes
-    DV_CONTEXT.RegisterFactory<Rotator>();
+    DV_CONTEXT->RegisterFactory<Rotator>();
 }
 
 void AnimatingScene::Start()

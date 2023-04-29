@@ -365,7 +365,7 @@ TmxFile2D::~TmxFile2D()
 
 void TmxFile2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<TmxFile2D>();
+    DV_CONTEXT->RegisterFactory<TmxFile2D>();
 }
 
 bool TmxFile2D::begin_load(Deserializer& source)

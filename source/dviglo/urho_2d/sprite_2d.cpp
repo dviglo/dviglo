@@ -28,7 +28,7 @@ Sprite2D::~Sprite2D() = default;
 
 void Sprite2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Sprite2D>();
+    DV_CONTEXT->RegisterFactory<Sprite2D>();
 }
 
 bool Sprite2D::begin_load(Deserializer& source)

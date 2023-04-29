@@ -52,7 +52,7 @@ AnimatedSprite2D::~AnimatedSprite2D()
 
 void AnimatedSprite2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<AnimatedSprite2D>(URHO2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<AnimatedSprite2D>(URHO2D_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticSprite2D);
     DV_REMOVE_ATTRIBUTE("Sprite");

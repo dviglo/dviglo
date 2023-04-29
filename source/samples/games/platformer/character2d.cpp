@@ -35,7 +35,7 @@ Character2D::Character2D() :
 
 void Character2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Character2D>();
+    DV_CONTEXT->RegisterFactory<Character2D>();
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the 'Default' attribute mode which means it will be used both for saving into file, and network replication.

@@ -31,7 +31,7 @@ Sprite::~Sprite() = default;
 
 void Sprite::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Sprite>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Sprite>(UI_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Name", GetName, SetName, String::EMPTY, AM_FILE);
     DV_ACCESSOR_ATTRIBUTE("Position", GetPosition, SetPosition, Vector2::ZERO, AM_FILE);

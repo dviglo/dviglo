@@ -186,7 +186,7 @@ Material::~Material() = default;
 
 void Material::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Material>();
+    DV_CONTEXT->RegisterFactory<Material>();
 }
 
 bool Material::begin_load(Deserializer& source)

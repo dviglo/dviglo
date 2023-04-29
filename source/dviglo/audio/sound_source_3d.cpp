@@ -36,7 +36,7 @@ SoundSource3D::SoundSource3D() :
 
 void SoundSource3D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SoundSource3D>(AUDIO_CATEGORY);
+    DV_CONTEXT->RegisterFactory<SoundSource3D>(AUDIO_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(SoundSource);
     // Remove Attenuation and Panning as attribute as they are constantly being updated

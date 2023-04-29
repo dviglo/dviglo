@@ -596,7 +596,7 @@ SharedPtr<UiElement> UI::LoadLayout(XmlFile* file, XmlFile* styleFile)
     if (typeName.Empty())
         typeName = "UiElement";
 
-    root = DynamicCast<UiElement>(DV_CONTEXT.CreateObject(typeName));
+    root = DynamicCast<UiElement>(DV_CONTEXT->CreateObject(typeName));
     if (!root)
     {
         DV_LOGERROR("Could not create unknown UI element " + typeName);

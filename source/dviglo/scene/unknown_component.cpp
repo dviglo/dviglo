@@ -68,7 +68,7 @@ UnknownComponent::UnknownComponent() :
 
 void UnknownComponent::register_object()
 {
-    DV_CONTEXT.RegisterFactory<UnknownComponent>();
+    DV_CONTEXT->RegisterFactory<UnknownComponent>();
 }
 
 bool UnknownComponent::Load(Deserializer& source)

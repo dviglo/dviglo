@@ -41,7 +41,7 @@ ParticleEmitter::~ParticleEmitter() = default;
 
 void ParticleEmitter::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ParticleEmitter>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ParticleEmitter>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Effect", GetEffectAttr, SetEffectAttr, ResourceRef(ParticleEffect::GetTypeStatic()),

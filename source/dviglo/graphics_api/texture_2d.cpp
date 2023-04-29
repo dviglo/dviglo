@@ -34,7 +34,7 @@ Texture2D::~Texture2D()
 
 void Texture2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Texture2D>();
+    DV_CONTEXT->RegisterFactory<Texture2D>();
 }
 
 bool Texture2D::begin_load(Deserializer& source)

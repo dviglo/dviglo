@@ -39,7 +39,7 @@ StaticModel::~StaticModel() = default;
 
 void StaticModel::register_object()
 {
-    DV_CONTEXT.RegisterFactory<StaticModel>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<StaticModel>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Model", GetModelAttr, SetModelAttr, ResourceRef(Model::GetTypeStatic()), AM_DEFAULT);

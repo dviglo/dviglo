@@ -160,7 +160,7 @@ DecalSet::~DecalSet() = default;
 
 void DecalSet::register_object()
 {
-    DV_CONTEXT.RegisterFactory<DecalSet>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<DecalSet>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Material", GetMaterialAttr, SetMaterialAttr, ResourceRef(Material::GetTypeStatic()),

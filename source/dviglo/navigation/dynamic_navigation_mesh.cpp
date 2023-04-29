@@ -207,7 +207,7 @@ DynamicNavigationMesh::~DynamicNavigationMesh()
 
 void DynamicNavigationMesh::register_object()
 {
-    DV_CONTEXT.RegisterFactory<DynamicNavigationMesh>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<DynamicNavigationMesh>(NAVIGATION_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(NavigationMesh);
     DV_ACCESSOR_ATTRIBUTE("Max Obstacles", GetMaxObstacles, SetMaxObstacles, DEFAULT_MAX_OBSTACLES, AM_DEFAULT);
@@ -306,7 +306,7 @@ bool DynamicNavigationMesh::Allocate(const BoundingBox& boundingBox, unsigned ma
     // Send a notification event to concerned parties that we've been fully rebuilt
     {
         using namespace NavigationMeshRebuilt;
-        VariantMap& buildEventParams = DV_CONTEXT.GetEventDataMap();
+        VariantMap& buildEventParams = DV_CONTEXT->GetEventDataMap();
         buildEventParams[P_NODE] = node_;
         buildEventParams[P_MESH] = this;
         SendEvent(E_NAVIGATION_MESH_REBUILT, buildEventParams);
@@ -439,7 +439,7 @@ bool DynamicNavigationMesh::Build()
         // Send a notification event to concerned parties that we've been fully rebuilt
         {
             using namespace NavigationMeshRebuilt;
-            VariantMap& buildEventParams = DV_CONTEXT.GetEventDataMap();
+            VariantMap& buildEventParams = DV_CONTEXT->GetEventDataMap();
             buildEventParams[P_NODE] = node_;
             buildEventParams[P_MESH] = this;
             SendEvent(E_NAVIGATION_MESH_REBUILT, buildEventParams);
@@ -787,7 +787,7 @@ bool DynamicNavigationMesh::ReadTiles(Deserializer& source, bool silent)
         for (unsigned i = 0; i < tileQueue_.Size(); ++i)
         {
             using namespace NavigationTileAdded;
-            VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+            VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
             eventData[P_NODE] = GetNode();
             eventData[P_MESH] = this;
             eventData[P_TILE] = tileQueue_[i];
@@ -965,7 +965,7 @@ int DynamicNavigationMesh::BuildTile(Vector<NavigationGeometryInfo>& geometryLis
     // Send a notification of the rebuild of this tile to anyone interested
     {
         using namespace NavigationAreaRebuilt;
-        VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+        VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
         eventData[P_NODE] = GetNode();
         eventData[P_MESH] = this;
         eventData[P_BOUNDSMIN] = Variant(tileBoundingBox.min_);
@@ -1080,7 +1080,7 @@ void DynamicNavigationMesh::AddObstacle(Obstacle* obstacle, bool silent)
         if (!silent)
         {
             using namespace NavigationObstacleAdded;
-            VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+            VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
             eventData[P_NODE] = obstacle->GetNode();
             eventData[P_OBSTACLE] = obstacle;
             eventData[P_POSITION] = obstacle->GetNode()->GetWorldPosition();
@@ -1119,7 +1119,7 @@ void DynamicNavigationMesh::RemoveObstacle(Obstacle* obstacle, bool silent)
         if (!silent && obstacle->GetNode())
         {
             using namespace NavigationObstacleRemoved;
-            VariantMap& eventData = DV_CONTEXT.GetEventDataMap();
+            VariantMap& eventData = DV_CONTEXT->GetEventDataMap();
             eventData[P_NODE] = obstacle->GetNode();
             eventData[P_OBSTACLE] = obstacle;
             eventData[P_POSITION] = obstacle->GetNode()->GetWorldPosition();

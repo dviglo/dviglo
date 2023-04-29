@@ -239,7 +239,7 @@ Image::~Image() = default;
 
 void Image::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Image>();
+    DV_CONTEXT->RegisterFactory<Image>();
 }
 
 bool Image::begin_load(Deserializer& source)

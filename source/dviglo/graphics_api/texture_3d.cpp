@@ -38,7 +38,7 @@ Texture3D::~Texture3D()
 
 void Texture3D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Texture3D>();
+    DV_CONTEXT->RegisterFactory<Texture3D>();
 }
 
 bool Texture3D::begin_load(Deserializer& source)

@@ -165,7 +165,7 @@ static const StringVector wheelElementNames =
 
 void RaycastVehicle::register_object()
 {
-    DV_CONTEXT.RegisterFactory<RaycastVehicle>();
+    DV_CONTEXT->RegisterFactory<RaycastVehicle>();
     DV_ACCESSOR_ATTRIBUTE("Wheel data", GetWheelDataAttr, SetWheelDataAttr, Variant::emptyVariantVector, AM_DEFAULT)
         .SetMetadata(AttributeMetadata::P_VECTOR_STRUCT_ELEMENTS, wheelElementNames);
     DV_ATTRIBUTE("Maximum side slip threshold", maxSideSlipSpeed_, 4.0f, AM_DEFAULT);

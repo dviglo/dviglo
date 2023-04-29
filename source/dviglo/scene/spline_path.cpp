@@ -33,7 +33,7 @@ SplinePath::SplinePath() :
 
 void SplinePath::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SplinePath>(LOGIC_CATEGORY);
+    DV_CONTEXT->RegisterFactory<SplinePath>(LOGIC_CATEGORY);
 
     DV_ENUM_ACCESSOR_ATTRIBUTE("Interpolation Mode", GetInterpolationMode, SetInterpolationMode,
         interpolationModeNames, BEZIER_CURVE, AM_FILE);

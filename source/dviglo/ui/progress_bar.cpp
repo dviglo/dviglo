@@ -37,7 +37,7 @@ ProgressBar::~ProgressBar() = default;
 
 void ProgressBar::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ProgressBar>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ProgressBar>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

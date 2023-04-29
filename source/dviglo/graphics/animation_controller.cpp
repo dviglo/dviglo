@@ -41,7 +41,7 @@ AnimationController::~AnimationController() = default;
 
 void AnimationController::register_object()
 {
-    DV_CONTEXT.RegisterFactory<AnimationController>(LOGIC_CATEGORY);
+    DV_CONTEXT->RegisterFactory<AnimationController>(LOGIC_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Animations", GetAnimationsAttr, SetAnimationsAttr, Variant::emptyVariantVector,

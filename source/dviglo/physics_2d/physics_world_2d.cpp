@@ -55,7 +55,7 @@ PhysicsWorld2D::~PhysicsWorld2D()
 
 void PhysicsWorld2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<PhysicsWorld2D>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT->RegisterFactory<PhysicsWorld2D>(SUBSYSTEM_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Draw Shape", GetDrawShape, SetDrawShape, false, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Draw Joint", GetDrawJoint, SetDrawJoint, false, AM_DEFAULT);

@@ -24,7 +24,7 @@ ConstraintFriction2D::~ConstraintFriction2D() = default;
 
 void ConstraintFriction2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ConstraintFriction2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ConstraintFriction2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Anchor", GetAnchor, SetAnchor, Vector2::ZERO, AM_DEFAULT);

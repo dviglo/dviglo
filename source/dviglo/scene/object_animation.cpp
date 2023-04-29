@@ -31,7 +31,7 @@ ObjectAnimation::~ObjectAnimation() = default;
 
 void ObjectAnimation::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ObjectAnimation>();
+    DV_CONTEXT->RegisterFactory<ObjectAnimation>();
 }
 
 bool ObjectAnimation::begin_load(Deserializer& source)

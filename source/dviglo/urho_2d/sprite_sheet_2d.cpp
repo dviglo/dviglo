@@ -28,7 +28,7 @@ SpriteSheet2D::~SpriteSheet2D() = default;
 
 void SpriteSheet2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SpriteSheet2D>();
+    DV_CONTEXT->RegisterFactory<SpriteSheet2D>();
 }
 
 bool SpriteSheet2D::begin_load(Deserializer& source)

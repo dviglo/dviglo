@@ -49,7 +49,7 @@ TerrainPatch::~TerrainPatch() = default;
 
 void TerrainPatch::register_object()
 {
-    DV_CONTEXT.RegisterFactory<TerrainPatch>();
+    DV_CONTEXT->RegisterFactory<TerrainPatch>();
 }
 
 void TerrainPatch::ProcessRayQuery(const RayOctreeQuery& query, Vector<RayQueryResult>& results)

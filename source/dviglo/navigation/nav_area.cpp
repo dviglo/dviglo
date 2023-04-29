@@ -28,7 +28,7 @@ NavArea::~NavArea() = default;
 
 void NavArea::register_object()
 {
-    DV_CONTEXT.RegisterFactory<NavArea>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<NavArea>(NAVIGATION_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Component);
     DV_ATTRIBUTE("Bounding Box Min", boundingBox_.min_, DEFAULT_BOUNDING_BOX_MIN, AM_DEFAULT);

@@ -40,7 +40,7 @@ Slider::~Slider() = default;
 
 void Slider::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Slider>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Slider>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

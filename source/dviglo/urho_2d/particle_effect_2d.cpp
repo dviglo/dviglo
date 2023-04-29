@@ -88,7 +88,7 @@ ParticleEffect2D::~ParticleEffect2D() = default;
 
 void ParticleEffect2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ParticleEffect2D>();
+    DV_CONTEXT->RegisterFactory<ParticleEffect2D>();
 }
 
 bool ParticleEffect2D::begin_load(Deserializer& source)

@@ -57,7 +57,7 @@ ScrollBar::~ScrollBar() = default;
 
 void ScrollBar::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ScrollBar>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ScrollBar>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Is Enabled", true);

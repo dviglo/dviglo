@@ -32,7 +32,7 @@ Obstacle::~Obstacle()
 
 void Obstacle::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Obstacle>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Obstacle>(NAVIGATION_CATEGORY);
     DV_COPY_BASE_ATTRIBUTES(Component);
     DV_ACCESSOR_ATTRIBUTE("Radius", GetRadius, SetRadius, 5.0f, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Height", GetHeight, SetHeight, 5.0f, AM_DEFAULT);

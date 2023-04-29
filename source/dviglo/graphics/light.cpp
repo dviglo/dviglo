@@ -99,7 +99,7 @@ Light::~Light() = default;
 
 void Light::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Light>(SCENE_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Light>(SCENE_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ENUM_ACCESSOR_ATTRIBUTE("Light Type", GetLightType, SetLightType, typeNames, DEFAULT_LIGHTTYPE, AM_DEFAULT);

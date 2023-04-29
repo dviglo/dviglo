@@ -56,7 +56,7 @@ ScrollView::~ScrollView() = default;
 
 void ScrollView::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ScrollView>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ScrollView>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UiElement);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Clip Children", true);

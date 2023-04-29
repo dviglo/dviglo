@@ -77,7 +77,7 @@ ParticleEffect::~ParticleEffect() = default;
 
 void ParticleEffect::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ParticleEffect>();
+    DV_CONTEXT->RegisterFactory<ParticleEffect>();
 }
 
 bool ParticleEffect::begin_load(Deserializer& source)

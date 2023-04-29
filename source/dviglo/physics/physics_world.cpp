@@ -180,7 +180,7 @@ PhysicsWorld::~PhysicsWorld()
 
 void PhysicsWorld::register_object()
 {
-    DV_CONTEXT.RegisterFactory<PhysicsWorld>(SUBSYSTEM_CATEGORY);
+    DV_CONTEXT->RegisterFactory<PhysicsWorld>(SUBSYSTEM_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Gravity", GetGravity, SetGravity, DEFAULT_GRAVITY, AM_DEFAULT);
     DV_ATTRIBUTE("Physics FPS", fps_, DEFAULT_FPS, AM_DEFAULT);

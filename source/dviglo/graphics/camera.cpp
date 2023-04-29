@@ -62,7 +62,7 @@ Camera::~Camera() = default;
 
 void Camera::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Camera>(SCENE_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Camera>(SCENE_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Near Clip", GetNearClip, SetNearClip, DEFAULT_NEARCLIP, AM_DEFAULT);

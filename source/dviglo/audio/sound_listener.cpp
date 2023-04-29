@@ -5,6 +5,7 @@
 #include "sound_listener.h"
 #include "../core/context.h"
 
+
 namespace dviglo
 {
 
@@ -18,9 +19,9 @@ SoundListener::~SoundListener() = default;
 
 void SoundListener::register_object()
 {
-    DV_CONTEXT.RegisterFactory<SoundListener>(AUDIO_CATEGORY);
+    DV_CONTEXT->RegisterFactory<SoundListener>(AUDIO_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
 }
 
-}
+} // namespace dviglo

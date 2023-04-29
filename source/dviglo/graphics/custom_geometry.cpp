@@ -43,7 +43,7 @@ CustomGeometry::~CustomGeometry() = default;
 
 void CustomGeometry::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CustomGeometry>(GEOMETRY_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CustomGeometry>(GEOMETRY_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ATTRIBUTE("Dynamic Vertex Buffer", dynamic_, false, AM_DEFAULT);

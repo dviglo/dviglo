@@ -24,7 +24,7 @@ Character::Character() :
 
 void Character::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Character>();
+    DV_CONTEXT->RegisterFactory<Character>();
 
     // These macros register the class attributes to the Context for automatic load / save handling.
     // We specify the Default attribute mode which means it will be used both for saving into file, and network replication

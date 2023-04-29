@@ -80,7 +80,7 @@ Cursor::~Cursor()
 
 void Cursor::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Cursor>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Cursor>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Priority", M_MAX_INT);

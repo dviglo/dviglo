@@ -49,18 +49,20 @@ class DV_API Context
 {
     friend class Object;
 
+private:
+    /// Инициализируется в конструкторе
+    inline static Context* instance_ = nullptr;
+
 public:
-    static Context& get_instance();
+    static Context* instance() { return instance_; }
 
     // Запрещаем копирование
     Context(const Context&) = delete;
     Context& operator =(const Context&) = delete;
 
-private:
     Context();
     ~Context();
 
-public:
     /// Create an object by type. Return pointer to it or null if no factory found.
     template <class T> inline SharedPtr<T> CreateObject()
     {
@@ -230,4 +232,4 @@ template <class T> void Context::UpdateAttributeDefaultValue(const char* name, c
 
 } // namespace dviglo
 
-#define DV_CONTEXT (dviglo::Context::get_instance())
+#define DV_CONTEXT (dviglo::Context::instance())

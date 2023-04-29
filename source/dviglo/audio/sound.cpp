@@ -59,7 +59,7 @@ Sound::~Sound() = default;
 
 void Sound::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Sound>();
+    DV_CONTEXT->RegisterFactory<Sound>();
 }
 
 bool Sound::begin_load(Deserializer& source)

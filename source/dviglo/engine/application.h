@@ -52,10 +52,14 @@ protected:
 };
 
 #define DV_DEFINE_APPLICATION_MAIN(className) \
-int RunApplication() \
+i32 RunApplication() \
 { \
-    dviglo::SharedPtr<className> application(new className()); \
-    return application->Run(); \
+    new Context(); \
+    className* application = new className(); \
+    i32 exit_code = application->Run(); \
+    delete application; \
+    delete Context::instance(); \
+    return exit_code; \
 } \
 DV_DEFINE_MAIN(RunApplication())
 

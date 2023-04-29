@@ -263,12 +263,12 @@ void Serializable::OnGetAttribute(const AttributeInfo& attr, Variant& dest) cons
 
 const Vector<AttributeInfo>* Serializable::GetAttributes() const
 {
-    return DV_CONTEXT.GetAttributes(GetType());
+    return DV_CONTEXT->GetAttributes(GetType());
 }
 
 const Vector<AttributeInfo>* Serializable::GetNetworkAttributes() const
 {
-    return networkState_ ? networkState_->attributes_ : DV_CONTEXT.GetNetworkAttributes(GetType());
+    return networkState_ ? networkState_->attributes_ : DV_CONTEXT->GetNetworkAttributes(GetType());
 }
 
 bool Serializable::Load(Deserializer& source)
@@ -975,7 +975,7 @@ unsigned Serializable::GetNumAttributes() const
 unsigned Serializable::GetNumNetworkAttributes() const
 {
     const Vector<AttributeInfo>* attributes = networkState_ ? networkState_->attributes_ :
-        DV_CONTEXT.GetNetworkAttributes(GetType());
+        DV_CONTEXT->GetNetworkAttributes(GetType());
     return attributes ? attributes->Size() : 0;
 }
 

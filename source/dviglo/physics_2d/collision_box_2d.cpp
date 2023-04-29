@@ -29,7 +29,7 @@ CollisionBox2D::~CollisionBox2D() = default;
 
 void CollisionBox2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CollisionBox2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CollisionBox2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Size", GetSize, SetSize, DEFAULT_BOX_SIZE, AM_DEFAULT);

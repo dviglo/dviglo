@@ -6,7 +6,7 @@
 
 void GameObject::register_object()
 {
-    DV_CONTEXT.RegisterFactory<GameObject>();
+    DV_CONTEXT->RegisterFactory<GameObject>();
 }
 
 GameObject::GameObject()

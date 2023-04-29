@@ -24,7 +24,7 @@ CollisionPolygon2D::~CollisionPolygon2D() = default;
 
 void CollisionPolygon2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CollisionPolygon2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CollisionPolygon2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_COPY_BASE_ATTRIBUTES(CollisionShape2D);

@@ -47,7 +47,7 @@ Menu::~Menu()
 
 void Menu::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Menu>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Menu>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(Button);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Focus Mode", FM_NOTFOCUSABLE);
@@ -160,7 +160,7 @@ bool Menu::load_xml(const XmlElement& source, XmlFile* styleFile)
             else
             {
                 // Do not add the popup element as a child even temporarily, as that can break layouts
-                SharedPtr<UiElement> popup = DynamicCast<UiElement>(DV_CONTEXT.CreateObject(typeName));
+                SharedPtr<UiElement> popup = DynamicCast<UiElement>(DV_CONTEXT->CreateObject(typeName));
                 if (!popup)
                     DV_LOGERROR("Could not create popup element type " + typeName);
                 else

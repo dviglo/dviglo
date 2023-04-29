@@ -72,7 +72,7 @@ CrowdManager::~CrowdManager()
 
 void CrowdManager::register_object()
 {
-    DV_CONTEXT.RegisterFactory<CrowdManager>(NAVIGATION_CATEGORY);
+    DV_CONTEXT->RegisterFactory<CrowdManager>(NAVIGATION_CATEGORY);
 
     DV_ATTRIBUTE("Max Agents", maxAgents_, DEFAULT_MAX_AGENTS, AM_DEFAULT);
     DV_ATTRIBUTE("Max Agent Radius", maxAgentRadius_, DEFAULT_MAX_AGENT_RADIUS, AM_DEFAULT);

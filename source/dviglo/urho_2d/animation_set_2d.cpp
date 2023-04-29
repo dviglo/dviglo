@@ -97,7 +97,7 @@ AnimationSet2D::~AnimationSet2D()
 
 void AnimationSet2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<AnimationSet2D>();
+    DV_CONTEXT->RegisterFactory<AnimationSet2D>();
 }
 
 bool AnimationSet2D::begin_load(Deserializer& source)

@@ -34,7 +34,7 @@ Shader::~Shader()
 
 void Shader::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Shader>();
+    DV_CONTEXT->RegisterFactory<Shader>();
 }
 
 bool Shader::begin_load(Deserializer& source)

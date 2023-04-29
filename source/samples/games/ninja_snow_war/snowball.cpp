@@ -14,7 +14,7 @@ static constexpr i32 SNOWBALL_DAMAGE = 1;
 
 void Snowball::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Snowball>();
+    DV_CONTEXT->RegisterFactory<Snowball>();
 }
 
 Snowball::Snowball()

@@ -8,7 +8,7 @@ static constexpr int POTION_HEAL_AMOUNT = 5;
 
 void Potion::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Potion>();
+    DV_CONTEXT->RegisterFactory<Potion>();
 }
 
 Potion::Potion()

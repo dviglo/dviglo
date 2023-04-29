@@ -53,7 +53,7 @@ Model::~Model() = default;
 
 void Model::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Model>();
+    DV_CONTEXT->RegisterFactory<Model>();
 }
 
 bool Model::begin_load(Deserializer& source)

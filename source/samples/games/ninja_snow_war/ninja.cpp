@@ -22,7 +22,7 @@ static constexpr i32 NINJA_POINTS = 250;
 
 void Ninja::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Ninja>();
+    DV_CONTEXT->RegisterFactory<Ninja>();
 }
 
 Ninja::Ninja()

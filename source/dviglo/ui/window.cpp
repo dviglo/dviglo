@@ -40,7 +40,7 @@ Window::~Window() = default;
 
 void Window::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Window>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Window>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(BorderImage);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Bring To Front", true);

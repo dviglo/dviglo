@@ -307,7 +307,7 @@ bool Console::PopulateInterpreter()
 {
     interpreters_->RemoveAllItems();
 
-    EventReceiverGroup* group = DV_CONTEXT.GetEventReceivers(E_CONSOLECOMMAND);
+    EventReceiverGroup* group = DV_CONTEXT->GetEventReceivers(E_CONSOLECOMMAND);
     if (!group || group->receivers_.Empty())
         return false;
 

@@ -58,7 +58,7 @@ TextureCube::~TextureCube()
 
 void TextureCube::register_object()
 {
-    DV_CONTEXT.RegisterFactory<TextureCube>();
+    DV_CONTEXT->RegisterFactory<TextureCube>();
 }
 
 bool TextureCube::begin_load(Deserializer& source)

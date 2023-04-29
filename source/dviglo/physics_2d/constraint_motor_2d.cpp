@@ -24,7 +24,7 @@ ConstraintMotor2D::~ConstraintMotor2D() = default;
 
 void ConstraintMotor2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ConstraintMotor2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ConstraintMotor2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Linear Offset", GetLinearOffset, SetLinearOffset, Vector2::ZERO, AM_DEFAULT);

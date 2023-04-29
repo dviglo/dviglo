@@ -26,7 +26,7 @@ TileMap2D::~TileMap2D() = default;
 
 void TileMap2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<TileMap2D>(URHO2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<TileMap2D>(URHO2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Tmx File", GetTmxFileAttr, SetTmxFileAttr, ResourceRef(TmxFile2D::GetTypeStatic()),

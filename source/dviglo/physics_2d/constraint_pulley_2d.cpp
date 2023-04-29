@@ -27,7 +27,7 @@ ConstraintPulley2D::~ConstraintPulley2D() = default;
 
 void ConstraintPulley2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ConstraintPulley2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ConstraintPulley2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Owner Body Ground Anchor", GetOwnerBodyGroundAnchor, SetOwnerBodyGroundAnchor, Vector2::ZERO,

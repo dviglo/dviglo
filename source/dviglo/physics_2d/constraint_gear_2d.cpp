@@ -22,7 +22,7 @@ ConstraintGear2D::~ConstraintGear2D() = default;
 
 void ConstraintGear2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<ConstraintGear2D>(PHYSICS2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<ConstraintGear2D>(PHYSICS2D_CATEGORY);
 
     DV_ACCESSOR_ATTRIBUTE("Is Enabled", IsEnabled, SetEnabled, true, AM_DEFAULT);
     DV_ACCESSOR_ATTRIBUTE("Ratio", GetRatio, SetRatio, 0.0f, AM_DEFAULT);

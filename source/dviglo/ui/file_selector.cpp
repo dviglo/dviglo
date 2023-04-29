@@ -118,7 +118,7 @@ FileSelector::~FileSelector()
 
 void FileSelector::register_object()
 {
-    DV_CONTEXT.RegisterFactory<FileSelector>();
+    DV_CONTEXT->RegisterFactory<FileSelector>();
 }
 
 void FileSelector::SetDefaultStyle(XmlFile* style)

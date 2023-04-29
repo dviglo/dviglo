@@ -7,7 +7,7 @@
 
 void FootSteps::register_object()
 {
-    DV_CONTEXT.RegisterFactory<FootSteps>();
+    DV_CONTEXT->RegisterFactory<FootSteps>();
 }
 
 FootSteps::FootSteps()

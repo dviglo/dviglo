@@ -105,7 +105,7 @@ StretchableSprite2D::StretchableSprite2D()
 
 void StretchableSprite2D::register_object()
 {
-    DV_CONTEXT.RegisterFactory<StretchableSprite2D>(URHO2D_CATEGORY);
+    DV_CONTEXT->RegisterFactory<StretchableSprite2D>(URHO2D_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(StaticSprite2D);
     DV_ACCESSOR_ATTRIBUTE("Border", GetBorder, SetBorder, IntRect::ZERO, AM_DEFAULT);

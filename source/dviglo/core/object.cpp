@@ -18,14 +18,14 @@ namespace dviglo
 Object::Object() :
     blockEvents_(false)
 {
-    // Гарантируем, что контекст будет создан перед созданием первого объекта
-    Context::get_instance();
+    // Проверяем, что контекст создан перед созданием первого объекта
+    assert(Context::instance());
 }
 
 Object::~Object()
 {
     UnsubscribeFromAllEvents();
-    DV_CONTEXT.RemoveEventSender(this);
+    DV_CONTEXT->RemoveEventSender(this);
 }
 
 void Object::OnEvent(Object* sender, StringHash eventType, VariantMap& eventData)
@@ -55,17 +55,17 @@ void Object::OnEvent(Object* sender, StringHash eventType, VariantMap& eventData
     // Specific event handlers have priority, so if found, invoke first
     if (specific)
     {
-        DV_CONTEXT.SetEventHandler(specific);
+        DV_CONTEXT->SetEventHandler(specific);
         specific->Invoke(eventData);
-        DV_CONTEXT.SetEventHandler(nullptr);
+        DV_CONTEXT->SetEventHandler(nullptr);
         return;
     }
 
     if (nonSpecific)
     {
-        DV_CONTEXT.SetEventHandler(nonSpecific);
+        DV_CONTEXT->SetEventHandler(nonSpecific);
         nonSpecific->Invoke(eventData);
-        DV_CONTEXT.SetEventHandler(nullptr);
+        DV_CONTEXT->SetEventHandler(nullptr);
     }
 }
 
@@ -86,7 +86,7 @@ void Object::subscribe_to_event(StringHash eventType, EventHandler* handler)
     else
     {
         eventHandlers_.InsertFront(handler);
-        DV_CONTEXT.AddEventReceiver(this, eventType);
+        DV_CONTEXT->AddEventReceiver(this, eventType);
     }
 }
 
@@ -111,7 +111,7 @@ void Object::subscribe_to_event(Object* sender, StringHash eventType, EventHandl
     else
     {
         eventHandlers_.InsertFront(handler);
-        DV_CONTEXT.AddEventReceiver(this, sender, eventType);
+        DV_CONTEXT->AddEventReceiver(this, sender, eventType);
     }
 }
 
@@ -134,9 +134,9 @@ void Object::unsubscribe_from_event(StringHash eventType)
         if (handler)
         {
             if (handler->GetSender())
-                DV_CONTEXT.RemoveEventReceiver(this, handler->GetSender(), eventType);
+                DV_CONTEXT->RemoveEventReceiver(this, handler->GetSender(), eventType);
             else
-                DV_CONTEXT.RemoveEventReceiver(this, eventType);
+                DV_CONTEXT->RemoveEventReceiver(this, eventType);
             eventHandlers_.Erase(handler, previous);
         }
         else
@@ -153,7 +153,7 @@ void Object::unsubscribe_from_event(Object* sender, StringHash eventType)
     EventHandler* handler = FindSpecificEventHandler(sender, eventType, &previous);
     if (handler)
     {
-        DV_CONTEXT.RemoveEventReceiver(this, handler->GetSender(), eventType);
+        DV_CONTEXT->RemoveEventReceiver(this, handler->GetSender(), eventType);
         eventHandlers_.Erase(handler, previous);
     }
 }
@@ -169,7 +169,7 @@ void Object::UnsubscribeFromEvents(Object* sender)
         EventHandler* handler = FindSpecificEventHandler(sender, &previous);
         if (handler)
         {
-            DV_CONTEXT.RemoveEventReceiver(this, handler->GetSender(), handler->GetEventType());
+            DV_CONTEXT->RemoveEventReceiver(this, handler->GetSender(), handler->GetEventType());
             eventHandlers_.Erase(handler, previous);
         }
         else
@@ -185,9 +185,9 @@ void Object::UnsubscribeFromAllEvents()
         if (handler)
         {
             if (handler->GetSender())
-                DV_CONTEXT.RemoveEventReceiver(this, handler->GetSender(), handler->GetEventType());
+                DV_CONTEXT->RemoveEventReceiver(this, handler->GetSender(), handler->GetEventType());
             else
-                DV_CONTEXT.RemoveEventReceiver(this, handler->GetEventType());
+                DV_CONTEXT->RemoveEventReceiver(this, handler->GetEventType());
             eventHandlers_.Erase(handler);
         }
         else
@@ -207,9 +207,9 @@ void Object::UnsubscribeFromAllEventsExcept(const Vector<StringHash>& exceptions
         if ((!onlyUserData || handler->GetUserData()) && !exceptions.Contains(handler->GetEventType()))
         {
             if (handler->GetSender())
-                DV_CONTEXT.RemoveEventReceiver(this, handler->GetSender(), handler->GetEventType());
+                DV_CONTEXT->RemoveEventReceiver(this, handler->GetSender(), handler->GetEventType());
             else
-                DV_CONTEXT.RemoveEventReceiver(this, handler->GetEventType());
+                DV_CONTEXT->RemoveEventReceiver(this, handler->GetEventType());
 
             eventHandlers_.Erase(handler, previous);
         }
@@ -249,11 +249,11 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
     WeakPtr<Object> self(this);
     HashSet<Object*> processed;
 
-    DV_CONTEXT.BeginSendEvent(this, eventType);
+    DV_CONTEXT->BeginSendEvent(this, eventType);
 
     // Check first the specific event receivers
     // Note: group is held alive with a shared ptr, as it may get destroyed along with the sender
-    SharedPtr<EventReceiverGroup> group(DV_CONTEXT.GetEventReceivers(this, eventType));
+    SharedPtr<EventReceiverGroup> group(DV_CONTEXT->GetEventReceivers(this, eventType));
     if (group)
     {
         group->BeginSendEvent();
@@ -272,7 +272,7 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
             if (self.Expired())
             {
                 group->EndSendEvent();
-                DV_CONTEXT.EndSendEvent();
+                DV_CONTEXT->EndSendEvent();
                 return;
             }
 
@@ -283,7 +283,7 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
     }
 
     // Then the non-specific receivers
-    group = DV_CONTEXT.GetEventReceivers(eventType);
+    group = DV_CONTEXT->GetEventReceivers(eventType);
     if (group)
     {
         group->BeginSendEvent();
@@ -302,7 +302,7 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
                 if (self.Expired())
                 {
                     group->EndSendEvent();
-                    DV_CONTEXT.EndSendEvent();
+                    DV_CONTEXT->EndSendEvent();
                     return;
                 }
             }
@@ -322,7 +322,7 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
                 if (self.Expired())
                 {
                     group->EndSendEvent();
-                    DV_CONTEXT.EndSendEvent();
+                    DV_CONTEXT->EndSendEvent();
                     return;
                 }
             }
@@ -331,37 +331,37 @@ void Object::SendEvent(StringHash eventType, VariantMap& eventData)
         group->EndSendEvent();
     }
 
-    DV_CONTEXT.EndSendEvent();
+    DV_CONTEXT->EndSendEvent();
 }
 
 VariantMap& Object::GetEventDataMap() const
 {
-    return DV_CONTEXT.GetEventDataMap();
+    return DV_CONTEXT->GetEventDataMap();
 }
 
 const Variant& Object::GetGlobalVar(StringHash key) const
 {
-    return DV_CONTEXT.GetGlobalVar(key);
+    return DV_CONTEXT->GetGlobalVar(key);
 }
 
 const VariantMap& Object::GetGlobalVars() const
 {
-    return DV_CONTEXT.GetGlobalVars();
+    return DV_CONTEXT->GetGlobalVars();
 }
 
 void Object::SetGlobalVar(StringHash key, const Variant& value)
 {
-    DV_CONTEXT.SetGlobalVar(key, value);
+    DV_CONTEXT->SetGlobalVar(key, value);
 }
 
 Object* Object::GetEventSender() const
 {
-    return DV_CONTEXT.GetEventSender();
+    return DV_CONTEXT->GetEventSender();
 }
 
 EventHandler* Object::GetEventHandler() const
 {
-    return DV_CONTEXT.GetEventHandler();
+    return DV_CONTEXT->GetEventHandler();
 }
 
 bool Object::HasSubscribedToEvent(StringHash eventType) const
@@ -379,7 +379,7 @@ bool Object::HasSubscribedToEvent(Object* sender, StringHash eventType) const
 
 const String& Object::GetCategory() const
 {
-    const HashMap<String, Vector<StringHash>>& objectCategories = DV_CONTEXT.GetObjectCategories();
+    const HashMap<String, Vector<StringHash>>& objectCategories = DV_CONTEXT->GetObjectCategories();
     for (HashMap<String, Vector<StringHash>>::ConstIterator i = objectCategories.Begin(); i != objectCategories.End(); ++i)
     {
         if (i->second_.Contains(GetType()))

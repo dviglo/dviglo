@@ -56,7 +56,7 @@ Text::~Text() = default;
 
 void Text::register_object()
 {
-    DV_CONTEXT.RegisterFactory<Text>(UI_CATEGORY);
+    DV_CONTEXT->RegisterFactory<Text>(UI_CATEGORY);
 
     DV_COPY_BASE_ATTRIBUTES(UISelectable);
     DV_UPDATE_ATTRIBUTE_DEFAULT_VALUE("Use Derived Opacity", false);
@@ -74,7 +74,7 @@ void Text::register_object()
     DV_ACCESSOR_ATTRIBUTE("Effect Color", GetEffectColor, SetEffectColor, Color::BLACK, AM_FILE);
 
     // Change the default value for UseDerivedOpacity
-    DV_CONTEXT.GetAttribute<Text>("Use Derived Opacity")->defaultValue_ = false;
+    DV_CONTEXT->GetAttribute<Text>("Use Derived Opacity")->defaultValue_ = false;
 }
 
 void Text::apply_attributes()

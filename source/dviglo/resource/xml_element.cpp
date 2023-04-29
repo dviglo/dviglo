@@ -430,7 +430,7 @@ bool XmlElement::SetResourceRef(const ResourceRef& value)
     if (!file_ || (!node_ && !xpathNode_))
         return false;
 
-    return SetAttribute("value", String(DV_CONTEXT.GetTypeName(value.type_)) + ";" + value.name_);
+    return SetAttribute("value", String(DV_CONTEXT->GetTypeName(value.type_)) + ";" + value.name_);
 }
 
 bool XmlElement::SetResourceRefList(const ResourceRefList& value)
@@ -438,7 +438,7 @@ bool XmlElement::SetResourceRefList(const ResourceRefList& value)
     if (!file_ || (!node_ && !xpathNode_))
         return false;
 
-    String str(DV_CONTEXT.GetTypeName(value.type_));
+    String str(DV_CONTEXT->GetTypeName(value.type_));
     for (const String& name : value.names_)
     {
         str += ";";

@@ -6,7 +6,7 @@
 
 void LightFlash::register_object()
 {
-    DV_CONTEXT.RegisterFactory<LightFlash>();
+    DV_CONTEXT->RegisterFactory<LightFlash>();
 }
 
 LightFlash::LightFlash()
