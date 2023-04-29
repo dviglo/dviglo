@@ -40,13 +40,13 @@ void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, Variant
 
     if (DV_INPUT->GetKeyDown(KEY_ESCAPE))
     {
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
         return;
     }
 
     if (fpsCounter_.GetTotalTime() >= 25.f)
     {
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_RESULTSCREEN);
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_RESULTSCREEN);
         return;
     }
 

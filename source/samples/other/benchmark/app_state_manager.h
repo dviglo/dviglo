@@ -23,8 +23,15 @@ class AppStateManager : public Object
 public:
     DV_OBJECT(AppStateManager);
 
+    /// Только App может создать и уничтожить объект
+    friend class App;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static AppStateManager* instance_ = nullptr;
+
 public:
-    static AppStateManager& get_instance();
+    static AppStateManager* instance() { return instance_; }
 
 private:
     HashMap<AppStateId, SharedPtr<AppState_Base>> appStates_;
@@ -70,4 +77,4 @@ public:
     }
 };
 
-#define APP_STATE_MANAGER (AppStateManager::get_instance())
+#define APP_STATE_MANAGER (AppStateManager::instance())

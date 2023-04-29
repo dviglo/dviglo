@@ -27,13 +27,13 @@ void AppState_MainScreen::HandleButtonPressed(StringHash eventType, VariantMap& 
     Button* pressedButton = static_cast<Button*>(eventData["Element"].GetPtr());
 
     if (pressedButton->GetName() == BENCHMARK_01_STR)
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_BENCHMARK01);
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_BENCHMARK01);
     else if (pressedButton->GetName() == BENCHMARK_02_STR)
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_BENCHMARK02);
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_BENCHMARK02);
     else if (pressedButton->GetName() == BENCHMARK_03_STR)
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_BENCHMARK03);
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_BENCHMARK03);
     else if (pressedButton->GetName() == BENCHMARK_04_STR)
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_BENCHMARK04);
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_BENCHMARK04);
 }
 
 void AppState_MainScreen::CreateButton(const String& name, const String& text, Window& parent)
@@ -64,10 +64,10 @@ void AppState_MainScreen::CreateGui()
     windowTitle->SetStyleAuto();
     windowTitle->SetText("Benchmark list");
 
-    CreateButton(BENCHMARK_01_STR, APP_STATE_MANAGER.GetName(APPSTATEID_BENCHMARK01), *window);
-    CreateButton(BENCHMARK_02_STR, APP_STATE_MANAGER.GetName(APPSTATEID_BENCHMARK02), *window);
-    CreateButton(BENCHMARK_03_STR, APP_STATE_MANAGER.GetName(APPSTATEID_BENCHMARK03), *window);
-    CreateButton(BENCHMARK_04_STR, APP_STATE_MANAGER.GetName(APPSTATEID_BENCHMARK04), *window);
+    CreateButton(BENCHMARK_01_STR, APP_STATE_MANAGER->GetName(APPSTATEID_BENCHMARK01), *window);
+    CreateButton(BENCHMARK_02_STR, APP_STATE_MANAGER->GetName(APPSTATEID_BENCHMARK02), *window);
+    CreateButton(BENCHMARK_03_STR, APP_STATE_MANAGER->GetName(APPSTATEID_BENCHMARK03), *window);
+    CreateButton(BENCHMARK_04_STR, APP_STATE_MANAGER->GetName(APPSTATEID_BENCHMARK04), *window);
 }
 
 void AppState_MainScreen::DestroyGui()

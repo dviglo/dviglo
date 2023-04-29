@@ -15,21 +15,6 @@
 
 #include <dviglo/common/debug_new.h>
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool app_state_manager_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-AppStateManager& AppStateManager::get_instance()
-{
-    assert(!app_state_manager_destructed);
-    static AppStateManager instance;
-    return instance;
-}
-
 AppStateManager::AppStateManager()
 {
     appStates_.Insert({APPSTATEID_MAINSCREEN, MakeShared<AppState_MainScreen>()});
@@ -39,16 +24,15 @@ AppStateManager::AppStateManager()
     appStates_.Insert({APPSTATEID_BENCHMARK03, MakeShared<AppState_Benchmark03>()});
     appStates_.Insert({APPSTATEID_BENCHMARK04, MakeShared<AppState_Benchmark04>()});
 
-    DV_LOGDEBUG("Singleton AppStateManager constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("AppStateManager constructed");
 }
 
 AppStateManager::~AppStateManager()
 {
-    DV_LOGDEBUG("Singleton AppStateManager destructed");
-
-#ifndef NDEBUG
-    app_state_manager_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("AppStateManager destructed");
 }
 
 void AppStateManager::Apply()

@@ -27,6 +27,11 @@ public:
         subscribe_to_event(E_BEGINFRAME, DV_HANDLER(App, ApplyAppState));
     }
 
+    ~App()
+    {
+        delete AppStateManager::instance_;
+    }
+
     void Setup() override
     {
         engineParameters_[EP_WINDOW_TITLE] = "Dviglo Benchmark";
@@ -52,7 +57,10 @@ public:
 
     void Start() override
     {
-        APP_STATE_MANAGER.SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
+        // Указатель на объект хранится в самом классе
+        new AppStateManager();
+
+        APP_STATE_MANAGER->SetRequiredAppStateId(APPSTATEID_MAINSCREEN);
 
         DV_INPUT->SetToggleFullscreen(false); // Block Alt+Enter
 
@@ -61,7 +69,7 @@ public:
 
     void ApplyAppState(StringHash eventType, VariantMap& eventData)
     {
-        APP_STATE_MANAGER.Apply();
+        APP_STATE_MANAGER->Apply();
     }
 };
 
