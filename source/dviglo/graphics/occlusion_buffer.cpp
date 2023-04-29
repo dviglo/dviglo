@@ -69,7 +69,7 @@ bool OcclusionBuffer::SetSize(int width, int height, bool threaded)
     height_ = height;
 
     // Build work buffers for threading
-    unsigned numThreadBuffers = threaded ? DV_WORK_QUEUE.GetNumThreads() + 1 : 1;
+    unsigned numThreadBuffers = threaded ? DV_WORK_QUEUE->GetNumThreads() + 1 : 1;
     buffers_.Resize(numThreadBuffers);
     for (unsigned i = 0; i < numThreadBuffers; ++i)
     {
@@ -199,19 +199,19 @@ void OcclusionBuffer::DrawTriangles()
     else if (buffers_.Size() > 1)
     {
         // Threaded
-        WorkQueue& queue = DV_WORK_QUEUE;
+        WorkQueue* queue = DV_WORK_QUEUE;
 
         for (Vector<OcclusionBatch>::Iterator i = batches_.Begin(); i != batches_.End(); ++i)
         {
-            SharedPtr<WorkItem> item = queue.GetFreeItem();
+            SharedPtr<WorkItem> item = queue->GetFreeItem();
             item->priority_ = WI_MAX_PRIORITY;
             item->workFunction_ = DrawOcclusionBatchWork;
             item->aux_ = this;
             item->start_ = &(*i);
-            queue.AddWorkItem(item);
+            queue->AddWorkItem(item);
         }
 
-        queue.Complete(WI_MAX_PRIORITY);
+        queue->Complete(WI_MAX_PRIORITY);
 
         MergeBuffers();
         depthHierarchyDirty_ = true;

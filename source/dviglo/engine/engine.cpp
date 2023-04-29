@@ -112,7 +112,7 @@ Engine::Engine() :
     // Создаём подсистемы, которые не зависят от инициализации движка и параметров движка.
     // Указатели на объекты хранятся в самих классах
     Time::get_instance();
-    WorkQueue::get_instance();
+    new WorkQueue();
     new FileSystem();
     new ResourceCache();
     new Localization();
@@ -155,6 +155,7 @@ Engine::~Engine()
     delete Localization::instance_;
     delete ResourceCache::instance_;
     delete FileSystem::instance_;
+    delete WorkQueue::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
 
@@ -215,7 +216,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     unsigned numThreads = GetParameter(parameters, EP_WORKER_THREADS, true).GetBool() ? GetNumPhysicalCPUs() - 1 : 0;
     if (numThreads)
     {
-        DV_WORK_QUEUE.CreateThreads(numThreads);
+        DV_WORK_QUEUE->CreateThreads(numThreads);
 
         DV_LOGINFOF("Created %u worker thread%s", numThreads, numThreads > 1 ? "s" : "");
     }

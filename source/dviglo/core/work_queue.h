@@ -55,8 +55,15 @@ class DV_API WorkQueue : public Object
 
     friend class WorkerThread;
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static WorkQueue* instance_ = nullptr;
+
 public:
-    static WorkQueue& get_instance();
+    static WorkQueue* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -144,6 +151,6 @@ private:
     int maxNonThreadedWorkMs_;
 };
 
-#define DV_WORK_QUEUE (dviglo::WorkQueue::get_instance())
+#define DV_WORK_QUEUE (dviglo::WorkQueue::instance())
 
 }

@@ -265,7 +265,7 @@ StringHash ParseTextureTypeXml(const String& filename);
 View::View()
 {
     // Create octree query and scene results vector for each thread
-    i32 numThreads = DV_WORK_QUEUE.GetNumThreads() + 1; // Worker threads + main thread
+    i32 numThreads = DV_WORK_QUEUE->GetNumThreads() + 1; // Worker threads + main thread
     tempDrawables_.Resize(numThreads);
     sceneResults_.Resize(numThreads);
 }
@@ -784,7 +784,7 @@ void View::GetDrawables()
 
     ZoneScoped;
 
-    WorkQueue& queue = DV_WORK_QUEUE;
+    WorkQueue* queue = DV_WORK_QUEUE;
     Vector<Drawable*>& tempDrawables = tempDrawables_[0];
 
     // Get zones and occluders first
@@ -880,14 +880,14 @@ void View::GetDrawables()
             result.maxZ_ = 0.0f;
         }
 
-        int numWorkItems = queue.GetNumThreads() + 1; // Worker threads + main thread
+        int numWorkItems = queue->GetNumThreads() + 1; // Worker threads + main thread
         int drawablesPerItem = tempDrawables.Size() / numWorkItems;
 
         Vector<Drawable*>::Iterator start = tempDrawables.Begin();
         // Create a work item for each thread
         for (int i = 0; i < numWorkItems; ++i)
         {
-            SharedPtr<WorkItem> item = queue.GetFreeItem();
+            SharedPtr<WorkItem> item = queue->GetFreeItem();
             item->priority_ = WI_MAX_PRIORITY;
             item->workFunction_ = CheckVisibilityWork;
             item->aux_ = this;
@@ -898,12 +898,12 @@ void View::GetDrawables()
 
             item->start_ = &(*start);
             item->end_ = &(*end);
-            queue.AddWorkItem(item);
+            queue->AddWorkItem(item);
 
             start = end;
         }
 
-        queue.Complete(WI_MAX_PRIORITY);
+        queue->Complete(WI_MAX_PRIORITY);
     }
 
     // Combine lights, geometries & scene Z range from the threads
@@ -963,12 +963,12 @@ void View::ProcessLights()
     // Process lit geometries and shadow casters for each light
     ZoneScoped;
 
-    WorkQueue& queue = DV_WORK_QUEUE;
+    WorkQueue* queue = DV_WORK_QUEUE;
     lightQueryResults_.Resize(lights_.Size());
 
     for (i32 i = 0; i < lightQueryResults_.Size(); ++i)
     {
-        SharedPtr<WorkItem> item = queue.GetFreeItem();
+        SharedPtr<WorkItem> item = queue->GetFreeItem();
         item->priority_ = WI_MAX_PRIORITY;
         item->workFunction_ = ProcessLightWork;
         item->aux_ = this;
@@ -977,11 +977,11 @@ void View::ProcessLights()
         query.light_ = lights_[i];
 
         item->start_ = &query;
-        queue.AddWorkItem(item);
+        queue->AddWorkItem(item);
     }
 
     // Ensure all lights have been processed before proceeding
-    queue.Complete(WI_MAX_PRIORITY);
+    queue->Complete(WI_MAX_PRIORITY);
 }
 
 void View::GetLightBatches()
@@ -1271,7 +1271,7 @@ void View::UpdateGeometries()
 
     DV_PROFILE(SortAndUpdateGeometry);
 
-    WorkQueue& queue = DV_WORK_QUEUE;
+    WorkQueue* queue = DV_WORK_QUEUE;
 
     // Sort batches
     {
@@ -1282,30 +1282,30 @@ void View::UpdateGeometries()
 
             if (command.type_ == CMD_SCENEPASS)
             {
-                SharedPtr<WorkItem> item = queue.GetFreeItem();
+                SharedPtr<WorkItem> item = queue->GetFreeItem();
                 item->priority_ = WI_MAX_PRIORITY;
                 item->workFunction_ =
                     command.sortMode_ == SORT_FRONTTOBACK ? SortBatchQueueFrontToBackWork : SortBatchQueueBackToFrontWork;
                 item->start_ = &batchQueues_[command.passIndex_];
-                queue.AddWorkItem(item);
+                queue->AddWorkItem(item);
             }
         }
 
         for (Vector<LightBatchQueue>::Iterator i = lightQueues_.Begin(); i != lightQueues_.End(); ++i)
         {
-            SharedPtr<WorkItem> lightItem = queue.GetFreeItem();
+            SharedPtr<WorkItem> lightItem = queue->GetFreeItem();
             lightItem->priority_ = WI_MAX_PRIORITY;
             lightItem->workFunction_ = SortLightQueueWork;
             lightItem->start_ = &(*i);
-            queue.AddWorkItem(lightItem);
+            queue->AddWorkItem(lightItem);
 
             if (i->shadowSplits_.Size())
             {
-                SharedPtr<WorkItem> shadowItem = queue.GetFreeItem();
+                SharedPtr<WorkItem> shadowItem = queue->GetFreeItem();
                 shadowItem->priority_ = WI_MAX_PRIORITY;
                 shadowItem->workFunction_ = SortShadowQueueWork;
                 shadowItem->start_ = &(*i);
-                queue.AddWorkItem(shadowItem);
+                queue->AddWorkItem(shadowItem);
             }
         }
     }
@@ -1326,7 +1326,7 @@ void View::UpdateGeometries()
                 }
             }
 
-            int numWorkItems = queue.GetNumThreads() + 1; // Worker threads + main thread
+            int numWorkItems = queue->GetNumThreads() + 1; // Worker threads + main thread
             int drawablesPerItem = threadedGeometries_.Size() / numWorkItems;
 
             Vector<Drawable*>::Iterator start = threadedGeometries_.Begin();
@@ -1336,13 +1336,13 @@ void View::UpdateGeometries()
                 if (i < numWorkItems - 1 && end - start > drawablesPerItem)
                     end = start + drawablesPerItem;
 
-                SharedPtr<WorkItem> item = queue.GetFreeItem();
+                SharedPtr<WorkItem> item = queue->GetFreeItem();
                 item->priority_ = WI_MAX_PRIORITY;
                 item->workFunction_ = UpdateDrawableGeometriesWork;
                 item->aux_ = const_cast<FrameInfo*>(&frame_);
                 item->start_ = &(*start);
                 item->end_ = &(*end);
-                queue.AddWorkItem(item);
+                queue->AddWorkItem(item);
 
                 start = end;
             }
@@ -1354,7 +1354,7 @@ void View::UpdateGeometries()
     }
 
     // Finally ensure all threaded work has completed
-    queue.Complete(WI_MAX_PRIORITY);
+    queue->Complete(WI_MAX_PRIORITY);
     geometriesUpdated_ = true;
 }
 

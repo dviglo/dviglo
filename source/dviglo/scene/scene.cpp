@@ -793,7 +793,7 @@ void Scene::Update(float timeStep)
 void Scene::BeginThreadedUpdate()
 {
     // Check the work queue subsystem whether it actually has created worker threads. If not, do not enter threaded mode.
-    if (DV_WORK_QUEUE.GetNumThreads())
+    if (DV_WORK_QUEUE->GetNumThreads())
         threadedUpdate_ = true;
 }
 
