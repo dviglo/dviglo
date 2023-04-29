@@ -147,7 +147,8 @@ void Chat::ShowChatText(const String& row)
     for (const String& row : chatHistory_)
         allRows += row + "\n";
 
-    chatHistoryText_->SetText(allRows);
+    if (chatHistoryText_) // TODO: При закрытии приложения этот компонент уже удалён, события Ui не должны обрабатываться
+        chatHistoryText_->SetText(allRows);
 }
 
 void Chat::UpdateButtons()
