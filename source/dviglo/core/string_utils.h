@@ -6,6 +6,7 @@
 
 #include "variant.h"
 
+
 namespace dviglo
 {
 
@@ -146,4 +147,4 @@ template <> inline Matrix4 FromString<Matrix4>(const char* source) { return ToMa
 /// Parse type from a string.
 template <class T> T FromString(const String& source) { return FromString<T>(source.c_str()); }
 
-}
+} // namespace dviglo
