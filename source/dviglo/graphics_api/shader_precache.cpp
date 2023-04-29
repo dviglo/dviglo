@@ -18,7 +18,7 @@ namespace dviglo
 ShaderPrecache::ShaderPrecache(const String& fileName) :
     fileName_(fileName)
 {
-    if (DV_FILE_SYSTEM.file_exists(fileName))
+    if (DV_FILE_SYSTEM->file_exists(fileName))
     {
         // If file exists, read the already listed combinations
         File source(fileName);

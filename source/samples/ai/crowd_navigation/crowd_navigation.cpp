@@ -426,12 +426,12 @@ void CrowdNavigation::move_camera(float timeStep)
     // Check for loading/saving the scene from/to the file data/scenes/crowd_navigation.xml relative to the executable directory
     if (input->GetKeyPress(KEY_F5))
     {
-        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/crowd_navigation.xml", FILE_WRITE);
+        File saveFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/crowd_navigation.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
     else if (input->GetKeyPress(KEY_F7))
     {
-        File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/crowd_navigation.xml", FILE_READ);
+        File loadFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/crowd_navigation.xml", FILE_READ);
         scene_->load_xml(loadFile);
     }
 

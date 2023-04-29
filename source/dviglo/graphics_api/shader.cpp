@@ -111,7 +111,7 @@ bool Shader::ProcessSource(String& code, Deserializer& source)
     if (file && !file->IsPackaged())
     {
         String fullName = cache->GetResourceFileName(file->GetName());
-        unsigned fileTimeStamp = DV_FILE_SYSTEM.GetLastModifiedTime(fullName);
+        unsigned fileTimeStamp = DV_FILE_SYSTEM->GetLastModifiedTime(fullName);
         if (fileTimeStamp > timeStamp_)
             timeStamp_ = fileTimeStamp;
     }

@@ -445,7 +445,7 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
     // Save scene
     if (DV_INPUT->GetKeyPress(KEY_F5))
     {
-        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/constraints.xml", FILE_WRITE);
+        File saveFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/constraints.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
 
@@ -454,7 +454,7 @@ void Urho2DConstraints::handle_update(StringHash eventType, VariantMap& eventDat
     /*
     if (DV_INPUT->GetKeyPress(KEY_F7))
     {
-        File load_file(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/constraints.xml", FILE_READ);
+        File load_file(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/constraints.xml", FILE_READ);
         scene_->load_xml(load_file);
     }
     */

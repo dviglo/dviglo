@@ -27,8 +27,15 @@ class DV_API FileSystem : public Object
 {
     DV_OBJECT(FileSystem);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static FileSystem* instance_ = nullptr;
+
 public:
-    static FileSystem& get_instance();
+    static FileSystem* instance() { return instance_; }
 
 private:
     /// Construct.
@@ -104,7 +111,7 @@ private:
     bool executeConsoleCommands_{};
 };
 
-#define DV_FILE_SYSTEM (dviglo::FileSystem::get_instance())
+#define DV_FILE_SYSTEM (dviglo::FileSystem::instance())
 
 /// Split a full path to path, filename and extension. The extension will be converted to lowercase by default.
 DV_API void split_path(const String& fullPath, String& pathName, String& fileName, String& extension, bool lowercaseExtension = true);

@@ -92,7 +92,7 @@ FileSelector::FileSelector() :
     Vector<String> defaultFilters;
     defaultFilters.Push("*.*");
     SetFilters(defaultFilters, 0);
-    SetPath(DV_FILE_SYSTEM.GetCurrentDir());
+    SetPath(DV_FILE_SYSTEM->GetCurrentDir());
 
     // Focus the fileselector's filelist initially when created, and bring to front
     DV_UI->GetRoot()->AddChild(window_);
@@ -273,8 +273,8 @@ void FileSelector::RefreshFiles()
 
     Vector<String> directories;
     Vector<String> files;
-    DV_FILE_SYSTEM.scan_dir(directories, path_, "*", SCAN_DIRS, false);
-    DV_FILE_SYSTEM.scan_dir(files, path_, GetFilter(), SCAN_FILES, false);
+    DV_FILE_SYSTEM->scan_dir(directories, path_, "*", SCAN_DIRS, false);
+    DV_FILE_SYSTEM->scan_dir(files, path_, GetFilter(), SCAN_FILES, false);
 
     fileEntries_.Reserve(directories.Size() + files.Size());
 

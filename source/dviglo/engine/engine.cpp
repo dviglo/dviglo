@@ -113,7 +113,7 @@ Engine::Engine() :
     // Указатели на объекты хранятся в самих классах
     Time::get_instance();
     WorkQueue::get_instance();
-    FileSystem::get_instance();
+    new FileSystem();
     new ResourceCache();
     new Localization();
 #ifdef DV_NETWORK
@@ -154,6 +154,7 @@ Engine::~Engine()
     delete Network::instance_;
     delete Localization::instance_;
     delete ResourceCache::instance_;
+    delete FileSystem::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
 
@@ -306,7 +307,7 @@ bool Engine::Initialize(const VariantMap& parameters)
 bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOld /*= true*/)
 {
     ResourceCache* cache = DV_RES_CACHE;
-    FileSystem& fileSystem = DV_FILE_SYSTEM;
+    FileSystem* fileSystem = DV_FILE_SYSTEM;
 
     // Remove all resource paths and packages
     if (removeOld)
@@ -323,7 +324,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
     Vector<String> resourcePrefixPaths = GetParameter(parameters, EP_RESOURCE_PREFIX_PATHS, String::EMPTY).GetString().Split(';', true);
     for (unsigned i = 0; i < resourcePrefixPaths.Size(); ++i)
         resourcePrefixPaths[i] = add_trailing_slash(
-            IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem.GetProgramDir() + resourcePrefixPaths[i]);
+            IsAbsolutePath(resourcePrefixPaths[i]) ? resourcePrefixPaths[i] : fileSystem->GetProgramDir() + resourcePrefixPaths[i]);
     Vector<String> resourcePaths = GetParameter(parameters, EP_RESOURCE_PATHS, "data;core_data").GetString().Split(';');
     Vector<String> resourcePackages = GetParameter(parameters, EP_RESOURCE_PACKAGES).GetString().Split(';');
     Vector<String> autoLoadPaths = GetParameter(parameters, EP_AUTOLOAD_PATHS, "autoload").GetString().Split(';');
@@ -337,7 +338,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
             for (; j < resourcePrefixPaths.Size(); ++j)
             {
                 String packageName = resourcePrefixPaths[j] + resourcePaths[i] + ".pak";
-                if (fileSystem.file_exists(packageName))
+                if (fileSystem->file_exists(packageName))
                 {
                     if (cache->add_package_file(packageName))
                         break;
@@ -377,7 +378,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
         for (; j < resourcePrefixPaths.Size(); ++j)
         {
             String packageName = resourcePrefixPaths[j] + resourcePackages[i];
-            if (fileSystem.file_exists(packageName))
+            if (fileSystem->file_exists(packageName))
             {
                 if (cache->add_package_file(packageName))
                     break;
@@ -411,7 +412,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
 
                 // Add all the subdirs (non-recursive) as resource directory
                 Vector<String> subdirs;
-                fileSystem.scan_dir(subdirs, autoLoadPath, "*", SCAN_DIRS, false);
+                fileSystem->scan_dir(subdirs, autoLoadPath, "*", SCAN_DIRS, false);
                 for (unsigned y = 0; y < subdirs.Size(); ++y)
                 {
                     String dir = subdirs[y];
@@ -425,7 +426,7 @@ bool Engine::InitializeResourceCache(const VariantMap& parameters, bool removeOl
 
                 // Add all the found package files (non-recursive)
                 Vector<String> paks;
-                fileSystem.scan_dir(paks, autoLoadPath, "*.pak", SCAN_FILES, false);
+                fileSystem->scan_dir(paks, autoLoadPath, "*.pak", SCAN_FILES, false);
                 for (unsigned y = 0; y < paks.Size(); ++y)
                 {
                     String pak = paks[y];

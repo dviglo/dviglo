@@ -100,7 +100,7 @@ bool FileWatcher::start_watching(const String& pathName, bool watchSubDirs)
         if (watchSubDirs_)
         {
             Vector<String> subDirs;
-            DV_FILE_SYSTEM.scan_dir(subDirs, pathName, "*", SCAN_DIRS, true);
+            DV_FILE_SYSTEM->scan_dir(subDirs, pathName, "*", SCAN_DIRS, true);
 
             for (unsigned i = 0; i < subDirs.Size(); ++i)
             {
@@ -148,7 +148,7 @@ void FileWatcher::stop_watching()
         String dummyFileName = path_ + "dummy.tmp";
         File file(dummyFileName, FILE_WRITE);
         file.Close();
-        DV_FILE_SYSTEM.Delete(dummyFileName);
+        DV_FILE_SYSTEM->Delete(dummyFileName);
 #endif
 
 #ifdef _WIN32

@@ -530,7 +530,7 @@ public:
             Image screenshot;
             DV_GRAPHICS->TakeScreenShot(screenshot);
             // Here we save in the Data folder with date and time appended
-            screenshot.SavePNG(DV_FILE_SYSTEM.GetProgramDir() + "Data/Screenshot_" +
+            screenshot.SavePNG(DV_FILE_SYSTEM->GetProgramDir() + "Data/Screenshot_" +
                 time_to_str().Replaced(':', '_').Replaced('-', '_').Replaced(' ', '_') + ".png");
         }
         // Allow pause only in singleplayer

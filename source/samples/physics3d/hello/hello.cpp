@@ -231,12 +231,12 @@ void Physics::move_camera(float timeStep)
     // directory
     if (input->GetKeyPress(KEY_F5))
     {
-        File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/phys3d_hello.xml", FILE_WRITE);
+        File saveFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/phys3d_hello.xml", FILE_WRITE);
         scene_->save_xml(saveFile);
     }
     if (input->GetKeyPress(KEY_F7))
     {
-        File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/phys3d_hello.xml", FILE_READ);
+        File loadFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/phys3d_hello.xml", FILE_READ);
         scene_->load_xml(loadFile);
     }
 

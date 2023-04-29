@@ -484,7 +484,7 @@ void Sample2D::SaveScene(bool initial)
     String filename = demoFilename_;
     if (!initial)
         filename += "_in_game";
-    File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/" + filename + ".xml", FILE_WRITE);
+    File saveFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/" + filename + ".xml", FILE_WRITE);
     scene_->save_xml(saveFile);
 }
 

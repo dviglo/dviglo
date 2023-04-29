@@ -205,13 +205,13 @@ void VehicleDemo::handle_update(StringHash eventType, VariantMap& eventData)
             // Check for loading / saving the scene
             if (input->GetKeyPress(KEY_F5))
             {
-                File saveFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/vehicle_demo.xml",
+                File saveFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/vehicle_demo.xml",
                     FILE_WRITE);
                 scene_->save_xml(saveFile);
             }
             if (input->GetKeyPress(KEY_F7))
             {
-                File loadFile(DV_FILE_SYSTEM.GetProgramDir() + "data/scenes/vehicle_demo.xml", FILE_READ);
+                File loadFile(DV_FILE_SYSTEM->GetProgramDir() + "data/scenes/vehicle_demo.xml", FILE_READ);
                 scene_->load_xml(loadFile);
                 // After loading we have to reacquire the weak pointer to the Vehicle component, as it has been recreated
                 // Simply find the vehicle's scene node by name as there's only one of them

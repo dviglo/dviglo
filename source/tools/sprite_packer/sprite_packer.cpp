@@ -155,7 +155,7 @@ void Run(Vector<String>& arguments)
     for (const String& inputFile : inputFiles)
     {
         DV_LOGINFO("Checking " + inputFile + " to see if file exists.");
-        if (!DV_FILE_SYSTEM.file_exists(inputFile))
+        if (!DV_FILE_SYSTEM->file_exists(inputFile))
             ErrorExit("File " + inputFile + " does not exist.");
     }
 

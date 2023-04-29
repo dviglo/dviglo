@@ -238,21 +238,6 @@ private:
     const Vector<String>& arguments_;
 };
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool file_system_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-FileSystem& FileSystem::get_instance()
-{
-    assert(!file_system_destructed);
-    static FileSystem instance;
-    return instance;
-}
-
 FileSystem::FileSystem()
 {
     subscribe_to_event(E_BEGINFRAME, DV_HANDLER(FileSystem, HandleBeginFrame));
@@ -260,7 +245,9 @@ FileSystem::FileSystem()
     // Subscribe to console commands
     SetExecuteConsoleCommands(true);
 
-    DV_LOGDEBUG("Singleton FileSystem constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("FileSystem constructed");
 }
 
 FileSystem::~FileSystem()
@@ -274,11 +261,9 @@ FileSystem::~FileSystem()
         asyncExecQueue_.Clear();
     }
 
-    DV_LOGDEBUG("Singleton FileSystem destructed");
+    instance_ = nullptr;
 
-#ifndef NDEBUG
-    file_system_destructed = true;
-#endif
+    DV_LOGDEBUG("FileSystem destructed");
 }
 
 bool FileSystem::SetCurrentDir(const String& pathName)
