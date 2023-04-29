@@ -103,8 +103,9 @@ Console::~Console()
 {
     background_->Remove();
     closeButton_->Remove();
+    unsubscribe_from_event(E_LOGMESSAGE); 
     instance_ = nullptr;
-    // DV_LOGDEBUG("Console destructed"); // TODO: Крэшит в при завершении net_chat
+    DV_LOGDEBUG("Console destructed");
 }
 
 void Console::SetDefaultStyle(XmlFile* style)
