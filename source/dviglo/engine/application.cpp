@@ -20,6 +20,8 @@ Application::Application() :
 {
     engineParameters_ = Engine::parse_parameters(GetArguments());
 
+    new SdlHelper(); // Указатель на объект хранится в самом классе
+
     // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
     new Engine(); // Указатель на объект хранится в самом классе
 
@@ -30,6 +32,7 @@ Application::Application() :
 Application::~Application()
 {
     delete Engine::instance_;
+    delete SdlHelper::instance_;
 }
 
 int Application::Run()
@@ -56,8 +59,6 @@ int Application::Run()
             DV_ENGINE->run_frame();
 
         Stop();
-
-        SdlHelper::manual_destruct();
 
         return exitCode_;
 #if !defined(__GNUC__) || __EXCEPTIONS

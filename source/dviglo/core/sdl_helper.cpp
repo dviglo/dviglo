@@ -12,52 +12,22 @@
 namespace dviglo
 {
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool sdl_helper_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-SdlHelper& SdlHelper::get_instance()
-{
-    assert(!sdl_helper_destructed);
-    static SdlHelper instance;
-    return instance;
-}
-
 SdlHelper::SdlHelper()
 {
     // Гарантируем, что синглтон будет создан после лога
     Log::get_instance();
 
-    DV_LOGDEBUG("Singleton SdlHelper constructed");
-}
+    instance_ = this;
 
-void SdlHelper::manual_destruct()
-{
-    DV_LOGDEBUG("Quitting SDL");
-    SDL_Quit();
-    DV_LOGDEBUG("Singleton SdlHelper destructed");
-
-#ifndef NDEBUG
-    sdl_helper_destructed = true;
-#endif
+    DV_LOGDEBUG("SdlHelper constructed");
 }
 
 SdlHelper::~SdlHelper()
 {
-    // Вызов SDL_Quit() тут вызывает крэш в dll версии движка в Windows
-    /*
     DV_LOGDEBUG("Quitting SDL");
     SDL_Quit();
-    DV_LOGDEBUG("Singleton SdlHelper destructed");
-
-#ifndef NDEBUG
-    sdl_helper_destructed = true;
-#endif
-    */
+    instance_ = nullptr;
+    DV_LOGDEBUG("SdlHelper destructed");
 }
 
 bool SdlHelper::require(u32 sdl_subsystem)

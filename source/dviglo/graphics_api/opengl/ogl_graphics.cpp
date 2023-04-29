@@ -201,7 +201,7 @@ void Graphics::Constructor_OGL()
     SetTextureUnitMappings_OGL();
     ResetCachedState_OGL();
 
-    DV_SDL_HELPER.require(SDL_INIT_VIDEO);
+    DV_SDL_HELPER->require(SDL_INIT_VIDEO);
 
     // Register Graphics library object factories
     register_graphics_library();

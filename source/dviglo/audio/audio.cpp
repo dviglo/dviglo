@@ -34,7 +34,7 @@ static void SDLAudioCallback(void* userdata, Uint8* stream, i32 len);
 
 Audio::Audio()
 {
-    DV_SDL_HELPER.require(SDL_INIT_AUDIO);
+    DV_SDL_HELPER->require(SDL_INIT_AUDIO);
 
     // Set the master to the default value
     masterGain_[SOUND_MASTER_HASH] = 1.0f;

@@ -122,7 +122,7 @@ Input::Input() :
     mouseMoveScaled_(false),
     initialized_(false)
 {
-    DV_SDL_HELPER.require(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
+    DV_SDL_HELPER->require(SDL_INIT_JOYSTICK | SDL_INIT_GAMEPAD);
 
     for (int i = 0; i < TOUCHID_MAX; i++)
         availableTouchIDs_.Push(i);
