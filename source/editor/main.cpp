@@ -17,6 +17,13 @@ public:
     {
     }
 
+    ~App()
+    {
+        delete MaterialEditor::instance_;
+        delete MainScene::instance_;
+        delete MainMenu::instance_;
+    }
+
     void Setup() override
     {
         engineParameters_[EP_FULL_SCREEN] = false;
@@ -35,12 +42,12 @@ public:
         DV_UI->SetCursor(cursor);
         DV_INPUT->SetMouseVisible(true);
 
-        // Создаём синглтоны
-        MainMenu::get_instance();
-        MainScene::get_instance();
-        MaterialEditor::get_instance();
+        // Указатели на объекты хранятся в самих классах
+        new MainMenu();
+        new MainScene();
+        new MaterialEditor();
 
-        SharedPtr<Viewport> viewport(new Viewport(MAIN_SCENE.scene(), MAIN_SCENE.camera()));
+        SharedPtr<Viewport> viewport(new Viewport(MAIN_SCENE->scene(), MAIN_SCENE->camera()));
         DV_RENDERER->SetViewport(0, viewport);
     }
 };

@@ -12,9 +12,15 @@ class MainScene : public Object
 {
     DV_OBJECT(MainScene);
 
+    /// Только App может создать и уничтожить объект
+    friend class App;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static MainScene* instance_ = nullptr;
+
 public:
-    static MainScene& get_instance();
-    static bool is_destructed();
+    static MainScene* instance() { return instance_; }
 
 private:
     SharedPtr<Scene> scene_;
@@ -28,4 +34,4 @@ public:
     Camera* camera() const { return camera_; }
 };
 
-#define MAIN_SCENE (MainScene::get_instance())
+#define MAIN_SCENE (MainScene::instance())

@@ -8,21 +8,6 @@ const String str_load_scene("load scene");
 const String str_save_scene("save scene");
 const String str_save_scene_as("save scene as");
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool main_menu_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-MainMenu& MainMenu::get_instance()
-{
-    assert(!main_menu_destructed);
-    static MainMenu instance;
-    return instance;
-}
-
 Menu* MainMenu::create_menu_item(const String& name, const String& text)
 {
     Menu* menu_item = new Menu();
@@ -78,16 +63,15 @@ MainMenu::MainMenu()
 
     subscribe_to_event(E_MENUSELECTED, DV_HANDLER(MainMenu, handle_menu_selected));
 
-    DV_LOGDEBUG("Singleton MainMenu constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("MainMenu constructed");
 }
 
 MainMenu::~MainMenu()
 {
-    DV_LOGDEBUG("Singleton MainMenu destructed");
-
-#ifndef NDEBUG
-    main_menu_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("MainMenu destructed");
 }
 
 void MainMenu::handle_menu_selected(StringHash event_type, VariantMap& event_data)

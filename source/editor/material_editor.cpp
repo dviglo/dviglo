@@ -12,21 +12,6 @@ const String str_save_material("save material");
 const String str_save_material_as("save material as");
 const String str_material_file_path("material file path");
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool material_editor_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-MaterialEditor& MaterialEditor::get_instance()
-{
-    assert(!material_editor_destructed);
-    static MaterialEditor instance;
-    return instance;
-}
-
 MaterialEditor::MaterialEditor()
 {
     // Создаём окно
@@ -101,16 +86,15 @@ MaterialEditor::MaterialEditor()
     Button* save_as_button = create_button(material_file_io, str_save_material_as, "Сохр. как…");
     scrollable->AddItem(material_file_io);
 
-    DV_LOGDEBUG("Singleton MaterialEditor constructed");
+    instance_ = this;
+
+    DV_LOGDEBUG("MaterialEditor constructed");
 }
 
 MaterialEditor::~MaterialEditor()
 {
-    DV_LOGDEBUG("Singleton MaterialEditor destructed");
-
-#ifndef NDEBUG
-    material_editor_destructed = true;
-#endif
+    instance_ = nullptr;
+    DV_LOGDEBUG("MaterialEditor destructed");
 }
 
 Button* MaterialEditor::create_button(UiElement* parent, const String& name, const String& text)
@@ -244,4 +228,4 @@ void MaterialEditor::handle_button_pressed(StringHash event_type, VariantMap& ev
     }
 }
 
-#define MATERIAL_EDITOR (MaterialEditor::get_instance())
+#define MATERIAL_EDITOR (MaterialEditor::instance())

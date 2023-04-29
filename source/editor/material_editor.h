@@ -7,13 +7,21 @@
 
 using namespace dviglo;
 
+
 // Класс создаёт окно редактора материалов и обрабатывает его события
 class MaterialEditor : public Object
 {
     DV_OBJECT(MaterialEditor);
 
+    /// Только App может создать и уничтожить объект
+    friend class App;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static MaterialEditor* instance_ = nullptr;
+
 public:
-    static MaterialEditor& get_instance();
+    static MaterialEditor* instance() { return instance_; }
 
 private:
     Window* window_ = nullptr;

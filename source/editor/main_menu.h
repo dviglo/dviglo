@@ -12,8 +12,15 @@ class MainMenu : public Object
 {
     DV_OBJECT(MainMenu);
 
+    /// Только App может создать и уничтожить объект
+    friend class App;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static MainMenu* instance_ = nullptr;
+
 public:
-    static MainMenu& get_instance();
+    static MainMenu* instance() { return instance_; }
 
 private:
     BorderImage* menu_bar_;
@@ -28,4 +35,4 @@ private:
     void handle_menu_selected(StringHash event_type, VariantMap& event_data);
 };
 
-#define MAIN_MENU (MainMenu::get_instance())
+#define MAIN_MENU (MainMenu::instance())
