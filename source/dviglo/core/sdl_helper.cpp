@@ -14,9 +14,6 @@ namespace dviglo
 
 SdlHelper::SdlHelper()
 {
-    // Гарантируем, что синглтон будет создан после лога
-    Log::get_instance();
-
     instance_ = this;
 
     DV_LOGDEBUG("SdlHelper constructed");

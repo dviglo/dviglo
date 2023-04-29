@@ -18,6 +18,7 @@
 
 using namespace std;
 
+
 namespace dviglo
 {
 
@@ -33,21 +34,6 @@ const char* logLevelPrefixes[] =
 
 static bool threadErrorDisplayed = false;
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool log_destructed = false;
-#endif
-
-// Определение должно быть в cpp-файле, иначе будут проблемы в shared-версии движка в MinGW.
-// Когда функция в h-файле, в exe и в dll создаются свои экземпляры объекта с разными адресами.
-// https://stackoverflow.com/questions/71830151/why-singleton-in-headers-not-work-for-windows-mingw
-Log& Log::get_instance()
-{
-    assert(!log_destructed);
-    static Log instance;
-    return instance;
-}
-
 Log::Log() :
 #ifdef _DEBUG
     level_(LOG_DEBUG),
@@ -59,6 +45,7 @@ Log::Log() :
     quiet_(false)
 {
     subscribe_to_event(E_ENDFRAME, DV_HANDLER(Log, HandleEndFrame));
+    instance_ = this;
 }
 
 Log::~Log()
@@ -69,9 +56,7 @@ Log::~Log()
         Close();
     }
 
-#ifndef NDEBUG
-    log_destructed = true;
-#endif
+    instance_ = nullptr;
 }
 
 void Log::Open(const String& filename)
@@ -133,12 +118,10 @@ void Log::SetQuiet(bool quiet)
 
 void Log::WriteFormat(int level, const char* format, ...)
 {
-    Log& instance = get_instance();
-
     if (level != LOG_RAW)
     {
         // No-op if illegal level
-        if (level < LOG_TRACE || level >= LOG_NONE || instance.level_ > level)
+        if (level < LOG_TRACE || level >= LOG_NONE || instance_->level_ > level)
             return;
     }
 
@@ -165,29 +148,27 @@ void Log::Write(int level, const String& message)
     if (level < LOG_TRACE || level >= LOG_NONE)
         return;
 
-    Log& instance = get_instance();
-
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())
     {
-        scoped_lock lock(instance.log_mutex_);
-        instance.threadMessages_.Push(StoredLogMessage(message, level, false));
+        scoped_lock lock(instance_->log_mutex_);
+        instance_->threadMessages_.Push(StoredLogMessage(message, level, false));
 
         return;
     }
 
     // Do not log if message level excluded or if currently sending a log event
-    if (instance.level_ > level || instance.inWrite_)
+    if (instance_->level_ > level || instance_->inWrite_)
         return;
 
     String formattedMessage = logLevelPrefixes[level];
     formattedMessage += ": " + message;
-    instance.lastMessage_ = message;
+    instance_->lastMessage_ = message;
 
-    if (instance.timeStamp_)
+    if (instance_->timeStamp_)
         formattedMessage = "[" + time_to_str() + "] " + formattedMessage;
 
-    if (instance.quiet_)
+    if (instance_->quiet_)
     {
         // If in quiet mode, still print the error message to the standard error stream
         if (level == LOG_ERROR)
@@ -196,57 +177,55 @@ void Log::Write(int level, const String& message)
     else
         PrintUnicodeLine(formattedMessage, level == LOG_ERROR);
 
-    if (instance.log_file_)
+    if (instance_->log_file_)
     {
         // Пишем в файл сообщения, которые были добавлены в лог до открытия файла
-        if (!instance.early_messages_.Empty())
+        if (!instance_->early_messages_.Empty())
         {
-            file_write(instance.early_messages_.c_str(), sizeof(char), instance.early_messages_.Length(), instance.log_file_);
-            instance.early_messages_.Clear();
+            file_write(instance_->early_messages_.c_str(), sizeof(char), instance_->early_messages_.Length(), instance_->log_file_);
+            instance_->early_messages_.Clear();
         }
 
-        file_write(formattedMessage.c_str(), sizeof(char), formattedMessage.Length(), instance.log_file_);
-        file_write("\n", sizeof(char), 1, instance.log_file_);
-        file_flush(instance.log_file_);
+        file_write(formattedMessage.c_str(), sizeof(char), formattedMessage.Length(), instance_->log_file_);
+        file_write("\n", sizeof(char), 1, instance_->log_file_);
+        file_flush(instance_->log_file_);
     }
     else
     {
         // Запоминаем сообщение, чтобы вывести его в файл, когда файл будет открыт
-        instance.early_messages_ += formattedMessage + "\n";
+        instance_->early_messages_ += formattedMessage + "\n";
     }
 
-    instance.inWrite_ = true;
+    instance_->inWrite_ = true;
 
     using namespace LogMessage;
 
-    VariantMap& eventData = instance.GetEventDataMap();
+    VariantMap& eventData = instance_->GetEventDataMap();
     eventData[P_MESSAGE] = formattedMessage;
     eventData[P_LEVEL] = level;
-    instance.SendEvent(E_LOGMESSAGE, eventData);
+    instance_->SendEvent(E_LOGMESSAGE, eventData);
 
-    instance.inWrite_ = false;
+    instance_->inWrite_ = false;
 }
 
 void Log::WriteRaw(const String& message, bool error)
 {
-    Log& instance = get_instance();
-
     // If not in the main thread, store message for later processing
     if (!Thread::IsMainThread())
     {
-        scoped_lock lock(instance.log_mutex_);
-        instance.threadMessages_.Push(StoredLogMessage(message, LOG_RAW, error));
+        scoped_lock lock(instance_->log_mutex_);
+        instance_->threadMessages_.Push(StoredLogMessage(message, LOG_RAW, error));
 
         return;
     }
 
     // Prevent recursion during log event
-    if (instance.inWrite_)
+    if (instance_->inWrite_)
         return;
 
-    instance.lastMessage_ = message;
+    instance_->lastMessage_ = message;
 
-    if (instance.quiet_)
+    if (instance_->quiet_)
     {
         // If in quiet mode, still print the error message to the standard error stream
         if (error)
@@ -255,34 +234,34 @@ void Log::WriteRaw(const String& message, bool error)
     else
         PrintUnicode(message, error);
 
-    if (instance.log_file_)
+    if (instance_->log_file_)
     {
         // Пишем в файл сообщения, которые были добавлены в лог до открытия файла
-        if (!instance.early_messages_.Empty())
+        if (!instance_->early_messages_.Empty())
         {
-            file_write(instance.early_messages_.c_str(), sizeof(char), instance.early_messages_.Length(), instance.log_file_);
-            instance.early_messages_.Clear();
+            file_write(instance_->early_messages_.c_str(), sizeof(char), instance_->early_messages_.Length(), instance_->log_file_);
+            instance_->early_messages_.Clear();
         }
 
-        file_write(message.c_str(), sizeof(char), message.Length(), instance.log_file_);
-        file_flush(instance.log_file_);
+        file_write(message.c_str(), sizeof(char), message.Length(), instance_->log_file_);
+        file_flush(instance_->log_file_);
     }
     else
     {
         // Запоминаем сообщение, чтобы вывести его в файл, когда файл будет открыт
-        instance.early_messages_ += message + "\n";
+        instance_->early_messages_ += message + "\n";
     }
 
-    instance.inWrite_ = true;
+    instance_->inWrite_ = true;
 
     using namespace LogMessage;
 
-    VariantMap& eventData = instance.GetEventDataMap();
+    VariantMap& eventData = instance_->GetEventDataMap();
     eventData[P_MESSAGE] = message;
     eventData[P_LEVEL] = error ? LOG_ERROR : LOG_INFO;
-    instance.SendEvent(E_LOGMESSAGE, eventData);
+    instance_->SendEvent(E_LOGMESSAGE, eventData);
 
-    instance.inWrite_ = false;
+    instance_->inWrite_ = false;
 }
 
 void Log::HandleEndFrame(StringHash eventType, VariantMap& eventData)
@@ -314,4 +293,4 @@ void Log::HandleEndFrame(StringHash eventType, VariantMap& eventData)
     }
 }
 
-}
+} // namespace dviglo

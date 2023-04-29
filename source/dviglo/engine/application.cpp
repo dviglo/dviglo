@@ -20,10 +20,10 @@ Application::Application() :
 {
     engineParameters_ = Engine::parse_parameters(GetArguments());
 
-    new SdlHelper(); // Указатель на объект хранится в самом классе
-
-    // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
-    new Engine(); // Указатель на объект хранится в самом классе
+    // Указатели на объекты хранятся в самих классах
+    new Log();
+    new SdlHelper();
+    new Engine(); // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
 
     // Subscribe to log messages so that can show errors if ErrorExit() is called with empty message
     subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));
@@ -33,6 +33,7 @@ Application::~Application()
 {
     delete Engine::instance_;
     delete SdlHelper::instance_;
+    delete Log::instance_;
 }
 
 int Application::Run()

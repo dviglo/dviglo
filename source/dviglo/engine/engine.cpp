@@ -185,9 +185,9 @@ bool Engine::Initialize(const VariantMap& parameters)
 
     // Начинаем запись лога в файл
     if (HasParameter(parameters, EP_LOG_LEVEL))
-        Log::get_instance().SetLevel(GetParameter(parameters, EP_LOG_LEVEL).GetI32());
-    Log::get_instance().SetQuiet(GetParameter(parameters, EP_LOG_QUIET, false).GetBool());
-    Log::get_instance().Open(GetParameter(parameters, EP_LOG_NAME, "dviglo.log").GetString());
+        Log::instance()->SetLevel(GetParameter(parameters, EP_LOG_LEVEL).GetI32());
+    Log::instance()->SetQuiet(GetParameter(parameters, EP_LOG_QUIET, false).GetBool());
+    Log::instance()->Open(GetParameter(parameters, EP_LOG_NAME, "dviglo.log").GetString());
 
     // Set maximally accurate low res timer
     DV_TIME->SetTimerPeriod(1);

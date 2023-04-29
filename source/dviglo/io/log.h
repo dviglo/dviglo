@@ -10,6 +10,7 @@
 
 #include <mutex>
 
+
 namespace dviglo
 {
 
@@ -57,8 +58,15 @@ class DV_API Log : public Object
 {
     DV_OBJECT(Log);
 
+    /// Только Application может создать и уничтожить объект
+    friend class Application;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Log* instance_ = nullptr;
+
 public:
-    static Log& get_instance();
+    static Log* instance() { return instance_; }
 
     // Запрещаем копирование
     Log(const Log&) = delete;
@@ -164,4 +172,4 @@ private:
 
 #endif
 
-}
+} // namespace dviglo
