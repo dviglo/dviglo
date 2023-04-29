@@ -1,5 +1,5 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
 #include "../core/context.h"
@@ -10,6 +10,7 @@
 #include "../io/memory_buffer.h"
 #include "font.h"
 #include "font_face_freetype.h"
+#include "free_type_lib_helper.h"
 #include "ui.h"
 
 #include <cassert>
@@ -30,55 +31,6 @@ inline float FixedToFloat(FT_Pos value)
     return value / 64.0f;
 }
 
-#ifndef NDEBUG
-// Проверяем, что не происходит обращения к синглтону после вызова деструктора
-static bool free_type_lib_destructed = false;
-#endif
-
-/// FreeType library subsystem.
-class FreeTypeLibrary : public Object
-{
-    DV_OBJECT(FreeTypeLibrary);
-
-public:
-    static FreeTypeLibrary& get_instance()
-    {
-        assert(!free_type_lib_destructed);
-        static FreeTypeLibrary instance;
-        return instance;
-    }
-
-private:
-    /// Construct.
-    explicit FreeTypeLibrary()
-    {
-        FT_Error error = FT_Init_FreeType(&library_);
-        if (error)
-            DV_LOGERROR("Could not initialize FreeType library");
-
-        DV_LOGDEBUG("Singleton FreeTypeLibrary constructed");
-    }
-
-    /// Destruct.
-    ~FreeTypeLibrary() override
-    {
-        FT_Done_FreeType(library_);
-
-        DV_LOGDEBUG("Singleton FreeTypeLibrary destructed");
-
-#ifndef NDEBUG
-        free_type_lib_destructed = true;
-#endif
-    }
-
-public:
-    FT_Library GetLibrary() const { return library_; }
-
-private:
-    /// FreeType library.
-    FT_Library library_{};
-};
-
 FontFaceFreeType::FontFaceFreeType(Font* font) :
     FontFace(font),
     loadMode_(FT_LOAD_DEFAULT)
@@ -96,9 +48,6 @@ FontFaceFreeType::~FontFaceFreeType()
 
 bool FontFaceFreeType::Load(const byte* fontData, unsigned fontDataSize, float pointSize)
 {
-    // Create & initialize FreeType library if it does not exist yet
-    FreeTypeLibrary& freeType = FreeTypeLibrary::get_instance();
-
     UI* ui = DV_UI;
     const int maxTextureSize = ui->max_font_texture_size();
     const FontHintLevel hintLevel = ui->GetFontHintLevel();
@@ -119,7 +68,7 @@ bool FontFaceFreeType::Load(const byte* fontData, unsigned fontDataSize, float p
         return false;
     }
 
-    FT_Library library = freeType.GetLibrary();
+    FT_Library library = FreeTypeLibHelper::instance()->library();
     FT_Face face;
     FT_Error error = FT_New_Memory_Face(library, (FT_Byte*)fontData, fontDataSize, 0, &face);
     if (error)

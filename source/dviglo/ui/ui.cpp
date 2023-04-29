@@ -30,6 +30,7 @@
 #include "dropdown_list.h"
 #include "file_selector.h"
 #include "font.h"
+#include "free_type_lib_helper.h"
 #include "line_edit.h"
 #include "list_view.h"
 #include "message_box.h"
@@ -133,6 +134,7 @@ UI::~UI()
 {
     delete Console::instance_;
     delete DebugHud::instance_;
+    delete FreeTypeLibHelper::instance_;
 
     instance_ = nullptr;
 
@@ -940,6 +942,7 @@ void UI::Initialize()
     subscribe_to_event(E_RENDERUPDATE, DV_HANDLER(UI, HandleRenderUpdate));
 
     // Указатели на объекты хранятся в самих классах
+    new FreeTypeLibHelper();
     new DebugHud();
     new Console();
 
