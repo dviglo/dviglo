@@ -572,7 +572,7 @@ void Octree::HandleRenderUpdate(StringHash eventType, VariantMap& eventData)
     using namespace RenderUpdate;
 
     FrameInfo frame;
-    frame.frameNumber_ = DV_TIME.GetFrameNumber();
+    frame.frameNumber_ = DV_TIME->GetFrameNumber();
     frame.timeStep_ = eventData[P_TIMESTEP].GetFloat();
     frame.camera_ = nullptr;
 

@@ -111,7 +111,7 @@ Engine::Engine() :
 {
     // Создаём подсистемы, которые не зависят от инициализации движка и параметров движка.
     // Указатели на объекты хранятся в самих классах
-    Time::get_instance();
+    new Time();
     new WorkQueue();
     new FileSystem();
     new ResourceCache();
@@ -156,6 +156,7 @@ Engine::~Engine()
     delete ResourceCache::instance_;
     delete FileSystem::instance_;
     delete WorkQueue::instance_;
+    delete Time::instance_;
 
     DV_LOGDEBUG("Singleton Engine destructed");
 
@@ -204,7 +205,7 @@ bool Engine::Initialize(const VariantMap& parameters)
     Log::get_instance().Open(GetParameter(parameters, EP_LOG_NAME, "dviglo.log").GetString());
 
     // Set maximally accurate low res timer
-    DV_TIME.SetTimerPeriod(1);
+    DV_TIME->SetTimerPeriod(1);
 
     // Configure max FPS
     if (GetParameter(parameters, EP_FRAME_LIMITER, true) == false)
@@ -468,9 +469,9 @@ void Engine::run_frame()
 
     // Note: there is a minimal performance cost to looking up subsystems (uses a hashmap); if they would be looked up several
     // times per frame it would be better to cache the pointers
-    Time& time = DV_TIME;
+    Time* time = DV_TIME;
 
-    time.BeginFrame(timeStep_);
+    time->BeginFrame(timeStep_);
 
     // If pause when minimized -mode is in use, stop updates and audio as necessary
     if (pauseMinimized_ && DV_INPUT->IsMinimized())
@@ -496,7 +497,7 @@ void Engine::run_frame()
     render();
     apply_frame_limit();
 
-    time.EndFrame();
+    time->EndFrame();
 
     // Mark a frame for profiling
     DV_PROFILE_FRAME();

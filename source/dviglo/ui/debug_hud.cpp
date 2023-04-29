@@ -113,7 +113,7 @@ void DebugHud::Update()
         if (fps_timer_.GetMSec(false) >= 500)
         {
             fps_timer_.Reset();
-            fps_ = (u32)Round(DV_TIME.GetFramesPerSecond());
+            fps_ = (u32)Round(DV_TIME->GetFramesPerSecond());
         }
 
         String stats;

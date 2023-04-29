@@ -1040,7 +1040,7 @@ public:
 
         if (!DV_CONSOLE->IsVisible())
         {
-            float timeStep = DV_TIME.GetTimeStep();
+            float timeStep = DV_TIME->GetTimeStep();
             float speedMultiplier = 1.0f;
             if (input->GetKeyDown(KEY_LSHIFT))
                 speedMultiplier = 5.0f;

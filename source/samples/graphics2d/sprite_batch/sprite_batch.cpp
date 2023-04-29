@@ -182,7 +182,7 @@ public:
         angle_ += timeStep * 100.0f;
         angle_ = fmod(angle_, 360.0f);
 
-        scale_ = 1.0f + Sin(DV_TIME.GetElapsedTime() * 200.0f) * 0.3f;
+        scale_ = 1.0f + Sin(DV_TIME->GetElapsedTime() * 200.0f) * 0.3f;
     }
 
     bool collide_ = true;

@@ -33,7 +33,7 @@ void AppState_Benchmark04::OnLeave()
 
 void AppState_Benchmark04::HandleEndAllViewsRender(StringHash eventType, VariantMap& eventData)
 {
-    float timeStep = DV_TIME.GetTimeStep();
+    float timeStep = DV_TIME->GetTimeStep();
 
     fpsCounter_.Update(timeStep);
     UpdateCurrentFpsElement();

@@ -6,6 +6,7 @@
 
 #include "object.h"
 
+
 namespace dviglo
 {
 
@@ -61,8 +62,15 @@ class DV_API Time : public Object
 {
     DV_OBJECT(Time);
 
+    /// Только Engine может создать и уничтожить объект
+    friend class Engine;
+
+private:
+    /// Инициализируется в конструкторе
+    inline static Time* instance_ = nullptr;
+
 public:
-    static Time& get_instance();
+    static Time* instance() { return instance_; }
 
     // Запрещаем копирование
     Time(const Time&) = delete;
@@ -116,6 +124,6 @@ private:
     unsigned timerPeriod_;
 };
 
-#define DV_TIME (dviglo::Time::get_instance())
+#define DV_TIME (dviglo::Time::instance())
 
-}
+} // namespace dviglo
