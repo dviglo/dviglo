@@ -25,8 +25,8 @@ class Chat : public Sample
     DV_OBJECT(Chat);
 
 public:
-    /// Construct.
     explicit Chat();
+    ~Chat();
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

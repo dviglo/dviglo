@@ -44,6 +44,11 @@ Chat::Chat()
 {
 }
 
+Chat::~Chat()
+{
+    unsubscribe_from_event(E_LOGMESSAGE); // TODO: Временный хак, чтобы не крэшилось при закрытии приложения крестиком
+}
+
 void Chat::Start()
 {
     // Execute base class startup
@@ -147,8 +152,7 @@ void Chat::ShowChatText(const String& row)
     for (const String& row : chatHistory_)
         allRows += row + "\n";
 
-    if (chatHistoryText_) // TODO: При закрытии приложения этот компонент уже удалён, события Ui не должны обрабатываться
-        chatHistoryText_->SetText(allRows);
+    chatHistoryText_->SetText(allRows);
 }
 
 void Chat::UpdateButtons()
@@ -167,8 +171,7 @@ void Chat::HandleLogMessage(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace LogMessage;
 
-    // TODO: Раскомментировать - крэшит при закрытии приложения
-    //ShowChatText(eventData[P_MESSAGE].GetString());
+    ShowChatText(eventData[P_MESSAGE].GetString());
 }
 
 void Chat::HandleSend(StringHash /*eventType*/, VariantMap& eventData)
