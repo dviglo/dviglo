@@ -167,7 +167,8 @@ void Chat::HandleLogMessage(StringHash /*eventType*/, VariantMap& eventData)
 {
     using namespace LogMessage;
 
-    ShowChatText(eventData[P_MESSAGE].GetString());
+    // TODO: Раскомментировать - крэшит при закрытии приложения
+    //ShowChatText(eventData[P_MESSAGE].GetString());
 }
 
 void Chat::HandleSend(StringHash /*eventType*/, VariantMap& eventData)
