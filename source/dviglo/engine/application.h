@@ -51,16 +51,13 @@ protected:
     int exitCode_;
 };
 
-#define DV_DEFINE_APPLICATION_MAIN(className) \
-i32 RunApplication() \
+#define DV_DEFINE_APPLICATION_MAIN(ClassName) \
+i32 run_application() \
 { \
-    new Context(); \
-    className* application = new className(); \
-    i32 exit_code = application->Run(); \
-    delete application; \
-    delete Context::instance(); \
-    return exit_code; \
+    Context context; \
+    ClassName app; \
+    return app.Run(); \
 } \
-DV_DEFINE_MAIN(RunApplication())
+DV_DEFINE_MAIN(run_application())
 
 } // namespace dviglo
