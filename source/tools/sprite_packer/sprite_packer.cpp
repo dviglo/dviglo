@@ -89,6 +89,7 @@ void Run(Vector<String>& arguments)
     if (arguments.Size() < 2)
         Help();
 
+    Context context;
     Vector<String> inputFiles;
     String outputFile;
     String spriteSheetFileName;

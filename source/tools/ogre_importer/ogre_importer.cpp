@@ -20,6 +20,8 @@ using namespace std;
 
 static const int VERTEX_CACHE_SIZE = 32;
 
+Context context;
+
 SharedPtr<XmlFile> meshFile_(new XmlFile());
 SharedPtr<XmlFile> skelFile_(new XmlFile());
 Vector<ModelIndexBuffer> indexBuffers_;

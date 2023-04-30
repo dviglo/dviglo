@@ -28,6 +28,8 @@ struct FileEntry
     hash32 checksum_{};
 };
 
+Context context;
+
 String basePath_;
 Vector<FileEntry> entries_;
 hash32 checksum_ = 0;
