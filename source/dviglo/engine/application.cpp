@@ -33,7 +33,7 @@ Application::~Application()
 {
     delete Engine::instance_;
     delete SdlHelper::instance_;
-    delete Log::instance_;
+    delete Log::instance();
 }
 
 int Application::Run()

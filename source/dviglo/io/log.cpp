@@ -44,6 +44,9 @@ Log::Log() :
     inWrite_(false),
     quiet_(false)
 {
+    // Проверяем, что лог только один
+    assert(!instance_);
+
     subscribe_to_event(E_ENDFRAME, DV_HANDLER(Log, HandleEndFrame));
     instance_ = this;
 }

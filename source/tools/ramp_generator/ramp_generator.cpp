@@ -3,10 +3,11 @@
 // License: MIT
 
 #include <dviglo/core/context.h>
-#include <dviglo/io/file.h>
-#include <dviglo/io/file_system.h>
 #include <dviglo/core/process_utils.h>
 #include <dviglo/core/string_utils.h>
+#include <dviglo/io/file.h>
+#include <dviglo/io/file_system.h>
+#include <dviglo/io/log.h>
 
 #include <dviglo/common/win_wrapped.h>
 
@@ -75,6 +76,7 @@ void Run(const Vector<String>& arguments)
         const int height = dim == 2 ? width : 1;
 
         Context context;
+        Log log_;
         File file;
         file.Open(inputFile);
 

@@ -58,9 +58,6 @@ class DV_API Log : public Object
 {
     DV_OBJECT(Log);
 
-    /// Только Application может создать и уничтожить объект
-    friend class Application;
-
 private:
     /// Инициализируется в конструкторе
     inline static Log* instance_ = nullptr;
@@ -72,11 +69,10 @@ public:
     Log(const Log&) = delete;
     Log& operator =(const Log&) = delete;
 
-private:
+public:
     Log();
     ~Log() override;
 
-public:
     void Open(const String& filename);
 
     /// Close the log file.

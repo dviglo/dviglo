@@ -6,6 +6,7 @@
 #include <dviglo/core/process_utils.h>
 #include <dviglo/io/file.h>
 #include <dviglo/io/file_system.h>
+#include <dviglo/io/log.h>
 #include <dviglo/io/package_file.h>
 
 #include <dviglo/common/win_wrapped.h>
@@ -29,6 +30,7 @@ struct FileEntry
 };
 
 Context context;
+Log log_;
 
 String basePath_;
 Vector<FileEntry> entries_;

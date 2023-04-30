@@ -8,6 +8,7 @@
 #include <dviglo/graphics/tangent.h>
 #include <dviglo/io/file.h>
 #include <dviglo/io/file_system.h>
+#include <dviglo/io/log.h>
 #include <dviglo/resource/xml_file.h>
 
 #include "ogre_importer_utils.h"
@@ -21,6 +22,7 @@ using namespace std;
 static const int VERTEX_CACHE_SIZE = 32;
 
 Context context;
+Log log_;
 
 SharedPtr<XmlFile> meshFile_(new XmlFile());
 SharedPtr<XmlFile> skelFile_(new XmlFile());

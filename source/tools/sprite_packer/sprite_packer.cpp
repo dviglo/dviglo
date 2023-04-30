@@ -90,6 +90,7 @@ void Run(Vector<String>& arguments)
         Help();
 
     Context context;
+    Log log;
     Vector<String> inputFiles;
     String outputFile;
     String spriteSheetFileName;
