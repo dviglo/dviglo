@@ -103,7 +103,7 @@ Console::~Console()
 {
     background_->Remove();
     closeButton_->Remove();
-    unsubscribe_from_event(E_LOGMESSAGE); 
+    unsubscribe_from_event(E_LOGMESSAGE);
     instance_ = nullptr;
     DV_LOGDEBUG("Console destructed");
 }
