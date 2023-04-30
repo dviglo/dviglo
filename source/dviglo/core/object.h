@@ -7,8 +7,11 @@
 #include "../containers/linked_list.h"
 #include "string_hash_register.h"
 #include "variant.h"
+
 #include <functional>
+#include <list>
 #include <utility>
+
 
 namespace dviglo
 {
@@ -264,6 +267,95 @@ public:
 private:
     /// Class-specific pointer to handler function.
     std::function<void(StringHash, VariantMap&)> function_;
+};
+
+template <typename ... Args>
+class Slot;
+
+template <typename ... Args>
+class Signal
+{
+    friend class Slot<Args ...>;
+
+private:
+    /// Ссылки на подключённые слоты (не указатели!)
+    std::list<std::reference_wrapper<Slot<Args ...>>> slots_;
+
+public:
+    ~Signal()
+    {
+        for (Slot<Args ...>& slot : slots_)
+        {
+            slot.signal_ = nullptr;
+            slot.func_ = nullptr;
+        }
+
+        slots_.clear();
+    }
+
+    void disconnect(Slot<Args ...>& slot)
+    {
+        // Если слот был подсоединён к текущему сигналу
+        if (slots_.remove_if([&slot](const Slot<Args ...>& val) { return &val == &slot; }))
+        {
+            // Очищаем слот
+            slot.signal_ = nullptr;
+            slot.func_ = nullptr;
+        }
+        else
+        {
+            // Паникуем
+            assert(false);
+        }
+    }
+
+    void connect(Slot<Args ...>& slot, std::function<void(Args ...)> func)
+    {
+        assert(func);
+
+        slot.disconnect();
+
+        slot.signal_ = this;
+        slot.func_ = func;
+        slots_.push_back(slot);
+    }
+
+    void emit(Args ... args)
+    {
+        for (Slot<Args ...>& slot : slots_)
+            slot.func_(std::forward<Args>(args) ...);
+    }
+};
+
+template <typename ... Args>
+class Slot
+{
+    friend class Signal<Args ...>;
+
+private:
+    /// Используется для удаления себя из списка слотов в сигнале
+    Signal<Args ...>* signal_ = nullptr;
+
+    /// Обработчик события
+    std::function<void(Args ...)> func_;
+
+public:
+    void disconnect()
+    {
+        // Если слот подключён к сигналу
+        if (signal_)
+        {
+            // Удаляем себя из списка слотов в сигнале
+            signal_->slots_.remove_if([this](const Slot<Args ...>& val) { return &val == this; });
+            signal_ = nullptr;
+            func_ = nullptr;
+        }
+    }
+
+    ~Slot()
+    {
+        disconnect();
+    }
 };
 
 /// Get register of event names.

@@ -108,6 +108,8 @@ void Time::BeginFrame(float timeStep)
         eventData[P_FRAMENUMBER] = frameNumber_;
         eventData[P_TIMESTEP] = timeStep_;
         SendEvent(E_BEGINFRAME, eventData);
+
+        begin_frame.emit(frameNumber_, timeStep_);
     }
 }
 
@@ -118,6 +120,8 @@ void Time::EndFrame()
 
         // Frame end event
         SendEvent(E_ENDFRAME);
+
+        end_frame.emit();
     }
 }
 

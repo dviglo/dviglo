@@ -14,9 +14,14 @@
 #include <dviglo/ui/text.h>
 #include <dviglo/ui/ui.h>
 
+using namespace std;
+
+
 class App : public Application
 {
     DV_OBJECT(App);
+
+    Slot<i32, float> begin_frame;
 
 public:
     App()
@@ -24,7 +29,7 @@ public:
         // The first handler for the first event in each frame.
         // To prevent a crash, we can only change the current scene at the start of a frame,
         // before any scene events are processed
-        subscribe_to_event(E_BEGINFRAME, DV_HANDLER(App, ApplyAppState));
+        DV_TIME->begin_frame.connect(begin_frame, bind(&App::apply_app_state, this, placeholders::_1, placeholders::_2));
     }
 
     ~App()
@@ -67,7 +72,7 @@ public:
         CreateCurrentFpsUiElement();
     }
 
-    void ApplyAppState(StringHash eventType, VariantMap& eventData)
+    void apply_app_state(i32 frame_number, float time_step)
     {
         APP_STATE_MANAGER->Apply();
     }

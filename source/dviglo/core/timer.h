@@ -65,6 +65,9 @@ class DV_API Time : public Object
     /// Только Engine может создать и уничтожить объект
     friend class Engine;
 
+    Signal<i32, float> begin_frame;
+    Signal<> end_frame;
+
 private:
     /// Инициализируется в конструкторе
     inline static Time* instance_ = nullptr;
