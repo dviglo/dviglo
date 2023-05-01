@@ -65,6 +65,8 @@ private:
 public:
     static Log* instance() { return instance_; }
 
+    Signal<const String&, i32> log_message;
+
     // Запрещаем копирование
     Log(const Log&) = delete;
     Log& operator =(const Log&) = delete;

@@ -25,6 +25,8 @@ class Chat : public Sample
     DV_OBJECT(Chat);
 
 public:
+    Slot<const String&, i32> log_message;
+
     explicit Chat();
     ~Chat();
 
@@ -43,7 +45,7 @@ private:
     /// Update visibility of buttons according to connection and server status.
     void UpdateButtons();
     /// Handle log message event; pipe it also to the chat display.
-    void HandleLogMessage(StringHash eventType, VariantMap& eventData);
+    void handle_log_message(const String& message, i32 level);
     /// Handle pressing the send button.
     void HandleSend(StringHash eventType, VariantMap& eventData);
     /// Handle pressing the connect button.

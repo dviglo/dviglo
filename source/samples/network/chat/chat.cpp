@@ -28,6 +28,9 @@
 
 #include <dviglo/common/debug_new.h>
 
+using namespace std;
+
+
 // Undefine Windows macro, as our Connection class has a function called SendMessage
 #ifdef SendMessage
 #undef SendMessage
@@ -46,7 +49,6 @@ Chat::Chat()
 
 Chat::~Chat()
 {
-    unsubscribe_from_event(E_LOGMESSAGE); // TODO: Временный хак, чтобы не крэшилось при закрытии приложения крестиком
 }
 
 void Chat::Start()
@@ -117,7 +119,7 @@ void Chat::subscribe_to_events()
     subscribe_to_event(startServerButton_, E_RELEASED, DV_HANDLER(Chat, HandleStartServer));
 
     // Subscribe to log messages so that we can pipe them to the chat window
-    subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Chat, HandleLogMessage));
+    Log::instance()->log_message.connect(log_message, bind(&Chat::handle_log_message, this, placeholders::_1, placeholders::_2));
 
     // Subscribe to network events
     subscribe_to_event(E_NETWORKMESSAGE, DV_HANDLER(Chat, HandleNetworkMessage));
@@ -167,11 +169,9 @@ void Chat::UpdateButtons()
     startServerButton_->SetVisible(!serverConnection && !serverRunning);
 }
 
-void Chat::HandleLogMessage(StringHash /*eventType*/, VariantMap& eventData)
+void Chat::handle_log_message(const String& message, i32 level)
 {
-    using namespace LogMessage;
-
-    ShowChatText(eventData[P_MESSAGE].GetString());
+    ShowChatText(message);
 }
 
 void Chat::HandleSend(StringHash /*eventType*/, VariantMap& eventData)
