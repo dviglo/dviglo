@@ -43,14 +43,6 @@ const unsigned short CHAT_SERVER_PORT = 2345;
 
 DV_DEFINE_APPLICATION_MAIN(Chat)
 
-Chat::Chat()
-{
-}
-
-Chat::~Chat()
-{
-}
-
 void Chat::Start()
 {
     // Execute base class startup

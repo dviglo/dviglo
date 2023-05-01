@@ -27,9 +27,6 @@ class Chat : public Sample
 public:
     Slot<const String&, i32> log_message;
 
-    explicit Chat();
-    ~Chat();
-
     /// Setup after engine initialization and before running the main loop.
     void Start() override;
 
