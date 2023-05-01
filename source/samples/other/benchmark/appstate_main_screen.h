@@ -16,6 +16,8 @@ class AppState_MainScreen : public AppState_Base
 public:
     DV_OBJECT(AppState_MainScreen);
 
+    Slot<Scene*, float> scene_update;
+
 private:
     void HandleButtonPressed(StringHash eventType, VariantMap& eventData);
     void CreateButton(const String& name, const String& text, Window& parent);
@@ -31,5 +33,5 @@ public:
     void OnEnter() override;
     void OnLeave() override;
 
-    void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_scene_update(Scene* scene, float time_step);
 };

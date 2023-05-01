@@ -16,6 +16,9 @@
 
 #include <dviglo/common/debug_new.h>
 
+using namespace std;
+
+
 static const String MAIN_SCREEN_WINDOW_STR = "Main Screen Window";
 static const String BENCHMARK_01_STR = "Benchmark 01";
 static const String BENCHMARK_02_STR = "Benchmark 02";
@@ -85,7 +88,7 @@ void AppState_MainScreen::OnEnter()
     CreateGui();
     setup_viewport();
     DV_INPUT->SetMouseVisible(true);
-    subscribe_to_event(scene_, E_SCENEUPDATE, DV_HANDLER(AppState_MainScreen, HandleSceneUpdate));
+    scene_update.connect(scene_->scene_update, bind(&AppState_MainScreen::handle_scene_update, this, placeholders::_1, placeholders::_2));
     fpsCounter_.Clear();
 }
 
@@ -96,11 +99,9 @@ void AppState_MainScreen::OnLeave()
     scene_ = nullptr;
 }
 
-void AppState_MainScreen::HandleSceneUpdate(StringHash eventType, VariantMap& eventData)
+void AppState_MainScreen::handle_scene_update(Scene* scene, float time_step)
 {
-    float timeStep = eventData[SceneUpdate::P_TIMESTEP].GetFloat();
-
-    fpsCounter_.Update(timeStep);
+    fpsCounter_.Update(time_step);
     UpdateCurrentFpsElement();
 
     if (DV_INPUT->GetKeyPress(KEY_ESCAPE))
