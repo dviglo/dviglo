@@ -340,6 +340,11 @@ private:
     std::function<void(Args ...)> func_;
 
 public:
+    void connect(Signal<Args ...>& slot, std::function<void(Args ...)> func)
+    {
+        slot.connect(*this, func);
+    }
+
     void disconnect()
     {
         // Если слот подключён к сигналу

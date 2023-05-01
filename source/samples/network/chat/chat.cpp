@@ -119,7 +119,7 @@ void Chat::subscribe_to_events()
     subscribe_to_event(startServerButton_, E_RELEASED, DV_HANDLER(Chat, HandleStartServer));
 
     // Subscribe to log messages so that we can pipe them to the chat window
-    Log::instance()->log_message.connect(log_message, bind(&Chat::handle_log_message, this, placeholders::_1, placeholders::_2));
+    log_message.connect(DV_LOG->log_message, bind(&Chat::handle_log_message, this, placeholders::_1, placeholders::_2));
 
     // Subscribe to network events
     subscribe_to_event(E_NETWORKMESSAGE, DV_HANDLER(Chat, HandleNetworkMessage));

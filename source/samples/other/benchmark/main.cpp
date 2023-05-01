@@ -29,7 +29,7 @@ public:
         // The first handler for the first event in each frame.
         // To prevent a crash, we can only change the current scene at the start of a frame,
         // before any scene events are processed
-        DV_TIME->begin_frame.connect(begin_frame, bind(&App::apply_app_state, this, placeholders::_1, placeholders::_2));
+        begin_frame.connect(DV_TIME->begin_frame, bind(&App::apply_app_state, this, placeholders::_1, placeholders::_2));
     }
 
     ~App()

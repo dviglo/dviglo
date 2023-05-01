@@ -132,9 +132,11 @@ private:
     bool quiet_;
 };
 
+#define DV_LOG (dviglo::Log::instance())
+
 #ifdef DV_LOGGING
 
-#define DV_LOG(level, message) dviglo::Log::Write(level, message)
+//#define DV_LOG(level, message) dviglo::Log::Write(level, message)
 #define DV_LOGTRACE(message) dviglo::Log::Write(dviglo::LOG_TRACE, message)
 #define DV_LOGDEBUG(message) dviglo::Log::Write(dviglo::LOG_DEBUG, message)
 #define DV_LOGINFO(message) dviglo::Log::Write(dviglo::LOG_INFO, message)
@@ -152,7 +154,7 @@ private:
 
 #else
 
-#define DV_LOG(message) ((void)0)
+//#define DV_LOG(message) ((void)0)
 #define DV_LOGTRACE(message) ((void)0)
 #define DV_LOGDEBUG(message) ((void)0)
 #define DV_LOGINFO(message) ((void)0)
