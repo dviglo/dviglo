@@ -77,6 +77,9 @@ public:
     using Node::save_xml;
     using Node::save_json;
 
+    Signal<Scene*, float> scene_update;
+    Signal<Scene*, float> scene_post_update;
+
     /// Construct.
     explicit Scene();
     /// Destruct.

@@ -761,6 +761,8 @@ void Scene::Update(float timeStep)
     // Update variable timestep logic
     SendEvent(E_SCENEUPDATE, eventData);
 
+    scene_update.emit(this, timeStep);
+
     // Update scene attribute animation.
     SendEvent(E_ATTRIBUTEANIMATIONUPDATE, eventData);
 
@@ -783,6 +785,8 @@ void Scene::Update(float timeStep)
 
     // Post-update variable timestep logic
     SendEvent(E_SCENEPOSTUPDATE, eventData);
+
+    scene_post_update.emit(this, timeStep);
 
     // Note: using a float for elapsed time accumulation is inherently inaccurate. The purpose of this value is
     // primarily to update material animation effects, as it is available to shaders. It can be reset by calling

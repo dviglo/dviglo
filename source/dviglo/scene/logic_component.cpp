@@ -10,6 +10,9 @@
 #include "scene.h"
 #include "scene_events.h"
 
+using namespace std;
+
+
 namespace dviglo
 {
 
@@ -74,6 +77,8 @@ void LogicComponent::OnSceneSet(Scene* scene)
     {
         unsubscribe_from_event(E_SCENEUPDATE);
         unsubscribe_from_event(E_SCENEPOSTUPDATE);
+        scene_update.disconnect();
+        scene_post_update.disconnect();
 #if defined(DV_BULLET) || defined(DV_BOX2D)
         unsubscribe_from_event(E_PHYSICSPRESTEP);
         unsubscribe_from_event(E_PHYSICSPOSTSTEP);
@@ -93,24 +98,26 @@ void LogicComponent::UpdateEventSubscription()
     bool needUpdate = enabled && (!!(updateEventMask_ & LogicComponentEvents::Update) || !delayedStartCalled_);
     if (needUpdate && !(currentEventMask_ & LogicComponentEvents::Update))
     {
-        subscribe_to_event(scene, E_SCENEUPDATE, DV_HANDLER(LogicComponent, HandleSceneUpdate));
+        scene_update.connect(scene->scene_update, bind(&LogicComponent::handle_scene_update, this, placeholders::_1, placeholders::_2));
         currentEventMask_ |= LogicComponentEvents::Update;
     }
     else if (!needUpdate && !!(currentEventMask_ & LogicComponentEvents::Update))
     {
         unsubscribe_from_event(scene, E_SCENEUPDATE);
+        scene_update.disconnect();
         currentEventMask_ &= ~LogicComponentEvents::Update;
     }
 
     bool needPostUpdate = enabled && !!(updateEventMask_ & LogicComponentEvents::PostUpdate);
     if (needPostUpdate && !(currentEventMask_ & LogicComponentEvents::PostUpdate))
     {
-        subscribe_to_event(scene, E_SCENEPOSTUPDATE, DV_HANDLER(LogicComponent, HandleScenePostUpdate));
+        scene_post_update.connect(scene->scene_post_update, bind(&LogicComponent::handle_scene_post_update, this, placeholders::_1, placeholders::_2));
         currentEventMask_ |= LogicComponentEvents::PostUpdate;
     }
     else if (!needPostUpdate && !!(currentEventMask_ & LogicComponentEvents::PostUpdate))
     {
         unsubscribe_from_event(scene, E_SCENEPOSTUPDATE);
+        scene_post_update.disconnect();
         currentEventMask_ &= ~LogicComponentEvents::PostUpdate;
     }
 
@@ -145,10 +152,8 @@ void LogicComponent::UpdateEventSubscription()
 #endif
 }
 
-void LogicComponent::HandleSceneUpdate(StringHash eventType, VariantMap& eventData)
+void LogicComponent::handle_scene_update(Scene* scene, float time_step)
 {
-    using namespace SceneUpdate;
-
     // Execute user-defined delayed start function before first update
     if (!delayedStartCalled_)
     {
@@ -165,15 +170,12 @@ void LogicComponent::HandleSceneUpdate(StringHash eventType, VariantMap& eventDa
     }
 
     // Then execute user-defined update function
-    Update(eventData[P_TIMESTEP].GetFloat());
+    Update(time_step);
 }
 
-void LogicComponent::HandleScenePostUpdate(StringHash eventType, VariantMap& eventData)
+void LogicComponent::handle_scene_post_update(Scene* scene, float time_step)
 {
-    using namespace ScenePostUpdate;
-
-    // Execute user-defined post-update function
-    PostUpdate(eventData[P_TIMESTEP].GetFloat());
+    PostUpdate(time_step);
 }
 
 #if defined(DV_BULLET) || defined(DV_BOX2D)

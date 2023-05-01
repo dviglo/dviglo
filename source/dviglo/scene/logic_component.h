@@ -40,6 +40,9 @@ class DV_API LogicComponent : public Component
     DV_OBJECT(LogicComponent);
 
 public:
+    Slot<Scene*, float> scene_update;
+    Slot<Scene*, float> scene_post_update;
+
     /// Construct.
     explicit LogicComponent();
     /// Destruct.
@@ -85,9 +88,9 @@ private:
     /// Subscribe/unsubscribe to update events based on current enabled state and update event mask.
     void UpdateEventSubscription();
     /// Handle scene update event.
-    void HandleSceneUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_scene_update(Scene* scene, float time_step);
     /// Handle scene post-update event.
-    void HandleScenePostUpdate(StringHash eventType, VariantMap& eventData);
+    void handle_scene_post_update(Scene* scene, float time_step);
 #if defined(DV_BULLET) || defined(DV_BOX2D)
     /// Handle physics pre-step event.
     void HandlePhysicsPreStep(StringHash eventType, VariantMap& eventData);
