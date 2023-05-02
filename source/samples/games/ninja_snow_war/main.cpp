@@ -25,6 +25,9 @@
 #include "utilities/network.h"
 #include "utilities/spawn.h"
 
+using namespace std;
+
+
 static constexpr float MOUSE_SENSITIVITY = 0.125f;
 static constexpr float JOY_SENSITIVITY = 0.5f;
 static constexpr float JOY_MOVE_DEAD_ZONE = 0.333f;
@@ -46,6 +49,8 @@ class App : public Application
     DV_OBJECT(App);
 
 private:
+    Slot<Scene*, float> scene_update;
+
     SharedPtr<Scene> gameScene;
     SharedPtr<Node> gameCameraNode;
     Camera* gameCamera = nullptr;
@@ -109,7 +114,7 @@ public:
         CreateCamera();
         CreateOverlays();
 
-        subscribe_to_event(gameScene, E_SCENEUPDATE, DV_HANDLER(App, handle_update));
+        scene_update.connect(gameScene->scene_update, bind(&App::handle_scene_update, this, placeholders::_1, placeholders::_2));
 
         PhysicsWorld* physicsWorld = gameScene->GetComponent<PhysicsWorld>();
         if (physicsWorld)
@@ -440,10 +445,8 @@ public:
         }
     }
 
-    void handle_update(StringHash eventType, VariantMap& eventData)
+    void handle_scene_update(Scene* scene, float time_step)
     {
-        float timeStep = eventData["TimeStep"].GetFloat();
-
         UpdateControls();
         CheckEndAndRestart();
 
