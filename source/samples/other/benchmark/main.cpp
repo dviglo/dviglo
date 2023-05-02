@@ -21,7 +21,7 @@ class App : public Application
 {
     DV_OBJECT(App);
 
-    Slot<i32, float> begin_frame;
+    SlotBeginFrame begin_frame;
 
 public:
     App()

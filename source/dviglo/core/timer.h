@@ -127,6 +127,9 @@ private:
     unsigned timerPeriod_;
 };
 
+using SlotBeginFrame = Slot<i32, float>;
+using SlotEndFrame = Slot<>;
+
 #define DV_TIME (dviglo::Time::instance())
 
 } // namespace dviglo
