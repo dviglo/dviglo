@@ -15,6 +15,7 @@
 #include <memory>
 #include <mutex>
 
+
 namespace dviglo
 {
 
@@ -325,7 +326,10 @@ private:
     bool threadedUpdate_;
 };
 
+using SlotSceneUpdate = Slot<Scene*, float>;
+using SlotScenePostUpdate = Slot<Scene*, float>;
+
 /// Register Scene library objects.
 void DV_API register_scene_library();
 
-}
+} // namespace dviglo

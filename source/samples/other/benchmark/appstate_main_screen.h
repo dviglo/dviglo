@@ -6,6 +6,7 @@
 
 #include "appstate_base.h"
 
+
 namespace dviglo
 {
     class Window;
@@ -16,7 +17,7 @@ class AppState_MainScreen : public AppState_Base
 public:
     DV_OBJECT(AppState_MainScreen);
 
-    Slot<Scene*, float> scene_update;
+    SlotSceneUpdate scene_update;
 
 private:
     void HandleButtonPressed(StringHash eventType, VariantMap& eventData);

@@ -49,7 +49,7 @@ class App : public Application
     DV_OBJECT(App);
 
 private:
-    Slot<Scene*, float> scene_update;
+    SlotSceneUpdate scene_update;
 
     SharedPtr<Scene> gameScene;
     SharedPtr<Node> gameCameraNode;

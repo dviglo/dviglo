@@ -6,8 +6,11 @@
 
 #pragma once
 
-#include "../containers/flag_set.h"
 #include "component.h"
+#include "scene.h"
+
+#include "../containers/flag_set.h"
+
 
 namespace dviglo
 {
@@ -40,8 +43,8 @@ class DV_API LogicComponent : public Component
     DV_OBJECT(LogicComponent);
 
 public:
-    Slot<Scene*, float> scene_update;
-    Slot<Scene*, float> scene_post_update;
+    SlotSceneUpdate scene_update;
+    SlotScenePostUpdate scene_post_update;
 
     /// Construct.
     explicit LogicComponent();
@@ -105,4 +108,4 @@ private:
     bool delayedStartCalled_;
 };
 
-}
+} // namespace dviglo
