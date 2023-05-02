@@ -25,7 +25,7 @@ class Chat : public Sample
     DV_OBJECT(Chat);
 
 public:
-    Slot<const String&, i32> log_message;
+    SlotLogMessage log_message;
 
     /// Setup after engine initialization and before running the main loop.
     void Start() override;

@@ -132,6 +132,8 @@ private:
     bool quiet_;
 };
 
+using SlotLogMessage = Slot<const String&, i32>;
+
 #define DV_LOG (dviglo::Log::instance())
 
 #ifdef DV_LOGGING
