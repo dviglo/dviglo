@@ -6,9 +6,11 @@
 
 #pragma once
 
+#include "engine.h"
+
 #include "../core/context.h"
 #include "../core/main.h"
-#include "engine.h"
+#include "../io/log.h"
 
 
 namespace dviglo
@@ -20,6 +22,8 @@ class DV_API Application : public Object
     DV_OBJECT(Application);
 
 public:
+    SlotLogMessage log_message;
+
     /// Construct. Parse default engine parameters from the command line, and create the engine in an uninitialized state.
     explicit Application();
 
@@ -41,7 +45,7 @@ public:
 
 protected:
     /// Handle log message.
-    void HandleLogMessage(StringHash eventType, VariantMap& eventData);
+    void handle_log_message(const String& message, i32 level);
 
     /// Engine parameters map.
     VariantMap engineParameters_;

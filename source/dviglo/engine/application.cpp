@@ -26,7 +26,7 @@ Application::Application() :
     new Engine(); // Create the Engine, but do not initialize it yet. Subsystems except Graphics & Renderer are registered at this point
 
     // Subscribe to log messages so that can show errors if ErrorExit() is called with empty message
-    subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Application, HandleLogMessage));
+    log_message.connect(DV_LOG->log_message, bind(&Application::handle_log_message, this, placeholders::_1, placeholders::_2));
 }
 
 Application::~Application()
@@ -86,14 +86,12 @@ void Application::ErrorExit(const String& message)
         ErrorDialog(GetTypeName(), message);
 }
 
-void Application::HandleLogMessage(StringHash eventType, VariantMap& eventData)
+void Application::handle_log_message(const String& message, i32 level)
 {
-    using namespace LogMessage;
-
-    if (eventData[P_LEVEL].GetI32() == LOG_ERROR)
+    if (level == LOG_ERROR)
     {
         // Strip the timestamp if necessary
-        String error = eventData[P_MESSAGE].GetString();
+        String error = message;
         i32 bracketPos = error.Find(']');
         if (bracketPos != String::NPOS)
             error = error.Substring(bracketPos + 2);
