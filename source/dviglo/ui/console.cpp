@@ -10,7 +10,6 @@
 #include "../graphics/graphics.h"
 #include "../input/input.h"
 #include "../io/io_events.h"
-#include "../io/log.h"
 #include "../resource/resource_cache.h"
 #include "../ui/dropdown_list.h"
 #include "../ui/font.h"
@@ -91,7 +90,7 @@ Console::Console() :
     subscribe_to_event(lineEdit_, E_UNHANDLEDKEY, DV_HANDLER(Console, HandleLineEditKey));
     subscribe_to_event(closeButton_, E_RELEASED, DV_HANDLER(Console, HandleCloseButtonPressed));
     subscribe_to_event(uiRoot, E_RESIZED, DV_HANDLER(Console, HandleRootElementResized));
-    subscribe_to_event(E_LOGMESSAGE, DV_HANDLER(Console, HandleLogMessage));
+    log_message.connect(DV_LOG->log_message, bind(&Console::handle_log_message, this, placeholders::_1, placeholders::_2));
     subscribe_to_event(E_POSTUPDATE, DV_HANDLER(Console, HandlePostUpdate));
 
     instance_ = this;
@@ -103,7 +102,6 @@ Console::~Console()
 {
     background_->Remove();
     closeButton_->Remove();
-    unsubscribe_from_event(E_LOGMESSAGE);
     instance_ = nullptr;
     DV_LOGDEBUG("Console destructed");
 }
@@ -523,17 +521,14 @@ void Console::HandleRootElementResized(StringHash eventType, VariantMap& eventDa
     UpdateElements();
 }
 
-void Console::HandleLogMessage(StringHash eventType, VariantMap& eventData)
+void Console::handle_log_message(const String& message, i32 level)
 {
     // If printing a log message causes more messages to be logged (error accessing font), disregard them
     if (printing_)
         return;
 
-    using namespace LogMessage;
-
-    int level = eventData[P_LEVEL].GetI32();
     // The message may be multi-line, so split to rows in that case
-    Vector<String> rows = eventData[P_MESSAGE].GetString().Split('\n');
+    Vector<String> rows = message.Split('\n');
 
     for (const String& row : rows)
         pendingRows_.Push(MakePair(level, row));

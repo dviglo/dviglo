@@ -5,6 +5,7 @@
 #pragma once
 
 #include "../core/object.h"
+#include "../io/log.h"
 
 namespace dviglo
 {
@@ -42,6 +43,8 @@ private:
     ~Console() override;
 
 public:
+    SlotLogMessage log_message;
+
     // Запрещаем копирование
     Console(const Console&) = delete;
     Console& operator =(const Console&) = delete;
@@ -132,7 +135,7 @@ private:
     /// Handle UI root resize.
     void HandleRootElementResized(StringHash eventType, VariantMap& eventData);
     /// Handle a log message.
-    void HandleLogMessage(StringHash eventType, VariantMap& eventData);
+    void handle_log_message(const String& message, i32 level);
     /// Handle the application post-update.
     void HandlePostUpdate(StringHash eventType, VariantMap& eventData);
 
