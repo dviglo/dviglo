@@ -205,7 +205,6 @@ Network::Network() :
 
     // Blacklist remote events which are not to be allowed to be registered in any case
     blacklistedRemoteEvents_.Insert(E_CONSOLECOMMAND);
-    blacklistedRemoteEvents_.Insert(E_LOGMESSAGE);
     blacklistedRemoteEvents_.Insert(E_BEGINFRAME);
     blacklistedRemoteEvents_.Insert(E_UPDATE);
     blacklistedRemoteEvents_.Insert(E_POSTUPDATE);

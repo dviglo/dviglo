@@ -200,16 +200,7 @@ void Log::Write(int level, const String& message)
     }
 
     instance_->inWrite_ = true;
-
-    using namespace LogMessage;
-
-    VariantMap& eventData = instance_->GetEventDataMap();
-    eventData[P_MESSAGE] = formattedMessage;
-    eventData[P_LEVEL] = level;
-    instance_->SendEvent(E_LOGMESSAGE, eventData);
-
     instance_->log_message.emit(formattedMessage, level);
-
     instance_->inWrite_ = false;
 }
 
@@ -258,16 +249,7 @@ void Log::WriteRaw(const String& message, bool error)
     }
 
     instance_->inWrite_ = true;
-
-    using namespace LogMessage;
-
-    VariantMap& eventData = instance_->GetEventDataMap();
-    eventData[P_MESSAGE] = message;
-    eventData[P_LEVEL] = error ? LOG_ERROR : LOG_INFO;
-    instance_->SendEvent(E_LOGMESSAGE, eventData);
-
     instance_->log_message.emit(message, error ? LOG_ERROR : LOG_INFO);
-
     instance_->inWrite_ = false;
 }
 
