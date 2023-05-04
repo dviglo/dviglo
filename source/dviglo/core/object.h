@@ -10,6 +10,7 @@
 
 #include <functional>
 #include <list>
+#include <memory>
 #include <utility>
 
 
@@ -28,7 +29,7 @@ class EventHandler;
         dviglo::StringHash GetType() const override { return GetTypeStatic(); }
 
 /// Base class for objects with type identification, subsystem access and event sending/receiving capability.
-class DV_API Object : public RefCounted
+class DV_API Object : public RefCounted, std::enable_shared_from_this<Object>
 {
     friend class Context;
 
