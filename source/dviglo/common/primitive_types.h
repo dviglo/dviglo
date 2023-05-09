@@ -1,10 +1,11 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
 #pragma once
 
 #include <cstddef> // std::byte
+
 
 // Пользователь может инжектировать dvt (dviglo types) в любое пространство имён.
 // Для namespace используется короткое имя вместо dviglo::primitive_types, так как в
