@@ -1,5 +1,5 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
 #include "thread.h"
@@ -11,6 +11,7 @@
 #endif
 
 #include "../common/debug_new.h"
+
 
 namespace dviglo
 {
@@ -38,7 +39,7 @@ static void* ThreadFunctionStatic(void* data)
 #endif
 #endif // DV_THREADING
 
-ThreadID Thread::mainThreadID;
+ThreadId Thread::mainThreadID;
 
 Thread::Thread() :
     handle_(nullptr),
@@ -114,7 +115,7 @@ void Thread::SetMainThread()
     mainThreadID = GetCurrentThreadID();
 }
 
-ThreadID Thread::GetCurrentThreadID()
+ThreadId Thread::GetCurrentThreadID()
 {
 #ifdef DV_THREADING
 #ifdef _WIN32
@@ -123,7 +124,7 @@ ThreadID Thread::GetCurrentThreadID()
     return pthread_self();
 #endif
 #else
-    return ThreadID();
+    return ThreadId();
 #endif // DV_THREADING
 }
 
@@ -136,4 +137,4 @@ bool Thread::IsMainThread()
 #endif // DV_THREADING
 }
 
-}
+} // namespace dviglo

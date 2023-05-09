@@ -1,5 +1,5 @@
-// Copyright (c) 2008-2023 the Urho3D project
 // Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2008-2023 the Urho3D project
 // License: MIT
 
 #pragma once
@@ -8,10 +8,11 @@
 
 #ifndef _WIN32
 #include <pthread.h>
-using ThreadID = pthread_t;
+using ThreadId = pthread_t;
 #else
-using ThreadID = unsigned;
+using ThreadId = unsigned;
 #endif
+
 
 namespace dviglo
 {
@@ -41,7 +42,7 @@ public:
     /// Set the current thread as the main thread.
     static void SetMainThread();
     /// Return the current thread's ID.
-    static ThreadID GetCurrentThreadID();
+    static ThreadId GetCurrentThreadID();
     /// Return whether is executing in the main thread.
     static bool IsMainThread();
 
@@ -52,7 +53,7 @@ protected:
     volatile bool shouldRun_;
 
     /// Main thread's thread ID.
-    static ThreadID mainThreadID;
+    static ThreadId mainThreadID;
 };
 
-}
+} // namespace dviglo
