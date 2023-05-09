@@ -17,6 +17,9 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
+
 namespace dviglo
 {
 
@@ -30,7 +33,7 @@ static const unsigned MAX_TRIANGLES = 100000;
 DebugRenderer::DebugRenderer() :
     lineAntiAlias_(false)
 {
-    vertexBuffer_ = new VertexBuffer();
+    vertexBuffer_ = make_unique<VertexBuffer>();
 
     subscribe_to_event(E_ENDFRAME, DV_HANDLER(DebugRenderer, HandleEndFrame));
 }
@@ -569,7 +572,7 @@ void DebugRenderer::Render()
     graphics->SetShaderParameter(VSP_VIEWINV, view_.Inverse());
     graphics->SetShaderParameter(VSP_VIEWPROJ, gpuProjection_ * view_);
     graphics->SetShaderParameter(PSP_MATDIFFCOLOR, Color(1.0f, 1.0f, 1.0f, 1.0f));
-    graphics->SetVertexBuffer(vertexBuffer_);
+    graphics->SetVertexBuffer(vertexBuffer_.get());
 
     unsigned start = 0;
     unsigned count = 0;
@@ -641,4 +644,4 @@ void DebugRenderer::HandleEndFrame(StringHash eventType, VariantMap& eventData)
         noDepthTriangles_.Reserve(noDepthTrianglesSize);
 }
 
-}
+} // namespace dviglo

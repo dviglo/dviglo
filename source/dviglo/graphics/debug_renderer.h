@@ -171,7 +171,7 @@ private:
     /// View frustum.
     Frustum frustum_;
     /// Vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::unique_ptr<VertexBuffer> vertexBuffer_;
     /// Line antialiasing flag.
     bool lineAntiAlias_;
 };
