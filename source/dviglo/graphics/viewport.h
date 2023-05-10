@@ -87,7 +87,7 @@ private:
     /// Rendering path.
     SharedPtr<RenderPath> renderPath_;
     /// Internal rendering structure.
-    SharedPtr<View> view_;
+    std::unique_ptr<View> view_;
 };
 
 }

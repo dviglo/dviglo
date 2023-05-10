@@ -13,6 +13,9 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
+
 namespace dviglo
 {
 
@@ -92,7 +95,7 @@ Camera* Viewport::GetCullCamera() const
 
 View* Viewport::GetView() const
 {
-    return view_;
+    return view_.get();
 }
 
 RenderPath* Viewport::GetRenderPath() const
@@ -174,7 +177,7 @@ Vector3 Viewport::screen_to_world_point(int x, int y, float depth) const
 
 void Viewport::allocate_view()
 {
-    view_ = new View();
+    view_ = make_unique<View>();
 }
 
 } // namespace dviglo
