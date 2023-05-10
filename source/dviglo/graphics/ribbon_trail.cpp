@@ -17,6 +17,7 @@
 
 using namespace std;
 
+
 namespace dviglo
 {
 
@@ -43,7 +44,7 @@ TrailPoint::TrailPoint(const Vector3& position, const Vector3& forward) :
 
 RibbonTrail::RibbonTrail() :
     Drawable(DrawableTypes::Geometry),
-    geometry_(new Geometry()),
+    geometry_(make_shared<Geometry>()),
     animationLodBias_(1.0f),
     animationLodTimer_(0.0f),
     vertexBuffer_(make_shared<VertexBuffer>()),
@@ -76,7 +77,7 @@ RibbonTrail::RibbonTrail() :
     geometry_->SetIndexBuffer(indexBuffer_);
 
     batches_.Resize(1);
-    batches_[0].geometry_ = geometry_;
+    batches_[0].geometry_ = geometry_.get();
     batches_[0].geometryType_ = GEOM_TRAIL_FACE_CAMERA;
     batches_[0].worldTransform_ = &transforms_;
     batches_[0].numWorldTransforms_ = 1;

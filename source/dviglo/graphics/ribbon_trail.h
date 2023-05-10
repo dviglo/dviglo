@@ -182,7 +182,7 @@ private:
     /// Update/Rebuild tail mesh only if position changed (called by update_batches()).
     void UpdateTail(float timeStep);
     /// Geometry.
-    SharedPtr<Geometry> geometry_;
+    std::shared_ptr<Geometry> geometry_;
     /// Vertex buffer.
     std::shared_ptr<VertexBuffer> vertexBuffer_;
     /// Index buffer.
