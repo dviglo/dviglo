@@ -247,13 +247,13 @@ private:
         /// UI rendering vertex data.
         Vector<float> vertexData_;
         /// UI vertex buffer.
-        SharedPtr<VertexBuffer> vertexBuffer_;
+        std::shared_ptr<VertexBuffer> vertexBuffer_; // TODO: unique_ptr
         /// UI rendering batches for debug draw.
         Vector<UIBatch> debugDrawBatches_;
         /// UI rendering vertex data for debug draw.
         Vector<float> debugVertexData_;
         /// UI debug geometry vertex buffer.
-        SharedPtr<VertexBuffer> debugVertexBuffer_;
+        std::shared_ptr<VertexBuffer> debugVertexBuffer_; // TODO: unique_ptr
     };
 
     /// Initialize when screen mode initially set.
@@ -355,9 +355,9 @@ private:
     /// UI rendering vertex data for debug draw.
     Vector<float> debugVertexData_;
     /// UI vertex buffer.
-    SharedPtr<VertexBuffer> vertexBuffer_;
+    std::unique_ptr<VertexBuffer> vertexBuffer_;
     /// UI debug geometry vertex buffer.
-    SharedPtr<VertexBuffer> debugVertexBuffer_;
+    std::unique_ptr<VertexBuffer> debugVertexBuffer_;
     /// UI element query vector.
     Vector<UiElement*> tempElements_;
     /// Clipboard text.

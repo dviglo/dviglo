@@ -51,6 +51,9 @@
 
 #include "../common/debug_new.h"
 
+using namespace std;
+
+
 namespace dviglo
 {
 
@@ -487,17 +490,17 @@ void UI::Render(bool renderUICommand)
     // Perform the default backbuffer render only if not rendered yet, or additional renders through RenderUI command
     if (renderUICommand || !uiRendered_)
     {
-        SetVertexData(vertexBuffer_, vertexData_);
-        SetVertexData(debugVertexBuffer_, debugVertexData_);
+        SetVertexData(vertexBuffer_.get(), vertexData_);
+        SetVertexData(debugVertexBuffer_.get(), debugVertexData_);
 
         if (!renderUICommand)
             graphics->ResetRenderTargets();
         // Render non-modal batches
-        Render(vertexBuffer_, batches_, 0, nonModalBatchSize_);
+        Render(vertexBuffer_.get(), batches_, 0, nonModalBatchSize_);
         // Render debug draw
-        Render(debugVertexBuffer_, debugDrawBatches_, 0, debugDrawBatches_.Size());
+        Render(debugVertexBuffer_.get(), debugDrawBatches_, 0, debugDrawBatches_.Size());
         // Render modal batches
-        Render(vertexBuffer_, batches_, nonModalBatchSize_, batches_.Size());
+        Render(vertexBuffer_.get(), batches_, nonModalBatchSize_, batches_.Size());
     }
 
     // Render to UiComponent textures. This is skipped when called from the RENDERUI command
@@ -508,8 +511,8 @@ void UI::Render(bool renderUICommand)
             RenderToTextureData& data = item.second_;
             if (data.rootElement_->IsEnabled())
             {
-                SetVertexData(data.vertexBuffer_, data.vertexData_);
-                SetVertexData(data.debugVertexBuffer_, data.debugVertexData_);
+                SetVertexData(data.vertexBuffer_.get(), data.vertexData_);
+                SetVertexData(data.debugVertexBuffer_.get(), data.debugVertexData_);
 
                 RenderSurface* surface = data.texture_->GetRenderSurface();
                 graphics->SetDepthStencil(surface->GetLinkedDepthStencil());
@@ -517,8 +520,8 @@ void UI::Render(bool renderUICommand)
                 graphics->SetViewport(IntRect(0, 0, surface->GetWidth(), surface->GetHeight()));
                 graphics->Clear(dviglo::CLEAR_COLOR);
 
-                Render(data.vertexBuffer_, data.batches_, 0, data.batches_.Size());
-                Render(data.debugVertexBuffer_, data.debugDrawBatches_, 0, data.debugDrawBatches_.Size());
+                Render(data.vertexBuffer_.get(), data.batches_, 0, data.batches_.Size());
+                Render(data.debugVertexBuffer_.get(), data.debugDrawBatches_, 0, data.debugDrawBatches_.Size());
                 data.debugDrawBatches_.Clear();
                 data.debugVertexData_.Clear();
             }
@@ -932,8 +935,8 @@ void UI::Initialize()
     // Set initial root element size
     ResizeRootElement();
 
-    vertexBuffer_ = new VertexBuffer();
-    debugVertexBuffer_ = new VertexBuffer();
+    vertexBuffer_ = make_unique<VertexBuffer>();
+    debugVertexBuffer_ = make_unique<VertexBuffer>();
 
     initialized_ = true;
 
@@ -2174,9 +2177,9 @@ void UI::SetElementRenderTexture(UiElement* element, Texture2D* texture)
         RenderToTextureData data;
         data.texture_ = texture;
         data.rootElement_ = element;
-        data.vertexBuffer_ = new VertexBuffer();
-        data.debugVertexBuffer_ = new VertexBuffer();
-        renderToTexture_[element] = data;
+        data.vertexBuffer_ = make_shared<VertexBuffer>();
+        data.debugVertexBuffer_ = make_shared<VertexBuffer>();
+        renderToTexture_[element] = move(data);
     }
     else if (it != renderToTexture_.End())
     {
