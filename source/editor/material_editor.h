@@ -1,4 +1,4 @@
-// Copyright (c) 2022-2023 the Dviglo project
+// Copyright (c) 2022-2024 the Dviglo project
 // License: MIT
 
 #pragma once
