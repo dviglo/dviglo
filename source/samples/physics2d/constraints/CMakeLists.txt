@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2024 the Dviglo project
+# Copyright (c) the Dviglo project
 # License: MIT
 
 # Движок должен быть скомпилирован с поддержкой 2D-графики и 2D-физики
